@@ -22,11 +22,13 @@ import {
 } from "./core.mjs";
 import { PIECE_LIMITS } from "./piece-contract.mjs";
 import { fetchSocialSource } from "./social-providers.mjs";
+import { recordTopicObservation } from "./audience-insights.mjs";
 import {
   safeFetch,
   integrationError,
   generateStructured,
   configureIntegrations,
+  getPublicationState,
   publishPiece,
   telegramRequest,
 } from "./connectors.mjs";
@@ -36,7 +38,80 @@ const stopwords = new Set(
     " ",
   ),
 );
+const textEntities = Object.freeze({
+  ...Object.fromEntries(
+    // Named Latin-1 references in code-point order (U+00A0 through U+00FF).
+    (
+      "nbsp iexcl cent pound curren yen brvbar sect uml copy ordf laquo not shy reg macr " +
+      "deg plusmn sup2 sup3 acute micro para middot cedil sup1 ordm raquo frac14 frac12 frac34 iquest " +
+      "Agrave Aacute Acirc Atilde Auml Aring AElig Ccedil Egrave Eacute Ecirc Euml Igrave Iacute Icirc Iuml " +
+      "ETH Ntilde Ograve Oacute Ocirc Otilde Ouml times Oslash Ugrave Uacute Ucirc Uuml Yacute THORN szlig " +
+      "agrave aacute acirc atilde auml aring aelig ccedil egrave eacute ecirc euml igrave iacute icirc iuml " +
+      "eth ntilde ograve oacute ocirc otilde ouml divide oslash ugrave uacute ucirc uuml yacute thorn yuml"
+    ).split(" ").map((name, index) => [name, String.fromCodePoint(0xa0 + index)]),
+  ),
+  amp: "&",
+  AMP: "&",
+  quot: '"',
+  QUOT: '"',
+  apos: "'",
+  lt: "<",
+  LT: "<",
+  gt: ">",
+  GT: ">",
+  nbsp: "\u00a0",
+  copy: "©",
+  reg: "®",
+  trade: "™",
+  euro: "€",
+  pound: "£",
+  yen: "¥",
+  cent: "¢",
+  ndash: "–",
+  mdash: "—",
+  hellip: "…",
+  bull: "•",
+  lsquo: "‘",
+  rsquo: "’",
+  ldquo: "“",
+  rdquo: "”",
+  laquo: "«",
+  raquo: "»",
+});
+// Decode once, after removing actual markup. A generated ampersand must not
+// start another replacement, and an encoded tag remains ordinary display text.
+function decodeTextEntities(value) {
+  return value.replace(
+    /&(#(?:[xX][\da-fA-F]+|\d+)|[a-zA-Z][\da-zA-Z]*);/g,
+    (entity, name) => {
+      if (name[0] !== "#")
+        return Object.hasOwn(textEntities, name) ? textEntities[name] : entity;
+      const hex = name[1]?.toLowerCase() === "x";
+      const codePoint = Number.parseInt(name.slice(hex ? 2 : 1), hex ? 16 : 10);
+      if (
+        !Number.isFinite(codePoint) ||
+        codePoint <= 0 ||
+        codePoint > 0x10ffff ||
+        (codePoint >= 0xd800 && codePoint <= 0xdfff)
+      )
+        return "�";
+      return String.fromCodePoint(codePoint);
+    },
+  );
+}
 const clean = (value) =>
+  decodeTextEntities(
+    String(value ?? "")
+      .replace(/<script\b[^>]*>[\s\S]*?<\/script>/gi, " ")
+      .replace(/<style\b[^>]*>[\s\S]*?<\/style>/gi, " ")
+      .replace(/<[^>]+>/g, " "),
+  )
+    .replace(/\s+/g, " ")
+    .trim();
+// Comparison only: never apply the former decoder to persisted text. The
+// provider's current response must exactly reproduce an untouched legacy body
+// before a refresh may replace it with the corrected representation.
+const legacyHackerNewsText = (value) =>
   String(value ?? "")
     .replace(/<script\b[^>]*>[\s\S]*?<\/script>/gi, " ")
     .replace(/<style\b[^>]*>[\s\S]*?<\/style>/gi, " ")
@@ -47,7 +122,10 @@ const clean = (value) =>
     .replace(/&lt;/g, "<")
     .replace(/&gt;/g, ">")
     .replace(/\s+/g, " ")
-    .trim();
+    .trim()
+    .slice(0, 12000);
+// Ephemeral parser metadata: it cannot enter persisted records or API output.
+const previousHackerNewsTexts = new WeakMap();
 export function tokens(value) {
   return [
     ...new Set(
@@ -609,23 +687,30 @@ export async function fetchSource(
       ).values(),
     ].slice(0, 80);
     return hits
-      .map((item) => ({
-        title: clean(item.title),
-        url:
-          item.url || `https://news.ycombinator.com/item?id=${item.objectID}`,
-        text: clean(item.story_text).slice(0, 12000),
-        publishedAt: item.created_at,
-        author: item.author,
-        externalId: item.objectID,
-        metrics: {
-          score: Number(item.points) || 0,
-          comments: Number(item.num_comments) || 0,
-        },
-        sourceUrl: `https://news.ycombinator.com/item?id=${item.objectID}`,
-        language: "en",
-        market: "Internacional",
-        format: "article",
-      }))
+      .map((item) => {
+        const parsed = {
+          title: clean(item.title),
+          url:
+            item.url || `https://news.ycombinator.com/item?id=${item.objectID}`,
+          text: clean(item.story_text).slice(0, 12000),
+          publishedAt: item.created_at,
+          author: item.author,
+          externalId: item.objectID,
+          metrics: {
+            score: Number(item.points) || 0,
+            comments: Number(item.num_comments) || 0,
+          },
+          sourceUrl: `https://news.ycombinator.com/item?id=${item.objectID}`,
+          language: "en",
+          market: "Internacional",
+          format: "article",
+        };
+        previousHackerNewsTexts.set(
+          parsed,
+          legacyHackerNewsText(item.story_text),
+        );
+        return parsed;
+      })
       .filter((item) => item.title);
   }
   if (!["rss", "reddit"].includes(source.type))
@@ -1164,12 +1249,16 @@ function validVideoAnalysisForRefresh(existing, item) {
   return compatibleDuration(existing, item, analysis) ? analysis : null;
 }
 
-function refreshedSocialReference(brand, existing, item, signals) {
+function refreshedSocialReference(brand, existing, item, signals, previousText) {
   const base = { ...existing };
   if (existing?.platform || item.platform)
     for (const field of SOCIAL_VIDEO_FIELDS)
       if (item[field] === undefined) delete base[field];
   const videoAnalysis = validVideoAnalysisForRefresh(existing, item);
+  const retainedText =
+    previousText !== undefined && existing?.text === previousText
+      ? item.text
+      : existing?.text || item.text;
   const merged = {
     ...base,
     ...item,
@@ -1177,7 +1266,7 @@ function refreshedSocialReference(brand, existing, item, signals) {
     text:
       existing?.platform || item.platform
         ? String(item.text || "")
-        : existing?.text || item.text,
+        : retainedText,
     status: existing?.status || "new",
     tags: existing?.tags || tokens(item.title).slice(0, 5),
     language: item.language || "unknown",
@@ -1188,7 +1277,7 @@ function refreshedSocialReference(brand, existing, item, signals) {
       text:
         existing?.platform || item.platform
           ? String(item.text || "")
-          : existing?.text || item.text,
+          : retainedText,
     }),
   };
   if (videoAnalysis) {
@@ -1379,7 +1468,18 @@ export async function syncSources(brand, options = {}) {
         const reference = saveRecord(
           brand.id,
           "references",
-          refreshedSocialReference(brand, existing, item, signals),
+          refreshedSocialReference(
+            brand,
+            existing,
+            item,
+            signals,
+            source.type === "hackernews" &&
+              exact &&
+              existing?.sourceId === item.sourceId &&
+              existing?.externalId === item.externalId
+              ? previousHackerNewsTexts.get(fetchedItem)
+              : undefined,
+          ),
         );
         if (existing) {
           Object.assign(existing, reference);
@@ -1418,6 +1518,14 @@ export async function syncSources(brand, options = {}) {
       brand.id,
       `Radar actualizado: ${added} referencias nuevas, ${updated} actualizadas y ${errors.length} fuentes con errores.`,
     );
+    const successfulSourceIds = results
+      .filter((source) => !source.error && !source.skipped)
+      .map((source) => source.id);
+    if (successfulSourceIds.length)
+      recordTopicObservation(brand.id, {
+        now: options.now ?? Date.now(),
+        sourceIds: successfulSourceIds,
+      });
     return { added, updated, errors, sources: results };
   } finally {
     syncLocks.delete(brand.id);
@@ -1802,6 +1910,225 @@ export async function analyzeReference(brand, reference, options = {}) {
   return publicReference(saved);
 }
 
+// Local drafts apply a small, explicit set of controls. Everything else stays
+// in the editorial brief: concatenating a brief is not content generation.
+function localDraftControls(input, format) {
+  for (const [field, limit, label] of [
+    ["topic", 200, "El tema"],
+    ["cta", PIECE_LIMITS.cta, "El llamado a la acción"],
+    ["instructions", 10000, "Las instrucciones"],
+  ]) {
+    if (
+      input[field] !== undefined &&
+      (typeof input[field] !== "string" || input[field].length > limit)
+    )
+      throw integrationError(
+        `${label} debe ser texto de hasta ${limit} caracteres.`,
+      );
+  }
+  if (
+    input.unitCount !== undefined &&
+    (!Number.isInteger(input.unitCount) ||
+      input.unitCount < 3 ||
+      input.unitCount > 8)
+  )
+    throw integrationError("Elige entre 3 y 8 láminas o escenas.");
+  if (
+    input.includeExample !== undefined &&
+    typeof input.includeExample !== "boolean"
+  )
+    throw integrationError("Indica si quieres incluir un ejemplo hipotético.");
+
+  const directions = input.instructions || "";
+  const notes = [
+    "La estructura local aplica formato, CTA, cantidad de láminas o escenas y ejemplo hipotético. Revisa manualmente el resto de la dirección editorial; se conserva aquí y no se añade al texto publicable.",
+  ];
+  const ctaMatch = [
+    ...directions.matchAll(
+      /\bCTA(?:\s+final)?(?:\s+exact[oa])?\s*:\s*(?:[«“"]([^»”"\n]+)[»”"]|([^\n.!?]+[.!?]?))/giu,
+    ),
+  ].at(-1);
+  const requestedCta =
+    input.cta?.trim() || (ctaMatch?.[1] || ctaMatch?.[2] || "").trim();
+  if (requestedCta.length > PIECE_LIMITS.cta)
+    throw integrationError(
+      "El llamado a la acción debe tener hasta 2000 caracteres.",
+    );
+
+  const numberWords = {
+    tres: 3,
+    cuatro: 4,
+    cinco: 5,
+    seis: 6,
+    siete: 7,
+    ocho: 8,
+    dos: 2,
+    nueve: 9,
+    diez: 10,
+  };
+  const unitPattern =
+    format === "carousel"
+      ? /\b(\d+|dos|tres|cuatro|cinco|seis|siete|ocho|nueve|diez)\s+(?:láminas|laminas|diapositivas)\b/giu
+      : /\b(\d+|dos|tres|cuatro|cinco|seis|siete|ocho|nueve|diez)\s+escenas\b/giu;
+  const countMatch = [...directions.matchAll(unitPattern)]
+    .at(-1)?.[1]
+    ?.toLowerCase();
+  const requestedCount =
+    input.unitCount ??
+    (countMatch ? numberWords[countMatch] || Number(countMatch) : 5);
+  const unitCount =
+    requestedCount >= 3 && requestedCount <= 8 ? requestedCount : 5;
+  if (unitCount !== requestedCount)
+    notes.push(
+      `La cantidad solicitada (${requestedCount}) no está admitida por la estructura local. Se prepararon 5 unidades; ajusta el guion o elige entre 3 y 8 al crear.`,
+    );
+
+  const noExample =
+    /\b(?:sin|no\s+(?:incluyas?|uses?|añadas?|agregues?))\s+(?:un\s+)?ejemplos?\b/iu.test(
+      directions,
+    );
+  const includeExample =
+    input.includeExample ??
+    (!noExample && /\bejemplo\s+hipot[eé]tico\b/iu.test(directions));
+  const sectionsMatch = [
+    ...directions.matchAll(/\bsecciones\s*:\s*([^\n.!?]+)/giu),
+  ].at(-1)?.[1];
+  const requestedSections = sectionsMatch
+    ?.split(/\s*(?:,|;)\s*|\s+y\s+/iu)
+    .map((title) => title.trim())
+    .filter(Boolean);
+  const sectionTitles =
+    requestedSections?.length >= 2 &&
+    requestedSections.length <= 8 &&
+    requestedSections.every((title) => title.length <= 80)
+      ? requestedSections
+      : ["Registrar", "Revisar"];
+  if (sectionsMatch && sectionTitles !== requestedSections)
+    notes.push(
+      "Los títulos de sección no se aplicaron: usa entre 2 y 8 títulos de hasta 80 caracteres separados por comas o «y».",
+    );
+  return {
+    cta:
+      requestedCta ||
+      "Comparte qué tarea necesitas resolver y qué te falta comprobar.",
+    unitCount,
+    includeExample,
+    sectionTitles,
+    notes,
+  };
+}
+
+function localDraft(
+  brand,
+  input,
+  { reference, idea, segment, format, videoAnalysis },
+) {
+  const controls = localDraftControls(input, format);
+  const title = summarizeTopic(
+    input.topic?.trim() ||
+      idea?.title ||
+      reference?.title ||
+      brand.pillars?.[0] ||
+      brand.industry ||
+      brand.name,
+    160,
+  );
+  const audience = summarizeTopic(segment?.name || "tu equipo", 150);
+  const fullNeeds =
+    segment?.needs || "resolver una tarea concreta de tu equipo";
+  const needs = summarizeTopic(fullNeeds, 180).replace(/[.!?]$/u, "");
+  const topic = title.replace(/[.!?]$/u, "");
+  const hook = `Una forma de trabajar en «${topic}» para ${audience}.`;
+  const opening = `La necesidad que guía esta propuesta: ${needs}. Elige una tarea de tu día a día que permita trabajar en ella.`;
+  const steps = [
+    `Registrar el punto de partida\nPara trabajar en «${needs}», anota qué tarea está pendiente, qué la bloquea y quién necesita resolverla. Conserva ese registro para poder comparar después.`,
+    `Probar una alternativa\nElige un caso manejable relacionado con «${topic}». Acuerda con tu equipo qué cambiarán y cómo comprobarán si la tarea quedó resuelta.`,
+    "Revisar lo ocurrido\nAnota qué hiciste, qué observaste y qué quedó pendiente. Separa lo comprobado de lo que todavía supones antes de repetir la prueba.",
+    `Volver a la necesidad\nRevisa el registro con ${audience}. Decide qué conservar, corregir o descartar para avanzar en «${needs}».`,
+    "Compartir el aprendizaje\nExplica qué se probó y qué falta comprobar. Describe los límites del caso sin convertirlo en una promesa de resultados.",
+    "Elegir el siguiente paso\nDefine una tarea para continuar y una persona que revise lo que ocurra. Conserva las dudas abiertas en el registro.",
+  ];
+  const example = `Ejemplo hipotético\nUn equipo que necesita «${needs}» registra una tarea pendiente y un obstáculo, prueba una alternativa y deja anotado qué pudo resolver y qué sigue abierto. Este escenario ilustra el método; no presenta resultados reales.`;
+  let script,
+    scenes = [];
+  if (["carousel", "reel", "video"].includes(format)) {
+    const middle = steps.slice(0, controls.unitCount - 2);
+    if (controls.includeExample) middle[middle.length - 1] = example;
+    const units = [
+      `${hook}\n${opening}`,
+      ...middle,
+      `El siguiente paso\n${controls.cta}`,
+    ];
+    const unitName = format === "carousel" ? "Lámina" : "Escena";
+    scenes = units.map((text, index) => ({
+      text: `${unitName} ${index + 1}: ${text}`,
+      duration:
+        format === "carousel"
+          ? 5
+          : Math.min(
+              20,
+              Math.max(5, Math.ceil(text.split(/\s+/u).length / 2.5)),
+            ),
+    }));
+    script = scenes.map((scene) => scene.text).join("\n\n");
+  } else if (format === "newsletter") {
+    const sectionSteps = [steps[0], steps[2], steps[1], ...steps.slice(3)];
+    const sections = controls.sectionTitles.map(
+      (heading, index) =>
+        `${heading}\n${sectionSteps[index % sectionSteps.length].split("\n").slice(1).join("\n")}${controls.includeExample && index === 0 ? `\n\n${example}` : ""}`,
+    );
+    script = [
+      `Asunto: ${title}`,
+      `Hola, ${audience}.`,
+      opening,
+      ...sections,
+      `Desde ${summarizeTopic(brand.name, 120)}, te proponemos contrastar el registro con tu equipo antes de repetir la prueba.`,
+      controls.cta,
+    ].join("\n\n");
+  } else {
+    script = [
+      hook,
+      opening,
+      steps[0],
+      steps[2],
+      ...(controls.includeExample ? [example] : []),
+      controls.cta,
+    ].join("\n\n");
+  }
+  return {
+    output: {
+      title,
+      hook,
+      script,
+      caption: `${audience}: ${needs}.\n\n${controls.cta}`,
+      cta: controls.cta,
+      scenes,
+    },
+    editorialBrief: {
+      instructions: input.instructions || "",
+      angle:
+        idea?.angle ||
+        videoAnalysis?.adaptation ||
+        reference?.analysis?.adaptation ||
+        "",
+      audienceNeeds: fullNeeds,
+      referenceUrl: reference?.url || "",
+      applied: {
+        format,
+        ...(["carousel", "reel", "video"].includes(format)
+          ? { unitCount: controls.unitCount }
+          : {}),
+        cta: controls.cta,
+        includeExample: controls.includeExample,
+        ...(format === "newsletter"
+          ? { sectionTitles: controls.sectionTitles }
+          : {}),
+      },
+      notes: controls.notes,
+    },
+  };
+}
+
 export async function createDraft(brand, input, options = {}) {
   const reference = input.referenceId
     ? getRecord(brand.id, "references", input.referenceId)
@@ -1834,47 +2161,9 @@ export async function createDraft(brand, input, options = {}) {
   ].includes(input.channel)
     ? input.channel
     : "linkedin";
-  const topic =
-    idea?.title ||
-    reference?.title ||
-    input.instructions?.trim() ||
-    brand.pillars?.[0] ||
-    brand.industry ||
-    brand.name;
-  const topicalSummary = summarizeTopic(topic, 160);
   const videoAnalysis = videoAnalysisShape(reference?.videoAnalysis);
-  const angle =
-    idea?.angle ||
-    videoAnalysis?.adaptation ||
-    reference?.analysis?.adaptation ||
-    `Qué significa para ${segment?.name || "tu audiencia"} y cómo probarlo sin perder el foco.`;
-  const hook = `¿Qué cambia con ${topicalSummary.toLowerCase().replace(/[.?!]$/, "")} para ${segment?.name || "tu equipo"}?`;
-  const steps = [
-    hook,
-    `${angle}\nEn ${brand.market || "tu mercado"}, comienza por una tarea concreta de ${brand.industry || "tu sector"} relacionada con ${segment?.needs || "una necesidad real de la audiencia"}.`,
-    "Antes de adoptar la idea, registra cómo resuelves esa tarea hoy. Elige un caso pequeño, define quién revisará el resultado y compara calidad y tiempo. Documenta las limitaciones; no extrapoles una prueba a toda la organización.",
-    `Desde ${brand.name}, nuestra propuesta es convertir la conversación en una prueba verificable. ${reference?.url ? `Referencia para consultar: ${reference.url}. ` : ""}${input.instructions ? `Dirección editorial: ${input.instructions}.` : ""}`,
-    "¿Qué tarea pondrías a prueba primero? Comparte tu contexto para adaptar el siguiente paso.",
-  ];
-  let output = {
-    title: topicalSummary,
-    hook,
-    script: steps.join("\n\n"),
-    caption: `${hook}\n\n${angle}\n\nGuarda esta propuesta y compártela con tu equipo.`,
-    cta: "Comparte qué caso quieres poner a prueba.",
-    scenes: steps.map((text, index) => ({
-      id: randomUUID(),
-      text,
-      duration:
-        index === 0
-          ? 5
-          : Math.min(
-              20,
-              Math.max(5, Math.ceil(text.split(/\s+/).length / 2.5)),
-            ),
-    })),
-    generationEngine: "heuristic",
-  };
+  const local = localDraft(brand, input, { reference, idea, segment, format, videoAnalysis });
+  let output = local.output;
   const generated = await generateStructured(
     brand.id,
     {
@@ -1908,6 +2197,8 @@ export async function createDraft(brand, input, options = {}) {
         segment,
         format,
         channel,
+        topic: input.topic,
+        controls: local.editorialBrief.applied,
         instructions: input.instructions,
         reference: reference && {
           title: reference.title,
@@ -1930,6 +2221,7 @@ export async function createDraft(brand, input, options = {}) {
   output = normalizeDraftOutput(output, generationEngine);
   const piece = saveRecord(brand.id, "pieces", {
     ...output,
+    ...(generationEngine === "heuristic" ? { editorialBrief: local.editorialBrief } : {}),
     referenceId: reference?.id,
     ideaId: idea?.id,
     segmentId: segment?.id,
@@ -2064,13 +2356,41 @@ export function createIntelligenceRouter() {
       res.json(integrations);
     },
   );
+  router.get("/brands/:brandId/pieces/:id/publish", (req, res) => {
+    const piece = getRecord(req.brand.id, "pieces", req.params.id);
+    if (!piece) throw integrationError("Pieza no encontrada.", 404);
+    res.json({
+      ...getPublicationState(req.brand, piece),
+      approvalVersion: publicPiece(piece).approvalVersion,
+      pieceStatus: piece.status,
+    });
+  });
   router.post(
     "/brands/:brandId/pieces/:id/publish",
     requireEditor,
-    async (req, res) =>
-      res.json(
-        publicPiece(await publishPiece(req.brand, { id: req.params.id })),
-      ),
+    async (req, res) => {
+      const piece = getRecord(req.brand.id, "pieces", req.params.id);
+      if (!piece) throw integrationError("Pieza no encontrada.", 404);
+      if (piece.status === "published" && piece.publicationReceipt)
+        return res.json(publicPiece(piece));
+      if (!["approved", "scheduled"].includes(piece.status))
+        throw integrationError("Aprueba la pieza antes de publicarla.", 409);
+      if (
+        !req.body?.expectedApprovalVersion ||
+        req.body.expectedApprovalVersion !== publicPiece(piece).approvalVersion
+      )
+        throw integrationError(
+          "La pieza cambió o falta confirmar su versión. Actualiza y revisa la pieza aprobada antes de enviarla.",
+          409,
+        );
+      const publication = getPublicationState(req.brand, piece);
+      if (req.body.expectedDestinationKey !== publication.destinationKey)
+        throw integrationError(
+          "El destino o la configuración del conector cambió. Revisa el destino actual y confirma de nuevo.",
+          409,
+        );
+      res.json(publicPiece(await publishPiece(req.brand, { id: req.params.id })));
+    },
   );
   return router;
 }

@@ -90,9 +90,9 @@ test("10,000-character accepted instructions produce a draft that the piece PATC
   });
   assert.equal(generated.status, 200, JSON.stringify(generated.data));
   assert.equal(generated.data.generationEngine, "heuristic");
-  assert.ok(
-    generated.data.script.includes(`Dirección editorial: ${instructions}.`),
-  );
+  assert.equal(generated.data.editorialBrief.instructions, instructions);
+  for (const field of ["title", "hook", "script", "caption", "cta"])
+    assert.ok(!generated.data[field].includes(instructions), field);
   assert.ok(generated.data.title.length <= 200);
   assert.ok(generated.data.hook.length < 300);
   assert.ok(generated.data.hook.length <= 2000);
@@ -116,6 +116,7 @@ test("10,000-character accepted instructions produce a draft that the piece PATC
   assert.equal(saved.status, 200, JSON.stringify(saved.data));
   assert.equal(saved.data.cta, "CTA actualizado");
   assert.equal(saved.data.script, generated.data.script);
+  assert.deepEqual(saved.data.editorialBrief, generated.data.editorialBrief);
 });
 
 test("provider drafts are bounded to every editable piece limit before persistence", async () => {
@@ -197,8 +198,11 @@ test("long reference analysis and maximum-size segment fields stay within the dr
     segmentId: "long-context-segment",
   });
   assert.equal(piece.generationEngine, "heuristic");
-  assert.ok(piece.script.includes("E".repeat(5000)));
-  assert.ok(piece.script.includes("N".repeat(3000)));
+  assert.equal(piece.editorialBrief.angle, "E".repeat(5000));
+  assert.equal(piece.editorialBrief.audienceNeeds, "N".repeat(3000));
+  assert.ok(!piece.script.includes("E".repeat(5000)));
+  assert.ok(!piece.script.includes("N".repeat(3000)));
+  assert.ok(piece.script.includes("N".repeat(100)));
   assert.ok(piece.title.length <= 200);
   assert.ok(piece.hook.length <= 2000);
   assert.ok(piece.script.length <= 50000);

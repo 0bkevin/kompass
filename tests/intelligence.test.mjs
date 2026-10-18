@@ -746,7 +746,11 @@ test("local analysis and drafts persist useful editable output without API keys"
   assert.equal(piece.status, "draft");
   assert.equal(piece.generationEngine, "heuristic");
   assert.equal(piece.format, "carousel");
-  assert.ok(piece.script.includes("Enfoque de pequeñas empresas"));
+  assert.equal(
+    piece.editorialBrief.instructions,
+    "Enfoque de pequeñas empresas",
+  );
+  assert.ok(!piece.script.includes("Enfoque de pequeñas empresas"));
   assert.equal(piece.scenes.length, 5);
   assert.equal(piece.segmentId, "directors");
   await assert.rejects(

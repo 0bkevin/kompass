@@ -29,6 +29,16 @@ import {
 } from "./auth.mjs";
 import { canonicalSocialSourceUrl } from "./social-providers.mjs";
 import { PIECE_LIMITS } from "./piece-contract.mjs";
+import { publicCitationUrl } from "./public-citation-url.mjs";
+import {
+  deduplicateReferences,
+  referenceIdentity,
+} from "./reference-identity.mjs";
+import {
+  filenameAwareUpload,
+  cleanUploadName,
+  encodedDownloadName,
+} from "./upload-filenames.mjs";
 
 function pieceApprovalContent(piece) {
   return {
@@ -197,6 +207,17 @@ export function publicAsset(asset) {
 export function publicReference(reference) {
   if (!reference) return reference;
   const { mediaUrl: _privateMediaUrl, ...safe } = reference;
+  delete safe.originalUrlOmitted;
+  if (safe.url) {
+    try {
+      publicCitationUrl(safe.url, "URL");
+    } catch {
+      // Preserve the historical record; do not offer an inadmissible original
+      // as a public citation in the inbox, detail or workspace readback.
+      delete safe.url;
+      safe.originalUrlOmitted = true;
+    }
+  }
   return safe;
 }
 export function brandState(brandId, userId) {
@@ -299,14 +320,35 @@ function brandInput(body, current = {}) {
     fail(400, "La marca admite hasta 30 segmentos.");
   result.audience = audiences.map((audience) => {
     object(audience);
+    const previous = (current.audience || []).find(
+      (segment) => segment.id === audience.id,
+    );
+    // Keep untouched legacy profiles usable while requiring complete new edits.
+    const changed =
+      !previous ||
+      ["name", "role", "stage", "needs", "description"].some(
+        (key) => (audience[key] ?? "") !== (previous[key] ?? ""),
+      );
+    const role = text(audience.role, "Rol", 300);
+    const needs = text(audience.needs, "Necesidades", 3000);
+    if (changed && !role)
+      fail(
+        400,
+        "El rol o responsabilidad es obligatorio. Escribe texto, no solo espacios.",
+      );
+    if (changed && !needs)
+      fail(
+        400,
+        "Las necesidades e intereses son obligatorias. Escribe texto, no solo espacios.",
+      );
     return {
       id: audience.id
         ? text(audience.id, "ID segmento", 100, true)
         : randomUUID(),
       name: text(audience.name, "Nombre segmento", 150, true),
-      role: text(audience.role, "Rol", 300),
+      role,
       stage: text(audience.stage, "Etapa", 300),
-      needs: text(audience.needs, "Necesidades", 3000),
+      needs,
       description: text(audience.description, "Descripción", 3000),
     };
   });
@@ -405,7 +447,8 @@ function referenceInput(body, current, req) {
         : "manual"
       : label || "manual";
   } else if (!current.id) result.source = "manual";
-  if (body.url !== undefined) result.url = url(body.url);
+  if (body.url !== undefined)
+    result.url = publicCitationUrl(text(body.url, "URL", 3000), "URL") || "";
   if (body.tags !== undefined)
     result.tags = stringArray(body.tags, "Etiquetas");
   if (body.assetId !== undefined)
@@ -678,6 +721,10 @@ function pieceInput(body, current, req) {
       result.scheduledFor = new Date(timestamp).toISOString();
     }
   }
+  // A date only belongs to the active plan or retained publication history.
+  // Invalidating approval must cancel scheduling even when a client omits null.
+  if (!["scheduled", "published"].includes(to))
+    result.scheduledFor = undefined;
   if (
     to === "scheduled" &&
     (!result.scheduledFor || Date.parse(result.scheduledFor) <= Date.now())
@@ -708,8 +755,21 @@ function sourceInput(body, current) {
       ["hackernews", "reddit", "rss", "gdelt", "youtube", "apify"],
       "Tipo de fuente",
     );
-  if (body.url !== undefined) result.url = url(body.url, "URL fuente");
-  if (body.query !== undefined)
+  const acceptsUrl = ["rss", "reddit", "youtube", "apify"].includes(result.type);
+  const queryKind = (type) =>
+    type === "rss" ? null : type === "reddit" ? "community" : "topic";
+  // Clear incompatible inherited values before applying the new input.
+  // URLs identify different resources across connectors; subreddit selectors
+  // are not topic queries, and RSS has no query field in its editor.
+  if (!acceptsUrl || current.type !== result.type) delete result.url;
+  if (
+    !queryKind(result.type) ||
+    queryKind(current.type) !== queryKind(result.type)
+  )
+    delete result.query;
+  if (acceptsUrl && body.url !== undefined)
+    result.url = url(body.url, "URL fuente");
+  if (queryKind(result.type) && body.query !== undefined)
     result.query = text(body.query, "Consulta", 300);
   if (body.platform !== undefined)
     result.platform = options(
@@ -717,6 +777,13 @@ function sourceInput(body, current) {
       ["youtube", "instagram", "tiktok", "facebook", "x"],
       "Plataforma",
     );
+  else if (current.id && current.type !== result.type) {
+    if (result.type === "youtube") result.platform = "youtube";
+    else if (result.type === "apify")
+      result.platform = ["instagram", "tiktok"].includes(current.platform)
+        ? current.platform
+        : "instagram";
+  }
   if (body.limit !== undefined) {
     result.limit = number(body.limit, "Límite de resultados", 1, 50);
     if (!Number.isInteger(result.limit))
@@ -772,13 +839,63 @@ function cleanAssetPath(asset) {
   if (!target || !target.startsWith(`${UPLOAD_DIR}${path.sep}`)) return null;
   return target;
 }
-const upload = multer({
+const MAX_ASSET_FILE_BYTES = 25 * 1024 * 1024;
+const upload = filenameAwareUpload({
   storage: multer.diskStorage({
     destination: UPLOAD_DIR,
     filename: (_req, _file, cb) => cb(null, randomUUID()),
   }),
-  limits: { fileSize: 50 * 1024 * 1024, files: 1, fields: 5, fieldSize: 4096 },
+  limits: { fileSize: MAX_ASSET_FILE_BYTES, files: 1, fields: 5, fieldSize: 4096 },
 });
+const receiveAssetFile = upload.single("file");
+function uploadAssetFile(req, res, next) {
+  receiveAssetFile(req, res, (error) => {
+    if (error?.code === "LIMIT_FILE_SIZE")
+      return next(
+        Object.assign(
+          new Error(
+            "El archivo supera el máximo de 25 MiB. Selecciona uno más pequeño.",
+          ),
+          { status: 413 },
+        ),
+      );
+    next(error);
+  });
+}
+function isUtf8TextFile(file) {
+  const fd = fs.openSync(file.path, "r");
+  const chunk = Buffer.alloc(64 * 1024);
+  const decoder = new TextDecoder("utf-8", { fatal: true });
+  // Inspect every byte within the upload limit using fixed memory. Streaming
+  // decoding preserves multibyte characters split between reads.
+  const binaryControls = /[\u0000-\u0008\u000B\u000E-\u001F\u007F-\u009F]/;
+  try {
+    let position = 0;
+    while (position < file.size) {
+      const count = fs.readSync(
+        fd,
+        chunk,
+        0,
+        Math.min(chunk.length, file.size - position),
+        position,
+      );
+      if (!count) return false;
+      if (
+        binaryControls.test(
+          decoder.decode(chunk.subarray(0, count), { stream: true }),
+        )
+      )
+        return false;
+      position += count;
+    }
+    return !binaryControls.test(decoder.decode());
+  } catch (error) {
+    if (error.code === "ERR_ENCODING_INVALID_ENCODED_DATA") return false;
+    throw error;
+  } finally {
+    fs.closeSync(fd);
+  }
+}
 function detectFile(file) {
   const fd = fs.openSync(file.path, "r");
   const header = Buffer.alloc(1024);
@@ -820,12 +937,14 @@ function detectFile(file) {
     (bytes[0] === 255 && (bytes[1] & 224) === 224)
   )
     return ["audio", "audio/mpeg"];
-  if (
-    ["text/plain", "text/markdown", "text/csv"].includes(file.mimetype) &&
-    !bytes.includes(0) &&
-    file.size <= 10 * 1024 * 1024
-  )
+  if (["text/plain", "text/markdown", "text/csv"].includes(file.mimetype)) {
+    if (!isUtf8TextFile(file))
+      fail(
+        400,
+        "El archivo no contiene texto UTF-8 válido o contiene datos binarios. Guárdalo como texto UTF-8 y vuelve a subirlo.",
+      );
     return ["document", file.mimetype];
+  }
   fail(
     400,
     "Formato no admitido. Sube PNG, JPG, WebP, GIF, PDF, texto, audio o MP4/WebM válidos.",
@@ -879,7 +998,7 @@ export function createCoreRouter() {
       email: `demo-${randomUUID()}@example.invalid`,
       passwordHash: await hashPassword(randomBytes(32).toString("hex")),
     });
-    const brand = saveBrand(brandInput(demoBrandInput()));
+    const brand = saveBrand({ ...brandInput(demoBrandInput()), isDemo: true });
     db.prepare("INSERT INTO members(brand_id,user_id,role) VALUES(?,?,?)").run(
       brand.id,
       user.id,
@@ -964,8 +1083,8 @@ export function createCoreRouter() {
         const linkedPieces = listRecords(req.brand.id, "pieces").filter(
           (piece) => removedIds.has(piece.segmentId),
         );
-        const linkedIdeas = listRecords(req.brand.id, "ideas").filter(
-          (idea) => removedIds.has(idea.segmentId),
+        const linkedIdeas = listRecords(req.brand.id, "ideas").filter((idea) =>
+          removedIds.has(idea.segmentId),
         );
         if (linkedPieces.length || linkedIdeas.length) {
           const usage = [];
@@ -1083,6 +1202,38 @@ export function createCoreRouter() {
     });
     router.post(`/brands/:brandId/${kind}`, requireEditor, (req, res) => {
       object(req.body);
+      if (kind === "references") {
+        const input = validate(req.body, {}, req);
+        let record,
+          reused = false;
+        // The identity check and insert share the SQLite write lock, including
+        // when more than one API process receives retries for this brand.
+        db.exec("BEGIN IMMEDIATE");
+        try {
+          const records = listRecords(req.brand.id, kind);
+          const identity = referenceIdentity(input);
+          record =
+            identity &&
+            deduplicateReferences(records.filter((item) => !item.isDemo)).find(
+              (item) => referenceIdentity(item) === identity,
+            );
+          reused = !!record;
+          if (!record) {
+            if (records.length >= 10000)
+              fail(400, "Se alcanzó el límite de registros de esta marca.");
+            record = saveRecord(req.brand.id, kind, input);
+            addActivity(
+              req.brand.id,
+              `${req.user.name} añadió una referencia: ${record.title}.`,
+            );
+          }
+          db.exec("COMMIT");
+        } catch (error) {
+          db.exec("ROLLBACK");
+          throw error;
+        }
+        return res.status(reused ? 200 : 201).json(publicReference(record));
+      }
       if (
         listRecords(req.brand.id, kind).length >=
         (kind === "sources" ? 100 : 10000)
@@ -1225,7 +1376,7 @@ export function createCoreRouter() {
   router.post(
     "/brands/:brandId/assets",
     requireEditor,
-    upload.single("file"),
+    uploadAssetFile,
     (req, res, next) => {
       try {
         if (!req.file) fail(400, "Selecciona un archivo en el campo file.");
@@ -1241,11 +1392,7 @@ export function createCoreRouter() {
         const id = randomUUID();
         const asset = saveRecord(req.brand.id, "assets", {
           id,
-          name:
-            path
-              .basename(req.file.originalname)
-              .replace(/[\u0000-\u001F\u007F]/g, "")
-              .slice(0, 200) || "Archivo",
+          name: cleanUploadName(req.file.originalname),
           type,
           mimeType,
           size: req.file.size,
@@ -1280,7 +1427,7 @@ export function createCoreRouter() {
         : "inline";
     res.set(
       "Content-Disposition",
-      `${disposition}; filename*=UTF-8''${encodeURIComponent(asset.name)}`,
+      `${disposition}; filename*=UTF-8''${encodedDownloadName(asset.name)}`,
     );
     res.sendFile(path.relative(UPLOAD_DIR, filePath), { root: UPLOAD_DIR });
   });

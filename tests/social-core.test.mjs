@@ -263,7 +263,7 @@ test("reference CRUD cannot forge video analysis or provider provenance", async 
     body: {
       title: "Referencia capturada manualmente",
       text: "Contenido de referencia",
-      url: "https://example.test/original",
+      url: "https://example.com/original",
       source: "Equipo",
       sourceId: "forged-source-id",
       sourceUrl: "https://www.youtube.com/watch?v=abcdefghijk",
@@ -353,7 +353,7 @@ test("editing reference content or asset invalidates audiovisual analysis and me
     body: {
       title: "Referencia original",
       text: "Texto inicial",
-      url: "https://example.test/original",
+      url: "https://example.com/original-to-edit",
     },
   });
   assert.equal(capture.status, 201);
@@ -400,7 +400,7 @@ test("editing reference content or asset invalidates audiovisual analysis and me
   assertInvalidated(result.data);
 
   refreshAnalysis();
-  result = await patch({ url: "https://example.test/otro-video" });
+  result = await patch({ url: "https://example.com/otro-video" });
   assert.equal(result.status, 200, JSON.stringify(result.data));
   assertInvalidated(result.data);
 

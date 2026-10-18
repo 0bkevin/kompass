@@ -464,7 +464,11 @@ test("draft fallback uses validated audiovisual observations without copying on-
     channel: "instagram",
   });
   assert.equal(piece.generationEngine, "heuristic");
-  assert.match(piece.script, /Crear un ejemplo propio de revisión semanal/);
+  assert.equal(
+    piece.editorialBrief.angle,
+    "Crear un ejemplo propio de revisión semanal para un equipo pequeño.",
+  );
+  assert.doesNotMatch(piece.script, /Crear un ejemplo propio de revisión semanal/);
   assert.doesNotMatch(piece.script, /video_audio|Apuntes observacionales/);
   assert.doesNotMatch(piece.script, /no copies frases ni deduzcas causalidad/);
   assert.doesNotMatch(piece.script, /Texto que no debe copiarse/);
