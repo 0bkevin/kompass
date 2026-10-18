@@ -36,6 +36,7 @@ import {
   timeAgo,
 } from "../lib/format";
 import PublishPiece from "./PublishPiece";
+import MediaProduction from "./MediaProduction";
 import "./studio-flow.css";
 
 export default function Studio() {
@@ -402,6 +403,7 @@ function PieceEditor({ piece }: { piece: Piece }) {
     baseline: piece,
     conflict: false,
   }));
+  const resourceTabRef = useRef<HTMLButtonElement>(null);
   const { draft, baseline, conflict: editorConflict } = editor;
   const [busy, setBusy] = useState(""),
     [comment, setComment] = useState(""),
@@ -925,6 +927,7 @@ function PieceEditor({ piece }: { piece: Piece }) {
               Guion y enfoque
             </button>
             <button
+              ref={resourceTabRef}
               className={tab === "resources" ? "active" : ""}
               onClick={() => setTab("resources")}
             >
@@ -940,6 +943,23 @@ function PieceEditor({ piece }: { piece: Piece }) {
           </div>
           {tab === "script" ? (
             <div className="stack editor-fields">
+              <div className="media-editor-entry">
+                <div>
+                  <strong>Del guion al contenido visual</strong>
+                  <p className="small muted">
+                    Crea una imagen o un video animado para acompañar esta
+                    pieza.
+                  </p>
+                </div>
+                <Button
+                  onClick={() => {
+                    setTab("resources");
+                    resourceTabRef.current?.focus();
+                  }}
+                >
+                  <Sparkles size={16} /> Crear imagen o video
+                </Button>
+              </div>
               <fieldset disabled={readonly || !!busy}>
                 <Field
                   label="Título de trabajo"
@@ -1045,6 +1065,27 @@ function PieceEditor({ piece }: { piece: Piece }) {
             </div>
           ) : tab === "resources" ? (
             <div className="editor-fields">
+              <MediaProduction
+                piece={draft}
+                unsaved={dirty}
+                disabled={readonly || !!busy || blockedByConflict}
+                disabledReason={
+                  readonly
+                    ? "Esta pieza solo puede consultarse. Abre un borrador editable para crear o añadir archivos."
+                    : blockedByConflict
+                      ? "Resuelve el conflicto de edición antes de crear o añadir archivos."
+                      : undefined
+                }
+                onSelectAssets={(assetIds) => {
+                  setDraft({
+                    ...draft,
+                    assetIds: [...new Set([...draft.assetIds, ...assetIds])],
+                  });
+                  notify(
+                    "Archivo añadido. Guarda los cambios de la pieza para conservarlo.",
+                  );
+                }}
+              />
               <h3>Material asociado a esta pieza</h3>
               <p className="muted">
                 Selecciona recursos de tu biblioteca y guarda los cambios.
