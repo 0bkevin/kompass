@@ -42,6 +42,8 @@ Cada empresa nueva recibe fuentes públicas permitidas (Hacker News, GDELT y Goo
 
 El operador configura la IA una sola vez con `OPENAI_API_KEY`, `OPENAI_MODEL`, `OPENAI_BASE_URL` y una revisión vigente del proveedor en `SOURCE_ACCESS_POLICY_FILE`. Las claves permanecen en servidor. La configuración de una empresa no puede cambiar el destino o modelo de la credencial compartida. Una empresa puede usar su propia credencial o volver al servicio de plataforma; esto no modifica las demás empresas.
 
+El destino predeterminado usa la API Responses de OpenAI. También se admite la API oficial de texto de Gemini con `OPENAI_BASE_URL=https://generativelanguage.googleapis.com/v1beta/openai`, su clave de AI Studio como `OPENAI_API_KEY` y un modelo disponible; ese destino usa Chat Completions con salida estructurada. No habilita el análisis de video. La [configuración y pruebas reales de servicios](docs/external-integrations-20261018/README.md) distinguen cuentas conectadas, cuota verificada y servicios aún restringidos. El nivel gratuito de Gemini tiene condiciones de tratamiento distintas del plan de pago y no admite información personal, sensible o confidencial.
+
 ```bash
 npm run integrations:check
 npm run integrations:check -- --require-ai
@@ -51,7 +53,7 @@ El chequeo inspecciona configuración sin transmitir datos, revelar claves ni ej
 
 La interfaz muestra los servicios disponibles y mantiene las personalizaciones de IA y conectores adicionales fuera del recorrido inicial. Revisar, planificar y exportar no requieren una conexión. La entrega opcional por webhook requiere el destino autorizado de cada empresa; programar no publica automáticamente.
 
-**Estado comprobado en este entorno:** no hay credencial de IA de plataforma ni revisión de operador configuradas. Los adaptadores sociales y de video restringidos permanecen bloqueados. No están activadas todas las integraciones. En lecturas públicas reales, Hacker News y Google Trends respondieron; GDELT devolvió HTTP 429. Ver [evidencia de las fuentes](docs/managed-integrations-validation.json).
+**Estado de la plataforma en localhost:** Google está conectado. Hacker News y Google Trends respondieron en la nueva [prueba interactiva de fuentes](docs/external-integrations-20261018/discovery.md); GDELT devolvió HTTP 429 y la interfaz mostró el fallo parcial y su recuperación al pausar esa fuente. Gemini de texto está configurado como servicio compartido de plataforma en modo de prueba con contenido público o ficticio, aprobado por el operador; las empresas no necesitan introducir claves. Su prueba de análisis y creación usa material sintético y no permite inferir precisión general ni derechos sobre contenido ajeno. OpenAI permite entrar con la cuenta solicitada, pero no tiene crédito API ni plan de facturación. Los adaptadores sociales y de video permanecen bloqueados. No están activadas todas las integraciones.
 
 ## Recorrido completo
 
@@ -94,7 +96,7 @@ Los límites de reservas Apify se conservan para auditar usos previos, pero no s
 
 Los tests usan SQLite temporal y proveedores simulados, incluyendo recorridos HTTP completos, aislamiento entre empresas, aprobación versionada, señales comunitarias, resultados corregibles, presupuestos concurrentes y análisis semántico con citas verificables. Build incluye TypeScript. Ver [validación](docs/VALIDATION.md) y [trazabilidad del audio](docs/TRANSCRIPT-TO-PRODUCT.md).
 
-El funcionamiento real de proveedores sociales/IA de pago no fue validado con credenciales del operador. La precisión de las recomendaciones y el ahorro deben medirse con uso real. La conservación/actualización de datos y permisos de cada API debe revisarse antes de una operación pública prolongada; no se afirma cobertura universal ni preparación de SaaS a escala.
+El funcionamiento real de proveedores sociales o de IA de pago no fue validado; la prueba de Gemini usa cuota gratuita y material sintético en un entorno aislado. La precisión de las recomendaciones y el ahorro deben medirse con uso real. La conservación/actualización de datos y permisos de cada API debe revisarse antes de una operación pública prolongada; no se afirma cobertura universal ni preparación de SaaS a escala.
 
 La [auditoría adversarial por funcionalidad](docs/adversarial/SUMMARY.md) registra las pruebas interactivas posteriores, sus resultados esperados/observados y los defectos confirmados fuera de la cobertura de los tests automáticos.
 

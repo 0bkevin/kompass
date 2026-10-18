@@ -1,0 +1,191 @@
+{
+  "checkedAt": "2026-10-18T11:35:59.140Z",
+  "method": "Native T3 collaborative browser, own incognito tab. Synthetic account and onboarding through UI; local API state summaries and cached preparation checks; real documented public-source reads.",
+  "environment": {
+    "port": 5492,
+    "isolatedData": true,
+    "noEnvFileLoaded": true,
+    "externalCredentials": false,
+    "schedulerEnabled": false
+  },
+  "firstUse": {
+    "preparedStatus": "partial",
+    "added": 47,
+    "errors": [
+      "Noticias globales · GDELT: GDELT no está disponible (HTTP 429)."
+    ],
+    "preparedAt": "2026-10-18T11:35:19.345Z",
+    "totalReferences": 47,
+    "sourceResults": [
+      {
+        "name": "Google Trends · Estados Unidos",
+        "type": "rss",
+        "enabled": true,
+        "lastSyncedAt": "2026-10-18T11:35:19.211Z",
+        "lastAttemptAt": null,
+        "lastResultCount": 10,
+        "error": null,
+        "sourcePolicyAllowed": true,
+        "storedReferences": 10
+      },
+      {
+        "name": "Hacker News · tecnología",
+        "type": "hackernews",
+        "enabled": true,
+        "lastSyncedAt": "2026-10-18T11:35:19.316Z",
+        "lastAttemptAt": null,
+        "lastResultCount": 40,
+        "error": null,
+        "sourcePolicyAllowed": true,
+        "storedReferences": 37
+      },
+      {
+        "name": "Noticias globales · GDELT",
+        "type": "gdelt",
+        "enabled": true,
+        "lastSyncedAt": null,
+        "lastAttemptAt": "2026-10-18T11:35:19.318Z",
+        "lastResultCount": 0,
+        "error": "Noticias globales · GDELT: GDELT no está disponible (HTTP 429).",
+        "sourcePolicyAllowed": true,
+        "storedReferences": 0
+      }
+    ],
+    "radarRefreshActivities": 1,
+    "homePartialNoticeVisible": true,
+    "retryVisible": true,
+    "noConsoleFailureObserved": true
+  },
+  "aiNotConfigured": true,
+  "reload": {
+    "references": 47,
+    "sourceResults": [
+      {
+        "name": "Google Trends · Estados Unidos",
+        "lastSyncedAt": "2026-10-18T11:35:19.211Z",
+        "lastAttemptAt": null,
+        "lastResultCount": 10
+      },
+      {
+        "name": "Hacker News · tecnología",
+        "lastSyncedAt": "2026-10-18T11:35:19.316Z",
+        "lastAttemptAt": null,
+        "lastResultCount": 40
+      },
+      {
+        "name": "Noticias globales · GDELT",
+        "lastSyncedAt": null,
+        "lastAttemptAt": "2026-10-18T11:35:19.318Z",
+        "lastResultCount": 0
+      }
+    ],
+    "radarRefreshActivities": 1,
+    "preparation": {
+      "status": "partial",
+      "added": 47,
+      "errors": [
+        "Noticias globales · GDELT: GDELT no está disponible (HTTP 429)."
+      ],
+      "preparedAt": "2026-10-18T11:35:19.345Z"
+    },
+    "partialNoticeVisible": true,
+    "noAutomaticSecondBatch": true,
+    "sourceTimestampsUnchanged": true,
+    "retainedPreparation": true
+  },
+  "recovery": {
+    "references": 47,
+    "preparation": {
+      "status": "ready",
+      "added": 0,
+      "errors": [],
+      "preparedAt": "2026-10-18T11:36:11.000Z"
+    },
+    "sourceResults": [
+      {
+        "name": "Google Trends · Estados Unidos",
+        "type": "rss",
+        "enabled": true,
+        "lastSyncedAt": "2026-10-18T11:36:10.873Z",
+        "lastAttemptAt": null,
+        "lastResultCount": 10,
+        "error": null
+      },
+      {
+        "name": "Hacker News · tecnología",
+        "type": "hackernews",
+        "enabled": true,
+        "lastSyncedAt": "2026-10-18T11:36:10.976Z",
+        "lastAttemptAt": null,
+        "lastResultCount": 40,
+        "error": null
+      },
+      {
+        "name": "Noticias globales · GDELT",
+        "type": "gdelt",
+        "enabled": false,
+        "lastSyncedAt": null,
+        "lastAttemptAt": "2026-10-18T11:35:19.318Z",
+        "lastResultCount": 0,
+        "error": "Noticias globales · GDELT: GDELT no está disponible (HTTP 429)."
+      }
+    ],
+    "radarRefreshActivities": [
+      {
+        "text": "Radar actualizado: 0 referencias nuevas, 50 actualizadas y 0 fuentes con errores.",
+        "createdAt": "2026-10-18T11:36:10.994Z"
+      },
+      {
+        "text": "Radar actualizado: 47 referencias nuevas, 3 actualizadas y 1 fuentes con errores.",
+        "createdAt": "2026-10-18T11:35:19.336Z"
+      }
+    ],
+    "partialNoticeCleared": true,
+    "successNoticeVisible": true,
+    "exactDuplicateUrls": 0,
+    "method": "Paused failed GDELT through UI, then used Home Reintentar búsqueda once. GDELT was not retried.",
+    "sourcePayloadChecks": [
+      {
+        "name": "Google Trends · Estados Unidos",
+        "storedReferences": 10,
+        "allCanonicalAttribution": true,
+        "allBodiesEmpty": true,
+        "allHaveNoAuthorIdentifier": true
+      },
+      {
+        "name": "Hacker News · tecnología",
+        "storedReferences": 37,
+        "allCanonicalAttribution": true,
+        "allBodiesEmpty": true,
+        "allHaveNoAuthorIdentifier": true
+      }
+    ]
+  },
+  "schedulerBackoff": {
+    "method": "Focused deterministic scheduler regression; no network; not an hours-long live scheduler observation.",
+    "command": "node --test --test-name-pattern='continuous discovery obeys cadence' tests/intelligence.test.mjs",
+    "tests": 1,
+    "passed": 1,
+    "failed": 0,
+    "checks": [
+      "cadence",
+      "persisted exponential backoff",
+      "no overlapping runs"
+    ]
+  },
+  "limits": [
+    "Two bounded real public-source batches; GDELT was attempted once and returned HTTP429.",
+    "No AI, paid/social/video provider calls, external account creation or publication in this check.",
+    "Scheduler was disabled for live UI checks; its cadence/backoff was checked separately with deterministic regression.",
+    "No performance, quality or audience-representativeness guarantee."
+  ],
+  "browser": {
+    "consoleEntries": 0,
+    "failedNetworkRequests": 0
+  },
+  "cleanup": {
+    "ownTemporaryServerStopped": true,
+    "ownBrowserTabClosed": true,
+    "mainPortsUntouched": [3026, 5450]
+  }
+}

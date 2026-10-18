@@ -1,0 +1,6 @@
+{
+  "status": 200,
+  "model": "gemini-3.8-flash",
+  "finishReason": "stop",
+  "output": "{\"ready\":true}"
+}

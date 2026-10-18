@@ -1,0 +1,125 @@
+{
+  "checkedAt": "2026-10-18 11:45:21 UTC",
+  "environment": {
+    "origin": "http://localhost:3026",
+    "requestedGoogleAccountConfirmed": true,
+    "originalSyntheticCompanyCreatedThroughOnboarding": true,
+    "privatePlatformKeyInherited": true,
+    "workspaceKeyRequired": false,
+    "freePublicTestModeApprovedByUser": true
+  },
+  "initialFailures": {
+    "mediumEffort": {
+      "status": 400,
+      "elapsedMs": 60045
+    },
+    "lowEffort": {
+      "status": 400,
+      "elapsedMs": 60042
+    },
+    "noAnalysisSaved": true,
+    "timeoutMessageObserved": true
+  },
+  "finalAnalysis": {
+    "events": [
+      {
+        "status": 400,
+        "elapsedMs": 60045
+      },
+      {
+        "status": 400,
+        "elapsedMs": 60042
+      },
+      {
+        "status": 200,
+        "elapsedMs": 1394
+      }
+    ],
+    "mode": "public-test",
+    "providerModel": "gemini-3.5-flash-lite",
+    "platformManaged": true,
+    "noWorkspaceKey": true,
+    "analysis": {
+      "engine": "ai",
+      "hook": "Cómo evaluar una automatización de seguimiento comercial en EdTech sin arriesgar operaciones reales.",
+      "hypothesis": "Presentar un enfoque paso a paso para estructurar procesos comerciales podría resultar útil para que los equipos de EdTech identifiquen puntos de control humano antes de escalar herramientas de inteligencia artificial.",
+      "adaptation": "Para los equipos comerciales de EdTech en Latinoamérica, proponemos revisar cómo mapear las etapas del embudo formativo. Sugerimos una prueba piloto con registros simulados para verificar la claridad de los mensajes y definir qué tareas de seguimiento requieren supervisión directa, contrastando siempre los resultados con la evidencia interna de cada institución.",
+      "saturation": "low"
+    },
+    "displayed": true
+  },
+  "finalDraft": {
+    "path": "/studio/:pieceId",
+    "events": [
+      {
+        "status": 200,
+        "elapsedMs": 1504
+      }
+    ],
+    "piece": {
+      "title": "Cómo evaluar una automatización de seguimiento comercial en EdTech",
+      "hook": "Antes de escalar herramientas de inteligencia artificial en tu equipo comercial de EdTech, prueba esto.",
+      "script": "En el sector EdTech, automatizar el seguimiento comercial puede parecer complejo si no se definen primero los límites. Una buena práctica es mapear cada etapa del proceso de ventas y decidir qué tareas exactas necesitan la revisión humana. Al realizar pruebas piloto con datos simulados, tu equipo puede comprobar la claridad de los mensajes y detectar posibles errores antes de implementarlo en operaciones reales. Recuerda que cualquier ajuste operativo debe validarse con la evidencia interna de tu institución.",
+      "caption": "Te compartimos una guía práctica para estructurar procesos comerciales y definir puntos de control humano en tu EdTech.",
+      "cta": "Comparte qué tarea necesitas resolver y qué te falta comprobar.",
+      "scenes": [
+        {
+          "text": "Mapea las etapas del proceso comercial en tu EdTech.",
+          "duration": 5
+        },
+        {
+          "text": "Define qué tareas requieren supervisión humana.",
+          "duration": 5
+        },
+        {
+          "text": "Realiza pruebas piloto con registros simulados.",
+          "duration": 5
+        }
+      ],
+      "engine": "ai",
+      "status": "draft",
+      "channel": "linkedin",
+      "format": "post"
+    },
+    "modeDisclosure": "IA de prueba gratuita. Usa solo contenido público o ficticio; Google puede usarlo para mejorar sus productos. Condiciones de Gemini",
+    "docWidth": 390,
+    "viewportWidth": 390
+  },
+  "limits": [
+    "Finite live calls using original synthetic public test content, no private company or personal audience data.",
+    "No publication, paid billing, subscription, scraping job or external message.",
+    "Public-test label describes permitted use, not automatic detection/redaction of confidential content."
+  ],
+  "editSaveReload": {
+    "captionPersisted": true,
+    "aiEnginePreserved": true,
+    "stillDraft": true,
+    "editorCaptionVisible": true
+  },
+  "uiVerification": {
+    "mobile": {
+      "width": 390,
+      "noHorizontalOverflow": true,
+      "publicModeVisible": true,
+      "termsLinkSafe": true
+    },
+    "desktop": {
+      "width": 1280,
+      "noHorizontalOverflow": true,
+      "publicModeVisible": true
+    },
+    "settings": {
+      "publicTestBadgeVisible": true,
+      "serviceInheritedWithoutWorkspaceKey": true
+    }
+  },
+  "finalStartup": {
+    "plainNpmStart": true,
+    "persistentIgnoredDataDirectory": "data/localhost",
+    "originalTemporaryDataRetained": true,
+    "sessionPreserved": true,
+    "companyPreserved": true,
+    "editedAiDraftPreserved": true,
+    "platformProviderReady": true
+  }
+}

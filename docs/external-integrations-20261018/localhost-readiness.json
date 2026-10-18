@@ -1,0 +1,53 @@
+{
+  "coreReady": true,
+  "verification": "configuration-only",
+  "discovery": [
+    {
+      "name": "Hacker News",
+      "available": true,
+      "credentialRequired": false
+    },
+    {
+      "name": "GDELT",
+      "available": true,
+      "credentialRequired": false
+    },
+    {
+      "name": "Google Trends",
+      "available": true,
+      "credentialRequired": false
+    }
+  ],
+  "ai": {
+    "configured": true,
+    "ready": true,
+    "dataMode": "public-test",
+    "action": "Available to workspaces by default; provider quota and connectivity still require a real request."
+  },
+  "publishing": {
+    "exportReady": true,
+    "automaticSocialPublishing": false,
+    "webhook": "Per-company destination and access review required for optional delivery."
+  },
+  "restricted": [
+    {
+      "provider": "apify",
+      "available": false
+    },
+    {
+      "provider": "youtube",
+      "available": false
+    },
+    {
+      "provider": "gemini",
+      "available": false
+    },
+    {
+      "provider": "reddit",
+      "available": false
+    }
+  ],
+  "operatorActions": [
+    "Social scraping and remote video analysis remain unavailable; credentials alone do not enable them."
+  ]
+}

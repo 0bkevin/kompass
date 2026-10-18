@@ -38,6 +38,8 @@ Telegram was removed from the product on 2026-10-18: no configuration, channel s
 
 Primary-source research, with access/date limits, is in [discovery](DISCOVERY-TERMS.md), [media and AI](MEDIA-AI-TERMS.md), and [imports and publishing](IMPORT-PUBLISH-TERMS.md). The independent [adversarial review](ADVERSARIAL-POLICY-REVIEW.md) records reproduced bypasses and their regression checks.
 
+The [external-service setup](../external-integrations-20261018/README.md) adds a separate official Gemini **text** transport. Its scoped live tests use original synthetic, non-confidential inputs in an isolated deployment and a short-lived review for that purpose. Google's free-tier input/output may be used for product improvement and human review; that test permission is not a general production-processing review for private company material. The video-analysis restriction above remains in force. See the [current Gemini terms](https://ai.google.dev/gemini-api/terms) and [official compatibility documentation](https://ai.google.dev/gemini-api/docs/openai).
+
 ## Operator permission records
 
 No broad permissive switch exists. `SOURCE_ACCESS_POLICY_FILE` points to an operator-controlled JSON file outside uploaded content. Browser/API clients cannot write its grants. Missing, malformed, expired, future-dated or overlong records deny access. Reviews expire within at most 90 days and match HTTPS origin, path boundary and purpose. Encoded path widening is rejected.
