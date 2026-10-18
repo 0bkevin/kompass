@@ -34,6 +34,7 @@ const randomToken = () => randomBytes(32).toString("base64url");
 const digest = (value) => createHash("sha256").update(value).digest("hex");
 const locks = new Set();
 const refreshes = new Map();
+const safeError = Symbol("safeOfficialSocialError");
 
 db.exec(`
   CREATE TABLE IF NOT EXISTS official_social_catalog (brand_id TEXT PRIMARY KEY REFERENCES brands(id) ON DELETE CASCADE, data TEXT NOT NULL, observed_at INTEGER NOT NULL);
@@ -45,7 +46,12 @@ db.exec(`
 `);
 
 function fail(status, message) {
-  throw Object.assign(new Error(message), { status });
+  throw Object.assign(new Error(message), { status, [safeError]: true });
+}
+function userFacingSyncError(error) {
+  return error?.[safeError]
+    ? error.message
+    : "No se pudo actualizar YouTube. Revisa la conexión y vuelve a intentarlo.";
 }
 function object(value) {
   if (!value || typeof value !== "object" || Array.isArray(value))
@@ -258,16 +264,49 @@ async function requestJson(url, init, fetchImpl) {
   return boundedJson(response);
 }
 
+function connectionContext(brandId, connection = getSecret(brandId, SECRET)) {
+  return {
+    generation: settings(brandId).generation || "initial",
+    identity: connection
+      ? digest(
+          JSON.stringify([
+            connection.connectedAt,
+            connection.channelId,
+            connection.ownerId,
+            connection.accessToken,
+            connection.refreshToken,
+          ]),
+        )
+      : null,
+  };
+}
+function sameConnection(brandId, expected) {
+  if (!expected || !getBrand(brandId)) return false;
+  const current = connectionContext(brandId);
+  return (
+    current.identity === expected.identity &&
+    current.generation === expected.generation
+  );
+}
+function revokeCurrentConnection(brandId, expected) {
+  if (!sameConnection(brandId, expected)) return;
+  setSecret(brandId, SECRET, null);
+  purgeBrandData(brandId);
+  saveSettings(brandId, { disabled: true, generation: randomUUID() });
+}
+
 async function accountToken(brandId, { env, fetchImpl, now }) {
   const connection = getSecret(brandId, SECRET);
   if (!connection?.accessToken) fail(409, "Conecta YouTube para continuar.");
-  if (connection.expiresAt > now + 60_000) return connection.accessToken;
-  if (refreshes.has(brandId)) return refreshes.get(brandId);
+  const context = connectionContext(brandId, connection);
+  if (connection.expiresAt > now + 60_000)
+    return { accessToken: connection.accessToken, context };
+  const refreshKey = `${brandId}:${context.generation}:${context.identity}`;
+  if (refreshes.has(refreshKey)) return refreshes.get(refreshKey);
   const run = (async () => {
     const config = youtubeConnectionConfig(env);
     if (!connection.refreshToken || !config) {
-      setSecret(brandId, SECRET, null);
-      purgeBrandData(brandId);
+      revokeCurrentConnection(brandId, context);
       fail(409, "La conexión de YouTube venció. Vuelve a conectar la cuenta.");
     }
     try {
@@ -305,8 +344,7 @@ async function accountToken(brandId, { env, fetchImpl, now }) {
           401,
           "El canal conectado ya no está autorizado. Conecta YouTube de nuevo.",
         );
-      const current = getSecret(brandId, SECRET);
-      if (!current || current.connectedAt !== connection.connectedAt)
+      if (!sameConnection(brandId, context))
         fail(409, "La conexión cambió durante la consulta.");
       setSecret(brandId, SECRET, {
         ...connection,
@@ -315,21 +353,20 @@ async function accountToken(brandId, { env, fetchImpl, now }) {
         expiresAt: now + Math.min(token.expires_in, 86400) * 1000,
         checkedAt: new Date(now).toISOString(),
       });
-      return token.access_token;
+      return {
+        accessToken: token.access_token,
+        context: connectionContext(brandId),
+      };
     } catch (error) {
-      if (error.status === 401) {
-        setSecret(brandId, SECRET, null);
-        purgeBrandData(brandId);
-        saveSettings(brandId, { disabled: true, generation: randomUUID() });
-      }
+      if (error.status === 401) revokeCurrentConnection(brandId, context);
       throw error;
     }
   })();
-  refreshes.set(brandId, run);
+  refreshes.set(refreshKey, run);
   try {
     return await run;
   } finally {
-    refreshes.delete(brandId);
+    refreshes.delete(refreshKey);
   }
 }
 
@@ -344,10 +381,16 @@ async function api(brandId, endpoint, parameters, options) {
   } = options;
   const key = configuredKey(env);
   const headers = { accept: "application/json" };
+  let context;
   if (token) headers.authorization = `Bearer ${token}`;
   else if (key) headers["x-goog-api-key"] = key;
-  else
-    headers.authorization = `Bearer ${await accountToken(brandId, { env, fetchImpl, now })}`;
+  else {
+    const account = await accountToken(brandId, { env, fetchImpl, now });
+    context = account.context;
+    if (!sameConnection(brandId, context))
+      fail(409, "La conexión cambió durante la consulta.");
+    headers.authorization = `Bearer ${account.accessToken}`;
+  }
   reserveQuota(endpoint === "search" ? "search" : "data", now);
   const url = new URL(endpoint, API_ROOT);
   for (const [name, value] of Object.entries(parameters))
@@ -355,11 +398,8 @@ async function api(brandId, endpoint, parameters, options) {
   try {
     return await requestJson(url.href, { headers }, fetchImpl);
   } catch (error) {
-    if (error.status === 401 && !token && !key) {
-      setSecret(brandId, SECRET, null);
-      purgeBrandData(brandId);
-      saveSettings(brandId, { disabled: true, generation: randomUUID() });
-    }
+    if (error.status === 401 && !token && !key)
+      revokeCurrentConnection(brandId, context);
     throw error;
   }
 }
@@ -587,6 +627,8 @@ export function socialConnections(brandId, { env = process.env } = {}) {
     automaticSync: {
       enabled: available && env.SOCIAL_SYNC_ENABLED !== "false",
       intervalMinutes: 60,
+      ...(state.lastSyncedAt ? { lastSyncedAt: state.lastSyncedAt } : {}),
+      ...(state.lastError ? { lastError: state.lastError } : {}),
       ...(state.lastSyncedAt ? { lastSyncedAt: state.lastSyncedAt } : {}),
     },
   };
@@ -885,7 +927,7 @@ export async function syncOfficialMetrics(brandId, options = {}) {
         getBrand(brandId) &&
         (settings(brandId).generation || "initial") === generation
       )
-        saveSettings(brandId, { lastError: error.message });
+        saveSettings(brandId, { lastError: userFacingSyncError(error) });
       throw error;
     }
   });
@@ -1300,7 +1342,12 @@ export function startSocialSyncScheduler({
               { env, fetchImpl, now: clock() },
             );
         } catch (error) {
-          if (getBrand(id)) saveSettings(id, { lastError: error.message });
+          if (
+            getBrand(id) &&
+            (settings(id).generation || "initial") ===
+              (state.generation || "initial")
+          )
+            saveSettings(id, { lastError: userFacingSyncError(error) });
         }
       }
     } finally {

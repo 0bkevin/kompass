@@ -794,6 +794,333 @@ test("channel token refresh revalidates native channel metadata before reading c
   );
 });
 
+test("an old failed refresh cannot erase a newly connected account or its state", async () => {
+  const f = fixture();
+  piece(f);
+  const old = {
+    accessToken: "old-access-qa",
+    refreshToken: "old-refresh-qa",
+    expiresAt: now - 1,
+    channelId,
+    connectedAt: new Date(now - 1000).toISOString(),
+  };
+  const current = {
+    ...old,
+    accessToken: "new-access-qa",
+    refreshToken: "new-refresh-qa",
+    expiresAt: now + 3600_000,
+    connectedAt: new Date(now).toISOString(),
+  };
+  storage.setSecret(f.brand.id, "official:youtube", old);
+  handler = () => {
+    storage.setSecret(f.brand.id, "official:youtube", current);
+    storage.db
+      .prepare(
+        "INSERT INTO official_social_state(brand_id,data) VALUES(?,?) ON CONFLICT(brand_id) DO UPDATE SET data=excluded.data",
+      )
+      .run(
+        f.brand.id,
+        JSON.stringify({ generation: "new-authorization", disabled: false }),
+      );
+    return json({ error: "invalid_grant" }, 400);
+  };
+  await assert.rejects(
+    social.syncOfficialMetrics(f.brand.id, {
+      env: { ...env, YOUTUBE_DATA_API_KEY: "" },
+      fetchImpl: transport,
+      now,
+    }),
+    { status: 401 },
+  );
+  assert.deepEqual(storage.getSecret(f.brand.id, "official:youtube"), current);
+  const state = JSON.parse(
+    storage.db
+      .prepare("SELECT data FROM official_social_state WHERE brand_id=?")
+      .get(f.brand.id).data,
+  );
+  assert.equal(state.disabled, false);
+  assert.equal(state.generation, "new-authorization");
+  assert.equal(state.lastError, undefined);
+});
+
+test("a stale access-token 401 cannot disconnect an account connected during that request", async () => {
+  const f = fixture();
+  piece(f);
+  const old = {
+    accessToken: "old-access-qa",
+    refreshToken: "old-refresh-qa",
+    expiresAt: now + 3600_000,
+    channelId,
+    connectedAt: new Date(now - 1000).toISOString(),
+  };
+  const current = {
+    ...old,
+    accessToken: "new-access-qa",
+    refreshToken: "new-refresh-qa",
+    connectedAt: new Date(now).toISOString(),
+  };
+  storage.setSecret(f.brand.id, "official:youtube", old);
+  handler = () => {
+    storage.setSecret(f.brand.id, "official:youtube", current);
+    storage.db
+      .prepare(
+        "INSERT INTO official_social_state(brand_id,data) VALUES(?,?) ON CONFLICT(brand_id) DO UPDATE SET data=excluded.data",
+      )
+      .run(
+        f.brand.id,
+        JSON.stringify({ generation: "new-authorization", disabled: false }),
+      );
+    return json({ error: "expired old access" }, 401);
+  };
+  await assert.rejects(
+    social.syncOfficialMetrics(f.brand.id, {
+      env: { ...env, YOUTUBE_DATA_API_KEY: "" },
+      fetchImpl: transport,
+      now,
+    }),
+    { status: 401 },
+  );
+  assert.deepEqual(storage.getSecret(f.brand.id, "official:youtube"), current);
+  assert.equal(
+    social.socialConnections(f.brand.id, { env }).automaticSync.lastError,
+    undefined,
+  );
+});
+
+test("an old successful refresh cannot overwrite new authorization even with the same connection timestamp", async () => {
+  const f = fixture();
+  piece(f);
+  const old = {
+    accessToken: "old-access-qa",
+    refreshToken: "old-refresh-qa",
+    expiresAt: now - 1,
+    channelId,
+    connectedAt: new Date(now).toISOString(),
+  };
+  const current = {
+    ...old,
+    accessToken: "new-access-qa",
+    refreshToken: "new-refresh-qa",
+    expiresAt: now + 3600_000,
+  };
+  storage.setSecret(f.brand.id, "official:youtube", old);
+  handler = (url) => {
+    if (url.href === "https://oauth2.googleapis.com/token")
+      return json({ access_token: "refreshed-old-access", expires_in: 3600 });
+    if (url.pathname.endsWith("/channels")) {
+      storage.setSecret(f.brand.id, "official:youtube", current);
+      storage.db
+        .prepare(
+          "INSERT INTO official_social_state(brand_id,data) VALUES(?,?) ON CONFLICT(brand_id) DO UPDATE SET data=excluded.data",
+        )
+        .run(
+          f.brand.id,
+          JSON.stringify({ generation: "new-authorization", disabled: false }),
+        );
+      return json({
+        items: [{ id: channelId, snippet: { title: "Old account metadata" } }],
+      });
+    }
+    return json({ items: [{ id, statistics: { viewCount: "99" } }] });
+  };
+  await assert.rejects(
+    social.syncOfficialMetrics(f.brand.id, {
+      env: { ...env, YOUTUBE_DATA_API_KEY: "" },
+      fetchImpl: transport,
+      now,
+    }),
+    { status: 409 },
+  );
+  assert.deepEqual(storage.getSecret(f.brand.id, "official:youtube"), current);
+  assert.equal(
+    calls.filter((call) => new URL(call.url).pathname.endsWith("/videos"))
+      .length,
+    0,
+  );
+});
+
+test("a stale scheduled refresh cannot attach its failure to a newly connected account", async () => {
+  const f = fixture();
+  piece(f);
+  const old = {
+    accessToken: "old-access-qa",
+    refreshToken: "old-refresh-qa",
+    expiresAt: now - 1,
+    channelId,
+    connectedAt: new Date(now - 1000).toISOString(),
+  };
+  const current = {
+    ...old,
+    accessToken: "new-access-qa",
+    refreshToken: "new-refresh-qa",
+    expiresAt: now + 3600_000,
+    connectedAt: new Date(now).toISOString(),
+  };
+  storage.setSecret(f.brand.id, "official:youtube", old);
+  handler = () => {
+    storage.setSecret(f.brand.id, "official:youtube", current);
+    storage.db
+      .prepare(
+        "INSERT INTO official_social_state(brand_id,data) VALUES(?,?) ON CONFLICT(brand_id) DO UPDATE SET data=excluded.data",
+      )
+      .run(
+        f.brand.id,
+        JSON.stringify({ generation: "new-authorization", disabled: false }),
+      );
+    return json({ error: "invalid_grant" }, 400);
+  };
+  const scheduler = social.startSocialSyncScheduler({
+    env,
+    fetchImpl: transport,
+    clock: () => now,
+    intervalMs: 3600_000,
+  });
+  try {
+    await scheduler.tick();
+  } finally {
+    scheduler.stop();
+  }
+  assert.deepEqual(storage.getSecret(f.brand.id, "official:youtube"), current);
+  assert.equal(
+    social.socialConnections(f.brand.id, { env }).automaticSync.lastError,
+    undefined,
+  );
+});
+
+test("new authorization never shares an older in-flight token refresh", async () => {
+  const f = fixture();
+  piece(f);
+  const old = {
+    accessToken: "old-access-qa",
+    refreshToken: "old-refresh-qa",
+    expiresAt: now - 1,
+    channelId,
+    connectedAt: new Date(now - 1000).toISOString(),
+  };
+  const current = {
+    ...old,
+    accessToken: "new-access-qa",
+    refreshToken: "new-refresh-qa",
+    connectedAt: new Date(now).toISOString(),
+  };
+  storage.setSecret(f.brand.id, "official:youtube", old);
+  let release,
+    started,
+    newRefreshes = 0;
+  const waiting = new Promise((resolve) => {
+    release = resolve;
+  });
+  const oldStarted = new Promise((resolve) => {
+    started = resolve;
+  });
+  handler = async (url, init) => {
+    if (url.href === "https://oauth2.googleapis.com/token") {
+      if (
+        new URLSearchParams(init.body).get("refresh_token") === old.refreshToken
+      ) {
+        started();
+        await waiting;
+        return json({ error: "invalid_grant" }, 400);
+      }
+      newRefreshes++;
+      return json({ access_token: "newly-refreshed-access", expires_in: 3600 });
+    }
+    if (url.pathname.endsWith("/channels"))
+      return json({
+        items: [{ id: channelId, snippet: { title: "New channel metadata" } }],
+      });
+    return json({ items: [] });
+  };
+  const oauthOnly = { ...env, YOUTUBE_DATA_API_KEY: "" };
+  const first = social.syncOfficialMetrics(f.brand.id, {
+    env: oauthOnly,
+    fetchImpl: transport,
+    now,
+  });
+  await oldStarted;
+  storage.setSecret(f.brand.id, "official:youtube", current);
+  storage.db
+    .prepare(
+      "INSERT INTO official_social_state(brand_id,data) VALUES(?,?) ON CONFLICT(brand_id) DO UPDATE SET data=excluded.data",
+    )
+    .run(
+      f.brand.id,
+      JSON.stringify({ generation: "new-authorization", disabled: false }),
+    );
+  const second = social.discoverOfficialContent(
+    f.brand.id,
+    { query: "Public test" },
+    { env: oauthOnly, fetchImpl: transport, now },
+  );
+  const settled = Promise.allSettled([first, second]);
+  await new Promise((resolve) => setImmediate(resolve));
+  release();
+  const result = await settled;
+  assert.equal(result[0].status, "rejected");
+  assert.equal(result[1].status, "fulfilled");
+  assert.equal(newRefreshes, 1);
+  assert.equal(
+    storage.getSecret(f.brand.id, "official:youtube").accessToken,
+    "newly-refreshed-access",
+  );
+});
+
+test("automatic public-key failures remain visible with the last good timestamp and counters", async () => {
+  const f = fixture();
+  piece(f);
+  handler = () => json({ items: [{ id, statistics: { viewCount: "15" } }] });
+  await social.syncOfficialMetrics(f.brand.id, {
+    env,
+    fetchImpl: transport,
+    now,
+  });
+  const initial = new Date(now).toISOString();
+  now += 3600_001;
+  handler = () =>
+    json(
+      {
+        error:
+          "synthetic-public-data-key https://private.example.invalid/diagnostic",
+      },
+      403,
+    );
+  const scheduler = social.startSocialSyncScheduler({
+    env,
+    fetchImpl: transport,
+    clock: () => now,
+    intervalMs: 3600_000,
+  });
+  try {
+    await scheduler.tick();
+  } finally {
+    scheduler.stop();
+  }
+  const failed = social.socialConnections(f.brand.id, { env });
+  assert.equal(failed.providers[0].connection, undefined);
+  assert.match(failed.automaticSync.lastError, /YouTube rechazó/);
+  assert.equal(failed.automaticSync.lastSyncedAt, initial);
+  assert.doesNotMatch(
+    JSON.stringify(failed),
+    /synthetic-public-data-key|private\.example|diagnostic/,
+  );
+  const retained = social.socialMetricSnapshots(f.brand.id, { now })
+    .snapshots[0];
+  assert.equal(retained.metrics.views, 15);
+  assert.equal(retained.observedAt, initial);
+  handler = () => json({ items: [{ id, statistics: { viewCount: "35" } }] });
+  await social.syncOfficialMetrics(f.brand.id, {
+    env,
+    fetchImpl: transport,
+    now,
+  });
+  const recovered = social.socialConnections(f.brand.id, { env });
+  assert.equal(recovered.automaticSync.lastError, undefined);
+  assert.equal(
+    recovered.automaticSync.lastSyncedAt,
+    new Date(now).toISOString(),
+  );
+});
+
 test("disconnect during OAuth exchange prevents an old consent attempt from reconnecting", async () => {
   const f = fixture();
   const started = await oauthStart(f);
