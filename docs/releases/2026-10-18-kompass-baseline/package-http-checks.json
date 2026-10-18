@@ -1,0 +1,319 @@
+{
+  "checked_at": "2026-10-18T15:29:23.383060+00:00",
+  "base": "http://127.0.0.1:5192",
+  "passed": true,
+  "checks": [
+    {
+      "path": "/",
+      "status": 200,
+      "content_type": "text/html; charset=utf-8",
+      "bytes": 30629
+    },
+    {
+      "path": "/home?auth=login",
+      "status": 200,
+      "content_type": "text/html; charset=utf-8",
+      "bytes": 6457
+    },
+    {
+      "path": "/api/health",
+      "status": 200,
+      "content_type": "application/json; charset=utf-8",
+      "bytes": 11
+    },
+    {
+      "path": "/api/session",
+      "status": 200,
+      "content_type": "application/json; charset=utf-8",
+      "bytes": 25
+    },
+    {
+      "path": "/api/auth/providers",
+      "status": 200,
+      "content_type": "application/json; charset=utf-8",
+      "bytes": 64
+    },
+    {
+      "path": "/api/brands/release-check/media",
+      "status": 401,
+      "content_type": "application/json; charset=utf-8",
+      "bytes": 42
+    },
+    {
+      "path": "/api/auth/login",
+      "status": 401,
+      "content_type": "application/json; charset=utf-8",
+      "bytes": 45
+    },
+    {
+      "path": "/icon.svg",
+      "status": 200,
+      "content_type": "image/svg+xml",
+      "bytes": 655
+    },
+    {
+      "path": "/assets/google-g.png",
+      "status": 200,
+      "content_type": "image/png",
+      "bytes": 33661
+    },
+    {
+      "path": "/fonts/landing/geist-latin.woff2",
+      "status": 200,
+      "content_type": "font/woff2",
+      "bytes": 29400
+    },
+    {
+      "path": "/fonts/landing/hedvig-letters-serif-latin.woff2",
+      "status": 200,
+      "content_type": "font/woff2",
+      "bytes": 34660
+    },
+    {
+      "path": "/fonts/google-sans/google-sans-medium-latin.woff2",
+      "status": 200,
+      "content_type": "font/woff2",
+      "bytes": 23336
+    },
+    {
+      "path": "/assets/BrandMark-B1utiLMy.js",
+      "status": 200,
+      "content_type": "text/javascript; charset=utf-8",
+      "bytes": 686
+    },
+    {
+      "path": "/assets/Discovery-D2DITe6P.js",
+      "status": 200,
+      "content_type": "text/javascript; charset=utf-8",
+      "bytes": 38869
+    },
+    {
+      "path": "/assets/ProviderCredits-Ba1iQEzC.js",
+      "status": 200,
+      "content_type": "text/javascript; charset=utf-8",
+      "bytes": 1474
+    },
+    {
+      "path": "/assets/SocialConnections-Bj-rA_u3.js",
+      "status": 200,
+      "content_type": "text/javascript; charset=utf-8",
+      "bytes": 17456
+    },
+    {
+      "path": "/assets/SocialConnections-DKj4q3U5.css",
+      "status": 200,
+      "content_type": "text/css; charset=utf-8",
+      "bytes": 4917
+    },
+    {
+      "path": "/assets/_workspace-D5C1CK67.css",
+      "status": 200,
+      "content_type": "text/css; charset=utf-8",
+      "bytes": 4230
+    },
+    {
+      "path": "/assets/_workspace-ac58fFmp.js",
+      "status": 200,
+      "content_type": "text/javascript; charset=utf-8",
+      "bytes": 30333
+    },
+    {
+      "path": "/assets/api-CqxrCQFa.js",
+      "status": 200,
+      "content_type": "text/javascript; charset=utf-8",
+      "bytes": 1737
+    },
+    {
+      "path": "/assets/arrow-right-9Xv7C3Wa.js",
+      "status": 200,
+      "content_type": "text/javascript; charset=utf-8",
+      "bytes": 151
+    },
+    {
+      "path": "/assets/calendar-days-bkP6YAZJ.js",
+      "status": 200,
+      "content_type": "text/javascript; charset=utf-8",
+      "bytes": 480
+    },
+    {
+      "path": "/assets/check-Bb71VxoT.js",
+      "status": 200,
+      "content_type": "text/javascript; charset=utf-8",
+      "bytes": 111
+    },
+    {
+      "path": "/assets/chevron-down-B_jXTSQK.js",
+      "status": 200,
+      "content_type": "text/javascript; charset=utf-8",
+      "bytes": 114
+    },
+    {
+      "path": "/assets/chevron-right-pYqpQzu9.js",
+      "status": 200,
+      "content_type": "text/javascript; charset=utf-8",
+      "bytes": 116
+    },
+    {
+      "path": "/assets/circle-check-BEMLwNRE.js",
+      "status": 200,
+      "content_type": "text/javascript; charset=utf-8",
+      "bytes": 164
+    },
+    {
+      "path": "/assets/clapperboard-C24TkC84.js",
+      "status": 200,
+      "content_type": "text/javascript; charset=utf-8",
+      "bytes": 444
+    },
+    {
+      "path": "/assets/discovery-settings-ct-JYjvL.css",
+      "status": 200,
+      "content_type": "text/css; charset=utf-8",
+      "bytes": 19575
+    },
+    {
+      "path": "/assets/discovery-settings-rFANZPCu.js",
+      "status": 200,
+      "content_type": "text/javascript; charset=utf-8",
+      "bytes": 243
+    },
+    {
+      "path": "/assets/earth-Dqwccv5_.js",
+      "status": 200,
+      "content_type": "text/javascript; charset=utf-8",
+      "bytes": 380
+    },
+    {
+      "path": "/assets/external-link-CB8UAIWD.js",
+      "status": 200,
+      "content_type": "text/javascript; charset=utf-8",
+      "bytes": 237
+    },
+    {
+      "path": "/assets/eye-CBcySnoy.js",
+      "status": 200,
+      "content_type": "text/javascript; charset=utf-8",
+      "bytes": 353
+    },
+    {
+      "path": "/assets/file-text-Czold_OT.js",
+      "status": 200,
+      "content_type": "text/javascript; charset=utf-8",
+      "bytes": 319
+    },
+    {
+      "path": "/assets/folder-open-Cm6n3wme.js",
+      "status": 200,
+      "content_type": "text/javascript; charset=utf-8",
+      "bytes": 278
+    },
+    {
+      "path": "/assets/format-CfFWS1q6.js",
+      "status": 200,
+      "content_type": "text/javascript; charset=utf-8",
+      "bytes": 1182
+    },
+    {
+      "path": "/assets/index-X9RQ45xb.css",
+      "status": 200,
+      "content_type": "text/css; charset=utf-8",
+      "bytes": 61275
+    },
+    {
+      "path": "/assets/index-eFNjG1zi.js",
+      "status": 200,
+      "content_type": "text/javascript; charset=utf-8",
+      "bytes": 339287
+    },
+    {
+      "path": "/assets/info-Bdwe-prg.js",
+      "status": 200,
+      "content_type": "text/javascript; charset=utf-8",
+      "bytes": 191
+    },
+    {
+      "path": "/assets/jsx-runtime-DyZJNswf.js",
+      "status": 200,
+      "content_type": "text/javascript; charset=utf-8",
+      "bytes": 8784
+    },
+    {
+      "path": "/assets/layers-tPeY3wn0.js",
+      "status": 200,
+      "content_type": "text/javascript; charset=utf-8",
+      "bytes": 408
+    },
+    {
+      "path": "/assets/message-square-kWwVI9iC.js",
+      "status": 200,
+      "content_type": "text/javascript; charset=utf-8",
+      "bytes": 165
+    },
+    {
+      "path": "/assets/palette-WhHrIWg3.js",
+      "status": 200,
+      "content_type": "text/javascript; charset=utf-8",
+      "bytes": 602
+    },
+    {
+      "path": "/assets/play-BkKHnMLw.js",
+      "status": 200,
+      "content_type": "text/javascript; charset=utf-8",
+      "bytes": 121
+    },
+    {
+      "path": "/assets/refresh-cw-BygxMdxa.js",
+      "status": 200,
+      "content_type": "text/javascript; charset=utf-8",
+      "bytes": 307
+    },
+    {
+      "path": "/assets/routes-Be1HE_yb.css",
+      "status": 200,
+      "content_type": "text/css; charset=utf-8",
+      "bytes": 20851
+    },
+    {
+      "path": "/assets/routes-aWjVNM_G.js",
+      "status": 200,
+      "content_type": "text/javascript; charset=utf-8",
+      "bytes": 19577
+    },
+    {
+      "path": "/assets/sparkles-DZQjDEa9.js",
+      "status": 200,
+      "content_type": "text/javascript; charset=utf-8",
+      "bytes": 495
+    },
+    {
+      "path": "/assets/ui-DntzDvY9.js",
+      "status": 200,
+      "content_type": "text/javascript; charset=utf-8",
+      "bytes": 3316
+    },
+    {
+      "path": "/assets/upload-j9DnDCja.js",
+      "status": 200,
+      "content_type": "text/javascript; charset=utf-8",
+      "bytes": 244
+    },
+    {
+      "path": "/assets/users-Btl37wvz.js",
+      "status": 200,
+      "content_type": "text/javascript; charset=utf-8",
+      "bytes": 291
+    },
+    {
+      "path": "/assets/video-DNCwaE6h.js",
+      "status": 200,
+      "content_type": "text/javascript; charset=utf-8",
+      "bytes": 235
+    },
+    {
+      "path": "/assets/workflow-recovery-CPUY0NiA.js",
+      "status": 200,
+      "content_type": "text/javascript; charset=utf-8",
+      "bytes": 622
+    }
+  ]
+}

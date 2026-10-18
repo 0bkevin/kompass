@@ -1,47 +1,81 @@
 .publication-actions {
   min-width: 0;
-  margin-block-start: 20px;
-  padding-block-start: 20px;
+  margin-block-start: 22px;
+  padding-block-start: 22px;
   border-block-start: 1px solid var(--border);
 }
+
 .publication-actions,
 .publication-actions .stack,
 .publication-dialog {
-  gap: 12px;
+  gap: 16px;
 }
+
 .publication-review > p,
 .review-card .publication-actions p,
-.publication-dialog p {
+.publication-dialog p,
+.publication-actions p {
   margin: 0;
-  color: #19352b;
+  max-width: 72ch;
+  color: var(--muted);
   font-size: 14px;
-  line-height: 1.5;
+  line-height: 1.75;
+  overflow-wrap: anywhere;
 }
+
+.publication-actions p strong,
+.publication-dialog p strong {
+  color: var(--text);
+  font-weight: 500;
+}
+
 .publication-review > .button,
 .review-card .publication-actions .button {
   margin-top: 0;
   font-size: 13px;
 }
+
+.publication-actions .form-error,
 .review-card .publication-actions .form-error,
 .publication-dialog .form-error {
-  color: #a84141;
+  color: var(--negative);
 }
+
 .publication-actions .badge {
+  align-self: flex-start;
+  margin-bottom: 10px;
+  white-space: normal;
+}
+
+.publication-actions summary,
+.publication-dialog summary {
+  color: var(--text);
+  font-size: 13px;
+  line-height: 1.6;
+  cursor: pointer;
+}
+
+.publication-actions details > div,
+.publication-dialog details > p {
+  margin-block-start: 14px;
+}
+
+.publication-actions > .button {
   align-self: flex-start;
   white-space: normal;
 }
-.publication-actions summary,
-.publication-dialog summary {
-  font-size: 13px;
-  cursor: pointer;
-}
-.publication-actions details > div,
-.publication-dialog details > p {
-  margin-block-start: 12px;
-}
+
 .publication-dialog-actions {
   flex-wrap: wrap;
+  gap: 10px;
 }
+
+.publication-dialog-actions > .button {
+  min-width: 0;
+  max-width: 100%;
+  white-space: normal;
+}
+
 @media (max-width: 520px) {
   .publication-dialog-actions > .button {
     flex: 1 1 100%;

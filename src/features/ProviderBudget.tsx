@@ -34,22 +34,22 @@ export function ProviderBudget() {
     return () => controller.abort();
   }, [state.brand.id, revision]);
   return (
-    <details className="provider-budget">
-      <summary>Control de costo de los conectores</summary>
+    <details
+      className="provider-budget"
+      aria-label="Reservas y límites de Apify"
+    >
+      <summary>Reservas de Apify</summary>
       <div>
-        <p>
-          Las fuentes públicas aprobadas funcionan sin contratar scraping.
-          Instagram y TikTok están bloqueados hasta verificar autorización de la
-          red; una credencial de Apify no los activa.
-        </p>
         {error ? (
-          <p role="alert">{error}</p>
+          <p className="form-error" role="alert">
+            {error}
+          </p>
         ) : !data ? (
           <p role="status">Consultando límites…</p>
         ) : data.budget ? (
           <>
             <p>
-              <strong>Apify bloqueado para recopilación</strong>
+              <strong>Recopilación bloqueada</strong>
             </p>
             <dl>
               <div>
@@ -70,16 +70,8 @@ export function ProviderBudget() {
             <p>{data.budget.note}</p>
           </>
         ) : (
-          <p>
-            No se ejecutan consultas de Apify en este despliegue. Los límites de
-            reservas se conservan para auditar usos anteriores.
-          </p>
+          <p>Apify no configurado.</p>
         )}
-        <p>
-          Hosting, almacenamiento y consultas a modelos de IA tienen sus propios
-          costos. Las reservas de Apify se comparten entre empresas que usan la
-          misma credencial.
-        </p>
         <Button onClick={() => setRevision((value) => value + 1)}>
           Actualizar límites
         </Button>

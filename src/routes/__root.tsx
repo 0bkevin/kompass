@@ -22,15 +22,16 @@ export const Route = createRootRoute({
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
       {
-        title: "30X Radar — Ideas que conectan",
+        title: "kompass · Le damos dirección a tu contenido",
       },
       {
         name: "description",
         content:
-          "Descubre señales, organiza referencias y convierte tendencias en contenido para tu marca.",
+          "Decide qué contar y por qué. Contrasta las necesidades de tu audiencia con fuentes públicas y prepara guiones para revisar y planificar con tu equipo.",
       },
-      { name: "theme-color", content: "#f7f8f5" },
+      { name: "theme-color", content: "#0c0c10" },
     ],
+    links: [{ rel: "icon", type: "image/svg+xml", href: "/icon.svg" }],
   }),
   component: RootDocument,
   notFoundComponent: NotFoundPage,
@@ -55,10 +56,10 @@ function NotFoundPage() {
     <main className="not-found-page">
       <h1>No encontramos esta página.</h1>
       <p className="muted">
-        Revisa la dirección o vuelve a una sección de 30X Radar.
+        Revisa la dirección o vuelve a una sección de kompass.
       </p>
-      <nav aria-label="Secciones de 30X Radar">
-        <Link to="/radar">Radar</Link>
+      <nav aria-label="Secciones de kompass">
+        <Link to="/radar">Explorar fuentes</Link>
         <Link to="/inbox">Bandeja</Link>
         <Link to="/studio">Estudio</Link>
         <Link to="/settings">Configuración</Link>

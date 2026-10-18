@@ -1035,7 +1035,7 @@ export function createCoreRouter() {
   });
   router.post("/auth/demo", authRateLimit, async (req, res) => {
     const user = createUser({
-      name: "Explorador de Radar",
+      name: "Explorador de kompass",
       email: `demo-${randomUUID()}@example.invalid`,
       passwordHash: await hashPassword(randomBytes(32).toString("hex")),
     });
@@ -1530,7 +1530,7 @@ export function createCoreRouter() {
 
 function demoBrandInput() {
   return {
-    name: "30X · espacio de ejemplo",
+    name: "Empresa de ejemplo",
     industry: "Educación y transformación con IA",
     description:
       "Espacio de demostración con referencias, hipótesis y piezas ficticias identificadas. Ayudamos a equipos latinoamericanos a convertir la IA en trabajo útil.",
@@ -1757,11 +1757,39 @@ export function seedDemo(brandId) {
   );
   const id = randomUUID();
   const storageName = `${id}.svg`;
-  const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="1200"><rect width="1200" height="1200" fill="#171d17"/><circle cx="1050" cy="100" r="450" fill="#c4f168" opacity=".13"/><text x="100" y="180" font-family="sans-serif" font-size="48" fill="#c4f168">30X · EJEMPLO</text><text x="100" y="510" font-family="sans-serif" font-weight="bold" font-size="102" fill="#f3f5ec">Menos ruido.</text><text x="100" y="640" font-family="sans-serif" font-weight="bold" font-size="102" fill="#f3f5ec">Más criterio.</text><text x="100" y="1050" font-family="sans-serif" font-size="34" fill="#c4f168">Plantilla de demostración · no publicada</text></svg>`;
+  const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="1200" viewBox="0 0 1200 1200" role="img" aria-labelledby="title description">
+  <title id="title">kompass · tarjeta de demostración</title>
+  <desc id="description">Le damos dirección a tu contenido. Plantilla de ejemplo, no publicada.</desc>
+  <rect width="1200" height="1200" fill="#0c0c10"/>
+  <g transform="translate(80 88) scale(2)" fill="none" stroke="#bea5f5" stroke-width="1.5">
+    <rect x="1" y="1" width="11" height="11" rx="2" fill="#bea5f5" stroke="none"/>
+    <rect x="18" y="1" width="11" height="11" rx="2"/>
+    <rect x="1" y="18" width="11" height="11" rx="2"/>
+    <rect x="18" y="18" width="11" height="11" rx="2" fill="#bea5f5" stroke="none"/>
+    <path d="m10 10 10 10M10 20l10-10"/>
+  </g>
+  <text x="166" y="133" font-family="Geist, Arial, sans-serif" font-size="38" fill="#f3f1f7">kompass · EJEMPLO</text>
+  <path d="M80 212h1040M80 982h1040" stroke="#2c2b35" stroke-width="2"/>
+  <text x="80" y="422" font-family="Hedvig Letters Serif, Georgia, serif" font-size="100" letter-spacing="-2" fill="#f3f1f7" aria-label="Le damos dirección a tu contenido.">
+    <tspan x="80" dy="0">Le damos</tspan>
+    <tspan x="80" dy="122">dirección a tu</tspan>
+    <tspan x="80" dy="122">contenido.</tspan>
+  </text>
+  <g transform="translate(850 384) scale(8)" fill="none" stroke="#bea5f5" stroke-width=".7">
+    <rect x="1" y="1" width="11" height="11" rx="1.5" fill="#bea5f5" stroke="none"/>
+    <rect x="18" y="1" width="11" height="11" rx="1.5"/>
+    <rect x="1" y="18" width="11" height="11" rx="1.5"/>
+    <rect x="18" y="18" width="11" height="11" rx="1.5" fill="#bea5f5" stroke="none"/>
+    <path d="m10 10 10 10M10 20l10-10"/>
+  </g>
+  <text x="80" y="850" font-family="Geist, Arial, sans-serif" font-size="30" fill="#aaa7b7">De una pregunta a una pieza con fundamento.</text>
+  <text x="80" y="1060" font-family="Geist, Arial, sans-serif" font-size="27" fill="#bea5f5">Plantilla de demostración · no publicada</text>
+  <text x="80" y="1110" font-family="Geist, Arial, sans-serif" font-size="22" fill="#aaa7b7">Material de ejemplo para explorar tu espacio de trabajo.</text>
+</svg>`;
   fs.writeFileSync(path.join(UPLOAD_DIR, storageName), svg, { mode: 0o600 });
   saveRecord(brandId, "assets", {
     id,
-    name: "30X · tarjeta de ejemplo.svg",
+    name: "kompass · tarjeta de ejemplo.svg",
     type: "image",
     mimeType: "image/svg+xml",
     size: Buffer.byteLength(svg),

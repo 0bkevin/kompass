@@ -26,15 +26,19 @@ import {
   AlertCircle,
   Compass,
   ArrowRight,
-  Radio,
   House,
   Lightbulb,
   BarChart3,
 } from "lucide-react";
 import { api, json } from "./lib/api";
+import {
+  readActiveWorkspace,
+  rememberActiveWorkspace,
+} from "./lib/active-workspace.mjs";
 import type { Brand, BrandState, Session, View } from "./lib/types";
 import { WorkspaceProvider } from "./lib/workspace";
 import { Button, Modal, Field } from "./components/ui";
+import { KompassMark } from "./components/BrandMark";
 import { CaptureModal } from "./features/Discovery";
 import { CompanySetup } from "./features/CompanySetup";
 import { workspaceLocation } from "./lib/legacy-navigation.mjs";
@@ -95,6 +99,12 @@ export default function App() {
   const callbackError = useLocation({
     select: (location) => location.search.authError,
   });
+  const authIntent = useLocation({
+    select: (location) =>
+      typeof location.search.auth === "string"
+        ? location.search.auth
+        : undefined,
+  });
   const [authError, setAuthError] = useState(() =>
     typeof callbackError === "string" &&
     Object.hasOwn(googleAuthErrors, callbackError)
@@ -144,6 +154,18 @@ export default function App() {
     [activeId, setActiveId] = useState(""),
     [state, setState] = useState<BrandState | null>(null),
     [error, setError] = useState("");
+  useEffect(() => {
+    if (!session?.user || authIntent === undefined) return;
+    void router.navigate({
+      to: ".",
+      search: (previous: WorkspaceSearch) => {
+        const next = { ...previous };
+        delete next.auth;
+        return next;
+      },
+      replace: true,
+    });
+  }, [session?.user, authIntent, router]);
   const [search, setSearch] = useState(""),
     [capture, setCapture] = useState(false),
     [newBrand, setNewBrand] = useState(false),
@@ -155,7 +177,7 @@ export default function App() {
   const searchInput = useRef<HTMLInputElement>(null);
   const sidebarRef = useRef<HTMLElement>(null);
   useEffect(() => {
-    const desktop = window.matchMedia("(min-width: 761px)");
+    const desktop = window.matchMedia("(min-width: 981px)");
     const closeMobileMenu = () => {
       if (desktop.matches) setMobile(false);
     };
@@ -282,7 +304,7 @@ export default function App() {
         setActiveId(
           (current) =>
             current ||
-            data.brands.find((b) => b.id === localStorage.getItem("30x-brand"))
+            data.brands.find((b) => b.id === readActiveWorkspace(localStorage))
               ?.id ||
             data.brands[0]?.id ||
             "",
@@ -373,7 +395,7 @@ export default function App() {
     if (!activeId || activeRef.current !== activeId) return;
     setState(null);
     setError("");
-    localStorage.setItem("30x-brand", activeId);
+    rememberActiveWorkspace(localStorage, activeId);
     void refresh({ reportError: true }).catch(() => {});
   }, [activeId, refresh]);
   useEffect(() => {
@@ -411,13 +433,15 @@ export default function App() {
     selectBrand(brand.id);
     setNewBrand(false);
     navigate("home");
-    notify("Tu empresa está lista. Empecemos con tu primera oportunidad.");
+    notify(
+      "Tu empresa está lista. Elige qué necesidad de audiencia vas a trabajar.",
+    );
   };
   if (!session)
     return (
       <div className="initial-loader">
         <div className="brand-symbol">
-          <Radio size={25} />
+          <KompassMark />
         </div>
         {error ? (
           <>
@@ -425,12 +449,19 @@ export default function App() {
             <Button onClick={() => void loadSession()}>Reintentar</Button>
           </>
         ) : (
-          <p>Conectando con tu próximo hallazgo…</p>
+          <p>Cargando tu espacio de trabajo…</p>
         )}
       </div>
     );
   if (!session.user)
-    return <Auth onSuccess={authenticated} initialError={authError} />;
+    return (
+      <Auth
+        key={authIntent === "login" ? "login" : "signup"}
+        onSuccess={authenticated}
+        initialError={authError}
+        initialMode={authIntent === "login" ? "login" : "signup"}
+      />
+    );
   if (joining)
     return (
       <div className="initial-loader">
@@ -444,7 +475,8 @@ export default function App() {
     return (
       <div className="onboarding">
         <div className="wordmark">
-          30X <span>RADAR</span>
+          <KompassMark />
+          kompass
         </div>
         <div className="onboarding-panel">
           <CompanySetup onCreated={brandCreated} />
@@ -500,15 +532,13 @@ export default function App() {
           search={(previous) => previous}
           onClick={() => setMobile(false)}
         >
-          <span className="wordmark-icon">
-            <Radio size={23} />
-          </span>
-          30X <span>RADAR</span>
+          <KompassMark />
+          kompass
         </Link>
         <div className="workspace-switch">
           <div
             className="workspace-avatar"
-            style={{ background: state?.brand.color || "#dcfce7" }}
+            style={{ borderColor: state?.brand.color || "#bea5f5" }}
           >
             {(state?.brand.name || session.brands[0].name).slice(0, 1)}
           </div>
@@ -683,9 +713,8 @@ export default function App() {
           {state?.integrations.ai.ready &&
             state.integrations.ai.dataMode === "public-test" && (
               <p className="ai-data-notice" role="note">
-                <strong>IA de prueba gratuita.</strong> Usa solo contenido
-                público o ficticio; Google puede usarlo para mejorar sus
-                productos.{" "}
+                <strong>Gemini de prueba.</strong> Solo contenido público o
+                ficticio; Google puede usarlo para mejorar sus productos.{" "}
                 <a
                   href="https://ai.google.dev/gemini-api/terms"
                   target="_blank"
@@ -719,10 +748,6 @@ export default function App() {
             content
           )}
         </main>
-        <footer className="app-footer">
-          <span>30X Radar · Hecho para encontrar tu próximo ángulo.</span>
-          <span>Las señales tienen contexto. Las decisiones son tuyas.</span>
-        </footer>
       </div>
       {newBrand && (
         <Modal
@@ -760,11 +785,15 @@ export default function App() {
 function Auth({
   onSuccess,
   initialError,
+  initialMode,
 }: {
   onSuccess: (value: Session) => void;
   initialError: string;
+  initialMode: "login" | "signup";
 }) {
-  const [signup, setSignup] = useState(!initialError),
+  const [signup, setSignup] = useState(
+      !initialError && initialMode === "signup",
+    ),
     [busy, setBusy] = useState(""),
     [error, setError] = useState(
       Object.hasOwn(googleAuthErrors, initialError)
@@ -799,6 +828,7 @@ function Auth({
   function returnTo() {
     const target = new URL(window.location.href);
     target.searchParams.delete("authError");
+    target.searchParams.delete("auth");
     return target.pathname + target.search;
   }
   function startGoogle() {
@@ -868,55 +898,13 @@ function Auth({
   }
   return (
     <div className="auth-page">
-      <div className="auth-story">
-        <div className="wordmark">
-          30X <span>RADAR</span>
-        </div>
-        <div className="auth-intro">
-          <h1>
-            Tu audiencia cambia. <br />
-            Tu contenido
-            <br />
-            <em>también puede.</em>
-          </h1>
-          <p>
-            Conecta el contexto de tu empresa con señales públicas, crea
-            contenido con criterio y aprende de cada publicación.
-          </p>
-          <div className="auth-radar">
-            <div className="auth-orbit o1" />
-            <div className="auth-orbit o2" />
-            <div className="auth-orbit o3" />
-            <div className="auth-radar-center">
-              <Radio size={34} />
-            </div>
-            <span className="auth-signal s1">
-              Conversaciones que crecen <ArrowUpRight size={15} />
-            </span>
-            <span className="auth-signal s2">
-              Tu marca. Tu perspectiva. <Palette size={15} />
-            </span>
-            <span className="auth-signal s3">
-              De referencia a guion <ArrowRight size={15} />
-            </span>
-          </div>
-        </div>
-        <p className="auth-footnote">
-          Descubrimiento + criterio editorial + un espacio para crear.
-        </p>
-      </div>
+      <Link className="wordmark" to="/">
+        <KompassMark />
+        kompass
+      </Link>
       <div className="auth-form-wrap">
         <div className="auth-form">
-          <h2>
-            {signup
-              ? "Dale contexto a tu contenido."
-              : "Qué bueno tenerte de vuelta."}
-          </h2>
-          <p className="muted">
-            {signup
-              ? "Crea tu cuenta. Después, empieza por tu web o una publicación."
-              : "Tu próxima oportunidad de contenido te espera."}
-          </p>
+          <h1>{signup ? "Crear cuenta" : "Iniciar sesión"}</h1>
           {googleEnabled && !linkGoogle && (
             <>
               <button
@@ -981,7 +969,7 @@ function Auth({
                 ? "Crear mi cuenta"
                 : linkGoogle && googleEnabled
                   ? "Entrar y conectar Google"
-                  : "Entrar a mi radar"}
+                  : "Iniciar sesión"}
               <ArrowRight size={17} />
             </Button>
             {signedIn && (
@@ -1004,7 +992,6 @@ function Auth({
             )}
           </form>
           <p className="auth-toggle">
-            {signup ? "¿Ya tienes una cuenta?" : "¿Primera vez por aquí?"}{" "}
             <button
               className="text-button"
               disabled={!!busy}
@@ -1018,7 +1005,7 @@ function Auth({
             </button>
           </p>
           <div className="or-divider">
-            <span />o explora primero
+            <span />o
             <span />
           </div>
           <Button
@@ -1048,10 +1035,6 @@ function Auth({
             <Compass size={17} />
             Explorar con datos de ejemplo
           </Button>
-          <p className="auth-small">
-            La demo usa ejemplos identificados. Puedes crear tu marca y
-            descubrir contenido real en cualquier momento.
-          </p>
         </div>
       </div>
     </div>

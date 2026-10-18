@@ -1166,13 +1166,22 @@ test("changing a source URL removes old metrics and snapshot history rather than
 test("demo data is explicitly labeled; secret values are encrypted and absent from state", async () => {
   const demo = await request("/auth/demo", { method: "POST", body: {} });
   assert.equal(demo.status, 201);
+  assert.equal(demo.data.user.name, "Explorador de kompass");
   const state = await request(`/brands/${demo.data.brands[0].id}/state`, {
     cookie: demo.cookie,
   });
   assert.ok(state.data.references.length >= 6);
   assert.ok(state.data.references.every((reference) => reference.isDemo));
   assert.ok(state.data.pieces.every((piece) => piece.isDemo));
-  assert.ok(state.data.brand.name.includes("ejemplo"));
+  assert.equal(state.data.brand.name, "Empresa de ejemplo");
+  assert.equal(state.data.assets[0].name, "kompass · tarjeta de ejemplo.svg");
+  const demoAsset = await request(
+    `/brands/${state.data.brand.id}/assets/${state.data.assets[0].id}/file`,
+    { cookie: demo.cookie },
+  );
+  assert.equal(demoAsset.status, 200);
+  assert.match(demoAsset.data, /kompass · EJEMPLO/);
+  assert.doesNotMatch(demoAsset.data, /30X/);
   assert.ok(state.data.assets.every((asset) => !("storageName" in asset)));
   dbModule.setSecret(workspace.id, "ai", {
     apiKey: "private-credential-DO-NOT-EXPOSE",

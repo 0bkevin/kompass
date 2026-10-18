@@ -1,284 +1,524 @@
 {
   "schemaVersion": 2,
-  "generatedAt": "2026-10-18T01:51:09.625177+00:00",
-  "title": "Design System: 30X Radar",
+  "generatedAt": "2026-10-18T14:28:32.011453+00:00",
+  "title": "Design System: kompass",
   "extensions": {
     "colorMeta": {
-      "primary": {
+      "accent": {
         "role": "primary",
-        "displayName": "Primary",
+        "displayName": "Lavender Action",
         "tonalRamp": [
-          "oklch(15% 0.0911 166.93)",
-          "oklch(27% 0.0911 166.93)",
-          "oklch(39% 0.0911 166.93)",
-          "oklch(51% 0.0911 166.93)",
-          "oklch(63% 0.0911 166.93)",
-          "oklch(75% 0.0911 166.93)",
-          "oklch(87% 0.0911 166.93)",
-          "oklch(95% 0.0911 166.93)"
+          "oklch(15% 0.11480 298.03)",
+          "oklch(27% 0.11480 298.03)",
+          "oklch(39% 0.11480 298.03)",
+          "oklch(51% 0.11480 298.03)",
+          "oklch(63% 0.11480 298.03)",
+          "oklch(75% 0.11480 298.03)",
+          "oklch(87% 0.11480 298.03)",
+          "oklch(95% 0.11480 298.03)"
         ]
       },
-      "primary-hover": {
+      "accent-ink": {
         "role": "primary",
-        "displayName": "Primary Hover",
+        "displayName": "Purple Ink",
         "tonalRamp": [
-          "oklch(15% 0.0781 165.97)",
-          "oklch(27% 0.0781 165.97)",
-          "oklch(39% 0.0781 165.97)",
-          "oklch(51% 0.0781 165.97)",
-          "oklch(63% 0.0781 165.97)",
-          "oklch(75% 0.0781 165.97)",
-          "oklch(87% 0.0781 165.97)",
-          "oklch(95% 0.0781 165.97)"
+          "oklch(15% 0.06786 298.83)",
+          "oklch(27% 0.06786 298.83)",
+          "oklch(39% 0.06786 298.83)",
+          "oklch(51% 0.06786 298.83)",
+          "oklch(63% 0.06786 298.83)",
+          "oklch(75% 0.06786 298.83)",
+          "oklch(87% 0.06786 298.83)",
+          "oklch(95% 0.06786 298.83)"
         ]
       },
-      "green": {
+      "accent-hover": {
         "role": "primary",
-        "displayName": "Green",
+        "displayName": "Lavender Hover",
         "tonalRamp": [
-          "oklch(15% 0.0932 168.90)",
-          "oklch(27% 0.0932 168.90)",
-          "oklch(39% 0.0932 168.90)",
-          "oklch(51% 0.0932 168.90)",
-          "oklch(63% 0.0932 168.90)",
-          "oklch(75% 0.0932 168.90)",
-          "oklch(87% 0.0932 168.90)",
-          "oklch(95% 0.0932 168.90)"
+          "oklch(15% 0.09915 298.64)",
+          "oklch(27% 0.09915 298.64)",
+          "oklch(39% 0.09915 298.64)",
+          "oklch(51% 0.09915 298.64)",
+          "oklch(63% 0.09915 298.64)",
+          "oklch(75% 0.09915 298.64)",
+          "oklch(87% 0.09915 298.64)",
+          "oklch(95% 0.09915 298.64)"
         ]
       },
-      "navigation": {
-        "role": "neutral",
-        "displayName": "Navigation",
+      "accent-soft": {
+        "role": "primary",
+        "displayName": "Lavender Wash",
         "tonalRamp": [
-          "oklch(15% 0.0332 188.95)",
-          "oklch(27% 0.0332 188.95)",
-          "oklch(39% 0.0332 188.95)",
-          "oklch(51% 0.0332 188.95)",
-          "oklch(63% 0.0332 188.95)",
-          "oklch(75% 0.0332 188.95)",
-          "oklch(87% 0.0332 188.95)",
-          "oklch(95% 0.0332 188.95)"
+          "oklch(15% 0.03259 303.08)",
+          "oklch(27% 0.03259 303.08)",
+          "oklch(39% 0.03259 303.08)",
+          "oklch(51% 0.03259 303.08)",
+          "oklch(63% 0.03259 303.08)",
+          "oklch(75% 0.03259 303.08)",
+          "oklch(87% 0.03259 303.08)",
+          "oklch(95% 0.03259 303.08)"
         ]
       },
-      "navigation-active": {
+      "bg": {
         "role": "neutral",
-        "displayName": "Navigation Active",
+        "displayName": "Ink Ground",
         "tonalRamp": [
-          "oklch(15% 0.0535 163.98)",
-          "oklch(27% 0.0535 163.98)",
-          "oklch(39% 0.0535 163.98)",
-          "oklch(51% 0.0535 163.98)",
-          "oklch(63% 0.0535 163.98)",
-          "oklch(75% 0.0535 163.98)",
-          "oklch(87% 0.0535 163.98)",
-          "oklch(95% 0.0535 163.98)"
+          "oklch(15% 0.00845 285.38)",
+          "oklch(27% 0.00845 285.38)",
+          "oklch(39% 0.00845 285.38)",
+          "oklch(51% 0.00845 285.38)",
+          "oklch(63% 0.00845 285.38)",
+          "oklch(75% 0.00845 285.38)",
+          "oklch(87% 0.00845 285.38)",
+          "oklch(95% 0.00845 285.38)"
         ]
       },
-      "navigation-text": {
+      "surface": {
         "role": "neutral",
-        "displayName": "Navigation Text",
+        "displayName": "Working Charcoal",
         "tonalRamp": [
-          "oklch(15% 0.0204 159.67)",
-          "oklch(27% 0.0204 159.67)",
-          "oklch(39% 0.0204 159.67)",
-          "oklch(51% 0.0204 159.67)",
-          "oklch(63% 0.0204 159.67)",
-          "oklch(75% 0.0204 159.67)",
-          "oklch(87% 0.0204 159.67)",
-          "oklch(95% 0.0204 159.67)"
+          "oklch(15% 0.01007 285.40)",
+          "oklch(27% 0.01007 285.40)",
+          "oklch(39% 0.01007 285.40)",
+          "oklch(51% 0.01007 285.40)",
+          "oklch(63% 0.01007 285.40)",
+          "oklch(75% 0.01007 285.40)",
+          "oklch(87% 0.01007 285.40)",
+          "oklch(95% 0.01007 285.40)"
         ]
       },
-      "navigation-active-text": {
+      "surface-raised": {
         "role": "neutral",
-        "displayName": "Navigation Active Text",
+        "displayName": "Raised Charcoal",
         "tonalRamp": [
-          "oklch(15% 0.0186 130.18)",
-          "oklch(27% 0.0186 130.18)",
-          "oklch(39% 0.0186 130.18)",
-          "oklch(51% 0.0186 130.18)",
-          "oklch(63% 0.0186 130.18)",
-          "oklch(75% 0.0186 130.18)",
-          "oklch(87% 0.0186 130.18)",
-          "oklch(95% 0.0186 130.18)"
+          "oklch(15% 0.01566 290.74)",
+          "oklch(27% 0.01566 290.74)",
+          "oklch(39% 0.01566 290.74)",
+          "oklch(51% 0.01566 290.74)",
+          "oklch(63% 0.01566 290.74)",
+          "oklch(75% 0.01566 290.74)",
+          "oklch(87% 0.01566 290.74)",
+          "oklch(95% 0.01566 290.74)"
         ]
       },
-      "canvas": {
+      "surface-hover": {
         "role": "neutral",
-        "displayName": "Canvas",
+        "displayName": "Hover Charcoal",
         "tonalRamp": [
-          "oklch(15% 0.0054 117.92)",
-          "oklch(27% 0.0054 117.92)",
-          "oklch(39% 0.0054 117.92)",
-          "oklch(51% 0.0054 117.92)",
-          "oklch(63% 0.0054 117.92)",
-          "oklch(75% 0.0054 117.92)",
-          "oklch(87% 0.0054 117.92)",
-          "oklch(95% 0.0054 117.92)"
-        ]
-      },
-      "paper": {
-        "role": "neutral",
-        "displayName": "Paper",
-        "tonalRamp": [
-          "oklch(15% 0.0000 89.88)",
-          "oklch(27% 0.0000 89.88)",
-          "oklch(39% 0.0000 89.88)",
-          "oklch(51% 0.0000 89.88)",
-          "oklch(63% 0.0000 89.88)",
-          "oklch(75% 0.0000 89.88)",
-          "oklch(87% 0.0000 89.88)",
-          "oklch(95% 0.0000 89.88)"
-        ]
-      },
-      "ink": {
-        "role": "neutral",
-        "displayName": "Ink",
-        "tonalRamp": [
-          "oklch(15% 0.0390 168.48)",
-          "oklch(27% 0.0390 168.48)",
-          "oklch(39% 0.0390 168.48)",
-          "oklch(51% 0.0390 168.48)",
-          "oklch(63% 0.0390 168.48)",
-          "oklch(75% 0.0390 168.48)",
-          "oklch(87% 0.0390 168.48)",
-          "oklch(95% 0.0390 168.48)"
-        ]
-      },
-      "muted": {
-        "role": "neutral",
-        "displayName": "Muted",
-        "tonalRamp": [
-          "oklch(15% 0.0204 164.02)",
-          "oklch(27% 0.0204 164.02)",
-          "oklch(39% 0.0204 164.02)",
-          "oklch(51% 0.0204 164.02)",
-          "oklch(63% 0.0204 164.02)",
-          "oklch(75% 0.0204 164.02)",
-          "oklch(87% 0.0204 164.02)",
-          "oklch(95% 0.0204 164.02)"
+          "oklch(15% 0.02294 296.12)",
+          "oklch(27% 0.02294 296.12)",
+          "oklch(39% 0.02294 296.12)",
+          "oklch(51% 0.02294 296.12)",
+          "oklch(63% 0.02294 296.12)",
+          "oklch(75% 0.02294 296.12)",
+          "oklch(87% 0.02294 296.12)",
+          "oklch(95% 0.02294 296.12)"
         ]
       },
       "border": {
         "role": "neutral",
-        "displayName": "Border",
+        "displayName": "Cool Divider",
         "tonalRamp": [
-          "oklch(15% 0.0127 149.24)",
-          "oklch(27% 0.0127 149.24)",
-          "oklch(39% 0.0127 149.24)",
-          "oklch(51% 0.0127 149.24)",
-          "oklch(63% 0.0127 149.24)",
-          "oklch(75% 0.0127 149.24)",
-          "oklch(87% 0.0127 149.24)",
-          "oklch(95% 0.0127 149.24)"
+          "oklch(15% 0.01804 289.83)",
+          "oklch(27% 0.01804 289.83)",
+          "oklch(39% 0.01804 289.83)",
+          "oklch(51% 0.01804 289.83)",
+          "oklch(63% 0.01804 289.83)",
+          "oklch(75% 0.01804 289.83)",
+          "oklch(87% 0.01804 289.83)",
+          "oklch(95% 0.01804 289.83)"
         ]
       },
-      "next-action": {
+      "text": {
         "role": "neutral",
-        "displayName": "Next Action",
+        "displayName": "Reading White",
         "tonalRamp": [
-          "oklch(15% 0.0170 145.44)",
-          "oklch(27% 0.0170 145.44)",
-          "oklch(39% 0.0170 145.44)",
-          "oklch(51% 0.0170 145.44)",
-          "oklch(63% 0.0170 145.44)",
-          "oklch(75% 0.0170 145.44)",
-          "oklch(87% 0.0170 145.44)",
-          "oklch(95% 0.0170 145.44)"
+          "oklch(15% 0.00823 301.36)",
+          "oklch(27% 0.00823 301.36)",
+          "oklch(39% 0.00823 301.36)",
+          "oklch(51% 0.00823 301.36)",
+          "oklch(63% 0.00823 301.36)",
+          "oklch(75% 0.00823 301.36)",
+          "oklch(87% 0.00823 301.36)",
+          "oklch(95% 0.00823 301.36)"
+        ]
+      },
+      "muted": {
+        "role": "neutral",
+        "displayName": "Muted Lavender Grey",
+        "tonalRamp": [
+          "oklch(15% 0.02302 294.43)",
+          "oklch(27% 0.02302 294.43)",
+          "oklch(39% 0.02302 294.43)",
+          "oklch(51% 0.02302 294.43)",
+          "oklch(63% 0.02302 294.43)",
+          "oklch(75% 0.02302 294.43)",
+          "oklch(87% 0.02302 294.43)",
+          "oklch(95% 0.02302 294.43)"
+        ]
+      },
+      "navigation": {
+        "role": "neutral",
+        "displayName": "Navigation Charcoal",
+        "tonalRamp": [
+          "oklch(15% 0.01027 285.29)",
+          "oklch(27% 0.01027 285.29)",
+          "oklch(39% 0.01027 285.29)",
+          "oklch(51% 0.01027 285.29)",
+          "oklch(63% 0.01027 285.29)",
+          "oklch(75% 0.01027 285.29)",
+          "oklch(87% 0.01027 285.29)",
+          "oklch(95% 0.01027 285.29)"
         ]
       },
       "focus": {
         "role": "primary",
-        "displayName": "Focus",
+        "displayName": "Lavender Focus",
         "tonalRamp": [
-          "oklch(15% 0.0895 161.90)",
-          "oklch(27% 0.0895 161.90)",
-          "oklch(39% 0.0895 161.90)",
-          "oklch(51% 0.0895 161.90)",
-          "oklch(63% 0.0895 161.90)",
-          "oklch(75% 0.0895 161.90)",
-          "oklch(87% 0.0895 161.90)",
-          "oklch(95% 0.0895 161.90)"
+          "oklch(15% 0.08637 300.34)",
+          "oklch(27% 0.08637 300.34)",
+          "oklch(39% 0.08637 300.34)",
+          "oklch(51% 0.08637 300.34)",
+          "oklch(63% 0.08637 300.34)",
+          "oklch(75% 0.08637 300.34)",
+          "oklch(87% 0.08637 300.34)",
+          "oklch(95% 0.08637 300.34)"
+        ]
+      },
+      "positive": {
+        "role": "neutral",
+        "displayName": "Positive",
+        "tonalRamp": [
+          "oklch(15% 0.07610 165.65)",
+          "oklch(27% 0.07610 165.65)",
+          "oklch(39% 0.07610 165.65)",
+          "oklch(51% 0.07610 165.65)",
+          "oklch(63% 0.07610 165.65)",
+          "oklch(75% 0.07610 165.65)",
+          "oklch(87% 0.07610 165.65)",
+          "oklch(95% 0.07610 165.65)"
+        ],
+        "purpose": "Semantic status only; not an alternate brand accent."
+      },
+      "positive-bg": {
+        "role": "neutral",
+        "displayName": "Positive Bg",
+        "tonalRamp": [
+          "oklch(15% 0.03037 166.56)",
+          "oklch(27% 0.03037 166.56)",
+          "oklch(39% 0.03037 166.56)",
+          "oklch(51% 0.03037 166.56)",
+          "oklch(63% 0.03037 166.56)",
+          "oklch(75% 0.03037 166.56)",
+          "oklch(87% 0.03037 166.56)",
+          "oklch(95% 0.03037 166.56)"
+        ],
+        "purpose": "Semantic status only; not an alternate brand accent."
+      },
+      "warning": {
+        "role": "neutral",
+        "displayName": "Warning",
+        "tonalRamp": [
+          "oklch(15% 0.09634 82.95)",
+          "oklch(27% 0.09634 82.95)",
+          "oklch(39% 0.09634 82.95)",
+          "oklch(51% 0.09634 82.95)",
+          "oklch(63% 0.09634 82.95)",
+          "oklch(75% 0.09634 82.95)",
+          "oklch(87% 0.09634 82.95)",
+          "oklch(95% 0.09634 82.95)"
+        ],
+        "purpose": "Semantic status only; not an alternate brand accent."
+      },
+      "warning-bg": {
+        "role": "neutral",
+        "displayName": "Warning Bg",
+        "tonalRamp": [
+          "oklch(15% 0.02343 80.82)",
+          "oklch(27% 0.02343 80.82)",
+          "oklch(39% 0.02343 80.82)",
+          "oklch(51% 0.02343 80.82)",
+          "oklch(63% 0.02343 80.82)",
+          "oklch(75% 0.02343 80.82)",
+          "oklch(87% 0.02343 80.82)",
+          "oklch(95% 0.02343 80.82)"
+        ],
+        "purpose": "Semantic status only; not an alternate brand accent."
+      },
+      "negative": {
+        "role": "neutral",
+        "displayName": "Negative",
+        "tonalRamp": [
+          "oklch(15% 0.09072 10.66)",
+          "oklch(27% 0.09072 10.66)",
+          "oklch(39% 0.09072 10.66)",
+          "oklch(51% 0.09072 10.66)",
+          "oklch(63% 0.09072 10.66)",
+          "oklch(75% 0.09072 10.66)",
+          "oklch(87% 0.09072 10.66)",
+          "oklch(95% 0.09072 10.66)"
+        ],
+        "purpose": "Semantic status only; not an alternate brand accent."
+      },
+      "negative-bg": {
+        "role": "neutral",
+        "displayName": "Negative Bg",
+        "tonalRamp": [
+          "oklch(15% 0.03187 355.81)",
+          "oklch(27% 0.03187 355.81)",
+          "oklch(39% 0.03187 355.81)",
+          "oklch(51% 0.03187 355.81)",
+          "oklch(63% 0.03187 355.81)",
+          "oklch(75% 0.03187 355.81)",
+          "oklch(87% 0.03187 355.81)",
+          "oklch(95% 0.03187 355.81)"
+        ],
+        "purpose": "Semantic status only; not an alternate brand accent."
+      },
+      "landing-raised": {
+        "role": "neutral",
+        "displayName": "Landing Raised",
+        "tonalRamp": [
+          "oklch(15% 0.01550 290.81)",
+          "oklch(27% 0.01550 290.81)",
+          "oklch(39% 0.01550 290.81)",
+          "oklch(51% 0.01550 290.81)",
+          "oklch(63% 0.01550 290.81)",
+          "oklch(75% 0.01550 290.81)",
+          "oklch(87% 0.01550 290.81)",
+          "oklch(95% 0.01550 290.81)"
+        ]
+      },
+      "landing-secondary": {
+        "role": "neutral",
+        "displayName": "Landing Secondary",
+        "tonalRamp": [
+          "oklch(15% 0.01372 291.74)",
+          "oklch(27% 0.01372 291.74)",
+          "oklch(39% 0.01372 291.74)",
+          "oklch(51% 0.01372 291.74)",
+          "oklch(63% 0.01372 291.74)",
+          "oklch(75% 0.01372 291.74)",
+          "oklch(87% 0.01372 291.74)",
+          "oklch(95% 0.01372 291.74)"
+        ]
+      },
+      "landing-secondary-text": {
+        "role": "neutral",
+        "displayName": "Landing Secondary Text",
+        "tonalRamp": [
+          "oklch(15% 0.01832 303.39)",
+          "oklch(27% 0.01832 303.39)",
+          "oklch(39% 0.01832 303.39)",
+          "oklch(51% 0.01832 303.39)",
+          "oklch(63% 0.01832 303.39)",
+          "oklch(75% 0.01832 303.39)",
+          "oklch(87% 0.01832 303.39)",
+          "oklch(95% 0.01832 303.39)"
+        ]
+      },
+      "landing-control-hover": {
+        "role": "neutral",
+        "displayName": "Landing Control Hover",
+        "tonalRamp": [
+          "oklch(15% 0.02305 303.85)",
+          "oklch(27% 0.02305 303.85)",
+          "oklch(39% 0.02305 303.85)",
+          "oklch(51% 0.02305 303.85)",
+          "oklch(63% 0.02305 303.85)",
+          "oklch(75% 0.02305 303.85)",
+          "oklch(87% 0.02305 303.85)",
+          "oklch(95% 0.02305 303.85)"
+        ]
+      },
+      "landing-status": {
+        "role": "neutral",
+        "displayName": "Landing Status",
+        "tonalRamp": [
+          "oklch(15% 0.05606 302.67)",
+          "oklch(27% 0.05606 302.67)",
+          "oklch(39% 0.05606 302.67)",
+          "oklch(51% 0.05606 302.67)",
+          "oklch(63% 0.05606 302.67)",
+          "oklch(75% 0.05606 302.67)",
+          "oklch(87% 0.05606 302.67)",
+          "oklch(95% 0.05606 302.67)"
+        ]
+      },
+      "landing-status-text": {
+        "role": "neutral",
+        "displayName": "Landing Status Text",
+        "tonalRamp": [
+          "oklch(15% 0.09197 306.18)",
+          "oklch(27% 0.09197 306.18)",
+          "oklch(39% 0.09197 306.18)",
+          "oklch(51% 0.09197 306.18)",
+          "oklch(63% 0.09197 306.18)",
+          "oklch(75% 0.09197 306.18)",
+          "oklch(87% 0.09197 306.18)",
+          "oklch(95% 0.09197 306.18)"
         ]
       }
     },
     "typographyMeta": {
       "headline": {
-        "displayName": "Page Headline",
-        "purpose": "Standard workspace page title."
+        "displayName": "Headline",
+        "purpose": "Standard working page titles."
+      },
+      "journey-headline": {
+        "displayName": "Journey Headline",
+        "purpose": "Compact editorial journey page titles."
+      },
+      "headline-operational": {
+        "displayName": "Headline Operational",
+        "purpose": "Company setup stage headings in Geist."
       },
       "title": {
-        "displayName": "Section Title",
-        "purpose": "Operational sections."
+        "displayName": "Title",
+        "purpose": "Shared operational H2 headings."
+      },
+      "subtitle": {
+        "displayName": "Subtitle",
+        "purpose": "Shared operational H3 headings."
       },
       "body": {
         "displayName": "Body",
-        "purpose": "Reading text and field values."
+        "purpose": "Working reading text, forms and records."
       },
       "label": {
         "displayName": "Label",
-        "purpose": "Visible field labels."
+        "purpose": "Field labels and compact controls."
+      },
+      "button": {
+        "displayName": "Button",
+        "purpose": "Workspace action text."
+      },
+      "badge": {
+        "displayName": "Badge",
+        "purpose": "Compact workflow condition labels."
+      },
+      "landing-display": {
+        "displayName": "Landing Display",
+        "purpose": "The public landing promise."
+      },
+      "landing-headline": {
+        "displayName": "Landing Headline",
+        "purpose": "Public landing section headings."
+      },
+      "landing-title": {
+        "displayName": "Landing Title",
+        "purpose": "Sans-serif landing feature headings."
+      },
+      "landing-example-title": {
+        "displayName": "Landing Example Title",
+        "purpose": "Interactive landing example heading."
+      },
+      "landing-body": {
+        "displayName": "Landing Body",
+        "purpose": "Landing wrapper reading baseline."
+      },
+      "landing-button": {
+        "displayName": "Landing Button",
+        "purpose": "Public landing actions."
+      },
+      "auth-title": {
+        "displayName": "Auth Title",
+        "purpose": "The account task title above a single centered form."
       }
     },
     "shadows": [
       {
-        "name": "modal",
-        "value": "0 20px 80px #0a2d2430",
-        "purpose": "Dialog elevation above the dimmed workspace."
+        "name": "dialog",
+        "value": "0 24px 80px #0009",
+        "purpose": "Modal elevation over the working canvas."
+      },
+      {
+        "name": "toast",
+        "value": "0 12px 36px #0005",
+        "purpose": "Brief working feedback above the canvas."
       }
     ],
     "motion": [
       {
-        "name": "control-transition",
-        "value": "background 0.18s, transform 0.18s",
-        "purpose": "Shared button state change; current workspace hover does not translate."
+        "name": "ease-out",
+        "value": "cubic-bezier(0.23, 1, 0.32, 1)",
+        "purpose": "Workspace press feedback and landing spatial transitions."
       },
       {
-        "name": "journey-arrival",
-        "value": "0.55s cubic-bezier(0.16, 1, 0.3, 1)",
-        "purpose": "Next-action entrance, only when reduced motion is not requested."
+        "name": "control-color",
+        "value": "150ms ease",
+        "purpose": "Hover, border and retained reduced-motion button color feedback."
       },
       {
-        "name": "setup-loading",
-        "value": "1.8s ease-in-out infinite",
-        "purpose": "Company content reading progress; disabled for reduced motion."
+        "name": "workspace-press",
+        "value": "100ms cubic-bezier(0.23, 1, 0.32, 1)",
+        "purpose": "Enabled pointer press scale, excluded during visible keyboard focus."
+      },
+      {
+        "name": "landing-aperture-entry",
+        "value": "600ms cubic-bezier(0.23, 1, 0.32, 1)",
+        "purpose": "The landing native SVG composition arrives once."
+      },
+      {
+        "name": "landing-tab-indicator",
+        "value": "240ms cubic-bezier(0.23, 1, 0.32, 1)",
+        "purpose": "Pointer-selected tabs only; keyboard updates are immediate."
+      },
+      {
+        "name": "landing-arrow",
+        "value": "160ms cubic-bezier(0.23, 1, 0.32, 1)",
+        "purpose": "Fine-pointer arrow feedback; removed for keyboard focus and reduced motion."
       }
     ],
     "breakpoints": [
       {
-        "name": "shell-narrow",
-        "value": "1250px"
+        "name": "calendar-stack",
+        "value": "1500px"
       },
       {
-        "name": "journey-compact",
+        "name": "studio-two-columns",
+        "value": "1400px"
+      },
+      {
+        "name": "workspace-gutters",
+        "value": "1200px"
+      },
+      {
+        "name": "editor-stack",
         "value": "1150px"
       },
       {
-        "name": "shell-compact",
+        "name": "landing-gutters",
         "value": "1100px"
       },
       {
-        "name": "search-hidden",
-        "value": "900px"
+        "name": "navigation-drawer",
+        "value": "980px"
       },
       {
-        "name": "journey-stacked",
+        "name": "landing-compact-header",
         "value": "800px"
       },
       {
-        "name": "navigation-drawer",
+        "name": "workspace-mobile",
         "value": "760px"
       },
       {
-        "name": "community-stacked",
-        "value": "700px"
-      },
-      {
-        "name": "forms-mobile",
+        "name": "landing-mobile",
         "value": "600px"
       },
       {
-        "name": "journey-mobile",
+        "name": "journey-small",
         "value": "520px"
+      },
+      {
+        "name": "workspace-small",
+        "value": "420px"
+      },
+      {
+        "name": "landing-small",
+        "value": "360px"
       }
     ]
   },
@@ -287,104 +527,132 @@
       "name": "Primary Button",
       "kind": "button",
       "refersTo": "button-primary",
-      "description": "Shared action control with visible keyboard focus.",
-      "html": "<button class=\"ds-button-primary\">Ver detalles</button>",
-      "css": ".ds-button-primary {display:inline-flex;align-items:center;justify-content:center;gap:8px;border-radius:8px;min-height:42px;padding:11px 16px;font:700 13px \"DM Sans\",sans-serif;cursor:pointer;transition:background .18s,transform .18s;background:#136c51;color:#fff;border:1px solid #136c51;} .ds-button-primary:hover:not(:disabled) {background:#0e563f;} .ds-button-primary:focus-visible {outline:3px solid #438b6a;outline-offset:3px;} .ds-button-primary:disabled {opacity:.48;cursor:not-allowed;} @media(prefers-reduced-motion:reduce) {.ds-button-primary {transition:none;}}"
+      "description": "The main enabled working action.",
+      "html": "<button type=\"button\" class=\"ds-button ds-primary\">Guardar cambios</button>",
+      "css": ".ds-button{display:inline-flex;align-items:center;justify-content:center;gap:9px;min-height:42px;padding:10px 15px;border:1px solid var(--border,#2c2b35);border-radius:8px;font:500 13px/1.4 var(--font-sans,\"Geist\",sans-serif);text-decoration:none;cursor:pointer;box-shadow:none;transition:background-color 150ms ease,border-color 150ms ease,transform 100ms cubic-bezier(0.23,1,0.32,1)}.ds-button:focus-visible{outline:2px solid var(--focus,#d7c2ff);outline-offset:4px;transition:none}.ds-button:disabled{opacity:.48;cursor:not-allowed;transform:none}.ds-button:active:not(:disabled):not(:focus-visible){transform:scale(.98);transition-duration:140ms}@media(prefers-reduced-motion:reduce){.ds-button:active:not(:disabled):not(:focus-visible){transform:none}.ds-button{transition:background-color 150ms ease,border-color 150ms ease}}.ds-primary{background:var(--accent,#bea5f5);color:var(--accent-ink,#211337);border-color:transparent}@media(hover:hover) and (pointer:fine){.ds-primary:hover:not(:disabled){background:var(--accent-hover,#cfb9ff);border-color:transparent}}"
     },
     {
       "name": "Secondary Button",
       "kind": "button",
       "refersTo": "button-secondary",
-      "description": "Shared action control with visible keyboard focus.",
-      "html": "<button class=\"ds-button-secondary\">Ver detalles</button>",
-      "css": ".ds-button-secondary {display:inline-flex;align-items:center;justify-content:center;gap:8px;border-radius:8px;min-height:42px;padding:11px 16px;font:700 13px \"DM Sans\",sans-serif;cursor:pointer;transition:background .18s,transform .18s;background:#fff;color:#19352b;border:1px solid var(--border);} .ds-button-secondary:hover:not(:disabled) {background:#f0f5f2;} .ds-button-secondary:focus-visible {outline:3px solid #438b6a;outline-offset:3px;} .ds-button-secondary:disabled {opacity:.48;cursor:not-allowed;} @media(prefers-reduced-motion:reduce) {.ds-button-secondary {transition:none;}}"
+      "description": "Supporting or cancel actions on raised charcoal.",
+      "html": "<button type=\"button\" class=\"ds-button ds-secondary\">Cancelar</button>",
+      "css": ".ds-button{display:inline-flex;align-items:center;justify-content:center;gap:9px;min-height:42px;padding:10px 15px;border:1px solid var(--border,#2c2b35);border-radius:8px;font:500 13px/1.4 var(--font-sans,\"Geist\",sans-serif);text-decoration:none;cursor:pointer;box-shadow:none;transition:background-color 150ms ease,border-color 150ms ease,transform 100ms cubic-bezier(0.23,1,0.32,1)}.ds-button:focus-visible{outline:2px solid var(--focus,#d7c2ff);outline-offset:4px;transition:none}.ds-button:disabled{opacity:.48;cursor:not-allowed;transform:none}.ds-button:active:not(:disabled):not(:focus-visible){transform:scale(.98);transition-duration:140ms}@media(prefers-reduced-motion:reduce){.ds-button:active:not(:disabled):not(:focus-visible){transform:none}.ds-button{transition:background-color 150ms ease,border-color 150ms ease}}.ds-secondary{background:var(--surface-raised,#191820);color:var(--text,#f3f1f7)}@media(hover:hover) and (pointer:fine){.ds-secondary:hover:not(:disabled){background:var(--surface-hover,#211e2a);border-color:#53445e}}"
     },
     {
       "name": "Ghost Button",
       "kind": "button",
       "refersTo": "button-ghost",
-      "description": "Shared action control with visible keyboard focus.",
-      "html": "<button class=\"ds-button-ghost\">Ver detalles</button>",
-      "css": ".ds-button-ghost {display:inline-flex;align-items:center;justify-content:center;gap:8px;border-radius:8px;min-height:42px;padding:11px 16px;font:700 13px \"DM Sans\",sans-serif;cursor:pointer;transition:background .18s,transform .18s;background:transparent;color:#19352b;border:1px solid transparent;} .ds-button-ghost:hover:not(:disabled) {background:#f0f5f2;} .ds-button-ghost:focus-visible {outline:3px solid #438b6a;outline-offset:3px;} .ds-button-ghost:disabled {opacity:.48;cursor:not-allowed;} @media(prefers-reduced-motion:reduce) {.ds-button-ghost {transition:none;}}"
+      "description": "Quiet supporting actions.",
+      "html": "<button type=\"button\" class=\"ds-button ds-ghost\">Ver detalles</button>",
+      "css": ".ds-button{display:inline-flex;align-items:center;justify-content:center;gap:9px;min-height:42px;padding:10px 15px;border:1px solid var(--border,#2c2b35);border-radius:8px;font:500 13px/1.4 var(--font-sans,\"Geist\",sans-serif);text-decoration:none;cursor:pointer;box-shadow:none;transition:background-color 150ms ease,border-color 150ms ease,transform 100ms cubic-bezier(0.23,1,0.32,1)}.ds-button:focus-visible{outline:2px solid var(--focus,#d7c2ff);outline-offset:4px;transition:none}.ds-button:disabled{opacity:.48;cursor:not-allowed;transform:none}.ds-button:active:not(:disabled):not(:focus-visible){transform:scale(.98);transition-duration:140ms}@media(prefers-reduced-motion:reduce){.ds-button:active:not(:disabled):not(:focus-visible){transform:none}.ds-button{transition:background-color 150ms ease,border-color 150ms ease}}.ds-ghost{background:transparent;color:var(--muted,#aaa7b7);border-color:transparent}@media(hover:hover) and (pointer:fine){.ds-ghost:hover:not(:disabled){background:var(--surface-raised,#191820);color:var(--text,#f3f1f7)}}"
     },
     {
-      "name": "Labeled Field",
+      "name": "Danger Button",
+      "kind": "button",
+      "refersTo": "button-danger",
+      "description": "Destructive actions with semantic error color.",
+      "html": "<button type=\"button\" class=\"ds-button ds-danger\">Eliminar</button>",
+      "css": ".ds-button{display:inline-flex;align-items:center;justify-content:center;gap:9px;min-height:42px;padding:10px 15px;border:1px solid var(--border,#2c2b35);border-radius:8px;font:500 13px/1.4 var(--font-sans,\"Geist\",sans-serif);text-decoration:none;cursor:pointer;box-shadow:none;transition:background-color 150ms ease,border-color 150ms ease,transform 100ms cubic-bezier(0.23,1,0.32,1)}.ds-button:focus-visible{outline:2px solid var(--focus,#d7c2ff);outline-offset:4px;transition:none}.ds-button:disabled{opacity:.48;cursor:not-allowed;transform:none}.ds-button:active:not(:disabled):not(:focus-visible){transform:scale(.98);transition-duration:140ms}@media(prefers-reduced-motion:reduce){.ds-button:active:not(:disabled):not(:focus-visible){transform:none}.ds-button{transition:background-color 150ms ease,border-color 150ms ease}}.ds-danger{background:var(--negative-bg,#301d24);color:var(--negative,#f1a5af);border-color:#5b333e}@media(hover:hover) and (pointer:fine){.ds-danger:hover:not(:disabled){background:#40232e;color:var(--negative,#f1a5af);border-color:#53445e}}"
+    },
+    {
+      "name": "Text Field",
       "kind": "input",
-      "description": "Visible label and editable white field.",
-      "html": "<label class=\"ds-field\"><span>Nombre de la empresa</span><input placeholder=\"Tu empresa\" /></label>",
-      "css": ".ds-field {display:flex;flex-direction:column;gap:7px;font:600 13px \"DM Sans\",sans-serif;color:#40524d;} .ds-field input {font:400 14px \"DM Sans\",sans-serif;color:#263a38;background:#fff;border:1px solid #dfe6e2;border-radius:8px;padding:12px 13px;caret-color:#136c51;transition:border .2s;} .ds-field input::placeholder {color:#69776d;opacity:1;} .ds-field input:focus {border-color:#259d7b;} .ds-field input:focus-visible {outline:3px solid #438b6a;outline-offset:2px;box-shadow:none;} @media(prefers-reduced-motion:reduce){.ds-field input{transition:none;}}",
-      "refersTo": "field-input"
+      "refersTo": "field-input",
+      "description": "A labeled working input with visible keyboard focus.",
+      "html": "<label class=\"ds-field\"><span>Nombre de la pieza</span><input class=\"ds-input\" placeholder=\"Escribe un título\" /></label>",
+      "css": ".ds-field{display:flex;flex-direction:column;gap:8px;color:#d4cfdf;font:500 13px/1.6 var(--font-sans,\"Geist\",sans-serif)}.ds-input{min-height:42px;padding:11px 13px;border:1px solid var(--border,#2c2b35);border-radius:8px;background:var(--surface,#131318);color:var(--text,#f3f1f7);font:400 14px var(--font-sans,\"Geist\",sans-serif);caret-color:var(--accent,#bea5f5);transition:border-color 150ms ease}.ds-input::placeholder{color:#a09aaa;opacity:1}.ds-input:focus{border-color:var(--accent,#bea5f5);box-shadow:none}.ds-input:focus-visible{outline:2px solid var(--focus,#d7c2ff);outline-offset:2px}.ds-input:disabled{background:var(--surface-raised,#191820);color:var(--muted,#aaa7b7)}@media(max-width:760px){.ds-input{font-size:16px}}@media(prefers-reduced-motion:reduce){.ds-input{transition:none}}"
     },
     {
-      "name": "Sidebar Navigation",
+      "name": "Active Navigation",
       "kind": "nav",
-      "description": "Dark orientation surface with current destination indicated.",
-      "html": "<nav class=\"ds-nav\" aria-label=\"Trabajo\"><button aria-current=\"page\">Inicio</button><button>Audiencia</button></nav>",
-      "css": ".ds-nav{background:#102b29;padding:18px;width:220px;font-family:\"DM Sans\",sans-serif;} .ds-nav button{display:flex;width:100%;text-align:left;margin:3px 0;padding:11px 12px;min-height:42px;border:0;border-radius:7px;font:500 13px \"DM Sans\",sans-serif;background:transparent;color:#c2d1c8;cursor:pointer;} .ds-nav button:hover{background:#1a3933;color:white;} .ds-nav button[aria-current]{background:#2a5140;color:#f2f9ec;font-weight:650;} .ds-nav button:focus-visible{outline:3px solid #438b6a;outline-offset:3px;}",
-      "refersTo": "navigation-active"
+      "refersTo": "navigation-active",
+      "description": "The current workspace destination in the charcoal rail.",
+      "html": "<nav class=\"ds-nav\" aria-label=\"Empresa\"><a href=\"#inicio\" class=\"ds-nav-item\" aria-current=\"page\"><svg width=\"17\" height=\"17\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.6\" aria-hidden=\"true\"><path d=\"m3 10 9-7 9 7v10a1 1 0 0 1-1 1h-5v-7H9v7H4a1 1 0 0 1-1-1Z\"/></svg>Inicio</a></nav>",
+      "css": ".ds-nav{padding:12px;background:var(--navigation,#101015);width:208px}.ds-nav-item{display:flex;align-items:center;gap:11px;min-height:42px;padding:10px 12px;border-radius:8px;color:var(--muted,#aaa7b7);font:450 13px/1.4 var(--font-sans,\"Geist\",sans-serif);text-decoration:none}.ds-nav-item[aria-current=\"page\"]{background:var(--accent-soft,#282132);color:#e0d1fb;font-weight:500}.ds-nav-item svg{color:var(--accent,#bea5f5);flex-shrink:0}.ds-nav-item:focus-visible{outline:2px solid var(--focus,#d7c2ff);outline-offset:4px}@media(hover:hover) and (pointer:fine){.ds-nav-item:hover{background:var(--surface-raised,#191820);color:var(--text,#f3f1f7)}.ds-nav-item[aria-current=\"page\"]:hover{background:#30253e;color:#e0d1fb}}"
     },
     {
-      "name": "Neutral Status Badge",
+      "name": "Positive Status",
       "kind": "chip",
-      "description": "Journey neutral status label.",
-      "html": "<span class=\"ds-badge\">En revisión</span>",
-      "css": ".ds-badge{display:inline-flex;align-items:center;gap:4px;font:600 11px/1.6 \"DM Sans\",sans-serif;padding:4px 7px;border-radius:5px;white-space:nowrap;color:#435b50;background:#edf2ed;}"
+      "refersTo": "status-positive",
+      "description": "A passive label for an actual positive workflow condition.",
+      "html": "<span class=\"ds-status\">Aprobado</span>",
+      "css": ".ds-status{display:inline-flex;align-items:center;padding:4px 7px;border-radius:5px;background:var(--positive-bg,#142820);color:var(--positive,#9bdbbf);font:450 11px/1.6 var(--font-sans,\"Geist\",sans-serif)}"
     },
     {
       "name": "Working Card",
       "kind": "card",
-      "description": "Shared flat container shown with community form padding.",
-      "html": "<section class=\"ds-card\"><h2>Pregunta a tu comunidad</h2><p>Recoge necesidades para orientar tu contenido.</p></section>",
-      "css": ".ds-card{background:#fff;border:1px solid var(--border);border-radius:12px;padding:24px;color:#19352b;font-family:\"DM Sans\",sans-serif;} .ds-card h2{font:700 18px/1.45 \"Manrope\",sans-serif;letter-spacing:-.35px;margin:0;} .ds-card p{font-size:14px;line-height:1.65;color:#58665f;margin:8px 0 0;}",
-      "refersTo": "card"
+      "refersTo": "card",
+      "description": "A flat piece container with a clickable operational title and status.",
+      "html": "<article class=\"ds-card\"><span class=\"ds-card-format\">Guion · Ejemplo</span><button class=\"ds-piece-open\" type=\"button\"><h2>Una primera tarea con IA</h2></button><p>Una guía para elegir qué probar y qué revisar con el equipo.</p><footer class=\"ds-card-footer\"><span>Borrador</span></footer></article>",
+      "css": ".ds-card{padding:24px;border:1px solid var(--border,#2c2b35);border-radius:12px;background:var(--surface,#131318);color:var(--text,#f3f1f7);font:400 14px/1.7 var(--font-sans,\"Geist\",sans-serif);max-width:340px;box-shadow:none}.ds-card-format{display:block;color:var(--muted,#aaa7b7);font-size:12px;margin-bottom:24px}.ds-piece-open{padding:0;border:0;background:transparent;text-align:left;color:var(--text,#f3f1f7);cursor:pointer}.ds-piece-open h2{margin:0;font:500 20px/1.4 var(--font-sans,\"Geist\",sans-serif);letter-spacing:-.025em;transition:color 160ms ease}.ds-card>p{margin:16px 0 0;color:var(--muted,#aaa7b7);font-size:14px;line-height:1.7}.ds-card-footer{border-top:1px solid var(--border,#2c2b35);padding-top:18px;margin-top:28px;font-size:12px;color:var(--muted,#aaa7b7)}.ds-piece-open:focus-visible{outline:2px solid var(--focus,#d7c2ff);outline-offset:4px}@media(hover:hover) and (pointer:fine){.ds-piece-open:hover h2{color:var(--accent,#bea5f5)}}@media(prefers-reduced-motion:reduce){.ds-piece-open h2{transition:none}}"
     },
     {
-      "name": "Next Action Region",
-      "kind": "custom",
-      "description": "Pale green home region that foregrounds one next action.",
-      "html": "<section class=\"ds-next\"><h2>El próximo paso para tu contenido</h2><p>Revisa las oportunidades de tu empresa.</p><button>Ver oportunidades</button></section>",
-      "css": ".ds-next{padding:32px 36px;background:#e6f0e6;border-radius:14px;color:#193b33;font-family:\"DM Sans\",sans-serif;} .ds-next h2{font:700 clamp(20px,2.1vw,26px)/1.35 \"Manrope\",sans-serif;letter-spacing:-.025em;margin:0;} .ds-next p{margin:11px 0 0;color:#3b5948;font-size:15px;line-height:1.65;max-width:72ch;} .ds-next button{display:inline-flex;align-items:center;justify-content:center;gap:8px;border-radius:8px;min-height:42px;padding:11px 16px;font:700 13px \"DM Sans\",sans-serif;cursor:pointer;transition:background .18s,transform .18s;background:#136c51;color:#fff;border:1px solid #136c51;margin-top:23px;} .ds-next button:hover{background:#0e563f;} .ds-next button:focus-visible{outline:3px solid #267c60;outline-offset:3px;} @media(max-width:520px){.ds-next{padding:23px 21px;} .ds-next h2{font-size:21px;}} @media(prefers-reduced-motion:reduce){.ds-next button{transition:none;}}",
-      "refersTo": "next-action"
+      "name": "Landing Primary Button",
+      "kind": "button",
+      "refersTo": "landing-button-primary",
+      "description": "The larger public landing action with an inline directional icon.",
+      "html": "<button class=\"ds-lp-button ds-lp-primary\" type=\"button\">Empezar<svg width=\"16\" height=\"16\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.6\" aria-hidden=\"true\"><path d=\"M5 12h14m-6-6 6 6-6 6\"/></svg></button>",
+      "css": ".ds-lp-button{display:inline-flex;align-items:center;justify-content:center;gap:12px;min-height:48px;padding:12px 22px;border:1px solid var(--lp-line,#2c2b35);border-radius:7px;font:550 14px/1.4 var(--font-sans,\"Geist\",sans-serif);text-decoration:none;cursor:pointer;transition:transform 100ms cubic-bezier(.23,1,.32,1),background-color 150ms ease,border-color 150ms ease}.ds-lp-button svg{transition:transform 160ms cubic-bezier(.23,1,.32,1)}.ds-lp-button:focus-visible{outline:2px solid var(--focus,#d7c2ff);outline-offset:5px;transition:none}.ds-lp-button:focus-visible svg{transition:none}.ds-lp-button:active:not(:focus-visible){transform:scale(.97);transition-duration:160ms}.ds-lp-button:disabled{opacity:.65;cursor:wait}@media(prefers-reduced-motion:reduce){.ds-lp-button,.ds-lp-button:active:not(:focus-visible),.ds-lp-button svg{transform:none}.ds-lp-button svg{transition:none}.ds-lp-button{transition:background-color 150ms ease,border-color 150ms ease}}.ds-lp-primary{background:var(--lp-purple,#bea5f5);color:var(--lp-purple-ink,#211337);border-color:transparent}@media(hover:hover) and (pointer:fine){.ds-lp-primary:hover{background:#cfb9ff}.ds-lp-primary:hover:not(:focus-visible) svg{transform:translateX(3px)}}"
+    },
+    {
+      "name": "Landing Secondary Button",
+      "kind": "button",
+      "refersTo": "landing-button-secondary",
+      "description": "A supporting landing action with the established local charcoal fill.",
+      "html": "<button class=\"ds-lp-button ds-lp-secondary\" type=\"button\">Ver la demo</button>",
+      "css": ".ds-lp-button{display:inline-flex;align-items:center;justify-content:center;gap:12px;min-height:48px;padding:12px 22px;border:1px solid var(--lp-line,#2c2b35);border-radius:7px;font:550 14px/1.4 var(--font-sans,\"Geist\",sans-serif);text-decoration:none;cursor:pointer;transition:transform 100ms cubic-bezier(.23,1,.32,1),background-color 150ms ease,border-color 150ms ease}.ds-lp-button svg{transition:transform 160ms cubic-bezier(.23,1,.32,1)}.ds-lp-button:focus-visible{outline:2px solid var(--focus,#d7c2ff);outline-offset:5px;transition:none}.ds-lp-button:focus-visible svg{transition:none}.ds-lp-button:active:not(:focus-visible){transform:scale(.97);transition-duration:160ms}.ds-lp-button:disabled{opacity:.65;cursor:wait}@media(prefers-reduced-motion:reduce){.ds-lp-button,.ds-lp-button:active:not(:focus-visible),.ds-lp-button svg{transform:none}.ds-lp-button svg{transition:none}.ds-lp-button{transition:background-color 150ms ease,border-color 150ms ease}}.ds-lp-secondary{background:#19181f;color:#e1dce9}@media(hover:hover) and (pointer:fine){.ds-lp-secondary:hover{background:#28232f;border-color:#645371}}"
     }
   ],
   "narrative": {
-    "northStar": "The Guided Green Workspace",
-    "overview": "The established 30X Radar identity pairs dark green navigation with a light neutral working surface. It feels practical, composed and readable: familiar forms, lists and disclosures support sustained editorial work. This records the incumbent application's visual language and its completed extensions.\n\nHierarchy comes from typography, space and restrained green emphasis. The workspace shows a clear action before supporting detail, while evidence remains readable in expanded sections. The interface uses Lucide outline controls and functional UI rather than illustration or simulated materials.",
+    "northStar": "The Editorial Thread",
+    "overview": "kompass connects an audience need with evidence, an editorial decision and the piece the team will review. Ink-black grounds, charcoal working surfaces, cool-violet dividers and pale lavender actions carry one identity across the public landing, account entry, onboarding, authenticated workspace and public community forms. The approved full-application redesign supersedes the former landing-only boundary.\n\nHedvig Letters Serif gives page titles and account titles their editorial voice. Geist keeps navigation, controls, reading, operational headings and data precise. Working screens use the structure each task needs: divided records, source context, editing panes and a calendar. The landing keeps its spacious composition and native geometric illustration; that composition does not become a template for every working screen.\n\nThis records the finished implementation in `src/workspace.css`, `src/styles.css`, feature stylesheets, `src/landing.css` and shared components. Global workspace tokens are authoritative for shared controls; landing-specific tokens retain their observed local values. The shared colors and fonts express one brand. Sidecar tonal ramps visualize color relationships in the design panel; they are not additional interface tokens.",
     "keyCharacteristics": [
-      "Dark green orientation beside light working surfaces.",
-      "Manrope headings with DM Sans controls and reading text.",
-      "Flat lists, soft bordered forms and restrained tonal emphasis.",
-      "Visible focus and responsive stacking."
+      "One charcoal and lavender identity across public and authenticated surfaces.",
+      "Editorial serif page titles paired with Geist operational text and controls.",
+      "Flat working surfaces, fine dividers and task-specific layouts.",
+      "A native four-module mark and restrained connected workflow stages.",
+      "Explicit keyboard focus, responsive working panes and reduced spatial motion."
     ],
     "rules": [
       {
-        "name": "The Action Emphasis Rule",
-        "body": "Use filled green to identify primary actions; keep supporting actions white or transparent.",
+        "name": "The One Brand Rule",
+        "body": "Use charcoal and lavender throughout the product. The global `--green` name is a compatibility alias for `--accent`, not a separate green palette.",
         "section": "colors"
       },
       {
-        "name": "The Two Voices Rule",
-        "body": "Keep Manrope for headings and DM Sans for body text and controls.",
+        "name": "The Status Meaning Rule",
+        "body": "Reserve semantic green, amber and red for the condition or consequence they describe.",
+        "section": "colors"
+      },
+      {
+        "name": "The Editorial Hierarchy Rule",
+        "body": "Give page titles and account titles the serif voice; keep operational H2/H3, navigation, forms and data in Geist. The landing retains its established serif section headings.",
         "section": "typography"
       },
       {
-        "name": "The Quiet Surface Rule",
-        "body": "Use tone and dividers for routine hierarchy; reserve strong elevation for overlays.",
+        "name": "The Flat Working Surface Rule",
+        "body": "Use tonal layers and fine dividers for ordinary work; reserve the shared soft shadows for modal and toast overlays.",
         "section": "elevation"
       }
     ],
     "dos": [
-      "**Do** retain the dark green shell and light working surface when extending the app.",
-      "**Do** reuse the shared button, field and badge components before introducing a local variant.",
-      "**Do** give keyboard focus a visible offset outline and preserve reduced-motion behavior.",
-      "**Do** use divided rows and disclosures for dense evidence and supporting detail.",
-      "**Do** keep responsive overflow inside tables and wrap long content within its region."
+      "**Do** use charcoal surfaces and lavender actions across landing, account entry, setup, workspace and public forms.",
+      "**Do** pair editorial serif page titles with Geist controls, operational headings and data.",
+      "**Do** preserve the shared four-module mark and lowercase kompass name.",
+      "**Do** keep semantic status colors tied to real success, warning, error or destructive meaning.",
+      "**Do** preserve visible keyboard focus, modal and drawer focus behavior, and reduced spatial motion.",
+      "**Do** adapt each task's records, working panes and evidence to the viewport while keeping controls readable.",
+      "**Do** preserve customer colors and stored creative assets as content within the shared interface.",
+      "**Do** keep working text essential: task titles, labels, data, states and actionable errors; omit promotion, advice, page introductions and repeated explanations."
     ],
     "donts": [
-      "**Don't** replace the established font pair or green identity for an individual feature.",
-      "**Don't** apply modal-strength shadows to routine forms and lists.",
-      "**Don't** rely on placeholder text or color alone to explain a field or state.",
-      "**Don't** promote incidental legacy type sizes, color variants or decorative labels into new system roles."
+      "**Don't** restore the superseded green application palette, Manrope headings or DM Sans controls.",
+      "**Don't** use the legacy `--green` alias as a reason to introduce a second brand accent.",
+      "**Don't** apply the landing's large illustration or spacious hero composition to every working task.",
+      "**Don't** replace operational H2/H3, form labels or data with display serif typography.",
+      "**Don't** remove the keyboard outline, move focused buttons, or make content depend on spatial animation.",
+      "**Don't** recolor the official Google sign-in control to match the brand action button."
     ]
   }
 }

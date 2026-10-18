@@ -102,14 +102,16 @@ export function WorkspacePreparation({ enabled }: { enabled: boolean }) {
   )
     return null;
   return (
-    <div className="journey-notice" role="status" aria-live="polite">
+    <div
+      className="journey-notice"
+      role="status"
+      aria-live="polite"
+      aria-busy={busy}
+    >
       <RefreshCw size={18} aria-hidden="true" />
       <div>
         {busy ? (
-          <p>
-            Estamos buscando las primeras referencias para tu empresa. Puedes
-            seguir trabajando mientras terminamos.
-          </p>
+          <p>Buscando referencias…</p>
         ) : (
           <>
             {error ? (
@@ -118,22 +120,21 @@ export function WorkspacePreparation({ enabled }: { enabled: boolean }) {
               result && (
                 <p>
                   {result.status === "failed" || result.status === "unavailable"
-                    ? "Las fuentes no respondieron esta vez. Puedes reintentar o empezar con contenido propio."
+                    ? "Las fuentes no respondieron."
                     : result.status === "partial"
-                      ? "Ya tienes referencias para explorar. Algunas fuentes no respondieron; las demás siguen disponibles."
+                      ? `${result.added} referencias nuevas. Algunas fuentes no respondieron.`
                       : result.added > 0
-                        ? `${result.added} referencias nuevas disponibles. Ya puedes explorar oportunidades.`
-                        : "La primera búsqueda terminó sin referencias nuevas. Puedes ampliar el tema o aportar contenido propio."}
+                        ? `${result.added} referencias nuevas.`
+                        : "No se encontraron referencias nuevas."}
                 </p>
               )
             )}
-            {error || result?.errors.length ? (
+            {result?.errors.length ? (
               <details>
-                <summary>Ver detalle de las fuentes</summary>
+                <summary>Detalle de fuentes</summary>
                 {result?.errors.map((message, index) => (
                   <p key={index}>{message}</p>
                 ))}
-                {error && <p>{error}</p>}
               </details>
             ) : null}
             {error || result?.errors.length ? (

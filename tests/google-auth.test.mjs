@@ -550,6 +550,20 @@ test("return targets preserve valid app/invite paths and cannot redirect externa
   assert.equal(result.location, "/");
 });
 
+test("landing account entry intents return Google sessions to the workspace and retain invitations", async () => {
+  for (const mode of ["login", "signup"]) {
+    const start = await begin({
+      returnTo: `/home?auth=${mode}&invite=abcdefghijklmnop123456&ref=landing`,
+    });
+    const result = await callback(start);
+    assert.equal(result.status, 303);
+    assert.equal(result.location, "/home?invite=abcdefghijklmnop123456");
+    const session = await request("/session", { cookie: result.cookie });
+    assert.equal(session.data.user.email, start.email);
+    assert.deepEqual(session.data.brands, []);
+  }
+});
+
 test("matching local email never implicitly links, even when Google marks it verified", async () => {
   const local = await localAccount();
   const start = await begin({ email: local.data.user.email });

@@ -1,18 +1,10 @@
 import { useCallback, useEffect, useId, useRef, useState } from "react";
-import {
-  ArrowRight,
-  Check,
-  Palette,
-  Plus,
-  Save,
-  Target,
-  Trash2,
-  Users,
-} from "lucide-react";
+import { ArrowRight, Palette, Plus, Save, Trash2, Users } from "lucide-react";
 import { api, json } from "../lib/api";
 import { useWorkspace } from "../lib/workspace";
 import type { Brand, Segment } from "../lib/types";
 import { Badge, Button, EmptyState, Field, Modal } from "../components/ui";
+import "./journey.css";
 
 const contentLanguages = [
   { value: "es", label: "Español" },
@@ -23,139 +15,138 @@ const contentLanguages = [
 function BrandFields({ brand }: { brand?: Brand }) {
   const fieldId = useId();
   return (
-    <>
-      <div className="form-grid">
-        <Field
-          label="Nombre de la marca"
-          name="name"
-          defaultValue={brand?.name}
-          placeholder="Tu marca o empresa"
-          required
-          maxLength={100}
-        />
-        <Field
-          label="Sector o industria"
-          name="industry"
-          defaultValue={brand?.industry}
-          placeholder="Tecnología, finanzas, salud…"
-          required
-          maxLength={150}
-        />
-      </div>
-      <Field label="¿Qué hace tu marca y qué la diferencia?">
-        <textarea
-          name="description"
-          defaultValue={brand?.description}
-          placeholder="Ayudamos a… con una perspectiva…"
-          required
-          rows={3}
-          maxLength={4000}
-        />
-      </Field>
-      <div className="form-grid">
-        <Field label="Mercado principal">
-          <input
-            name="market"
-            defaultValue={brand?.market ?? "Latinoamérica"}
-            list={`${fieldId}-markets`}
-            maxLength={150}
-            aria-describedby={`${fieldId}-market-hint`}
-          />
-          <datalist id={`${fieldId}-markets`}>
-            {[
-              "Latinoamérica",
-              "México",
-              "Colombia",
-              "Argentina",
-              "Chile",
-              "Perú",
-              "Venezuela",
-              "España",
-              "Estados Unidos",
-              "Global",
-            ].map((m) => (
-              <option key={m} value={m} />
-            ))}
-          </datalist>
-          <small className="small muted" id={`${fieldId}-market-hint`}>
-            Escribe un país, una región o el mercado de tu empresa.
-          </small>
-        </Field>
-        <Field label="Idioma del contenido">
-          <input
-            name="language"
-            defaultValue={
-              contentLanguages.find(
-                (option) => option.value === brand?.language,
-              )?.label ||
-              brand?.language ||
-              "Español"
-            }
-            list={`${fieldId}-languages`}
+    <div className="brand-field-groups">
+      <section className="brand-field-group" aria-label="Empresa y mercado">
+        <h3>Empresa</h3>
+        <div className="form-grid">
+          <Field
+            label="Nombre de la marca"
+            name="name"
+            defaultValue={brand?.name}
+            required
             maxLength={100}
-            aria-describedby={`${fieldId}-language-hint`}
           />
-          <datalist id={`${fieldId}-languages`}>
-            {contentLanguages.map((option) => (
-              <option key={option.value} value={option.label} />
-            ))}
-          </datalist>
-          <small className="small muted" id={`${fieldId}-language-hint`}>
-            Elige una sugerencia o escribe otro idioma.
-          </small>
+          <Field
+            label="Sector o industria"
+            name="industry"
+            defaultValue={brand?.industry}
+            placeholder="Tecnología, finanzas, salud…"
+            required
+            maxLength={150}
+          />
+        </div>
+        <Field label="Descripción">
+          <textarea
+            name="description"
+            defaultValue={brand?.description}
+            placeholder="Actividad, oferta y audiencia"
+            required
+            rows={3}
+            maxLength={4000}
+          />
         </Field>
-      </div>
-      <Field
-        label="Temas a explorar · separados por comas"
-        name="pillars"
-        defaultValue={brand?.pillars.join(", ")}
-        placeholder="artificial intelligence, leadership, automation"
-        required
-      />
-      <p className="field-hint">
-        Incluye palabras en inglés para descubrir conversaciones en otros
-        mercados. Podrás afinar cada fuente.
-      </p>
-      <div className="form-grid">
+        <div className="form-grid">
+          <Field label="Mercado principal">
+            <input
+              name="market"
+              defaultValue={brand?.market ?? "Latinoamérica"}
+              list={`${fieldId}-markets`}
+              maxLength={150}
+            />
+            <datalist id={`${fieldId}-markets`}>
+              {[
+                "Latinoamérica",
+                "México",
+                "Colombia",
+                "Argentina",
+                "Chile",
+                "Perú",
+                "Venezuela",
+                "España",
+                "Estados Unidos",
+                "Global",
+              ].map((m) => (
+                <option key={m} value={m} />
+              ))}
+            </datalist>
+          </Field>
+          <Field label="Idioma del contenido">
+            <input
+              name="language"
+              defaultValue={
+                contentLanguages.find(
+                  (option) => option.value === brand?.language,
+                )?.label ||
+                brand?.language ||
+                "Español"
+              }
+              list={`${fieldId}-languages`}
+              maxLength={100}
+            />
+            <datalist id={`${fieldId}-languages`}>
+              {contentLanguages.map((option) => (
+                <option key={option.value} value={option.label} />
+              ))}
+            </datalist>
+          </Field>
+        </div>
+      </section>
+      <section className="brand-field-group" aria-label="Dirección editorial">
+        <h3>Dirección editorial</h3>
         <Field
-          label="Voz y tono"
-          name="tone"
-          defaultValue={brand?.tone || "Claro, cercano y práctico"}
+          label="Temas · separados por comas"
+          name="pillars"
+          defaultValue={brand?.pillars.join(", ")}
+          placeholder="artificial intelligence, leadership, automation"
           required
         />
+        <div className="form-grid">
+          <Field
+            label="Voz y tono"
+            name="tone"
+            defaultValue={brand?.tone || "Claro, cercano y práctico"}
+            required
+          />
+          <Field
+            label="Objetivo editorial"
+            name="goals"
+            defaultValue={
+              brand?.goals.join(", ") || "Educar, generar conversación"
+            }
+            required
+          />
+        </div>
+      </section>
+      <section
+        className="brand-field-group"
+        aria-label="Identidad y ritmo de trabajo"
+      >
+        <h3>Identidad y ritmo de trabajo</h3>
+        <div className="form-grid">
+          <Field
+            label="Color principal"
+            name="color"
+            type="color"
+            defaultValue={brand?.color || "#bea5f5"}
+          />
+          <Field
+            label="Piezas por semana"
+            name="weeklyTarget"
+            type="number"
+            defaultValue={brand?.weeklyTarget || 4}
+            min={1}
+            max={50}
+          />
+        </div>
         <Field
-          label="Objetivo editorial"
-          name="goals"
-          defaultValue={
-            brand?.goals.join(", ") || "Educar, generar conversación"
-          }
-          required
+          label="Sitio web (opcional)"
+          name="website"
+          type="url"
+          defaultValue={brand?.website}
+          placeholder="https://tumarca.com"
         />
-      </div>
-      <div className="form-grid">
-        <Field
-          label="Color principal"
-          name="color"
-          type="color"
-          defaultValue={brand?.color || "#147d65"}
-        />
-        <Field
-          label="Piezas por semana"
-          name="weeklyTarget"
-          type="number"
-          defaultValue={brand?.weeklyTarget || 4}
-          min={1}
-          max={50}
-        />
-      </div>
-      <Field
-        label="Sitio web (opcional)"
-        name="website"
-        type="url"
-        defaultValue={brand?.website}
-        placeholder="https://tumarca.com"
-      />
-    </>
+      </section>
+    </div>
   );
 }
 
@@ -281,16 +272,16 @@ export function NewBrandForm({ onCreated }: { onCreated: (b: Brand) => void }) {
       <div className="form-section">
         <h3>
           <Users size={17} />
-          ¿Para quién creas?
+          Audiencia
         </h3>
         <Field
-          label="Tu primera audiencia"
+          label="Audiencia"
           name="audienceName"
           placeholder="Ej. Directivos de empresas medianas"
           required
         />
         <Field
-          label="¿Qué necesita esa audiencia?"
+          label="Necesidad"
           name="audienceNeeds"
           placeholder="Ej. Entender cómo aplicar IA en su negocio"
           required
@@ -302,7 +293,7 @@ export function NewBrandForm({ onCreated }: { onCreated: (b: Brand) => void }) {
         </p>
       )}
       <Button variant="primary" type="submit" busy={busy}>
-        Crear espacio de marca
+        Crear empresa
         <ArrowRight size={17} />
       </Button>
     </form>
@@ -333,7 +324,7 @@ export function BrandPage() {
         return false;
       }
       return window.confirm(
-        "Hay cambios sin guardar en el ADN de la marca. ¿Salir y descartarlos?",
+        "Hay cambios sin guardar en el contexto de la marca. ¿Salir y descartarlos?",
       );
     },
   });
@@ -349,20 +340,7 @@ export function BrandPage() {
     setFieldRevision((revision) => revision + 1);
   }, [brand]);
   return (
-    <div className="page">
-      <div className="page-heading">
-        <div>
-          <h1>El ADN de tu marca.</h1>
-          <p>
-            El contexto que convierte tendencias genéricas en oportunidades
-            propias.
-          </p>
-        </div>
-        <Badge tone="green">
-          <Check size={13} />
-          Contexto activo
-        </Badge>
-      </div>
+    <div className="page brand-page">
       <div className="brand-layout">
         <section className="card form-card">
           <div className="section-heading">
@@ -397,9 +375,7 @@ export function BrandPage() {
                 setDirty(false);
                 try {
                   await refresh();
-                  notify(
-                    "Contexto actualizado. Tus próximos análisis usarán estos criterios.",
-                  );
+                  notify("Contexto guardado.");
                 } catch (refreshError) {
                   notify(
                     `El contexto se guardó, pero no se pudo actualizar el espacio: ${(refreshError as Error).message}`,
@@ -429,33 +405,25 @@ export function BrandPage() {
           </form>
         </section>
         <aside>
-          <div
-            className="brand-preview"
-            style={{ background: brand.color || "#147d65" }}
-          >
-            <div className="brand-monogram">{brand.name.slice(0, 1)}</div>
+          <div className="brand-preview">
+            <div className="brand-preview-identity">
+              <div className="brand-monogram">{brand.name.slice(0, 1)}</div>
+              <span
+                className="brand-color-swatch"
+                style={{ background: brand.color || "#bea5f5" }}
+                role="img"
+                aria-label={`Color de marca: ${brand.color || "#bea5f5"}`}
+              />
+            </div>
             <h2>{brand.name}</h2>
             <p>
               {brand.industry} · {brand.market}
             </p>
-            <div>
+            <div className="brand-preview-topics">
               {brand.pillars.map((p) => (
                 <span key={p}>{p}</span>
               ))}
             </div>
-          </div>
-          <div className="insight-card">
-            <Target size={22} />
-            <h3>
-              Un contexto más preciso.
-              <br />
-              Mejores oportunidades.
-            </h3>
-            <p className="muted">
-              La relevancia se compara con tus temas, audiencia y objetivos.
-              Cambiar tu contexto no reescribe análisis anteriores: puedes
-              actualizarlos desde cada referencia.
-            </p>
           </div>
         </aside>
       </div>
@@ -464,7 +432,8 @@ export function BrandPage() {
 }
 
 export function AudiencePage() {
-  const { state, refresh, notify, registerUnsavedChangesGuard } = useWorkspace();
+  const { state, refresh, notify, registerUnsavedChangesGuard } =
+    useWorkspace();
   const [editing, setEditing] = useState<Segment | null | undefined>(undefined),
     [busy, setBusy] = useState(false),
     [error, setError] = useState("");
@@ -495,7 +464,9 @@ export function AudiencePage() {
         form &&
         JSON.stringify([...new FormData(form).entries()]) !==
           audienceBaselineRef.current &&
-        !window.confirm("Hay cambios sin guardar. ¿Salir y descartar este perfil?")
+        !window.confirm(
+          "Hay cambios sin guardar. ¿Salir y descartar este perfil?",
+        )
       )
         return false;
       audienceFormRef.current = null;
@@ -552,15 +523,8 @@ export function AudiencePage() {
     }
   }
   return (
-    <div className="page">
+    <div className="page audience-page">
       <div className="page-heading">
-        <div>
-          <h1>¿A quién quieres llegar?</h1>
-          <p>
-            Perfiles editoriales que dan dirección a tus referencias, enfoques y
-            guiones.
-          </p>
-        </div>
         <Button
           variant="primary"
           disabled={state.brand.role !== "owner"}
@@ -571,19 +535,24 @@ export function AudiencePage() {
         </Button>
       </div>
       {state.brand.audience.length ? (
-        <div className="audience-grid">
-          {state.brand.audience.map((s, i) => (
-            <article className="card audience-card" key={s.id}>
-              <div className="row">
-                <span className={`audience-avatar av-${i % 3}`}>
-                  <Users size={25} />
+        <div className="audience-profile-list">
+          {state.brand.audience.map((s) => (
+            <article className="audience-profile" key={s.id}>
+              <div className="audience-profile-identity">
+                <span className="audience-profile-icon">
+                  <Users size={20} />
                 </span>
-                <Badge>{s.stage}</Badge>
+                <div>
+                  <h2>{s.name}</h2>
+                  <p className="audience-profile-role">{s.role}</p>
+                  <Badge>{s.stage}</Badge>
+                </div>
               </div>
-              <h2>{s.name}</h2>
-              <p className="audience-role">{s.role}</p>
-              <p>{s.needs}</p>
-              <div className="audience-card-footer">
+              <div className="audience-profile-need">
+                <h3>Qué necesita resolver</h3>
+                <p>{s.needs}</p>
+              </div>
+              <div className="audience-profile-actions">
                 <small>
                   {state.pieces.filter((p) => p.segmentId === s.id).length}{" "}
                   piezas dirigidas
@@ -593,7 +562,7 @@ export function AudiencePage() {
                   disabled={state.brand.role !== "owner"}
                   onClick={() => startEditing(s)}
                 >
-                  Editar perfil →
+                  Editar perfil <ArrowRight size={14} aria-hidden="true" />
                 </button>
               </div>
             </article>
@@ -602,31 +571,20 @@ export function AudiencePage() {
       ) : (
         <EmptyState
           icon={<Users />}
-          title="Una audiencia concreta cambia el contenido"
+          title="No hay audiencias"
           action={
             <Button
               onClick={() => startEditing(null)}
               disabled={state.brand.role !== "owner"}
             >
-              Crear mi primera audiencia
+              Nueva audiencia
             </Button>
           }
-        >
-          Define roles, momento de adopción y necesidades. El análisis podrá
-          recomendar enfoques más cercanos.
-        </EmptyState>
+        />
       )}
-      <div className="callout audience-note">
-        <Users size={20} />
-        <p>
-          Estos perfiles representan grupos de audiencia. Puedes actualizarlos
-          cuando cambien sus necesidades; no rastrean personas ni datos
-          individuales.
-        </p>
-      </div>
       {editing !== undefined && (
         <Modal
-          title={editing ? "Afinar audiencia" : "Una nueva audiencia"}
+          title={editing ? "Editar audiencia" : "Nueva audiencia"}
           onClose={closeEditing}
         >
           <form
@@ -658,8 +616,8 @@ export function AudiencePage() {
                 if (!segment[field] || segment[field].length > max) {
                   setError(
                     !segment[field]
-                      ? `«${label}» es obligatorio. Escribe texto, no solo espacios.`
-                      : `«${label}» admite hasta ${max} caracteres. Acorta el texto para guardar.`,
+                      ? `«${label}» es obligatorio.`
+                      : `«${label}» admite hasta ${max} caracteres.`,
                   );
                   setInvalidField(field);
                   const input = form.elements.namedItem(field);
@@ -677,11 +635,7 @@ export function AudiencePage() {
               );
             }}
           >
-            <fieldset
-              disabled={busy}
-              className="stack"
-              style={{ border: 0, margin: 0, minWidth: 0, padding: 0 }}
-            >
+            <fieldset disabled={busy} className="stack">
               <Field
                 label="Nombre del perfil"
                 name="name"
@@ -728,13 +682,19 @@ export function AudiencePage() {
                   rows={4}
                   aria-invalid={invalidField === "needs" || undefined}
                   aria-describedby={
-                    invalidField === "needs" ? "audience-profile-error" : undefined
+                    invalidField === "needs"
+                      ? "audience-profile-error"
+                      : undefined
                   }
                   required
                 />
               </Field>
               {error && (
-                <p id="audience-profile-error" className="form-error" role="alert">
+                <p
+                  id="audience-profile-error"
+                  className="form-error"
+                  role="alert"
+                >
                   {error}
                 </p>
               )}

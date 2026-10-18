@@ -1,6 +1,9 @@
 // RFC 9309 matching for the reader's product token. This is an additional
 // restriction: an Allow directive never supplies permission to use content.
-const TOKEN = "30xradar";
+const TOKEN = "kompass";
+// Keep historical restrictions in force when a site still addresses the old
+// crawler name, so the product rename cannot grant access that was denied.
+const LEGACY_TOKEN = "30xradar";
 function octets(value) {
   return value
     .replace(/%[\da-f]{2}/gi, (encoded) => {
@@ -39,10 +42,15 @@ export function robotsAllows(text, value) {
   const selected = exact.length
     ? exact
     : groups.filter((item) => item.agents.includes("*"));
+  const legacy = groups.filter((item) => item.agents.includes(LEGACY_TOKEN));
   const url = new URL(value),
     path = octets(`${url.pathname}${url.search}`);
+  return rulesAllow(selected, path) && rulesAllow(legacy, path);
+}
+
+function rulesAllow(groups, path) {
   let best = null;
-  for (const { rules } of selected)
+  for (const { rules } of groups)
     for (const rule of rules) {
       const end = rule.pattern.endsWith("$");
       const body = end ? rule.pattern.slice(0, -1) : rule.pattern;

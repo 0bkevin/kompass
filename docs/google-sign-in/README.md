@@ -1,8 +1,10 @@
-# Google sign-in: configured and verified locally
+# kompass Google sign-in: configured and verified locally
 
 Google sign-in is enabled at **http://localhost:3026**. The requested account completed a real Google authorization, reached the existing company setup screen, signed out, and signed in again as the same application user. No sample company was created in that account.
 
-## Cloud configuration
+## Cloud configuration recorded during verification
+
+The application is now named **kompass**. The external Google Cloud resource names below were recorded during the original verification; this report does not confirm a rename of those resources in Google Console.
 
 - Project: [`radar-auth-20261018-kevin`](https://console.cloud.google.com/auth/clients?project=radar-auth-20261018-kevin), named **30X Radar Google Sign-In**.
 - OAuth consent brand: **30X Radar**; audience **External**, publishing status **Testing**, with the requested account added as a test user. This remains a localhost setup, as requested.

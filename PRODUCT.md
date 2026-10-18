@@ -12,7 +12,7 @@ Reuse the user-selected ../30x-track application: React 19, TypeScript, TanStack
 
 ## Users
 
-Companies and their content teams. Each company signs in to its own workspace and starts with its website, public social links and content it can provide. 30X is the originating use case, not the only company supported.
+Companies and their content teams. Each company signs in to its own workspace and starts with its website, public social links and content it can provide.
 
 ## Product Purpose
 
@@ -34,7 +34,13 @@ Keep observations separate from editorial hypotheses. No invented metrics, globa
 
 ## Brand Commitments
 
-Retain the established 30X Radar identity from the application the user requested to reuse: restrained green, light neutral work surfaces, Spanish copy, familiar operational controls. Improve hierarchy, flow and readability rather than replacing the visual world. No new visual identity was requested.
+The application is named `kompass`, written in lowercase on every public and authenticated surface. This name replaces the previous product name across the application.
+
+The user-selected promise is «Le damos dirección a tu contenido». Written content should explain the decisions the team can make: who to address, what question to answer, which sources support the topic, how to shape and review the piece, and what recorded results suggest trying next. Use concrete Spanish for content teams. Keep clear operational labels and factual limitations. Avoid vague growth promises, trend claims without evidence, motivational filler and repeated compass metaphors; the promise does not need to appear in every instruction.
+
+Inside the application, the user requires essential text only. Use short task titles, action and field labels, actual data, operational states and actionable errors. Remove promotion, advice panels, page introductions, repeated explanations and brand slogans from working screens and authentication. Retain concise context only when it changes a decision, such as permissions, costs, data provenance, destructive consequences or a real service restriction. The public landing and pitch remain separate persuasion surfaces.
+
+The user explicitly expands the approved kompass identity to the complete application and authorizes rewriting every page and component. The former landing-only visual boundary is superseded. Use the established dark-by-default charcoal and purple world, native kompass mark, Hedvig Letters Serif and Geist throughout authentication, onboarding, workspace, public community forms and shared controls. The landing retains its approved composition; operational screens express the same brand through readable task-focused layouts. Product truth, existing workflows, permissions, session isolation and saved data remain binding.
 
 ## Evidence on Hand
 
@@ -54,4 +60,4 @@ Deployment host, deadline and API operating budget are not supplied. Do not infe
 
 ## Acceso a fuentes revisado
 
-La revisión de condiciones de uso aplica a cada finalidad, no solo a la disponibilidad pública de una URL. [La matriz vigente](docs/compliance/README.md) registra fuentes y funciones habilitadas, restringidas y sus condiciones. Apify Instagram/TikTok, Reddit, YouTube editorial y Gemini video están bloqueados. No se promete cobertura social ni autorización por guardar una credencial. Webs/feeds adicionales, IA y webhooks requieren una revisión vigente; el recorrido con material propio y fuentes aprobadas sigue disponible.
+La revisión de condiciones de uso aplica a cada finalidad, no solo a la disponibilidad pública de una URL. [La matriz vigente](docs/compliance/README.md) registra fuentes y funciones habilitadas, restringidas y sus condiciones. Apify Instagram/TikTok, Reddit, el análisis editorial con datos de YouTube y Gemini video están bloqueados. El catálogo público y los contadores oficiales de YouTube tienen un [conector separado](docs/official-social-sync-20261018.md); esos datos no se envían a la IA ni al aprendizaje editorial. No se promete cobertura social ni autorización por guardar una credencial. Webs/feeds adicionales, IA y webhooks requieren una revisión vigente; el recorrido con material propio y fuentes aprobadas sigue disponible.

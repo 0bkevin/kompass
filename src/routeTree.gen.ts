@@ -9,8 +9,8 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as IndexRouteImport } from './routes/index'
 import { Route as WorkspaceRouteImport } from './routes/_workspace'
-import { Route as WorkspaceIndexRouteImport } from './routes/_workspace/index'
 import { Route as WorkspaceAssetsRouteImport } from './routes/_workspace/assets'
 import { Route as WorkspaceAudienceRouteImport } from './routes/_workspace/audience'
 import { Route as WorkspaceBrandRouteImport } from './routes/_workspace/brand'
@@ -25,14 +25,14 @@ import { Route as WorkspaceStudioRouteImport } from './routes/_workspace/studio'
 import { Route as CommunityTokenRouteImport } from './routes/community.$token'
 import { Route as WorkspaceStudioPieceIdRouteImport } from './routes/_workspace/studio/$pieceId'
 
+const IndexRoute = IndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const WorkspaceRoute = WorkspaceRouteImport.update({
   id: '/_workspace',
   getParentRoute: () => rootRouteImport,
-} as any)
-const WorkspaceIndexRoute = WorkspaceIndexRouteImport.update({
-  id: '/',
-  path: '/',
-  getParentRoute: () => WorkspaceRoute,
 } as any)
 const WorkspaceAssetsRoute = WorkspaceAssetsRouteImport.update({
   id: '/assets',
@@ -101,7 +101,7 @@ const WorkspaceStudioPieceIdRoute = WorkspaceStudioPieceIdRouteImport.update({
 } as any)
 
 export interface FileRoutesByFullPath {
-  '/': typeof WorkspaceIndexRoute
+  '/': typeof IndexRoute
   '/assets': typeof WorkspaceAssetsRoute
   '/audience': typeof WorkspaceAudienceRoute
   '/brand': typeof WorkspaceBrandRoute
@@ -117,6 +117,7 @@ export interface FileRoutesByFullPath {
   '/studio/$pieceId': typeof WorkspaceStudioPieceIdRoute
 }
 export interface FileRoutesByTo {
+  '/': typeof IndexRoute
   '/assets': typeof WorkspaceAssetsRoute
   '/audience': typeof WorkspaceAudienceRoute
   '/brand': typeof WorkspaceBrandRoute
@@ -129,11 +130,11 @@ export interface FileRoutesByTo {
   '/settings': typeof WorkspaceSettingsRoute
   '/studio': typeof WorkspaceStudioRouteWithChildren
   '/community/$token': typeof CommunityTokenRoute
-  '/': typeof WorkspaceIndexRoute
   '/studio/$pieceId': typeof WorkspaceStudioPieceIdRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
+  '/': typeof IndexRoute
   '/_workspace': typeof WorkspaceRouteWithChildren
   '/_workspace/assets': typeof WorkspaceAssetsRoute
   '/_workspace/audience': typeof WorkspaceAudienceRoute
@@ -147,7 +148,6 @@ export interface FileRoutesById {
   '/_workspace/settings': typeof WorkspaceSettingsRoute
   '/_workspace/studio': typeof WorkspaceStudioRouteWithChildren
   '/community/$token': typeof CommunityTokenRoute
-  '/_workspace/': typeof WorkspaceIndexRoute
   '/_workspace/studio/$pieceId': typeof WorkspaceStudioPieceIdRoute
 }
 export interface FileRouteTypes {
@@ -169,6 +169,7 @@ export interface FileRouteTypes {
     | '/studio/$pieceId'
   fileRoutesByTo: FileRoutesByTo
   to:
+    | '/'
     | '/assets'
     | '/audience'
     | '/brand'
@@ -181,10 +182,10 @@ export interface FileRouteTypes {
     | '/settings'
     | '/studio'
     | '/community/$token'
-    | '/'
     | '/studio/$pieceId'
   id:
     | '__root__'
+    | '/'
     | '/_workspace'
     | '/_workspace/assets'
     | '/_workspace/audience'
@@ -198,30 +199,30 @@ export interface FileRouteTypes {
     | '/_workspace/settings'
     | '/_workspace/studio'
     | '/community/$token'
-    | '/_workspace/'
     | '/_workspace/studio/$pieceId'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
+  IndexRoute: typeof IndexRoute
   WorkspaceRoute: typeof WorkspaceRouteWithChildren
   CommunityTokenRoute: typeof CommunityTokenRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/': {
+      id: '/'
+      path: '/'
+      fullPath: '/'
+      preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/_workspace': {
       id: '/_workspace'
       path: ''
       fullPath: '/'
       preLoaderRoute: typeof WorkspaceRouteImport
       parentRoute: typeof rootRouteImport
-    }
-    '/_workspace/': {
-      id: '/_workspace/'
-      path: '/'
-      fullPath: '/'
-      preLoaderRoute: typeof WorkspaceIndexRouteImport
-      parentRoute: typeof WorkspaceRoute
     }
     '/_workspace/assets': {
       id: '/_workspace/assets'
@@ -341,7 +342,6 @@ interface WorkspaceRouteChildren {
   WorkspaceResultsRoute: typeof WorkspaceResultsRoute
   WorkspaceSettingsRoute: typeof WorkspaceSettingsRoute
   WorkspaceStudioRoute: typeof WorkspaceStudioRouteWithChildren
-  WorkspaceIndexRoute: typeof WorkspaceIndexRoute
 }
 
 const WorkspaceRouteChildren: WorkspaceRouteChildren = {
@@ -356,7 +356,6 @@ const WorkspaceRouteChildren: WorkspaceRouteChildren = {
   WorkspaceResultsRoute: WorkspaceResultsRoute,
   WorkspaceSettingsRoute: WorkspaceSettingsRoute,
   WorkspaceStudioRoute: WorkspaceStudioRouteWithChildren,
-  WorkspaceIndexRoute: WorkspaceIndexRoute,
 }
 
 const WorkspaceRouteWithChildren = WorkspaceRoute._addFileChildren(
@@ -364,6 +363,7 @@ const WorkspaceRouteWithChildren = WorkspaceRoute._addFileChildren(
 )
 
 const rootRouteChildren: RootRouteChildren = {
+  IndexRoute: IndexRoute,
   WorkspaceRoute: WorkspaceRouteWithChildren,
   CommunityTokenRoute: CommunityTokenRoute,
 }

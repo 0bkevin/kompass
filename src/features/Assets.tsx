@@ -16,6 +16,7 @@ import { uploadFilesIndividually } from "../lib/workflow-recovery.mjs";
 import { Badge, Button, EmptyState, IconButton, Modal } from "../components/ui";
 import type { Asset } from "../lib/types";
 import { dateLabel } from "../lib/format";
+import "./studio-flow.css";
 const icons = { image: Image, video: Video, audio: Music, document: FileText };
 const MAX_ASSET_FILE_BYTES = 25 * 1024 * 1024;
 export default function Assets() {
@@ -58,21 +59,21 @@ export default function Assets() {
           setRefreshPending(false);
           notify(
             failedCount
-              ? `Se guardaron ${uploadedCount} archivo(s); ${failedCount} no se pudieron subir. Revisa el resultado por archivo.`
-              : `${uploadedCount} archivo(s) guardado(s) en tu biblioteca.`,
+              ? `${uploadedCount} archivo(s) guardado(s); ${failedCount} fallaron.`
+              : `${uploadedCount} archivo(s) guardado(s).`,
             failedCount ? "error" : "success",
           );
         } catch {
           setRefreshPending(true);
           notify(
-            `Se guardaron ${uploadedCount} archivo(s), pero no se pudo actualizar la biblioteca. Reintenta la actualización; no vuelvas a subirlos.`,
+            `${uploadedCount} archivo(s) guardado(s). Reintenta la actualización; no vuelvas a subirlos.`,
             "error",
           );
         }
       } else {
         notify(
           results.length
-            ? `No se pudo subir ningún archivo. Revisa el resultado por archivo.`
+            ? "No se pudo subir ningún archivo."
             : "Selecciona al menos un archivo.",
           "error",
         );
@@ -88,12 +89,10 @@ export default function Assets() {
     try {
       await refresh();
       setRefreshPending(false);
-      notify(
-        "Biblioteca actualizada. Los archivos guardados ya están visibles.",
-      );
+      notify("Archivos actualizados.");
     } catch {
       notify(
-        "No pudimos actualizar la biblioteca. Vuelve a intentar la actualización; los archivos no se volverán a subir.",
+        "No pudimos actualizar. Reintenta; los archivos no se volverán a subir.",
         "error",
       );
     } finally {
@@ -101,14 +100,10 @@ export default function Assets() {
     }
   }
   return (
-    <div className="page">
+    <div className="page assets-page">
       <div className="page-heading">
         <div>
-          <h1>Todo lo que necesitas para crear.</h1>
-          <p>
-            Imágenes, videos, documentos y referencias, con acceso para tu
-            equipo.
-          </p>
+          <h1>Archivos</h1>
           <p id="asset-upload-help">
             Hasta 25 MiB por archivo. TXT, Markdown y CSV en UTF-8.
           </p>
@@ -150,8 +145,8 @@ export default function Assets() {
           {refreshPending && (
             <div role="alert">
               <p>
-                Los archivos guardados no se volverán a subir. Reintenta solo la
-                actualización de la biblioteca.
+                Reintenta la actualización; los archivos guardados no se
+                volverán a subir.
               </p>
               <Button busy={busy} onClick={() => void retryRefresh()}>
                 Reintentar actualización
@@ -160,7 +155,11 @@ export default function Assets() {
           )}
         </section>
       )}
-      <div className="tabs library-tabs">
+      <div
+        className="tabs library-tabs"
+        role="group"
+        aria-label="Tipo de archivo"
+      >
         {[
           ["all", "Todos"],
           ["image", "Imágenes"],
@@ -171,6 +170,7 @@ export default function Assets() {
           <button
             key={v}
             className={filter === v ? "active" : ""}
+            aria-pressed={filter === v}
             onClick={() => setFilter(v)}
           >
             {l}
@@ -256,7 +256,7 @@ export default function Assets() {
       ) : (
         <EmptyState
           icon={<FolderOpen size={30} />}
-          title="Dale un lugar a tus recursos"
+          title={search ? "Sin coincidencias" : "Sin archivos"}
           action={
             <Button
               disabled={
@@ -265,21 +265,11 @@ export default function Assets() {
               onClick={() => input.current?.click()}
             >
               <Plus size={16} />
-              Subir mis primeros archivos
+              Subir archivos
             </Button>
           }
-        >
-          Sube material de marca o referencias. Puedes asociarlos a tus piezas
-          desde el estudio. Hasta 25 MiB por archivo; texto en UTF-8.
-        </EmptyState>
+        />
       )}
-      <div className="callout">
-        <Video size={20} />
-        <p>
-          Guarda videos y archivos de tu marca para consultarlos y asociarlos a
-          una pieza desde el estudio.
-        </p>
-      </div>
       {selected && (
         <Modal wide title={selected.name} onClose={() => setSelected(null)}>
           <div className="asset-full">
@@ -293,6 +283,10 @@ export default function Assets() {
               <FileText size={60} />
             )}
           </div>
+          <p className="asset-detail-meta">
+            {(selected.size / 1024 / 1024).toFixed(2)} MiB ·{" "}
+            {dateLabel(selected.createdAt)}
+          </p>
           <a
             className="button primary"
             href={selected.url}

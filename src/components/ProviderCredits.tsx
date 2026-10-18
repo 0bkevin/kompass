@@ -5,8 +5,8 @@ export function ProviderCredits({ reference }: { reference: unknown }) {
   if (!providers.length) return null;
   return (
     <p
-      className="small muted"
-      style={{ margin: "8px 0", overflowWrap: "anywhere" }}
+      className="small muted provider-credits"
+      style={{ margin: "8px 0", overflowWrap: "anywhere", lineHeight: 1.65 }}
     >
       Datos:{" "}
       {providers.map((provider, index) => (

@@ -74,7 +74,7 @@ export async function startProductionServer({
     .catch(() => {
       console.error("No se pudo recuperar la cola de creación multimedia.");
     });
-  console.log(`30X Radar escuchando en http://localhost:${port}`);
+  console.log(`kompass escuchando en http://localhost:${port}`);
 
   let shuttingDown = false;
   for (const signal of ["SIGINT", "SIGTERM"]) {
@@ -97,7 +97,7 @@ if (
   path.resolve(process.argv[1]) === fileURLToPath(import.meta.url)
 ) {
   startProductionServer().catch((error) => {
-    console.error(`[30X Radar] ${error.message}`);
+    console.error(`[kompass] ${error.message}`);
     process.exitCode = 1;
   });
 }

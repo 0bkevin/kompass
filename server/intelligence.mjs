@@ -1352,7 +1352,7 @@ function refreshedSocialReference(
 
 export async function syncSources(brand, options = {}) {
   if (syncLocks.has(brand.id))
-    throw integrationError("El radar ya está actualizando esta marca.", 409);
+    throw integrationError("kompass ya está actualizando esta marca.", 409);
   syncLocks.add(brand.id);
   try {
     const sources = listRecords(brand.id, "sources")
@@ -1598,7 +1598,7 @@ export async function syncSources(brand, options = {}) {
     }
     addActivity(
       brand.id,
-      `Radar actualizado: ${added} referencias nuevas, ${updated} actualizadas y ${errors.length} fuentes con errores.`,
+      `Actualización completada: ${added} referencias nuevas, ${updated} actualizadas y ${errors.length} fuentes con errores.`,
     );
     const successfulSourceIds = results
       .filter((source) => !source.error && !source.skipped)

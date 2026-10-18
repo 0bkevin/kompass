@@ -2,7 +2,6 @@ import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import {
   ArrowUpRight,
   Bookmark,
-  Check,
   ChevronRight,
   Compass,
   Download,
@@ -53,6 +52,7 @@ import {
   saturationNames,
   timeAgo,
 } from "../lib/format";
+import "./discovery-settings.css";
 
 function SourceMark({
   source,
@@ -349,14 +349,7 @@ export default function Radar() {
     <div className="page radar-page">
       <div className="page-heading">
         <div>
-          <h1>
-            El mundo se mueve.
-            <br className="small-break" /> Encuentra tu próximo ángulo.
-          </h1>
-          <p>
-            Conversaciones que crecen, filtradas por lo que importa para{" "}
-            <strong>{state.brand.name}</strong>.
-          </p>
+          <h1>Explorar fuentes</h1>
         </div>
         <Button
           variant="primary"
@@ -365,27 +358,29 @@ export default function Radar() {
           onClick={() => void discover()}
         >
           <RefreshCw size={16} />
-          Buscar tendencias
+          Buscar en mis fuentes
         </Button>
       </div>
       {state.references.some((r) => r.isDemo) && !real.length && (
         <div className="demo-banner">
           <Info size={16} />
-          <span>
-            Estás viendo datos de ejemplo. Pulsa{" "}
-            <strong>Buscar tendencias</strong> para traer señales reales de tus
-            fuentes.
-          </span>
-          <Badge tone="amber">DEMO</Badge>
+          <span>Datos de ejemplo</span>
         </div>
       )}
-      <SocialDiscovery />
-      <div className="stats-grid">
+      <details className="discovery-youtube-panel">
+        <summary>
+          <span>
+            <strong>Consulta pública de YouTube</strong>
+          </span>
+          <ChevronRight size={18} aria-hidden="true" />
+        </summary>
+        <SocialDiscovery />
+      </details>
+      <div className="discovery-coverage" aria-label="Cobertura de tus fuentes">
         <Metric
           icon={<Radio />}
-          label="Señales en tu radar"
+          label="Referencias reales"
           value={String(real.length)}
-          detail="Hallazgos reales captados"
         />
         <Metric
           icon={<TrendingUp />}
@@ -393,11 +388,10 @@ export default function Radar() {
           value={String(
             real.filter((r) => r.trend?.kind === "emerging").length,
           )}
-          detail="Con crecimiento observado"
         />
         <Metric
           icon={<Compass />}
-          label="Dentro de tu contexto"
+          label="Afines"
           value={String(
             real.filter(
               (r) =>
@@ -405,17 +399,12 @@ export default function Radar() {
                 (r.analysis?.relevance || 0) >= 70,
             ).length,
           )}
-          detail="Coincidencias con tus temas"
         />
         <Metric
           icon={<Globe2 />}
-          label="Fuentes conectadas"
+          label="Fuentes activas"
           value={String(state.sources.filter((s) => s.enabled).length)}
-          detail={
-            latest
-              ? `Última búsqueda: ${timeAgo(latest)}`
-              : "Listas para explorar"
-          }
+          detail={latest ? `Última búsqueda: ${timeAgo(latest)}` : undefined}
         />
       </div>
       <div className="radar-body">
@@ -423,25 +412,27 @@ export default function Radar() {
           <div className="section-heading">
             <div>
               <h2>
-                Oportunidades de contenido{" "}
-                <span className="count-pill">{visible.length}</span>
+                Referencias <span className="count-pill">{visible.length}</span>
               </h2>
-              <p>De lo que está pasando a lo que vale la pena contar.</p>
             </div>
             <div className="view-toggle" aria-label="Vista de resultados">
               <button
                 className={layout === "cards" ? "active" : ""}
                 onClick={() => setLayout("cards")}
-                title="Ver tarjetas"
+                title="Ver lista"
+                aria-pressed={layout === "cards"}
               >
                 <Layers3 size={16} />
+                <span>Lista</span>
               </button>
               <button
                 className={layout === "radar" ? "active" : ""}
                 onClick={() => setLayout("radar")}
-                title="Ver radar"
+                title="Ver mapa de referencias"
+                aria-pressed={layout === "radar"}
               >
                 <Radio size={16} />
+                <span>Mapa</span>
               </button>
             </div>
           </div>
@@ -449,12 +440,14 @@ export default function Radar() {
             <div className="tabs">
               <button
                 className={tab === "all" ? "active" : ""}
+                aria-pressed={tab === "all"}
                 onClick={() => setTab("all")}
               >
                 Para ti
               </button>
               <button
                 className={tab === "emerging" ? "active" : ""}
+                aria-pressed={tab === "emerging"}
                 onClick={() => setTab("emerging")}
               >
                 <TrendingUp size={14} />
@@ -462,12 +455,14 @@ export default function Radar() {
               </button>
               <button
                 className={tab === "relevant" ? "active" : ""}
+                aria-pressed={tab === "relevant"}
                 onClick={() => setTab("relevant")}
               >
                 Alta afinidad
               </button>
               <button
                 className={tab === "saved" ? "active" : ""}
+                aria-pressed={tab === "saved"}
                 onClick={() => setTab("saved")}
               >
                 Guardados
@@ -533,8 +528,8 @@ export default function Radar() {
               icon={<Compass size={28} />}
               title={
                 state.references.length
-                  ? "Todavía no hay señales con estos filtros"
-                  : "Tu próxima gran idea está por aparecer"
+                  ? "Sin resultados para estos filtros"
+                  : "Sin referencias"
               }
               action={
                 <Button
@@ -547,11 +542,7 @@ export default function Radar() {
                   Explorar mis fuentes
                 </Button>
               }
-            >
-              {tab === "emerging"
-                ? "Necesitamos al menos dos observaciones separadas con métricas crecientes para señalar una tendencia emergente."
-                : "Busca en tus fuentes públicas o agrega una referencia. Cada hallazgo conserva su origen y evidencia."}
-            </EmptyState>
+            />
           ) : layout === "cards" ? (
             <div className="reference-grid">
               {visible.slice(0, shownCount).map((ref) => (
@@ -581,38 +572,18 @@ export default function Radar() {
           )}
         </section>
         <aside className="radar-insights">
-          <div className="insight-card dark">
-            <div className="row">
-              <Sparkles size={18} />
-            </div>
-            <h3>
-              Una tendencia.
-              <br />
-              Tu propia perspectiva.
-            </h3>
-            <p>
-              Elige una señal y encuentra un enfoque que tu audiencia todavía
-              necesite escuchar.
-            </p>
-            <button onClick={() => navigate("brand")}>
-              Afinar mi contexto
-              <ArrowUpRight size={16} />
-            </button>
-            <div className="insight-orbit" />
-          </div>
           <div className="insight-card">
             <div className="section-title">
-              <h3>Conversaciones detectadas</h3>
+              <h3>Temas en estas referencias</h3>
               <Layers3 size={16} />
             </div>
             {clusters.length ? (
-              clusters.slice(0, 5).map(([label, refs], index) => (
+              clusters.slice(0, 5).map(([label, refs]) => (
                 <button
                   className="topic-row"
                   key={label}
                   onClick={() => setSelected(refs[0])}
                 >
-                  <span className="topic-index">0{index + 1}</span>
                   <span>
                     <strong>{label}</strong>
                     <small>
@@ -624,13 +595,8 @@ export default function Radar() {
                 </button>
               ))
             ) : (
-              <p className="muted small">
-                Los grupos aparecerán a medida que encuentres referencias.
-              </p>
+              <p className="muted small">Sin temas.</p>
             )}
-            <p className="insight-caption">
-              Volumen dentro de tu radar; no representa todo el mercado.
-            </p>
           </div>
           <div className="insight-card source-list">
             <div className="section-title">
@@ -662,10 +628,6 @@ export default function Radar() {
                 />
               </div>
             ))}
-            <div className="free-note">
-              <Check size={14} />
-              Fuentes abiertas · sin scraping privado
-            </div>
           </div>
         </aside>
       </div>
@@ -690,16 +652,18 @@ function Metric({
   icon: React.ReactNode;
   label: string;
   value: string;
-  detail: string;
+  detail?: string;
 }) {
   return (
-    <div className="metric-card">
+    <div className="coverage-item">
+      <span className="coverage-icon" aria-hidden="true">
+        {icon}
+      </span>
       <div>
-        <span className="metric-label">{label}</span>
-        <span className="metric-icon">{icon}</span>
+        <span className="coverage-label">{label}</span>
+        {detail && <span className="coverage-detail">{detail}</span>}
       </div>
       <strong>{value}</strong>
-      <small>{detail}</small>
     </div>
   );
 }
@@ -789,11 +753,9 @@ function ReferenceCard({
           {r.isDemo && <Badge tone="amber">Ejemplo</Badge>}
         </div>
         <h3>{r.title}</h3>
-        <p>
-          {r.analysis?.adaptation ||
-            r.text ||
-            "Abre esta referencia para revisar su origen y encontrar un ángulo para tu marca."}
-        </p>
+        {(r.analysis?.adaptation || r.text) && (
+          <p>{r.analysis?.adaptation || r.text}</p>
+        )}
         <div className="reference-tags">
           {(r.tags || []).slice(0, 2).map((tag) => (
             <span key={tag}>{tag}</span>
@@ -805,7 +767,7 @@ function ReferenceCard({
           </span>
         </div>
       </button>
-      <div style={{ padding: "0 18px" }}>
+      <div className="reference-credits">
         <ProviderCredits reference={r} />
       </div>
       <div className="reference-bottom">
@@ -927,10 +889,6 @@ function RadarPlot({
           Sin estimación
         </span>
       </div>
-      <p className="small muted">
-        La posición organiza la lectura. La repetición se estima dentro del
-        corpus observado.
-      </p>
     </div>
   );
 }
@@ -1110,7 +1068,7 @@ export function ReferenceDetail({
       }
       onClose();
       navigate("studio", result.piece.id);
-      notify("Tu primer guion está listo para editar.");
+      notify("Guion creado.");
     } catch (e) {
       setDraftError((e as Error).message);
     } finally {
@@ -1119,372 +1077,348 @@ export function ReferenceDetail({
     }
   }
   return (
-    <Modal wide title="De señal a oportunidad" onClose={close}>
-      <div className="detail-source">
-        <SourceMark source={r.source} platform={r.platform} />
-        <span>
-          {r.source} · {timeAgo(r.createdAt)}
-        </span>
-        {r.platform && <Badge>{platformLabel(r.platform)}</Badge>}
-        {r.isDemo && <Badge tone="amber">Datos de ejemplo</Badge>}
-        {safeExternalUrl(r.url) && (
-          <a href={safeExternalUrl(r.url)} target="_blank" rel="noreferrer">
-            Ver original
-            <ExternalLink size={14} />
-          </a>
+    <Modal wide title="Referencia" onClose={close}>
+      <div className="discovery-detail">
+        <div className="detail-source">
+          <SourceMark source={r.source} platform={r.platform} />
+          <span>
+            {r.source} · {timeAgo(r.createdAt)}
+          </span>
+          {r.platform && <Badge>{platformLabel(r.platform)}</Badge>}
+          {r.isDemo && <Badge tone="amber">Datos de ejemplo</Badge>}
+          {safeExternalUrl(r.url) && (
+            <a href={safeExternalUrl(r.url)} target="_blank" rel="noreferrer">
+              Ver original
+              <ExternalLink size={14} />
+            </a>
+          )}
+        </div>
+        {r.originalUrlOmitted && (
+          <p className="small muted">
+            Enlace omitido: no es una cita pública válida.
+          </p>
+        )}
+        <h2 className="detail-title">{r.title}</h2>
+        <ProviderCredits reference={r} />
+        {referenceRestricted && (
+          <p className="form-error" role="status">
+            {r.accessPolicy?.reason}
+          </p>
+        )}
+        {r.text && <p className="detail-text">{r.text}</p>}
+        {(r.assetId || r.format === "document") && (
+          <section
+            className="reference-attachment"
+            aria-label="Archivo adjunto"
+          >
+            <div className="reference-attachment-info">
+              <strong>Archivo adjunto</strong>
+              {attachment && (
+                <>
+                  <span className="reference-attachment-name">
+                    {attachment.name}
+                  </span>
+                  <span className="small muted">
+                    {attachment.mimeType} ·{" "}
+                    {new Intl.NumberFormat("es").format(attachment.size)} bytes
+                  </span>
+                </>
+              )}
+              <p className="small muted">Archivo privado de esta empresa.</p>
+            </div>
+            <div className="reference-attachment-action" aria-live="polite">
+              {!attachment ? (
+                <p role="status">
+                  Adjunto no disponible. Vuelve a adjuntarlo desde Agregar
+                  referencia.
+                </p>
+              ) : attachmentStatus === "available" ? (
+                <a
+                  className="button secondary"
+                  href={attachmentUrl}
+                  download={attachment.name}
+                >
+                  <Download size={16} aria-hidden="true" />
+                  Descargar original adjunto
+                </a>
+              ) : attachmentStatus === "checking" ? (
+                <p role="status">Comprobando el archivo adjunto…</p>
+              ) : (
+                <>
+                  <p role="status">
+                    {attachmentStatus === "missing"
+                      ? "El archivo adjunto ya no está disponible. Pide al equipo que vuelva a adjuntar el original."
+                      : attachmentStatus === "unauthorized"
+                        ? "No se pudo autorizar la descarga. Comprueba tu sesión y tu acceso a esta empresa."
+                        : "No se pudo comprobar el archivo. Vuelve a intentarlo para habilitar la descarga."}
+                  </p>
+                  <Button
+                    onClick={() => setAttachmentRetry((value) => value + 1)}
+                  >
+                    Volver a comprobar
+                  </Button>
+                </>
+              )}
+            </div>
+          </section>
+        )}
+        {attachment?.type === "image" && (
+          <img className="reference-image" src={attachment.url} alt={r.title} />
+        )}
+        {r.trend && (
+          <div className="evidence-box">
+            <div className="row">
+              <TrendingUp size={17} />
+              <strong>
+                {r.platform === "youtube"
+                  ? "Métricas observadas · YouTube"
+                  : trendLabel(r)}
+              </strong>
+              {r.platform === "youtube" ? (
+                r.trend.priorityMetric?.rank != null && (
+                  <Badge>
+                    Posición {r.trend.priorityMetric.rank} dentro de esta
+                    consulta
+                  </Badge>
+                )
+              ) : (
+                <Badge>Prioridad {Math.round(r.trend.score)}/100</Badge>
+              )}
+            </div>
+            {r.platform === "youtube" && (
+              <p className="small muted">
+                {youtubeViews != null
+                  ? `${num(youtubeViews)} vistas públicas reportadas por YouTube.`
+                  : "Esta referencia no incluye un contador público de vistas."}
+                {r.trend.priorityMetric?.origin
+                  ? ` Fuente: ${r.trend.priorityMetric.origin}.`
+                  : ""}
+              </p>
+            )}
+            <ul>
+              {(r.trend.scoreReasons || []).map((s, i) => (
+                <li key={i}>{s}</li>
+              ))}
+            </ul>
+            <p className="small muted">
+              Observado {timeAgo(r.trend.observedAt)}
+              {r.trend.previousObservedAt
+                ? ` · Observación anterior: ${timeAgo(r.trend.previousObservedAt)}`
+                : " · Sin observación anterior"}
+            </p>
+          </div>
+        )}
+        {videoCandidate && videoPolicy?.allowed !== true && (
+          <section className="video-analysis-section">
+            <h3>Lectura audiovisual restringida</h3>
+            <p className="small muted">
+              {videoPolicy?.reason || "Análisis audiovisual no disponible."}
+            </p>
+          </section>
+        )}
+        {videoCandidate && videoPolicy?.allowed === true && (
+          <section
+            className="video-analysis-section"
+            aria-labelledby="video-analysis-title"
+          >
+            <div className="video-analysis-heading">
+              <div>
+                <h3 id="video-analysis-title">Lectura audiovisual</h3>
+              </div>
+              {r.videoAnalysis && (
+                <Badge tone="green">
+                  {r.videoAnalysis.contentScope === "sampled_video"
+                    ? "Video por muestras"
+                    : "Video y audio"}
+                </Badge>
+              )}
+            </div>
+            <p className="small muted">
+              Se enviará a Gemini; puede tener coste. Máximo 20 minutos y 50 MB.
+            </p>
+            <div className="video-access-note">
+              <span className="signal-dot" />
+              {videoAccessLabel(r, state.assets)}
+            </div>
+            {!videoAccessible && (
+              <p className="small muted">
+                Sin archivo audiovisual; solo metadatos.
+              </p>
+            )}
+            {r.isDemo && (
+              <p className="small muted">Los ejemplos no se envían a Gemini.</p>
+            )}
+            {geminiStatus === "loading" && (
+              <p className="small muted">Consultando la conexión de Gemini…</p>
+            )}
+            {geminiStatus === "missing" && (
+              <p className="small muted">
+                Gemini no configurado.{" "}
+                <button
+                  className="text-button"
+                  type="button"
+                  onClick={() => navigate("settings")}
+                >
+                  Fuentes y equipo
+                </button>
+                .
+              </p>
+            )}
+            {geminiStatus === "error" && (
+              <p className="small muted" role="status">
+                No se pudo consultar Gemini. Revisa la conexión en Fuentes y
+                equipo.
+              </p>
+            )}
+            {state.brand.role === "reviewer" && (
+              <p className="small muted">Tu rol no permite iniciar análisis.</p>
+            )}
+            {!r.isDemo && videoAccessible && geminiStatus === "configured" && (
+              <div className="video-analysis-controls">
+                <Field
+                  label="Foco de análisis (opcional)"
+                  value={videoFocus}
+                  maxLength={500}
+                  onChange={(event) => setVideoFocus(event.target.value)}
+                  placeholder="Ej. ritmo del montaje y texto en pantalla"
+                  disabled={
+                    !!busy ||
+                    !!committedDraft ||
+                    state.brand.role === "reviewer"
+                  }
+                />
+                <Button
+                  variant="primary"
+                  busy={busy === "video-analysis"}
+                  disabled={!mayAnalyzeVideo || !!busy || !!committedDraft}
+                  onClick={() => void analyzeVideo()}
+                >
+                  <Video size={16} />
+                  {r.videoAnalysis
+                    ? "Volver a examinar video"
+                    : "Examinar video"}
+                </Button>
+              </div>
+            )}
+            {videoError && (
+              <p className="form-error" role="alert">
+                {videoError}
+              </p>
+            )}
+            {r.videoAnalysis && (
+              <VideoAnalysisResult analysis={r.videoAnalysis} />
+            )}
+          </section>
+        )}
+        {r.analysis ? (
+          <>
+            <p className="small muted analysis-scope-note">
+              Análisis de texto y metadatos.
+            </p>
+            <div className="analysis-grid">
+              <div className="analysis-block">
+                <h4 className="analysis-label">Gancho</h4>
+                <p>{r.analysis.hook}</p>
+              </div>
+              <div className="analysis-block">
+                <h4 className="analysis-label">Afinidad</h4>
+                <h3>{r.analysis.relevance}/100</h3>
+                <p>{r.analysis.adaptation}</p>
+              </div>
+              <div className="analysis-block full">
+                <div className="row">
+                  <h4 className="analysis-label">Hipótesis</h4>
+                  <Badge tone="amber">
+                    Hipótesis ·{" "}
+                    {r.analysis.confidence === "high"
+                      ? "confianza alta"
+                      : r.analysis.confidence === "medium"
+                        ? "confianza media"
+                        : "confianza baja"}
+                  </Badge>
+                </div>
+                <p>{r.analysis.hypothesis}</p>
+              </div>
+              <div className="analysis-block full">
+                <h4 className="analysis-label">Repetición en lo observado</h4>
+                <Badge
+                  tone={
+                    r.analysis.saturation === "low"
+                      ? "green"
+                      : r.analysis.saturation === "high"
+                        ? "red"
+                        : "neutral"
+                  }
+                >
+                  {saturationNames[r.analysis.saturation]}
+                </Badge>
+                <p>{r.analysis.saturationReason}</p>
+                <div className="small muted">
+                  {r.analysis.engine === "ai" ? "IA" : "Reglas locales"}
+                </div>
+              </div>
+            </div>
+          </>
+        ) : null}
+        <div className="detail-actions">
+          <Button
+            busy={busy === "analyze"}
+            disabled={
+              referenceRestricted ||
+              !!busy ||
+              !!committedDraft ||
+              state.brand.role === "reviewer"
+            }
+            onClick={() => void analyze()}
+          >
+            <Sparkles size={16} />
+            {r.analysis ? "Actualizar análisis" : "Analizar referencia"}
+          </Button>
+          <label className="sr-only" htmlFor="draft-format">
+            Formato del guion
+          </label>
+          <select
+            id="draft-format"
+            value={format}
+            disabled={!!busy || !!committedDraft}
+            onChange={(e) => setFormat(e.target.value)}
+          >
+            <option value="post">Post</option>
+            <option value="carousel">Carrusel</option>
+            <option value="reel">Guion de reel</option>
+            <option value="newsletter">Newsletter</option>
+          </select>
+          <select
+            aria-label="Audiencia del guion"
+            value={segmentId}
+            disabled={!!busy || !!committedDraft}
+            onChange={(e) => setSegmentId(e.target.value)}
+          >
+            <option value="">Audiencia general</option>
+            {state.brand.audience.map((s) => (
+              <option key={s.id} value={s.id}>
+                {s.name}
+              </option>
+            ))}
+          </select>
+          <Button
+            variant="primary"
+            busy={busy === "draft"}
+            disabled={
+              referenceRestricted || !!busy || state.brand.role === "reviewer"
+            }
+            onClick={() => void draft()}
+          >
+            <FileText size={16} />
+            {committedDraft ? "Reintentar actualización" : "Crear guion"}
+          </Button>
+        </div>
+        {draftError && (
+          <p className="form-error" role="alert">
+            {draftError}
+          </p>
         )}
       </div>
-      {r.originalUrlOmitted && (
-        <p className="small muted">
-          El enlace original se omitió porque no cumple las reglas de citas
-          públicas. El contexto aportado sigue disponible.
-        </p>
-      )}
-      <h2 className="detail-title">{r.title}</h2>
-      <ProviderCredits reference={r} />
-      {referenceRestricted && (
-        <p className="form-error" role="status">
-          {r.accessPolicy?.reason}
-        </p>
-      )}
-      {r.text && <p className="detail-text">{r.text}</p>}
-      {(r.assetId || r.format === "document") && (
-        <section className="reference-attachment" aria-label="Archivo adjunto">
-          <div className="reference-attachment-info">
-            <strong>Archivo adjunto</strong>
-            {attachment && (
-              <>
-                <span className="reference-attachment-name">
-                  {attachment.name}
-                </span>
-                <span className="small muted">
-                  {attachment.mimeType} ·{" "}
-                  {new Intl.NumberFormat("es").format(attachment.size)} bytes
-                </span>
-              </>
-            )}
-            <p className="small muted">
-              Archivo aportado por el equipo. Su descarga requiere acceso a esta
-              empresa; no es un enlace público.
-            </p>
-          </div>
-          <div className="reference-attachment-action" aria-live="polite">
-            {!attachment ? (
-              <p role="status">
-                No hay un archivo adjunto disponible. Pide al equipo que vuelva
-                a adjuntar el original desde Agregar referencia.
-              </p>
-            ) : attachmentStatus === "available" ? (
-              <a
-                className="button secondary"
-                href={attachmentUrl}
-                download={attachment.name}
-              >
-                <Download size={16} aria-hidden="true" />
-                Descargar original adjunto
-              </a>
-            ) : attachmentStatus === "checking" ? (
-              <p role="status">Comprobando el archivo adjunto…</p>
-            ) : (
-              <>
-                <p role="status">
-                  {attachmentStatus === "missing"
-                    ? "El archivo adjunto ya no está disponible. Pide al equipo que vuelva a adjuntar el original."
-                    : attachmentStatus === "unauthorized"
-                      ? "No se pudo autorizar la descarga. Comprueba tu sesión y tu acceso a esta empresa."
-                      : "No se pudo comprobar el archivo. Vuelve a intentarlo para habilitar la descarga."}
-                </p>
-                <Button
-                  onClick={() => setAttachmentRetry((value) => value + 1)}
-                >
-                  Volver a comprobar
-                </Button>
-              </>
-            )}
-          </div>
-        </section>
-      )}
-      {attachment?.type === "image" && (
-        <img className="reference-image" src={attachment.url} alt={r.title} />
-      )}
-      {r.trend && (
-        <div className="evidence-box">
-          <div className="row">
-            <TrendingUp size={17} />
-            <strong>
-              {r.platform === "youtube"
-                ? "Métricas observadas · YouTube"
-                : trendLabel(r)}
-            </strong>
-            {r.platform === "youtube" ? (
-              r.trend.priorityMetric?.rank != null && (
-                <Badge>
-                  Posición {r.trend.priorityMetric.rank} dentro de esta consulta
-                </Badge>
-              )
-            ) : (
-              <Badge>Prioridad {Math.round(r.trend.score)}/100</Badge>
-            )}
-          </div>
-          {r.platform === "youtube" && (
-            <p className="small muted">
-              {youtubeViews != null
-                ? `${num(youtubeViews)} vistas públicas reportadas por YouTube.`
-                : "Esta referencia no incluye un contador público de vistas."}
-              {r.trend.priorityMetric?.origin
-                ? ` Fuente de la métrica: ${r.trend.priorityMetric.origin}.`
-                : " No se calcula un ranking global entre redes."}
-            </p>
-          )}
-          <ul>
-            {(r.trend.scoreReasons || []).map((s, i) => (
-              <li key={i}>{s}</li>
-            ))}
-          </ul>
-          <p className="small muted">
-            Observado {timeAgo(r.trend.observedAt)}
-            {r.trend.previousObservedAt
-              ? ` · Observación anterior: ${timeAgo(r.trend.previousObservedAt)}`
-              : " · Primera observación; el crecimiento todavía no está demostrado."}
-          </p>
-        </div>
-      )}
-      {videoCandidate && videoPolicy?.allowed !== true && (
-        <section className="video-analysis-section">
-          <h3>Lectura audiovisual restringida</h3>
-          <p className="small muted">
-            {videoPolicy?.reason ||
-              "El análisis de video necesita una revisión de derechos y tratamiento de datos. Puedes trabajar con texto propio."}
-          </p>
-        </section>
-      )}
-      {videoCandidate && videoPolicy?.allowed === true && (
-        <section
-          className="video-analysis-section"
-          aria-labelledby="video-analysis-title"
-        >
-          <div className="video-analysis-heading">
-            <div>
-              <h3 id="video-analysis-title">Lectura audiovisual</h3>
-            </div>
-            {r.videoAnalysis && (
-              <Badge tone="green">
-                {r.videoAnalysis.contentScope === "sampled_video"
-                  ? "Video por muestras"
-                  : "Video y audio"}
-              </Badge>
-            )}
-          </div>
-          <p className="small muted">
-            Al iniciar, el video accesible se envía a Gemini para examinar sus
-            imágenes y audio. Esta acción puede tener coste. El archivo debe
-            cumplir los límites de esta implementación: hasta 20 minutos y 50
-            MB.
-          </p>
-          <div className="video-access-note">
-            <span className="signal-dot" />
-            {videoAccessLabel(r, state.assets)}
-          </div>
-          {!videoAccessible && (
-            <p className="small muted">
-              Solo hay metadatos disponibles. No se puede examinar el contenido
-              audiovisual de esta referencia.
-            </p>
-          )}
-          {r.isDemo && (
-            <p className="small muted">
-              Las referencias de ejemplo no se envían al proveedor de análisis.
-            </p>
-          )}
-          {geminiStatus === "loading" && (
-            <p className="small muted">Consultando la conexión de Gemini…</p>
-          )}
-          {geminiStatus === "missing" && (
-            <p className="small muted">
-              Gemini no está configurado para esta marca. Un propietario puede
-              conectarlo en{" "}
-              <button
-                className="text-button"
-                type="button"
-                onClick={() => navigate("settings")}
-              >
-                Fuentes y equipo
-              </button>
-              .
-            </p>
-          )}
-          {geminiStatus === "error" && (
-            <p className="small muted" role="status">
-              No se pudo consultar el estado de Gemini. Revisa la configuración
-              de la marca antes de analizar.
-            </p>
-          )}
-          {state.brand.role === "reviewer" && (
-            <p className="small muted">
-              Tu rol de revisor no permite iniciar análisis.
-            </p>
-          )}
-          {!r.isDemo && videoAccessible && geminiStatus === "configured" && (
-            <div className="video-analysis-controls">
-              <Field
-                label="Foco de análisis (opcional)"
-                value={videoFocus}
-                maxLength={500}
-                onChange={(event) => setVideoFocus(event.target.value)}
-                placeholder="Ej. ritmo del montaje y texto en pantalla"
-                disabled={
-                  !!busy || !!committedDraft || state.brand.role === "reviewer"
-                }
-              />
-              <Button
-                variant="primary"
-                busy={busy === "video-analysis"}
-                disabled={!mayAnalyzeVideo || !!busy || !!committedDraft}
-                onClick={() => void analyzeVideo()}
-              >
-                <Video size={16} />
-                {r.videoAnalysis ? "Volver a examinar video" : "Examinar video"}
-              </Button>
-            </div>
-          )}
-          {videoError && (
-            <p className="form-error" role="alert">
-              {videoError}
-            </p>
-          )}
-          {r.videoAnalysis && (
-            <VideoAnalysisResult analysis={r.videoAnalysis} />
-          )}
-        </section>
-      )}
-      {r.analysis ? (
-        <>
-          <p className="small muted analysis-scope-note">
-            Análisis editorial de texto y metadatos. No describe el audio ni las
-            imágenes del video.
-          </p>
-          <div className="analysis-grid">
-            <div className="analysis-block">
-              <h4 className="analysis-label">El gancho</h4>
-              <p>{r.analysis.hook}</p>
-            </div>
-            <div className="analysis-block">
-              <h4 className="analysis-label">Relevancia para tu marca</h4>
-              <h3>{r.analysis.relevance}/100</h3>
-              <p>{r.analysis.adaptation}</p>
-            </div>
-            <div className="analysis-block full">
-              <div className="row">
-                <h4 className="analysis-label">Por qué pudo funcionar</h4>
-                <Badge tone="amber">
-                  Hipótesis ·{" "}
-                  {r.analysis.confidence === "high"
-                    ? "confianza alta"
-                    : r.analysis.confidence === "medium"
-                      ? "confianza media"
-                      : "confianza baja"}
-                </Badge>
-              </div>
-              <p>{r.analysis.hypothesis}</p>
-            </div>
-            <div className="analysis-block full">
-              <h4 className="analysis-label">Repetición en lo observado</h4>
-              <Badge
-                tone={
-                  r.analysis.saturation === "low"
-                    ? "green"
-                    : r.analysis.saturation === "high"
-                      ? "red"
-                      : "neutral"
-                }
-              >
-                {saturationNames[r.analysis.saturation]}
-              </Badge>
-              <p>{r.analysis.saturationReason}</p>
-              <div className="small muted">
-                {r.analysis.engine === "ai"
-                  ? "Análisis con IA configurada"
-                  : "Análisis orientativo por reglas locales"}{" "}
-                · No demuestra causalidad ni saturación global.
-              </div>
-            </div>
-          </div>
-        </>
-      ) : (
-        <div className="callout">
-          <Sparkles size={20} />
-          <div>
-            <strong>¿Qué oportunidad editorial hay detrás?</strong>
-            <p>
-              El análisis de referencia usa texto y metadatos disponibles. Para
-              trabajar con audio o imágenes se necesita un permiso de uso y
-              tratamiento verificado; la lectura audiovisual está restringida.
-            </p>
-          </div>
-        </div>
-      )}
-      <div className="detail-actions">
-        <Button
-          busy={busy === "analyze"}
-          disabled={
-            referenceRestricted ||
-            !!busy ||
-            !!committedDraft ||
-            state.brand.role === "reviewer"
-          }
-          onClick={() => void analyze()}
-        >
-          <Sparkles size={16} />
-          {r.analysis ? "Actualizar análisis" : "Analizar referencia"}
-        </Button>
-        <label className="sr-only" htmlFor="draft-format">
-          Formato del guion
-        </label>
-        <select
-          id="draft-format"
-          value={format}
-          disabled={!!busy || !!committedDraft}
-          onChange={(e) => setFormat(e.target.value)}
-        >
-          <option value="post">Post</option>
-          <option value="carousel">Carrusel</option>
-          <option value="reel">Guion de reel</option>
-          <option value="newsletter">Newsletter</option>
-        </select>
-        <select
-          aria-label="Audiencia del guion"
-          value={segmentId}
-          disabled={!!busy || !!committedDraft}
-          onChange={(e) => setSegmentId(e.target.value)}
-        >
-          <option value="">Audiencia general</option>
-          {state.brand.audience.map((s) => (
-            <option key={s.id} value={s.id}>
-              {s.name}
-            </option>
-          ))}
-        </select>
-        <Button
-          variant="primary"
-          busy={busy === "draft"}
-          disabled={
-            referenceRestricted || !!busy || state.brand.role === "reviewer"
-          }
-          onClick={() => void draft()}
-        >
-          <FileText size={16} />
-          {committedDraft ? "Reintentar actualización" : "Crear guion"}
-        </Button>
-      </div>
-      {draftError && (
-        <p className="form-error" role="alert">
-          {draftError}
-        </p>
-      )}
-      <p className="small muted">
-        La adaptación y el guion siempre quedan disponibles para revisión
-        humana.
-      </p>
     </Modal>
   );
 }
@@ -1612,11 +1546,6 @@ function VideoAnalysisResult({ analysis }: { analysis: VideoAnalysis }) {
           </ul>
         </div>
       )}
-      <p className="small muted">
-        El análisis describe señales observadas en el contenido disponible; no
-        demuestra por qué tuvo su rendimiento ni equivale a generar o editar
-        video.
-      </p>
     </div>
   );
 }
@@ -1633,14 +1562,10 @@ export function InboxPage() {
     )
     .sort((a, b) => b.createdAt.localeCompare(a.createdAt));
   return (
-    <div className="page">
+    <div className="page references-page">
       <div className="page-heading">
         <div>
-          <h1>Las referencias, en un solo lugar.</h1>
-          <p>
-            Lo que viste, lo que te enviaron y lo que vale la pena volver a
-            mirar.
-          </p>
+          <h1>Referencias</h1>
         </div>
         <Button
           variant="primary"
@@ -1663,6 +1588,7 @@ export function InboxPage() {
             <button
               key={v}
               className={filter === v ? "active" : ""}
+              aria-pressed={filter === v}
               onClick={() => setFilter(v)}
             >
               {l}
@@ -1738,23 +1664,15 @@ export function InboxPage() {
       ) : (
         <EmptyState
           icon={<Link />}
-          title={
-            state.references.length
-              ? "No hay referencias que coincidan"
-              : "Nada se pierde si tiene su lugar"
-          }
+          title={state.references.length ? "Sin resultados" : "Sin referencias"}
           action={
             !state.references.length ? (
               <Button onClick={() => setCapture(true)}>
-                Agregar mi primera referencia
+                Agregar referencia
               </Button>
             ) : undefined
           }
-        >
-          {state.references.length
-            ? "Prueba otra palabra, borra la búsqueda o revisa el filtro de estado."
-            : "Guarda enlaces, texto y capturas para que todo el equipo pueda convertirlos en oportunidades."}
-        </EmptyState>
+        />
       )}
       {capture && <CaptureModal onClose={() => setCapture(false)} />}
       {selected && (
@@ -1839,7 +1757,7 @@ export function CaptureModal({ onClose }: { onClose: () => void }) {
         return;
       }
       onClose();
-      notify("Referencia guardada. Ya forma parte de tu radar.");
+      notify("Referencia guardada.");
     } catch (e) {
       setError((e as Error).message);
     } finally {
@@ -1848,12 +1766,8 @@ export function CaptureModal({ onClose }: { onClose: () => void }) {
     }
   }
   return (
-    <Modal title="Una buena referencia merece quedarse" onClose={close}>
-      <p className="muted">
-        Comparte lo que te llamó la atención. Añade contexto para que el
-        análisis tenga mejores señales.
-      </p>
-      <form className="stack" onSubmit={submit}>
+    <Modal title="Agregar una referencia" onClose={close}>
+      <form className="stack reference-capture" onSubmit={submit}>
         <Field
           label="Enlace original"
           name="url"
@@ -1863,8 +1777,8 @@ export function CaptureModal({ onClose }: { onClose: () => void }) {
           disabled={busy || !!committedReference}
         />
         <p id="capture-url-hint" className="small muted">
-          Usa un enlace público sin credenciales. Guardarlo como cita no
-          confirma que se haya leído la página.
+          URL pública, sin credenciales. Guardar el enlace no importa su
+          contenido.
         </p>
         <Field
           label="Título o idea"
@@ -1898,10 +1812,7 @@ export function CaptureModal({ onClose }: { onClose: () => void }) {
           <span>
             {file ? file.name : "Adjuntar captura, video o documento"}
           </span>
-          <small>
-            Hasta 25 MiB · Un archivo por referencia. TXT, Markdown y CSV en
-            UTF-8.
-          </small>
+          <small>1 archivo · Máx. 25 MiB · Texto en UTF-8</small>
           <input
             type="file"
             accept="image/*,video/*,audio/*,.pdf,.txt,.md,.csv"
@@ -1923,10 +1834,8 @@ export function CaptureModal({ onClose }: { onClose: () => void }) {
           />
         </label>
         <p className="small muted">
-          Puedes analizar el texto que aportes y conservar archivos o enlaces
-          como referencias. El análisis audiovisual no está disponible
-          actualmente; subir un video o una captura no lo procesa. Hasta 25 MiB
-          por archivo.
+          Se analiza el texto aportado. Los adjuntos se guardan sin análisis
+          audiovisual.
         </p>
         {error && (
           <p className="form-error" role="alert">

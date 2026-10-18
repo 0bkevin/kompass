@@ -1,0 +1,76 @@
+{
+  "date": "2026-10-18",
+  "base": "9fd8e9a92a389540d4e8fd04d00a03fab6790bd7",
+  "ports": {
+    "web": 5188,
+    "api": 3038
+  },
+  "tests": {
+    "total": 586,
+    "pass": 586,
+    "fail": 0,
+    "skipped": 0,
+    "durationMs": 44046.056009
+  },
+  "build": {
+    "viteClient": true,
+    "viteServer": true,
+    "typescript": true,
+    "afterFinalUICorrections": true
+  },
+  "format": true,
+  "diffCheck": true,
+  "viewports": {
+    "desktop": [1280, 800],
+    "mobile": [390, 844],
+    "additionalReflowWidths": [320, 768, 1440]
+  },
+  "horizontalOverflow": false,
+  "contrast": {
+    "checkedTextElements": 99,
+    "minimumRatio": 5.4,
+    "failures": 0
+  },
+  "keyboard": {
+    "arrows": true,
+    "homeEnd": true,
+    "singleTabStop": true,
+    "focusWidthPx": 2,
+    "focusOffsetPx": 5,
+    "focusedCTATransition": "0s",
+    "panelAnimationCount": 0
+  },
+  "reducedMotion": {
+    "sourceAudited": true,
+    "cssomBranchExecuted": true,
+    "activeAnimations": 0,
+    "nativeOSPreferenceEmulated": false
+  },
+  "cta": {
+    "signup": true,
+    "login": true,
+    "demo": true,
+    "demoFailureRetry": true,
+    "existingSessionPreserved": true,
+    "rootInvites": true,
+    "rootGoogleErrors": true,
+    "legacyFullLoadHash": true
+  },
+  "console": {
+    "instrumentedInteractionErrors": 0,
+    "failedFinalResources": 0,
+    "historicalT3EntriesTruncated": true
+  },
+  "review": {
+    "visualRounds": 2,
+    "detectorRuns": 1,
+    "motionVerdict": "Approve",
+    "finishVerdict": "ship — all five scored fixes resolved; verdict pass scope"
+  },
+  "limitations": [
+    "No deployment",
+    "No conversion experiment",
+    "No physical-device/GPU profiling",
+    "No live provider credentials copied"
+  ]
+}

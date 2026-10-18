@@ -154,20 +154,18 @@ export default function SocialConnections() {
     if (typeof window === "undefined") return "";
     const search = new URLSearchParams(window.location.search);
     if (search.get("socialConnected") === "youtube")
-      return "Canal de YouTube conectado con permiso de lectura.";
+      return "YouTube conectado con permiso de lectura.";
     const messages: Record<string, string> = {
-      unavailable:
-        "La conexión con Google aún no está habilitada. Puedes seguir usando la consulta pública de YouTube si está disponible.",
+      unavailable: "Conexión con Google no habilitada.",
       invalid_state:
-        "La solicitud de conexión caducó o cambió la sesión. Pulsa Conectar YouTube para empezar de nuevo.",
-      cancelled:
-        "No se conectó el canal porque se canceló la autorización. Puedes volver a intentarlo cuando quieras.",
+        "La solicitud caducó o cambió la sesión. Vuelve a conectar YouTube.",
+      cancelled: "Autorización cancelada. El canal no se conectó.",
       connection_failed:
-        "No pudimos completar la conexión del canal. Vuelve a intentarlo y revisa que Google conceda acceso de lectura a YouTube.",
+        "No se pudo conectar el canal. Reintenta y concede acceso de lectura a YouTube.",
       no_channel:
-        "Esta cuenta de Google no tiene un canal de YouTube disponible. Esto no cambia el acceso público de la plataforma.",
+        "La cuenta de Google no tiene un canal de YouTube disponible.",
       missing_scope:
-        "Google no concedió permiso de lectura de YouTube. Vuelve a conectar y acepta ese permiso para consultar el canal.",
+        "Falta permiso de lectura de YouTube. Vuelve a conectar y acéptalo.",
     };
     return messages[search.get("socialError") || ""] || "";
   });
@@ -211,7 +209,7 @@ export default function SocialConnections() {
         result.revoked
           ? "Cuenta desconectada y acceso revocado."
           : result.reason ||
-              "Cuenta desconectada de este espacio. Puedes revisar el acceso restante en la configuración de tu cuenta de Google.",
+              "Cuenta desconectada. Revisa el acceso restante en tu cuenta de Google.",
       );
     } catch (cause) {
       if (activeBase.current === base)
@@ -234,7 +232,7 @@ export default function SocialConnections() {
       await api(provider.enableUrl, { method: "POST", body: json({}) });
       if (activeBase.current !== base) return;
       await load();
-      setMessage("Consulta pública de YouTube activada para esta empresa.");
+      setMessage("Consulta pública de YouTube activada.");
     } catch (cause) {
       if (activeBase.current === base)
         setError(
@@ -246,18 +244,15 @@ export default function SocialConnections() {
   }
   return (
     <section
+      id="social-connections"
       className="card settings-section social-connections"
       aria-labelledby="social-connections-heading"
     >
       <div className="section-heading">
         <div>
           <h2 id="social-connections-heading">
-            <Link2 size={20} /> Cuentas y datos de tus redes
+            <Link2 size={20} /> Cuentas de redes
           </h2>
-          <p className="muted">
-            Consulta contenido público y actualiza sus cifras desde las
-            conexiones disponibles.
-          </p>
         </div>
         <Button onClick={() => void reload()} busy={loading}>
           <RefreshCw size={16} /> Actualizar
@@ -270,7 +265,7 @@ export default function SocialConnections() {
       )}
       {loading && !data && (
         <p className="muted" role="status">
-          Consultando las conexiones de esta empresa…
+          Consultando conexiones…
         </p>
       )}
       {data && (
@@ -295,14 +290,14 @@ export default function SocialConnections() {
                         ? "Cuenta conectada"
                         : provider.ready
                           ? "Consulta pública disponible"
-                          : "Aún no disponible"}
+                          : "No disponible"}
                   </Badge>
                 </div>
                 {provider.connection ? (
                   <>
                     <p>{provider.connection.name}</p>
                     <p className="small muted">
-                      Acceso de lectura. Última sincronización:{" "}
+                      Solo lectura · Última sincronización:{" "}
                       {dateTime(provider.connection.lastSyncedAt)}.
                     </p>
                     {provider.connection.lastError && (
@@ -311,14 +306,12 @@ export default function SocialConnections() {
                       </p>
                     )}
                   </>
-                ) : (
+                ) : !provider.ready ? (
                   <p className="small muted">
                     {provider.reason ||
-                      (provider.ready
-                        ? "Puedes consultar videos públicos y sus cifras sin conectar un canal propio."
-                        : "El administrador de la plataforma debe habilitar esta conexión.")}
+                      "El administrador debe habilitar la conexión."}
                   </p>
-                )}
+                ) : null}
               </div>
               {owner && (
                 <div className="social-provider-actions">
@@ -360,16 +353,14 @@ export default function SocialConnections() {
       {data && (
         <p className="social-scope-note">
           {data.automaticSync.enabled
-            ? `Las cifras de las publicaciones vinculadas se actualizan automáticamente cada ${data.automaticSync.intervalMinutes} minutos.`
-            : "La actualización automática todavía no está activa. Podrás consultar su estado en Resultados."}{" "}
-          Estas conexiones permiten consultar datos; la publicación directa se
-          gestiona por separado.
+            ? `Actualización automática cada ${data.automaticSync.intervalMinutes} minutos.`
+            : "Actualización automática desactivada."}
         </p>
       )}
       <SyncHealth sync={data?.automaticSync} />
       {!owner && (
         <p className="small muted">
-          El propietario de la empresa puede conectar o desconectar cuentas.
+          Solo el propietario puede conectar o desconectar cuentas.
         </p>
       )}
       {error && (
@@ -391,8 +382,8 @@ function SyncHealth({ sync }: { sync?: Connections["automaticSync"] }) {
       </p>
       <p className="small muted">
         {sync.lastSyncedAt
-          ? `Última actualización completada: ${dateTime(sync.lastSyncedAt)}. Los datos guardados conservan su fecha de consulta.`
-          : "Todavía no hay una actualización completada en este espacio."}
+          ? `Última actualización: ${dateTime(sync.lastSyncedAt)}.`
+          : "Sin actualizaciones completadas."}
       </p>
     </div>
   );
@@ -468,12 +459,8 @@ function SocialDiscoveryPanel() {
       <div className="social-panel-heading">
         <div>
           <h2 id="social-discovery-heading">
-            <Youtube size={20} /> Explora videos de YouTube
+            <Youtube size={20} /> YouTube · últimos 7 días
           </h2>
-          <p>
-            Busca videos publicados en los últimos 7 días y consulta sus cifras
-            en la fuente oficial.
-          </p>
         </div>
         {ready && <Badge tone="green">API oficial disponible</Badge>}
       </div>
@@ -484,12 +471,11 @@ function SocialDiscoveryPanel() {
           void search();
         }}
       >
-        <Field label="¿Qué tema o empresa quieres explorar?">
+        <Field label="Tema o empresa">
           <input
             value={query}
             maxLength={200}
             onChange={(event) => setQuery(event.target.value)}
-            placeholder="Por ejemplo: 30X inteligencia artificial"
             disabled={busy || !canEdit}
           />
         </Field>
@@ -506,14 +492,9 @@ function SocialDiscoveryPanel() {
         <p className="social-scope-note">
           {connections.providers.find((provider) => provider.id === "youtube")
             ?.reason ||
-            "La conexión con YouTube todavía no está disponible. Revisa su estado en Fuentes y equipo."}
+            "YouTube no está disponible. Revisa la conexión en Fuentes y equipo."}
         </p>
       )}
-      <p className="small muted">
-        Las cifras son acumuladas y corresponden al momento de la consulta. Una
-        búsqueda no demuestra crecimiento ni explica por qué funcionó un video.
-        Los resultados se mantienen fuera del análisis editorial con IA.
-      </p>
       {(error || connectionError) && (
         <p className="form-error" role="alert">
           {error || connectionError}
@@ -535,8 +516,8 @@ function SocialDiscoveryPanel() {
           {!data.items.length ? (
             <p className="social-empty">
               {data.query
-                ? "No encontramos videos de los últimos 7 días para esta búsqueda. Prueba un tema más amplio."
-                : "Escribe un tema para descubrir los primeros videos."}
+                ? "Sin videos de los últimos 7 días para esta búsqueda."
+                : "Sin búsquedas."}
             </p>
           ) : (
             <div className="social-catalog-list">
@@ -564,6 +545,11 @@ function SocialDiscoveryPanel() {
                 </article>
               ))}
             </div>
+          )}
+          {!!data.items.length && (
+            <p className="small muted">
+              Contadores acumulados · Resultados excluidos del análisis con IA.
+            </p>
           )}
         </>
       )}
@@ -688,9 +674,7 @@ function AutomaticMetricsPanel() {
       await load();
       setLinkForm(false);
       setLinkedPublication(null);
-      setLinkMessage(
-        "Video vinculado. Pulsa Actualizar cifras para consultar sus contadores públicos.",
-      );
+      setLinkMessage("Video vinculado.");
     } catch (cause) {
       setError(
         savedLink
@@ -715,7 +699,7 @@ function AutomaticMetricsPanel() {
       });
       await load();
       setLinkMessage(
-        "Vínculo y cifras guardadas eliminados. La pieza conserva su estado editorial.",
+        "Vínculo y cifras eliminados. Estado editorial sin cambios.",
       );
     } catch (cause) {
       setError(
@@ -744,11 +728,7 @@ function AutomaticMetricsPanel() {
     >
       <div className="social-panel-heading">
         <div>
-          <h2 id="automatic-metrics-heading">Cifras de videos vinculados</h2>
-          <p>
-            Datos públicos de YouTube, separados de los resultados que registra
-            tu equipo.
-          </p>
+          <h2 id="automatic-metrics-heading">Cifras automáticas de YouTube</h2>
         </div>
         <div className="social-metric-actions">
           {canLink && (
@@ -791,10 +771,6 @@ function AutomaticMetricsPanel() {
             void linkVideo(event.currentTarget);
           }}
         >
-          <p>
-            Relaciona una pieza aprobada con un video público de YouTube. No
-            necesitas introducir cifras manuales ni cambiar su estado editorial.
-          </p>
           {eligiblePieces.length ? (
             <>
               <Field label="Pieza de YouTube">
@@ -838,26 +814,29 @@ function AutomaticMetricsPanel() {
           ) : (
             <>
               <p className="small muted">
-                Primero necesitas una pieza para YouTube aprobada, programada o
-                publicada.
+                No hay piezas de YouTube aprobadas, programadas o publicadas.
               </p>
               <Button onClick={() => navigate("studio")}>Ir a contenido</Button>
             </>
           )}
         </form>
       )}
-      <p className="social-scope-note">
-        Vincula la URL de un video publicado a una pieza de esta empresa para
-        recuperar sus cifras.{" "}
-        {connections?.automaticSync.enabled
-          ? `La consulta se repite cada ${connections.automaticSync.intervalMinutes} minutos.`
-          : "La sincronización automática aún no está activa."}
-      </p>
+      {connections && (
+        <p className="social-scope-note">
+          {!ready
+            ? connections.providers.find(
+                (provider) => provider.id === "youtube",
+              )?.reason ||
+              "YouTube no está disponible. Revisa la conexión en Fuentes y equipo."
+            : connections.automaticSync.enabled
+              ? `Actualización automática cada ${connections.automaticSync.intervalMinutes} minutos.`
+              : "Actualización automática desactivada."}
+        </p>
+      )}
       <SyncHealth sync={connections?.automaticSync} />
       {state.brand.isDemo && (
         <p className="small muted">
-          Los videos reales se vinculan en una empresa propia. Este espacio
-          contiene datos de demostración.
+          Demostración: no permite vincular videos reales.
         </p>
       )}
       {linkMessage && (
@@ -885,7 +864,7 @@ function AutomaticMetricsPanel() {
               : !syncResult.synced &&
                   !syncResult.skipped &&
                   !syncResult.errors.length
-                ? "No hay videos vinculados listos para consultar. Vincula una pieza aprobada para recuperar sus cifras."
+                ? "Sin videos vinculados listos para consultar."
                 : `${syncResult.synced} publicaciones actualizadas · ${syncResult.skipped} sin actualizar.`}
           </p>
           {syncResult.errors.map((item) => (
@@ -934,10 +913,7 @@ function AutomaticMetricsPanel() {
         </div>
       )}
       {!loading && !snapshots.length && (
-        <p className="social-empty">
-          Todavía no hay cifras automáticas. Necesitas una conexión disponible y
-          el enlace de una publicación de YouTube.
-        </p>
+        <p className="social-empty">Sin cifras automáticas.</p>
       )}
       {!!snapshots.length && (
         <div className="social-catalog-list">
@@ -964,10 +940,6 @@ function AutomaticMetricsPanel() {
           ))}
         </div>
       )}
-      <p className="small muted">
-        La API no aporta leads ni resultados de negocio. Una cifra no disponible
-        se muestra como tal y no se convierte en cero.
-      </p>
     </section>
   );
 }

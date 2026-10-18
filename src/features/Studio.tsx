@@ -39,6 +39,11 @@ import PublishPiece from "./PublishPiece";
 import MediaProduction from "./MediaProduction";
 import "./studio-flow.css";
 
+const briefAdvice = new Set([
+  "La estructura local aplica formato, CTA, cantidad de láminas o escenas y ejemplo hipotético. Revisa manualmente el resto de la dirección editorial; se conserva aquí y no se añade al texto publicable.",
+  "Borrador generado con IA. Se comprobaron la estructura solicitada, el CTA exacto cuando se indicó y la etiqueta del ejemplo hipotético cuando se pidió. Revisa los hechos, la utilidad del ejemplo y el resto de la dirección editorial antes de aprobar.",
+]);
+
 export default function Studio() {
   const { state, refresh, notify, navigate, selectedPieceId, search } =
     useWorkspace();
@@ -53,14 +58,10 @@ export default function Studio() {
     .sort((a, b) => b.updatedAt.localeCompare(a.updatedAt));
   if (selected) return <PieceEditor key={selected.id} piece={selected} />;
   return (
-    <div className="page">
+    <div className="page studio-page">
       <div className="page-heading">
         <div>
-          <h1>Las ideas toman forma aquí.</h1>
-          <p>
-            Guiones editables, contexto de audiencia y un espacio para revisar
-            en equipo.
-          </p>
+          <h1>Contenido</h1>
         </div>
         <Button
           variant="primary"
@@ -71,7 +72,11 @@ export default function Studio() {
           Crear contenido
         </Button>
       </div>
-      <div className="tabs studio-tabs">
+      <div
+        className="tabs studio-tabs"
+        role="group"
+        aria-label="Estado de las piezas"
+      >
         {[
           ["all", "Todas las piezas"],
           ["draft", "Borradores"],
@@ -82,6 +87,7 @@ export default function Studio() {
           <button
             key={v}
             className={filter === v ? "active" : ""}
+            aria-pressed={filter === v}
             onClick={() => setFilter(v)}
           >
             {l}
@@ -139,20 +145,19 @@ export default function Studio() {
       ) : (
         <EmptyState
           icon={<Clapperboard size={28} />}
-          title="Tu siguiente pieza empieza con un ángulo"
+          title={
+            search || filter !== "all" ? "Sin coincidencias" : "Sin piezas"
+          }
           action={
             <Button
               variant="primary"
               disabled={state.brand.role === "reviewer"}
               onClick={() => setNewPiece(true)}
             >
-              Crear mi primer guion
+              Crear contenido
             </Button>
           }
-        >
-          Convierte una referencia en una estructura editable, o comienza con
-          una idea propia.
-        </EmptyState>
+        />
       )}
       {newPiece && <NewDraft onClose={() => setNewPiece(false)} />}
     </div>
@@ -206,15 +211,13 @@ function NewDraft({ onClose }: { onClose: () => void }) {
             if (result.status === "refresh-failed") {
               setCreatedPiece(result.piece);
               setError(
-                `El guion “${result.piece.title}” ya se creó, pero no pudimos actualizar la lista. Reintenta la actualización para abrir el guion; no se generará otro guion.`,
+                `El guion “${result.piece.title}” está creado. Reintenta la actualización; no se generará otro.`,
               );
               return;
             }
             onClose();
             navigate("studio", result.piece.id);
-            notify(
-              "Borrador listo. Revísalo y ajústalo antes de pedir aprobación.",
-            );
+            notify("Borrador creado.");
           } catch (e) {
             setError((e as Error).message);
           } finally {
@@ -227,28 +230,17 @@ function NewDraft({ onClose }: { onClose: () => void }) {
             name="topic"
             style={controlStyle}
             maxLength={200}
-            placeholder="¿Sobre qué quieres crear contenido?"
             disabled={busy || !!createdPiece}
           />
         </Field>
-        <Field label="Tu dirección editorial">
+        <Field label="Instrucciones">
           <textarea
             name="instructions"
             style={controlStyle}
-            placeholder="¿Qué quieres contar, desde qué ángulo y qué debería llevarse la audiencia?"
-            aria-describedby={
-              state.integrations.ai.ready ? undefined : "draft-directions-help"
-            }
             rows={3}
             disabled={busy || !!createdPiece}
           />
         </Field>
-        {!state.integrations.ai.ready && (
-          <p className="small muted" id="draft-directions-help">
-            Tus notas se guardan para revisión manual. En «Ajustar el borrador»
-            puedes elegir la estructura y el llamado a la acción.
-          </p>
-        )}
         <div className="form-grid">
           <Field label="Formato">
             <select
@@ -286,7 +278,7 @@ function NewDraft({ onClose }: { onClose: () => void }) {
             style={controlStyle}
             disabled={busy || !!createdPiece}
           >
-            <option value="">Audiencia general de la marca</option>
+            <option value="">Audiencia general</option>
             {state.brand.audience.map((s) => (
               <option key={s.id} value={s.id}>
                 {s.name}
@@ -295,7 +287,7 @@ function NewDraft({ onClose }: { onClose: () => void }) {
           </select>
         </Field>
         <details className="draft-options">
-          <summary>Ajustar el borrador (opcional)</summary>
+          <summary>Opciones del borrador</summary>
           <div className="stack draft-options-fields">
             <Field label="Referencia de origen (opcional)">
               <select
@@ -313,12 +305,11 @@ function NewDraft({ onClose }: { onClose: () => void }) {
                   ))}
               </select>
             </Field>
-            <Field label="Llamado a la acción exacto (opcional)">
+            <Field label="Llamado a la acción (opcional)">
               <input
                 name="cta"
                 style={controlStyle}
                 maxLength={2000}
-                placeholder="Por ejemplo: Descarga la plantilla de inventario."
                 disabled={busy || !!createdPiece}
               />
             </Field>
@@ -355,26 +346,12 @@ function NewDraft({ onClose }: { onClose: () => void }) {
                 <option value="no">Omitir</option>
               </select>
             </Field>
-            {!state.integrations.ai.ready && (
-              <details className="small">
-                <summary>
-                  Indicaciones simples que también reconoce en las notas
-                </summary>
-                <p>
-                  «4 láminas» o «3 escenas» (de 3 a 8), «ejemplo hipotético» y
-                  «CTA final exacto: “Tu texto.”». Para newsletter: «secciones:
-                  Registrar y Revisar» (de 2 a 8 títulos cortos). Los controles
-                  elegidos tienen prioridad y el formato siempre es el del
-                  selector.
-                </p>
-              </details>
-            )}
           </div>
         </details>
         <p className="small muted draft-engine-note">
           {state.integrations.ai.ready
-            ? "Se creará con la IA disponible en tu espacio. Después podrás editarlo y pedir revisión."
-            : "Se creará una estructura local editable. Revisa el contenido antes de pedir aprobación."}
+            ? "Generación con IA."
+            : "Estructura local, sin IA."}
         </p>
         {error && (
           <p className="form-error" role="alert">
@@ -690,11 +667,9 @@ function PieceEditor({ piece }: { piece: Piece }) {
           aria-label="Conflicto de edición"
         >
           <p className="form-error" role="alert">
-            Otra persona guardó una versión nueva mientras tenías cambios sin
-            guardar. Conservamos tu borrador local y bloqueamos el guardado y la
-            aprobación para no sobrescribir la versión actual. Puedes exportar
-            tus cambios o revisar la versión del servidor y cargarla después de
-            confirmar que quieres descartar tu borrador.
+            La pieza cambió en el servidor. Tus cambios locales se conservan; el
+            guardado y la aprobación están bloqueados hasta resolver el
+            conflicto.
           </p>
           {conflictLoadFailed ? (
             <p className="small muted">
@@ -742,9 +717,7 @@ function PieceEditor({ piece }: { piece: Piece }) {
       )}
       {missingAudience && (
         <p className="callout" role="alert">
-          La audiencia asociada ya no está disponible. El contenido de esta
-          pieza se conserva; elige Audiencia general u otra audiencia para poder
-          guardar.
+          La audiencia ya no está disponible. Reasígnala para guardar.
         </p>
       )}
       {piece.editorialBrief && (
@@ -752,13 +725,13 @@ function PieceEditor({ piece }: { piece: Piece }) {
           className="callout"
           style={{ display: "block", overflowWrap: "anywhere" }}
         >
-          <summary>
-            Brief y revisión pendiente (fuera del texto publicable)
-          </summary>
+          <summary>Brief editorial</summary>
           <div className="stack small" style={{ maxWidth: "75ch" }}>
-            {piece.editorialBrief.notes.map((note, index) => (
-              <p key={index}>{note}</p>
-            ))}
+            {piece.editorialBrief.notes
+              .filter((note) => !briefAdvice.has(note))
+              .map((note, index) => (
+                <p key={index}>{note}</p>
+              ))}
             <p>
               <strong>Controles aplicados:</strong>{" "}
               {formatNames[piece.editorialBrief.applied.format]}
@@ -773,8 +746,7 @@ function PieceEditor({ piece }: { piece: Piece }) {
                 : ""}
             </p>
             <p>
-              <strong>CTA aplicado al crear:</strong>{" "}
-              {piece.editorialBrief.applied.cta}
+              <strong>CTA original:</strong> {piece.editorialBrief.applied.cta}
             </p>
             <p>
               <strong>Necesidad de audiencia:</strong>{" "}
@@ -782,7 +754,7 @@ function PieceEditor({ piece }: { piece: Piece }) {
             </p>
             {piece.editorialBrief.instructions && (
               <div>
-                <strong>Dirección editorial original:</strong>
+                <strong>Instrucciones originales:</strong>
                 <p style={{ whiteSpace: "pre-wrap" }}>
                   {piece.editorialBrief.instructions}
                 </p>
@@ -790,8 +762,7 @@ function PieceEditor({ piece }: { piece: Piece }) {
             )}
             {piece.editorialBrief.angle && (
               <p>
-                <strong>Ángulo de partida para revisar:</strong>{" "}
-                {piece.editorialBrief.angle}
+                <strong>Enfoque original:</strong> {piece.editorialBrief.angle}
               </p>
             )}
             {piece.editorialBrief.referenceUrl && (
@@ -820,13 +791,9 @@ function PieceEditor({ piece }: { piece: Piece }) {
             )}
           </div>
         )}
-        <h2>El siguiente paso</h2>
         {piece.status === "draft" ? (
           <>
-            <p>
-              Revisa hechos, enfoque y voz de marca. Al enviar a revisión se
-              guardarán tus cambios.
-            </p>
+            {dirty && <p>Enviar a revisión guardará los cambios.</p>}
             <Button
               variant={dirty ? "secondary" : "primary"}
               disabled={readonly || !!busy || blockedByConflict}
@@ -839,11 +806,9 @@ function PieceEditor({ piece }: { piece: Piece }) {
           </>
         ) : piece.status === "review" ? (
           <>
-            <p>
-              {state.brand.role === "editor"
-                ? "La pieza está en revisión. Un propietario o revisor debe aprobarla antes de planificarla."
-                : "Confirma que la pieza está lista para sumarse al plan editorial."}
-            </p>
+            {state.brand.role === "editor" && (
+              <p>La aprobación requiere un propietario o revisor.</p>
+            )}
             <Button
               variant={dirty ? "secondary" : "primary"}
               disabled={
@@ -867,25 +832,16 @@ function PieceEditor({ piece }: { piece: Piece }) {
           </>
         ) : piece.status === "approved" ? (
           <>
-            <p>
-              Elige una fecha en tu calendario editorial. Después podrás
-              exportar el contenido y publicarlo desde tu canal.
-            </p>
             <Button
               variant="primary"
               disabled={readonly || !!busy || dirty || approvalBlocked}
               onClick={() => setSchedule(true)}
             >
-              Elegir fecha en el calendario
+              Agendar
             </Button>
           </>
         ) : (
           <>
-            <p>
-              {piece.status === "scheduled"
-                ? "Esta pieza está incluida en la grilla. El calendario organiza; no publica automáticamente."
-                : "Ya hay un registro de envío o publicación. Revisa el recibo, si lo hay, y añade los resultados que observes en tu canal."}
-            </p>
             <Button
               variant="primary"
               onClick={() =>
@@ -900,13 +856,13 @@ function PieceEditor({ piece }: { piece: Piece }) {
         )}
         {dirty && ["approved", "scheduled"].includes(piece.status) && (
           <p role="status">
-            Al guardar, la pieza volverá a borrador y necesitará una nueva
-            aprobación. También se retirará su fecha del calendario.
+            Guardar devuelve la pieza a borrador y elimina su aprobación y
+            fecha.
           </p>
         )}
         {["approved", "scheduled", "published"].includes(piece.status) && (
           <details className="editor-connector-options">
-            <summary>Envío con conector (opcional)</summary>
+            <summary>Envío con conector</summary>
             <PublishPiece
               piece={piece}
               disabled={!!busy || dirty || approvalBlocked}
@@ -918,23 +874,30 @@ function PieceEditor({ piece }: { piece: Piece }) {
       </section>
       <div className="editor-layout">
         <section className="card script-editor">
-          <div className="editor-tabs tabs">
+          <div
+            className="editor-tabs tabs"
+            role="group"
+            aria-label="Sección del editor"
+          >
             <button
               className={tab === "script" ? "active" : ""}
+              aria-pressed={tab === "script"}
               onClick={() => setTab("script")}
             >
               <SquarePen size={15} />
-              Guion y enfoque
+              Guion
             </button>
             <button
               ref={resourceTabRef}
               className={tab === "resources" ? "active" : ""}
+              aria-pressed={tab === "resources"}
               onClick={() => setTab("resources")}
             >
               Recursos
             </button>
             <button
               className={tab === "comments" ? "active" : ""}
+              aria-pressed={tab === "comments"}
               onClick={() => setTab("comments")}
             >
               <MessageSquare size={15} />
@@ -944,13 +907,6 @@ function PieceEditor({ piece }: { piece: Piece }) {
           {tab === "script" ? (
             <div className="stack editor-fields">
               <div className="media-editor-entry">
-                <div>
-                  <strong>Del guion al contenido visual</strong>
-                  <p className="small muted">
-                    Crea una imagen o un video animado para acompañar esta
-                    pieza.
-                  </p>
-                </div>
                 <Button
                   onClick={() => {
                     setTab("resources");
@@ -962,7 +918,7 @@ function PieceEditor({ piece }: { piece: Piece }) {
               </div>
               <fieldset disabled={readonly || !!busy}>
                 <Field
-                  label="Título de trabajo"
+                  label="Título"
                   value={draft.title}
                   onChange={(e) =>
                     setDraft({ ...draft, title: e.target.value })
@@ -1010,7 +966,7 @@ function PieceEditor({ piece }: { piece: Piece }) {
                     </select>
                   </Field>
                 </div>
-                <Field label="Gancho · la primera razón para quedarse">
+                <Field label="Gancho">
                   <textarea
                     rows={2}
                     value={draft.hook}
@@ -1019,7 +975,7 @@ function PieceEditor({ piece }: { piece: Piece }) {
                     }
                   />
                 </Field>
-                <Field label="Guion o cuerpo del contenido">
+                <Field label="Guion">
                   <textarea
                     className="script-textarea"
                     rows={15}
@@ -1029,7 +985,7 @@ function PieceEditor({ piece }: { piece: Piece }) {
                     }
                   />
                 </Field>
-                <Field label="Caption o texto de acompañamiento">
+                <Field label="Caption">
                   <textarea
                     rows={4}
                     value={draft.caption}
@@ -1071,9 +1027,9 @@ function PieceEditor({ piece }: { piece: Piece }) {
                 disabled={readonly || !!busy || blockedByConflict}
                 disabledReason={
                   readonly
-                    ? "Esta pieza solo puede consultarse. Abre un borrador editable para crear o añadir archivos."
+                    ? "Solo lectura."
                     : blockedByConflict
-                      ? "Resuelve el conflicto de edición antes de crear o añadir archivos."
+                      ? "Resuelve el conflicto de edición para crear o añadir archivos."
                       : undefined
                 }
                 onSelectAssets={(assetIds) => {
@@ -1081,15 +1037,10 @@ function PieceEditor({ piece }: { piece: Piece }) {
                     ...draft,
                     assetIds: [...new Set([...draft.assetIds, ...assetIds])],
                   });
-                  notify(
-                    "Archivo añadido. Guarda los cambios de la pieza para conservarlo.",
-                  );
+                  notify("Archivo añadido. Guarda la pieza para conservarlo.");
                 }}
               />
-              <h3>Material asociado a esta pieza</h3>
-              <p className="muted">
-                Selecciona recursos de tu biblioteca y guarda los cambios.
-              </p>
+              <h3>Archivos asociados</h3>
               {state.assets.length ? (
                 <div className="asset-picker">
                   {state.assets.map((a) => (
@@ -1118,20 +1069,14 @@ function PieceEditor({ piece }: { piece: Piece }) {
                 </div>
               ) : (
                 <EmptyState
-                  title="Primero, un poco de material"
+                  title="Sin archivos"
                   action={
                     <Button onClick={() => navigate("assets")}>
-                      Ir a la biblioteca
+                      Ir a archivos
                     </Button>
                   }
-                >
-                  Sube tus recursos de marca para asociarlos a esta pieza.
-                </EmptyState>
+                />
               )}
-              <p className="small muted">
-                Asocia los archivos que usarás al producir y publicar esta
-                pieza.
-              </p>
             </div>
           ) : (
             <div className="editor-fields">
@@ -1150,9 +1095,7 @@ function PieceEditor({ piece }: { piece: Piece }) {
                     </div>
                   ))
                 ) : (
-                  <p className="muted">
-                    Deja el primer comentario para tu equipo.
-                  </p>
+                  <p className="muted">Sin comentarios.</p>
                 )}
               </div>
               <form
@@ -1187,7 +1130,7 @@ function PieceEditor({ piece }: { piece: Piece }) {
                   disabled={!!busy}
                   value={comment}
                   onChange={(e) => setComment(e.target.value)}
-                  placeholder="¿Qué mejorarías de esta pieza?"
+                  placeholder="Comentario"
                   rows={3}
                   required
                 />
@@ -1206,7 +1149,7 @@ function PieceEditor({ piece }: { piece: Piece }) {
           <div className="card post-preview">
             <div className="preview-title">
               <EyeIcon />
-              VISTA PREVIA DEL TEXTO
+              Vista previa del texto
             </div>
             <div className="post-author">
               <span style={{ background: state.brand.color }}>
@@ -1262,7 +1205,7 @@ export function ScheduleModal({
     : new Date(Date.now() + 86400000);
   const defaultDate = `${target.getFullYear()}-${String(target.getMonth() + 1).padStart(2, "0")}-${String(target.getDate()).padStart(2, "0")}T${String(target.getHours()).padStart(2, "0")}:${String(target.getMinutes()).padStart(2, "0")}`;
   return (
-    <Modal title="Dale un lugar en la grilla" onClose={onClose}>
+    <Modal title="Agendar pieza" onClose={onClose}>
       <form
         className="stack"
         onSubmit={async (e) => {
@@ -1279,7 +1222,7 @@ export function ScheduleModal({
             });
             await refresh();
             onClose();
-            notify("Pieza añadida a tu grilla editorial.");
+            notify("Pieza agendada.");
           } catch (e) {
             notify((e as Error).message, "error");
           } finally {
@@ -1295,13 +1238,9 @@ export function ScheduleModal({
           required
           defaultValue={defaultDate}
         />
-        <p className="muted small">
-          La grilla no publica automáticamente. Usa Enviar ahora desde la pieza
-          para un conector, o publica desde tu canal y registra el enlace en
-          Resultados.
-        </p>
+        <p className="muted small">No publica automáticamente.</p>
         <Button variant="primary" type="submit" busy={busy}>
-          Guardar en la grilla
+          Agendar
         </Button>
       </form>
     </Modal>

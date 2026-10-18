@@ -109,7 +109,7 @@ export default function MediaProduction({
         } catch {
           if (mounted.current)
             setLibraryError(
-              "El archivo ya se creó, pero no pudimos actualizar la biblioteca. Pulsa Actualizar para recuperarlo; no necesitas generarlo otra vez.",
+              "Archivo creado. Pulsa Actualizar para recuperarlo; no lo generes de nuevo.",
             );
         }
       }
@@ -154,7 +154,7 @@ export default function MediaProduction({
           setError(
             cause instanceof Error
               ? cause.message
-              : "Se interrumpió la consulta. La creación puede seguir en curso; pulsa Actualizar.",
+              : "Consulta interrumpida. La generación puede seguir en curso; pulsa Actualizar.",
           );
       }
       if (!cancelled) timer = setTimeout(poll, 3000);
@@ -219,7 +219,7 @@ export default function MediaProduction({
         setError(
           cause instanceof Error
             ? cause.message
-            : "No pudimos iniciar la creación. Puedes reintentar sin duplicar la solicitud.",
+            : "No pudimos iniciar la creación. Reintenta; la solicitud no se duplicará.",
         );
     } finally {
       if (mounted.current) setBusy(false);
@@ -251,8 +251,7 @@ export default function MediaProduction({
     >
       <div className="media-production-heading">
         <div>
-          <h3 id="media-production-heading">Crea el material de esta pieza</h3>
-          <p>Genera, revisa el archivo y añádelo a tu contenido.</p>
+          <h3 id="media-production-heading">Generar archivos</h3>
         </div>
         <Button
           onClick={() => void reload()}
@@ -287,9 +286,11 @@ export default function MediaProduction({
         </Button>
       </div>
       {loading && !status ? (
-        <p role="status" className="muted">
-          Consultando la creación de archivos…
-        </p>
+        <div className="media-loading" role="status">
+          <span>Consultando la creación de archivos…</span>
+          <div aria-hidden="true" />
+          <div aria-hidden="true" />
+        </div>
       ) : (
         status && (
           <>
@@ -299,12 +300,12 @@ export default function MediaProduction({
                   ? "Imagen generada con IA"
                   : "Video con imágenes y texto")}
               {kind === "video" &&
-                " · Una ilustración con movimiento y subtítulos del guion, sin audio."}
+                " · Ilustración animada con subtítulos, sin audio."}
             </p>
             {!capability?.ready && (
               <p className="media-unavailable" role="status">
                 {capability?.reason ||
-                  "La creación de este tipo de archivo aún no está disponible. Tu administrador debe habilitar el servicio."}
+                  "Servicio no disponible. Un administrador debe habilitarlo."}
               </p>
             )}
             <form
@@ -316,16 +317,14 @@ export default function MediaProduction({
             >
               {reusesImage ? (
                 <p className="media-unavailable">
-                  Este video usará la imagen «{attachedImage.name}» ya asociada
-                  y los subtítulos del guion guardado. Para crear otra
-                  ilustración, quita esa imagen de los recursos y guarda la
-                  pieza.
+                  Usa «{attachedImage.name}» y el guion guardado. Para generar
+                  otra imagen, quítala de los recursos y guarda la pieza.
                 </p>
               ) : (
                 <Field
                   label={
                     kind === "image"
-                      ? "¿Cómo quieres que se vea?"
+                      ? "Instrucciones de imagen"
                       : "Dirección visual del video"
                   }
                 >
@@ -375,14 +374,11 @@ export default function MediaProduction({
               )}
               {unsaved && !disabled && (
                 <p className="small muted">
-                  Guarda los cambios de la pieza antes de generar un archivo con
-                  la versión actual del guion.
+                  Guarda los cambios antes de generar.
                 </p>
               )}
               <p className="small muted">
-                La creación usa el servicio disponible en este equipo y puede
-                consumir sus créditos. Revisa el resultado antes de añadirlo o
-                publicarlo.
+                Puede consumir créditos del proveedor.
               </p>
             </form>
           </>
@@ -439,12 +435,10 @@ export default function MediaProduction({
                 {(job.status === "queued" || job.status === "running") && (
                   <p className="muted" role="status">
                     {job.stage === "generating"
-                      ? "Generando la ilustración con IA. "
+                      ? "Generando ilustración…"
                       : job.stage === "rendering"
-                        ? "Montando el video y sus subtítulos. "
-                        : "Preparando el archivo. "}
-                    Puede tardar unos minutos. Puedes continuar trabajando; el
-                    resultado quedará aquí y en tu biblioteca.
+                        ? "Montando video y subtítulos…"
+                        : "Preparando archivo…"}
                   </p>
                 )}
                 {job.error && <p className="form-error">{job.error}</p>}
@@ -476,13 +470,12 @@ export default function MediaProduction({
                     onClick={() => onSelectAssets(job.assetIds)}
                   >
                     <Check size={16} />{" "}
-                    {added ? "Añadido a esta pieza" : "Añadir a esta pieza"}
+                    {added ? "Añadido" : "Añadir a la pieza"}
                   </Button>
                 )}
                 {job.status === "completed" && !outputs.length && (
                   <p className="small muted">
-                    El archivo está creado. Pulsa Actualizar para cargarlo desde
-                    la biblioteca.
+                    Archivo creado. Pulsa Actualizar para cargarlo.
                   </p>
                 )}
               </article>

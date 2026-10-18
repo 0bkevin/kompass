@@ -3,11 +3,10 @@ import {
   ArrowLeft,
   ArrowRight,
   Check,
-  CheckCircle2,
+  ChevronDown,
   FileText,
   Globe2,
   Link2,
-  ShieldCheck,
 } from "lucide-react";
 import { api, json } from "../lib/api";
 import type { Brand, Segment } from "../lib/types";
@@ -161,7 +160,7 @@ export function CompanySetup({
           body: json({
             ...draft,
             goals: ["Crear contenido útil para nuestra audiencia"],
-            color: "#137c64",
+            color: "#bea5f5",
             weeklyTarget: 3,
           }),
         });
@@ -190,26 +189,24 @@ export function CompanySetup({
   return (
     <div className="company-setup">
       <ol className="setup-steps" aria-label="Configurar empresa">
-        {["Tu contenido", "Tu empresa", "Tu audiencia"].map((label, index) => (
+        {["Contenido", "Empresa", "Audiencia"].map((label, index) => (
           <li
             key={label}
             aria-current={step === index ? "step" : undefined}
             className={step >= index ? "reached" : ""}
           >
-            <span>{step > index ? <Check size={14} /> : index + 1}</span>
-            {label}
+            <span aria-hidden="true">
+              {step > index ? <Check size={14} /> : index + 1}
+            </span>
+            <div>{label}</div>
           </li>
         ))}
       </ol>
       {step === 0 && (
         <form onSubmit={inspect} className="setup-stage">
           <h2 ref={heading} tabIndex={-1}>
-            Empieza por lo que ya tienes.
+            Contenido de la empresa
           </h2>
-          <p className="setup-description">
-            Cuéntanos qué hace tu empresa. Si tienes una web o redes, puedes
-            añadirlas para conservarlas como referencia.
-          </p>
           <fieldset disabled={busy}>
             <Field
               label="Web de tu empresa (opcional)"
@@ -222,11 +219,8 @@ export function CompanySetup({
             />
             {needsDescription && (
               <div className="setup-recovery" role="status">
-                <strong>No pudimos leer el contenido de tus enlaces.</strong>
-                <p>
-                  Los conservaremos como referencia. Pega una descripción o un
-                  contenido propio para preparar tu empresa.
-                </p>
+                <strong>No pudimos leer los enlaces.</strong>
+                <p>Añade una descripción o contenido propio para continuar.</p>
               </div>
             )}
             <Field label="Descripción de tu empresa">
@@ -234,19 +228,19 @@ export function CompanySetup({
                 ref={description}
                 value={text}
                 onChange={(event) => setText(event.target.value)}
-                placeholder="Ej. Somos 30X. Ofrecemos formación en ventas e IA para líderes y equipos de Latinoamérica."
+                placeholder="Ej. Somos una empresa de formación. Ofrecemos cursos de ventas e IA para líderes y equipos de Latinoamérica."
                 rows={4}
                 maxLength={20000}
-                aria-describedby="setup-description-help"
               />
             </Field>
-            <p id="setup-description-help" className="setup-field-help">
-              Incluye el nombre, qué ofreces y a quién ayudas. También puedes
-              pegar una publicación propia.
-            </p>
             <details className="setup-more">
               <summary>
                 <Link2 size={16} /> Añadir redes sociales (opcional)
+                <ChevronDown
+                  size={15}
+                  className="setup-disclosure-icon"
+                  aria-hidden="true"
+                />
               </summary>
               <div className="stack">
                 <Field label="Instagram, YouTube u otros enlaces públicos">
@@ -261,11 +255,6 @@ export function CompanySetup({
               </div>
             </details>
           </fieldset>
-          <p className="setup-note">
-            <ShieldCheck size={16} /> Los enlaces se guardan como referencia.
-            Solo se leen webs con permiso revisado. Pega contenido propio para
-            empezar sin esperar una conexión.
-          </p>
           {error && (
             <p className="form-error" role="alert">
               {error}
@@ -281,7 +270,7 @@ export function CompanySetup({
                 (needsDescription && input === inspectedInput)
               }
             >
-              {busy ? "Leyendo tu contenido…" : "Preparar mi empresa"}
+              {busy ? "Leyendo contenido…" : "Analizar contenido"}
               <ArrowRight size={16} />
             </Button>
             <Button
@@ -295,16 +284,13 @@ export function CompanySetup({
                 setStep(1);
               }}
             >
-              Prefiero completarlo a mano
+              Completar a mano
             </Button>
           </div>
           {busy && (
             <div className="setup-loading" role="status">
               <span />
-              <p>
-                Buscando el contexto de tu empresa. Algunas páginas pueden
-                tardar en responder.
-              </p>
+              <p>Consultando fuentes…</p>
             </div>
           )}
         </form>
@@ -319,12 +305,8 @@ export function CompanySetup({
           }}
         >
           <h2 ref={heading} tabIndex={-1}>
-            ¿Describe bien a tu empresa?
+            Empresa
           </h2>
-          <p className="setup-description">
-            Esta es una propuesta inicial. Corrige lo que haga falta; tú conoces
-            tu empresa.
-          </p>
           <div className="form-grid">
             <Field
               label="Nombre de la empresa"
@@ -372,11 +354,14 @@ export function CompanySetup({
               event.currentTarget.open = true;
             }}
           >
-            <summary>Mercado y voz de la marca (opcional)</summary>
-            <p className="setup-field-help">
-              Empezaremos con {draft.market} y la voz «{draft.tone}». Puedes
-              ajustar estos valores ahora o más adelante.
-            </p>
+            <summary>
+              Mercado y voz de la marca (opcional)
+              <ChevronDown
+                size={15}
+                className="setup-disclosure-icon"
+                aria-hidden="true"
+              />
+            </summary>
             <div className="form-grid">
               <Field
                 label="Mercado"
@@ -397,8 +382,12 @@ export function CompanySetup({
           {inspection && (
             <details className="setup-evidence">
               <summary>
-                <FileText size={16} /> Ver qué pudimos leer (
-                {inspection.evidence.length})
+                <FileText size={16} /> Fuentes ({inspection.evidence.length})
+                <ChevronDown
+                  size={15}
+                  className="setup-disclosure-icon"
+                  aria-hidden="true"
+                />
               </summary>
               <ul>
                 {inspection.evidence.map((item) => (
@@ -435,7 +424,7 @@ export function CompanySetup({
               Atrás
             </Button>
             <Button variant="primary" type="submit">
-              Definir mi audiencia
+              Continuar
               <ArrowRight size={16} />
             </Button>
           </div>
@@ -444,15 +433,11 @@ export function CompanySetup({
       {step === 2 && (
         <form className="setup-stage" onSubmit={create}>
           <h2 ref={heading} tabIndex={-1}>
-            ¿A quién quieres ayudar?
+            Audiencia
           </h2>
-          <p className="setup-description">
-            Comienza con un grupo y una necesidad. Después podrás añadir más y
-            contrastarlos con señales públicas.
-          </p>
           <fieldset disabled={busy || !!created}>
             <Field
-              label="Tu primera audiencia"
+              label={inspection ? "Audiencia propuesta" : "Audiencia"}
               value={draft.audience[0]?.name || ""}
               onChange={(event) => updateAudience("name", event.target.value)}
               placeholder="Ej. Equipos de ventas de empresas medianas"
@@ -472,13 +457,6 @@ export function CompanySetup({
               />
             </Field>
           </fieldset>
-          <div className="setup-truth">
-            <CheckCircle2 size={19} />
-            <p>
-              Este perfil es una hipótesis que tú confirmas. No hemos
-              identificado ni rastreado a personas.
-            </p>
-          </div>
           {error && (
             <p className="form-error" role="alert">
               {error}
@@ -494,7 +472,7 @@ export function CompanySetup({
               Atrás
             </Button>
             <Button variant="primary" type="submit" busy={busy}>
-              {created ? "Reintentar guardar fuentes" : "Abrir mi espacio"}
+              {created ? "Reintentar guardar fuentes" : "Abrir espacio"}
               <ArrowRight size={16} />
             </Button>
           </div>

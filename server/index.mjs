@@ -68,7 +68,7 @@ export function createApp({
     app.get("/{*splat}", (_req, res) =>
       res
         .status(200)
-        .send("30X Radar API está activa. Inicia la interfaz con npm run dev."),
+        .send("kompass API está activa. Inicia la interfaz con npm run dev."),
     );
   } else if (webHandler) {
     if (staticDirectory) {
@@ -92,7 +92,7 @@ export function createApp({
     app.get("/{*splat}", (_req, res) =>
       res
         .status(200)
-        .send("30X Radar API está activa. Inicia la interfaz con npm run dev."),
+        .send("kompass API está activa. Inicia la interfaz con npm run dev."),
     );
   }
   app.use((error, _req, res, _next) => {
@@ -120,7 +120,7 @@ export function createApp({
       error.status <= 599
         ? error.status
         : 500;
-    if (status >= 500) console.error("[30X Radar]", error.message);
+    if (status >= 500) console.error("[kompass]", error.message);
     res.status(status).json({
       error:
         status === 500
@@ -144,7 +144,7 @@ if (
       console.error("No se pudo recuperar la cola de creación multimedia.");
     });
   server.once("listening", () =>
-    console.log(`30X Radar API escuchando en http://localhost:${port}`),
+    console.log(`kompass API escuchando en http://localhost:${port}`),
   );
   server.once("error", (error) => {
     discovery.stop();

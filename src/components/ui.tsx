@@ -76,15 +76,19 @@ export function EmptyState({
 }: {
   icon?: ReactNode;
   title: string;
-  children: ReactNode;
+  children?: ReactNode;
   action?: ReactNode;
 }) {
   return (
     <div className="empty-state">
-      <div className="empty-icon">{icon || <ArrowUpRight />}</div>
-      <h3>{title}</h3>
-      <p>{children}</p>
-      {action}
+      <div className="empty-icon" aria-hidden="true">
+        {icon || <ArrowUpRight />}
+      </div>
+      <div className="empty-copy">
+        <h3>{title}</h3>
+        {children && <p>{children}</p>}
+        {action && <div className="empty-action">{action}</div>}
+      </div>
     </div>
   );
 }
