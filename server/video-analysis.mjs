@@ -4,6 +4,7 @@ import path from "node:path";
 import { randomUUID } from "node:crypto";
 import { UPLOAD_DIR, getRecord, getSecret, saveRecord } from "./db.mjs";
 import { requireAuth, requireBrand, requireEditor } from "./core.mjs";
+import { assertVideoAnalysisAllowed } from "./access-policy.mjs";
 import {
   integrationError,
   safeFetch,
@@ -113,7 +114,7 @@ function getGeminiConfig(brandId) {
   return { apiKey: apiKey.trim(), model };
 }
 
-function youtubeVideoId(value) {
+export function youtubeVideoId(value) {
   let url;
   try {
     url = new URL(value);
@@ -353,7 +354,7 @@ function findBox(bytes, start, end, wanted) {
   return null;
 }
 
-function parseMp4Duration(bytes) {
+export function parseMp4Duration(bytes) {
   const moov = findBox(bytes, 0, bytes.length, "moov");
   if (!moov) return null;
   const mvhd = findBox(bytes, moov.dataOffset, moov.end, "mvhd");
@@ -912,6 +913,9 @@ export function createVideoAnalysisRouter({
         );
         if (!reference)
           fail(404, "No se encontró la referencia en esta marca.");
+        // Provider keys and an accessible URL do not prove media rights or
+        // approved processing conditions. This gate precedes every network path.
+        assertVideoAnalysisAllowed(reference);
         const fingerprint = referenceFingerprint(reference);
         const config = getGeminiConfig(req.brand.id);
         if (!config)

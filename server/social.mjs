@@ -3,6 +3,10 @@ import { getSecret, setSecret } from "./db.mjs";
 import { requireAuth, requireBrand, requireOwner } from "./core.mjs";
 import { getSocialSettings } from "./social-providers.mjs";
 import { getApifyBudgetStatus } from "./provider-budget.mjs";
+import {
+  publicAccessPolicies,
+  providerAccessPolicy,
+} from "./access-policy.mjs";
 
 const PROVIDERS = Object.freeze({
   youtube: { secretKey: "youtube", credential: "apiKey", maxCredential: 500 },
@@ -69,14 +73,22 @@ export function createSocialRouter() {
         credential && settings.apify.configured
           ? getApifyBudgetStatus(credential)
           : null;
-      res.json({ configured: settings.apify.configured, budget });
+      res.json({
+        configured: settings.apify.configured,
+        budget,
+        accessPolicy: providerAccessPolicy("apify"),
+      });
     },
   );
   router.get(
     "/brands/:brandId/social/settings",
     requireAuth,
     requireBrand,
-    (req, res) => res.json(getSocialSettings(req.brand.id)),
+    (req, res) =>
+      res.json({
+        ...getSocialSettings(req.brand.id),
+        policies: publicAccessPolicies(),
+      }),
   );
   router.put(
     "/brands/:brandId/social/settings",
@@ -91,6 +103,18 @@ export function createSocialRouter() {
         provider,
         validatePatch(provider, value),
       ]);
+      // Validate all permission changes before storing any secret.
+      for (const [provider, patch] of patches) {
+        if (
+          patch &&
+          patch.disabled !== true &&
+          !providerAccessPolicy(provider).allowed
+        )
+          throw Object.assign(
+            new Error(providerAccessPolicy(provider).reason),
+            { status: 403 },
+          );
+      }
       for (const [provider, patch] of patches) {
         if (patch === null) {
           // Remove stored credentials and prevent an environment alias from
@@ -111,7 +135,10 @@ export function createSocialRouter() {
         if (patch.model) next.model = patch.model;
         setSecret(req.brand.id, key, next);
       }
-      res.json(getSocialSettings(req.brand.id));
+      res.json({
+        ...getSocialSettings(req.brand.id),
+        policies: publicAccessPolicies(),
+      });
     },
   );
   return router;

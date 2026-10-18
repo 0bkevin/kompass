@@ -31,6 +31,12 @@ import { canonicalSocialSourceUrl } from "./social-providers.mjs";
 import { PIECE_LIMITS } from "./piece-contract.mjs";
 import { publicCitationUrl } from "./public-citation-url.mjs";
 import {
+  assertSourceCollectionAllowed,
+  sourceAccessPolicy,
+  publicAccessPolicies,
+  referenceUsePolicy,
+} from "./access-policy.mjs";
+import {
   deduplicateReferences,
   referenceIdentity,
 } from "./reference-identity.mjs";
@@ -204,7 +210,15 @@ export function publicAsset(asset) {
   const { storageName, filePath, path: internalPath, ...safe } = asset;
   return safe;
 }
-export function publicReference(reference) {
+export function publicSource(source) {
+  const accessPolicy = sourceAccessPolicy(source);
+  return {
+    ...source,
+    enabled: !!source.enabled && accessPolicy.allowed,
+    accessPolicy,
+  };
+}
+export function publicReference(reference, context) {
   if (!reference) return reference;
   const { mediaUrl: _privateMediaUrl, ...safe } = reference;
   delete safe.originalUrlOmitted;
@@ -218,6 +232,21 @@ export function publicReference(reference) {
       safe.originalUrlOmitted = true;
     }
   }
+  const policy = referenceUsePolicy(
+    reference,
+    context && typeof context === "object" ? context.source : undefined,
+  );
+  if (!policy.allowed)
+    return {
+      id: safe.id,
+      title: "Referencia con acceso restringido",
+      source: "Acceso restringido",
+      url: safe.url,
+      format: "post",
+      status: safe.status || "new",
+      createdAt: safe.createdAt,
+      accessPolicy: policy,
+    };
   return safe;
 }
 export function brandState(brandId, userId) {
@@ -227,11 +256,18 @@ export function brandState(brandId, userId) {
   if (!membership) fail(404, "No se encontró la marca.");
   return {
     brand: { ...getBrand(brandId), role: membership.role },
-    references: listRecords(brandId, "references").map(publicReference),
+    references: listRecords(brandId, "references").map((reference) =>
+      publicReference(reference, {
+        source:
+          reference.sourceId &&
+          getRecord(brandId, "sources", reference.sourceId),
+      }),
+    ),
     ideas: listRecords(brandId, "ideas"),
     pieces: listRecords(brandId, "pieces").map(publicPiece),
     assets: listRecords(brandId, "assets").map(publicAsset),
-    sources: listRecords(brandId, "sources"),
+    sources: listRecords(brandId, "sources").map(publicSource),
+    accessPolicies: publicAccessPolicies(),
     members: db
       .prepare(
         "SELECT u.id,u.name,u.email,m.role FROM members m JOIN users u ON u.id=m.user_id WHERE m.brand_id=? ORDER BY u.name",
@@ -434,6 +470,14 @@ function defaults(brandId) {
 }
 function referenceInput(body, current, req) {
   const result = { ...current };
+  if (
+    current.id &&
+    !referenceUsePolicy(
+      current,
+      current.sourceId && getRecord(req.brand.id, "sources", current.sourceId),
+    ).allowed
+  )
+    result.ingestionRestricted = true;
   for (const key of ["title", "text", "language", "market", "format"])
     if (body[key] !== undefined)
       result[key] = text(body[key], key, key === "text" ? 30000 : 500);
@@ -723,8 +767,7 @@ function pieceInput(body, current, req) {
   }
   // A date only belongs to the active plan or retained publication history.
   // Invalidating approval must cancel scheduling even when a client omits null.
-  if (!["scheduled", "published"].includes(to))
-    result.scheduledFor = undefined;
+  if (!["scheduled", "published"].includes(to)) result.scheduledFor = undefined;
   if (
     to === "scheduled" &&
     (!result.scheduledFor || Date.parse(result.scheduledFor) <= Date.now())
@@ -755,7 +798,9 @@ function sourceInput(body, current) {
       ["hackernews", "reddit", "rss", "gdelt", "youtube", "apify"],
       "Tipo de fuente",
     );
-  const acceptsUrl = ["rss", "reddit", "youtube", "apify"].includes(result.type);
+  const acceptsUrl = ["rss", "reddit", "youtube", "apify"].includes(
+    result.type,
+  );
   const queryKind = (type) =>
     type === "rss" ? null : type === "reddit" ? "community" : "topic";
   // Clear incompatible inherited values before applying the new input.
@@ -822,6 +867,8 @@ function sourceInput(body, current) {
     socialType && (!current.id || current.type !== result.type);
   if (body.enabled === undefined && becameSocial) result.enabled = false;
   else if (!current.id && body.enabled === undefined) result.enabled = true;
+  if (body.enabled === true) assertSourceCollectionAllowed(result);
+  if (!sourceAccessPolicy(result).allowed) result.enabled = false;
   return result;
 }
 const validators = {
@@ -845,7 +892,12 @@ const upload = filenameAwareUpload({
     destination: UPLOAD_DIR,
     filename: (_req, _file, cb) => cb(null, randomUUID()),
   }),
-  limits: { fileSize: MAX_ASSET_FILE_BYTES, files: 1, fields: 5, fieldSize: 4096 },
+  limits: {
+    fileSize: MAX_ASSET_FILE_BYTES,
+    files: 1,
+    fields: 5,
+    fieldSize: 4096,
+  },
 });
 const receiveAssetFile = upload.single("file");
 function uploadAssetFile(req, res, next) {
@@ -1194,10 +1246,18 @@ export function createCoreRouter() {
       const records = listRecords(req.brand.id, kind);
       res.json(
         kind === "references"
-          ? records.map(publicReference)
+          ? records.map((reference) =>
+              publicReference(reference, {
+                source:
+                  reference.sourceId &&
+                  getRecord(req.brand.id, "sources", reference.sourceId),
+              }),
+            )
           : kind === "pieces"
             ? records.map(publicPiece)
-            : records,
+            : kind === "sources"
+              ? records.map(publicSource)
+              : records,
       );
     });
     router.post(`/brands/:brandId/${kind}`, requireEditor, (req, res) => {
@@ -1255,7 +1315,9 @@ export function createCoreRouter() {
             ? publicReference(record)
             : kind === "pieces"
               ? publicPiece(record)
-              : record,
+              : kind === "sources"
+                ? publicSource(record)
+                : record,
         );
     });
     router.patch(`/brands/:brandId/${kind}/:id`, requireEditor, (req, res) => {
@@ -1283,7 +1345,9 @@ export function createCoreRouter() {
           ? publicReference(record)
           : kind === "pieces"
             ? publicPiece(record)
-            : record,
+            : kind === "sources"
+              ? publicSource(record)
+              : record,
       );
     });
     router.delete(`/brands/:brandId/${kind}/:id`, requireEditor, (req, res) => {

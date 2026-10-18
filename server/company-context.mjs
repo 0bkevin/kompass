@@ -1,6 +1,7 @@
 import express from "express";
 import { createHash, randomUUID } from "node:crypto";
 import net from "node:net";
+import { webAccessPolicy, assertWebReadAllowed } from "./access-policy.mjs";
 import {
   safeFetch,
   validatePublicUrl,
@@ -301,6 +302,9 @@ async function inspectUrl(value, { fetcher, lookup }) {
           "Enlace guardado. No se ha leído este perfil ni su audiencia; aporta contenido propio para incorporarlo al contexto.",
       },
     };
+  const policy = webAccessPolicy(url.href, "website");
+  if (!policy.allowed)
+    return { evidence: { ...evidence, reason: policy.reason } };
   if (
     /\/(?:login|signin|sign-in|auth|oauth|accounts?|dashboard|admin|wp-admin|iniciar-sesion)(?:\/|$)/i.test(
       url.pathname,
@@ -317,6 +321,7 @@ async function inspectUrl(value, { fetcher, lookup }) {
     // Validation is explicit so a future alternative fetcher cannot bypass SSRF protection.
     await validatePublicUrl(url.href, lookup ? { lookup } : {});
     const response = await fetcher(url.href, {
+      policyPurpose: "website",
       timeout: 8_000,
       maxBytes: MAX_BYTES,
       maxRedirects: 2,
@@ -325,6 +330,7 @@ async function inspectUrl(value, { fetcher, lookup }) {
         const target = publicUrl(
           destination instanceof URL ? destination.href : destination,
         );
+        assertWebReadAllowed(target.href, "website");
         if (
           platformOf(target) !== "website" ||
           /\/(?:login|signin|sign-in|auth|oauth|accounts?|dashboard|admin|wp-admin|iniciar-sesion)(?:\/|$)/i.test(
@@ -407,6 +413,7 @@ async function inspectUrl(value, { fetcher, lookup }) {
           2_000,
         ),
         status: "read",
+        permissionUrls: response.accessTrail || [url.href],
       },
       document,
     };
@@ -659,6 +666,7 @@ export async function inspectCompany(
 }
 
 function publicInspection(record) {
+  assertInspectionPermission(record);
   const { id, inspectedAt, method, draft, evidence, warnings } = record;
   const redactText = (value) =>
     typeof value === "string" ? redact(value, Infinity) : value;
@@ -684,6 +692,23 @@ function publicInspection(record) {
       : evidence,
     warnings: Array.isArray(warnings) ? warnings.map(redactText) : warnings,
   };
+}
+
+function inspectionPermissionAllowed(record) {
+  return (record.evidence || []).every(
+    (item) =>
+      item.status !== "read" ||
+      (item.permissionUrls || [item.url]).every(
+        (url) => webAccessPolicy(url, "website").allowed,
+      ),
+  );
+}
+function assertInspectionPermission(record) {
+  if (!inspectionPermissionAllowed(record))
+    fail(
+      403,
+      "El permiso de una web de esta inspección ha caducado o fue retirado. Aporta contenido propio o solicita una nueva revisión.",
+    );
 }
 
 function currentOwner(req) {
@@ -712,10 +737,20 @@ export function createCompanyContextRouter({
   }
   async function inspectForUser(userId, input) {
     const validated = validateInput(input);
-    const key = `${userId}:${createHash("sha256").update(JSON.stringify(validated)).digest("hex")}`;
+    const key = `${userId}:${createHash("sha256")
+      .update(
+        JSON.stringify({
+          validated,
+          permissions: validated.urls.map((url) =>
+            webAccessPolicy(url, "website"),
+          ),
+        }),
+      )
+      .digest("hex")}`;
     prune();
     const existing = [...cache.values()].find((item) => item.key === key);
-    if (existing) return existing.inspection;
+    if (existing && inspectionPermissionAllowed(existing.inspection))
+      return existing.inspection;
     if (pending.has(key)) return pending.get(key);
     if (
       [...pending.keys()].filter((id) => id.startsWith(`${userId}:`)).length >=
@@ -752,6 +787,7 @@ export function createCompanyContextRouter({
     }
   }
   function persist(req, inspection) {
+    assertInspectionPermission(inspection);
     currentOwner(req);
     const saved = saveRecord(req.params.brandId, "contextImports", inspection);
     addActivity(

@@ -2,6 +2,7 @@ import { isIP } from "node:net";
 import { getSecret } from "./db.mjs";
 import { integrationError, isPublicAddress, safeFetch } from "./connectors.mjs";
 import { reserveApifyRun, finishProviderRun } from "./provider-budget.mjs";
+import { assertSocialCollectionAllowed } from "./access-policy.mjs";
 
 const PLATFORM_HOSTS = {
   instagram: new Set(["instagram.com", "www.instagram.com"]),
@@ -793,6 +794,9 @@ export async function fetchSocialSource(
   source,
   { fetcher = safeFetch, now = Date.now() } = {},
 ) {
+  // A credential authenticates a provider call; it does not authorize this
+  // product's collection and downstream use under the platform's terms.
+  assertSocialCollectionAllowed(source);
   if (source.type === "youtube")
     return fetchYouTube(brand, source, { fetcher, now });
   if (source.type === "apify")

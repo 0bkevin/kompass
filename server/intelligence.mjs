@@ -1,6 +1,13 @@
 import express from "express";
-import { randomUUID, timingSafeEqual } from "node:crypto";
+import { randomUUID } from "node:crypto";
 import { XMLParser } from "fast-xml-parser";
+import {
+  assertSourceCollectionAllowed,
+  assertWebReadAllowed,
+  assertReferenceUseAllowed,
+  referenceUsePolicy,
+  sourceAccessPolicy,
+} from "./access-policy.mjs";
 import {
   db,
   getBrand,
@@ -21,6 +28,7 @@ import {
   publicPiece,
 } from "./core.mjs";
 import { PIECE_LIMITS } from "./piece-contract.mjs";
+import { providerAttributionsForReference } from "../src/lib/provider-attribution.mjs";
 import { fetchSocialSource } from "./social-providers.mjs";
 import { recordTopicObservation } from "./audience-insights.mjs";
 import {
@@ -30,7 +38,6 @@ import {
   configureIntegrations,
   getPublicationState,
   publishPiece,
-  telegramRequest,
 } from "./connectors.mjs";
 
 const stopwords = new Set(
@@ -48,7 +55,9 @@ const textEntities = Object.freeze({
       "ETH Ntilde Ograve Oacute Ocirc Otilde Ouml times Oslash Ugrave Uacute Ucirc Uuml Yacute THORN szlig " +
       "agrave aacute acirc atilde auml aring aelig ccedil egrave eacute ecirc euml igrave iacute icirc iuml " +
       "eth ntilde ograve oacute ocirc otilde ouml divide oslash ugrave uacute ucirc uuml yacute thorn yuml"
-    ).split(" ").map((name, index) => [name, String.fromCodePoint(0xa0 + index)]),
+    )
+      .split(" ")
+      .map((name, index) => [name, String.fromCodePoint(0xa0 + index)]),
   ),
   amp: "&",
   AMP: "&",
@@ -379,7 +388,7 @@ function officialGoogleFeed(value) {
   try {
     const url = new URL(value);
     return url.protocol === "https:" &&
-      url.hostname === "trends.google.com" &&
+      url.hostname.replace(/\.$/, "") === "trends.google.com" &&
       url.pathname === "/trending/rss"
       ? url
       : null;
@@ -399,6 +408,13 @@ function googleTrendIdentity(title, feedUrl) {
     sourceUrl: feedUrl.href,
     market: country || "Sin especificar",
     signalType: "search-interest",
+    providerAttributions: [
+      {
+        id: "google_trends",
+        name: "Google Trends",
+        url: "https://trends.google.com/",
+      },
+    ],
     format: "trend",
   };
 }
@@ -446,7 +462,7 @@ export function parseFeed(xml, source) {
         publishedAt: Number.isFinite(Date.parse(published))
           ? new Date(published).toISOString()
           : undefined,
-        author: xmlText(item.author?.name || item["dc:creator"] || item.author),
+        author: undefined,
         externalId: xmlText(item.guid || item.id || url),
         language:
           xmlText(rss?.language || feed?.["@_xml:lang"]) ||
@@ -580,6 +596,7 @@ export async function fetchSource(
     socialFetcher = fetchSocialSource,
   } = {},
 ) {
+  assertSourceCollectionAllowed(source);
   if (["youtube", "apify"].includes(source.type))
     return socialFetcher(brand, source, { fetcher, now });
   if (source.type === "gdelt") {
@@ -607,7 +624,12 @@ export async function fetchSource(
     });
     const response = await fetcher(
       `https://api.gdeltproject.org/api/v2/doc/doc?${params}`,
-      { timeout: 18000, maxBytes: 3 * 1024 * 1024 },
+      {
+        timeout: 18000,
+        maxBytes: 3 * 1024 * 1024,
+        policyPurpose: "discovery",
+        maxRedirects: 0,
+      },
     );
     if (!response.ok)
       throw integrationError(
@@ -650,6 +672,13 @@ export async function fetchSource(
           format: "article",
           sourceUrl: article.url,
           signalType: "news-coverage",
+          providerAttributions: [
+            {
+              id: "gdelt",
+              name: "GDELT Project",
+              url: "https://www.gdeltproject.org/",
+            },
+          ],
         };
       })
       .filter((article) => article.title && /^https?:\/\//i.test(article.url));
@@ -667,7 +696,11 @@ export async function fetchSource(
       ["search_by_date", "search"].map(async (mode) => {
         const response = await fetcher(
           `https://hn.algolia.com/api/v1/${mode}?${params}`,
-          { maxBytes: 3 * 1024 * 1024 },
+          {
+            maxBytes: 3 * 1024 * 1024,
+            policyPurpose: "discovery",
+            maxRedirects: 0,
+          },
         );
         if (!response.ok)
           throw integrationError(
@@ -692,9 +725,16 @@ export async function fetchSource(
           title: clean(item.title),
           url:
             item.url || `https://news.ycombinator.com/item?id=${item.objectID}`,
-          text: clean(item.story_text).slice(0, 12000),
+          text: "",
           publishedAt: item.created_at,
-          author: item.author,
+          author: undefined,
+          providerAttributions: [
+            {
+              id: "hn_algolia",
+              name: "Hacker News / Algolia",
+              url: "https://hn.algolia.com/",
+            },
+          ],
           externalId: item.objectID,
           metrics: {
             score: Number(item.points) || 0,
@@ -735,12 +775,23 @@ export async function fetchSource(
     url = parsed.href;
   }
   if (!url) throw integrationError("Configura una URL pública RSS o Atom.");
-  const response = await fetcher(url, { maxBytes: 3 * 1024 * 1024 });
+  const response = await fetcher(url, {
+    maxBytes: 3 * 1024 * 1024,
+    policyPurpose: "rss",
+    validateRedirect: (destination) => assertWebReadAllowed(destination, "rss"),
+  });
   if (!response.ok)
     throw integrationError(
       `${source.type === "reddit" ? "Reddit restringe el acceso público; configura una fuente permitida" : "La fuente no está disponible"} (HTTP ${response.status}).`,
     );
-  const items = parseFeed(await response.text(), { ...source, url });
+  const ingestionAccess = {
+    url,
+    urls: response.accessTrail || [url],
+    purpose: "rss",
+  };
+  const items = parseFeed(await response.text(), { ...source, url }).map(
+    (item) => ({ ...item, ingestionAccess }),
+  );
   const query = source.query?.trim();
   if (!query) return items;
   const requested = tokens(query);
@@ -952,6 +1003,7 @@ function computeSocialTrend(item, existing, sample, now, observedAt) {
 }
 
 export function computeTrend(item, existing, sample, corpus, now = Date.now()) {
+  assertReferenceUseAllowed(item);
   const observedAt = new Date(now).toISOString();
   if (["youtube", "instagram", "tiktok"].includes(item.platform))
     return computeSocialTrend(item, existing, sample, now, observedAt);
@@ -1249,7 +1301,13 @@ function validVideoAnalysisForRefresh(existing, item) {
   return compatibleDuration(existing, item, analysis) ? analysis : null;
 }
 
-function refreshedSocialReference(brand, existing, item, signals, previousText) {
+function refreshedSocialReference(
+  brand,
+  existing,
+  item,
+  signals,
+  previousText,
+) {
   const base = { ...existing };
   if (existing?.platform || item.platform)
     for (const field of SOCIAL_VIDEO_FIELDS)
@@ -1310,11 +1368,17 @@ export async function syncSources(brand, options = {}) {
     );
     // Refresh after network waits so a simultaneous editorial decision is retained.
     const corpus = listRecords(brand.id, "references").filter(
-      (reference) => !reference.isDemo,
+      (reference) =>
+        !reference.isDemo &&
+        referenceUsePolicy(
+          reference,
+          reference.sourceId &&
+            getRecord(brand.id, "sources", reference.sourceId),
+        ).allowed,
     );
     for (let index = 0; index < sources.length; index++) {
       const initialSource = sources[index];
-      const result = fetched[index];
+      let result = fetched[index];
       const source = currentEnabledSource(brand.id, initialSource);
       if (!source) {
         results.push({
@@ -1327,6 +1391,13 @@ export async function syncSources(brand, options = {}) {
         });
         continue;
       }
+      if (result.status === "fulfilled" && !sourceAccessPolicy(source).allowed)
+        result = {
+          status: "rejected",
+          reason: Object.assign(new Error(sourceAccessPolicy(source).reason), {
+            status: 403,
+          }),
+        };
       if (result.status === "rejected") {
         const message = `${source.name}: ${result.reason?.message || "No se pudo consultar la fuente."}`;
         errors.push(message);
@@ -1351,6 +1422,15 @@ export async function syncSources(brand, options = {}) {
           ...fetchedItem,
           sourceId: source.id,
           source: source.name,
+          ingestionProvider: source.type,
+          ...(source.type === "rss"
+            ? {
+                ingestionAccess: fetchedItem.ingestionAccess || {
+                  url: source.url,
+                  purpose: "rss",
+                },
+              }
+            : {}),
         };
         const existing = findDuplicate(item, corpus);
         const exact =
@@ -1383,7 +1463,9 @@ export async function syncSources(brand, options = {}) {
                   platform: evidenceItem.platform,
                   market: evidenceItem.market,
                   publisher: evidenceItem.publisher,
-                  author: evidenceItem.author,
+                  providerAttributions: evidenceItem.providerAttributions,
+                  signalType: evidenceItem.signalType,
+                  sourceUrl: evidenceItem.sourceUrl,
                   publishedAt: evidenceItem.publishedAt,
                   metrics: evidenceItem.metrics,
                   metricsOrigin: evidenceItem.metricsOrigin,
@@ -1621,6 +1703,21 @@ export function startDiscoveryScheduler({
 }
 
 export function localAnalysis(brand, reference, corpus = [], pieces = []) {
+  assertReferenceUseAllowed(
+    reference,
+    brand.id &&
+      reference.sourceId &&
+      getRecord(brand.id, "sources", reference.sourceId),
+  );
+  corpus = corpus.filter(
+    (item) =>
+      referenceUsePolicy(
+        item,
+        brand.id &&
+          item.sourceId &&
+          getRecord(brand.id, "sources", item.sourceId),
+      ).allowed,
+  );
   const content = `${reference.title} ${reference.text || ""}`;
   const comparable = corpus.filter((x) => !x.isDemo || reference.isDemo);
   const related = comparable.filter(
@@ -1713,7 +1810,11 @@ export async function extractMetadata(reference, { fetcher = safeFetch } = {}) {
   if (!reference.url || reference.text?.length >= 250)
     return { reference, signals: [] };
   try {
+    assertWebReadAllowed(reference.url, "metadata");
     const response = await fetcher(reference.url, {
+      policyPurpose: "metadata",
+      validateRedirect: (destination) =>
+        assertWebReadAllowed(destination, "metadata"),
       maxBytes: 1024 * 1024,
       timeout: 10000,
     });
@@ -1746,6 +1847,11 @@ export async function extractMetadata(reference, { fetcher = safeFetch } = {}) {
     return {
       reference: {
         ...reference,
+        ingestionAccess: {
+          url: reference.url,
+          urls: response.accessTrail || [reference.url],
+          purpose: "metadata",
+        },
         ...(title && (!reference.title || reference.title === reference.url)
           ? { title }
           : {}),
@@ -1834,11 +1940,25 @@ function normalizeDraftOutput(output, engine) {
 }
 
 export async function analyzeReference(brand, reference, options = {}) {
+  assertReferenceUseAllowed(
+    reference,
+    reference.sourceId && getRecord(brand.id, "sources", reference.sourceId),
+  );
   const { reference: enriched, signals } = await extractMetadata(
     reference,
     options,
   );
-  const corpus = listRecords(brand.id, "references"),
+  assertReferenceUseAllowed(
+    enriched,
+    enriched.sourceId && getRecord(brand.id, "sources", enriched.sourceId),
+  );
+  const corpus = listRecords(brand.id, "references").filter(
+      (item) =>
+        referenceUsePolicy(
+          item,
+          item.sourceId && getRecord(brand.id, "sources", item.sourceId),
+        ).allowed,
+    ),
     pieces = listRecords(brand.id, "pieces");
   let analysis = localAnalysis(brand, enriched, corpus, pieces);
   const generated = await generateStructured(
@@ -1902,6 +2022,9 @@ export async function analyzeReference(brand, reference, options = {}) {
     ...current,
     title: enriched.title,
     text: enriched.text,
+    ...(enriched.ingestionAccess
+      ? { ingestionAccess: enriched.ingestionAccess }
+      : {}),
     analysis,
     status: ["saved", "dismissed"].includes(current.status)
       ? current.status
@@ -2113,6 +2236,7 @@ function localDraft(
         "",
       audienceNeeds: fullNeeds,
       referenceUrl: reference?.url || "",
+      providerAttributions: providerAttributionsForReference(reference),
       applied: {
         format,
         ...(["carousel", "reel", "video"].includes(format)
@@ -2137,6 +2261,19 @@ export async function createDraft(brand, input, options = {}) {
   if (input.referenceId && !reference)
     throw integrationError("Referencia no encontrada.", 404);
   if (input.ideaId && !idea) throw integrationError("Idea no encontrada.", 404);
+  if (reference)
+    assertReferenceUseAllowed(
+      reference,
+      reference.sourceId && getRecord(brand.id, "sources", reference.sourceId),
+    );
+  for (const id of idea?.referenceIds || []) {
+    const cited = getRecord(brand.id, "references", id);
+    if (cited)
+      assertReferenceUseAllowed(
+        cited,
+        cited.sourceId && getRecord(brand.id, "sources", cited.sourceId),
+      );
+  }
   const segment =
     (brand.audience || []).find(
       (x) =>
@@ -2162,7 +2299,13 @@ export async function createDraft(brand, input, options = {}) {
     ? input.channel
     : "linkedin";
   const videoAnalysis = videoAnalysisShape(reference?.videoAnalysis);
-  const local = localDraft(brand, input, { reference, idea, segment, format, videoAnalysis });
+  const local = localDraft(brand, input, {
+    reference,
+    idea,
+    segment,
+    format,
+    videoAnalysis,
+  });
   let output = local.output;
   const generated = await generateStructured(
     brand.id,
@@ -2221,8 +2364,11 @@ export async function createDraft(brand, input, options = {}) {
   output = normalizeDraftOutput(output, generationEngine);
   const piece = saveRecord(brand.id, "pieces", {
     ...output,
-    ...(generationEngine === "heuristic" ? { editorialBrief: local.editorialBrief } : {}),
+    ...(generationEngine === "heuristic"
+      ? { editorialBrief: local.editorialBrief }
+      : {}),
     referenceId: reference?.id,
+    providerAttributions: providerAttributionsForReference(reference),
     ideaId: idea?.id,
     segmentId: segment?.id,
     format,
@@ -2238,75 +2384,16 @@ export async function createDraft(brand, input, options = {}) {
   return publicPiece(piece);
 }
 
-const safeEqual = (a, b) => {
-  if (typeof a !== "string" || typeof b !== "string") return false;
-  const left = Buffer.from(a),
-    right = Buffer.from(b);
-  return left.length === right.length && timingSafeEqual(left, right);
-};
 export function createIntelligenceRouter() {
   const router = express.Router();
-  router.post("/inbox/telegram/:brandId/:secret", async (req, res) => {
-    const brand = getBrand(req.params.brandId),
-      config = brand && getSecret(brand.id, "telegram");
-    if (!config || !safeEqual(req.params.secret, config.inboxSecret))
-      throw integrationError("Webhook no autorizado.", 403);
-    const update = req.body;
-    if (!update || typeof update !== "object" || Array.isArray(update))
-      throw integrationError("Actualización de Telegram no válida.");
-    const message = update.message || update.channel_post;
-    if (!message) return res.json({ ok: true, ignored: true });
-    const configuredChat = String(config.chatId);
-    const matchingChat = configuredChat.startsWith("@")
-      ? configuredChat.slice(1).toLowerCase() ===
-        String(message.chat?.username || "").toLowerCase()
-      : String(message.chat?.id) === configuredChat;
-    if (!matchingChat)
-      throw integrationError(
-        "El chat no está autorizado para esta marca.",
-        403,
-      );
-    const updateId = String(update.update_id || message.message_id);
-    const seen = getSecret(brand.id, "telegramUpdates") || [];
-    if (seen.includes(updateId)) return res.json({ ok: true, duplicate: true });
-    const text = String(message.text || message.caption || "").slice(0, 12000);
-    const url = text.match(/https?:\/\/[^\s<>]+/)?.[0];
-    const reference = saveRecord(brand.id, "references", {
-      title: text.slice(0, 160) || "Referencia recibida por Telegram",
-      text,
-      url,
-      source: "Telegram",
-      language: "unknown",
-      market: brand.market,
-      format: message.video ? "video" : message.photo ? "image" : "post",
-      status: "new",
-      tags: [],
-      telegramMessageId: message.message_id,
-    });
-    setSecret(brand.id, "telegramUpdates", [...seen, updateId].slice(-1000));
-    let responseError;
-    try {
-      const analyzed = await analyzeReference(brand, reference);
-      await telegramRequest(config, "sendMessage", {
-        chat_id: message.chat.id,
-        reply_to_message_id: message.message_id,
-        text: `Referencia guardada: ${analyzed.title}\n\nGancho: ${analyzed.analysis.hook}\n\n${analyzed.analysis.hypothesis}\n\nSaturación del corpus: ${analyzed.analysis.saturation}\n${analyzed.analysis.adaptation}`.slice(
-          0,
-          4096,
-        ),
-      });
-    } catch (error) {
-      responseError = error.message;
-      addActivity(
-        brand.id,
-        `Referencia Telegram guardada; análisis/respuesta pendiente: ${error.message}`,
-      );
-    }
-    return res.json({
-      ok: true,
-      referenceId: reference.id,
-      ...(responseError ? { warning: responseError } : {}),
-    });
+  router.post("/inbox/telegram/:brandId/:secret", (_req, _res) => {
+    // A configured bot/chat is not permission to ingest participant content or
+    // process it with AI. Keep every legacy intake URL closed before touching
+    // the payload, even when its former credentials are valid.
+    throw integrationError(
+      "La recepción desde Telegram está deshabilitada: no importamos mensajes ni contenido de chats para análisis. Usa contenido público autorizado desde la plataforma. La publicación explícita por Telegram es independiente.",
+      403,
+    );
   });
   router.use("/brands/:brandId", requireAuth, requireBrand);
   router.post("/brands/:brandId/discover", requireEditor, async (req, res) =>
@@ -2350,9 +2437,6 @@ export function createIntelligenceRouter() {
       if (!req.body || typeof req.body !== "object" || Array.isArray(req.body))
         throw integrationError("Envía una configuración válida.");
       const integrations = await configureIntegrations(req.brand.id, req.body);
-      const telegram = getSecret(req.brand.id, "telegram");
-      if (telegram?.inboxSecret)
-        integrations.telegram.inboxUrl = `/api/inbox/telegram/${req.brand.id}/${telegram.inboxSecret}`;
       res.json(integrations);
     },
   );
@@ -2389,7 +2473,9 @@ export function createIntelligenceRouter() {
           "El destino o la configuración del conector cambió. Revisa el destino actual y confirma de nuevo.",
           409,
         );
-      res.json(publicPiece(await publishPiece(req.brand, { id: req.params.id })));
+      res.json(
+        publicPiece(await publishPiece(req.brand, { id: req.params.id })),
+      );
     },
   );
   return router;
