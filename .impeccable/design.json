@@ -370,10 +370,6 @@
         "displayName": "Journey Headline",
         "purpose": "Compact editorial journey page titles."
       },
-      "auth-promise": {
-        "displayName": "Auth Promise",
-        "purpose": "The account story promise."
-      },
       "headline-operational": {
         "displayName": "Headline Operational",
         "purpose": "Company setup stage headings in Geist."
@@ -425,6 +421,10 @@
       "landing-button": {
         "displayName": "Landing Button",
         "purpose": "Public landing actions."
+      },
+      "auth-title": {
+        "displayName": "Auth Title",
+        "purpose": "The account task title above a single centered form."
       }
     },
     "shadows": [
@@ -606,7 +606,7 @@
   ],
   "narrative": {
     "northStar": "The Editorial Thread",
-    "overview": "kompass connects an audience need with evidence, an editorial decision and the piece the team will review. Ink-black grounds, charcoal working surfaces, cool-violet dividers and pale lavender actions carry one identity across the public landing, account entry, onboarding, authenticated workspace and public community forms. The approved full-application redesign supersedes the former landing-only boundary.\n\nHedvig Letters Serif gives page titles and the account promise their editorial voice. Geist keeps navigation, controls, reading, operational headings and data precise. Working screens use the structure each task needs: divided records, source context, editing panes and a calendar. The landing keeps its spacious composition and native geometric illustration; that composition does not become a template for every working screen.\n\nThis records the finished implementation in `src/workspace.css`, `src/styles.css`, feature stylesheets, `src/landing.css` and shared components. Global workspace tokens are authoritative for shared controls; landing-specific tokens retain their observed local values. The shared colors and fonts express one brand. Sidecar tonal ramps visualize color relationships in the design panel; they are not additional interface tokens.",
+    "overview": "kompass connects an audience need with evidence, an editorial decision and the piece the team will review. Ink-black grounds, charcoal working surfaces, cool-violet dividers and pale lavender actions carry one identity across the public landing, account entry, onboarding, authenticated workspace and public community forms. The approved full-application redesign supersedes the former landing-only boundary.\n\nHedvig Letters Serif gives page titles and account titles their editorial voice. Geist keeps navigation, controls, reading, operational headings and data precise. Working screens use the structure each task needs: divided records, source context, editing panes and a calendar. The landing keeps its spacious composition and native geometric illustration; that composition does not become a template for every working screen.\n\nThis records the finished implementation in `src/workspace.css`, `src/styles.css`, feature stylesheets, `src/landing.css` and shared components. Global workspace tokens are authoritative for shared controls; landing-specific tokens retain their observed local values. The shared colors and fonts express one brand. Sidecar tonal ramps visualize color relationships in the design panel; they are not additional interface tokens.",
     "keyCharacteristics": [
       "One charcoal and lavender identity across public and authenticated surfaces.",
       "Editorial serif page titles paired with Geist operational text and controls.",
@@ -627,7 +627,7 @@
       },
       {
         "name": "The Editorial Hierarchy Rule",
-        "body": "Give page titles and the account promise the serif voice; keep operational H2/H3, navigation, forms and data in Geist. The landing retains its established serif section headings.",
+        "body": "Give page titles and account titles the serif voice; keep operational H2/H3, navigation, forms and data in Geist. The landing retains its established serif section headings.",
         "section": "typography"
       },
       {
@@ -643,7 +643,8 @@
       "**Do** keep semantic status colors tied to real success, warning, error or destructive meaning.",
       "**Do** preserve visible keyboard focus, modal and drawer focus behavior, and reduced spatial motion.",
       "**Do** adapt each task's records, working panes and evidence to the viewport while keeping controls readable.",
-      "**Do** preserve customer colors and stored creative assets as content within the shared interface."
+      "**Do** preserve customer colors and stored creative assets as content within the shared interface.",
+      "**Do** keep working text essential: task titles, labels, data, states and actionable errors; omit promotion, advice, page introductions and repeated explanations."
     ],
     "donts": [
       "**Don't** restore the superseded green application palette, Manrope headings or DM Sans controls.",

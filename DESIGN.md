@@ -40,12 +40,12 @@ typography:
     fontWeight: 400
     lineHeight: 1.18
     letterSpacing: -0.03em
-  auth-promise:
+  auth-title:
     fontFamily: Hedvig Letters Serif, Georgia, serif
-    fontSize: 60px
+    fontSize: 34px
     fontWeight: 400
-    lineHeight: 1.12
-    letterSpacing: -0.035em
+    lineHeight: 1.2
+    letterSpacing: -0.03em
   headline-operational:
     fontFamily: Geist, sans-serif
     fontSize: 28px
@@ -217,7 +217,7 @@ components:
 
 kompass connects an audience need with evidence, an editorial decision and the piece the team will review. Ink-black grounds, charcoal working surfaces, cool-violet dividers and pale lavender actions carry one identity across the public landing, account entry, onboarding, authenticated workspace and public community forms. The approved full-application redesign supersedes the former landing-only boundary.
 
-Hedvig Letters Serif gives page titles and the account promise their editorial voice. Geist keeps navigation, controls, reading, operational headings and data precise. Working screens use the structure each task needs: divided records, source context, editing panes and a calendar. The landing keeps its spacious composition and native geometric illustration; that composition does not become a template for every working screen.
+Hedvig Letters Serif gives page titles and account titles their editorial voice. Geist keeps navigation, controls, reading, operational headings and data precise. Working screens use the structure each task needs: divided records, source context, editing panes and a calendar. The landing keeps its spacious composition and native geometric illustration; that composition does not become a template for every working screen.
 
 This records the finished implementation in `src/workspace.css`, `src/styles.css`, feature stylesheets, `src/landing.css` and shared components. Global workspace tokens are authoritative for shared controls; landing-specific tokens retain their observed local values. The shared colors and fonts express one brand. Sidecar tonal ramps visualize color relationships in the design panel; they are not additional interface tokens.
 
@@ -262,7 +262,7 @@ Semantic status pairs are functional: **Positive** identifies actual success or 
 ### Hierarchy
 
 - **Headline:** the serif `headline` role leads standard pages. Journey and editor titles use their observed compact variant; public community titles also use the serif. Workspace titles reduce to (34px) at (760px) and (31px) at (420px); journey titles have their own (34px) and (30px) steps. Do not force a single title size across distinct working layouts.
-- **Account Promise:** the serif `auth-promise` role occupies the story panel, reducing through (50px), (43px) and (36px) as that layout contracts.
+- **Account Title:** the serif `auth-title` role labels the account task at (34px). Account entry is a single form without a promotional story panel.
 - **Operational Headline:** the sans-serif `headline-operational` role leads company setup stages. Account form headings use Geist at (27px), reducing to (25px).
 - **Title / Subtitle:** Geist supplies H2, H3, record titles, dialog titles and operational summaries. The frontmatter records the shared H2 and H3 roles; larger record and dialog headings use observed local (19–20px) sizes.
 - **Body:** Geist supplies working text. Supporting descriptions commonly use line-height (1.7–1.8); prose is capped around (65–72ch) where the task calls for sustained reading. Field hints and metadata use (11–12px).
@@ -270,7 +270,7 @@ Semantic status pairs are functional: **Positive** identifies actual success or 
 - **Landing Display / Headline:** the landing uses its larger serif promise and section hierarchy. The hero reduces through `clamp(40px, 6.5vw, 59px)` at (800px), `clamp(35px, 8.2vw, 49px)` at (600px), and (32px) at (360px). Major section headings reduce to (36px) on smaller screens.
 - **Landing Title / Example Title / Body / Button:** Geist carries feature headings, the interactive example, prose and actions. The body role is the wrapper baseline; paragraphs use line-height (1.65), with smaller task-specific example and feature prose.
 
-**The Editorial Hierarchy Rule.** Give page titles and the account promise the serif voice; keep operational H2/H3, navigation, forms and data in Geist. The landing retains its established serif section headings.
+**The Editorial Hierarchy Rule.** Give page titles and account titles the serif voice; keep operational H2/H3, navigation, forms and data in Geist. The landing retains its established serif section headings.
 
 ## Layout
 
@@ -278,7 +278,7 @@ The desktop workspace uses a fixed navigation rail (240px), a sticky contextual 
 
 At (980px) and below, navigation becomes a drawer (280px) over a dark scrim. The drawer opens as a labeled modal region, locks body scrolling, focuses its first control, traps Tab, closes with Escape or the scrim, and returns focus to its trigger. The covered main region and skip link become inert while it is open. Resizing to desktop closes the drawer.
 
-Working layouts preserve their own density. Journey pages use open divided stages and contextual evidence beside the next action. The editor stacks its panes at (1150px); draft lists reduce from three columns to two at (1400px) and then to one on small screens. The calendar has a local horizontal scrolling grid with an explicit scroll hint; its sidebar moves below the board at (1500px). Forms wrap or stack without compressing their inputs. Auth moves from a story/form split to one column at (760px), retaining a compact promise above the form. Onboarding is centered in a panel capped at (760px); public community forms are capped at (680px).
+Working layouts preserve their own density. Journey pages use open divided stages and contextual evidence beside the next action. The editor stacks its panes at (1150px); draft lists reduce from three columns to two at (1400px) and then to one on small screens. The calendar has a local horizontal scrolling grid; its sidebar moves below the board at (1500px). Forms wrap or stack without compressing their inputs. Auth uses one centered form capped at (380px), with the mark, task title and account controls. Onboarding is centered in a panel capped at (760px); public community forms are capped at (680px).
 
 The landing centers content at a maximum (1120px), with desktop gutters (48px), reducing to (32px) at (1100px), (20px) at (600px) and (16px) at (360px). Its header is (64px), then (60px) at (800px) and (56px) at (600px); central links collapse while account entry stays available. Feature rows use open columns and thin dividers; illustrations and example panes stack at their local responsive breakpoints.
 
@@ -325,7 +325,7 @@ Small state labels, without decorative pill styling.
 Flat, softly squared working surfaces.
 
 - **Style:** working charcoal, a cool single-pixel border and the card radius. Piece cards commonly use padding (24px); larger setup and onboarding panels use roomier padding. Divided lists remain open where the task uses rows.
-- **Empty states:** an accent-colored icon sits in a quiet lavender square beside clear explanatory text and a next action. Empty regions preserve the shared card treatment; supporting copy remains muted.
+- **Empty states:** an accent-colored icon sits in a quiet lavender square beside the state title and next action. Supporting text is optional and appears only when it changes the next decision.
 - **Dialogs / Toasts:** the modal is capped at (640px), with a wide variant (1080px), and scrolls within the viewport. It has a labeled dialog role, takes focus, traps Tab among visible enabled controls, allows Escape and backdrop close, and restores prior focus. Nested visible dialogs give keyboard handling to the topmost modal. Toasts use raised charcoal and semantic icons or error color.
 
 ### Inputs / Fields
@@ -361,6 +361,7 @@ Spatial motion is bounded. Controls use the shared ease-out curve; the landing a
 - **Do** preserve visible keyboard focus, modal and drawer focus behavior, and reduced spatial motion.
 - **Do** adapt each task's records, working panes and evidence to the viewport while keeping controls readable.
 - **Do** preserve customer colors and stored creative assets as content within the shared interface.
+- **Do** keep working text essential: task titles, labels, data, states and actionable errors; omit promotion, advice, page introductions and repeated explanations.
 
 ### Don't:
 
