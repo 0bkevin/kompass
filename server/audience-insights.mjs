@@ -473,6 +473,7 @@ function buildOpportunities(
   isDemo,
   outcomes,
   pieces,
+  audienceOnly = false,
 ) {
   const groups = new Map();
   for (const reference of deduplicateReferences(
@@ -630,6 +631,8 @@ function buildOpportunities(
         isDemo,
       };
     })
+    // Audience matches must be selected before the candidate limit.
+    .filter((opportunity) => !audienceOnly || opportunity.segmentIds.length > 0)
     .sort((a, b) => b.relevance - a.relevance || a.title.localeCompare(b.title))
     .slice(0, 40);
 }
@@ -772,6 +775,7 @@ export function buildInsights(brand, options = {}) {
       isDemo,
       learning.outcomes,
       allPieces,
+      options.audienceOnly === true,
     ).map((opportunity) => {
       const analysis = analyses.find(
         (item) =>

@@ -14,6 +14,7 @@ import type { Opportunity } from "../lib/journey-types";
 import type { Brand } from "../lib/types";
 import { useWorkspace } from "../lib/workspace";
 import { ReportDraft } from "./ReportDraft";
+import { EditorialComparison } from "./EditorialComparison";
 import {
   exportMarkdown,
   isResearchReportStale,
@@ -257,6 +258,10 @@ function ReportSession({
                 empty="Sin patrones de formato informados."
               />
             </div>
+          </details>
+          <details className="report-evidence-disclosure">
+            <summary>Comparar dos textos</summary>
+            <EditorialComparison />
           </details>
           <section
             className="report-opportunities"
