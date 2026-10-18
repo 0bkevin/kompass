@@ -1,0 +1,66 @@
+[
+  {
+    "label": "Current week",
+    "heading": "12 oct — 18 oct, 2026",
+    "days": 7,
+    "search": true,
+    "exportDisabled": true
+  },
+  {
+    "label": "Next week",
+    "heading": "19 oct — 25 oct, 2026",
+    "days": 7,
+    "search": true,
+    "exportDisabled": true
+  },
+  {
+    "label": "Previous week",
+    "heading": "12 oct — 18 oct, 2026",
+    "days": 7,
+    "search": true,
+    "exportDisabled": true
+  },
+  {
+    "label": "Today week",
+    "heading": "12 oct — 18 oct, 2026",
+    "days": 7,
+    "search": true,
+    "exportDisabled": true
+  },
+  {
+    "label": "November",
+    "heading": "noviembre de 2026",
+    "days": 42,
+    "search": true,
+    "exportDisabled": false
+  },
+  {
+    "label": "No match",
+    "heading": "noviembre de 2026",
+    "days": 42,
+    "search": true,
+    "exportDisabled": true
+  },
+  {
+    "label": "Unmatched term: noviembre",
+    "heading": "noviembre de 2026",
+    "days": 42,
+    "search": true,
+    "exportDisabled": true
+  },
+  {
+    "label": "Exact scheduled title: 30X QA próximo mes",
+    "heading": "noviembre de 2026",
+    "days": 42,
+    "search": true,
+    "exportDisabled": false,
+    "eventTitles": [
+      "LinkedIn14:3030X QA próximo mes"
+    ],
+    "csv": {
+      "rows": 1,
+      "date": "2026-11-05",
+      "title": "30X QA próximo mes"
+    }
+  }
+]

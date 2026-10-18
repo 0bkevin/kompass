@@ -1,0 +1,4 @@
+PASS: 61 JSON artifacts parse; all 11 review/index Markdown files have resolvable links.
+PASS: CSV scope/date/quoting/multiline/formula safety; Markdown content; exactly three explicit transport attempts and stable retry key.
+PASS: main previews3026 and5450 each return200 for Home, health, and all25 referenced compiled assets.
+PASS: no disposable QA listeners or browser tabs remain.

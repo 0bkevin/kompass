@@ -14,10 +14,10 @@ test at tests/interactive-results.test.mjs:48:1
 ✖ clearing a manual publication URL removes the outcome and piece link, while omitted corrections preserve it (61.266624ms)
   AssertionError [ERR_ASSERTION]: explicit blank must remove the stale outcome URL
   + actual - expected
-  
+
   + 'https://example.org/synthetic-post'
   - undefined
-  
+
       at TestContext.<anonymous> (file:///home/ubuntu/.t3/projects/30x-trackt-2/tests/interactive-results.test.mjs:63:10)
       at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
       at async Test.run (node:internal/test_runner/test:1404:7)

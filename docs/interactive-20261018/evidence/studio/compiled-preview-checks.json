@@ -1,0 +1,16 @@
+{
+  "same": {
+    "pieceId": "499ac172-eda1-4c0c-b8a7-a1d6e00cffe7",
+    "cta": "Comenta REVISIÓN para conversar con tu equipo.",
+    "scriptOccurrences": 1,
+    "previewOccurrences": 1,
+    "previewParagraphs": 1
+  },
+  "different": {
+    "pieceId": "a951bca4-092e-4a31-88a4-a7223b2d1f6e",
+    "cta": "Responde BITÁCORA para revisar la plantilla.",
+    "scriptOccurrences": 0,
+    "previewOccurrences": 1,
+    "previewParagraphs": 2
+  }
+}

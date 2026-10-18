@@ -64,3 +64,7 @@ The temporary Vite process is stopped and port 5467 is free. A final production 
 ## Bounded limitations
 
 This review verifies application interaction with synthetic company/audience/reference fixtures and real Codex text generation over a simulated provider transport. It does not establish production HTTP provider availability, external-source permissions, model quality for real company data, or actual social publication. Existing post/carousel/newsletter successes were reopened and independently inspected rather than regenerated after the restart. Structured scene metadata is not exposed as a separate timing/storyboard editor; this review assessed the editable script and export behavior and did not invent a scene-synchronization requirement. The mobile check uses a 390px emulated CSS viewport, not physical mobile hardware or a screen reader. It is a workflow check, not a full WCAG certification.
+
+## Coordinated production retest
+
+After the successful combined production build, root restarted port5465 and reopened both saved examples in the compiled UI. The exact CTA occurs once in the script and once in the preview (one preview paragraph). The independently authored different CTA occurs zero times in its script and once in the preview (two paragraphs). Neither case changes saved text. Browser diagnostics contained no errors or failed requests. Evidence: [counts](evidence/studio/compiled-preview-checks.json), [compiled screenshot](evidence/studio/compiled-cta-preview-after.png).

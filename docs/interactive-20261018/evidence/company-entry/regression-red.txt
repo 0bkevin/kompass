@@ -14,10 +14,10 @@ test at tests/interactive-company-entry.test.mjs:17:1
 ✖ owned text preserves an explicit audience's role and industry before generic topic suggestions (5.876866ms)
   AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
   + actual - expected
-  
+
   + 'Equipos comerciales'
   - 'CEOs de empresas EdTech'
-  
+
       at TestContext.<anonymous> (file:///home/ubuntu/.t3/projects/30x-trackt-2/tests/interactive-company-entry.test.mjs:31:10)
       at async Test.run (node:internal/test_runner/test:1404:7)
       at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
