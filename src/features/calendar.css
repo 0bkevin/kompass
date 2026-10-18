@@ -190,10 +190,6 @@
   box-shadow: none;
 }
 
-.calendar-scroll-hint {
-  display: none;
-}
-
 .calendar-scroll {
   overflow-x: auto;
   overscroll-behavior-x: contain;
@@ -499,33 +495,6 @@
   background: var(--calendar-selected);
 }
 
-.calendar-first-plan {
-  display: flex;
-  align-items: flex-start;
-  gap: 14px;
-  padding: 20px;
-  border-top: 1px solid var(--calendar-line);
-  color: var(--muted);
-}
-
-.calendar-first-plan > svg {
-  flex-shrink: 0;
-  margin-top: 2px;
-}
-
-.calendar-first-plan strong {
-  font-size: 13px;
-  font-weight: 500;
-  color: var(--text);
-}
-
-.calendar-first-plan p {
-  margin: 6px 0 0;
-  color: var(--muted);
-  font-size: 13px;
-  line-height: 1.7;
-}
-
 .calendar-sidebar {
   display: flex;
   flex-direction: column;
@@ -685,13 +654,6 @@
   font-weight: 500;
 }
 
-.calendar-selected-empty p {
-  margin: 0;
-  color: var(--muted);
-  font-size: 13px;
-  line-height: 1.7;
-}
-
 .calendar-readonly-note {
   padding-top: 16px;
   margin: 16px 0 0;
@@ -810,32 +772,6 @@
   font-size: 13px;
 }
 
-.calendar-publication-note {
-  display: flex;
-  align-items: flex-start;
-  gap: 12px;
-  padding: 4px 8px;
-  color: var(--muted);
-}
-
-.calendar-publication-note > svg {
-  flex-shrink: 0;
-  margin-top: 3px;
-}
-
-.calendar-publication-note strong {
-  font-size: 13px;
-  font-weight: 500;
-  color: var(--text);
-}
-
-.calendar-publication-note p {
-  margin: 6px 0 0;
-  color: var(--muted);
-  font-size: 12px;
-  line-height: 1.8;
-}
-
 .calendar-page .calendar-upcoming {
   margin-top: 28px;
   padding: 24px;
@@ -850,10 +786,6 @@
   margin: 0;
   font: 500 18px/1.4 var(--font-sans);
   letter-spacing: -0.025em;
-}
-
-.calendar-upcoming .section-heading > .small {
-  font-size: 12px;
 }
 
 .calendar-upcoming-item {
@@ -954,11 +886,6 @@
     grid-template-columns: repeat(2, minmax(0, 1fr));
     align-items: start;
   }
-
-  .calendar-publication-note {
-    grid-column: 1 / -1;
-    max-width: 75ch;
-  }
 }
 
 @media (max-width: 760px) {
@@ -990,28 +917,12 @@
     font-size: 18px;
   }
 
-  .calendar-scroll-hint {
-    display: block;
-    padding: 0 18px;
-    margin: 0 0 14px;
-    font-size: 12px;
-    color: var(--muted);
-  }
-
   .calendar-sidebar {
     grid-template-columns: minmax(0, 1fr);
   }
 
-  .calendar-publication-note {
-    grid-column: auto;
-  }
-
   .calendar-page .calendar-upcoming {
     padding: 20px;
-  }
-
-  .calendar-upcoming .section-heading > .small {
-    display: none;
   }
 
   .calendar-upcoming-item {

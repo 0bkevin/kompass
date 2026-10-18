@@ -268,11 +268,7 @@ export default function Calendar() {
     <div className="page calendar-page">
       <div className="page-heading">
         <div>
-          <h1>Pon fecha a las piezas aprobadas.</h1>
-          <p>
-            Consulta el plan editorial y ajusta las fechas antes de publicar
-            desde tu canal.
-          </p>
+          <h1>Calendario</h1>
         </div>
         <Button onClick={exportCalendar} disabled={!periodPieces.length}>
           <Download size={16} />
@@ -289,12 +285,12 @@ export default function Calendar() {
             <strong>
               {periodPieces.length}{" "}
               {periodPieces.length === 1
-                ? "pieza en tu grilla"
-                : "piezas en tu grilla"}
+                ? "pieza agendada"
+                : "piezas agendadas"}
             </strong>
             <span>
-              {mode === "month" ? "Durante este mes" : "Durante esta semana"}
-              {query ? " · Filtradas por tu búsqueda" : ""}
+              {mode === "month" ? "Este mes" : "Esta semana"}
+              {query ? " · Filtradas" : ""}
             </span>
           </div>
         </div>
@@ -320,13 +316,7 @@ export default function Calendar() {
           >
             <span style={{ width: `${weekProgress}%` }} />
           </div>
-          <small>
-            {target
-              ? weekCount >= target
-                ? "Objetivo de planificación alcanzado"
-                : "Objetivo semanal de tu marca"
-              : "Define tu objetivo desde Marca"}
-          </small>
+          <small>{target ? "Objetivo semanal" : "Sin objetivo semanal"}</small>
         </div>
       </div>
 
@@ -375,9 +365,6 @@ export default function Calendar() {
               </button>
             </div>
           </div>
-          <p className="calendar-scroll-hint">
-            Desliza para ver todos los días.
-          </p>
           <div className="calendar-scroll">
             <div className={`calendar-grid-surface ${mode}`}>
               <div className="calendar-weekdays">
@@ -469,7 +456,6 @@ export default function Calendar() {
                       )}
                       {mode === "week" && !entries.length && (
                         <div className="calendar-free-day">
-                          <span>Espacio disponible</span>
                           {!readonly && day >= today && (
                             <button
                               onClick={() => {
@@ -497,18 +483,6 @@ export default function Calendar() {
             </span>
             <span>Zona horaria: {timezone}</span>
           </div>
-          {!scheduled.length && (
-            <div className="calendar-first-plan">
-              <CalendarClock size={20} />
-              <div>
-                <strong>La grilla empieza con una pieza aprobada.</strong>
-                <p>
-                  Elige una fecha y agenda contenido desde la bandeja de
-                  aprobadas.
-                </p>
-              </div>
-            </div>
-          )}
         </section>
 
         <aside className="calendar-sidebar">
@@ -573,26 +547,16 @@ export default function Calendar() {
             ) : (
               <div className="calendar-selected-empty">
                 <CalendarDays size={25} />
-                <strong>
-                  {query
-                    ? "Sin coincidencias para esta fecha"
-                    : "Una fecha con posibilidades"}
-                </strong>
-                <p>
-                  {query
-                    ? "Prueba otra búsqueda o selecciona otro día."
-                    : "Elige una pieza aprobada para darle un lugar en tu plan."}
-                </p>
+                <strong>{query ? "Sin coincidencias" : "Sin piezas"}</strong>
               </div>
             )}
             {readonly ? (
               <p className="calendar-readonly-note">
-                Tu rol de revisor permite consultar la grilla. Un editor puede
-                agendar las piezas.
+                Solo lectura. Agendar requiere un propietario o editor.
               </p>
             ) : selectedDate < today ? (
               <p className="calendar-readonly-note">
-                Para agendar contenido nuevo, elige hoy o una fecha futura.
+                No se puede agendar en fechas pasadas.
               </p>
             ) : null}
           </section>
@@ -608,7 +572,7 @@ export default function Calendar() {
             >
               <span>
                 <CheckCircle2 size={17} />
-                Listas para agendar<Badge tone="green">{approved.length}</Badge>
+                Aprobadas sin fecha<Badge tone="green">{approved.length}</Badge>
               </span>
               <ChevronRight
                 size={16}
@@ -619,9 +583,6 @@ export default function Calendar() {
               <div className="calendar-approved-content">
                 {approved.length ? (
                   <>
-                    <p className="small muted">
-                      Aprobadas, esperando su momento.
-                    </p>
                     <div className="calendar-approved-list">
                       {approved.map((piece) => (
                         <div className="calendar-approved-item" key={piece.id}>
@@ -657,15 +618,13 @@ export default function Calendar() {
                 ) : (
                   <div className="calendar-approved-empty">
                     <p>
-                      {query
-                        ? "No hay piezas aprobadas que coincidan con tu búsqueda."
-                        : "Las piezas aprobadas sin fecha aparecerán aquí."}
+                      {query ? "Sin coincidencias." : "Sin piezas aprobadas."}
                     </p>
                     <button
                       className="text-button"
                       onClick={() => navigate("studio")}
                     >
-                      Ir al estudio
+                      Ir a contenido
                       <ArrowUpRight size={14} />
                     </button>
                   </div>
@@ -673,18 +632,6 @@ export default function Calendar() {
               </div>
             )}
           </section>
-
-          <div className="calendar-publication-note">
-            <CalendarClock size={18} />
-            <div>
-              <strong>Planifica aquí. Publica a tu ritmo.</strong>
-              <p>
-                Abre la pieza para usar Enviar ahora con un conector, o exporta
-                y publica desde tu canal. Confirma la publicación final y
-                registra el enlace y las métricas en Resultados.
-              </p>
-            </div>
-          </div>
         </aside>
       </div>
 
@@ -693,7 +640,6 @@ export default function Calendar() {
           <div>
             <h2>Próximas piezas</h2>
           </div>
-          <span className="small muted">Tu siguiente contenido, en orden</span>
         </div>
         {upcoming.length ? (
           <div className="calendar-upcoming-list">
@@ -742,22 +688,14 @@ export default function Calendar() {
         ) : (
           <EmptyState
             icon={<CalendarClock size={24} />}
-            title={
-              query
-                ? "No hay próximas piezas con esta búsqueda"
-                : "Tu próximo contenido tiene espacio"
-            }
+            title={query ? "Sin coincidencias" : "Sin próximas piezas"}
             action={
               <Button onClick={() => navigate("studio")}>
-                Ver el estudio
+                Ir a contenido
                 <ArrowUpRight size={14} />
               </Button>
             }
-          >
-            {query
-              ? "Prueba con otro título o canal para encontrar lo que buscas."
-              : "Aprueba una pieza en el estudio y elige cuándo quieres publicarla."}
-          </EmptyState>
+          />
         )}
       </section>
       {schedulePiece && (
