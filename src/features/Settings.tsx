@@ -28,6 +28,7 @@ import { useWorkspace } from "../lib/workspace";
 import { api, json } from "../lib/api";
 import { createSourceDraftGuard } from "../lib/source-draft-guard.mjs";
 import { ProviderBudget } from "./ProviderBudget";
+import SocialConnections from "./SocialConnections";
 import {
   Badge,
   Button,
@@ -455,6 +456,7 @@ export default function Settings() {
           </p>
         )}
       </section>
+      <SocialConnections />
       <section className="card settings-section">
         <div className="section-heading">
           <div>
