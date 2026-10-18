@@ -377,9 +377,7 @@ export default function MediaProduction({
                   Guarda los cambios antes de generar.
                 </p>
               )}
-              <p className="small muted">
-                Puede consumir créditos del proveedor.
-              </p>
+              <p className="small muted">Creación gestionada por kompass.</p>
             </form>
           </>
         )

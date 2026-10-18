@@ -27,9 +27,9 @@ const stages = [
     icon: Users,
     title: "Elige a quién va dirigido el contenido.",
     description:
-      "Un equipo pequeño quiere empezar a usar IA, pero no sabe qué tarea elegir ni qué debe revisar.",
+      "Un director quiere incorporar IA en su empresa, pero todavía no sabe por dónde empezar.",
     detail:
-      "Necesidad propuesta por el equipo, pendiente de contrastar con fuentes.",
+      "Necesidad propuesta por el equipo, pendiente de contrastar con fuentes o una pregunta a su comunidad.",
     output: "Ayudar al equipo a elegir su primera tarea con IA.",
     outputLabel: "Objetivo editorial",
   },
@@ -83,6 +83,11 @@ const faqs = [
     question: "¿El calendario publica por mí?",
     answer:
       "El calendario organiza fechas y permite exportar el plan. Para publicar el contenido en una red social debes hacerlo aparte.",
+  },
+  {
+    question: "¿Cómo puedo consultar a mi comunidad?",
+    answer:
+      "Comparte una pregunta pública con opciones de respuesta. Kompass conserva los conteos agregados y muestra resultados por grupo desde cinco respuestas. Son respuestas voluntarias, sin verificar identidades ni representar a toda la audiencia.",
   },
   {
     question: "¿Puedo crear imágenes y videos?",
@@ -498,7 +503,8 @@ export function LandingPage() {
               <p>
                 Compara una necesidad de tu audiencia con referencias públicas.
                 Distingue lo observado de las hipótesis para decidir si merece
-                la pena trabajar el tema.
+                la pena trabajar el tema. También puedes consultar a tu
+                comunidad con una pregunta pública.
               </p>
               <div className="lp-inline-points">
                 <span>
@@ -521,6 +527,10 @@ export function LandingPage() {
                 Escribe un guion a partir de la propuesta y recoge los
                 comentarios del equipo en el mismo espacio. Aprueba la versión
                 que vas a usar antes de programarla.
+              </p>
+              <p>
+                Crea imágenes y videos animados desde Studio. Revisa y añade los
+                recursos a la pieza antes de aprobarla.
               </p>
               <a
                 className="lp-text-link"
