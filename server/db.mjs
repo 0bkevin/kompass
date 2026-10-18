@@ -30,6 +30,7 @@ const kinds = new Set([
   "topicSnapshots",
   "communityPolls",
   "opportunityAnalyses",
+  "opportunityFeedback",
   "mediaJobs",
 ]);
 export function initDb() {
