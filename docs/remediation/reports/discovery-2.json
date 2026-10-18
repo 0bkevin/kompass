@@ -1,0 +1,75 @@
+{
+  "issueId": "discovery-2",
+  "agent": "fix_discovery_2",
+  "status": "fixed",
+  "rootCause": "clean replaced only a small list of named entities and decimal &#39; in a chained sequence. Hexadecimal and other numeric references survived in HN titles/body, while &amp;lt; could be decoded twice. HN refreshes also retained existing non-social body text, leaving historical malformed text unchanged.",
+  "changes": [
+    "Decode recognized named references and decimal/hexadecimal Unicode scalar references in one pass after stripping actual markup. Include Latin-1 named characters for Spanish/Portuguese and common typography; preserve unknown/malformed references as evidence.",
+    "Replace null, surrogate and out-of-range numeric references with U+FFFD without throwing; keep encoded tags as literal text for existing React rendering.",
+    "Store the prior HN normalizer's output only in an ephemeral WeakMap keyed by parsed provider objects. Refresh historical body text only for the same HN source/publication when the existing body exactly equals that current provider response normalized by the old algorithm.",
+    "Preserve modified editorial annotations, status, tags, analysis, provenance, IDs and approved pieces. Opportunity fingerprints change when repaired evidence text changes and remain stable on repeated unchanged refreshes.",
+    "Add regression tests at fetchSource/syncSources and verify imported reference cards/detail interactively in the native T3 browser at desktop/mobile, including storage readback after reload."
+  ],
+  "files": [
+    "server/intelligence.mjs",
+    "tests/remediation-discovery-2.test.mjs",
+    "docs/remediation/evidence/discovery-2-browser-seed.mjs",
+    "docs/remediation/reports/discovery-2.md",
+    "docs/remediation/reports/discovery-2.json"
+  ],
+  "verification": [
+    {
+      "command": "node --test tests/remediation-discovery-2.test.mjs",
+      "before": "Original reproduction: 8 tests, 2 passed and 6 failed, including original &#x2F;/&#x27; symptoms, Unicode, ordinary named typography, double decoding and persisted HN text. Follow-up legacy test: 9 passed / 1 failed before the refresh repair. Latin-1 follow-up: 10 passed / 1 failed before extending named characters.",
+      "after": "Final suite: 11 tests passed, 0 failed/cancelled/skipped. FetchSource calls both HN modes through a controlled JSON transport; syncSources persists readable title/body, keeps one reference after repetition, repairs exact legacy body matches, preserves changed annotations and approved piece/version, and updates the opportunity fingerprint only when its evidence changes.",
+      "kind": "test"
+    },
+    {
+      "command": "node --test tests/intelligence.test.mjs tests/social-intelligence.test.mjs tests/company-context.test.mjs tests/opportunity-analysis.test.mjs tests/remediation-discovery-1.test.mjs",
+      "before": "Existing nearby suites preserved unchanged by this agent.",
+      "after": "90 passed, 0 failed/cancelled/skipped. Provider transport, RSS, safeFetch/SSRF, analysis/draft and opportunity fingerprint behavior retained.",
+      "kind": "test"
+    },
+    {
+      "command": "Native T3 preview: own tab at http://127.0.1.33:5523/radar → Explorar → reload → Explorar; desktop 1280×800 and mobile 390×844.",
+      "before": "Original adversarial evidence showed hexadecimal entities literally in the HN card/detail. A synthetic HN provider payload was ingested through production syncSources, without external calls.",
+      "after": "Card and detail contain https://, apostrophe, ñ é 😀 🚀 and © – … €. Encoded <tag> and <img onerror=...> remain literal text; no injected image node or payload execution. Double-encoded &lt;/&#x27;/&quot; remain encoded after one pass. UI title/body exactly match API/SQLite readback after reload, same reference ID and 47 points/8 comments; no horizontal page overflow at either viewport.",
+      "kind": "browser"
+    }
+  ],
+  "artifacts": [
+    "docs/remediation/evidence/discovery-2-red.tap",
+    "docs/remediation/evidence/discovery-2-legacy-red.tap",
+    "docs/remediation/evidence/discovery-2-latin-red.tap",
+    "docs/remediation/evidence/discovery-2-green.tap",
+    "docs/remediation/evidence/discovery-2-nearby.tap",
+    "docs/remediation/evidence/discovery-2-browser-seed.mjs",
+    "docs/remediation/evidence/discovery-2-browser-seed.json",
+    "docs/remediation/evidence/discovery-2/browser-checks.json",
+    "docs/remediation/evidence/discovery-2/card-desktop.png",
+    "docs/remediation/evidence/discovery-2/detail-desktop.png",
+    "docs/remediation/evidence/discovery-2/detail-mobile.png",
+    "docs/remediation/evidence/discovery-2/detail-mobile-after-reload.png",
+    "docs/remediation/evidence/discovery-2/lifecycle.json"
+  ],
+  "limitations": [
+    "Provider responses and account/company were explicitly synthetic. No live Hacker News request, credentials, paid provider or publication was used; this verifies parsing, persistence and rendering, not live provider availability.",
+    "The named table covers XML, Latin-1 and common typography, not the full HTML5 named-entity catalog. Unsupported names and malformed references remain literal instead of being guessed or recursively decoded.",
+    "Historical correction is conservative and refresh-driven: it does not rewrite the database globally. A body that differs from the current HN response under the old normalizer is preserved, including annotations or provider text that has changed.",
+    "Piece approval versions cover editorial piece content. Refreshing evidence leaves existing piece records untouched; the separate opportunity fingerprint reflects changed evidence. This agent did not change approval policy.",
+    "Browser checks exercise the supplied encoded markup payload as React text; they do not establish a general-purpose HTML sanitizer guarantee.",
+    "No global build was run. The coordinator owns final combined build/test and compiled UI validation."
+  ],
+  "cleanup": {
+    "ownTabClosed": true,
+    "tabId": "tab_4r_07e54779-9ab2-4979-8a15-674c4eff160a",
+    "ownPortsReleased": [
+      4523,
+      5523
+    ],
+    "processGroupStopped": 267754,
+    "dataDirPreserved": "/tmp/30x-remediation-discovery-2",
+    "nodeWatchShutdownNote": "Node --watch asserted in FSEventWrap/FSWatcher.close during intentional SIGTERM teardown. Both own listeners were verified closed; the running app and tests had succeeded before teardown.",
+    "adversarialReportsOverwritten": false
+  }
+}

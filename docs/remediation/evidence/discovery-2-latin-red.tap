@@ -1,0 +1,40 @@
+✔ fetchSource HN: original HN hexadecimal slash and apostrophe (4.525977ms)
+✔ fetchSource HN: decimal and hexadecimal Unicode scalar values (0.775059ms)
+✔ fetchSource HN: named XML entities and ordinary typography (0.544922ms)
+✖ fetchSource HN: named Latin-1 entities used in Spanish and Portuguese (1.134772ms)
+✔ fetchSource HN: encoded references decode exactly once (0.698914ms)
+✔ fetchSource HN: unknown and malformed entities preserve original evidence (0.425452ms)
+✔ fetchSource HN: invalid scalar values cannot abort discovery (0.376337ms)
+✔ fetchSource HN: encoded markup stays literal text while raw script/style are removed (0.317519ms)
+✔ syncSources persists the decoded HN title and detail, preserves provenance and metrics, and repeated discovery keeps the same reference (84.917632ms)
+✔ HN legacy refresh repairs only an exact old-normalizer match without rewriting an approved piece (19.260575ms)
+✔ HN legacy refresh preserves changed editorial notes verbatim without rewriting an approved piece (16.939214ms)
+ℹ tests 11
+ℹ suites 0
+ℹ pass 10
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 316.03355
+
+✖ failing tests:
+
+test at tests/remediation-discovery-2.test.mjs:95:3
+✖ fetchSource HN: named Latin-1 entities used in Spanish and Portuguese (1.134772ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+  
+  + 'Espa&ntilde;ol caf&eacute; &aacute; &Aacute; &uuml; &Uuml; &iquest; a&ccedil;&atilde;o'
+  - 'Español café á Á ü Ü ¿ ação'
+  
+      at TestContext.<anonymous> (file:///home/ubuntu/.t3/projects/30x-trackt-2/tests/remediation-discovery-2.test.mjs:99:12)
+      at async Test.run (node:internal/test_runner/test:1404:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:969:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 'Espa&ntilde;ol caf&eacute; &aacute; &Aacute; &uuml; &Uuml; &iquest; a&ccedil;&atilde;o',
+    expected: 'Español café á Á ü Ü ¿ ação',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }

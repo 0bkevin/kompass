@@ -1,0 +1,19 @@
+✔ fetchSource HN: original HN hexadecimal slash and apostrophe (4.56076ms)
+✔ fetchSource HN: decimal and hexadecimal Unicode scalar values (0.807288ms)
+✔ fetchSource HN: named XML entities and ordinary typography (0.588568ms)
+✔ fetchSource HN: named Latin-1 entities used in Spanish and Portuguese (0.45073ms)
+✔ fetchSource HN: encoded references decode exactly once (0.650962ms)
+✔ fetchSource HN: unknown and malformed entities preserve original evidence (0.400584ms)
+✔ fetchSource HN: invalid scalar values cannot abort discovery (0.406804ms)
+✔ fetchSource HN: encoded markup stays literal text while raw script/style are removed (0.323749ms)
+✔ syncSources persists the decoded HN title and detail, preserves provenance and metrics, and repeated discovery keeps the same reference (84.244837ms)
+✔ HN legacy refresh repairs only an exact old-normalizer match without rewriting an approved piece (20.077838ms)
+✔ HN legacy refresh preserves changed editorial notes verbatim without rewriting an approved piece (19.48208ms)
+ℹ tests 11
+ℹ suites 0
+ℹ pass 11
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 320.134305

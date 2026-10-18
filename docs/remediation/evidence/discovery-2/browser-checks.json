@@ -1,0 +1,79 @@
+{
+  "issueId": "discovery-2",
+  "simulatedProvider": true,
+  "brandId": "0daaadff-e644-4ee1-ba37-801de5800d5f",
+  "url": "http://127.0.1.33:5523/radar",
+  "desktop": {
+    "title": "AdFection QA — https://example.com/public — it's readable",
+    "text": "JSON HN simulado; no es evidencia de un proveedor real. Enlace: https://example.com/public. Unicode: ñ é 😀 🚀. Tipografía: © – … €. Texto literal: <tag>fin</tag> <img src=x onerror=\"window.__discoveryXss=true\">. Una sola pasada: &lt;tag&gt; &#x27; &quot;.",
+    "checks": {
+      "titleExact": true,
+      "publicSlash": true,
+      "unicode": true,
+      "typography": true,
+      "literalTags": true,
+      "singleDecode": true,
+      "notExecuted": true,
+      "noInjectedNode": true
+    },
+    "allPassed": true,
+    "viewport": 1280,
+    "overflow": false
+  },
+  "mobile": {
+    "viewport": {
+      "width": 390,
+      "height": 844
+    },
+    "title": "AdFection QA — https://example.com/public — it's readable",
+    "text": "JSON HN simulado; no es evidencia de un proveedor real. Enlace: https://example.com/public. Unicode: ñ é 😀 🚀. Tipografía: © – … €. Texto literal: <tag>fin</tag> <img src=x onerror=\"window.__discoveryXss=true\">. Una sola pasada: &lt;tag&gt; &#x27; &quot;.",
+    "checks": {
+      "literalTags": true,
+      "slash": true,
+      "unicode": true,
+      "noExecutedPayload": true,
+      "noInjectedImg": true,
+      "noHorizontalOverflow": true
+    }
+  },
+  "reload": {
+    "status": 200,
+    "keys": [
+      "brand",
+      "references",
+      "ideas",
+      "pieces",
+      "assets",
+      "sources",
+      "members",
+      "activity",
+      "integrations"
+    ],
+    "title": "AdFection QA — https://example.com/public — it's readable",
+    "notExecuted": true
+  },
+  "finalReadback": {
+    "status": 200,
+    "id": "258e04d3-17c7-465b-b538-1936d159521d",
+    "title": "AdFection QA — https://example.com/public — it's readable",
+    "text": "JSON HN simulado; no es evidencia de un proveedor real. Enlace: https://example.com/public. Unicode: ñ é 😀 🚀. Tipografía: © – … €. Texto literal: <tag>fin</tag> <img src=x onerror=\"window.__discoveryXss=true\">. Una sola pasada: &lt;tag&gt; &#x27; &quot;.",
+    "storedTitle": "AdFection QA — https://example.com/public — it's readable",
+    "storedText": "JSON HN simulado; no es evidencia de un proveedor real. Enlace: https://example.com/public. Unicode: ñ é 😀 🚀. Tipografía: © – … €. Texto literal: <tag>fin</tag> <img src=x onerror=\"window.__discoveryXss=true\">. Una sola pasada: &lt;tag&gt; &#x27; &quot;.",
+    "metrics": {
+      "score": 47,
+      "comments": 8
+    },
+    "source": "HN — JSON simulado, no proveedor real",
+    "sourceUrl": "https://news.ycombinator.com/item?id=900000001",
+    "checks": {
+      "titleMatchesStorage": true,
+      "bodyMatchesStorage": true,
+      "sameReference": true,
+      "metricsPreserved": true,
+      "simulatedLabel": true,
+      "noInjectedNode": true,
+      "notExecuted": true,
+      "noOverflow": true
+    }
+  }
+}

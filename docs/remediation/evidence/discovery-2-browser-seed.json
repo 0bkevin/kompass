@@ -1,0 +1,33 @@
+{
+  "simulated": true,
+  "requests": [
+    "/api/v1/search_by_date",
+    "/api/v1/search"
+  ],
+  "result": {
+    "added": 1,
+    "updated": 0,
+    "errors": [],
+    "sources": [
+      {
+        "id": "59bc4cf6-0aec-45f1-bb08-ac93202ad41d",
+        "name": "HN — JSON simulado, no proveedor real",
+        "added": 1,
+        "updated": 0,
+        "fetched": 1
+      }
+    ]
+  },
+  "references": [
+    {
+      "id": "258e04d3-17c7-465b-b538-1936d159521d",
+      "title": "AdFection QA — https://example.com/public — it's readable",
+      "text": "JSON HN simulado; no es evidencia de un proveedor real. Enlace: https://example.com/public. Unicode: ñ é 😀 🚀. Tipografía: © – … €. Texto literal: <tag>fin</tag> <img src=x onerror=\"window.__discoveryXss=true\">. Una sola pasada: &lt;tag&gt; &#x27; &quot;.",
+      "sourceUrl": "https://news.ycombinator.com/item?id=900000001",
+      "metrics": {
+        "score": 47,
+        "comments": 8
+      }
+    }
+  ]
+}

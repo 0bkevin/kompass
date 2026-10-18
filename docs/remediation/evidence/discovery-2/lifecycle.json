@@ -1,0 +1,12 @@
+{
+  "ownTabClosed": true,
+  "tabId": "tab_4r_07e54779-9ab2-4979-8a15-674c4eff160a",
+  "ownPortsReleased": [
+    4523,
+    5523
+  ],
+  "processGroupStopped": 267754,
+  "dataDirPreserved": "/tmp/30x-remediation-discovery-2",
+  "nodeWatchShutdownNote": "Node --watch asserted in FSEventWrap/FSWatcher.close during intentional SIGTERM teardown. Both own listeners were verified closed; the running app and tests had succeeded before teardown.",
+  "adversarialReportsOverwritten": false
+}

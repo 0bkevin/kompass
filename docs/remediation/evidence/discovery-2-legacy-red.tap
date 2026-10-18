@@ -1,0 +1,39 @@
+✔ fetchSource HN: original HN hexadecimal slash and apostrophe (4.451376ms)
+✔ fetchSource HN: decimal and hexadecimal Unicode scalar values (0.791023ms)
+✔ fetchSource HN: named XML entities and ordinary typography (0.520355ms)
+✔ fetchSource HN: encoded references decode exactly once (0.438922ms)
+✔ fetchSource HN: unknown and malformed entities preserve original evidence (0.633486ms)
+✔ fetchSource HN: invalid scalar values cannot abort discovery (0.424721ms)
+✔ fetchSource HN: encoded markup stays literal text while raw script/style are removed (0.363047ms)
+✔ syncSources persists the decoded HN title and detail, preserves provenance and metrics, and repeated discovery keeps the same reference (85.310544ms)
+✖ HN legacy refresh repairs only an exact old-normalizer match without rewriting an approved piece (15.560583ms)
+✔ HN legacy refresh preserves changed editorial notes verbatim without rewriting an approved piece (20.336287ms)
+ℹ tests 10
+ℹ suites 0
+ℹ pass 9
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 318.729235
+
+✖ failing tests:
+
+test at tests/remediation-discovery-2.test.mjs:129:3
+✖ HN legacy refresh repairs only an exact old-normalizer match without rewriting an approved piece (15.560583ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+  
+  + 'Ruta https:&#x2F;&#x2F;example.com&#x2F;public y apóstrofo &#x27;.'
+  - "Ruta https://example.com/public y apóstrofo '."
+  
+      at TestContext.<anonymous> (file:///home/ubuntu/.t3/projects/30x-trackt-2/tests/remediation-discovery-2.test.mjs:148:12)
+      at async Test.run (node:internal/test_runner/test:1404:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:969:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 'Ruta https:&#x2F;&#x2F;example.com&#x2F;public y apóstrofo &#x27;.',
+    expected: "Ruta https://example.com/public y apóstrofo '.",
+    operator: 'strictEqual',
+    diff: 'simple'
+  }

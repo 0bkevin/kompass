@@ -1,0 +1,133 @@
+✖ fetchSource HN: original HN hexadecimal slash and apostrophe (4.602573ms)
+✖ fetchSource HN: decimal and hexadecimal Unicode scalar values (0.942513ms)
+✖ fetchSource HN: named XML entities and ordinary typography (0.607778ms)
+✖ fetchSource HN: encoded references decode exactly once (0.521207ms)
+✔ fetchSource HN: unknown and malformed entities preserve original evidence (1.231668ms)
+✖ fetchSource HN: invalid scalar values cannot abort discovery (0.478442ms)
+✔ fetchSource HN: encoded markup stays literal text while raw script/style are removed (0.391081ms)
+✖ syncSources persists the decoded HN title and detail, preserves provenance and metrics, and repeated discovery keeps the same reference (79.699881ms)
+ℹ tests 8
+ℹ suites 0
+ℹ pass 2
+ℹ fail 6
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 283.718762
+
+✖ failing tests:
+
+test at tests/remediation-discovery-2.test.mjs:88:3
+✖ fetchSource HN: original HN hexadecimal slash and apostrophe (4.602573ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+  
+  + 'AdFection: https:&#x2F;&#x2F;example.com&#x2F;public — it&#x27;s readable'
+  - "AdFection: https://example.com/public — it's readable"
+  
+      at TestContext.<anonymous> (file:///home/ubuntu/.t3/projects/30x-trackt-2/tests/remediation-discovery-2.test.mjs:92:12)
+      at async Test.run (node:internal/test_runner/test:1404:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 'AdFection: https:&#x2F;&#x2F;example.com&#x2F;public — it&#x27;s readable',
+    expected: "AdFection: https://example.com/public — it's readable",
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/remediation-discovery-2.test.mjs:88:3
+✖ fetchSource HN: decimal and hexadecimal Unicode scalar values (0.942513ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+  
+  + 'Equipo &#241; &#xE9; &#128512; &#x1F680; &#X2f; &#00047;'
+  - 'Equipo ñ é 😀 🚀 / /'
+            ^
+  
+      at TestContext.<anonymous> (file:///home/ubuntu/.t3/projects/30x-trackt-2/tests/remediation-discovery-2.test.mjs:92:12)
+      at async Test.run (node:internal/test_runner/test:1404:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:969:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 'Equipo &#241; &#xE9; &#128512; &#x1F680; &#X2f; &#00047;',
+    expected: 'Equipo ñ é 😀 🚀 / /',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/remediation-discovery-2.test.mjs:88:3
+✖ fetchSource HN: named XML entities and ordinary typography (0.607778ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+  
+  + `"IA" & equipos 'prácticos' <texto> &nbsp; &copy; &ndash; &hellip; &euro;`
+  - `"IA" & equipos 'prácticos' <texto> © – … €`
+  
+      at TestContext.<anonymous> (file:///home/ubuntu/.t3/projects/30x-trackt-2/tests/remediation-discovery-2.test.mjs:92:12)
+      at async Test.run (node:internal/test_runner/test:1404:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:969:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: `"IA" & equipos 'prácticos' <texto> &nbsp; &copy; &ndash; &hellip; &euro;`,
+    expected: `"IA" & equipos 'prácticos' <texto> © – … €`,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/remediation-discovery-2.test.mjs:88:3
+✖ fetchSource HN: encoded references decode exactly once (0.521207ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+  
+  + '<tag> &#x27; " &amp;'
+  - '&lt;tag&gt; &#x27; &quot; &amp;'
+  
+      at TestContext.<anonymous> (file:///home/ubuntu/.t3/projects/30x-trackt-2/tests/remediation-discovery-2.test.mjs:92:12)
+      at async Test.run (node:internal/test_runner/test:1404:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:969:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: '<tag> &#x27; " &amp;',
+    expected: '&lt;tag&gt; &#x27; &quot; &amp;',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/remediation-discovery-2.test.mjs:88:3
+✖ fetchSource HN: invalid scalar values cannot abort discovery (0.478442ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+  
+  + 'Invalid &#x110000; &#999999999999999999999999; &#xD800; &#0; tail'
+  - 'Invalid � � � � tail'
+  
+      at TestContext.<anonymous> (file:///home/ubuntu/.t3/projects/30x-trackt-2/tests/remediation-discovery-2.test.mjs:92:12)
+      at async Test.run (node:internal/test_runner/test:1404:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:969:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 'Invalid &#x110000; &#999999999999999999999999; &#xD800; &#0; tail',
+    expected: 'Invalid � � � � tail',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/remediation-discovery-2.test.mjs:101:1
+✖ syncSources persists the decoded HN title and detail, preserves provenance and metrics, and repeated discovery keeps the same reference (79.699881ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+  
+  + 'AdFection: https:&#x2F;&#x2F;example.com&#x2F;public — it&#x27;s readable'
+  - "AdFection: https://example.com/public — it's readable"
+  
+      at TestContext.<anonymous> (file:///home/ubuntu/.t3/projects/30x-trackt-2/tests/remediation-discovery-2.test.mjs:109:10)
+      at async Test.run (node:internal/test_runner/test:1404:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:969:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 'AdFection: https:&#x2F;&#x2F;example.com&#x2F;public — it&#x27;s readable',
+    expected: "AdFection: https://example.com/public — it's readable",
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
