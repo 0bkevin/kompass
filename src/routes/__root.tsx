@@ -29,7 +29,7 @@ export const Route = createRootRoute({
         content:
           "Decide qué contar y por qué. Contrasta las necesidades de tu audiencia con fuentes públicas y prepara guiones para revisar y planificar con tu equipo.",
       },
-      { name: "theme-color", content: "#f7f8f5" },
+      { name: "theme-color", content: "#0c0c10" },
     ],
     links: [{ rel: "icon", type: "image/svg+xml", href: "/icon.svg" }],
   }),

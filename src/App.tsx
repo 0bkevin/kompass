@@ -26,7 +26,6 @@ import {
   AlertCircle,
   Compass,
   ArrowRight,
-  Radio,
   House,
   Lightbulb,
   BarChart3,
@@ -39,6 +38,7 @@ import {
 import type { Brand, BrandState, Session, View } from "./lib/types";
 import { WorkspaceProvider } from "./lib/workspace";
 import { Button, Modal, Field } from "./components/ui";
+import { KompassMark } from "./components/BrandMark";
 import { CaptureModal } from "./features/Discovery";
 import { CompanySetup } from "./features/CompanySetup";
 import { workspaceLocation } from "./lib/legacy-navigation.mjs";
@@ -177,7 +177,7 @@ export default function App() {
   const searchInput = useRef<HTMLInputElement>(null);
   const sidebarRef = useRef<HTMLElement>(null);
   useEffect(() => {
-    const desktop = window.matchMedia("(min-width: 761px)");
+    const desktop = window.matchMedia("(min-width: 981px)");
     const closeMobileMenu = () => {
       if (desktop.matches) setMobile(false);
     };
@@ -441,7 +441,7 @@ export default function App() {
     return (
       <div className="initial-loader">
         <div className="brand-symbol">
-          <Radio size={25} />
+          <KompassMark />
         </div>
         {error ? (
           <>
@@ -474,7 +474,10 @@ export default function App() {
   if (!session.brands.length)
     return (
       <div className="onboarding">
-        <div className="wordmark">kompass</div>
+        <div className="wordmark">
+          <KompassMark />
+          kompass
+        </div>
         <div className="onboarding-panel">
           <CompanySetup onCreated={brandCreated} />
         </div>
@@ -529,15 +532,13 @@ export default function App() {
           search={(previous) => previous}
           onClick={() => setMobile(false)}
         >
-          <span className="wordmark-icon">
-            <Radio size={23} />
-          </span>
+          <KompassMark />
           kompass
         </Link>
         <div className="workspace-switch">
           <div
             className="workspace-avatar"
-            style={{ background: state?.brand.color || "#dcfce7" }}
+            style={{ borderColor: state?.brand.color || "#bea5f5" }}
           >
             {(state?.brand.name || session.brands[0].name).slice(0, 1)}
           </div>
@@ -902,7 +903,10 @@ function Auth({
   return (
     <div className="auth-page">
       <div className="auth-story">
-        <div className="wordmark">kompass</div>
+        <Link className="wordmark" to="/">
+          <KompassMark />
+          kompass
+        </Link>
         <div className="auth-intro">
           <h1>
             Le damos dirección <br />
@@ -913,22 +917,28 @@ function Auth({
             fuentes que puedas contrastar. Prepara el guion y revísalo con tu
             equipo.
           </p>
-          <div className="auth-radar">
-            <div className="auth-orbit o1" />
-            <div className="auth-orbit o2" />
-            <div className="auth-orbit o3" />
-            <div className="auth-radar-center">
-              <Radio size={34} />
+          <div
+            className="auth-example"
+            aria-label="Recorrido de una propuesta de contenido"
+          >
+            <div className="auth-example-row">
+              <span>
+                <Users size={15} /> Audiencia
+              </span>
+              <p>Una pregunta que quieras responder.</p>
             </div>
-            <span className="auth-signal s1">
-              Una pregunta de audiencia <ArrowUpRight size={15} />
-            </span>
-            <span className="auth-signal s2">
-              Fuentes para contrastar <Palette size={15} />
-            </span>
-            <span className="auth-signal s3">
-              Un enfoque para el guion <ArrowRight size={15} />
-            </span>
+            <div className="auth-example-row">
+              <span>
+                <Search size={15} /> Fuentes
+              </span>
+              <p>Referencias que puedas contrastar.</p>
+            </div>
+            <div className="auth-example-row">
+              <span>
+                <Clapperboard size={15} /> Contenido
+              </span>
+              <p>Un enfoque para escribir y revisar con tu equipo.</p>
+            </div>
           </div>
         </div>
         <p className="auth-footnote">
