@@ -71,6 +71,12 @@ function saveSettings(brandId, patch) {
   ).run(brandId, JSON.stringify(next));
   return next;
 }
+function clearOperationError(brandId, source) {
+  const state = settings(brandId);
+  return !state.lastErrorSource || state.lastErrorSource === source
+    ? { lastError: null, lastErrorSource: null }
+    : {};
+}
 
 export function youtubeConnectionConfig(env = process.env) {
   const clientId = env.GOOGLE_CLIENT_ID?.trim();
@@ -353,6 +359,7 @@ async function accountToken(brandId, { env, fetchImpl, now }) {
         expiresAt: now + Math.min(token.expires_in, 86400) * 1000,
         checkedAt: new Date(now).toISOString(),
       });
+      saveSettings(brandId, clearOperationError(brandId, "connection"));
       return {
         accessToken: token.access_token,
         context: connectionContext(brandId),
@@ -784,7 +791,12 @@ export async function discoverOfficialContent(
     db.prepare(
       "INSERT INTO official_social_catalog(brand_id,data,observed_at) VALUES(?,?,?) ON CONFLICT(brand_id) DO UPDATE SET data=excluded.data,observed_at=excluded.observed_at",
     ).run(brandId, JSON.stringify(data), now);
-    saveSettings(brandId, { query, limit, lastDiscoveryAt: data.observedAt });
+    saveSettings(brandId, {
+      query,
+      limit,
+      lastDiscoveryAt: data.observedAt,
+      ...clearOperationError(brandId, "discovery"),
+    });
     return data;
   });
 }
@@ -919,7 +931,9 @@ export async function syncOfficialMetrics(brandId, options = {}) {
       const observedAt = new Date(now).toISOString();
       saveSettings(brandId, {
         lastSyncedAt: observedAt,
-        lastError: errors.length ? errors[0].error : null,
+        ...(errors.length
+          ? { lastError: errors[0].error, lastErrorSource: "metrics" }
+          : clearOperationError(brandId, "metrics")),
       });
       return { synced, skipped: pieces.length - synced, errors, observedAt };
     } catch (error) {
@@ -927,7 +941,10 @@ export async function syncOfficialMetrics(brandId, options = {}) {
         getBrand(brandId) &&
         (settings(brandId).generation || "initial") === generation
       )
-        saveSettings(brandId, { lastError: userFacingSyncError(error) });
+        saveSettings(brandId, {
+          lastError: userFacingSyncError(error),
+          lastErrorSource: "metrics",
+        });
       throw error;
     }
   });
@@ -1318,6 +1335,7 @@ export function startSocialSyncScheduler({
       for (const { id } of rows) {
         if (!ready(id, env) || getBrand(id)?.isDemo) continue;
         const state = settings(id);
+        let operation = "connection";
         try {
           const connection = getSecret(id, SECRET);
           if (
@@ -1326,11 +1344,13 @@ export function startSocialSyncScheduler({
               clock() - Date.parse(connection.checkedAt) > DAY)
           )
             await accountToken(id, { env, fetchImpl, now: clock() });
+          operation = "metrics";
           if (
             !state.lastSyncedAt ||
             clock() - Date.parse(state.lastSyncedAt) >= INTERVAL
           )
             await syncOfficialMetrics(id, { env, fetchImpl, now: clock() });
+          operation = "discovery";
           if (
             state.query &&
             (!state.lastDiscoveryAt ||
@@ -1347,7 +1367,10 @@ export function startSocialSyncScheduler({
             (settings(id).generation || "initial") ===
               (state.generation || "initial")
           )
-            saveSettings(id, { lastError: userFacingSyncError(error) });
+            saveSettings(id, {
+              lastError: userFacingSyncError(error),
+              lastErrorSource: operation,
+            });
         }
       }
     } finally {

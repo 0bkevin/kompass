@@ -1121,6 +1121,123 @@ test("automatic public-key failures remain visible with the last good timestamp 
   );
 });
 
+test("a discovery-only company clears a recovered catalog failure without requiring a linked video", async () => {
+  const f = fixture();
+  handler = () => json({ items: [] });
+  await social.discoverOfficialContent(
+    f.brand.id,
+    { query: "Public IA test" },
+    { env, fetchImpl: transport, now },
+  );
+  const scheduler = social.startSocialSyncScheduler({
+    env,
+    fetchImpl: transport,
+    clock: () => now,
+    intervalMs: 3600_000,
+  });
+  try {
+    now += 3600_001;
+    handler = () => json({ error: "access denied" }, 403);
+    await scheduler.tick();
+    assert.match(
+      social.socialConnections(f.brand.id, { env }).automaticSync.lastError,
+      /YouTube rechazó/,
+    );
+    now += 3600_001;
+    handler = () => json({ items: [] });
+    await scheduler.tick();
+    assert.equal(
+      social.socialConnections(f.brand.id, { env }).automaticSync.lastError,
+      undefined,
+    );
+    assert.equal(
+      social.socialDiscoveryCache(f.brand.id, { now }).observedAt,
+      new Date(now).toISOString(),
+    );
+  } finally {
+    scheduler.stop();
+  }
+});
+
+test("a successful catalog query cannot hide a still-failing counter synchronization", async () => {
+  const f = fixture();
+  piece(f);
+  handler = () => json({ error: "quota temporarily unavailable" }, 403);
+  await assert.rejects(
+    social.syncOfficialMetrics(f.brand.id, { env, fetchImpl: transport, now }),
+    { status: 403 },
+  );
+  const failure = social.socialConnections(f.brand.id, { env }).automaticSync
+    .lastError;
+  assert.match(failure, /YouTube rechazó/);
+  handler = () => json({ items: [] });
+  await social.discoverOfficialContent(
+    f.brand.id,
+    { query: "Public IA test" },
+    { env, fetchImpl: transport, now },
+  );
+  assert.equal(
+    social.socialConnections(f.brand.id, { env }).automaticSync.lastError,
+    failure,
+  );
+});
+
+test("successful counters do not hide a catalog failure until discovery itself recovers", async () => {
+  const f = fixture();
+  piece(f);
+  handler = (url) =>
+    url.pathname.endsWith("/videos")
+      ? json({ items: [{ id, statistics: { viewCount: "15" } }] })
+      : json({ items: [] });
+  await social.discoverOfficialContent(
+    f.brand.id,
+    { query: "Public IA test" },
+    { env, fetchImpl: transport, now },
+  );
+  now += 3600_001;
+  handler = (url) =>
+    url.pathname.endsWith("/videos")
+      ? json({ items: [{ id, statistics: { viewCount: "20" } }] })
+      : json({ error: "catalog unavailable" }, 403);
+  const scheduler = social.startSocialSyncScheduler({
+    env,
+    fetchImpl: transport,
+    clock: () => now,
+    intervalMs: 3600_000,
+  });
+  try {
+    await scheduler.tick();
+  } finally {
+    scheduler.stop();
+  }
+  const failure = social.socialConnections(f.brand.id, { env }).automaticSync
+    .lastError;
+  assert.match(failure, /YouTube rechazó/);
+  now += 61_000;
+  handler = (url) =>
+    url.pathname.endsWith("/videos")
+      ? json({ items: [{ id, statistics: { viewCount: "25" } }] })
+      : json({ items: [] });
+  await social.syncOfficialMetrics(f.brand.id, {
+    env,
+    fetchImpl: transport,
+    now,
+  });
+  assert.equal(
+    social.socialConnections(f.brand.id, { env }).automaticSync.lastError,
+    failure,
+  );
+  await social.discoverOfficialContent(
+    f.brand.id,
+    { query: "Public IA test" },
+    { env, fetchImpl: transport, now },
+  );
+  assert.equal(
+    social.socialConnections(f.brand.id, { env }).automaticSync.lastError,
+    undefined,
+  );
+});
+
 test("disconnect during OAuth exchange prevents an old consent attempt from reconnecting", async () => {
   const f = fixture();
   const started = await oauthStart(f);
