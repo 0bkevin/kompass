@@ -22,7 +22,7 @@ export function isPublicAddress(address) {
   let ip = address.replace(/^\[|\]$/g, "").toLowerCase();
   if (net.isIP(ip) === 6) ip = new URL(`http://[${ip}]`).hostname.slice(1, -1);
   if (net.isIP(ip) === 4) {
-    const [a, b, c] = ip.split(".").map(Number);
+    const [a, b, c, d] = ip.split(".").map(Number);
     return !(
       a === 0 ||
       a === 10 ||
@@ -31,7 +31,12 @@ export function isPublicAddress(address) {
       (a === 100 && b >= 64 && b <= 127) ||
       (a === 169 && b === 254) ||
       (a === 172 && b >= 16 && b <= 31) ||
-      (a === 192 && (b === 168 || b === 0 || (b === 88 && c === 99))) ||
+      (a === 192 &&
+        (b === 168 ||
+          // IANA: 192.0.0.0/24, with globally reachable PCP/TURN anycast exceptions.
+          (b === 0 && c === 0 && d !== 9 && d !== 10) ||
+          (b === 0 && c === 2) ||
+          (b === 88 && c === 99))) ||
       (a === 198 && (b === 18 || b === 19 || (b === 51 && c === 100))) ||
       (a === 203 && b === 0 && c === 113)
     );
@@ -190,11 +195,13 @@ export async function safeFetch(value, options = {}) {
       throw integrationError(
         "El proveedor devolvió una redirección sin destino.",
       );
+    const redirectUrl = new URL(location, url).href;
+    if (options.validateRedirect) await options.validateRedirect(redirectUrl);
     const redirectHeaders = { ...options.headers };
     for (const name of Object.keys(redirectHeaders))
       if (/authorization|cookie|secret/i.test(name))
         delete redirectHeaders[name];
-    return safeFetch(new URL(location, url).href, {
+    return safeFetch(redirectUrl, {
       ...options,
       headers: redirectHeaders,
       maxRedirects: maxRedirects - 1,
@@ -380,6 +387,62 @@ export async function telegramRequest(
   return data.result;
 }
 
+function publicationDestination(brand, piece) {
+  const telegram = getSecret(brand.id, "telegram");
+  const webhook = getSecret(brand.id, "webhook");
+  const useTelegram =
+    piece.channel === "telegram" && telegram?.botToken && telegram?.chatId;
+  let destination = null;
+  if (useTelegram)
+    destination = { provider: "telegram", chatId: telegram.chatId };
+  else if (webhook?.url) {
+    const url = new URL(webhook.url);
+    const parametersHidden = !!(url.search || url.hash);
+    url.search = "";
+    url.hash = "";
+    destination = { provider: "webhook", url: url.href, parametersHidden };
+  }
+  // Opaque confirmation token: a settings change invalidates an open dialog.
+  const destinationKey = destination
+    ? createHash("sha256")
+        .update(JSON.stringify(useTelegram ? telegram : webhook))
+        .digest("base64url")
+    : null;
+  return { telegram, webhook, useTelegram, destination, destinationKey };
+}
+
+function telegramPublicationText(piece) {
+  return [piece.title, piece.caption || piece.script, piece.cta]
+    .filter(Boolean)
+    .join("\n\n");
+}
+
+export function getPublicationState(brand, piece) {
+  const current = publicationDestination(brand, piece);
+  const journal = getSecret(brand.id, `publication:${piece.id}`);
+  const receipt = journal?.receipt || piece.publicationReceipt;
+  const status = receipt
+    ? "delivered"
+    : ["sending", "uncertain", "failed"].includes(journal?.status)
+      ? journal.status
+      : "ready";
+  return {
+    status,
+    destination:
+      (["sending", "uncertain", "delivered"].includes(status) &&
+        (journal?.destination || receipt?.destination)) || current.destination,
+    destinationKey: current.destinationKey,
+    ...(current.useTelegram
+      ? {
+          previewText: telegramPublicationText(piece).slice(0, 4096),
+          textTruncated: telegramPublicationText(piece).length > 4096,
+        }
+      : {}),
+    ...(receipt ? { receipt } : {}),
+    ...(piece.publicationError ? { error: piece.publicationError } : {}),
+  };
+}
+
 const publicationLocks = new Set();
 export async function publishPiece(brand, value, options = {}) {
   const key = `${brand.id}:${value.id}`;
@@ -407,10 +470,8 @@ export async function publishPiece(brand, value, options = {}) {
         publicationReceipt: previous.receipt,
         publicationError: undefined,
       });
-    const telegram = getSecret(brand.id, "telegram");
-    const webhook = getSecret(brand.id, "webhook");
-    const useTelegram =
-      piece.channel === "telegram" && telegram?.botToken && telegram?.chatId;
+    const { telegram, webhook, useTelegram, destination } =
+      publicationDestination(brand, piece);
     if (!useTelegram && !webhook?.url)
       throw integrationError(
         "Conecta Telegram para ese canal o un webhook de publicación. Puedes exportar la pieza mientras tanto.",
@@ -423,6 +484,7 @@ export async function publishPiece(brand, value, options = {}) {
       status: "sending",
       startedAt: new Date().toISOString(),
       idempotencyKey,
+      destination,
     });
     let receipt;
     try {
@@ -432,18 +494,21 @@ export async function publishPiece(brand, value, options = {}) {
           "sendMessage",
           {
             chat_id: telegram.chatId,
-            text: [piece.title, piece.caption || piece.script, piece.cta]
-              .filter(Boolean)
-              .join("\n\n")
-              .slice(0, 4096),
+            text: telegramPublicationText(piece).slice(0, 4096),
             disable_web_page_preview: true,
           },
           options,
         );
+        if (!Number.isInteger(result?.message_id) || result.message_id <= 0)
+          throw integrationError(
+            "Telegram no devolvió un recibo de mensaje válido. Comprueba el chat antes de intentar otro envío.",
+            502,
+          );
         receipt = {
           provider: "telegram",
           messageId: result.message_id,
-          chatId: result.chat?.id,
+          chatId: result.chat?.id ?? telegram.chatId,
+          destination,
           publishedAt: new Date().toISOString(),
         };
       } else {
@@ -466,17 +531,22 @@ export async function publishPiece(brand, value, options = {}) {
           }),
         });
         if (!response.ok) {
+          const definitelyRejected =
+            response.status >= 400 && response.status < 500 && response.status !== 408;
           const error = integrationError(
-            `El webhook rechazó la pieza (HTTP ${response.status}).`,
+            definitelyRejected
+              ? `El webhook rechazó la pieza (HTTP ${response.status}).`
+              : `El webhook respondió HTTP ${response.status}. No se pudo confirmar el envío; comprueba el destino antes de repetirlo.`,
             502,
           );
-          error.definitelyRejected = true;
+          error.definitelyRejected = definitelyRejected;
           throw error;
         }
         receipt = {
           provider: "webhook",
           status: response.status,
           requestId: response.headers.get("x-request-id") || idempotencyKey,
+          destination,
           publishedAt: new Date().toISOString(),
         };
       }
@@ -484,11 +554,13 @@ export async function publishPiece(brand, value, options = {}) {
         status: "delivered",
         receipt,
         idempotencyKey,
+        destination,
       });
     } catch (error) {
       setSecret(brand.id, deliveryKey, {
         status: error.definitelyRejected ? "failed" : "uncertain",
         idempotencyKey,
+        destination,
       });
       const current = getRecord(brand.id, "pieces", piece.id) || piece;
       saveRecord(brand.id, "pieces", {
