@@ -710,15 +710,6 @@ fieldset .field {
 .small-break {
   display: none;
 }
-.app-footer {
-  display: flex;
-  justify-content: space-between;
-  gap: 20px;
-  border-top: 1px solid var(--border);
-  font-size: 9px;
-  color: var(--muted);
-  padding: 18px 34px;
-}
 .mobile-menu {
   display: none;
 }
@@ -1058,57 +1049,6 @@ fieldset .field {
   font-size: 13px;
   color: var(--muted);
 }
-.insight-card.dark {
-  background: var(--bg);
-  border-color: var(--border);
-  color: var(--muted);
-  padding: 23px 21px;
-}
-.insight-card.dark .eyebrow {
-  color: var(--muted);
-  font-size: 7px;
-  letter-spacing: 1px;
-}
-.insight-card.dark .row {
-  gap: 7px;
-  flex-wrap: nowrap;
-}
-.insight-card.dark svg {
-  color: var(--muted);
-  flex-shrink: 0;
-}
-.insight-card.dark h3 {
-  font-size: 21px;
-  color: var(--text);
-  line-height: 1.5;
-  letter-spacing: -0.5px;
-  margin-top: 18px;
-}
-.insight-card.dark p {
-  font-size: 10px;
-  line-height: 1.85;
-  color: var(--muted);
-  margin-top: 12px;
-  position: relative;
-  z-index: 1;
-}
-.insight-card.dark button {
-  display: flex;
-  align-items: center;
-  gap: 15px;
-  font-size: 9px;
-  background: var(--surface-raised);
-  border-radius: 6px;
-  color: var(--text);
-  padding: 9px 11px;
-  margin-top: 20px;
-  font-weight: 700;
-  position: relative;
-  z-index: 1;
-}
-.insight-card.dark button svg {
-  color: inherit;
-}
 .insight-orbit {
   position: absolute;
   width: 200px;
@@ -1179,12 +1119,6 @@ fieldset .field {
 .topic-row > svg {
   color: var(--muted);
 }
-.insight-caption {
-  font-size: 8px;
-  color: var(--muted);
-  line-height: 1.8;
-  margin-top: 9px;
-}
 .source-row {
   display: flex;
   align-items: center;
@@ -1218,19 +1152,6 @@ fieldset .field {
 }
 .status-dot.amber {
   background: var(--warning-bg);
-}
-.free-note {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  border-top: 1px solid var(--border);
-  margin-top: 9px;
-  padding-top: 13px;
-  font-size: 8px;
-  color: var(--muted);
-}
-.free-note svg {
-  color: var(--muted);
 }
 .source-warning {
   display: flex;
@@ -2483,119 +2404,6 @@ fieldset .field {
   min-height: 100vh;
   background: var(--surface);
 }
-.auth-story {
-  background: var(--bg);
-  position: relative;
-  padding: 40px 55px;
-  color: var(--text);
-  overflow: hidden;
-  display: flex;
-  flex-direction: column;
-}
-.auth-story > .wordmark {
-  font-size: 29px;
-}
-.auth-story .wordmark > span {
-  color: var(--muted);
-}
-.auth-intro {
-  margin: auto 0;
-  position: relative;
-  padding: 65px 0 20px;
-}
-.auth-intro > .eyebrow {
-  font-size: 8px;
-  color: var(--muted);
-  letter-spacing: 1.3px;
-}
-.auth-intro h1 {
-  font-size: 51px;
-  line-height: 1.25;
-  letter-spacing: -2.4px;
-  margin: 27px 0;
-  color: var(--text);
-}
-.auth-intro h1 em {
-  font-style: normal;
-  color: var(--muted);
-}
-.auth-intro > p:not(.eyebrow) {
-  color: var(--muted);
-  font-size: 13px;
-  max-width: 390px;
-  line-height: 1.9;
-}
-.auth-radar {
-  position: relative;
-  height: 250px;
-  margin-top: 20px;
-}
-.auth-orbit {
-  width: 180px;
-  height: 180px;
-  border: 1px solid var(--border);
-  position: absolute;
-  border-radius: 50%;
-  left: 50%;
-  top: 60%;
-  transform: translate(-50%, -50%);
-}
-.auth-orbit.o2 {
-  width: 280px;
-  height: 280px;
-  border-style: dashed;
-  opacity: 0.6;
-}
-.auth-orbit.o3 {
-  width: 380px;
-  height: 380px;
-  opacity: 0.3;
-}
-.auth-radar-center {
-  display: grid;
-  place-items: center;
-  position: absolute;
-  width: 70px;
-  height: 70px;
-  border-radius: 50%;
-  background: var(--bg);
-  color: var(--muted);
-  left: 50%;
-  top: 60%;
-  transform: translate(-50%, -50%);
-  box-shadow: 0 0 0 15px #00000055;
-}
-.auth-signal {
-  position: absolute;
-  display: flex;
-  align-items: center;
-  gap: 13px;
-  border-radius: 7px;
-  background: var(--bg);
-  padding: 12px 13px;
-  font-size: 9px;
-  color: var(--muted);
-  box-shadow: 0 5px 15px #00000020;
-  border: 1px solid var(--border);
-}
-.auth-signal.s1 {
-  left: 0;
-  top: 65px;
-}
-.auth-signal.s2 {
-  right: -2px;
-  top: 140px;
-}
-.auth-signal.s3 {
-  left: 25px;
-  bottom: 0;
-}
-.auth-footnote {
-  font-size: 9px;
-  color: var(--muted);
-  position: relative;
-  margin-top: 35px;
-}
 .auth-form-wrap {
   display: flex;
   align-items: center;
@@ -2606,26 +2414,11 @@ fieldset .field {
   width: 100%;
   max-width: 360px;
 }
-.auth-tag {
-  display: flex;
-  align-items: center;
-  gap: 7px;
-  color: var(--muted);
-  font-size: 8px;
-  font-weight: 700;
-  letter-spacing: 1.3px;
-  margin-bottom: 25px;
-}
 .auth-form h2 {
   font-size: 28px;
   line-height: 1.5;
   letter-spacing: -1px;
   margin-bottom: 10px;
-}
-.auth-form > .muted {
-  font-size: 12px;
-  line-height: 1.8;
-  margin-bottom: 30px;
 }
 .auth-form form {
   display: flex;
@@ -2662,13 +2455,6 @@ fieldset .field {
 .auth-form > .button {
   width: 100%;
   height: 44px;
-}
-.auth-small {
-  font-size: 10px;
-  color: var(--muted);
-  text-align: center;
-  line-height: 1.8;
-  margin-top: 20px;
 }
 .onboarding {
   padding: 40px;
@@ -2814,19 +2600,6 @@ fieldset .field {
   .editor-heading h1 {
     font-size: 21px;
   }
-  .app-footer {
-    padding-left: 25px;
-    padding-right: 25px;
-  }
-  .auth-story {
-    padding: 35px 40px;
-  }
-  .auth-intro h1 {
-    font-size: 44px;
-  }
-  .auth-form-wrap {
-    padding: 40px;
-  }
   .settings-grid {
     grid-template-columns: 1fr 1fr;
   }
@@ -2840,16 +2613,6 @@ fieldset .field {
     grid-template-columns: repeat(3, 1fr);
     gap: 14px;
     align-items: start;
-  }
-  .insight-card.dark h3 {
-    font-size: 18px;
-  }
-  .insight-card.dark {
-    padding: 20px;
-  }
-  .insight-card.dark .eyebrow {
-    font-size: 6px;
-    letter-spacing: 0.5px;
   }
   .reference-body h3 {
     font-size: 17px;
@@ -2913,25 +2676,8 @@ fieldset .field {
   .brand-preview h2 {
     font-size: 22px;
   }
-  .auth-intro h1 {
-    font-size: 38px;
-  }
-  .auth-intro > .eyebrow {
-    letter-spacing: 1px;
-    font-size: 7px;
-  }
-  .auth-form-wrap {
-    padding: 32px;
-  }
-  .auth-form h2 {
-    font-size: 24px;
-  }
   .settings-grid {
     grid-template-columns: 1fr;
-  }
-  .auth-signal {
-    font-size: 8px;
-    padding: 10px;
   }
   .asset-grid {
     grid-template-columns: repeat(2, 1fr);
@@ -3045,13 +2791,6 @@ fieldset .field {
   .card-open {
     font-size: 9px;
   }
-  .app-footer {
-    padding: 17px 18px;
-    font-size: 8px;
-  }
-  .app-footer > span:nth-child(2) {
-    display: none;
-  }
   .small-break {
     display: block;
   }
@@ -3161,44 +2900,8 @@ fieldset .field {
     max-width: none;
     font-size: 11px;
   }
-  .auth-page {
-    grid-template-columns: 1fr;
-  }
-  .auth-story {
-    padding: 28px 30px 30px;
-  }
-  .auth-story > .wordmark {
-    font-size: 24px;
-  }
-  .auth-intro {
-    padding: 35px 0 0;
-  }
-  .auth-intro h1 {
-    font-size: 37px;
-    margin: 18px 0;
-  }
-  .auth-intro h1 br:first-of-type {
-    display: none;
-  }
-  .auth-intro > p:not(.eyebrow) {
-    font-size: 12px;
-    max-width: 100%;
-  }
-  .auth-radar,
-  .auth-footnote {
-    display: none;
-  }
-  .auth-form-wrap {
-    padding: 40px 28px;
-  }
   .auth-form {
     max-width: 420px;
-  }
-  .auth-tag {
-    display: none;
-  }
-  .auth-form h2 {
-    font-size: 25px;
   }
   .onboarding {
     padding: 25px 18px;
@@ -3325,9 +3028,6 @@ fieldset .field {
     font-size: 13px;
   }
   .radar-insights .topic-row small {
-    font-size: 10px;
-  }
-  .radar-insights .insight-caption {
     font-size: 10px;
   }
   .radar-grid {
@@ -3460,18 +3160,6 @@ fieldset .field {
   .onboarding-panel h1 {
     font-size: 25px;
   }
-  .auth-intro h1 {
-    font-size: 34px;
-  }
-  .auth-story {
-    padding: 25px;
-  }
-  .auth-form-wrap {
-    padding: 34px 25px;
-  }
-  .auth-form h2 {
-    font-size: 25px;
-  }
 }
 @media (prefers-reduced-motion: reduce) {
   *,
@@ -3503,9 +3191,6 @@ fieldset .field {
 .section-heading p {
   color: var(--muted);
 }
-.insight-caption {
-  color: var(--muted);
-}
 .source-row small {
   color: var(--muted);
 }
@@ -3516,9 +3201,6 @@ fieldset .field {
   color: var(--muted);
 }
 .page-heading > div > p:not(.eyebrow) {
-  color: var(--muted);
-}
-.auth-small {
   color: var(--muted);
 }
 .post-copy > p {

@@ -713,9 +713,8 @@ export default function App() {
           {state?.integrations.ai.ready &&
             state.integrations.ai.dataMode === "public-test" && (
               <p className="ai-data-notice" role="note">
-                <strong>IA de prueba gratuita.</strong> Usa solo contenido
-                público o ficticio; Google puede usarlo para mejorar sus
-                productos.{" "}
+                <strong>Gemini de prueba.</strong> Solo contenido público o
+                ficticio; Google puede usarlo para mejorar sus productos.{" "}
                 <a
                   href="https://ai.google.dev/gemini-api/terms"
                   target="_blank"
@@ -749,9 +748,6 @@ export default function App() {
             content
           )}
         </main>
-        <footer className="app-footer">
-          <span>kompass · Le damos dirección a tu contenido.</span>
-        </footer>
       </div>
       {newBrand && (
         <Modal
@@ -902,57 +898,13 @@ function Auth({
   }
   return (
     <div className="auth-page">
-      <div className="auth-story">
-        <Link className="wordmark" to="/">
-          <KompassMark />
-          kompass
-        </Link>
-        <div className="auth-intro">
-          <h1>
-            Le damos dirección <br />
-            <em>a tu contenido.</em>
-          </h1>
-          <p>
-            Decide qué contar a partir de las preguntas de tu audiencia y de
-            fuentes que puedas contrastar. Prepara el guion y revísalo con tu
-            equipo.
-          </p>
-          <div
-            className="auth-example"
-            aria-label="Recorrido de una propuesta de contenido"
-          >
-            <div className="auth-example-row">
-              <span>
-                <Users size={15} /> Audiencia
-              </span>
-              <p>Una pregunta que quieras responder.</p>
-            </div>
-            <div className="auth-example-row">
-              <span>
-                <Search size={15} /> Fuentes
-              </span>
-              <p>Referencias que puedas contrastar.</p>
-            </div>
-            <div className="auth-example-row">
-              <span>
-                <Clapperboard size={15} /> Contenido
-              </span>
-              <p>Un enfoque para escribir y revisar con tu equipo.</p>
-            </div>
-          </div>
-        </div>
-        <p className="auth-footnote">
-          Tu equipo elige el enfoque y aprueba cada pieza.
-        </p>
-      </div>
+      <Link className="wordmark" to="/">
+        <KompassMark />
+        kompass
+      </Link>
       <div className="auth-form-wrap">
         <div className="auth-form">
-          <h2>{signup ? "Empieza por tu empresa." : "Retoma tu contenido."}</h2>
-          <p className="muted">
-            {signup
-              ? "Crea tu cuenta y añade tu web o un texto propio para definir a quién quieres dirigirte."
-              : "Vuelve a tus propuestas, guiones y revisiones."}
-          </p>
+          <h1>{signup ? "Crear cuenta" : "Iniciar sesión"}</h1>
           {googleEnabled && !linkGoogle && (
             <>
               <button
@@ -1017,7 +969,7 @@ function Auth({
                 ? "Crear mi cuenta"
                 : linkGoogle && googleEnabled
                   ? "Entrar y conectar Google"
-                  : "Entrar a kompass"}
+                  : "Iniciar sesión"}
               <ArrowRight size={17} />
             </Button>
             {signedIn && (
@@ -1040,7 +992,6 @@ function Auth({
             )}
           </form>
           <p className="auth-toggle">
-            {signup ? "¿Ya tienes una cuenta?" : "¿Primera vez por aquí?"}{" "}
             <button
               className="text-button"
               disabled={!!busy}
@@ -1054,7 +1005,7 @@ function Auth({
             </button>
           </p>
           <div className="or-divider">
-            <span />o explora primero
+            <span />o
             <span />
           </div>
           <Button
@@ -1084,10 +1035,6 @@ function Auth({
             <Compass size={17} />
             Explorar con datos de ejemplo
           </Button>
-          <p className="auth-small">
-            La demo usa ejemplos identificados. Al crear tu empresa, podrás
-            trabajar con tus propias audiencias, fuentes y piezas.
-          </p>
         </div>
       </div>
     </div>

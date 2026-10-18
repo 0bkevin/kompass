@@ -626,14 +626,6 @@ li {
   margin-inline: auto;
   outline: none;
 }
-.app-footer {
-  display: flex;
-  padding: 20px 40px;
-  min-height: 58px;
-  border-top: 1px solid var(--border);
-  color: var(--muted);
-  font-size: 11px;
-}
 .ai-data-notice {
   color: var(--warning);
   background: var(--warning-bg);
@@ -801,95 +793,34 @@ li {
   margin-top: 24px;
 }
 .auth-page {
-  display: grid;
-  grid-template-columns: 1.05fr 1fr;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 56px 24px;
   min-height: 100dvh;
   background: var(--bg);
   color: var(--text);
 }
-.auth-story {
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  padding: 40px 56px 30px;
-  overflow: hidden;
-  border-right: 1px solid var(--border);
-  background: #101015;
-  color: var(--text);
-}
-.auth-story > .wordmark {
+.auth-page > .wordmark {
+  width: 100%;
+  max-width: 380px;
+  margin-bottom: 36px;
   font-size: 25px;
-  color: var(--text);
-}
-.auth-intro {
-  margin-block: auto;
-  padding: 64px 0 34px;
-}
-.auth-intro h1 {
-  margin: 0 0 24px;
-  font: 400 60px/1.12 var(--font-display);
-  letter-spacing: -0.035em;
-  color: var(--text);
-}
-.auth-intro h1 em {
-  color: #c8b2ed;
-  font-style: normal;
-}
-.auth-intro > p:not(.eyebrow) {
-  max-width: 45ch;
-  font: 400 15px/1.8 var(--font-sans);
-  color: var(--muted);
-}
-.auth-example {
-  margin-top: 42px;
-  border-block: 1px solid var(--border);
-}
-.auth-example-row {
-  display: grid;
-  grid-template-columns: 100px 1fr;
-  gap: 24px;
-  padding: 15px 0;
-  align-items: center;
-}
-.auth-example-row + .auth-example-row {
-  border-top: 1px solid var(--border);
-}
-.auth-example-row span {
-  display: inline-flex;
-  align-items: center;
-  gap: 9px;
-  color: var(--accent);
-  font-size: 11px;
-}
-.auth-example-row p {
-  color: #d2c9df;
-  font-size: 12px;
-}
-.auth-footnote {
-  position: relative;
-  margin: 24px 0 0;
-  color: var(--muted);
-  font-size: 11px;
 }
 .auth-form-wrap {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 56px 48px;
+  display: block;
+  padding: 0;
+  width: 100%;
+  max-width: 380px;
 }
 .auth-form {
   width: 100%;
   max-width: 380px;
 }
-.auth-form h2 {
-  font: 500 27px/1.3 var(--font-sans);
-  letter-spacing: -0.035em;
-}
-.auth-form > .muted {
-  margin-top: 13px;
-  margin-bottom: 30px;
-  font-size: 14px;
-  color: var(--muted);
+.auth-form h1 {
+  margin-bottom: 28px;
+  font: 400 34px/1.2 var(--font-display);
+  letter-spacing: -0.03em;
 }
 .auth-form form {
   gap: 20px;
@@ -902,12 +833,6 @@ li {
   background: var(--surface);
   min-height: 46px;
   font-size: 14px;
-}
-.auth-small {
-  color: var(--muted);
-  font-size: 11px;
-  line-height: 1.7;
-  margin-top: 18px;
 }
 .auth-toggle {
   color: var(--muted);
@@ -1033,8 +958,7 @@ li {
   .main-content {
     padding: 30px 28px 40px;
   }
-  .topbar,
-  .app-footer {
+  .topbar {
     padding-inline: 28px;
   }
   .breadcrumb > span:first-child {
@@ -1043,12 +967,6 @@ li {
   .global-search {
     width: 210px;
     max-width: 32%;
-  }
-  .auth-story {
-    padding-inline: 36px;
-  }
-  .auth-intro h1 {
-    font-size: 50px;
   }
 }
 @media (max-width: 980px) {
@@ -1086,19 +1004,6 @@ li {
   .breadcrumb > span:first-child,
   .breadcrumb > span[aria-hidden="true"] {
     display: none;
-  }
-  .auth-page {
-    grid-template-columns: 1fr 1fr;
-  }
-  .auth-intro h1 {
-    font-size: 43px;
-  }
-  .auth-example-row {
-    grid-template-columns: 1fr;
-    gap: 5px;
-  }
-  .auth-form-wrap {
-    padding-inline: 28px;
   }
 }
 @media (max-width: 760px) {
@@ -1141,10 +1046,6 @@ li {
   .main-content {
     padding: 28px 20px 36px;
   }
-  .app-footer {
-    padding: 18px 20px;
-    font-size: 10px;
-  }
   .page-heading {
     gap: 18px;
     flex-wrap: wrap;
@@ -1179,44 +1080,8 @@ li {
   .onboarding-panel {
     padding: 28px 24px;
   }
-  .auth-page {
-    grid-template-columns: 1fr;
-  }
-  .auth-story {
-    padding: 25px 28px 28px;
-    border-right: 0;
-    border-bottom: 1px solid var(--border);
-  }
-  .auth-story > .wordmark {
-    font-size: 22px;
-  }
-  .auth-intro {
-    padding: 30px 0 0;
-    margin: 0;
-  }
-  .auth-intro h1 {
-    font-size: 36px;
-    margin: 0;
-  }
-  .auth-intro h1 br:first-of-type {
-    display: initial;
-  }
-  .auth-intro > p:not(.eyebrow),
-  .auth-example,
-  .auth-footnote {
-    display: none;
-  }
-  .auth-form-wrap {
-    padding: 32px 28px 40px;
-  }
   .auth-form {
     max-width: 440px;
-  }
-  .auth-form h2 {
-    font-size: 25px;
-  }
-  .auth-form > .muted {
-    margin-bottom: 26px;
   }
   .auth-form .field input {
     font-size: 16px;
@@ -1230,8 +1095,7 @@ li {
   .main-content {
     padding-inline: 16px;
   }
-  .topbar,
-  .app-footer {
+  .topbar {
     padding-inline: 16px;
   }
   .button {
