@@ -275,7 +275,9 @@ export function getAiConfig(brandId) {
   return resolveAiConfig(getSecret(brandId, "ai"));
 }
 
-// Plain HTTP Responses API, no browser credentials or client-side API keys.
+// Responses API by default; Google's documented compatibility endpoint uses
+// Chat Completions. Select by the exact official base, never a hostname suffix.
+// Credentials remain server-side and both transports use the same access gate.
 export async function generateStructured(
   brandId,
   { name, schema, instructions, input, image },
@@ -292,11 +294,15 @@ export async function generateStructured(
       "Aporta una imagen propia; no se envían URLs de medios de terceros al proveedor de IA.",
       403,
     );
-  const content = [{ type: "input_text", text: String(input).slice(0, 60000) }];
+  const baseUrl = config.baseUrl.replace(/\/$/, "");
+  const gemini =
+    baseUrl === "https://generativelanguage.googleapis.com/v1beta/openai";
+  const inputText = String(input).slice(0, 60000);
+  const content = [{ type: "input_text", text: inputText }];
   if (image)
     content.push({ type: "input_image", image_url: image, detail: "auto" });
   const response = await fetcher(
-    `${config.baseUrl.replace(/\/$/, "")}/responses`,
+    `${baseUrl}/${gemini ? "chat/completions" : "responses"}`,
     {
       requireHttps: true,
       policyPurpose: "ai",
@@ -307,13 +313,37 @@ export async function generateStructured(
         authorization: `Bearer ${config.apiKey}`,
         "content-type": "application/json",
       },
-      body: JSON.stringify({
-        model: config.model,
-        store: false,
-        instructions,
-        input: [{ role: "user", content }],
-        text: { format: { type: "json_schema", name, strict: true, schema } },
-      }),
+      body: JSON.stringify(
+        gemini
+          ? {
+              model: config.model,
+              messages: [
+                { role: "system", content: instructions },
+                {
+                  role: "user",
+                  content: [
+                    { type: "text", text: inputText },
+                    ...(image
+                      ? [{ type: "image_url", image_url: { url: image } }]
+                      : []),
+                  ],
+                },
+              ],
+              response_format: {
+                type: "json_schema",
+                json_schema: { name, strict: true, schema },
+              },
+            }
+          : {
+              model: config.model,
+              store: false,
+              instructions,
+              input: [{ role: "user", content }],
+              text: {
+                format: { type: "json_schema", name, strict: true, schema },
+              },
+            },
+      ),
     },
   );
   if (!response.ok)
@@ -330,14 +360,24 @@ export async function generateStructured(
       502,
     );
   }
-  const output =
-    result.output_text ||
-    result.output
-      ?.flatMap((item) => item.content || [])
-      .filter((item) => item.type === "output_text")
-      .map((item) => item.text)
-      .join("");
   try {
+    const choice = gemini ? result?.choices?.[0] : null;
+    if (
+      gemini &&
+      (choice?.finish_reason !== "stop" ||
+        choice?.message?.refusal ||
+        choice?.message?.tool_calls?.length ||
+        typeof choice?.message?.content !== "string")
+    )
+      throw new Error();
+    const output = gemini
+      ? choice.message.content
+      : result.output_text ||
+        result.output
+          ?.flatMap((item) => item.content || [])
+          .filter((item) => item.type === "output_text")
+          .map((item) => item.text)
+          .join("");
     const value = JSON.parse(output);
     if (!value || typeof value !== "object" || Array.isArray(value))
       throw new Error();
