@@ -376,6 +376,10 @@ export default function Settings() {
         ? socialSettings?.apify.configured === true
         : false;
   function focusSocialSettings() {
+    const details = document.getElementById(
+      "additional-integrations",
+    ) as HTMLDetailsElement | null;
+    if (details) details.open = true;
     document
       .getElementById("social-provider-settings")
       ?.scrollIntoView({ behavior: "smooth", block: "start" });
@@ -396,7 +400,56 @@ export default function Settings() {
         </Badge>
       </div>
 
-      <ProviderBudget />
+      <section
+        className="card settings-section"
+        aria-labelledby="workspace-services-heading"
+      >
+        <div className="section-heading">
+          <div>
+            <h2 id="workspace-services-heading">
+              Tu espacio, listo para trabajar
+            </h2>
+            <p className="muted">
+              Las fuentes disponibles vienen incluidas. Añade el contexto de tu
+              empresa y empieza a descubrir, crear y revisar contenido.
+            </p>
+          </div>
+        </div>
+        <dl className="workspace-services">
+          <div>
+            <dt>Descubrimiento</dt>
+            <dd>
+              {state.sources.some(
+                (source) =>
+                  source.enabled && source.accessPolicy?.allowed === true,
+              )
+                ? "Fuentes disponibles incluidas"
+                : "Sin fuentes activas; puedes aportar contenido propio"}
+            </dd>
+          </div>
+          <div>
+            <dt>Análisis y creación</dt>
+            <dd>
+              {state.integrations.ai.ready
+                ? state.integrations.ai.managedBy === "platform"
+                  ? "IA gestionada por la plataforma"
+                  : "IA de esta empresa disponible"
+                : "Motor editorial local disponible"}
+            </dd>
+          </div>
+          <div>
+            <dt>Revisión, calendario y exportación</dt>
+            <dd>Incluidos, sin conexiones adicionales</dd>
+          </div>
+        </dl>
+        {!state.integrations.ai.ready && (
+          <p className="small muted">
+            La IA contextual aún no está disponible en este espacio. La
+            configuración del servicio corresponde al administrador de la
+            plataforma.
+          </p>
+        )}
+      </section>
       <section className="card settings-section">
         <div className="section-heading">
           <div>
@@ -608,95 +661,101 @@ export default function Settings() {
         </p>
       </section>
 
-      <section
-        id="social-provider-settings"
-        className="card settings-section social-settings-section"
-      >
-        <div className="section-heading">
-          <div>
-            <h2>
-              <Globe size={20} /> Exploración social y video
-            </h2>
-            <p className="muted">
-              Estas integraciones están restringidas por las condiciones de uso.
-              Puedes guardar enlaces y aportar contenido propio. No se ejecutan
-              consultas ni se generan cargos de estos conectores.
-            </p>
+      <details id="additional-integrations" className="card settings-section">
+        <summary>Integraciones adicionales y alcance</summary>
+        <ProviderBudget />
+        <section
+          id="social-provider-settings"
+          className="card settings-section social-settings-section"
+        >
+          <div className="section-heading">
+            <div>
+              <h2>
+                <Globe size={20} /> Exploración social y video
+              </h2>
+              <p className="muted">
+                Estas integraciones están restringidas por las condiciones de
+                uso. Puedes guardar enlaces y aportar contenido propio. No se
+                ejecutan consultas ni se generan cargos de estos conectores.
+              </p>
+            </div>
           </div>
-        </div>
-        {socialSettingsError && (
-          <p className="form-error" role="alert">
-            No se pudo consultar el estado de estas conexiones:{" "}
-            {socialSettingsError}
-          </p>
-        )}
-        <div className="social-settings-grid">
-          {(
-            [
-              { id: "youtube", label: "YouTube Data API", icon: Youtube },
-              {
-                id: "apify",
-                label: "Apify · Instagram y TikTok",
-                icon: Instagram,
-              },
-              {
-                id: "gemini",
-                label: "Gemini · análisis de video",
-                icon: Video,
-              },
-            ] as const
-          ).map(({ id, label, icon: Icon }) => {
-            const policy =
-              socialSettings?.policies?.[id] || state.accessPolicies?.[id];
-            return (
-              <section className="social-connector-card" key={id}>
-                <div className="social-connector-title">
-                  <span className={`social-connector-icon ${id}`}>
-                    <Icon size={17} />
-                  </span>
-                  <div>
-                    <h3>{label}</h3>
-                    <Badge>Requiere autorización</Badge>
+          {socialSettingsError && (
+            <p className="form-error" role="alert">
+              No se pudo consultar el estado de estas conexiones:{" "}
+              {socialSettingsError}
+            </p>
+          )}
+          <div className="social-settings-grid">
+            {(
+              [
+                { id: "youtube", label: "YouTube Data API", icon: Youtube },
+                {
+                  id: "apify",
+                  label: "Apify · Instagram y TikTok",
+                  icon: Instagram,
+                },
+                {
+                  id: "gemini",
+                  label: "Gemini · análisis de video",
+                  icon: Video,
+                },
+              ] as const
+            ).map(({ id, label, icon: Icon }) => {
+              const policy =
+                socialSettings?.policies?.[id] || state.accessPolicies?.[id];
+              return (
+                <section className="social-connector-card" key={id}>
+                  <div className="social-connector-title">
+                    <span className={`social-connector-icon ${id}`}>
+                      <Icon size={17} />
+                    </span>
+                    <div>
+                      <h3>{label}</h3>
+                      <Badge>Requiere autorización</Badge>
+                    </div>
                   </div>
-                </div>
-                <p className="muted">
-                  {policy?.reason ||
-                    "Esta integración está bloqueada hasta revisar los permisos para el uso previsto. Una credencial no la activa."}
-                </p>
-                {owner && socialSettings?.[id].configured && (
-                  <Button
-                    disabled={!!busy}
-                    onClick={() => socialIntegration({ [id]: null }, () => {})}
-                  >
-                    Retirar credencial guardada
-                  </Button>
-                )}
-              </section>
-            );
-          })}
-        </div>
-        <div className="social-unsupported-note">
-          Facebook y X aparecen como pendientes: este radar todavía no tiene
-          adaptadores disponibles para esas redes. No se ejecutarán consultas
-          globales ni se presentarán resultados como cobertura completa.
-        </div>
-        {!owner && (
-          <p className="muted social-owner-note">
-            <KeyRound size={14} /> Solo el propietario de la marca puede
-            configurar o retirar estas credenciales.
-          </p>
-        )}
-      </section>
-
+                  <p className="muted">
+                    {policy?.reason ||
+                      "Esta integración está bloqueada hasta revisar los permisos para el uso previsto. Una credencial no la activa."}
+                  </p>
+                  {owner && socialSettings?.[id].configured && (
+                    <Button
+                      disabled={!!busy}
+                      onClick={() =>
+                        socialIntegration({ [id]: null }, () => {})
+                      }
+                    >
+                      Retirar credencial guardada
+                    </Button>
+                  )}
+                </section>
+              );
+            })}
+          </div>
+          <div className="social-unsupported-note">
+            Facebook y X aparecen como pendientes: este radar todavía no tiene
+            adaptadores disponibles para esas redes. No se ejecutarán consultas
+            globales ni se presentarán resultados como cobertura completa.
+          </div>
+          {!owner && (
+            <p className="muted social-owner-note">
+              <KeyRound size={14} /> Solo el propietario de la marca puede
+              configurar o retirar estas credenciales.
+            </p>
+          )}
+        </section>
+      </details>
       <div className="settings-grid">
         <section className="card settings-section">
           <div className="section-heading">
             <div>
               <h2>
-                <Sparkles size={20} /> Conectores opcionales
+                <Sparkles size={20} /> Servicios de creación y publicación
               </h2>
               <p className="muted">
-                La captación y el radar funcionan sin configurar IA de pago.
+                La IA de la plataforma se aplica automáticamente cuando está
+                disponible. No necesitas una clave propia para empezar.
               </p>
             </div>
           </div>
@@ -726,81 +785,119 @@ export default function Settings() {
             ))}
           </div>
           {integrationTab === "ai" && (
-            <form
-              className="stack"
-              onSubmit={(event) => {
-                event.preventDefault();
-                integration(
-                  {
-                    ai: { ...(aiKey ? { apiKey: aiKey } : {}), model: aiModel },
-                  },
-                  () => setAiKey(""),
-                );
-              }}
-            >
-              <div className="row">
-                <Badge
-                  tone={state.integrations.ai.configured ? "green" : "neutral"}
-                >
-                  {state.integrations.ai.configured
-                    ? "IA configurada"
-                    : "Motor editorial local"}
-                </Badge>
-              </div>
-              <p className="muted" style={{ fontSize: 13 }}>
-                Una API key habilita análisis y guiones con IA. Sin ella se usa
-                una heurística identificada, con evidencia limitada. El
-                proveedor necesita una revisión del operador sobre derechos de
-                entrada y tratamiento de datos antes de recibir contenido. Las
-                consultas pueden tener costo.
+            <div className="stack">
+              <Badge tone={state.integrations.ai.ready ? "green" : "neutral"}>
+                {state.integrations.ai.ready
+                  ? state.integrations.ai.managedBy === "platform"
+                    ? "IA de la plataforma disponible"
+                    : "IA de esta empresa disponible"
+                  : "Motor editorial local disponible"}
+              </Badge>
+              <p className="muted">
+                {state.integrations.ai.ready
+                  ? "Los análisis y borradores usan el servicio disponible en tu espacio. Las claves se conservan en el servidor."
+                  : "Puedes preparar borradores y completar el flujo editorial con el motor local. El administrador de la plataforma gestiona la disponibilidad de IA contextual."}
               </p>
-              <Field
-                label={
-                  state.integrations.ai.configured
-                    ? "Nueva API key (deja vacío para conservar)"
-                    : "API key"
-                }
-                type="password"
-                autoComplete="new-password"
-                value={aiKey}
-                onChange={(event) => setAiKey(event.target.value)}
-                placeholder="sk-…"
-                disabled={!owner}
-              />
-              <Field
-                label="Modelo"
-                value={aiModel}
-                onChange={(event) => setAiModel(event.target.value)}
-                maxLength={100}
-                disabled={!owner}
-              />
-              {owner && (
-                <div className="row" style={{ flexWrap: "wrap" }}>
-                  <Button
-                    type="submit"
-                    variant="primary"
-                    busy={busy === "integration"}
-                    disabled={
-                      !!busy || (!aiKey && !state.integrations.ai.configured)
-                    }
-                  >
-                    <Check size={16} /> Guardar IA
-                  </Button>
-                  {state.integrations.ai.configured && (
-                    <Button
-                      disabled={!!busy}
-                      onClick={() =>
-                        integration({ ai: { disabled: true } }, () =>
-                          setAiKey(""),
-                        )
+              <details>
+                <summary>Personalizar IA para esta empresa</summary>
+                <form
+                  className="stack"
+                  onSubmit={(event) => {
+                    event.preventDefault();
+                    integration(
+                      {
+                        ai: {
+                          ...(aiKey ? { apiKey: aiKey } : {}),
+                          model: aiModel,
+                        },
+                      },
+                      () => setAiKey(""),
+                    );
+                  }}
+                >
+                  <div className="row">
+                    <Badge
+                      tone={
+                        state.integrations.ai.configured ? "green" : "neutral"
                       }
                     >
-                      Usar motor local
-                    </Button>
+                      {state.integrations.ai.ready
+                        ? "IA disponible"
+                        : state.integrations.ai.configured
+                          ? "Credencial guardada · servicio no disponible"
+                          : "Sin credencial propia"}
+                    </Badge>
+                  </div>
+                  <p className="muted" style={{ fontSize: 13 }}>
+                    Una API key habilita análisis y guiones con IA. Sin ella se
+                    usa una heurística identificada, con evidencia limitada. El
+                    proveedor necesita una revisión del operador sobre derechos
+                    de entrada y tratamiento de datos antes de recibir
+                    contenido. Las consultas pueden tener costo.
+                  </p>
+                  <Field
+                    label={
+                      state.integrations.ai.configured
+                        ? "Nueva API key (deja vacío para conservar)"
+                        : "API key"
+                    }
+                    type="password"
+                    autoComplete="new-password"
+                    value={aiKey}
+                    onChange={(event) => setAiKey(event.target.value)}
+                    placeholder="sk-…"
+                    disabled={!owner}
+                  />
+                  <Field
+                    label="Modelo"
+                    value={aiModel}
+                    onChange={(event) => setAiModel(event.target.value)}
+                    maxLength={100}
+                    disabled={!owner}
+                  />
+                  {owner && (
+                    <div className="row" style={{ flexWrap: "wrap" }}>
+                      <Button
+                        type="submit"
+                        variant="primary"
+                        busy={busy === "integration"}
+                        disabled={
+                          !!busy ||
+                          (!aiKey &&
+                            state.integrations.ai.managedBy !== "workspace")
+                        }
+                      >
+                        <Check size={16} /> Guardar IA
+                      </Button>
+                      {state.integrations.ai.configured && (
+                        <Button
+                          disabled={!!busy}
+                          onClick={() =>
+                            integration({ ai: { disabled: true } }, () =>
+                              setAiKey(""),
+                            )
+                          }
+                        >
+                          Usar motor local
+                        </Button>
+                      )}
+                    </div>
                   )}
-                </div>
+                </form>
+              </details>
+              {owner && state.integrations.ai.managedBy === "workspace" && (
+                <Button
+                  disabled={!!busy}
+                  onClick={() =>
+                    integration({ ai: { usePlatform: true } }, () =>
+                      setAiKey(""),
+                    )
+                  }
+                >
+                  Usar servicio de la plataforma
+                </Button>
               )}
-            </form>
+            </div>
           )}
           {integrationTab === "webhook" && (
             <form

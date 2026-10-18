@@ -3642,3 +3642,39 @@ fieldset .field {
     padding-bottom: 15px;
   }
 }
+
+.workspace-services {
+  margin: 0;
+}
+.workspace-services > div {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 16px;
+  padding: 12px 0;
+  border-bottom: 1px solid var(--border, #e2e9e4);
+}
+.workspace-services dt {
+  font-weight: 600;
+}
+.workspace-services dd {
+  margin: 0;
+  text-align: right;
+  color: #52655a;
+}
+#additional-integrations > summary {
+  cursor: pointer;
+  font-weight: 600;
+}
+#additional-integrations[open] > summary {
+  margin-bottom: 24px;
+}
+@media (max-width: 600px) {
+  .workspace-services > div {
+    flex-direction: column;
+    gap: 5px;
+  }
+  .workspace-services dd {
+    text-align: left;
+  }
+}

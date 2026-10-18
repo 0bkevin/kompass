@@ -44,6 +44,7 @@ import { useWorkspace } from "../lib/workspace";
 import { ProviderCredits } from "../components/ProviderCredits";
 import { AudiencePage, BrandPage } from "./Brand";
 import "./journey.css";
+import { WorkspacePreparation } from "./WorkspacePreparation";
 
 const channelNames: Record<string, string> = {
   linkedin: "LinkedIn",
@@ -160,7 +161,7 @@ function useBrandResource<T>(path: string) {
           }));
       });
     return () => controller.abort();
-  }, [brandId, path, resourceKey, revision]);
+  }, [brandId, path, resourceKey, revision, state]);
   return {
     data: resource.key === resourceKey ? resource.data : undefined,
     error: resource.key === resourceKey ? resource.error : "",
@@ -468,6 +469,7 @@ export function Home() {
       <JourneyHeader title={`El contenido de ${brand.name}, con dirección.`}>
         Del contexto de tu empresa a una publicación que puedas evaluar.
       </JourneyHeader>
+      <WorkspacePreparation enabled={!reviewer && hasContext && hasAudience} />
       <section className="journey-next" aria-labelledby="next-action-heading">
         <div>
           <h2 id="next-action-heading">{next.title}</h2>
@@ -931,7 +933,7 @@ function OpportunityRow({
               </h3>
               {canCreate && (
                 <Button
-                  disabled={busy || !state.integrations.ai.configured}
+                  disabled={busy || !state.integrations.ai.ready}
                   busy={analyzing}
                   onClick={() => void analyze()}
                 >
@@ -972,20 +974,15 @@ function OpportunityRow({
               </>
             ) : (
               <p>
-                {state.integrations.ai.configured
+                {state.integrations.ai.ready
                   ? "La IA puede contrastar las necesidades declaradas con el texto de las referencias. Esta consulta usa el proveedor configurado y puede tener costo."
-                  : "La lectura inicial usa reglas de texto. Conecta un proveedor de IA en Fuentes y equipo para profundizar en la necesidad, el contexto y las citas."}
+                  : "La lectura inicial usa reglas de texto. La IA contextual estará disponible cuando la plataforma complete su conexión; puedes seguir creando y revisando contenido."}
               </p>
             )}
             {analysisError && (
               <p role="alert" className="form-error">
                 {analysisError}
               </p>
-            )}
-            {!state.integrations.ai.configured && canCreate && (
-              <Button variant="ghost" onClick={() => navigate("settings")}>
-                Configurar IA
-              </Button>
             )}
           </div>
         </details>
@@ -1160,7 +1157,7 @@ function OpportunityRow({
               </fieldset>
               <div className="journey-form-actions">
                 <span>
-                  {state.integrations.ai.configured
+                  {state.integrations.ai.ready
                     ? "Usará la IA conectada a este espacio."
                     : "Se creará una estructura inicial sin IA conectada."}
                 </span>

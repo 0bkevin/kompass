@@ -283,7 +283,13 @@ export interface Activity {
   createdAt: string;
 }
 export interface Integrations {
-  ai: { configured: boolean; model?: string; accessPolicy?: AccessPolicy };
+  ai: {
+    configured: boolean;
+    ready: boolean;
+    managedBy: "platform" | "workspace" | "local";
+    model?: string;
+    accessPolicy?: AccessPolicy;
+  };
   webhook: { configured: boolean; url?: string; accessPolicy?: AccessPolicy };
 }
 export interface BrandState {

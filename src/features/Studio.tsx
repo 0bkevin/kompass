@@ -249,15 +249,13 @@ function NewDraft({ onClose }: { onClose: () => void }) {
             style={controlStyle}
             placeholder="¿Qué quieres contar, desde qué ángulo y qué debería llevarse la audiencia?"
             aria-describedby={
-              state.integrations.ai.configured
-                ? undefined
-                : "draft-directions-help"
+              state.integrations.ai.ready ? undefined : "draft-directions-help"
             }
             rows={4}
             disabled={busy || !!createdPiece}
           />
         </Field>
-        {!state.integrations.ai.configured && (
+        {!state.integrations.ai.ready && (
           <p className="small muted" id="draft-directions-help">
             Las notas libres se conservan en un brief para revisión manual. Usa
             los controles de abajo para aplicar el CTA y la estructura.
@@ -353,12 +351,12 @@ function NewDraft({ onClose }: { onClose: () => void }) {
         <div className="callout">
           <Sparkles size={18} />
           <p>
-            {state.integrations.ai.configured
-              ? "Usará tu proveedor de IA configurado."
-              : "Usará una estructura local con tu audiencia, formato y controles elegidos. El resto del brief requiere revisión manual. Puedes conectar IA desde Configuración."}
+            {state.integrations.ai.ready
+              ? "Usará la IA disponible en tu espacio."
+              : "Usará una estructura local con tu audiencia, formato y controles elegidos. El resto del brief requiere revisión manual. Puedes empezar sin configurar servicios."}
           </p>
         </div>
-        {!state.integrations.ai.configured && (
+        {!state.integrations.ai.ready && (
           <details className="small">
             <summary>
               Indicaciones simples que también reconoce en las notas
