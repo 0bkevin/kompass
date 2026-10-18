@@ -30,3 +30,11 @@ The authenticated research route reads the current company's report. Segment and
 Manual observations live in Discovery's reference detail, with literal text or attached audio/video time support, uncertainty, optional hypothesis and revision-aware saving. Reviewers have read-only controls on these surfaces. Provider readiness, allowed source access and server authorization remain external requirements; manual observations and pilot figures do not establish consumer behavior or causal results.
 
 Checked implementation, incumbent-system comparison, evidence scope and deployment limitations: [integration record](../../docs/challenge-integration-20261018.md). The 2026-10-18 local finish review is `ship`; the recorded public deployment of the new modules remains pending.
+
+## Learning and comparison extension, 16:25 UTC
+
+Extend this approved world with a native disclosure for comparing two authorized texts. Two labeled selects, one explicit generation action, pending/error feedback, verified quotations and hypotheses reuse existing controls. No new motion or raster assets. The complete supplied text is analyzed up to 24,000 characters per reference; external audiovisual analysis remains unavailable. Company changes and edits invalidate pending results.
+
+Historical findings include a walk-forward review over the last 90 UTC days, with nine additional baseline days. Manual format comparisons retain audience, channel, exact elapsed measurement interval, sample counts and observed ranges. These findings describe collected observations and supplied results; predictive accuracy and usefulness to the real 30X audience remain unvalidated.
+
+Independent bounded finish review: `ship` through 28d771a. Tenant/editor authorization, current provider permissions, privacy gates, literal quotations, audience selection before truncation and bounded replay checked. Root local desktop/mobile inspection: disclosure, unavailable-provider state and 390px layout passed; no horizontal overflow. Full suite 785/785 passed before the final bounded-history and RSS transport checks; final focused extension 22/22 passed. Live RSS sync imported 30 metadata-only references with no errors. Production promotion and live comparison verification remain separate release checks.
