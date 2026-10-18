@@ -181,6 +181,7 @@ export function publicIntegrations(brandId) {
       configured: !!ai,
       ready: !!ai && policy.allowed,
       managedBy: ai?.managedBy || "local",
+      hasOverride: !!stored,
       ...(ai ? { model: ai.model } : {}),
     },
     webhook: {

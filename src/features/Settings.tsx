@@ -885,7 +885,7 @@ export default function Settings() {
                   )}
                 </form>
               </details>
-              {owner && state.integrations.ai.managedBy === "workspace" && (
+              {owner && state.integrations.ai.hasOverride && (
                 <Button
                   disabled={!!busy}
                   onClick={() =>

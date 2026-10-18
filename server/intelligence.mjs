@@ -1608,7 +1608,10 @@ export async function syncSources(brand, options = {}) {
         now: options.now ?? Date.now(),
         sourceIds: successfulSourceIds,
       });
-    return { added, updated, errors, sources: results };
+    const result = { added, updated, errors, sources: results };
+    if (getSecret(brand.id, "workspacePreparation"))
+      setSecret(brand.id, "workspacePreparation", discoveryPreparation(result));
+    return result;
   } finally {
     syncLocks.delete(brand.id);
   }
@@ -1617,6 +1620,17 @@ export async function syncSources(brand, options = {}) {
 // First-use discovery is free of paid providers and shared across concurrent tabs.
 // A saved outcome prevents remounts from repeatedly querying sources. Manual
 // refresh remains available for another attempt or for a later time window.
+function discoveryPreparation(result) {
+  const successful = result.sources.filter(
+    (source) => !source.error && !source.skipped,
+  ).length;
+  return {
+    status: !successful ? "failed" : result.errors.length ? "partial" : "ready",
+    added: result.added,
+    errors: result.errors,
+    preparedAt: new Date().toISOString(),
+  };
+}
 const initialDiscovery = new Map();
 export async function prepareWorkspace(brand, { discover = syncSources } = {}) {
   if (brand.isDemo) return { status: "example", added: 0, errors: [] };
@@ -1640,19 +1654,7 @@ export async function prepareWorkspace(brand, { discover = syncSources } = {}) {
     let preparation;
     try {
       const result = await discover(brand);
-      const successful = result.sources.filter(
-        (source) => !source.error && !source.skipped,
-      ).length;
-      preparation = {
-        status: !successful
-          ? "failed"
-          : result.errors.length
-            ? "partial"
-            : "ready",
-        added: result.added,
-        errors: result.errors,
-        preparedAt: new Date().toISOString(),
-      };
+      preparation = discoveryPreparation(result);
     } catch (error) {
       preparation = {
         status: "failed",

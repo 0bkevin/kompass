@@ -21,7 +21,7 @@ const database = await import("../server/db.mjs");
 const { resolveAiConfig } = await import("../server/integration-config.mjs");
 const { getAiConfig, configureIntegrations, generateStructured } =
   await import("../server/connectors.mjs");
-const { prepareWorkspace, createDraft } =
+const { prepareWorkspace, createDraft, syncSources } =
   await import("../server/intelligence.mjs");
 const { platformReadiness } = await import("../server/platform-readiness.mjs");
 const { createApp } = await import("../server/index.mjs");
@@ -367,4 +367,56 @@ test("new spaces need no provider settings and first-use endpoints preserve tena
   } finally {
     await new Promise((resolve) => server.close(resolve));
   }
+});
+
+test("a company that disabled AI can explicitly return to the platform service", async () => {
+  platformAi();
+  const brand = makeBrand();
+  database.setSecret(brand.id, "ai", { disabled: true });
+  const before = database.publicIntegrations(brand.id).ai;
+  assert.equal(before.ready, false);
+  assert.equal(before.hasOverride, true);
+  const reset = await configureIntegrations(brand.id, {
+    ai: { usePlatform: true },
+  });
+  assert.equal(reset.ai.ready, true);
+  assert.equal(reset.ai.hasOverride, false);
+  assert.equal(reset.ai.managedBy, "platform");
+});
+
+test("a successful manual discovery replaces a stale first-entry failure", async () => {
+  const brand = makeBrand();
+  sourceFor(brand);
+  await prepareWorkspace(brand, {
+    discover: async () => {
+      throw Error("Synthetic initial failure");
+    },
+  });
+  assert.equal(
+    database.getSecret(brand.id, "workspacePreparation").status,
+    "failed",
+  );
+  await syncSources(brand, {
+    fetcher: async () =>
+      Response.json({
+        hits: [
+          {
+            objectID: "synthetic-recovery-story",
+            title: "A synthetic education story",
+            url: "https://example.com/education",
+            created_at: new Date().toISOString(),
+            points: 10,
+            num_comments: 2,
+          },
+        ],
+      }),
+  });
+  const after = await prepareWorkspace(brand, {
+    discover: async () => {
+      throw Error("Must reuse refreshed state");
+    },
+  });
+  assert.equal(after.status, "ready");
+  assert.deepEqual(after.errors, []);
+  assert.equal(database.listRecords(brand.id, "references").length, 1);
 });

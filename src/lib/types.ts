@@ -287,6 +287,7 @@ export interface Integrations {
     configured: boolean;
     ready: boolean;
     managedBy: "platform" | "workspace" | "local";
+    hasOverride: boolean;
     model?: string;
     accessPolicy?: AccessPolicy;
   };
