@@ -26,6 +26,7 @@ import {
   Video,
 } from "lucide-react";
 import { useWorkspace } from "../lib/workspace";
+import { ProviderCredits } from "../components/ProviderCredits";
 import { api, json, uploadAsset } from "../lib/api";
 import { getOrUploadCaptureAsset } from "../lib/capture-retry.mjs";
 import { createThenRefresh } from "../lib/workflow-recovery.mjs";
@@ -562,6 +563,9 @@ export default function Radar() {
           ) : (
             <RadarPlot clusters={clusters} onOpen={setSelected} />
           )}
+          {layout !== "cards" && (
+            <ProviderCredits reference={{ evidence: visible }} />
+          )}
           {layout === "cards" && visible.length > shownCount && (
             <div className="load-more">
               <Button onClick={() => setShownCount((n) => n + 12)}>
@@ -753,18 +757,6 @@ function ReferenceCard({
         </IconButton>
       </div>
       <button className="reference-body" onClick={onOpen}>
-        {safeExternalUrl(r.thumbnailUrl) && (
-          <img
-            className="reference-thumbnail"
-            src={safeExternalUrl(r.thumbnailUrl)}
-            alt=""
-            loading="lazy"
-            referrerPolicy="no-referrer"
-            onError={(event) => {
-              event.currentTarget.hidden = true;
-            }}
-          />
-        )}
         <div className="reference-badges">
           <Badge
             tone={
@@ -811,6 +803,9 @@ function ReferenceCard({
           </span>
         </div>
       </button>
+      <div style={{ padding: "0 18px" }}>
+        <ProviderCredits reference={r} />
+      </div>
       <div className="reference-bottom">
         <div className="reference-metrics">
           {r.trend?.metrics?.score != null ? (
@@ -968,9 +963,7 @@ export function ReferenceDetail({
   }>({ url: "", status: "checking" });
   const [attachmentRetry, setAttachmentRetry] = useState(0);
   const attachmentStatus =
-    attachmentCheck.url === attachmentUrl
-      ? attachmentCheck.status
-      : "checking";
+    attachmentCheck.url === attachmentUrl ? attachmentCheck.status : "checking";
   useEffect(() => {
     if (!attachmentUrl) return;
     let active = true;
@@ -997,8 +990,7 @@ export function ReferenceDetail({
         });
       })
       .catch(() => {
-        if (active)
-          setAttachmentCheck({ url: attachmentUrl, status: "error" });
+        if (active) setAttachmentCheck({ url: attachmentUrl, status: "error" });
       })
       .finally(() => clearTimeout(timeout));
     return () => {
@@ -1028,7 +1020,10 @@ export function ReferenceDetail({
   }, [state.brand.id]);
   const videoCandidate = isVideoReference(r, state.assets);
   const videoAccessible = canAccessVideo(r, state.assets);
+  const videoPolicy = state.accessPolicies?.gemini;
+  const referenceRestricted = r.accessPolicy?.allowed === false;
   const mayAnalyzeVideo =
+    videoPolicy?.allowed === true &&
     state.brand.role !== "reviewer" &&
     videoAccessible &&
     !r.isDemo &&
@@ -1144,6 +1139,12 @@ export function ReferenceDetail({
         </p>
       )}
       <h2 className="detail-title">{r.title}</h2>
+      <ProviderCredits reference={r} />
+      {referenceRestricted && (
+        <p className="form-error" role="status">
+          {r.accessPolicy?.reason}
+        </p>
+      )}
       {r.text && <p className="detail-text">{r.text}</p>}
       {(r.assetId || r.format === "document") && (
         <section className="reference-attachment" aria-label="Archivo adjunto">
@@ -1168,8 +1169,8 @@ export function ReferenceDetail({
           <div className="reference-attachment-action" aria-live="polite">
             {!attachment ? (
               <p role="status">
-                No hay un archivo adjunto disponible. Pide al equipo que vuelva a
-                adjuntar el original desde Agregar referencia.
+                No hay un archivo adjunto disponible. Pide al equipo que vuelva
+                a adjuntar el original desde Agregar referencia.
               </p>
             ) : attachmentStatus === "available" ? (
               <a
@@ -1191,7 +1192,9 @@ export function ReferenceDetail({
                       ? "No se pudo autorizar la descarga. Comprueba tu sesión y tu acceso a esta empresa."
                       : "No se pudo comprobar el archivo. Vuelve a intentarlo para habilitar la descarga."}
                 </p>
-                <Button onClick={() => setAttachmentRetry((value) => value + 1)}>
+                <Button
+                  onClick={() => setAttachmentRetry((value) => value + 1)}
+                >
                   Volver a comprobar
                 </Button>
               </>
@@ -1200,11 +1203,7 @@ export function ReferenceDetail({
         </section>
       )}
       {attachment?.type === "image" && (
-        <img
-          className="reference-image"
-          src={attachment.url}
-          alt={r.title}
-        />
+        <img className="reference-image" src={attachment.url} alt={r.title} />
       )}
       {r.trend && (
         <div className="evidence-box">
@@ -1248,7 +1247,16 @@ export function ReferenceDetail({
           </p>
         </div>
       )}
-      {videoCandidate && (
+      {videoCandidate && videoPolicy?.allowed !== true && (
+        <section className="video-analysis-section">
+          <h3>Lectura audiovisual restringida</h3>
+          <p className="small muted">
+            {videoPolicy?.reason ||
+              "El análisis de video necesita una revisión de derechos y tratamiento de datos. Puedes trabajar con texto propio."}
+          </p>
+        </section>
+      )}
+      {videoCandidate && videoPolicy?.allowed === true && (
         <section
           className="video-analysis-section"
           aria-labelledby="video-analysis-title"
@@ -1275,15 +1283,6 @@ export function ReferenceDetail({
             <span className="signal-dot" />
             {videoAccessLabel(r, state.assets)}
           </div>
-          {r.thumbnailUrl && safeExternalUrl(r.thumbnailUrl) && (
-            <img
-              className="video-detail-thumbnail"
-              src={safeExternalUrl(r.thumbnailUrl)}
-              alt={`Miniatura de ${r.title}`}
-              loading="lazy"
-              referrerPolicy="no-referrer"
-            />
-          )}
           {!videoAccessible && (
             <p className="small muted">
               Solo hay metadatos disponibles. No se puede examinar el contenido
@@ -1416,8 +1415,8 @@ export function ReferenceDetail({
             <strong>¿Qué oportunidad editorial hay detrás?</strong>
             <p>
               El análisis de referencia usa texto y metadatos disponibles. Para
-              describir el audio y las imágenes, usa Examinar video cuando el
-              medio sea accesible.
+              trabajar con audio o imágenes se necesita un permiso de uso y
+              tratamiento verificado; la lectura audiovisual está restringida.
             </p>
           </div>
         </div>
@@ -1426,7 +1425,10 @@ export function ReferenceDetail({
         <Button
           busy={busy === "analyze"}
           disabled={
-            !!busy || !!committedDraft || state.brand.role === "reviewer"
+            referenceRestricted ||
+            !!busy ||
+            !!committedDraft ||
+            state.brand.role === "reviewer"
           }
           onClick={() => void analyze()}
         >
@@ -1463,7 +1465,9 @@ export function ReferenceDetail({
         <Button
           variant="primary"
           busy={busy === "draft"}
-          disabled={!!busy || state.brand.role === "reviewer"}
+          disabled={
+            referenceRestricted || !!busy || state.brand.role === "reviewer"
+          }
           onClick={() => void draft()}
         >
           <FileText size={16} />
@@ -1670,13 +1674,16 @@ export function InboxPage() {
           {refs.map((r) => (
             <div className="inbox-item" key={r.id}>
               <SourceMark source={r.source} platform={r.platform} />
-              <button className="inbox-title" onClick={() => setSelected(r)}>
-                <strong>{r.title}</strong>
-                <span>
-                  {r.source} · {timeAgo(r.createdAt)}
-                  {r.isDemo ? " · Ejemplo" : ""}
-                </span>
-              </button>
+              <div className="inbox-title">
+                <button className="inbox-title" onClick={() => setSelected(r)}>
+                  <strong>{r.title}</strong>
+                  <span>
+                    {r.source} · {timeAgo(r.createdAt)}
+                    {r.isDemo ? " · Ejemplo" : ""}
+                  </span>
+                </button>
+                <ProviderCredits reference={r} />
+              </div>
               <Badge tone={r.analysis ? "green" : "neutral"}>
                 {r.status === "saved"
                   ? "Guardada"

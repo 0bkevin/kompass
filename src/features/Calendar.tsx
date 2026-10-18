@@ -13,6 +13,7 @@ import {
 import { Badge, Button, EmptyState, IconButton } from "../components/ui";
 import { download, formatNames, pieceStatusLabel } from "../lib/format";
 import { calendarPlanDate } from "../lib/calendar-plan.mjs";
+import { formatProviderAttributions } from "../lib/provider-attribution.mjs";
 import type { Piece } from "../lib/types";
 import { useWorkspace } from "../lib/workspace";
 import { ScheduleModal } from "./Studio";
@@ -134,11 +135,7 @@ export default function Calendar() {
     )
     .slice(0, 5);
   const approved = state.pieces
-    .filter(
-      (piece) =>
-        piece.status === "approved" &&
-        matchesSearch(piece),
-    )
+    .filter((piece) => piece.status === "approved" && matchesSearch(piece))
     .sort((a, b) => b.updatedAt.localeCompare(a.updatedAt));
   const selectedWeek = startOfWeek(selectedDate),
     selectedWeekEnd = addDays(selectedWeek, 7);
@@ -223,6 +220,7 @@ export default function Calendar() {
       "Guion",
       "Caption",
       "Llamado a la acción",
+      "Fuente de los datos",
     ];
     const rows = periodPieces.map(({ piece, date }) => [
       dateKey(date),
@@ -238,6 +236,13 @@ export default function Calendar() {
       piece.script,
       piece.caption,
       piece.cta,
+      formatProviderAttributions(
+        state.references.find(
+          (reference) => reference.id === piece.referenceId,
+        ),
+        piece,
+        piece.editorialBrief,
+      ),
     ]);
     const slug =
       state.brand.name

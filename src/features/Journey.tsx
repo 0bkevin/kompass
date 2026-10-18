@@ -41,6 +41,7 @@ import type {
 } from "../lib/journey-types";
 import type { Brand, Piece, View } from "../lib/types";
 import { useWorkspace } from "../lib/workspace";
+import { ProviderCredits } from "../components/ProviderCredits";
 import { AudiencePage, BrandPage } from "./Brand";
 import "./journey.css";
 
@@ -592,6 +593,13 @@ export function Home() {
                     </small>
                   </button>
                 ))}
+              <ProviderCredits
+                reference={{
+                  evidence: insights.data.opportunities
+                    .slice(0, 3)
+                    .flatMap((opportunity) => opportunity.evidence),
+                }}
+              />
             </div>
           ) : !insights.error ? (
             <div className="journey-quiet-empty">
@@ -868,9 +876,7 @@ function OpportunityRow({
     <article className={`journey-opportunity ${expanded ? "is-open" : ""}`}>
       <div className="journey-opportunity-main">
         <div className="journey-badges">
-          <Badge
-            tone={growthStates[opportunity.growth.label].tone}
-          >
+          <Badge tone={growthStates[opportunity.growth.label].tone}>
             {growthStates[opportunity.growth.label].label}
           </Badge>
           {opportunity.isDemo && (
@@ -883,6 +889,7 @@ function OpportunityRow({
         </div>
         <h2>{opportunity.title}</h2>
         <p>{opportunity.adaptation}</p>
+        <ProviderCredits reference={{ evidence: opportunity.evidence }} />
         <div className="journey-segment-tags">
           {opportunity.segmentIds
             .map(
@@ -1035,6 +1042,7 @@ function OpportunityRow({
                           : ""}
                       </small>
                       <p>{evidence.detail}</p>
+                      <ProviderCredits reference={evidence} />
                       {safeExternalUrl(evidence.url) && (
                         <a
                           href={safeExternalUrl(evidence.url)}

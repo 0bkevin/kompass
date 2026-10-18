@@ -20,6 +20,8 @@ import {
 import { useWorkspace } from "../lib/workspace";
 import { ApiError, api, json } from "../lib/api";
 import { createThenRefresh } from "../lib/workflow-recovery.mjs";
+import { formatProviderAttributions } from "../lib/provider-attribution.mjs";
+import { ProviderCredits } from "../components/ProviderCredits";
 import type { Piece } from "../lib/types";
 import {
   isPieceEditorDirty,
@@ -27,7 +29,12 @@ import {
   type PieceEditorState,
 } from "../lib/piece-draft";
 import { Badge, Button, EmptyState, Field, Modal } from "../components/ui";
-import { download, formatNames, pieceStatusLabel, timeAgo } from "../lib/format";
+import {
+  download,
+  formatNames,
+  pieceStatusLabel,
+  timeAgo,
+} from "../lib/format";
 import PublishPiece from "./PublishPiece";
 
 export default function Studio() {
@@ -601,9 +608,15 @@ function PieceEditor({ piece }: { piece: Piece }) {
     }
   }
   function exportPiece() {
+    const reference = state.references.find((r) => r.id === draft.referenceId);
+    const attribution = formatProviderAttributions(
+      reference,
+      piece,
+      piece.editorialBrief,
+    );
     download(
       `${draft.title.slice(0, 60)}.md`,
-      `# ${draft.title}\n\n${formatNames[draft.format]} · ${draft.channel}\n\n## Gancho\n${draft.hook}\n\n## Guion\n${draft.script}\n\n## Caption\n${draft.caption}\n\n## Llamado a la acción\n${draft.cta}\n\nFuente: ${state.references.find((r) => r.id === draft.referenceId)?.url || "Idea propia"}\n`,
+      `# ${draft.title}\n\n${formatNames[draft.format]} · ${draft.channel}\n\n## Gancho\n${draft.hook}\n\n## Guion\n${draft.script}\n\n## Caption\n${draft.caption}\n\n## Llamado a la acción\n${draft.cta}\n\nFuente: ${reference?.url || piece.editorialBrief?.referenceUrl || "Idea propia"}\n${attribution ? `${attribution}\n` : ""}`,
       "text/markdown",
     );
   }
@@ -720,26 +733,62 @@ function PieceEditor({ piece }: { piece: Piece }) {
         </p>
       )}
       {piece.editorialBrief && (
-        <details className="callout" style={{ display: "block", overflowWrap: "anywhere" }}>
-          <summary>Brief y revisión pendiente (fuera del texto publicable)</summary>
+        <details
+          className="callout"
+          style={{ display: "block", overflowWrap: "anywhere" }}
+        >
+          <summary>
+            Brief y revisión pendiente (fuera del texto publicable)
+          </summary>
           <div className="stack small" style={{ maxWidth: "75ch" }}>
-            {piece.editorialBrief.notes.map((note, index) => <p key={index}>{note}</p>)}
+            {piece.editorialBrief.notes.map((note, index) => (
+              <p key={index}>{note}</p>
+            ))}
             <p>
-              <strong>Controles aplicados:</strong> {formatNames[piece.editorialBrief.applied.format]}
-              {piece.editorialBrief.applied.unitCount ? ` · ${piece.editorialBrief.applied.unitCount} ${piece.editorialBrief.applied.format === "carousel" ? "láminas" : "escenas"}` : ""}
-              {piece.editorialBrief.applied.includeExample ? " · ejemplo hipotético" : ""}
-              {piece.editorialBrief.applied.sectionTitles ? ` · ${piece.editorialBrief.applied.sectionTitles.join(", ")}` : ""}
+              <strong>Controles aplicados:</strong>{" "}
+              {formatNames[piece.editorialBrief.applied.format]}
+              {piece.editorialBrief.applied.unitCount
+                ? ` · ${piece.editorialBrief.applied.unitCount} ${piece.editorialBrief.applied.format === "carousel" ? "láminas" : "escenas"}`
+                : ""}
+              {piece.editorialBrief.applied.includeExample
+                ? " · ejemplo hipotético"
+                : ""}
+              {piece.editorialBrief.applied.sectionTitles
+                ? ` · ${piece.editorialBrief.applied.sectionTitles.join(", ")}`
+                : ""}
             </p>
-            <p><strong>CTA aplicado al crear:</strong> {piece.editorialBrief.applied.cta}</p>
-            <p><strong>Necesidad de audiencia:</strong> {piece.editorialBrief.audienceNeeds}</p>
+            <p>
+              <strong>CTA aplicado al crear:</strong>{" "}
+              {piece.editorialBrief.applied.cta}
+            </p>
+            <p>
+              <strong>Necesidad de audiencia:</strong>{" "}
+              {piece.editorialBrief.audienceNeeds}
+            </p>
             {piece.editorialBrief.instructions && (
-              <div><strong>Dirección editorial original:</strong><p style={{ whiteSpace: "pre-wrap" }}>{piece.editorialBrief.instructions}</p></div>
+              <div>
+                <strong>Dirección editorial original:</strong>
+                <p style={{ whiteSpace: "pre-wrap" }}>
+                  {piece.editorialBrief.instructions}
+                </p>
+              </div>
             )}
-            {piece.editorialBrief.angle && <p><strong>Ángulo de partida para revisar:</strong> {piece.editorialBrief.angle}</p>}
-            {piece.editorialBrief.referenceUrl && <p><strong>Procedencia:</strong> {piece.editorialBrief.referenceUrl}</p>}
+            {piece.editorialBrief.angle && (
+              <p>
+                <strong>Ángulo de partida para revisar:</strong>{" "}
+                {piece.editorialBrief.angle}
+              </p>
+            )}
+            {piece.editorialBrief.referenceUrl && (
+              <p>
+                <strong>Procedencia:</strong>{" "}
+                {piece.editorialBrief.referenceUrl}
+              </p>
+            )}
           </div>
         </details>
       )}
+      <ProviderCredits reference={piece} />
       <div className="editor-layout">
         <section className="card script-editor">
           <div className="editor-tabs tabs">
@@ -918,7 +967,8 @@ function PieceEditor({ piece }: { piece: Piece }) {
                 </EmptyState>
               )}
               <p className="small muted">
-                Asocia los archivos que usarás al producir y publicar esta pieza.
+                Asocia los archivos que usarás al producir y publicar esta
+                pieza.
               </p>
             </div>
           ) : (
@@ -1002,7 +1052,9 @@ function PieceEditor({ piece }: { piece: Piece }) {
               </span>
               <div>
                 <strong>{state.brand.name}</strong>
-                <small>{draft.channel} · {pieceStatusLabel(piece)}</small>
+                <small>
+                  {draft.channel} · {pieceStatusLabel(piece)}
+                </small>
               </div>
               <MoreHorizontal size={18} />
             </div>
@@ -1018,7 +1070,9 @@ function PieceEditor({ piece }: { piece: Piece }) {
               <Bookmark size={17} />
             </div>
           </div>
-          <div className={`insight-card review-card ${["approved", "scheduled", "published"].includes(piece.status) ? "publication-review" : ""}`}>
+          <div
+            className={`insight-card review-card ${["approved", "scheduled", "published"].includes(piece.status) ? "publication-review" : ""}`}
+          >
             {approvalConflict && (
               <div className="stack">
                 <p className="form-error" role="alert">

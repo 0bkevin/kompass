@@ -89,6 +89,7 @@ export interface Opportunity {
   reasons: string[];
   evidence: {
     referenceId: string;
+    providerAttributions?: { id: string; name: string; url: string }[];
     title: string;
     url?: string;
     source: string;

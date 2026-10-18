@@ -11,6 +11,22 @@ export type View =
   | "brand"
   | "settings";
 export type Role = "owner" | "editor" | "reviewer";
+export interface AccessPolicy {
+  allowed: boolean;
+  reason: string;
+  termsUrl?: string;
+  reviewedAt?: string;
+  expiresAt?: string;
+}
+export interface AccessPolicies {
+  version?: string;
+  apify: AccessPolicy;
+  youtube: AccessPolicy;
+  gemini: AccessPolicy;
+  reddit: AccessPolicy;
+  telegramInbox: AccessPolicy;
+  externalWeb: AccessPolicy;
+}
 export interface User {
   id: string;
   name: string;
@@ -81,12 +97,14 @@ export interface Trend {
   [key: string]: unknown;
 }
 export interface Reference {
+  accessPolicy?: AccessPolicy;
   id: string;
   title: string;
   url?: string;
   originalUrlOmitted?: boolean;
   text?: string;
   source: string;
+  providerAttributions?: { id: string; name: string; url: string }[];
   platform?: SocialPlatform;
   language: string;
   market: string;
@@ -160,6 +178,7 @@ export interface Piece {
   id: string;
   title: string;
   referenceId?: string;
+  providerAttributions?: { id: string; name: string; url: string }[];
   ideaId?: string;
   segmentId?: string;
   format: "reel" | "carousel" | "post" | "video" | "newsletter";
@@ -184,6 +203,7 @@ export interface Piece {
     angle: string;
     audienceNeeds: string;
     referenceUrl: string;
+    providerAttributions?: { id: string; name: string; url: string }[];
     applied: {
       format: Piece["format"];
       unitCount?: number;
@@ -232,6 +252,7 @@ export interface Asset {
   origin: "upload" | "template" | "ai" | "render";
 }
 export interface Source {
+  accessPolicy?: AccessPolicy;
   id: string;
   name: string;
   type: "hackernews" | "reddit" | "rss" | "gdelt" | "youtube" | "apify";
@@ -247,6 +268,7 @@ export interface Source {
 export type SocialPlatform =
   "youtube" | "instagram" | "tiktok" | "facebook" | "x";
 export interface SocialSettings {
+  policies?: AccessPolicies;
   youtube: { configured: boolean };
   apify: { configured: boolean };
   gemini: { configured: boolean; model?: string };
@@ -263,11 +285,12 @@ export interface Activity {
   createdAt: string;
 }
 export interface Integrations {
-  ai: { configured: boolean; model?: string };
+  ai: { configured: boolean; model?: string; accessPolicy?: AccessPolicy };
   telegram: { configured: boolean; chatId?: string; inboxUrl?: string };
-  webhook: { configured: boolean; url?: string };
+  webhook: { configured: boolean; url?: string; accessPolicy?: AccessPolicy };
 }
 export interface BrandState {
+  accessPolicies?: AccessPolicies;
   brand: Brand;
   references: Reference[];
   ideas: Idea[];
