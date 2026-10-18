@@ -672,11 +672,6 @@ export default function Settings() {
                   {policy?.reason ||
                     "Esta integración está bloqueada hasta revisar los permisos para el uso previsto. Una credencial no la activa."}
                 </p>
-                {policy?.termsUrl && (
-                  <a href={policy.termsUrl} target="_blank" rel="noreferrer">
-                    Consultar condiciones del proveedor
-                  </a>
-                )}
                 {owner && socialSettings?.[id].configured && (
                   <Button
                     disabled={!!busy}
