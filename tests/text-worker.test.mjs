@@ -1,14 +1,67 @@
 import test from "node:test";
 import assert from "node:assert/strict";
 import fs from "node:fs";
+import os from "node:os";
 import path from "node:path";
+import { spawnSync } from "node:child_process";
 import {
   MANAGED_TEXT_LIMITS,
   generateCodexText,
   codexTextReadiness,
+  codexTextArguments,
   prepareTextRequest,
 } from "../scripts/text-worker.mjs";
-import { runBoundedProcess } from "../scripts/media-worker.mjs";
+import {
+  mediaWorkerEnvironment,
+  runBoundedProcess,
+} from "../scripts/media-worker.mjs";
+
+test("actual Codex CLI accepts worker configuration without credentials or inference", (t) => {
+  const binary = process.env.RADAR_CODEX_BINARY || "codex";
+  const directory = fs.mkdtempSync(
+    path.join(os.tmpdir(), "kompass-text-config-test-"),
+  );
+  fs.chmodSync(directory, 0o700);
+  try {
+    const env = {
+      ...mediaWorkerEnvironment(),
+      HOME: directory,
+      CODEX_HOME: directory,
+    };
+    const version = spawnSync(binary, ["--version"], {
+      env,
+      encoding: "utf8",
+      timeout: 3000,
+      maxBuffer: 64000,
+    });
+    if (version.error?.code === "ENOENT")
+      return t.skip(
+        "Codex CLI is not installed; the configuration probe needs no account",
+      );
+    assert.equal(version.status, 0, "the installed Codex CLI must start");
+    const args = codexTextArguments(
+      directory,
+      path.join(directory, "schema.json"),
+    );
+    const overrides = args.flatMap((arg, index) =>
+      arg === "-c" ? ["-c", args[index + 1]] : [],
+    );
+    const result = spawnSync(binary, [...overrides, "features", "list"], {
+      env,
+      cwd: directory,
+      encoding: "utf8",
+      timeout: 5000,
+      maxBuffer: 64000,
+    });
+    assert.equal(
+      result.status,
+      0,
+      "the real CLI must accept every worker config override before inference",
+    );
+  } finally {
+    fs.rmSync(directory, { recursive: true, force: true });
+  }
+});
 
 const schema = {
   type: "object",
@@ -102,6 +155,47 @@ function fixture({
   return { calls, options, directories };
 }
 
+const startupWarnings = [
+  "Under-development features enabled: skip_host_skill_discovery. Under-development features are incomplete and may behave unpredictably. To suppress this warning, set `suppress_unstable_features_warning = true` in /synthetic/private/config.toml",
+  "Code Mode is unavailable because code-mode host is disabled. Code mode will fail closed; enable `features.code_mode_host` and install `codex-code-mode-host`.",
+];
+const diagnosticEvent = (message) => ({
+  type: "item.completed",
+  item: { type: "error", message },
+});
+
+test("ordinary startup diagnostics from disabled code mode do not discard a completed structured turn", async () => {
+  const stdout = stream().replace(
+    JSON.stringify({ type: "turn.started" }),
+    [...startupWarnings.map(diagnosticEvent), { type: "turn.started" }]
+      .map((event) => JSON.stringify(event))
+      .join("\n"),
+  );
+  const f = fixture({ result: { code: 0, stdout, stderr: "" } });
+  assert.deepEqual(await generateCodexText(request(), f.options), value);
+});
+
+test("unknown startup errors and even known diagnostics during a turn still fail closed", async () => {
+  const unknown = stream().replace(
+    JSON.stringify({ type: "turn.started" }),
+    [
+      diagnosticEvent("synthetic-confidential-provider-error"),
+      { type: "turn.started" },
+    ]
+      .map((event) => JSON.stringify(event))
+      .join("\n"),
+  );
+  for (const stdout of [
+    unknown,
+    stream(value, [diagnosticEvent(startupWarnings[1])]),
+  ]) {
+    const f = fixture({ result: { code: 0, stdout, stderr: "" } });
+    await assert.rejects(generateCodexText(request(), f.options), {
+      code: "TEXT_INVALID_RESULT",
+    });
+  }
+});
+
 test("worker uses normal login status, stdin and the caller schema with tools and retries disabled", async () => {
   const f = fixture();
   const output = await generateCodexText(request(), f.options);
@@ -131,8 +225,11 @@ test("worker uses normal login status, stdin and the caller schema with tools an
   for (const arg of [
     'web_search="disabled"',
     "mcp_servers={}",
-    "model_providers.openai.request_max_retries=0",
-    "model_providers.openai.stream_max_retries=0",
+    'model_provider="kompass_text"',
+    'model_providers.kompass_text.name="OpenAI managed text"',
+    "model_providers.kompass_text.requires_openai_auth=true",
+    "model_providers.kompass_text.request_max_retries=0",
+    "model_providers.kompass_text.stream_max_retries=0",
     "--ignore-user-config",
     "--ignore-rules",
     "--ephemeral",
@@ -141,6 +238,11 @@ test("worker uses normal login status, stdin and the caller schema with tools an
   assert.equal(
     execution.args[execution.args.indexOf("--sandbox") + 1],
     "read-only",
+  );
+  assert.ok(
+    !execution.args.some((arg) =>
+      /model_providers\.openai\.|base_url|env_key|bearer_token/.test(arg),
+    ),
   );
   assert.ok(execution.input.includes("Texto público de prueba"));
   assert.ok(!execution.args.join(" ").includes("Texto público de prueba"));

@@ -383,9 +383,18 @@ export function codexTextArguments(workDir, schemaPath) {
     "-c",
     'history.persistence="none"',
     "-c",
-    "model_providers.openai.request_max_retries=0",
+    // Built-in provider IDs are reserved. A named provider uses the CLI's
+    // normal OpenAI authentication/default routing while bounding retries;
+    // no endpoint, API key or extracted session token is supplied here.
+    'model_provider="kompass_text"',
     "-c",
-    "model_providers.openai.stream_max_retries=0",
+    'model_providers.kompass_text.name="OpenAI managed text"',
+    "-c",
+    "model_providers.kompass_text.requires_openai_auth=true",
+    "-c",
+    "model_providers.kompass_text.request_max_retries=0",
+    "-c",
+    "model_providers.kompass_text.stream_max_retries=0",
     "--cd",
     workDir,
     "--output-schema",
@@ -393,6 +402,20 @@ export function codexTextArguments(workDir, schemaPath) {
     "--json",
     "-",
   ];
+}
+
+function isExpectedStartupDiagnostic(event) {
+  if (event.type !== "item.completed" || event.item?.type !== "error")
+    return false;
+  const message = event.item.message;
+  return (
+    message ===
+      "Code Mode is unavailable because code-mode host is disabled. Code mode will fail closed; enable `features.code_mode_host` and install `codex-code-mode-host`." ||
+    (typeof message === "string" &&
+      /^Under-development features enabled: skip_host_skill_discovery\. Under-development features are incomplete and may behave unpredictably\. To suppress this warning, set `suppress_unstable_features_warning = true` in [^\r\n]+$/.test(
+        message,
+      ))
+  );
 }
 
 function parseTextEvents(stdout, schema) {
@@ -405,9 +428,15 @@ function parseTextEvents(stdout, schema) {
       throw textFailure("TEXT_INVALID_RESULT");
     if (events.some((event) => ["error", "turn.failed"].includes(event.type)))
       throw textFailure("TEXT_PROVIDER_ERROR");
-    // Tool executions are forbidden even when they appear to have failed.
-    const itemEvents = events.filter((event) =>
-      event.type?.startsWith("item."),
+    const turnStart = events.findIndex(
+      (event) => event.type === "turn.started",
+    );
+    // CLI startup warnings also use item.type=error. Ignore only these exact
+    // diagnostics before the turn; unknown errors and all tool executions fail.
+    const itemEvents = events.filter(
+      (event, index) =>
+        event.type?.startsWith("item.") &&
+        !(index < turnStart && isExpectedStartupDiagnostic(event)),
     );
     if (
       itemEvents.some(
