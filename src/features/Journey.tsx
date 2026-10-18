@@ -32,6 +32,11 @@ import type { AudienceEvidenceResource } from "../lib/audience-evidence";
 import { formatNames, pieceStatusLabel, safeExternalUrl } from "../lib/format";
 import { safeAudienceEvidenceUrl } from "../lib/evidence-url.mjs";
 import { opportunityDraftReferenceId } from "../lib/opportunity-draft-reference";
+import {
+  outcomeLocalDateTime,
+  outcomeMeasurementUpdate,
+  outcomePublicationDate,
+} from "../lib/outcome-dates";
 import type {
   AudienceSignal,
   Insights,
@@ -2450,10 +2455,11 @@ function OutcomeForm({
           method: "POST",
           body: json({
             publishedUrl: String(input.get("publishedUrl") || "").trim(),
-            publishedAt: new Date(date).toISOString(),
-            ...(measurement
-              ? { measuredAt: new Date(measurement).toISOString() }
-              : {}),
+            publishedAt: outcomePublicationDate(
+              date,
+              outcome?.publishedAt || piece.publishedAt,
+            ),
+            ...outcomeMeasurementUpdate(measurement, outcome?.measuredAt),
             metrics: {
               views: Number(input.get("views")),
               engagement: Number(input.get("engagement")),
@@ -2511,11 +2517,12 @@ function OutcomeForm({
             label="Fecha y hora de publicación"
             name="publishedAt"
             type="datetime-local"
+            step={1}
             required
-            defaultValue={localDateTime(
+            defaultValue={outcomeLocalDateTime(
               outcome?.publishedAt || piece.publishedAt,
             )}
-            max={localDateTime()}
+            max={outcomeLocalDateTime()}
           />
         </div>
         <Field
@@ -2524,9 +2531,9 @@ function OutcomeForm({
           type="datetime-local"
           step={1}
           defaultValue={
-            outcome?.measuredAt ? localDateTime(outcome.measuredAt) : ""
+            outcome?.measuredAt ? outcomeLocalDateTime(outcome.measuredAt) : ""
           }
-          max={localDateTime()}
+          max={outcomeLocalDateTime()}
         />
         <div className="journey-metric-fields">
           <Field

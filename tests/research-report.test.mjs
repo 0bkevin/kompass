@@ -4,6 +4,11 @@ import fs from "node:fs";
 import os from "node:os";
 import path from "node:path";
 import { randomUUID } from "node:crypto";
+import {
+  outcomeLocalDateTime,
+  outcomeMeasurementUpdate,
+  outcomePublicationDate,
+} from "../src/lib/outcome-dates.ts";
 
 const directory = fs.mkdtempSync(
   path.join(os.tmpdir(), "kompass-research-report-"),
@@ -258,7 +263,9 @@ test("actual pilot measurements appear for editors and stay hidden from reviewer
 });
 
 test("explicit measurement dates reach comparable format evidence through the real outcome route", async () => {
-  const publishedAt = new Date(Date.now() - 2 * 86400000).toISOString();
+  const publication = new Date(Date.now() - 2 * 86400000);
+  publication.setUTCSeconds(30, 123);
+  const publishedAt = publication.toISOString();
   const measuredAt = new Date(Date.parse(publishedAt) + 86400000).toISOString();
   let first;
   for (let index = 0; index < 3; index++) {
@@ -314,5 +321,62 @@ test("explicit measurement dates reach comparable format evidence through the re
       .listRecords(brand.id, "outcomes")
       .find((item) => item.pieceId === first.id).measuredAt,
     measuredAt,
+  );
+  const corrected = await request(
+    `/brands/${brand.id}/pieces/${first.id}/outcome`,
+    {
+      method: "POST",
+      body: {
+        publishedAt: outcomePublicationDate(
+          outcomeLocalDateTime(publishedAt),
+          publishedAt,
+        ),
+        ...outcomeMeasurementUpdate(
+          outcomeLocalDateTime(measuredAt),
+          measuredAt,
+        ),
+        metrics: { views: 120, engagement: 12, leads: 0 },
+      },
+    },
+  );
+  assert.equal(corrected.status, 200);
+  assert.equal(corrected.body.publishedAt, publishedAt);
+  assert.equal(corrected.body.measuredAt, measuredAt);
+  const preserved = await request(route());
+  assert.equal(
+    preserved.body.evidence.formats.manualPerformance.status,
+    "comparable",
+  );
+  assert.equal(
+    preserved.body.evidence.formats.manualPerformance.groups[0].sampleSize,
+    3,
+  );
+
+  const cleared = await request(
+    `/brands/${brand.id}/pieces/${first.id}/outcome`,
+    {
+      method: "POST",
+      body: {
+        ...outcomeMeasurementUpdate("", measuredAt),
+        metrics: { views: 120, engagement: 12, leads: 0 },
+      },
+    },
+  );
+  assert.equal(cleared.status, 200);
+  assert.equal(Object.hasOwn(cleared.body, "measuredAt"), false);
+  const stored = storage
+    .listRecords(brand.id, "outcomes")
+    .find((item) => item.pieceId === first.id);
+  assert.equal(Object.hasOwn(stored, "measuredAt"), false);
+  const insufficient = await request(route());
+  assert.equal(
+    insufficient.body.evidence.formats.manualPerformance.status,
+    "insufficient",
+  );
+  assert.equal(
+    insufficient.body.evidence.formats.manualPerformance.groups.find(
+      (group) => group.measurementWindow.kind === "measured_interval",
+    ).sampleSize,
+    2,
   );
 });

@@ -937,7 +937,9 @@ function outcomeInput(input) {
     metrics,
     ...(Object.hasOwn(body, "publishedUrl") ? { publishedUrl } : {}),
     ...(publishedAt ? { publishedAt } : {}),
-    ...(measuredAt ? { measuredAt } : {}),
+    ...(Object.hasOwn(body, "measuredAt")
+      ? { measuredAt: measuredAt ?? null }
+      : {}),
     ...(body.notes !== undefined
       ? {
           notes: assertAggregateAudienceText(
@@ -1028,7 +1030,9 @@ export function createAudienceInsightsRouter() {
           existing?.publishedAt ||
           piece.publishedAt ||
           new Date().toISOString();
-        const measuredAt = input.measuredAt || existing?.measuredAt;
+        const measuredAt = Object.hasOwn(input, "measuredAt")
+          ? input.measuredAt
+          : existing?.measuredAt;
         if (measuredAt && Date.parse(measuredAt) <= Date.parse(publishedAt))
           fail(
             400,
