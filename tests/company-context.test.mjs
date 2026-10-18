@@ -1,3 +1,4 @@
+import { installPermissionFixture } from "./permission-fixture.mjs";
 import test, { before, after } from "node:test";
 import assert from "node:assert/strict";
 import { randomUUID, randomBytes } from "node:crypto";
@@ -10,6 +11,18 @@ const dataDir = fs.mkdtempSync(
   path.join(os.tmpdir(), "radar-company-context-"),
 );
 process.env.DATA_DIR = dataDir;
+installPermissionFixture(dataDir, [
+  {
+    origin: "https://acme.com",
+    pathPrefix: "/",
+    purposes: ["website"],
+  },
+  {
+    origin: "https://www.acme.com",
+    pathPrefix: "/public",
+    purposes: ["website"],
+  },
+]);
 const { db, saveBrand, getBrand, listRecords } =
   await import("../server/db.mjs");
 const { createUser, tokenHash } = await import("../server/auth.mjs");

@@ -1,3 +1,4 @@
+import { installPermissionFixture } from "./permission-fixture.mjs";
 import { test, before, after } from "node:test";
 import assert from "node:assert/strict";
 import express from "express";
@@ -8,6 +9,13 @@ import path from "node:path";
 
 const directory = fs.mkdtempSync(path.join(os.tmpdir(), "radar-semantic-"));
 process.env.DATA_DIR = directory;
+installPermissionFixture(directory, [
+  {
+    origin: "https://model.example",
+    pathPrefix: "/v1",
+    purposes: ["ai"],
+  },
+]);
 process.env.OPENAI_API_KEY = "";
 let storage,
   auth,
@@ -467,7 +475,11 @@ test("only one analysis per brand runs at a time while another workspace can pro
   transport = async (_url, options) => {
     calls++;
     const input = JSON.parse(JSON.parse(options.body).input[0].content[0].text);
-    if (input.company.name === current.brand.name) {
+    if (
+      input.references.some(
+        (reference) => reference.id === current.reference.id,
+      )
+    ) {
       entered.resolve();
       await release.promise;
       return json(validOutput(current));
@@ -484,17 +496,25 @@ test("only one analysis per brand runs at a time while another workspace can pro
 });
 
 test("YouTube-only opportunities are excluded and mixed opportunities cannot cite YouTube API evidence", async () => {
-  const youtubeOnly = fixture({ platform: "youtube" });
+  const youtubeOnly = fixture();
+  storage.saveRecord(youtubeOnly.brand.id, "references", {
+    ...youtubeOnly.reference,
+    platform: "youtube",
+    source: "YouTube",
+    metricsOrigin: "YouTube Data API",
+    url: "https://www.youtube.com/watch?v=abcdefghijk",
+  });
+  assert.deepEqual(buildInsights(youtubeOnly.brand).opportunities, []);
   let calls = 0;
   transport = async () => {
     calls++;
     throw new Error("unexpected");
   };
   const excluded = await request(youtubeOnly.route);
-  assert.equal(excluded.status, 409);
-  assert.match(
-    excluded.data.error,
-    /YouTube.*no se usan para inferir audiencia/,
+  assert.equal(
+    excluded.status,
+    404,
+    "A stale opportunity cannot revive restricted evidence",
   );
   assert.equal(calls, 0);
   const current = fixture();
@@ -513,15 +533,19 @@ test("YouTube-only opportunities are excluded and mixed opportunities cannot cit
       input.references.map((reference) => reference.id),
       [current.reference.id],
     );
-    assert.equal(input.coverage.excludedYouTubeReferences, 1);
+    assert.equal(
+      input.coverage.excludedYouTubeReferences,
+      0,
+      "Restricted evidence is excluded before the opportunity corpus is constructed",
+    );
+    assert.equal(input.coverage.availableReferences, 1);
     return json(validOutput(current));
   };
   const good = await request(current.route);
   assert.equal(good.status, 200, JSON.stringify(good.data));
-  assert.ok(
-    good.data.limitations.some((item) =>
-      /excluyeron 1 referencias de YouTube/.test(item),
-    ),
+  assert.deepEqual(
+    good.data.citations.map((citation) => citation.referenceId),
+    [current.reference.id],
   );
   transport = async () =>
     json(

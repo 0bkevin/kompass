@@ -1,3 +1,4 @@
+import { installPermissionFixture } from "./permission-fixture.mjs";
 import { test, before, after } from "node:test";
 import assert from "node:assert/strict";
 import fs from "node:fs";
@@ -10,6 +11,18 @@ const directory = fs.mkdtempSync(
   path.join(os.tmpdir(), "radar-opportunities-1-"),
 );
 process.env.DATA_DIR = directory;
+installPermissionFixture(directory, [
+  {
+    origin: "https://example.com",
+    pathPrefix: "/synthetic/feed",
+    purposes: ["rss"],
+  },
+  {
+    origin: "https://example.com",
+    pathPrefix: "/synthetic/second-feed",
+    purposes: ["rss"],
+  },
+]);
 for (const key of [
   "OPENAI_API_KEY",
   "GEMINI_API_KEY",
@@ -192,7 +205,7 @@ test("unequal or stale observation windows cannot establish a direction", () => 
   assert.equal(stale.growth.label, "insufficient");
 });
 
-test("native YouTube metrics remain native even with comparable RSS history", () => {
+test("restricted YouTube evidence is excluded even with comparable permitted RSS history", () => {
   const fixture = scenario(1, 4);
   const youtube = storage.saveRecord(fixture.brand.id, "sources", {
     name: "YouTube sintético",
@@ -206,13 +219,17 @@ test("native YouTube metrics remain native even with comparable RSS history", ()
     metrics: { views: 123, likes: 7, comments: 1 },
     metricsOrigin: "YouTube Data API",
   });
-  const result = resultFor(fixture, { references: [reference] });
+  const result = insights.buildInsights(fixture.brand, {
+    now: latestTime + 3_600_000,
+    references: [reference],
+  });
   assert.equal(result.coverage.hasHistory, true);
-  assert.equal(result.growth.label, "insufficient");
-  assert.match(result.growth.explanation, /métricas nativas de YouTube/);
-  assert.match(
-    result.opportunities[0].evidence[0].detail,
-    /123 vistas, 7 me gusta, 1 comentarios/,
+  assert.deepEqual(result.opportunities, []);
+  assert.equal(result.coverage.references, 0);
+  assert.deepEqual(
+    storage.getRecord(fixture.brand.id, "references", reference.id).metrics,
+    { views: 123, likes: 7, comments: 1 },
+    "Policy restrictions preserve historical metrics without reusing them",
   );
 });
 

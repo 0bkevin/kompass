@@ -1,3 +1,4 @@
+import { installPermissionFixture } from "./permission-fixture.mjs";
 import test, { after, before } from "node:test";
 import assert from "node:assert/strict";
 import fs from "node:fs";
@@ -7,6 +8,13 @@ import { randomUUID } from "node:crypto";
 
 const dataDir = fs.mkdtempSync(path.join(os.tmpdir(), "radar-draft-contract-"));
 process.env.DATA_DIR = dataDir;
+installPermissionFixture(dataDir, [
+  {
+    origin: "https://provider.example",
+    pathPrefix: "/v1",
+    purposes: ["ai"],
+  },
+]);
 delete process.env.OPENAI_API_KEY;
 
 let server;

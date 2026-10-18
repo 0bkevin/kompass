@@ -123,7 +123,12 @@ for (const entry of cases) {
       "The two HN retrieval modes deduplicate the same public object.",
     );
     assert.equal(result[0].title, entry.expected);
-    assert.equal(result[0].text, entry.expected);
+    assert.equal(
+      result[0].text,
+      "",
+      "HN story bodies are not retained without a reuse basis.",
+    );
+    assert.equal(result[0].author, undefined);
     assert.deepEqual(result[0].metrics, { score: 47, comments: 8 });
     assert.equal(result[0].url, "https://example.com/discovery-2/900000001");
     assert.equal(
@@ -137,7 +142,7 @@ for (const entry of cases) {
   });
 }
 
-test("syncSources persists the decoded HN title and detail, preserves provenance and metrics, and repeated discovery keeps the same reference", async () => {
+test("syncSources persists the decoded HN title and metadata without body or personal author, and repeated discovery keeps the same reference", async () => {
   const brand = saveBrand({
     name: "Decodificación QA — datos ficticios",
     industry: "technology",
@@ -156,10 +161,10 @@ test("syncSources persists the decoded HN title and detail, preserves provenance
   assert.deepEqual(first.errors, []);
   const [reference] = listRecords(brand.id, "references");
   assert.equal(reference.title, cases[0].expected);
-  assert.equal(reference.text, cases[0].expected);
+  assert.equal(reference.text, "");
   assert.equal(reference.sourceId, source.id);
   assert.equal(reference.source, source.name);
-  assert.equal(reference.author, "synthetic-public-author");
+  assert.equal(reference.author, undefined);
   assert.deepEqual(reference.trend.metrics, { score: 47, comments: 8 });
   const second = await syncSources(brand, {
     fetcher: fixture.fetcher,
@@ -172,11 +177,11 @@ test("syncSources persists the decoded HN title and detail, preserves provenance
   assert.equal(readback.length, 1);
   assert.equal(readback[0].id, reference.id);
   assert.equal(readback[0].title, cases[0].expected);
-  assert.equal(readback[0].text, cases[0].expected);
+  assert.equal(readback[0].text, "");
 });
 
 for (const customized of [false, true]) {
-  test(`HN legacy refresh ${customized ? "preserves changed editorial notes verbatim" : "repairs only an exact old-normalizer match"} without rewriting an approved piece`, async () => {
+  test(`HN legacy refresh ${customized ? "preserves changed editorial notes verbatim" : "drops only an exact old body-normalizer match"} without rewriting an approved piece`, async () => {
     const brand = saveBrand({
       name: "Legacy HN QA — ficticia",
       audience: [],
@@ -230,10 +235,8 @@ for (const customized of [false, true]) {
     assert.equal(result.added, 0);
     assert.equal(result.updated, 1);
     const repaired = getRecord(brand.id, "references", current.id);
-    assert.equal(
-      repaired.text,
-      customized ? body : "Ruta https://example.com/public y apóstrofo '.",
-    );
+    assert.equal(repaired.text, customized ? body : "");
+    assert.equal(repaired.author, undefined);
     for (const key of [
       "id",
       "createdAt",

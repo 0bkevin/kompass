@@ -1,3 +1,4 @@
+import { installPermissionFixture } from "./permission-fixture.mjs";
 import test, { after } from "node:test";
 import assert from "node:assert/strict";
 import dns from "node:dns/promises";
@@ -10,6 +11,23 @@ import path from "node:path";
 
 const dataDir = fs.mkdtempSync(path.join(os.tmpdir(), "radar-discovery-1-"));
 process.env.DATA_DIR = dataDir;
+installPermissionFixture(dataDir, [
+  {
+    origin: "https://www.nasa.gov",
+    pathPrefix: "/feed",
+    purposes: ["metadata", "rss"],
+  },
+  {
+    origin: "https://redirect.synthetic.test",
+    pathPrefix: "/feed",
+    purposes: ["metadata"],
+  },
+  {
+    origin: "https://mixed.synthetic.test",
+    pathPrefix: "/feed",
+    purposes: ["metadata"],
+  },
+]);
 const { db } = await import("../server/db.mjs");
 const { isPublicAddress, validatePublicUrl, safeFetch } =
   await import("../server/connectors.mjs");
@@ -25,8 +43,10 @@ const privateError = /direcciones privadas|reservadas/;
 
 // The DNS and HTTP stream are synthetic. URL validation, socket lookup pinning,
 // redirect handling and feed parsing execute the production implementation.
-function transportFixture(t, { lookup, respond }) {
+function transportFixture(t, { lookup, respond, robotsRespond }) {
   const requests = [];
+  const contentRequests = [];
+  const robotsRequests = [];
   const dnsMock = t.mock.method(dns, "lookup", lookup);
   const request = (url, options, callback) => {
     const captured = { url: url.href, headers: options.headers };
@@ -39,6 +59,8 @@ function transportFixture(t, { lookup, respond }) {
       captured.firstAddress = { address, family };
     });
     requests.push(captured);
+    const isRobots = url.pathname === "/robots.txt";
+    (isRobots ? robotsRequests : contentRequests).push(captured);
     const outgoing = new EventEmitter();
     outgoing.write = () => {};
     outgoing.destroy = (error) => {
@@ -47,7 +69,13 @@ function transportFixture(t, { lookup, respond }) {
     };
     outgoing.end = () => {
       queueMicrotask(() => {
-        const reply = respond(url, requests.length);
+        const reply = isRobots
+          ? robotsRespond?.(url) || {
+              status: 200,
+              headers: { "content-type": "text/plain" },
+              body: "User-agent: *\nAllow: /\n",
+            }
+          : respond(url, contentRequests.length);
         const incoming = new EventEmitter();
         incoming.statusCode = reply.status || 200;
         incoming.headers = reply.headers || {};
@@ -62,7 +90,7 @@ function transportFixture(t, { lookup, respond }) {
   };
   t.mock.method(https, "request", request);
   t.mock.method(http, "request", request);
-  return { requests, dnsMock };
+  return { requests, contentRequests, robotsRequests, dnsMock };
 }
 
 test("NASA RSS URL accepts its public 192.0.66.108 DNS result", async () => {
@@ -267,17 +295,21 @@ test("mixed public/private DNS answers are rejected before creating a request", 
   assert.equal(fixture.requests.length, 0);
 });
 
-test("NASA RSS discovery uses real safeFetch, pins DNS once and parses a synthetic RSS", async (t) => {
+test("NASA RSS discovery checks robots and pins each request without resolving the content socket again", async (t) => {
   let resolutions = 0;
+  const robotsAddress = { address: "192.0.67.108", family: 4 };
   const fixture = transportFixture(t, {
     lookup: async (hostname, options) => {
       resolutions++;
       assert.equal(hostname, "www.nasa.gov");
       assert.deepEqual(options, { all: true, verbatim: true });
-      // A second resolution would represent DNS rebinding and must never occur.
+      // Page and robots are separate requests. A third DNS resolution would
+      // improperly re-resolve an already validated socket and reach loopback.
       return resolutions === 1
         ? [nasaAddress]
-        : [{ address: "127.0.0.1", family: 4 }];
+        : resolutions === 2
+          ? [robotsAddress]
+          : [{ address: "127.0.0.1", family: 4 }];
     },
     respond: () => ({
       headers: { "content-type": "application/rss+xml" },
@@ -298,11 +330,58 @@ test("NASA RSS discovery uses real safeFetch, pins DNS once and parses a synthet
     results[0].url,
     "https://www.nasa.gov/synthetic-regression-fixture/",
   );
-  assert.equal(fixture.dnsMock.mock.callCount(), 1);
-  assert.equal(fixture.requests.length, 1);
-  assert.equal(fixture.requests[0].url, nasaUrl);
-  assert.deepEqual(fixture.requests[0].addresses, [nasaAddress]);
-  assert.deepEqual(fixture.requests[0].firstAddress, nasaAddress);
+  assert.equal(fixture.dnsMock.mock.callCount(), 2);
+  assert.equal(fixture.contentRequests.length, 1);
+  assert.equal(fixture.robotsRequests.length, 1);
+  assert.equal(
+    fixture.robotsRequests[0].url,
+    "https://www.nasa.gov/robots.txt",
+  );
+  assert.deepEqual(fixture.robotsRequests[0].addresses, [robotsAddress]);
+  assert.deepEqual(fixture.robotsRequests[0].firstAddress, robotsAddress);
+  assert.equal(fixture.contentRequests[0].url, nasaUrl);
+  assert.deepEqual(fixture.contentRequests[0].addresses, [nasaAddress]);
+  assert.deepEqual(fixture.contentRequests[0].firstAddress, nasaAddress);
+});
+
+test("a private DNS answer for robots cannot open either a robots or content socket", async (t) => {
+  let resolutions = 0;
+  const fixture = transportFixture(t, {
+    lookup: async () =>
+      ++resolutions === 1
+        ? [nasaAddress]
+        : [{ address: "127.0.0.1", family: 4 }],
+    respond: () => {
+      throw new Error("A failed robots preflight must not fetch content");
+    },
+  });
+  await assert.rejects(safeFetch(nasaUrl), privateError);
+  assert.equal(resolutions, 2);
+  assert.equal(fixture.requests.length, 0);
+});
+
+test("robots denial or unverified access blocks content despite a reviewed source permission", async (t) => {
+  for (const reply of [
+    { status: 200, body: "User-agent: *\nDisallow: /feed\n" },
+    { status: 403 },
+    { status: 503 },
+  ]) {
+    await t.test(`robots HTTP ${reply.status}`, async (child) => {
+      const fixture = transportFixture(child, {
+        lookup: async () => [nasaAddress],
+        robotsRespond: () => reply,
+        respond: () => {
+          throw new Error("Robots restrictions must prevent content requests");
+        },
+      });
+      await assert.rejects(
+        safeFetch(nasaUrl),
+        (error) => error.status === 403 && /robots\.txt/.test(error.message),
+      );
+      assert.equal(fixture.robotsRequests.length, 1);
+      assert.equal(fixture.contentRequests.length, 0);
+    });
+  }
 });
 
 test("safeFetch revalidates redirect destinations before opening their socket", async (t) => {
@@ -337,11 +416,12 @@ test("safeFetch revalidates redirect destinations before opening their socket", 
       });
       await assert.rejects(safeFetch(nasaUrl));
       assert.equal(
-        fixture.requests.length,
+        fixture.contentRequests.length,
         1,
-        "Only the public origin may be requested",
+        "Only the reviewed public origin's content may be requested",
       );
-      assert.deepEqual(fixture.requests[0].addresses, [nasaAddress]);
+      assert.equal(fixture.robotsRequests.length, 1);
+      assert.deepEqual(fixture.contentRequests[0].addresses, [nasaAddress]);
     });
   }
 });
@@ -368,15 +448,22 @@ test("safeFetch follows a public redirect with its own pinned DNS and strips sen
     },
   });
   assert.equal(await response.text(), "synthetic public response");
-  assert.equal(fixture.dnsMock.mock.callCount(), 2);
-  assert.equal(fixture.requests.length, 2);
-  assert.deepEqual(fixture.requests[0].addresses, [nasaAddress]);
-  assert.deepEqual(fixture.requests[1].addresses, [redirectedAddress]);
-  assert.deepEqual(fixture.requests[1].firstAddress, redirectedAddress);
-  assert.equal(fixture.requests[1].headers.Authorization, undefined);
-  assert.equal(fixture.requests[1].headers.Cookie, undefined);
-  assert.equal(fixture.requests[1].headers["X-Secret"], undefined);
-  assert.equal(fixture.requests[1].headers["X-Fixture"], "kept");
+  assert.equal(fixture.dnsMock.mock.callCount(), 4);
+  assert.equal(fixture.contentRequests.length, 2);
+  assert.deepEqual(
+    fixture.robotsRequests.map((request) => request.url),
+    [
+      "https://www.nasa.gov/robots.txt",
+      "https://redirect.synthetic.test/robots.txt",
+    ],
+  );
+  assert.deepEqual(fixture.contentRequests[0].addresses, [nasaAddress]);
+  assert.deepEqual(fixture.contentRequests[1].addresses, [redirectedAddress]);
+  assert.deepEqual(fixture.contentRequests[1].firstAddress, redirectedAddress);
+  assert.equal(fixture.contentRequests[1].headers.Authorization, undefined);
+  assert.equal(fixture.contentRequests[1].headers.Cookie, undefined);
+  assert.equal(fixture.contentRequests[1].headers["X-Secret"], undefined);
+  assert.equal(fixture.contentRequests[1].headers["X-Fixture"], "kept");
 });
 
 test("safeFetch keeps the redirect budget and HTTPS requirement", async (t) => {
@@ -394,7 +481,8 @@ test("safeFetch keeps the redirect budget and HTTPS requirement", async (t) => {
         }),
       });
       await assert.rejects(safeFetch(nasaUrl, options));
-      assert.equal(fixture.requests.length, 1);
+      assert.equal(fixture.contentRequests.length, 1);
+      assert.equal(fixture.robotsRequests.length, 1);
     });
   }
 });

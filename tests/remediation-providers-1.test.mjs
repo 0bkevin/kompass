@@ -1,3 +1,4 @@
+import { installPermissionFixture } from "./permission-fixture.mjs";
 import { after, before, test, mock } from "node:test";
 import assert from "node:assert/strict";
 import fs from "node:fs";
@@ -10,6 +11,13 @@ import { EventEmitter } from "node:events";
 // Isolated, synthetic transport: no request in this suite can reach a provider.
 const temporary = fs.mkdtempSync(path.join(os.tmpdir(), "radar-providers-1-"));
 process.env.DATA_DIR = temporary;
+installPermissionFixture(temporary, [
+  {
+    origin: "https://webhook.example.test",
+    pathPrefix: "/SIMULATED",
+    purposes: ["webhook"],
+  },
+]);
 process.env.DISCOVERY_ENABLED = "false";
 for (const key of [
   "OPENAI_API_KEY",

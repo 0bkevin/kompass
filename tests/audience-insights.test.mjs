@@ -1,3 +1,4 @@
+import { installPermissionFixture } from "./permission-fixture.mjs";
 import { test, before, after } from "node:test";
 import assert from "node:assert/strict";
 import fs from "node:fs";
@@ -8,6 +9,13 @@ import express from "express";
 
 const directory = fs.mkdtempSync(path.join(os.tmpdir(), "radar-insights-"));
 process.env.DATA_DIR = directory;
+installPermissionFixture(directory, [
+  {
+    origin: "https://example.com",
+    pathPrefix: "/feed",
+    purposes: ["rss"],
+  },
+]);
 process.env.OPENAI_API_KEY = "";
 let storage,
   insights,
@@ -517,18 +525,12 @@ test("YouTube and demo records never synthesize performance growth or real audie
     null,
   );
   const result = insights.buildInsights(brand);
-  assert.equal(result.opportunities[0].growth.label, "insufficient");
-  assert.match(
-    result.opportunities[0].evidence[0].detail,
-    /Solo título y metadatos/,
-  );
-  assert.match(
-    result.opportunities[0].evidence[0].detail,
-    /1000 vistas, 50 me gusta/,
-  );
-  assert.match(
-    result.opportunities[0].growth.explanation,
-    /no se convierten en una puntuación/,
+  assert.deepEqual(result.opportunities, []);
+  assert.equal(result.coverage.references, 0);
+  assert.equal(
+    storage.listRecords(brand.id, "references")[0].metrics.views,
+    1000,
+    "Restricted historical data stays preserved without generating new editorial opportunities",
   );
   const demoBrand = company("Demo explícita");
   demoBrand.isDemo = true;

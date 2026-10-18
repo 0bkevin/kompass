@@ -1,3 +1,4 @@
+import { installPermissionFixture } from "./permission-fixture.mjs";
 import test, { after, before } from "node:test";
 import assert from "node:assert/strict";
 import { randomBytes, randomUUID } from "node:crypto";
@@ -8,6 +9,13 @@ import express from "express";
 
 const dataDir = fs.mkdtempSync(path.join(os.tmpdir(), "radar-company-2-"));
 process.env.DATA_DIR = dataDir;
+installPermissionFixture(dataDir, [
+  ...["html-metadata", "html-paragraph", "plain-text"].map((type) => ({
+    origin: "https://example.com",
+    pathPrefix: `/synthetic-company-2-${type}`,
+    purposes: ["website"],
+  })),
+]);
 const { db, saveBrand, getBrand, saveRecord, listRecords } =
   await import("../server/db.mjs");
 const { createUser, tokenHash } = await import("../server/auth.mjs");

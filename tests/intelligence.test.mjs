@@ -1,3 +1,4 @@
+import { installPermissionFixture } from "./permission-fixture.mjs";
 import test, { after } from "node:test";
 import assert from "node:assert/strict";
 import fs from "node:fs";
@@ -6,6 +7,38 @@ import path from "node:path";
 
 const dataDir = fs.mkdtempSync(path.join(os.tmpdir(), "radar-intelligence-"));
 process.env.DATA_DIR = dataDir;
+installPermissionFixture(dataDir, [
+  {
+    origin: "https://example.com",
+    pathPrefix: "/feed",
+    purposes: ["rss"],
+  },
+  {
+    origin: "https://example.com",
+    pathPrefix: "/rss",
+    purposes: ["rss"],
+  },
+  {
+    origin: "https://example.com",
+    pathPrefix: "/article",
+    purposes: ["metadata"],
+  },
+  {
+    origin: "https://feed.example.com",
+    pathPrefix: "/feed",
+    purposes: ["rss"],
+  },
+  {
+    origin: "https://ai.example.test",
+    pathPrefix: "/v1",
+    purposes: ["ai"],
+  },
+  {
+    origin: "https://publisher.example.com",
+    pathPrefix: "/hook",
+    purposes: ["webhook"],
+  },
+]);
 delete process.env.OPENAI_API_KEY;
 const {
   db,
@@ -392,7 +425,11 @@ test("discovery persists source failures, does not duplicate URLs, and refreshes
   assert.equal(references.length, 1);
   assert.equal(references[0].trend.metrics.score, 40);
   assert.equal(references[0].trend.velocity, 20);
-  assert.equal(references[0].author, "real-author");
+  assert.equal(
+    references[0].author,
+    undefined,
+    "Discovery must omit individual author identity from research records",
+  );
   assert.ok(getRecord(brand.id, "sources", hn.id).lastSyncedAt);
 });
 
@@ -693,13 +730,18 @@ test("URL fetch blocks private, mapped, reserved and DNS-rebinding destinations"
   );
   await assert.rejects(
     safeFetch("http://169.254.169.254/latest/meta-data"),
-    /privadas/,
+    (error) =>
+      error.status === 403 && error.code === "SOURCE_ACCESS_RESTRICTED",
   );
 });
 
 test("AI provider failures are explicit and secret never appears in errors", async () => {
   const brand = makeBrand();
-  setSecret(brand.id, "ai", { apiKey: "sk-private-test", model: "test-model" });
+  setSecret(brand.id, "ai", {
+    apiKey: "sk-private-test",
+    model: "test-model",
+    baseUrl: "https://ai.example.test/v1",
+  });
   await assert.rejects(
     generateStructured(
       brand.id,

@@ -1,3 +1,4 @@
+import { installPermissionFixture } from "./permission-fixture.mjs";
 import { after, before, test } from "node:test";
 import assert from "node:assert/strict";
 import fs from "node:fs";
@@ -8,6 +9,13 @@ const directory = fs.mkdtempSync(
   path.join(os.tmpdir(), "30x-remediation-signals-2-"),
 );
 process.env.DATA_DIR = directory;
+installPermissionFixture(directory, [
+  {
+    origin: "https://model.example",
+    pathPrefix: "/v1",
+    purposes: ["ai"],
+  },
+]);
 process.env.DISCOVERY_ENABLED = "false";
 for (const name of [
   "OPENAI_API_KEY",

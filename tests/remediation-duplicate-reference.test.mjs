@@ -1,3 +1,4 @@
+import { installPermissionFixture } from "./permission-fixture.mjs";
 import { test, before, after } from "node:test";
 import assert from "node:assert/strict";
 import fs from "node:fs";
@@ -9,6 +10,23 @@ const root = "/tmp/30x-remediation-duplicate-reference";
 fs.mkdirSync(root, { recursive: true });
 const directory = fs.mkdtempSync(path.join(root, "test-"));
 process.env.DATA_DIR = directory;
+installPermissionFixture(directory, [
+  {
+    origin: "https://example.com",
+    pathPrefix: "/one.xml",
+    purposes: ["rss"],
+  },
+  {
+    origin: "https://example.com",
+    pathPrefix: "/two.xml",
+    purposes: ["rss"],
+  },
+  {
+    origin: "https://example.com",
+    pathPrefix: "/feed.xml",
+    purposes: ["rss"],
+  },
+]);
 process.env.DISCOVERY_ENABLED = "false";
 for (const key of [
   "OPENAI_API_KEY",
