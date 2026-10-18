@@ -219,7 +219,7 @@ export async function safeFetch(value, options = {}) {
     const timer = setTimeout(
       () =>
         request.destroy(
-          integrationError("El proveedor agotó el tiempo de espera."),
+          integrationError("El proveedor agotó el tiempo de espera.", 504),
         ),
       timeout,
     );
