@@ -1,0 +1,355 @@
+.challenge-report {
+  max-width: 1160px;
+  margin: 0 auto;
+}
+.report-header,
+.report-actions,
+.report-meta,
+.report-section-heading {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+.report-header,
+.report-section-heading {
+  justify-content: space-between;
+}
+.report-header {
+  align-items: flex-start;
+  margin-bottom: 24px;
+}
+.report-header h1 {
+  font: 400 38px/1.18 var(--font-display);
+  letter-spacing: -0.03em;
+  margin-bottom: 8px;
+}
+.report-muted,
+.report-meta,
+.report-rank {
+  color: var(--muted);
+}
+.report-meta {
+  font-size: 13px;
+  margin: 16px 0;
+}
+.report-scope {
+  padding: 20px 0;
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+}
+.report-question {
+  font-size: 16px;
+  max-width: 70ch;
+  margin-bottom: 20px;
+}
+.report-scope dl {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px 36px;
+  margin: 0 0 16px;
+}
+.report-scope dt {
+  color: var(--muted);
+  font-size: 12px;
+}
+.report-scope dd {
+  margin: 4px 0 0;
+  font-variant-numeric: tabular-nums;
+}
+.challenge-report summary {
+  cursor: pointer;
+  min-height: 44px;
+  padding: 10px 0;
+}
+.report-detail-content {
+  margin: 12px 0;
+  max-width: 75ch;
+}
+.challenge-report ul {
+  padding-left: 20px;
+  margin: 12px 0;
+}
+.challenge-report li + li {
+  margin-top: 8px;
+}
+.report-notice {
+  padding: 12px 16px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  color: var(--warning);
+  background: var(--warning-bg);
+  margin: 12px 0;
+}
+.report-error {
+  color: var(--negative);
+}
+.report-notice.report-error {
+  background: var(--negative-bg);
+}
+.report-findings-pair {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 36px;
+  margin: 28px 0;
+}
+.report-findings h2,
+.report-costs h2 {
+  margin-bottom: 12px;
+}
+.report-findings li strong {
+  font-weight: 500;
+}
+.report-opportunities {
+  margin: 36px 0;
+}
+.report-filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  margin: 20px 0 8px;
+}
+.report-filters .field {
+  flex: 1 1 220px;
+  max-width: 320px;
+}
+.report-filter-note {
+  font-size: 13px;
+  max-width: 75ch;
+  margin-bottom: 16px;
+}
+.report-opportunity-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  border-top: 1px solid var(--border);
+}
+.report-opportunity-list > li + li {
+  margin: 0;
+}
+.report-opportunity {
+  border-bottom: 1px solid var(--border);
+}
+.report-opportunity > summary {
+  list-style: none;
+  display: flex;
+  gap: 16px;
+  align-items: center;
+  padding: 18px 4px;
+}
+.report-opportunity > summary::-webkit-details-marker {
+  display: none;
+}
+.report-rank {
+  min-width: 24px;
+  font-variant-numeric: tabular-nums;
+}
+.report-opportunity-heading {
+  min-width: 0;
+  flex: 1;
+  display: grid;
+  gap: 4px;
+}
+.report-opportunity-heading strong {
+  font-size: 16px;
+  font-weight: 500;
+}
+.report-opportunity-heading > span {
+  font-size: 12px;
+}
+.report-chevron {
+  flex: 0 0 auto;
+}
+.report-opportunity[open] > summary .report-chevron {
+  transform: rotate(180deg);
+}
+.report-opportunity-body {
+  display: grid;
+  grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr);
+  gap: 28px;
+  padding: 4px 4px 28px 44px;
+}
+.report-opportunity-body h3 {
+  margin: 24px 0 8px;
+  font-size: 14px;
+}
+.report-opportunity-body h3:first-child {
+  margin-top: 0;
+}
+.report-opportunity-copy p,
+.report-sources p {
+  max-width: 70ch;
+}
+.report-factors {
+  margin: 0;
+}
+.report-factors > div + div {
+  margin-top: 16px;
+}
+.report-factors dt {
+  font-weight: 500;
+}
+.report-factors dd {
+  margin: 4px 0 0;
+}
+.report-sources {
+  border-left: 1px solid var(--border);
+  padding-left: 24px;
+}
+.report-sources ul {
+  list-style: none;
+  padding: 0;
+}
+.report-sources li + li {
+  margin-top: 20px;
+}
+.report-sources a {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.report-sources a svg {
+  display: inline;
+  vertical-align: middle;
+  margin-left: 4px;
+}
+.report-sources blockquote {
+  border-left: 1px solid var(--border);
+  margin: 12px 0;
+  padding-left: 12px;
+  color: var(--muted);
+}
+.report-feedback {
+  grid-column: 1 / -1;
+  padding-top: 20px;
+  border-top: 1px solid var(--border);
+}
+.challenge-report fieldset {
+  border: 0;
+  padding: 0;
+  margin: 16px 0;
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  min-width: 0;
+}
+.challenge-report fieldset .field {
+  min-width: 0;
+  flex: 1 1 180px;
+}
+.report-feedback fieldset {
+  max-width: 800px;
+}
+.report-review {
+  border-top: 1px solid var(--border);
+  padding-top: 28px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 28px 36px;
+}
+.report-pilot-form {
+  grid-column: 1 / -1;
+  border-top: 1px solid var(--border);
+  padding-top: 12px;
+}
+.report-pilot-form form {
+  max-width: 900px;
+  padding: 12px 0;
+}
+.report-pilot-form fieldset {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+.report-pilot-form form > .button {
+  margin: 16px 0;
+}
+.challenge-report :where(p, dd, li, strong, a, h1, h2, h3) {
+  overflow-wrap: anywhere;
+}
+.report-loading {
+  padding: 24px 0;
+}
+.report-loading span {
+  display: block;
+  height: 20px;
+  border-radius: 5px;
+  background: var(--surface-raised);
+  margin-top: 16px;
+  max-width: 70ch;
+}
+.report-loading span:nth-child(3) {
+  max-width: 55ch;
+}
+.report-loading span:nth-child(4) {
+  max-width: 40ch;
+}
+.report-sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
+}
+@media (hover: hover) and (pointer: fine) {
+  .report-opportunity > summary:hover {
+    background: var(--surface);
+  }
+  .challenge-report summary:hover,
+  .report-sources a:hover {
+    color: var(--accent-hover);
+  }
+}
+@media (max-width: 760px) {
+  .report-header h1 {
+    font-size: 34px;
+  }
+  .report-header,
+  .report-actions {
+    width: 100%;
+  }
+  .report-actions .button {
+    flex: 1 1 auto;
+  }
+  .report-findings-pair,
+  .report-review {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+  .report-scope dl {
+    gap: 16px 24px;
+  }
+  .report-opportunity-body {
+    grid-template-columns: minmax(0, 1fr);
+    padding-left: 4px;
+  }
+  .report-sources {
+    border-left: 0;
+    border-top: 1px solid var(--border);
+    padding: 20px 0 0;
+  }
+  .report-filters .field {
+    max-width: none;
+  }
+  .challenge-report :where(input, select) {
+    font-size: 16px;
+    width: 100%;
+  }
+}
+@media (max-width: 420px) {
+  .report-header h1 {
+    font-size: 30px;
+  }
+  .report-pilot-form fieldset {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .report-feedback fieldset .field {
+    flex-basis: 100%;
+  }
+  .report-feedback fieldset .button {
+    width: 100%;
+  }
+}
