@@ -1,0 +1,100 @@
+{
+  "original": {
+    "results": "Resultado de la carga\n15-texto-11MiB.txt: Guardado",
+    "libraryMatches": 1,
+    "size": 11534336,
+    "downloadStatus": 200,
+    "downloadBytes": 11534336,
+    "sha256": "1309fb8522d7deec22b712f936fddc4cf81fd13588c6fa2f1554972741e2674c",
+    "disposition": "attachment; filename*=UTF-8''15-texto-11MiB.txt",
+    "requests": [
+      {
+        "url": "/api/brands/3e7550ab-3b0d-4409-a627-b69e80553e8e/assets",
+        "status": 201,
+        "method": "POST"
+      },
+      {
+        "url": "/api/brands/3e7550ab-3b0d-4409-a627-b69e80553e8e/state",
+        "status": 200,
+        "method": "GET"
+      },
+      {
+        "url": "/api/brands/3e7550ab-3b0d-4409-a627-b69e80553e8e/assets",
+        "status": 200,
+        "method": "GET"
+      }
+    ],
+    "hint": "Hasta 25 MiB por archivo. TXT, Markdown y CSV en UTF-8."
+  },
+  "mixedBatch": {
+    "results": "Resultado de la carga\ntexto-25MiB-mas-1.txt: No se pudo subir — El archivo supera el máximo de 25 MiB. Selecciona uno más pequeño.\nbinario-renombrado.txt: No se pudo subir — El archivo no contiene texto UTF-8 válido o contiene datos binarios. Guárdalo como texto UTF-8 y vuelve a subirlo.\nrecuperacion-valida.txt: Guardado\n\nLos archivos guardados no se volverán a subir. Reintenta solo la actualización de la biblioteca.\n\nReintentar actualización",
+    "uploadDisabled": true,
+    "requests": [
+      {
+        "url": "/api/brands/3e7550ab-3b0d-4409-a627-b69e80553e8e/assets",
+        "method": "POST",
+        "status": 400,
+        "error": "El archivo no contiene texto UTF-8 válido o contiene datos binarios. Guárdalo como texto UTF-8 y vuelve a subirlo."
+      },
+      {
+        "url": "/api/brands/3e7550ab-3b0d-4409-a627-b69e80553e8e/assets",
+        "method": "POST",
+        "status": 201
+      },
+      {
+        "url": "/api/brands/3e7550ab-3b0d-4409-a627-b69e80553e8e/state",
+        "method": "GET",
+        "status": 503,
+        "simulated": true
+      }
+    ]
+  },
+  "afterRefreshRetry": {
+    "counts": {
+      "15-texto-11MiB.txt": 1,
+      "recuperacion-valida.txt": 1,
+      "binario-renombrado.txt": 0,
+      "texto-25MiB-mas-1.txt": 0
+    },
+    "requests": [
+      {
+        "url": "/api/brands/3e7550ab-3b0d-4409-a627-b69e80553e8e/assets",
+        "method": "POST",
+        "status": 400,
+        "error": "El archivo no contiene texto UTF-8 válido o contiene datos binarios. Guárdalo como texto UTF-8 y vuelve a subirlo."
+      },
+      {
+        "url": "/api/brands/3e7550ab-3b0d-4409-a627-b69e80553e8e/assets",
+        "method": "POST",
+        "status": 201
+      },
+      {
+        "url": "/api/brands/3e7550ab-3b0d-4409-a627-b69e80553e8e/state",
+        "method": "GET",
+        "status": 503,
+        "simulated": true
+      },
+      {
+        "url": "/api/brands/3e7550ab-3b0d-4409-a627-b69e80553e8e/state",
+        "method": "GET",
+        "status": 200
+      }
+    ],
+    "uploadEnabled": true,
+    "retryVisible": false,
+    "visibleResults": "Resultado de la carga\ntexto-25MiB-mas-1.txt: No se pudo subir — El archivo supera el máximo de 25 MiB. Selecciona uno más pequeño.\nbinario-renombrado.txt: No se pudo subir — El archivo no contiene texto UTF-8 válido o contiene datos binarios. Guárdalo como texto UTF-8 y vuelve a subirlo.\nrecuperacion-valida.txt: Guardado"
+  },
+  "mobile": {
+    "viewport": {
+      "width": 390,
+      "height": 844
+    },
+    "documentWidth": 390,
+    "horizontalOverflow": false,
+    "resultWidth": 358,
+    "uploadDescription": "asset-upload-help",
+    "sizes": ["0.00 MiB · 18 oct", "11.00 MiB · 18 oct"],
+    "screenshot": "docs/remediation/evidence/assets-2-mobile-ui.png"
+  },
+  "syntheticFailure": "Sólo un GET /state de la pestaña propia se devolvió como503 para probar recuperación; las cargas y descargas fueron HTTP reales. window.fetch se restauró antes de cerrar la pestaña."
+}

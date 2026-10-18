@@ -1,0 +1,22 @@
+[
+  {
+    "name": "15-texto-11MiB.txt",
+    "size": 11534336,
+    "sha256": "1309fb8522d7deec22b712f936fddc4cf81fd13588c6fa2f1554972741e2674c"
+  },
+  {
+    "name": "texto-25MiB-mas-1.txt",
+    "size": 26214401,
+    "sha256": "333c085aa86d99197c17caa2a911eff4d8abe8632034389be18974a0a8436038"
+  },
+  {
+    "name": "binario-renombrado.txt",
+    "size": 2052,
+    "sha256": "7f61a25d38b9b6bbabdff12b01d8ca9d944b140f4a4f32b1e552046933fabf4f"
+  },
+  {
+    "name": "recuperacion-valida.txt",
+    "size": 52,
+    "sha256": "06f98dc4be83576ae37c962f25ec6763bf144521fb2263150a3bd09159c485b0"
+  }
+]

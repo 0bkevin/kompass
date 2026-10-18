@@ -1,0 +1,25 @@
+✔ assets-1 real multipart preserves browser UTF-8 names through storage, library and download (199.811714ms)
+✔ assets-1 accepts legacy Latin-1 and explicitly decoded Unicode without a second conversion (101.843544ms)
+✔ assets-1 keeps safe bounded filenames, extensions and valid Unicode at the length boundary (61.264079ms)
+✔ assets-1 keeps private downloads authenticated (11.538977ms)
+✔ assets-1 preserves multipart field and file-count rejections without orphan files (24.302982ms)
+[30X Radar] Request aborted
+✔ assets-1 stops filename readers and removes partial storage when an HTTP upload aborts (15.241622ms)
+✔ assets-1 filename selection preserves the caller's file-size limit and backpressure (12.107214ms)
+✔ assets-2 original 11 MiB ASCII TXT uploads and downloads the same bytes (267.81564ms)
+✔ assets-2 accepts the 10 MiB and inclusive 25 MiB text boundaries (347.128877ms)
+✔ assets-2 25 MiB plus one byte gets a specific size error without storage or library residue (171.587405ms)
+✔ assets-2 validates multibyte UTF-8 across inspection chunks and at EOF (109.372202ms)
+✔ assets-2 rejects binary tails and malformed UTF-8 despite a TXT name and MIME (29.12777ms)
+✔ assets-2 retains supported binary signatures and safe text document downloads (158.408145ms)
+✔ assets-2 per-file recovery keeps valid files when a TXT is invalid (70.481855ms)
+✔ asset upload records per-file failures and continues through the batch (1.245269ms)
+✔ draft refresh retry reuses the created piece and never creates it twice (0.33179ms)
+ℹ tests 16
+ℹ suites 0
+ℹ pass 16
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1382.815631

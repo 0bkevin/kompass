@@ -1,0 +1,145 @@
+{
+  "issueId": "assets-2",
+  "agent": "fix_assets_2",
+  "status": "fixed",
+  "rootCause": "detectFile sólo reconocía texto cuando file.size<=10MiB y únicamente inspeccionaba el primer1KiB. Así, un TXT ASCII válido de11MiB recibía400 Formato no admitido pese al límite UI de25MiB. Además, el parser multipart permitía50MiB, otro límite distinto.",
+  "changes": [
+    "Se aplica25MiB inclusivos (26.214.400bytes) como máximo real del archivo en el parser multipart de assets y en la UI.",
+    "El error LIMIT_FILE_SIZE de esta ruta se normaliza a413 con un mensaje específico de25MiB y recuperación. El manejo de otros errores multipart y las demás rutas permanecen a cargo de sus handlers.",
+    "TXT, Markdown y CSV se verifican como UTF-8 estricto, sin controles binarios, a lo largo de todos sus bytes usando un buffer fijo de64KiB y TextDecoder streaming. Se aceptan caracteres multibyte divididos entre bloques; las secuencias incompletas se rechazan al finalizar.",
+    "Se distinguen los errores de tamaño, texto/codificación inválidos y formato no admitido. El MIME declarado es sólo candidato a texto; no evita inspeccionar el contenido.",
+    "La ayuda visible y accesible indica25MiB y UTF-8, CSV aparece en el selector y los tamaños de tarjetas usanMiB.",
+    "Se conserva filenameAwareUpload, selección de charset/nombre, saneamiento, headers de descarga, autenticación y recuperación individual por archivo. Las firmas existentes de formatos soportados conservan su comportamiento.",
+    "CaptureModal usa la misma ruta de assets: sus dos ayudas, guardia de selección y error pasan de50MB a25MiB; se informaUTF-8 y se incluyeCSV en accept. Cambio coordinado sin tocarReferenceDetail."
+  ],
+  "files": [
+    "server/core.mjs",
+    "src/features/Assets.tsx",
+    "src/features/Discovery.tsx (sólo CaptureModal)",
+    "tests/remediation-assets-2.test.mjs",
+    "docs/remediation/reports/assets-2.md",
+    "docs/remediation/reports/assets-2.json",
+    "docs/remediation/evidence/assets-2-red.txt",
+    "docs/remediation/evidence/assets-2-green-tests.txt",
+    "docs/remediation/evidence/assets-2-core-tests.txt",
+    "docs/remediation/evidence/assets-2-browser.json",
+    "docs/remediation/evidence/assets-2-fixtures.json",
+    "docs/remediation/evidence/assets-2-red-ui.png",
+    "docs/remediation/evidence/assets-2-green-ui.png",
+    "docs/remediation/evidence/assets-2-batch-retry-ui.png",
+    "docs/remediation/evidence/assets-2-batch-recovered-ui.png",
+    "docs/remediation/evidence/assets-2-mobile-ui.png",
+    "docs/remediation/evidence/assets-2-capture-copy.txt"
+  ],
+  "verification": [
+    {
+      "command": "node --test --test-name-pattern='original 11 MiB' tests/remediation-assets-2.test.mjs",
+      "before": "Ejecutado dos veces sin cambios:400 Formato no admitido; expected201;1 fallo. Mismos11.534.336bytes ASCII y SHA-2561309fb8522d7deec22b712f936fddc4cf81fd13588c6fa2f1554972741e2674c.",
+      "after": "La misma prueba queda verde dentro del conjunto final:201, documento text/plain, biblioteca persistida, descarga200 y bytes exactamente iguales.",
+      "kind": "http"
+    },
+    {
+      "command": "node --test tests/remediation-assets-1.test.mjs tests/remediation-assets-2.test.mjs tests/workflow-recovery.test.mjs",
+      "before": "assets-2 original11MiB rojo antes de la corrección; los demás casos se añadieron para cubrir límites y preservación.",
+      "after": "16/16PASS:7assets-1,7assets-2 y2workflow-recovery. Incluye aborto multipart, límites/backpressure, nombresUnicode/Latin1/filename*, autenticación, formatos soportados, descarga exacta, límites10/11/25MiB y25MiB+1, UTF-8 entre chunks y alEOF, otra codificación y binario tras1KiB, limpieza y continuidad del lote.",
+      "kind": "test"
+    },
+    {
+      "command": "node --test tests/core.test.mjs",
+      "before": "No ejecutado para establecer una línea base de este defecto; suite de preservación cercana.",
+      "after": "14/14PASS, incluida carga privada con validación de formato, aislamiento y roles.",
+      "kind": "test"
+    },
+    {
+      "command": "T3 preview_*; http://127.0.1.26:5516/assets; pestaña propia tab_4l_07e54779-9ab2-4979-8a15-674c4eff160a",
+      "before": "Subir15-texto-11MiB.txt desde el input real produce400, resultado individual Formato no admitido y biblioteca vacía mientras se anuncia Hasta25MB.",
+      "after": "Misma fixture física:201, resultado Guardado y una sola entrada en biblioteca. GET de descarga200 con11.534.336bytes y el mismo SHA-256. Ayuda25MiB/UTF-8 visible.",
+      "kind": "browser"
+    },
+    {
+      "command": "T3 preview_upload lote [texto-25MiB-mas-1.txt,binario-renombrado.txt,recuperacion-valida.txt], seguido de Reintentar actualización",
+      "before": "Sin una prueba adicional previa de este lote específico.",
+      "after": "Exceso rechazado localmente con tamaño25MiB, binario rechazado porHTTP400UTF-8/binario y archivo válido guardado201. Una respuesta GET/state503 fue simulada exclusivamente en la pestaña propia. El botón de recuperación realiza sólo GET/state200, deja una entrada del válido y no repitePOST. El fetch original se restauró.",
+      "kind": "browser"
+    },
+    {
+      "command": "T3 preview_resize390x844 y comprobaciónDOM",
+      "before": "No se observó antes del arreglo este viewport específico.",
+      "after": "documentWidth390, viewport390, resultado358px, sin scroll horizontal. Ayuda asociada al botón mediante aria-describedby; límites y errores legibles.",
+      "kind": "browser"
+    },
+    {
+      "command": "node --input-type=module; script inline preservado en docs/remediation/evidence/assets-2-capture-copy.txt",
+      "before": "CaptureModal conservaba dos ayudas50MB, guardia50*1024*1024 y error50MB para la misma ruta ya limitada a25MiB.",
+      "after": "Verificación localPASS: las dos ayudas25MiB, UTF-8/CSV y guardia/error25MiB son coherentes; TypeScript.transpileModule sin erroresTSX. Runtime sigue cerrado.",
+      "kind": "test"
+    }
+  ],
+  "artifacts": [
+    "docs/remediation/evidence/assets-2-red.txt",
+    "docs/remediation/evidence/assets-2-green-tests.txt",
+    "docs/remediation/evidence/assets-2-core-tests.txt",
+    "docs/remediation/evidence/assets-2-browser.json",
+    "docs/remediation/evidence/assets-2-fixtures.json",
+    "docs/remediation/evidence/assets-2-red-ui.png",
+    "docs/remediation/evidence/assets-2-green-ui.png",
+    "docs/remediation/evidence/assets-2-batch-retry-ui.png",
+    "docs/remediation/evidence/assets-2-batch-recovered-ui.png",
+    "docs/remediation/evidence/assets-2-mobile-ui.png",
+    "/tmp/30x-remediation-assets-2/fixtures/manifest.json",
+    "/tmp/30x-remediation-assets-2/radar.sqlite",
+    "docs/remediation/evidence/assets-2-capture-copy.txt"
+  ],
+  "limits": {
+    "maxFileBytes": 26214400,
+    "maxFileMiB": 25,
+    "inclusive": true,
+    "textEncoding": "UTF-8 estricto",
+    "textInspectionBufferBytes": 65536,
+    "textMimeTypes": ["text/plain", "text/markdown", "text/csv"],
+    "boundaries": [
+      {
+        "bytes": 10485760,
+        "label": "10MiB",
+        "httpStatus": 201,
+        "downloadBytesEqual": true
+      },
+      {
+        "bytes": 11534336,
+        "label": "11MiB",
+        "httpStatus": 201,
+        "downloadBytesEqual": true
+      },
+      {
+        "bytes": 26214400,
+        "label": "25MiB",
+        "httpStatus": 201,
+        "downloadBytesEqual": true
+      },
+      {
+        "bytes": 26214401,
+        "label": "25MiB+1",
+        "httpStatus": 413,
+        "stored": false
+      }
+    ]
+  },
+  "limitations": [
+    "Los casos de medios conservados usan firmas mínimas de transporte; no acreditan decodificación, reproducción ni validez integral de cada contenedor. Ese reconocimiento preexistente no se rediseñó.",
+    "El TXT ahora exigeUTF-8 válido: otra codificación obtiene un error específico con la acción de volver a guardarlo enUTF-8, reflejada también en la ayuda.",
+    "La igualdad de descarga se verificó medianteHTTP real desde Node y fetch en la pestaña. Un click de descarga nativa coincidió con un reinicio de node--watch durante el ajuste final de formato y recibió error de proxy; no se obtuvo un archivo de descarga del SO como evidencia.",
+    "La prueba de recuperación usa un503 sintético una vez en window.fetch de la pestaña propia; no representa una caída real de almacenamiento. Cargas/descargas y persistencia fueron reales y aisladas.",
+    "No build, formato global, dependencias, proveedores reales, publicación ni datos principales. El coordinador conserva la comprobación integrada final.",
+    "El ajuste final acotado de CaptureModal se verificó localmente por copia/límite y sintaxisTSX; no se volvió a abrir un runtime ni se afirma una nueva comprobación nativa de ese modal."
+  ],
+  "environment": {
+    "date": "2026-10-18",
+    "apiPort": 4516,
+    "webPort": 5516,
+    "host": "127.0.1.26",
+    "dataDir": "/tmp/30x-remediation-assets-2",
+    "processSession": 4696,
+    "tabId": "tab_4l_07e54779-9ab2-4979-8a15-674c4eff160a",
+    "cleanup": "Pestaña propia cerrada; procesos propios detenidos conSIGTERM; ss confirma4516/5516 sin listeners. El watcherNode24 imprimió una aserción durante su cierre, después de las pruebas; sesión4696 terminada. Bases yfixtures propias conservadas; las bases temporales de tests se eliminan al terminar."
+  }
+}

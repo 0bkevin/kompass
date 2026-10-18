@@ -1,0 +1,22 @@
+✔ registration, session, password validation, login and logout persist safely (376.871966ms)
+✔ brands start empty and users cannot read or mutate other brands (45.759731ms)
+✔ deleting an audience used by approved or published content preserves its links and version (52.916457ms)
+✔ deleting an audience used only by an idea is rejected (21.151057ms)
+✔ capture → analysis → draft → review → approval → schedule with no fabricated publication (62.779696ms)
+✔ private uploads validate formats, hide storage paths and enforce brand isolation (33.017288ms)
+✔ invitation acceptance is single-use; reviewer can review/comment but cannot edit (85.260058ms)
+✔ approval is bound to the displayed content version across review interleavings (91.373099ms)
+✔ unchanged oversized legacy piece text can be saved with an unrelated edit (18.072484ms)
+✔ optional edit preconditions reject stale HTTP writes without breaking older clients (23.428663ms)
+✔ editor may produce content but cannot configure integrations or approve their work (62.551331ms)
+✔ changing a source URL removes old metrics and snapshot history rather than reusing evidence (9.785492ms)
+✔ demo data is explicitly labeled; secret values are encrypted and absent from state (87.964408ms)
+✔ invalid requests and foreign Origin mutations fail with safe JSON errors (13.213493ms)
+ℹ tests 14
+ℹ suites 0
+ℹ pass 14
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1106.835183

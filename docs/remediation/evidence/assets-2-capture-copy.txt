@@ -1,0 +1,21 @@
+node --input-type=module - <<'NODE'
+import fs from 'node:fs';
+import assert from 'node:assert/strict';
+import ts from 'typescript';
+const source=fs.readFileSync('src/features/Discovery.tsx','utf8');
+const capture=source.slice(source.indexOf('export function CaptureModal('));
+assert.doesNotMatch(capture,/50 MB|50 \* 1024 \* 1024/);
+assert.match(capture,/Hasta 25 MiB/);
+assert.match(capture,/TXT, Markdown y CSV en\s+UTF-8/);
+assert.match(capture,/f\.size > 25 \* 1024 \* 1024/);
+const result=ts.transpileModule(source,{compilerOptions:{jsx:ts.JsxEmit.ReactJSX,target:ts.ScriptTarget.ES2022,module:ts.ModuleKind.ESNext},fileName:'Discovery.tsx',reportDiagnostics:true});
+const errors=result.diagnostics.filter(d=>d.category===ts.DiagnosticCategory.Error);
+assert.equal(errors.length,0,JSON.stringify(errors));
+console.log('CaptureModal local check PASS: two hints 25 MiB, UTF-8, CSV, client limit 25 MiB and TSX syntax. Runtime remains closed.');
+NODE
+
+CaptureModal local check PASS: two hints 25 MiB, UTF-8, CSV, client limit 25 MiB and TSX syntax. Runtime remains closed.
+
+Scope: only CaptureModal's upload hint, accept, size guard/error and paragraph; ReferenceDetail unchanged by assets-2.
+No new browser runtime was opened. This is local syntax/copy verification; native CaptureModal validation belongs to the coordinator's integrated run.
+
