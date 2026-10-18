@@ -1,0 +1,33 @@
+{
+  "desktop": {
+    "url": "http://localhost:3026/home",
+    "viewport": {
+      "width": 1440,
+      "height": 1000
+    },
+    "overflow": false,
+    "contrastFailures": [
+      {
+        "text": "/",
+        "selector": "span.",
+        "contrast": 2.54,
+        "size": 12,
+        "fg": "rgb(155, 165, 159)",
+        "bg": [
+          255,
+          255,
+          255
+        ]
+      }
+    ]
+  },
+  "mobile": {
+    "url": "http://localhost:3026/home",
+    "viewport": {
+      "width": 390,
+      "height": 844
+    },
+    "overflow": false,
+    "contrastFailures": []
+  }
+}
