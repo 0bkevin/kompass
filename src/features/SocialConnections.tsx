@@ -717,7 +717,7 @@ function AutomaticMetricsPanel() {
           {canLink && (
             <Button
               variant={
-                !data?.publications?.length && !snapshots.length
+                !linkForm && !data?.publications?.length && !snapshots.length
                   ? "primary"
                   : "secondary"
               }
@@ -734,7 +734,7 @@ function AutomaticMetricsPanel() {
           )}
           <Button
             variant={
-              !!data?.publications?.length || !!snapshots.length
+              !linkForm && (!!data?.publications?.length || !!snapshots.length)
                 ? "primary"
                 : "secondary"
             }
