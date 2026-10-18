@@ -27,6 +27,7 @@ import {
 import { useWorkspace } from "../lib/workspace";
 import { ProviderCredits } from "../components/ProviderCredits";
 import { SocialDiscovery } from "./SocialConnections";
+import { ReferenceEvidence } from "./ReferenceEvidence";
 import { api, json, uploadAsset } from "../lib/api";
 import { getOrUploadCaptureAsset } from "../lib/capture-retry.mjs";
 import { createThenRefresh } from "../lib/workflow-recovery.mjs";
@@ -913,6 +914,7 @@ export function ReferenceDetail({
     >("loading");
   const busyRef = useRef(false);
   const committedDraftRef = useRef<Piece | null>(null);
+  const [evidenceDirty, setEvidenceDirty] = useState(false);
   const attachment = state.assets.find((asset) => asset.id === r.assetId);
   const attachmentUrl = attachment
     ? `/api/brands/${encodeURIComponent(state.brand.id)}/assets/${encodeURIComponent(attachment.id)}/file?download=1`
@@ -960,8 +962,13 @@ export function ReferenceDetail({
     };
   }, [attachmentUrl, attachmentRetry]);
   const close = useCallback(() => {
-    if (!busyRef.current) onClose();
-  }, [onClose]);
+    if (
+      !busyRef.current &&
+      (!evidenceDirty ||
+        window.confirm("Hay observaciones sin guardar. ¿Descartarlas?"))
+    )
+      onClose();
+  }, [onClose, evidenceDirty]);
   useEffect(() => {
     let active = true;
     void api<SocialSettings>(`/api/brands/${state.brand.id}/social/settings`)
@@ -1360,6 +1367,13 @@ export function ReferenceDetail({
             </div>
           </>
         ) : null}
+        {!referenceRestricted && (
+          <ReferenceEvidence
+            key={`${state.brand.id}:${r.id}`}
+            reference={r}
+            onDirtyChange={setEvidenceDirty}
+          />
+        )}
         <div className="detail-actions">
           <Button
             busy={busy === "analyze"}
