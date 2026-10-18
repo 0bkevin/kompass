@@ -1,0 +1,15 @@
+✔ original HTTP repro: editorial scheduled→draft omitting scheduledFor clears the plan, preserving the piece and review history (86.250551ms)
+✔ leaving scheduled for draft, review or approved clears dates even when explicitly supplied again (127.083479ms)
+✔ draft creation cannot establish a plan; future-date validation and atomic rescheduling remain intact (60.850536ms)
+✔ published history retains its scheduled date, publication metadata and protection against editorial edits (39.572537ms)
+✔ reviewers and other workspaces cannot cancel a plan; editorial corrections still require the current edit version (58.721244ms)
+✔ calendar eligibility ignores dated legacy drafts, reviews and approvals without deleting their records (45.755674ms)
+✔ calendar dates require scheduled/published status and a finite date, and preserve old legitimate publications (0.408987ms)
+ℹ tests 7
+ℹ suites 0
+ℹ pass 7
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 643.061473

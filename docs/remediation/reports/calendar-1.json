@@ -1,0 +1,89 @@
+{
+  "issueId": "calendar-1",
+  "agent": "fix_calendar_1",
+  "status": "fixed",
+  "cleanup": {
+    "runtimeSession": 45113,
+    "runtimeStopped": true,
+    "portsClosed": [4513, 5513],
+    "ownTabClosed": "tab_4p_07e54779-9ab2-4979-8a15-674c4eff160a",
+    "dataDirPreserved": "/tmp/30x-remediation-calendar-1",
+    "note": "Controlled SIGTERM teardown exited 143. Node 24 watch mode printed its known FSEventWrap/FSWatcher.close assertion while closing watchers; both own listener ports were verified closed. No runtime functional error occurred during QA."
+  },
+  "rootCause": "pieceInput copied scheduledFor from the current record and only changed it when a client explicitly sent scheduledFor. Calendar treated every parseable date as a plan, including draft/review/approved records whose approval was invalidated.",
+  "changes": [
+    "Enforce server invariant: scheduledFor is cleared whenever the resulting status is outside scheduled/published, including editorial PATCH requests that omit scheduledFor and transitions back to approved.",
+    "Use calendarPlanDate as the single eligibility gate before deriving grid, period/weekly counts, selected-day agenda, upcoming entries and CSV. Only scheduled/published records with finite dates participate.",
+    "Keep approved pieces with legacy residual dates in the ready-to-schedule tray without treating their date as a plan. Preserve all legacy records, published dates, receipts, comments, approval/version gates and reviewer/workspace permissions."
+  ],
+  "files": [
+    "server/core.mjs",
+    "src/features/Calendar.tsx",
+    "src/lib/calendar-plan.mjs",
+    "src/lib/calendar-plan.d.mts",
+    "tests/remediation-calendar-1.test.mjs"
+  ],
+  "verification": [
+    {
+      "command": "node --test tests/remediation-calendar-1.test.mjs",
+      "before": "Original real HTTP scheduled→draft editorial PATCH, omitting scheduledFor, failed: retained 2026-10-20T05:34:28.202Z instead of undefined (0/1).",
+      "after": "7/7 pass: omitted/explicit dates, draft/review/approved transitions, rescheduling/date validation, current edit version, reviewer 403/outsider 404, published metadata protection, immutable legacy rows and calendar date eligibility.",
+      "kind": "test"
+    },
+    {
+      "command": "node --test tests/core.test.mjs tests/integrated-flow.test.mjs",
+      "before": "Existing nearby contracts retained.",
+      "after": "17/17 pass, no failures/cancellations/skips.",
+      "kind": "test"
+    },
+    {
+      "command": "npx tsc -b --pretty false",
+      "before": "New calendar eligibility seam requires a declaration consumed by TypeScript.",
+      "after": "Exit 0; no diagnostics.",
+      "kind": "test"
+    },
+    {
+      "command": "T3 preview interactive desktop at http://127.0.1.23:5513/calendar, 1280×800",
+      "before": "Synthetic legacy draft with residual date appeared in month summary (2), grid and upcoming next to one valid scheduled piece.",
+      "after": "Same legacy draft remains stored but disappears from plan. Expanded seven-row fixture excludes dated draft/review/approved and invalid-date scheduled; valid scheduled/published remain. October count 2, selected future week count 1; approved residual appears only in tray. Studio UI edit clears the date and returns to draft.",
+      "kind": "browser"
+    },
+    {
+      "command": "T3 preview native CSV download and Python csv.DictReader verification",
+      "before": "Historical audit CSV included an unapproved draft; current pre-fix browser reproduced the same eligibility failure.",
+      "after": "October export has exactly 2 rows/12 columns: valid scheduled + published history; date/hour/title/UTC/state exact, including accepted-webhook label. Next-month record excluded. After UI/API edits, export has exactly 1 row/12 columns, published history only.",
+      "kind": "browser"
+    },
+    {
+      "command": "T3 preview interactive mobile 390×844",
+      "before": "Residual dates could imply false planning regardless of viewport.",
+      "after": "Approved residual can be scheduled through UI, same id/count and review history, no duplicate. Subsequent original API PATCH without null clears the date and reload removes it. Seven records preserved, no page overflow. Week 19–25 October has zero events/count, and export is disabled.",
+      "kind": "browser"
+    }
+  ],
+  "artifacts": [
+    "docs/remediation/evidence/calendar-1/red-test.log",
+    "docs/remediation/evidence/calendar-1/red-draft-counted.png",
+    "docs/remediation/evidence/calendar-1/30x-remediation-calendar-1-green.log",
+    "docs/remediation/evidence/calendar-1/30x-remediation-calendar-1-nearby.log",
+    "docs/remediation/evidence/calendar-1/30x-remediation-calendar-1-types.log",
+    "docs/remediation/evidence/calendar-1/browser-fixture.json",
+    "docs/remediation/evidence/calendar-1/browser-checks.json",
+    "docs/remediation/evidence/calendar-1/csv-check.json",
+    "docs/remediation/evidence/calendar-1/green-october.csv",
+    "docs/remediation/evidence/calendar-1/green-after-invalidations.csv",
+    "docs/remediation/evidence/calendar-1/green-month.png",
+    "docs/remediation/evidence/calendar-1/green-week.png",
+    "docs/remediation/evidence/calendar-1/ui-edit-invalidates.png",
+    "docs/remediation/evidence/calendar-1/mobile-before-plan.png",
+    "docs/remediation/evidence/calendar-1/mobile-scheduled-valid.png",
+    "docs/remediation/evidence/calendar-1/mobile-after-invalidations.png",
+    "docs/remediation/evidence/calendar-1/mobile-empty-week.png"
+  ],
+  "limitations": [
+    "Interactive QA uses only synthetic local records and a synthetic published webhook receipt. No external publication/provider was called; scheduling is not delivery.",
+    "Browser timezone was UTC. Pure date tests preserve an explicit UTC−06 offset; no browser timezone or DST switch was performed.",
+    "Legacy invalid rows are retained for correction/history and excluded by eligibility; no destructive backfill or silent mass migration was performed.",
+    "Integration-wide build and final full suite remain the coordinator's responsibility."
+  ]
+}

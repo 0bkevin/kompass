@@ -1,0 +1,31 @@
+✖ original HTTP repro: editorial scheduled→draft omitting scheduledFor clears the plan, preserving the piece and review history (62.512823ms)
+ℹ tests 1
+ℹ suites 0
+ℹ pass 0
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 259.487677
+
+✖ failing tests:
+
+test at tests/remediation-calendar-1.test.mjs:63:1
+✖ original HTTP repro: editorial scheduled→draft omitting scheduledFor clears the plan, preserving the piece and review history (62.512823ms)
+  AssertionError [ERR_ASSERTION]: The unapproved draft must not retain the scheduled date omitted by this PATCH.
+  + actual - expected
+  
+  + '2026-10-20T05:34:28.202Z'
+  - undefined
+  
+      at TestContext.<anonymous> (file:///home/ubuntu/.t3/projects/30x-trackt-2/tests/remediation-calendar-1.test.mjs:68:10)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async Test.run (node:internal/test_runner/test:1404:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: '2026-10-20T05:34:28.202Z',
+    expected: undefined,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }

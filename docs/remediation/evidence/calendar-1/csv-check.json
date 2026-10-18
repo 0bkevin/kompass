@@ -1,0 +1,61 @@
+{
+  "status": "PASS",
+  "rows": [
+    {
+      "Fecha": "2026-10-18",
+      "Hora": "00:00",
+      "Zona horaria": "UTC",
+      "Título": "QA publicada \"sintética\", historial",
+      "Canal": "LinkedIn",
+      "Formato": "Post",
+      "Estado": "Aceptado por webhook",
+      "Audiencia": "Equipos comerciales",
+      "Responsable": "",
+      "Guion": "Guion sintético para verificar calendario.",
+      "Caption": "",
+      "Llamado a la acción": ""
+    },
+    {
+      "Fecha": "2026-10-21",
+      "Hora": "16:20",
+      "Zona horaria": "UTC",
+      "Título": "QA programada válida",
+      "Canal": "LinkedIn",
+      "Formato": "Post",
+      "Estado": "Programado",
+      "Audiencia": "Equipos comerciales",
+      "Responsable": "",
+      "Guion": "Guion sintético para verificar calendario.",
+      "Caption": "",
+      "Llamado a la acción": ""
+    }
+  ],
+  "columns": 12,
+  "excluded": [
+    "draft residual",
+    "review residual",
+    "approved residual",
+    "invalid date",
+    "next-month scheduled"
+  ],
+  "afterInvalidations": {
+    "status": "PASS",
+    "rows": [
+      {
+        "Fecha": "2026-10-18",
+        "Hora": "00:00",
+        "Zona horaria": "UTC",
+        "Título": "QA publicada \"sintética\", historial",
+        "Canal": "LinkedIn",
+        "Formato": "Post",
+        "Estado": "Aceptado por webhook",
+        "Audiencia": "Equipos comerciales",
+        "Responsable": "",
+        "Guion": "Guion sintético para verificar calendario.",
+        "Caption": "",
+        "Llamado a la acción": ""
+      }
+    ],
+    "columns": 12
+  }
+}

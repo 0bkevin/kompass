@@ -1,0 +1,53 @@
+{
+  "issueId": "calendar-1",
+  "data": "Synthetic company, account, pieces and publication receipt only; no providers called.",
+  "apiAfterFix": {
+    "status": 200,
+    "pieceId": "4a60e20d-d765-49b2-b145-82227061a07f",
+    "pieceStatus": "draft",
+    "scheduledFor": null,
+    "comments": 1,
+    "script": "Corrección sintética; PATCH sin scheduledFor."
+  },
+  "mobileAfterReload": {
+    "status": "PASS",
+    "summary": "1 pieza en tu grilla",
+    "events": [
+      "QA publicada \"sintética\", historial",
+      "QA programada mes siguiente"
+    ],
+    "upcoming": [
+      "QA programada mes siguiente"
+    ],
+    "totalRecords": 7,
+    "legacyDraft": {
+      "status": "draft",
+      "scheduledFor": "2026-10-20T16:20:00.000Z"
+    },
+    "editedPieces": [
+      {
+        "id": "4a60e20d-d765-49b2-b145-82227061a07f",
+        "status": "draft",
+        "scheduledFor": null
+      },
+      {
+        "id": "1379e67e-cfb9-4f81-9155-ff0a474fd225",
+        "status": "draft",
+        "scheduledFor": null
+      }
+    ],
+    "viewport": {
+      "width": 390,
+      "height": 844
+    },
+    "overflow": false
+  },
+  "mobileEmptyWeek": {
+    "status": "PASS",
+    "summary": "0 piezas en tu grilla",
+    "weekCount": "0",
+    "exportDisabled": true,
+    "events": 0,
+    "overflow": false
+  }
+}

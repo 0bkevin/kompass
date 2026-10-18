@@ -1,0 +1,47 @@
+{
+  "brandId": "ab15e183-dda6-4235-b899-fab47eb0c159",
+  "goodId": "1379e67e-cfb9-4f81-9155-ff0a474fd225",
+  "legacyDraftId": "b82d559f-e5e2-477b-af76-0f569c443a66",
+  "legacyDraftDate": "2026-10-20T16:20:00.000Z",
+  "fixtures": [
+    {
+      "id": "3af67d92-c613-41d6-b0c8-4be938ef26c6",
+      "status": "review",
+      "title": "QA revisión con fecha residual",
+      "scheduledFor": "2026-10-20T16:20:00.000Z"
+    },
+    {
+      "id": "4a60e20d-d765-49b2-b145-82227061a07f",
+      "status": "approved",
+      "title": "QA aprobada con fecha residual",
+      "scheduledFor": "2026-10-20T16:20:00.000Z"
+    },
+    {
+      "id": "2e8bb3b0-832d-498d-a423-b1bf5dec7d9a",
+      "status": "scheduled",
+      "title": "QA programada con fecha inválida",
+      "scheduledFor": "fecha-no-válida"
+    },
+    {
+      "id": "6258e825-498f-4d66-8041-02e9358e7f3a",
+      "status": "published",
+      "title": "QA publicada \"sintética\", historial",
+      "scheduledFor": "2026-10-18T00:00:00.000Z"
+    },
+    {
+      "id": "d7d18dd2-2011-4ab5-ac2c-145e9a1f063b",
+      "status": "scheduled",
+      "title": "QA programada mes siguiente",
+      "scheduledFor": "2026-11-02T16:20:00.000Z"
+    }
+  ],
+  "expectedOctober": [
+    "QA programada válida",
+    "QA publicada \"sintética\", historial"
+  ],
+  "expectedUpcoming": [
+    "QA programada válida",
+    "QA programada mes siguiente"
+  ],
+  "recordCount": 7
+}
