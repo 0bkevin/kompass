@@ -495,6 +495,17 @@ const TOPICS = [
   },
 ];
 
+function statedAudience(text) {
+  // Keep a clearly declared target group more specific than a topic match.
+  // This is supplied company context, never an observed consumer profile.
+  const match = text.match(
+    /(?:^|[.!?]\s+)(?:ayudamos|acompañamos|apoyamos)\s+a\s+([^.!?]{2,160}?)\s+que\s+necesita(?:n)?\s+([^.!?]{3,400})(?=[.!?]|$)/iu,
+  );
+  if (!match) return null;
+  const name = redact(match[1], 120);
+  return { name, role: name, needs: redact(match[2], 400) };
+}
+
 function makeDraft(input, results) {
   const documents = results.map((item) => item.document).filter(Boolean);
   const corpus = redact(
@@ -505,16 +516,20 @@ function makeDraft(input, results) {
     40_000,
   );
   const topics = TOPICS.filter((item) => item.pattern.test(corpus));
-  const audience = topics
-    .filter((item) => item.segment)
-    .slice(0, 3)
-    .map((item) => ({
-      id: randomUUID(),
-      ...item.segment,
-      stage: "Por confirmar",
-      description:
-        "Hipótesis sugerida a partir del contenido de la empresa. Requiere validación del equipo; no procede de perfiles de consumidores.",
-    }));
+  const declaredAudience = statedAudience(input.text);
+  const segments = declaredAudience
+    ? [declaredAudience]
+    : topics
+        .filter((item) => item.segment)
+        .slice(0, 3)
+        .map((item) => item.segment);
+  const audience = segments.map((segment) => ({
+    id: randomUUID(),
+    ...segment,
+    stage: "Por confirmar",
+    description:
+      "Hipótesis sugerida a partir del contenido de la empresa. Requiere validación del equipo; no procede de perfiles de consumidores.",
+  }));
   if (!audience.length && topics[0]?.pillar === TOPICS[0].pillar)
     audience.push({
       id: randomUUID(),

@@ -1,0 +1,51 @@
+✔ public metadata produces editable, explicitly hypothetical company context (18.482953ms)
+✔ provided content and extracted excerpts remove scripts and contact details (3.731821ms)
+✔ social links remain linked without network requests or invented audience (0.984225ms)
+✔ private URLs, invalid payloads and excessive imports are rejected before fetching (1.263095ms)
+✔ public-looking domains resolving privately never reach the fetcher (0.953028ms)
+✔ blocked pages and unsupported responses expose recovery without inventing read content (3.145516ms)
+✔ redirect hooks reject social networks, credentials and private login destinations (2.70475ms)
+✔ inspection requires a session and a company is not required yet (39.197682ms)
+✔ cached inspections are user-owned, expire after 30 minutes and are consumed on commit (37.170063ms)
+✔ context history and deletion stay inside the brand and preserve reviewed brand fields (26.073404ms)
+✔ partial network failure can be recovered by importing team content (8.321533ms)
+✔ membership revoked during remote inspection prevents storing into a former workspace (13.034363ms)
+✔ owned text preserves an explicit audience's role and industry before generic topic suggestions (5.124421ms)
+✔ the complete 30X onboarding text keeps its declared EdTech CEO audience without reading citation links (8.456948ms)
+✔ generic topic suggestions remain the fallback when no affirmative audience is declared (0.4045ms)
+✔ company-2 original inline address is redacted in the imported and persisted inspector result (52.068768ms)
+✔ company-2 redaction survives inspection caching, explicit commit and history reload (20.74853ms)
+▶ company-2 labeled address variants preserve surrounding business prose
+  ✔ Dirección: ending ". " (9.182873ms)
+  ✔ DIRECCION： ending "; " (10.767974ms)
+  ✔ Address: ending " | " (7.993508ms)
+  ✔ Domicilio: ending "\n" (10.378807ms)
+  ✔ Dirección postal: ending ". " (7.301104ms)
+  ✔ Domicilio particular: ending " — " (8.261573ms)
+  ✔ dirección de contacto: ending ". " (6.578274ms)
+  ✔ Dirección:  ending ". " (6.293335ms)
+  ✔ Dirección: ending "! " (7.666696ms)
+  ✔ Dirección: ending "? " (7.222496ms)
+✔ company-2 labeled address variants preserve surrounding business prose (84.10059ms)
+✔ company-2 adjacent labeled fields and repeated addresses remain redacted without losing business fields (5.955924ms)
+▶ company-2 address fields end at input and CRLF boundaries
+  ✔ [domicilio omitido] (7.03329ms)
+  ✔ Nexo ofrece formación. [domicilio omitido] Ayudamos con ventas. (6.838526ms)
+  ✔ Nexo ofrece formación. [domicilio omitido] Servicios: Formación de equipos. (6.192262ms)
+✔ company-2 address fields end at input and CRLF boundaries (20.759026ms)
+✔ company-2 inline contact labels do not erase management terminology or substring matches (5.36266ms)
+▶ company-2 HTML metadata, HTML paragraphs and plain text use the same persisted redaction
+  ✔ html-metadata (15.003483ms)
+  ✔ html-paragraph (10.261441ms)
+  ✔ plain-text (9.859383ms)
+✔ company-2 HTML metadata, HTML paragraphs and plain text use the same persisted redaction (35.743941ms)
+✔ company-2 address redaction precedes excerpt and description truncation (4.953993ms)
+✔ company-2 pre-fix history is redacted on read without mutating original evidence or metadata (6.65477ms)
+ℹ tests 40
+ℹ suites 0
+ℹ pass 40
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 433.540697

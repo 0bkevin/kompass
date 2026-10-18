@@ -1,0 +1,368 @@
+{
+  "checkedAt": "2026-10-18",
+  "initialCommit": "383933d",
+  "host": "http://127.0.2.61:5461",
+  "viewportChecks": [
+    {
+      "width": 1440,
+      "height": 900
+    },
+    {
+      "width": 390,
+      "height": 844,
+      "scrollWidth": 390
+    }
+  ],
+  "sourceText": "30X enseña inteligencia artificial práctica a líderes y equipos de América Latina. Ofrecemos talleres de IA aplicada y acompañamiento para mejorar procesos de ventas. Ayudamos a CEOs de empresas EdTech que necesitan mejorar su proceso comercial, dar seguimiento a oportunidades y convertir más ventas. Nuestra voz es clara, cercana y orientada a resultados. Trabajamos en español en Latinoamérica.",
+  "before": {
+    "audience": {
+      "name": "Equipos comerciales",
+      "role": "Ventas y dirección comercial",
+      "needs": "Encontrar prácticas para mejorar ventas y procesos comerciales."
+    },
+    "companyName": "example",
+    "companyMarket": "Latinoamérica",
+    "companyIndustry": "Educación y formación"
+  },
+  "persistedBeforeFix": {
+    "brands": [
+      {
+        "id": "c2869cec-bd73-4c2d-8cb5-3af9160458a3",
+        "name": "30X — Laboratorio de ventas",
+        "description": "Empresa: 30X — Laboratorio de ventas 30X enseña IA práctica a líderes y equipos de América Latina. Esta empresa de prueba acompaña a CEOs de empresas EdTech en Chile que necesitan mejorar renovaciones y seguimiento comercial. Voz clara, cercana y práctica.",
+        "market": "Chile",
+        "language": "Español",
+        "role": "owner",
+        "audience": [
+          {
+            "id": "91cf6153-f82e-44b7-8827-bd93f7c1dacc",
+            "name": "CEOs EdTech en Chile",
+            "role": "CEOs EdTech en Chile",
+            "stage": "Por confirmar",
+            "needs": "Mejorar renovaciones y seguimiento comercial con IA práctica.",
+            "description": "Hipótesis sugerida a partir del contenido de la empresa. Requiere validación del equipo; no procede de perfiles de consumidores."
+          }
+        ]
+      },
+      {
+        "id": "0d68a589-8ca0-4fd9-aae3-d3ee085a7f2d",
+        "name": "30X — IA práctica",
+        "description": "30X enseña inteligencia artificial práctica a líderes y equipos de América Latina. Ofrecemos talleres de IA aplicada y acompañamiento para mejorar procesos de ventas. Ayudamos a CEOs de empresas EdTech que necesitan mejorar su proceso comercial, dar seguimiento a oportunidades y convertir más ventas. Nuestra voz es clara, cercana y orientada a resultados. Trabajamos en español en Latinoamérica.",
+        "market": "Latinoamérica",
+        "language": "Español",
+        "role": "owner",
+        "audience": [
+          {
+            "id": "359ccec2-ca8d-4765-8fd1-3db994b20a0f",
+            "name": "CEOs de empresas EdTech",
+            "role": "CEOs de empresas EdTech",
+            "stage": "Por confirmar",
+            "needs": "Mejorar procesos de ventas, dar seguimiento a oportunidades y convertir más ventas con IA práctica.",
+            "description": "Hipótesis sugerida a partir del contenido de la empresa. Requiere validación del equipo; no procede de perfiles de consumidores."
+          }
+        ]
+      }
+    ],
+    "visibleAudience": [
+      "Por confirmar\nCEOs EdTech en Chile\n\nCEOs EdTech en Chile\n\nMejorar renovaciones y seguimiento comercial con IA práctica.\n\n0 piezas dirigidas\nEditar perfil →"
+    ],
+    "viewport": 390,
+    "scrollWidth": 390
+  },
+  "afterFix": {
+    "name": "30X — Audiencia declarada",
+    "role": "owner",
+    "description": "Empresa: 30X — Audiencia declarada 30X enseña inteligencia artificial práctica a líderes y equipos de América Latina. Ofrecemos talleres de IA aplicada y acompañamiento para mejorar procesos de ventas. Ayudamos a CEOs de empresas EdTech que necesitan mejorar su proceso comercial, dar seguimiento a oportunidades y convertir más ventas. Nuestra voz es clara, cercana y orientada a resultados. Trabajamos en español en Latinoamérica.",
+    "market": "Latinoamérica",
+    "language": "Español",
+    "audience": [
+      {
+        "id": "498f0693-ebb9-44f4-93e3-146cb0f8daa8",
+        "name": "CEOs de empresas EdTech",
+        "role": "CEOs de empresas EdTech",
+        "stage": "Por confirmar",
+        "needs": "mejorar su proceso comercial, dar seguimiento a oportunidades y convertir más ventas",
+        "description": "Hipótesis sugerida a partir del contenido de la empresa. Requiere validación del equipo; no procede de perfiles de consumidores."
+      }
+    ],
+    "visibleAudience": [
+      "Por confirmar\nCEOs de empresas EdTech\n\nCEOs de empresas EdTech\n\nmejorar su proceso comercial, dar seguimiento a oportunidades y convertir más ventas\n\n0 piezas dirigidas\nEditar perfil →"
+    ]
+  },
+  "network": [
+    {
+      "url": "http://127.0.2.61:5461/api/session",
+      "method": "GET",
+      "status": 200,
+      "failed": false,
+      "timestamp": "2026-10-18T10:42:25.868Z"
+    },
+    {
+      "url": "http://127.0.2.61:5461/api/auth/register",
+      "method": "POST",
+      "status": 201,
+      "failed": false,
+      "timestamp": "2026-10-18T10:42:40.156Z"
+    },
+    {
+      "url": "http://127.0.2.61:5461/api/auth/logout",
+      "method": "POST",
+      "status": 200,
+      "failed": false,
+      "timestamp": "2026-10-18T10:42:52.076Z"
+    },
+    {
+      "url": "http://127.0.2.61:5461/api/auth/register",
+      "method": "POST",
+      "status": 409,
+      "failed": false,
+      "timestamp": "2026-10-18T10:42:52.245Z"
+    },
+    {
+      "url": "http://127.0.2.61:5461/api/auth/login",
+      "method": "POST",
+      "status": 401,
+      "failed": false,
+      "timestamp": "2026-10-18T10:42:55.603Z"
+    },
+    {
+      "url": "http://127.0.2.61:5461/api/auth/login",
+      "method": "POST",
+      "status": 200,
+      "failed": false,
+      "timestamp": "2026-10-18T10:43:04.029Z"
+    },
+    {
+      "url": "http://127.0.2.61:5461/api/context/inspect",
+      "method": "POST",
+      "status": 400,
+      "failed": false,
+      "timestamp": "2026-10-18T10:43:08.997Z"
+    },
+    {
+      "url": "http://127.0.2.61:5461/api/context/inspect",
+      "method": "POST",
+      "status": 200,
+      "failed": false,
+      "timestamp": "2026-10-18T10:43:13.195Z"
+    },
+    {
+      "url": "http://127.0.2.61:5461/api/brands/0d68a589-8ca0-4fd9-aae3-d3ee085a7f2d/context/commit",
+      "method": "POST",
+      "status": 201,
+      "failed": false,
+      "timestamp": "2026-10-18T10:43:42.174Z"
+    },
+    {
+      "url": "http://127.0.2.61:5461/api/brands/0d68a589-8ca0-4fd9-aae3-d3ee085a7f2d/state",
+      "method": "GET",
+      "status": 200,
+      "failed": false,
+      "timestamp": "2026-10-18T10:43:42.174Z"
+    },
+    {
+      "url": "http://127.0.2.61:5461/api/brands/0d68a589-8ca0-4fd9-aae3-d3ee085a7f2d/insights",
+      "method": "GET",
+      "status": 200,
+      "failed": false,
+      "timestamp": "2026-10-18T10:43:42.174Z"
+    },
+    {
+      "url": "http://127.0.2.61:5461/api/brands",
+      "method": "POST",
+      "status": 201,
+      "failed": false,
+      "timestamp": "2026-10-18T10:43:42.174Z"
+    },
+    {
+      "url": "http://127.0.2.61:5461/api/session",
+      "method": "GET",
+      "status": 200,
+      "failed": false,
+      "timestamp": "2026-10-18T10:43:59.893Z"
+    },
+    {
+      "url": "http://127.0.2.61:5461/api/brands/0d68a589-8ca0-4fd9-aae3-d3ee085a7f2d/state",
+      "method": "GET",
+      "status": 200,
+      "failed": false,
+      "timestamp": "2026-10-18T10:43:59.901Z"
+    },
+    {
+      "url": "http://127.0.2.61:5461/api/brands/0d68a589-8ca0-4fd9-aae3-d3ee085a7f2d/context",
+      "method": "GET",
+      "status": 200,
+      "failed": false,
+      "timestamp": "2026-10-18T10:43:59.916Z"
+    },
+    {
+      "url": "http://127.0.2.61:5461/api/brands/0d68a589-8ca0-4fd9-aae3-d3ee085a7f2d/community-polls",
+      "method": "GET",
+      "status": 200,
+      "failed": false,
+      "timestamp": "2026-10-18T10:44:03.933Z"
+    },
+    {
+      "url": "http://127.0.2.61:5461/api/brands/0d68a589-8ca0-4fd9-aae3-d3ee085a7f2d/audience-signals",
+      "method": "GET",
+      "status": 200,
+      "failed": false,
+      "timestamp": "2026-10-18T10:44:03.933Z"
+    },
+    {
+      "url": "http://127.0.2.61:5461/api/context/inspect",
+      "method": "POST",
+      "status": 200,
+      "failed": false,
+      "timestamp": "2026-10-18T10:44:17.043Z"
+    },
+    {
+      "url": "http://127.0.2.61:5461/api/brands/c2869cec-bd73-4c2d-8cb5-3af9160458a3/context/commit",
+      "method": "POST",
+      "status": 201,
+      "failed": false,
+      "timestamp": "2026-10-18T10:44:17.735Z"
+    },
+    {
+      "url": "http://127.0.2.61:5461/api/brands/c2869cec-bd73-4c2d-8cb5-3af9160458a3/state",
+      "method": "GET",
+      "status": 200,
+      "failed": false,
+      "timestamp": "2026-10-18T10:44:17.744Z"
+    },
+    {
+      "url": "http://127.0.2.61:5461/api/brands/c2869cec-bd73-4c2d-8cb5-3af9160458a3/insights",
+      "method": "GET",
+      "status": 200,
+      "failed": false,
+      "timestamp": "2026-10-18T10:44:17.751Z"
+    },
+    {
+      "url": "http://127.0.2.61:5461/api/brands/0d68a589-8ca0-4fd9-aae3-d3ee085a7f2d/community-polls",
+      "method": "GET",
+      "status": 200,
+      "failed": false,
+      "timestamp": "2026-10-18T10:45:18.273Z"
+    },
+    {
+      "url": "http://127.0.2.61:5461/api/brands/0d68a589-8ca0-4fd9-aae3-d3ee085a7f2d/audience-signals",
+      "method": "GET",
+      "status": 200,
+      "failed": false,
+      "timestamp": "2026-10-18T10:45:18.273Z"
+    },
+    {
+      "url": "http://127.0.2.61:5461/api/auth/logout",
+      "method": "POST",
+      "status": 200,
+      "failed": false,
+      "timestamp": "2026-10-18T10:45:18.819Z"
+    },
+    {
+      "url": "http://127.0.2.61:5461/api/session",
+      "method": "GET",
+      "status": 200,
+      "failed": false,
+      "timestamp": "2026-10-18T10:45:18.983Z"
+    },
+    {
+      "url": "http://127.0.2.61:5461/api/auth/login",
+      "method": "POST",
+      "status": 200,
+      "failed": false,
+      "timestamp": "2026-10-18T10:45:28.583Z"
+    },
+    {
+      "url": "http://127.0.2.61:5461/api/brands/c2869cec-bd73-4c2d-8cb5-3af9160458a3/state",
+      "method": "GET",
+      "status": 200,
+      "failed": false,
+      "timestamp": "2026-10-18T10:45:28.597Z"
+    },
+    {
+      "url": "http://127.0.2.61:5461/api/brands/c2869cec-bd73-4c2d-8cb5-3af9160458a3/community-polls",
+      "method": "GET",
+      "status": 200,
+      "failed": false,
+      "timestamp": "2026-10-18T10:45:28.609Z"
+    },
+    {
+      "url": "http://127.0.2.61:5461/api/brands/c2869cec-bd73-4c2d-8cb5-3af9160458a3/audience-signals",
+      "method": "GET",
+      "status": 200,
+      "failed": false,
+      "timestamp": "2026-10-18T10:45:28.609Z"
+    },
+    {
+      "url": "http://127.0.2.61:5461/api/session",
+      "method": "GET",
+      "status": 200,
+      "failed": false,
+      "timestamp": "2026-10-18T10:45:33.650Z"
+    },
+    {
+      "url": "http://127.0.2.61:5461/api/brands/0d68a589-8ca0-4fd9-aae3-d3ee085a7f2d/state",
+      "method": "GET",
+      "status": 200,
+      "failed": false,
+      "timestamp": "2026-10-18T10:45:39.219Z"
+    },
+    {
+      "url": "http://127.0.2.61:5461/api/brands/0d68a589-8ca0-4fd9-aae3-d3ee085a7f2d/community-polls",
+      "method": "GET",
+      "status": 200,
+      "failed": false,
+      "timestamp": "2026-10-18T10:45:39.220Z"
+    },
+    {
+      "url": "http://127.0.2.61:5461/api/brands/0d68a589-8ca0-4fd9-aae3-d3ee085a7f2d/audience-signals",
+      "method": "GET",
+      "status": 200,
+      "failed": false,
+      "timestamp": "2026-10-18T10:45:39.221Z"
+    },
+    {
+      "url": "http://127.0.2.61:5461/api/context/inspect",
+      "method": "POST",
+      "status": 200,
+      "failed": false,
+      "timestamp": "2026-10-18T10:45:45.645Z"
+    },
+    {
+      "url": "http://127.0.2.61:5461/api/session",
+      "method": "GET",
+      "status": 200,
+      "failed": false,
+      "timestamp": "2026-10-18T10:46:55.096Z"
+    },
+    {
+      "url": "http://127.0.2.61:5461/api/brands/2d66f192-ae54-44ab-b22a-ea1b88f3e189/state",
+      "method": "GET",
+      "status": 200,
+      "failed": false,
+      "timestamp": "2026-10-18T10:46:55.110Z"
+    },
+    {
+      "url": "http://127.0.2.61:5461/api/brands/2d66f192-ae54-44ab-b22a-ea1b88f3e189/community-polls",
+      "method": "GET",
+      "status": 200,
+      "failed": false,
+      "timestamp": "2026-10-18T10:46:55.117Z"
+    },
+    {
+      "url": "http://127.0.2.61:5461/api/brands/2d66f192-ae54-44ab-b22a-ea1b88f3e189/audience-signals",
+      "method": "GET",
+      "status": 200,
+      "failed": false,
+      "timestamp": "2026-10-18T10:46:55.120Z"
+    },
+    {
+      "url": "http://127.0.2.61:5461/api/session",
+      "method": "GET",
+      "status": 200,
+      "failed": false,
+      "timestamp": "2026-10-18T10:46:55.139Z"
+    }
+  ],
+  "note": "URLs and statuses only. No request bodies, authentication headers, cookies, passwords, or account email are included."
+}
