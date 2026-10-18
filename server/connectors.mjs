@@ -2,6 +2,14 @@ import https from "node:https";
 import http from "node:http";
 import dns from "node:dns/promises";
 import net from "node:net";
+import {
+  assertOutboundAllowed,
+  assertAiProviderAllowed,
+  assertWebhookAllowed,
+  assertReferenceUseAllowed,
+} from "./access-policy.mjs";
+import { robotsAllows } from "./robots-policy.mjs";
+import { formatProviderAttributions } from "../src/lib/provider-attribution.mjs";
 import { createHash, randomBytes } from "node:crypto";
 import {
   getRecord,
@@ -13,6 +21,21 @@ import {
 } from "./db.mjs";
 
 export { publicIntegrations };
+// Below the documented 10,000 requests/IP/hour ceiling. Shared across brands
+// within this process; operators must also budget other clients on the same IP.
+const hnRequests = [];
+function reserveDiscoveryRequest(url, purpose) {
+  if (purpose !== "discovery" || url.hostname !== "hn.algolia.com") return;
+  const now = Date.now();
+  while (hnRequests.length && hnRequests[0] <= now - 3600000)
+    hnRequests.shift();
+  if (hnRequests.length >= 1000)
+    throw integrationError(
+      "Hacker News alcanzó el límite conservador de 1000 consultas por hora de este servidor. No se hizo otra solicitud.",
+      429,
+    );
+  hnRequests.push(now);
+}
 export function integrationError(message, status = 400) {
   return Object.assign(new Error(message), { status });
 }
@@ -110,6 +133,8 @@ export async function validatePublicUrl(
 }
 
 export async function safeFetch(value, options = {}) {
+  const purpose = options.policyPurpose || "metadata";
+  assertOutboundAllowed(value, purpose);
   const {
     timeout = 12000,
     maxBytes = 3 * 1024 * 1024,
@@ -117,6 +142,28 @@ export async function safeFetch(value, options = {}) {
     requireHttps = false,
   } = options;
   const { url, addresses } = await validatePublicUrl(value, { requireHttps });
+  reserveDiscoveryRequest(url, purpose);
+  if (["website", "metadata", "rss"].includes(purpose)) {
+    const robotsUrl = new URL("/robots.txt", url.origin).href;
+    const robots = await safeFetch(robotsUrl, {
+      policyPurpose: "robots",
+      maxBytes: 512 * 1024,
+      timeout: 8000,
+      maxRedirects: 2,
+    });
+    if (
+      ![404, 410].includes(robots.status) &&
+      (!robots.ok ||
+        !/^text\/plain(?:;|$)/i.test(
+          robots.headers.get("content-type") || "",
+        ) ||
+        !robotsAllows(await robots.text(), url.href))
+    )
+      throw integrationError(
+        "El sitio no permite esta lectura automatizada o no se pudo verificar robots.txt. El enlace se conserva sin leer.",
+        403,
+      );
+  }
   const body = options.body;
   const headers = {
     "user-agent": "30XRadar/1.0 (public editorial feed reader)",
@@ -201,12 +248,24 @@ export async function safeFetch(value, options = {}) {
     for (const name of Object.keys(redirectHeaders))
       if (/authorization|cookie|secret/i.test(name))
         delete redirectHeaders[name];
-    return safeFetch(redirectUrl, {
+    const redirected = await safeFetch(redirectUrl, {
       ...options,
       headers: redirectHeaders,
       maxRedirects: maxRedirects - 1,
     });
+    Object.defineProperty(redirected, "accessTrail", {
+      value: Object.freeze([
+        url.href,
+        ...(redirected.accessTrail || [redirectUrl]),
+      ]),
+      configurable: true,
+    });
+    return redirected;
   }
+  Object.defineProperty(response, "accessTrail", {
+    value: Object.freeze([url.href]),
+    configurable: true,
+  });
   return response;
 }
 
@@ -230,6 +289,15 @@ export async function generateStructured(
 ) {
   const config = getAiConfig(brandId);
   if (!config) return null;
+  assertAiProviderAllowed(config.baseUrl);
+  if (
+    image &&
+    !/^data:image\/(?:png|jpeg|webp);base64,[A-Za-z0-9+/=]+$/.test(image)
+  )
+    throw integrationError(
+      "Aporta una imagen propia; no se envían URLs de medios de terceros al proveedor de IA.",
+      403,
+    );
   const content = [{ type: "input_text", text: String(input).slice(0, 60000) }];
   if (image)
     content.push({ type: "input_image", image_url: image, detail: "auto" });
@@ -237,6 +305,7 @@ export async function generateStructured(
     `${config.baseUrl.replace(/\/$/, "")}/responses`,
     {
       requireHttps: true,
+      policyPurpose: "ai",
       maxRedirects: 0,
       timeout: 60000,
       method: "POST",
@@ -302,6 +371,7 @@ export async function configureIntegrations(brandId, input) {
       const baseUrl = String(
         input.ai.baseUrl || previous.baseUrl || "https://api.openai.com/v1",
       ).replace(/\/$/, "");
+      assertAiProviderAllowed(baseUrl);
       await validatePublicUrl(baseUrl, { requireHttps: true });
       changes.ai = {
         apiKey,
@@ -342,6 +412,7 @@ export async function configureIntegrations(brandId, input) {
     else {
       const previous = getSecret(brandId, "webhook") || {};
       const url = String(input.webhook.url || previous.url || "");
+      assertWebhookAllowed(url);
       await validatePublicUrl(url, { requireHttps: true });
       changes.webhook = {
         url,
@@ -360,10 +431,15 @@ export async function telegramRequest(
   payload,
   { fetcher = safeFetch } = {},
 ) {
+  assertOutboundAllowed(
+    `https://api.telegram.org/bot${config.botToken}/${method}`,
+    "telegram-publish",
+  );
   const response = await fetcher(
     `https://api.telegram.org/bot${config.botToken}/${method}`,
     {
       method: "POST",
+      policyPurpose: "telegram-publish",
       maxRedirects: 0,
       requireHttps: true,
       headers: { "content-type": "application/json" },
@@ -412,9 +488,13 @@ function publicationDestination(brand, piece) {
 }
 
 function telegramPublicationText(piece) {
-  return [piece.title, piece.caption || piece.script, piece.cta]
+  const body = [piece.title, piece.caption || piece.script, piece.cta]
     .filter(Boolean)
     .join("\n\n");
+  const credits = formatProviderAttributions(piece);
+  return credits
+    ? `${body.slice(0, Math.max(0, 4096 - credits.length - 2))}\n\n${credits}`
+    : body.slice(0, 4096);
 }
 
 export function getPublicationState(brand, piece) {
@@ -430,12 +510,21 @@ export function getPublicationState(brand, piece) {
     status,
     destination:
       (["sending", "uncertain", "delivered"].includes(status) &&
-        (journal?.destination || receipt?.destination)) || current.destination,
+        (journal?.destination || receipt?.destination)) ||
+      current.destination,
     destinationKey: current.destinationKey,
     ...(current.useTelegram
       ? {
           previewText: telegramPublicationText(piece).slice(0, 4096),
-          textTruncated: telegramPublicationText(piece).length > 4096,
+          textTruncated:
+            [
+              piece.title,
+              piece.caption || piece.script,
+              piece.cta,
+              formatProviderAttributions(piece),
+            ]
+              .filter(Boolean)
+              .join("\n\n").length > 4096,
         }
       : {}),
     ...(receipt ? { receipt } : {}),
@@ -477,6 +566,15 @@ export async function publishPiece(brand, value, options = {}) {
         "Conecta Telegram para ese canal o un webhook de publicación. Puedes exportar la pieza mientras tanto.",
         409,
       );
+    if (!useTelegram) assertWebhookAllowed(webhook.url);
+    const reference =
+      piece.referenceId && getRecord(brand.id, "references", piece.referenceId);
+    if (reference)
+      assertReferenceUseAllowed(
+        reference,
+        reference.sourceId &&
+          getRecord(brand.id, "sources", reference.sourceId),
+      );
     const idempotencyKey = createHash("sha256")
       .update(`${brand.id}:${piece.id}`)
       .digest("hex");
@@ -514,6 +612,7 @@ export async function publishPiece(brand, value, options = {}) {
       } else {
         const response = await (options.fetcher || safeFetch)(webhook.url, {
           method: "POST",
+          policyPurpose: "webhook",
           maxRedirects: 0,
           requireHttps: true,
           headers: {
@@ -532,7 +631,9 @@ export async function publishPiece(brand, value, options = {}) {
         });
         if (!response.ok) {
           const definitelyRejected =
-            response.status >= 400 && response.status < 500 && response.status !== 408;
+            response.status >= 400 &&
+            response.status < 500 &&
+            response.status !== 408;
           const error = integrationError(
             definitelyRejected
               ? `El webhook rechazó la pieza (HTTP ${response.status}).`

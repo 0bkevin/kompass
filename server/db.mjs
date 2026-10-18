@@ -7,6 +7,10 @@ import {
 } from "node:crypto";
 import fs from "node:fs";
 import path from "node:path";
+import {
+  aiProviderAccessPolicy,
+  webhookAccessPolicy,
+} from "./access-policy.mjs";
 
 export const DATA_DIR = path.resolve(process.env.DATA_DIR || "./data");
 export const UPLOAD_DIR = path.join(DATA_DIR, "uploads");
@@ -167,6 +171,9 @@ export function publicIntegrations(brandId) {
   const webhook = getSecret(brandId, "webhook");
   return {
     ai: {
+      accessPolicy: aiProviderAccessPolicy(
+        ai?.baseUrl || "https://api.openai.com/v1",
+      ),
       configured: !ai?.disabled && !!(ai?.apiKey || process.env.OPENAI_API_KEY),
       ...(ai?.model || process.env.OPENAI_MODEL
         ? { model: ai?.model || process.env.OPENAI_MODEL }
@@ -177,6 +184,7 @@ export function publicIntegrations(brandId) {
       ...(telegram?.chatId ? { chatId: telegram.chatId } : {}),
     },
     webhook: {
+      accessPolicy: webhookAccessPolicy(webhook?.url),
       configured: !!webhook?.url,
       ...(webhook?.url ? { url: webhook.url } : {}),
     },
