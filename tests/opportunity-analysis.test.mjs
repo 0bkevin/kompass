@@ -282,6 +282,57 @@ test("reanalysis upserts by opportunity and never crosses workspace boundaries",
   );
 });
 
+test("synthetic exercises reach the provider without demanding an invented real implementation", async () => {
+  const current = fixture();
+  const text =
+    "Ejercicio ficticio de prueba: prepara una propuesta comercial con datos sintéticos y revisa sus supuestos. No documenta un caso real ni demuestra resultados.";
+  storage.saveRecord(current.brand.id, "references", {
+    ...current.reference,
+    text,
+    source: "Equipo",
+    url: "",
+  });
+  transport = async (_url, options) => {
+    const payload = JSON.parse(options.body);
+    const input = JSON.parse(payload.input[0].content[0].text);
+    assert.equal(input.references.length, 1);
+    assert.equal(input.references[0].text, text);
+    assert.match(payload.instructions, /caso real.*referencias.*documentan/s);
+    assert.match(
+      payload.instructions,
+      /hipotético.*ficticio.*futuro o condicional/s,
+    );
+    assert.match(
+      payload.instructions,
+      /No afirmes.*implementó.*ausente de las referencias/s,
+    );
+    assert.doesNotMatch(
+      payload.instructions,
+      /con una decisión práctica, un caso verificable/,
+    );
+    return json(
+      validOutput(current, {
+        adaptation:
+          "Ejemplo ficticio: el equipo podría preparar una propuesta con datos sintéticos y comprobar sus supuestos antes de aprobarla. Se propone como ejercicio, sin afirmar una implementación real.",
+        citations: [
+          {
+            referenceId: current.reference.id,
+            support:
+              "prepara una propuesta comercial con datos sintéticos y revisa sus supuestos",
+          },
+        ],
+        limitations: [
+          "El material es un ejercicio ficticio y no documenta una implementación empresarial real.",
+        ],
+      }),
+    );
+  };
+  const response = await request(current.route);
+  assert.equal(response.status, 200, JSON.stringify(response.data));
+  assert.match(response.data.adaptation, /Ejemplo ficticio.*podría/);
+  assert.match(response.data.limitations[0], /no documenta una implementación/);
+});
+
 test("invalid output types, foreign IDs and invented citations are rejected without saving", async () => {
   const current = fixture();
   const foreign = fixture();
