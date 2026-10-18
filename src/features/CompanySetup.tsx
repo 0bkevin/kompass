@@ -232,9 +232,9 @@ export function CompanySetup({
             </details>
           </fieldset>
           <p className="setup-note">
-            <ShieldCheck size={16} /> Leeremos páginas públicas accesibles. Los
-            enlaces sociales que no podamos leer quedarán guardados como
-            referencia.
+            <ShieldCheck size={16} /> Los enlaces se guardan como referencia.
+            Solo se leen webs con permiso revisado. Pega contenido propio para
+            empezar sin esperar una conexión.
           </p>
           {error && (
             <p className="form-error" role="alert">

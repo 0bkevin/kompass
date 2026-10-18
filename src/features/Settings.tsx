@@ -51,7 +51,11 @@ const sourceHasUrl = (type: Source["type"]) =>
 const sourceQueryKind = (type: Source["type"]) =>
   type === "rss" ? null : type === "reddit" ? "community" : "topic";
 const sourcePlatform = (type: Source["type"], platform?: SocialPlatform) =>
-  type === "youtube" ? "youtube" : platform === "tiktok" ? "tiktok" : "instagram";
+  type === "youtube"
+    ? "youtube"
+    : platform === "tiktok"
+      ? "tiktok"
+      : "instagram";
 
 type SourceDraft = {
   id?: string;
@@ -70,13 +74,13 @@ const newSource: SourceDraft = {
   url: "",
   platform: "instagram",
   limit: "20",
-  enabled: true,
+  enabled: false,
 };
 const sourceTypes = [
   {
     value: "rss",
     label: "RSS / Atom",
-    description: "Feed público de noticias, blog o Google Trends.",
+    description: "Google Trends oficial o un feed con permiso de uso revisado.",
   },
   {
     value: "hackernews",
@@ -90,21 +94,21 @@ const sourceTypes = [
   },
   {
     value: "reddit",
-    label: "Reddit · acceso limitado",
+    label: "Reddit · requiere autorización",
     description:
-      "Puede requerir permisos de Reddit y bloquear solicitudes públicas.",
+      "Recopilación desactivada hasta verificar un acuerdo para este uso.",
   },
   {
     value: "youtube",
     label: "YouTube · API oficial",
     description:
-      "Busca videos por tema o revisa videos recientes de un canal. Requiere una API key de YouTube Data API.",
+      "Análisis editorial desactivado hasta completar la revisión de uso de datos.",
   },
   {
     value: "apify",
     label: "Instagram / TikTok · Apify",
     description:
-      "Consulta acotada mediante actores de Apify. El acceso, límites y posibles cargos dependen del actor y tu cuenta.",
+      "Instagram y TikTok desactivados hasta verificar autorización de la red.",
   },
 ];
 const roleLabel: Record<Role, string> = {
@@ -121,7 +125,8 @@ const formatDate = (date?: string) =>
     : "Todavía sin sincronizar";
 
 export default function Settings() {
-  const { state, refresh, notify, registerUnsavedChangesGuard } = useWorkspace();
+  const { state, refresh, notify, registerUnsavedChangesGuard } =
+    useWorkspace();
   const brandId = state.brand.id;
   const brandIdRef = useRef(brandId);
   brandIdRef.current = brandId;
@@ -133,7 +138,9 @@ export default function Settings() {
   const sourceGuardRef = useRef(
     createSourceDraftGuard<SourceDraft>({
       confirmDiscard: () =>
-        window.confirm("Hay cambios sin guardar. ¿Salir y descartar esta fuente?"),
+        window.confirm(
+          "Hay cambios sin guardar. ¿Salir y descartar esta fuente?",
+        ),
       onDiscard: () => setSource(null),
     }),
   );
@@ -159,10 +166,6 @@ export default function Settings() {
     null,
   );
   const [socialSettingsError, setSocialSettingsError] = useState("");
-  const [youtubeKey, setYoutubeKey] = useState("");
-  const [apifyToken, setApifyToken] = useState("");
-  const [geminiKey, setGeminiKey] = useState("");
-  const [geminiModel, setGeminiModel] = useState("gemini-3.8-flash");
   const [aiKey, setAiKey] = useState("");
   const [aiModel, setAiModel] = useState(
     state.integrations.ai.model || "gpt-4.1-mini",
@@ -185,7 +188,6 @@ export default function Settings() {
       const value = await api<SocialSettings>(`${base}/social/settings`);
       if (brandIdRef.current === requestedBrandId) {
         setSocialSettings(value);
-        setGeminiModel(value.gemini.model || "gemini-3.8-flash");
         setSocialSettingsError("");
       }
       return value;
@@ -203,10 +205,6 @@ export default function Settings() {
   useEffect(() => {
     setSocialSettings(null);
     setSocialSettingsError("");
-    setYoutubeKey("");
-    setApifyToken("");
-    setGeminiKey("");
-    setGeminiModel("gemini-3.8-flash");
     void loadSocialSettings().catch(() => {});
   }, [loadSocialSettings]);
 
@@ -288,7 +286,10 @@ export default function Settings() {
               type: source.type,
               ...(sourceQueryKind(source.type) ? { query: source.query } : {}),
               ...(sourceHasUrl(source.type) ? { url: source.url } : {}),
-              enabled: source.enabled && (!socialType || isConfigured),
+              enabled:
+                source.enabled &&
+                !["youtube", "apify", "reddit"].includes(source.type) &&
+                (!socialType || isConfigured),
               ...(source.type === "youtube"
                 ? { platform: "youtube" }
                 : source.type === "apify"
@@ -302,7 +303,7 @@ export default function Settings() {
           sourceGuardRef.current.discard();
           await refresh();
         },
-        "Fuente guardada. Usa Buscar tendencias en el radar para consultarla.",
+        "Fuente guardada. Solo las fuentes con permiso revisado pueden activarse.",
       );
     } finally {
       sourceGuardRef.current.endSave();
@@ -456,7 +457,9 @@ export default function Settings() {
                   : item.type === "apify"
                     ? socialSettings?.apify.configured === true
                     : true;
-              const needsProviderSetup = !!provider && !providerConfigured;
+              const accessRestricted = item.accessPolicy?.allowed === false;
+              const needsProviderSetup =
+                !!provider && !providerConfigured && !accessRestricted;
               return (
                 <div className="source-row" key={item.id}>
                   <div
@@ -470,7 +473,11 @@ export default function Settings() {
                       <div className="row" style={{ flexWrap: "wrap", gap: 8 }}>
                         <strong>{item.name}</strong>
                         <Badge tone={item.enabled ? "green" : "neutral"}>
-                          {item.enabled ? "Activa" : "Pausada"}
+                          {accessRestricted
+                            ? "Requiere revisión"
+                            : item.enabled
+                              ? "Activa"
+                              : "Pausada"}
                         </Badge>
                         <span className="muted" style={{ fontSize: 12 }}>
                           {sourceTypes.find((type) => type.value === item.type)
@@ -492,6 +499,11 @@ export default function Settings() {
                       <small className="muted">
                         {formatDate(item.lastSyncedAt)}
                       </small>
+                      {accessRestricted && (
+                        <p className="small muted" role="status">
+                          {item.accessPolicy?.reason}
+                        </p>
+                      )}
                       {item.lastError && (
                         <p
                           role="status"
@@ -528,7 +540,9 @@ export default function Settings() {
                     <div className="row" style={{ flexShrink: 0, gap: 2 }}>
                       <IconButton
                         disabled={
-                          !!busy || (needsProviderSetup && !item.enabled)
+                          !!busy ||
+                          accessRestricted ||
+                          (needsProviderSetup && !item.enabled)
                         }
                         label={
                           item.enabled
@@ -559,7 +573,9 @@ export default function Settings() {
                             id: item.id,
                             name: item.name,
                             type: item.type,
-                            query: sourceQueryKind(item.type) ? item.query || "" : "",
+                            query: sourceQueryKind(item.type)
+                              ? item.query || ""
+                              : "",
                             url: sourceHasUrl(item.type) ? item.url || "" : "",
                             platform: sourcePlatform(item.type, item.platform),
                             limit: String(item.limit || 20),
@@ -611,11 +627,9 @@ export default function Settings() {
               <Globe size={20} /> Exploración social y video
             </h2>
             <p className="muted">
-              Conecta proveedores para traer referencias públicas. Cada consulta
-              consume cuotas o uso del proveedor y puede generar cargos según el
-              servicio, la cuenta y el actor elegido. El estado indica si hay
-              una credencial configurada; no confirma que el proveedor haya
-              aceptado el acceso.
+              Estas integraciones están restringidas por las condiciones de uso.
+              Puedes guardar enlaces y aportar contenido propio. No se ejecutan
+              consultas ni se generan cargos de estos conectores.
             </p>
           </div>
         </div>
@@ -626,239 +640,54 @@ export default function Settings() {
           </p>
         )}
         <div className="social-settings-grid">
-          <form
-            className="social-connector-card"
-            onSubmit={(event) => {
-              event.preventDefault();
-              socialIntegration({ youtube: { apiKey: youtubeKey } }, () =>
-                setYoutubeKey(""),
-              );
-            }}
-          >
-            <div className="social-connector-title">
-              <span className="social-connector-icon youtube">
-                <Youtube size={17} />
-              </span>
-              <div>
-                <h3>YouTube Data API</h3>
-                <Badge
-                  tone={
-                    socialSettings?.youtube.configured ? "green" : "neutral"
-                  }
-                >
-                  {socialSettings
-                    ? socialSettings.youtube.configured
-                      ? "Configurado"
-                      : "Sin configurar"
-                    : socialSettingsError
-                      ? "Estado no disponible"
-                      : "Consultando…"}
-                </Badge>
-              </div>
-            </div>
-            <p className="muted">
-              Busca videos por tema o canal y conserva sus métricas oficiales.
-              Las solicitudes consumen la cuota del proyecto de Google; no
-              representan un ranking global.
-            </p>
-            <Field
-              label={
-                socialSettings?.youtube.configured
-                  ? "Nueva API key (vacía para conservar)"
-                  : "API key"
-              }
-              type="password"
-              autoComplete="new-password"
-              value={youtubeKey}
-              onChange={(event) => setYoutubeKey(event.target.value)}
-              placeholder="La clave guardada no se muestra"
-              disabled={!owner}
-            />
-            {owner && (
-              <div className="row">
-                <Button
-                  type="submit"
-                  variant="primary"
-                  busy={busy === "social-integration"}
-                  disabled={!!busy || !youtubeKey.trim()}
-                >
-                  <KeyRound size={15} /> Guardar API key
-                </Button>
-                {socialSettings?.youtube.configured && (
+          {(
+            [
+              { id: "youtube", label: "YouTube Data API", icon: Youtube },
+              {
+                id: "apify",
+                label: "Apify · Instagram y TikTok",
+                icon: Instagram,
+              },
+              {
+                id: "gemini",
+                label: "Gemini · análisis de video",
+                icon: Video,
+              },
+            ] as const
+          ).map(({ id, label, icon: Icon }) => {
+            const policy =
+              socialSettings?.policies?.[id] || state.accessPolicies?.[id];
+            return (
+              <section className="social-connector-card" key={id}>
+                <div className="social-connector-title">
+                  <span className={`social-connector-icon ${id}`}>
+                    <Icon size={17} />
+                  </span>
+                  <div>
+                    <h3>{label}</h3>
+                    <Badge>Requiere autorización</Badge>
+                  </div>
+                </div>
+                <p className="muted">
+                  {policy?.reason ||
+                    "Esta integración está bloqueada hasta revisar los permisos para el uso previsto. Una credencial no la activa."}
+                </p>
+                {policy?.termsUrl && (
+                  <a href={policy.termsUrl} target="_blank" rel="noreferrer">
+                    Consultar condiciones del proveedor
+                  </a>
+                )}
+                {owner && socialSettings?.[id].configured && (
                   <Button
                     disabled={!!busy}
-                    onClick={() =>
-                      socialIntegration({ youtube: null }, () =>
-                        setYoutubeKey(""),
-                      )
-                    }
+                    onClick={() => socialIntegration({ [id]: null }, () => {})}
                   >
-                    Desconectar
+                    Retirar credencial guardada
                   </Button>
                 )}
-              </div>
-            )}
-          </form>
-
-          <form
-            className="social-connector-card"
-            onSubmit={(event) => {
-              event.preventDefault();
-              socialIntegration({ apify: { apiToken: apifyToken } }, () =>
-                setApifyToken(""),
-              );
-            }}
-          >
-            <div className="social-connector-title">
-              <span className="social-connector-icon apify">
-                <Instagram size={17} />
-              </span>
-              <div>
-                <h3>Apify · Instagram y TikTok</h3>
-                <Badge
-                  tone={socialSettings?.apify.configured ? "green" : "neutral"}
-                >
-                  {socialSettings
-                    ? socialSettings.apify.configured
-                      ? "Configurado"
-                      : "Sin configurar"
-                    : socialSettingsError
-                      ? "Estado no disponible"
-                      : "Consultando…"}
-                </Badge>
-              </div>
-            </div>
-            <p className="muted">
-              La cobertura depende del actor y de las URLs o consultas que
-              admite. Los usos pueden consumir créditos o generar cargos en tu
-              cuenta de Apify.
-            </p>
-            <Field
-              label={
-                socialSettings?.apify.configured
-                  ? "Nuevo token (vacío para conservar)"
-                  : "API token"
-              }
-              type="password"
-              autoComplete="new-password"
-              value={apifyToken}
-              onChange={(event) => setApifyToken(event.target.value)}
-              placeholder="El token guardado no se muestra"
-              disabled={!owner}
-            />
-            {owner && (
-              <div className="row">
-                <Button
-                  type="submit"
-                  variant="primary"
-                  busy={busy === "social-integration"}
-                  disabled={!!busy || !apifyToken.trim()}
-                >
-                  <KeyRound size={15} /> Guardar token
-                </Button>
-                {socialSettings?.apify.configured && (
-                  <Button
-                    disabled={!!busy}
-                    onClick={() =>
-                      socialIntegration({ apify: null }, () =>
-                        setApifyToken(""),
-                      )
-                    }
-                  >
-                    Desconectar
-                  </Button>
-                )}
-              </div>
-            )}
-          </form>
-
-          <form
-            className="social-connector-card"
-            onSubmit={(event) => {
-              event.preventDefault();
-              socialIntegration(
-                {
-                  gemini: {
-                    ...(geminiKey.trim() ? { apiKey: geminiKey.trim() } : {}),
-                    model: geminiModel,
-                  },
-                },
-                () => setGeminiKey(""),
-              );
-            }}
-          >
-            <div className="social-connector-title">
-              <span className="social-connector-icon gemini">
-                <Video size={17} />
-              </span>
-              <div>
-                <h3>Gemini · análisis de video</h3>
-                <Badge
-                  tone={socialSettings?.gemini.configured ? "green" : "neutral"}
-                >
-                  {socialSettings
-                    ? socialSettings.gemini.configured
-                      ? "Configurado"
-                      : "Sin configurar"
-                    : socialSettingsError
-                      ? "Estado no disponible"
-                      : "Consultando…"}
-                </Badge>
-              </div>
-            </div>
-            <p className="muted">
-              Examina videos públicos de YouTube, archivos subidos o medios
-              accesibles del proveedor. Las llamadas pueden tener coste según el
-              modelo y la cuenta de Google AI.
-            </p>
-            <Field
-              label={
-                socialSettings?.gemini.configured
-                  ? "Nueva API key (vacía para conservar)"
-                  : "API key"
-              }
-              type="password"
-              autoComplete="new-password"
-              value={geminiKey}
-              onChange={(event) => setGeminiKey(event.target.value)}
-              placeholder="La clave guardada no se muestra"
-              disabled={!owner}
-            />
-            <Field
-              label="Modelo"
-              value={geminiModel}
-              onChange={(event) => setGeminiModel(event.target.value)}
-              maxLength={100}
-              disabled={!owner}
-            />
-            {owner && (
-              <div className="row">
-                <Button
-                  type="submit"
-                  variant="primary"
-                  busy={busy === "social-integration"}
-                  disabled={
-                    !!busy ||
-                    (!geminiKey.trim() && !socialSettings?.gemini.configured)
-                  }
-                >
-                  <KeyRound size={15} /> Guardar Gemini
-                </Button>
-                {socialSettings?.gemini.configured && (
-                  <Button
-                    disabled={!!busy}
-                    onClick={() =>
-                      socialIntegration({ gemini: null }, () =>
-                        setGeminiKey(""),
-                      )
-                    }
-                  >
-                    Desconectar
-                  </Button>
-                )}
-              </div>
-            )}
-          </form>
+              </section>
+            );
+          })}
         </div>
         <div className="social-unsupported-note">
           Facebook y X aparecen como pendientes: este radar todavía no tiene
@@ -935,8 +764,10 @@ export default function Settings() {
               </div>
               <p className="muted" style={{ fontSize: 13 }}>
                 Una API key habilita análisis y guiones con IA. Sin ella se usa
-                una heurística identificada, con evidencia limitada. Las
-                consultas al proveedor pueden tener costo.
+                una heurística identificada, con evidencia limitada. El
+                proveedor necesita una revisión del operador sobre derechos de
+                entrada y tratamiento de datos antes de recibir contenido. Las
+                consultas pueden tener costo.
               </p>
               <Field
                 label={
@@ -1006,10 +837,9 @@ export default function Settings() {
                   : "Sin conectar"}
               </Badge>
               <p className="muted" style={{ fontSize: 13 }}>
-                Recibe referencias del chat autorizado y publica texto aprobado
-                al canal Telegram. La recepción requiere registrar el webhook
-                del bot en el servidor; no se activa al guardar estas
-                credenciales.
+                Publica texto aprobado en un canal donde tu bot tenga permiso.
+                La recepción automática de mensajes está desactivada. Configurar
+                este bot no importa conversaciones ni mensajes privados.
               </p>
               <Field
                 label="Token del bot (vacío para conservar)"
@@ -1080,9 +910,10 @@ export default function Settings() {
               </Badge>
               <p className="muted" style={{ fontSize: 13 }}>
                 Envía contenido aprobado a un endpoint HTTPS público. El destino
-                debe encargarse de distribuirlo. Sin conector puedes exportar
-                tus piezas. La grilla organiza fechas; esta entrega no ejecuta
-                publicaciones automáticas.
+                debe tener permiso para publicarlo y una revisión del operador
+                para esa URL. Sin conector puedes exportar tus piezas. La grilla
+                organiza fechas; esta entrega no ejecuta publicaciones
+                automáticas.
               </p>
               <Field
                 label="URL HTTPS del webhook"
@@ -1408,7 +1239,8 @@ export default function Settings() {
                   />
                   <small className="muted">
                     Indica una consulta temática o una URL de canal. Se conserva
-                    la URL del video original y las vistas oficiales disponibles.
+                    la URL del video original y las vistas oficiales
+                    disponibles.
                   </small>
                 </>
               )}
@@ -1422,7 +1254,9 @@ export default function Settings() {
                           ...source,
                           platform: event.target.value as SocialPlatform,
                           url:
-                            event.target.value === source.platform ? source.url : "",
+                            event.target.value === source.platform
+                              ? source.url
+                              : "",
                         })
                       }
                     >
@@ -1464,8 +1298,8 @@ export default function Settings() {
                     }
                   />
                   <small className="muted">
-                    Si completas consulta y URL, el backend prioriza la consulta.
-                    El actor puede tener límites o cargos propios.
+                    Si completas consulta y URL, el backend prioriza la
+                    consulta. El actor puede tener límites o cargos propios.
                   </small>
                 </>
               )}
@@ -1490,30 +1324,31 @@ export default function Settings() {
               )}
               {source.type === "gdelt" && (
                 <small className="muted">
-                  Si dejas la consulta vacía, se utiliza el contexto de tu marca.
-                  Prueba términos concretos en inglés para ampliar cobertura.
+                  Si dejas la consulta vacía, se utiliza el contexto de tu
+                  marca. Prueba términos concretos en inglés para ampliar
+                  cobertura.
                 </small>
               )}
               <label className="row">
                 <input
                   type="checkbox"
                   checked={source.enabled}
-                  disabled={selectedSourceSocial && !selectedSourceConfigured}
+                  disabled={["youtube", "apify", "reddit"].includes(
+                    source.type,
+                  )}
                   onChange={(event) =>
                     setSource({ ...source, enabled: event.target.checked })
                   }
                 />{" "}
-                {selectedSourceSocial && !selectedSourceConfigured
-                  ? "Activar al configurar el proveedor"
+                {["youtube", "apify", "reddit"].includes(source.type)
+                  ? "Recopilación no autorizada en este despliegue"
                   : "Activar para la próxima búsqueda"}
               </label>
-              {selectedSourceSocial && !selectedSourceConfigured && (
-                <p className="small muted">
-                  Esta fuente se guardará pausada. Un propietario debe conectar
-                  {source.type === "youtube" ? " YouTube" : " Apify"} en Fuentes y
-                  equipo antes de activarla.
-                </p>
-              )}
+              <p className="small muted">
+                Los feeds adicionales requieren revisión del operador antes de
+                activarse. Guardar una credencial no concede permiso de acceso a
+                una red social.
+              </p>
               <div className="row" style={{ justifyContent: "flex-end" }}>
                 <Button disabled={!!busy} onClick={closeSource}>
                   Cancelar

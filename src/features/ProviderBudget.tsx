@@ -38,8 +38,9 @@ export function ProviderBudget() {
       <summary>Control de costo de los conectores</summary>
       <div>
         <p>
-          Las fuentes abiertas están disponibles sin contratar scraping. Los
-          conectores de pago se activan por separado.
+          Las fuentes públicas aprobadas funcionan sin contratar scraping.
+          Instagram y TikTok están bloqueados hasta verificar autorización de la
+          red; una credencial de Apify no los activa.
         </p>
         {error ? (
           <p role="alert">{error}</p>
@@ -48,10 +49,7 @@ export function ProviderBudget() {
         ) : data.budget ? (
           <>
             <p>
-              <strong>
-                Apify{" "}
-                {data.budget.paused ? "pausado" : "con límite de reservas"}
-              </strong>
+              <strong>Apify bloqueado para recopilación</strong>
             </p>
             <dl>
               <div>
@@ -73,9 +71,8 @@ export function ProviderBudget() {
           </>
         ) : (
           <p>
-            Apify no está conectado. Al conectarlo se aplicarán los límites
-            diarios y mensuales del servidor. Guardar una credencial no inicia
-            una búsqueda.
+            No se ejecutan consultas de Apify en este despliegue. Los límites de
+            reservas se conservan para auditar usos anteriores.
           </p>
         )}
         <p>
