@@ -1,0 +1,174 @@
+{
+  "verifiedAt": "2026-10-18T12:03:00Z",
+  "business": {
+    "website": "https://30x.com/",
+    "instagram": "https://www.instagram.com/crece30x/",
+    "inputMode": "Original paraphrase of independently verified public business facts; links retained unread.",
+    "audience": "Reviewed editorial hypothesis, not students/followers observed."
+  },
+  "actors": {
+    "kind": "Reviewer-operated QA accounts; no recruited user study",
+    "owner": "Editorial QA",
+    "reviewer": "Revisión QA",
+    "workspace": "30X · Editorial QA"
+  },
+  "runtime": {
+    "port": 5503,
+    "productionServer": true,
+    "dataDirectory": "/tmp/radar-real30x-editorial",
+    "sourceUiPort": 5504,
+    "browser": "native collaborative preview",
+    "provider": "Official Gemini API, inherited platform public-test config",
+    "realAiCalls": 4,
+    "mockedInteractiveTransports": false
+  },
+  "assertions": [
+    {
+      "part": "AI carousel before fix",
+      "pass": false,
+      "evidence": "editorial-evidence/ai-carousel-before.json",
+      "actual": "Four scenes stored but body/export omitted panels; requested hypothetical example absent."
+    },
+    {
+      "part": "AI carousel after fix",
+      "pass": true,
+      "evidence": "editorial-evidence/ai-carousel-after.json",
+      "actual": "Four numbered panels, conditional hypothetical example, exact CTA and saved brief."
+    },
+    {
+      "part": "AI reel",
+      "pass": true,
+      "actual": "Three numbered scenes, no hypothetical example, exact CTA, selected audience and Instagram."
+    },
+    {
+      "part": "AI newsletter",
+      "pass": true,
+      "actual": "Diagnóstico/Piloto/Revisión heading lines, no hypothetical example, exact CTA and LinkedIn."
+    },
+    {
+      "part": "Edit save and full reload",
+      "pass": true,
+      "actual": "Title, reviewed hook, caption and four-panel body restored."
+    },
+    {
+      "part": "Original asset upload/association",
+      "pass": true,
+      "actual": "One own UTF-8 note uploaded and attached to saved piece."
+    },
+    {
+      "part": "Local reviewer invitation",
+      "pass": true,
+      "actual": "Second QA account joined correct brand as reviewer; no external delivery."
+    },
+    {
+      "part": "Comments/request changes/approval",
+      "pass": true,
+      "actual": "Thread persisted; request changes returned to draft; revised version approved."
+    },
+    {
+      "part": "Edit invalidates approval",
+      "pass": true,
+      "actual": "Caption edit changed approval hash and returned approved content to draft; fresh approval performed."
+    },
+    {
+      "part": "Reviewer permissions",
+      "pass": true,
+      "actual": "Editable fields/save/planning/send disabled; insights read 200; outcome write 403."
+    },
+    {
+      "part": "Calendar/CSV",
+      "pass": true,
+      "actual": "20 Oct 2026 15:30 UTC; one Instagram item; weekly count 1/3; full body exported."
+    },
+    {
+      "part": "Publication transport",
+      "pass": true,
+      "actual": "No publishing connector configured; send disabled; manual export path usable. No live publication verified."
+    },
+    {
+      "part": "Negative metrics",
+      "pass": true,
+      "actual": "Native form rejected -1 before submission and retained other fields."
+    },
+    {
+      "part": "Results correction/reload",
+      "pass": true,
+      "actual": "Same outcome ID updated to 120.5 views/8.25 interactions/0 contacts; exact totals restored after reload; notes explicitly fictitious."
+    },
+    {
+      "part": "Manual provenance",
+      "pass": true,
+      "actual": "Manual labels and caution about causal/consumer inferences visible; no connector receipt."
+    }
+  ],
+  "previewHook": {
+    "before": {
+      "occurrences": 2,
+      "standaloneHook": true
+    },
+    "afterDesktop": {
+      "count": 1,
+      "hookRendered": false,
+      "docWidth": 1440,
+      "viewport": 1440
+    },
+    "afterMobile": {
+      "count": 1,
+      "hookRendered": false,
+      "docWidth": 390,
+      "viewport": 390
+    },
+    "differentHookPreserved": true
+  },
+  "outcomes": {
+    "outcomes": [
+      {
+        "id": "451c9c57-f74f-4de5-9e1b-66d66921538f",
+        "pieceId": "c24f504f-06a7-46d1-8c87-5c6b860a45a7",
+        "channel": "instagram",
+        "segmentId": "cba9a209-77db-460f-8142-318c1b53572c",
+        "title": "QA 30X · Primer piloto de IA con criterio",
+        "publishedAt": "2026-10-18T11:59:00.000Z",
+        "metrics": {
+          "views": 120.5,
+          "engagement": 8.25,
+          "leads": 0
+        },
+        "notes": "MEDICIONES FICTICIAS DE QA. Ninguna pieza se ha publicado en redes y estas cifras no describen resultados de 30X. Ventana de prueba: 7 días. Solo validación del formulario y cálculos de la plataforma.",
+        "origin": "manual",
+        "createdAt": "2026-10-18T12:00:03.006Z",
+        "updatedAt": "2026-10-18T12:00:26.520Z"
+      }
+    ],
+    "summary": "1 publicación con resultados registrados manualmente por el equipo. Los totales son conteos aportados, pueden tener ventanas distintas y no comparan rendimiento entre redes ni demuestran causalidad, preferencias de consumidores o aprendizaje automático. Revisa piezas, canal y tiempo de medición antes de decidir.",
+    "bySegment": [
+      {
+        "segmentId": "cba9a209-77db-460f-8142-318c1b53572c",
+        "name": "Líderes y equipos latinoamericanos que aplican IA",
+        "pieces": 1,
+        "views": 120.5,
+        "engagement": 8.25,
+        "leads": 0
+      }
+    ]
+  },
+  "focusedTests": {
+    "passed": 35,
+    "failed": 0,
+    "newControlCases": 8
+  },
+  "commits": ["bbda35e", "f4e8918", "e6a8a6a"],
+  "limits": [
+    "No website/Instagram scraping or observed social engagement data.",
+    "Four real public-test AI calls are a finite model-quality sample.",
+    "No real publication, external webhook/email or recruited human-user study.",
+    "Post/video not regenerated this round; previous audit and regression coverage apply.",
+    "SSR old-hash 404 during coordinated rebuild resolved by restarting isolated server."
+  ],
+  "cleanup": {
+    "ownTabsClosed": true,
+    "isolatedProductionServerStopped": true,
+    "temporarySourceFrontendStopped": true,
+    "mainServersUntouched": true
+  }
+}

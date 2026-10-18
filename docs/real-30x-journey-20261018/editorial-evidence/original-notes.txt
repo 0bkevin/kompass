@@ -1,0 +1,7 @@
+Material original de QA; no publicación oficial de 30X.
+Objetivo editorial: ayudar a líderes y equipos de Latinoamérica a elegir un primer piloto de IA.
+Criterios: proceso repetitivo, bajo riesgo, resultado verificable y revisión humana.
+Ejemplo hipotético: un equipo podría organizar preguntas frecuentes de formación y comprobar manualmente cada respuesta.
+No se utilizan datos de alumnos, seguidores, clientes ni métricas de rendimiento.
+Fuentes de contexto empresarial: https://30x.com/ y enlace público https://www.instagram.com/crece30x/.
+Los enlaces se conservan como referencias; no se afirma haber importado sus publicaciones.

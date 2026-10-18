@@ -1,0 +1,44 @@
+✔ AI output missing the requested hypothetical example is rejected before persistence (6.59567ms)
+✔ AI output missing a requested panel is rejected before persistence (1.415075ms)
+✔ AI output rewriting the exact requested CTA is rejected before persistence (0.929703ms)
+✔ AI panels reach the editable script and stored brief with their requested controls (5.081895ms)
+✔ an exact CTA extracted from opportunity notes is enforced without a separate CTA field (1.235034ms)
+✖ AI cannot include a labeled hypothetical example when the user chooses Omitir (5.855032ms)
+✖ a newsletter missing requested section headings fails before claiming controls were applied (4.407258ms)
+✔ newsletter section headings may use Markdown and retain the complete authored body (4.883987ms)
+ℹ tests 8
+ℹ suites 0
+ℹ pass 6
+ℹ fail 2
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 235.838399
+
+✖ failing tests:
+
+test at tests/ai-draft-controls.test.mjs:136:1
+✖ AI cannot include a labeled hypothetical example when the user chooses Omitir (5.855032ms)
+  AssertionError [ERR_ASSERTION]: Missing expected rejection.
+      at async TestContext.<anonymous> (file:///home/ubuntu/.t3/projects/30x-trackt-2/tests/ai-draft-controls.test.mjs:138:3)
+      at async Test.run (node:internal/test_runner/test:1404:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:969:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    operator: 'rejects',
+    diff: 'simple'
+  }
+
+test at tests/ai-draft-controls.test.mjs:145:1
+✖ a newsletter missing requested section headings fails before claiming controls were applied (4.407258ms)
+  AssertionError [ERR_ASSERTION]: Missing expected rejection.
+      at async TestContext.<anonymous> (file:///home/ubuntu/.t3/projects/30x-trackt-2/tests/ai-draft-controls.test.mjs:147:3)
+      at async Test.run (node:internal/test_runner/test:1404:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:969:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    operator: 'rejects',
+    diff: 'simple'
+  }

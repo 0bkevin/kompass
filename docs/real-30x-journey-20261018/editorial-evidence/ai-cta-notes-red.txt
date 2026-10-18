@@ -1,0 +1,28 @@
+✔ AI output missing the requested hypothetical example is rejected before persistence (6.512984ms)
+✔ AI output missing a requested panel is rejected before persistence (1.59676ms)
+✔ AI output rewriting the exact requested CTA is rejected before persistence (1.086409ms)
+✔ AI panels reach the editable script and stored brief with their requested controls (5.564254ms)
+✖ an exact CTA extracted from opportunity notes is enforced without a separate CTA field (5.639116ms)
+ℹ tests 5
+ℹ suites 0
+ℹ pass 4
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 274.832089
+
+✖ failing tests:
+
+test at tests/ai-draft-controls.test.mjs:118:1
+✖ an exact CTA extracted from opportunity notes is enforced without a separate CTA field (5.639116ms)
+  AssertionError [ERR_ASSERTION]: Missing expected rejection.
+      at async TestContext.<anonymous> (file:///home/ubuntu/.t3/projects/30x-trackt-2/tests/ai-draft-controls.test.mjs:121:3)
+      at async Test.run (node:internal/test_runner/test:1404:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:969:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    operator: 'rejects',
+    diff: 'simple'
+  }

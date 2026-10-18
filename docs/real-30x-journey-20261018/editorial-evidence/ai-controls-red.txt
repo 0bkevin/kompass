@@ -1,0 +1,70 @@
+✖ AI output missing the requested hypothetical example is rejected before persistence (11.12348ms)
+✖ AI output missing a requested panel is rejected before persistence (4.696375ms)
+✖ AI output rewriting the exact requested CTA is rejected before persistence (3.751829ms)
+✖ AI panels reach the editable script and stored brief with their requested controls (8.872203ms)
+ℹ tests 4
+ℹ suites 0
+ℹ pass 0
+ℹ fail 4
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 253.837217
+
+✖ failing tests:
+
+test at tests/ai-draft-controls.test.mjs:53:3
+✖ AI output missing the requested hypothetical example is rejected before persistence (11.12348ms)
+  AssertionError [ERR_ASSERTION]: Missing expected rejection.
+      at async TestContext.<anonymous> (file:///home/ubuntu/.t3/projects/30x-trackt-2/tests/ai-draft-controls.test.mjs:55:5)
+      at async Test.run (node:internal/test_runner/test:1404:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    operator: 'rejects',
+    diff: 'simple'
+  }
+
+test at tests/ai-draft-controls.test.mjs:53:3
+✖ AI output missing a requested panel is rejected before persistence (4.696375ms)
+  AssertionError [ERR_ASSERTION]: Missing expected rejection.
+      at async TestContext.<anonymous> (file:///home/ubuntu/.t3/projects/30x-trackt-2/tests/ai-draft-controls.test.mjs:55:5)
+      at async Test.run (node:internal/test_runner/test:1404:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:969:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    operator: 'rejects',
+    diff: 'simple'
+  }
+
+test at tests/ai-draft-controls.test.mjs:53:3
+✖ AI output rewriting the exact requested CTA is rejected before persistence (3.751829ms)
+  AssertionError [ERR_ASSERTION]: Missing expected rejection.
+      at async TestContext.<anonymous> (file:///home/ubuntu/.t3/projects/30x-trackt-2/tests/ai-draft-controls.test.mjs:55:5)
+      at async Test.run (node:internal/test_runner/test:1404:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:969:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    operator: 'rejects',
+    diff: 'simple'
+  }
+
+test at tests/ai-draft-controls.test.mjs:63:1
+✖ AI panels reach the editable script and stored brief with their requested controls (8.872203ms)
+  AssertionError [ERR_ASSERTION]: The expression evaluated to a falsy value:
+  
+    assert.ok(piece.script.includes(`Lámina ${index + 1}: ${scene.text}`))
+  
+      at TestContext.<anonymous> (file:///home/ubuntu/.t3/projects/30x-trackt-2/tests/ai-draft-controls.test.mjs:69:12)
+      at async Test.run (node:internal/test_runner/test:1404:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:969:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }

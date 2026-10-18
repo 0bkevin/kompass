@@ -1,0 +1,61 @@
+{
+  "observedAt": "2026-10-18T11:55:57.082Z",
+  "realProvider": true,
+  "transport": "official Gemini API",
+  "piece": {
+    "title": "Cómo elegir tu primer piloto de IA con criterio",
+    "hook": "Elegir el proceso correcto es el paso más importante antes de aplicar inteligencia artificial en tu equipo.",
+    "script": "Lámina 1: El primer piloto de IA no debe ser el más complejo, sino el más adecuado para aprender en equipo. Busca una tarea repetitiva, de bajo riesgo y con un volumen manejable.\n\nLámina 2: Define con claridad cómo comprobarás que el resultado es correcto antes de implementarlo a mayor escala. La validación humana es clave en esta etapa inicial.\n\nLámina 3: Ejemplo hipotético: un equipo podría seleccionar la organización inicial de preguntas frecuentes de formación para evaluar la claridad de las respuestas generadas, revisando cada una manualmente.\n\nLámina 4: Guarda esta guía y elige un proceso para conversar con tu equipo.",
+    "caption": "Seleccionar el proceso adecuado para tu primer piloto de inteligencia artificial ayuda a alinear al equipo y mantener el control humano. Descubre los criterios clave en este carrusel.",
+    "cta": "Guarda esta guía y elige un proceso para conversar con tu equipo.",
+    "scenes": [
+      {
+        "id": "9b7385d5-e474-4152-88d4-6ea400fff707",
+        "text": "El primer piloto de IA no debe ser el más complejo, sino el más adecuado para aprender en equipo. Busca una tarea repetitiva, de bajo riesgo y con un volumen manejable.",
+        "duration": 5
+      },
+      {
+        "id": "f6984000-49a7-4395-af18-460ef212b13f",
+        "text": "Define con claridad cómo comprobarás que el resultado es correcto antes de implementarlo a mayor escala. La validación humana es clave en esta etapa inicial.",
+        "duration": 5
+      },
+      {
+        "id": "72c85bd5-b5da-49b4-a37e-3b89aee1c0bd",
+        "text": "Ejemplo hipotético: un equipo podría seleccionar la organización inicial de preguntas frecuentes de formación para evaluar la claridad de las respuestas generadas, revisando cada una manualmente.",
+        "duration": 5
+      },
+      {
+        "id": "f1dcf18a-d4ed-4395-8177-279377f0cae9",
+        "text": "Guarda esta guía y elige un proceso para conversar con tu equipo.",
+        "duration": 5
+      }
+    ],
+    "generationEngine": "ai",
+    "editorialBrief": {
+      "instructions": "Propuesta educativa original para 30X, líderes y equipos de Latinoamérica. Enseña cómo elegir un proceso repetitivo y de bajo riesgo, definir una comprobación del resultado y mantener revisión humana. Incluye un ejemplo explícitamente hipotético de un equipo organizando preguntas frecuentes de formación; usa el condicional y no lo atribuyas a un cliente real. No inventes métricas, resultados ni historias de 30X. Es un borrador QA y no una publicación real.",
+      "angle": "",
+      "audienceNeeds": "Elegir procesos de trabajo adecuados para IA y evaluar sus resultados con criterio humano. Hipótesis editorial a contrastar; no inferida de alumnos ni seguidores.",
+      "referenceUrl": "",
+      "providerAttributions": [],
+      "applied": {
+        "format": "carousel",
+        "unitCount": 4,
+        "cta": "Guarda esta guía y elige un proceso para conversar con tu equipo.",
+        "includeExample": true
+      },
+      "notes": [
+        "Borrador generado con IA. Se comprobaron la estructura solicitada, el CTA exacto cuando se indicó y la etiqueta del ejemplo hipotético cuando se pidió. Revisa los hechos, la utilidad del ejemplo y el resto de la dirección editorial antes de aprobar."
+      ]
+    },
+    "providerAttributions": [],
+    "segmentId": "cba9a209-77db-460f-8142-318c1b53572c",
+    "format": "carousel",
+    "channel": "instagram",
+    "status": "draft",
+    "assetIds": [],
+    "comments": [],
+    "id": "c24f504f-06a7-46d1-8c87-5c6b860a45a7",
+    "createdAt": "2026-10-18T11:55:51.798Z",
+    "updatedAt": "2026-10-18T11:55:51.798Z"
+  }
+}

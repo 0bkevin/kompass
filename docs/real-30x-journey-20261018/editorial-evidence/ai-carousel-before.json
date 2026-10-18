@@ -1,0 +1,50 @@
+{
+  "observedAt": "2026-10-18T11:54:29.109Z",
+  "requested": {
+    "format": "carousel",
+    "channel": "instagram",
+    "unitCount": 4,
+    "includeExample": true,
+    "cta": "Guarda esta guía y elige un proceso para conversar con tu equipo."
+  },
+  "actual": {
+    "title": "Cómo elegir tu primer piloto de IA en el equipo",
+    "hook": "¿Quieres implementar inteligencia artificial en tu equipo pero no sabes por dónde empezar sin correr riesgos?",
+    "script": "Elegir el primer piloto de IA no requiere cambiar toda tu operación. Comienza por identificar un proceso repetitivo, de bajo riesgo y que consuma tiempo valioso. Define una métrica clara de claridad o ahorro de tiempo, mantén siempre la revisión humana y lleva esta pregunta a tu próxima reunión: ¿qué tarea semanal nos quita más tiempo operativo y depende poco de la intuición humana?",
+    "caption": "La clave para adoptar IA con criterio en equipos de trabajo en Latinoamérica es empezar pequeño. En esta guía te mostramos los pasos para seleccionar tu primer piloto de forma segura y práctica.",
+    "cta": "Guarda esta guía y elige un proceso para conversar con tu equipo.",
+    "scenes": [
+      {
+        "id": "91bb4ede-3e29-4d12-b0fb-b0e691b7d0aa",
+        "text": "Paso 1: Busca procesos repetitivos y de bajo riesgo operativo.",
+        "duration": 5
+      },
+      {
+        "id": "aa5847ed-ab0d-4669-aece-391937331cc4",
+        "text": "Paso 2: Asegúrate de que siempre exista una validación humana del resultado.",
+        "duration": 5
+      },
+      {
+        "id": "bbc25b0f-f1e9-4944-bfe5-911b2b1dfac4",
+        "text": "Paso 3: Define qué éxito significa para este pequeño experimento.",
+        "duration": 5
+      },
+      {
+        "id": "e1029a1b-a05e-47c4-bfdc-61f10b48945c",
+        "text": "Paso 4: Pregunta en tu próxima reunión qué tarea repetitiva consume más tiempo.",
+        "duration": 5
+      }
+    ],
+    "generationEngine": "ai",
+    "providerAttributions": [],
+    "segmentId": "cba9a209-77db-460f-8142-318c1b53572c",
+    "format": "carousel",
+    "channel": "instagram",
+    "status": "draft",
+    "assetIds": [],
+    "comments": [],
+    "id": "a07a67c1-cca1-4487-b85d-17b01bd5605a",
+    "createdAt": "2026-10-18T11:53:54.203Z",
+    "updatedAt": "2026-10-18T11:53:54.203Z"
+  }
+}

@@ -1,0 +1,43 @@
+✔ AI output missing the requested hypothetical example is rejected before persistence (8.560394ms)
+✔ AI output missing a requested panel is rejected before persistence (1.858484ms)
+✔ AI output rewriting the exact requested CTA is rejected before persistence (1.296226ms)
+✔ AI panels reach the editable script and stored brief with their requested controls (5.352966ms)
+✔ an exact CTA extracted from opportunity notes is enforced without a separate CTA field (1.406422ms)
+✔ AI cannot include a labeled hypothetical example when the user chooses Omitir (1.003384ms)
+✔ a newsletter missing requested section headings fails before claiming controls were applied (7.709048ms)
+✔ newsletter section headings may use Markdown and retain the complete authored body (8.311657ms)
+✔ 10,000-character accepted instructions produce a draft that the piece PATCH can save (237.212733ms)
+✔ provider drafts are bounded to every editable piece limit before persistence (28.920326ms)
+✔ long reference analysis and maximum-size segment fields stay within the draft contract (7.963823ms)
+✔ invalid provider field and scene types fail without persisting an AI draft (6.029255ms)
+✔ official Gemini base sends its documented chat schema and reads a completed JSON object (5.824747ms)
+✔ the official trailing slash is accepted and text remains bounded (0.948791ms)
+✔ own image data uses Gemini's image shape while third-party image URLs fail before transport (1.454875ms)
+✔ a valid Gemini key does not bypass an absent or incorrectly scoped access review (2.196334ms)
+✔ Gemini refusals, safety blocks, truncated content and invalid JSON never become results (6.051048ms)
+✔ provider HTTP errors are actionable and do not disclose remote bodies or credentials (1.283726ms)
+✔ a lookalike reviewed hostname retains the Responses transport (0.724583ms)
+✔ a draft traverses the real Gemini adapter, validates and persists its nested scene schema (7.427623ms)
+✔ social collection fails before injected transports for every restricted provider (15.182743ms)
+✔ youtube sync reports permission restriction and cannot mutate previously captured references (12.907971ms)
+✔ instagram sync reports permission restriction and cannot mutate previously captured references (11.101887ms)
+✔ tiktok sync reports permission restriction and cannot mutate previously captured references (10.751218ms)
+✔ paused restricted sources neither call transports nor generate successful collection telemetry (7.527044ms)
+✔ derived trend computation rejects old tiktok provider data (0.569358ms)
+✔ derived trend computation rejects old instagram provider data (0.187111ms)
+✔ derived trend computation rejects old youtube provider data (0.090016ms)
+✔ permitted public news trend computation still distinguishes observation windows (0.476699ms)
+✔ youtube legacy content cannot enter analysis or AI drafting (7.932867ms)
+✔ tiktok legacy content cannot enter analysis or AI drafting (5.89333ms)
+✔ instagram legacy content cannot enter analysis or AI drafting (5.653949ms)
+✔ an idea cannot launder a restricted reference into a draft (6.584282ms)
+✔ own editorial draft keeps instructions separate from publishable copy (10.889707ms)
+✔ a reviewed synthetic AI provider receives own editorial context with storage disabled (14.45871ms)
+ℹ tests 35
+ℹ suites 0
+ℹ pass 35
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 453.808903

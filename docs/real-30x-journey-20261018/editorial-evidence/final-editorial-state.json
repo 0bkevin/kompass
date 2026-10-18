@@ -1,0 +1,260 @@
+{
+  "capturedAt": "2026-10-18T12:02:52.518Z",
+  "workspace": "30X · Editorial QA",
+  "containsRealPerformance": false,
+  "performanceData": "Explicitly fictitious QA measurements; no real publication.",
+  "pieces": [
+    {
+      "id": "a07a67c1-cca1-4487-b85d-17b01bd5605a",
+      "title": "Cómo elegir tu primer piloto de IA en el equipo",
+      "format": "carousel",
+      "channel": "instagram",
+      "generationEngine": "ai",
+      "status": "draft",
+      "hook": "El primer piloto de IA no debe ser el más complejo, sino el más adecuado para aprender en equipo. Busca una tarea repetitiva, de bajo riesgo y con un volumen manejable.",
+      "script": "Lámina 1: El primer piloto de IA no debe ser el más complejo, sino el más adecuado para aprender en equipo. Busca una tarea repetitiva, de bajo riesgo y con un volumen manejable.\n\nLámina 2: Define con claridad cómo comprobarás que el resultado es correcto antes de implementarlo a mayor escala. La validación humana es clave en esta etapa inicial.\n\nLámina 3: Ejemplo hipotético: un equipo podría seleccionar la organización inicial de preguntas frecuentes de formación para evaluar la claridad de las respuestas generadas, revisando cada una manualmente.\n\nLámina 4: Guarda esta guía y elige un proceso para conversar con tu equipo.",
+      "cta": "Guarda esta guía y elige un proceso para conversar con tu equipo.",
+      "scenes": [
+        {
+          "id": "91bb4ede-3e29-4d12-b0fb-b0e691b7d0aa",
+          "text": "Paso 1: Busca procesos repetitivos y de bajo riesgo operativo.",
+          "duration": 5
+        },
+        {
+          "id": "aa5847ed-ab0d-4669-aece-391937331cc4",
+          "text": "Paso 2: Asegúrate de que siempre exista una validación humana del resultado.",
+          "duration": 5
+        },
+        {
+          "id": "bbc25b0f-f1e9-4944-bfe5-911b2b1dfac4",
+          "text": "Paso 3: Define qué éxito significa para este pequeño experimento.",
+          "duration": 5
+        },
+        {
+          "id": "e1029a1b-a05e-47c4-bfdc-61f10b48945c",
+          "text": "Paso 4: Pregunta en tu próxima reunión qué tarea repetitiva consume más tiempo.",
+          "duration": 5
+        }
+      ],
+      "assetIds": [],
+      "comments": []
+    },
+    {
+      "id": "c24f504f-06a7-46d1-8c87-5c6b860a45a7",
+      "title": "QA 30X · Primer piloto de IA con criterio",
+      "format": "carousel",
+      "channel": "instagram",
+      "generationEngine": "ai",
+      "status": "published",
+      "hook": "Antes de probar IA en tu equipo, elige una tarea que puedas revisar con criterio.",
+      "script": "Lámina 1: El primer piloto de IA no debe ser el más complejo, sino el más adecuado para aprender en equipo. Busca una tarea repetitiva, de bajo riesgo y con un volumen manejable.\n\nLámina 2: Define con claridad cómo comprobarás que el resultado es correcto antes de implementarlo a mayor escala. La validación humana es clave en esta etapa inicial.\n\nLámina 3: Ejemplo hipotético: un equipo podría seleccionar la organización inicial de preguntas frecuentes de formación para evaluar la claridad de las respuestas generadas, revisando cada una manualmente.\n\nLámina 4: Guarda esta guía y elige un proceso para conversar con tu equipo.",
+      "cta": "Guarda esta guía y elige un proceso para conversar con tu equipo.",
+      "scenes": [
+        {
+          "id": "9b7385d5-e474-4152-88d4-6ea400fff707",
+          "text": "El primer piloto de IA no debe ser el más complejo, sino el más adecuado para aprender en equipo. Busca una tarea repetitiva, de bajo riesgo y con un volumen manejable.",
+          "duration": 5
+        },
+        {
+          "id": "f6984000-49a7-4395-af18-460ef212b13f",
+          "text": "Define con claridad cómo comprobarás que el resultado es correcto antes de implementarlo a mayor escala. La validación humana es clave en esta etapa inicial.",
+          "duration": 5
+        },
+        {
+          "id": "72c85bd5-b5da-49b4-a37e-3b89aee1c0bd",
+          "text": "Ejemplo hipotético: un equipo podría seleccionar la organización inicial de preguntas frecuentes de formación para evaluar la claridad de las respuestas generadas, revisando cada una manualmente.",
+          "duration": 5
+        },
+        {
+          "id": "f1dcf18a-d4ed-4395-8177-279377f0cae9",
+          "text": "Guarda esta guía y elige un proceso para conversar con tu equipo.",
+          "duration": 5
+        }
+      ],
+      "editorialBrief": {
+        "instructions": "Propuesta educativa original para 30X, líderes y equipos de Latinoamérica. Enseña cómo elegir un proceso repetitivo y de bajo riesgo, definir una comprobación del resultado y mantener revisión humana. Incluye un ejemplo explícitamente hipotético de un equipo organizando preguntas frecuentes de formación; usa el condicional y no lo atribuyas a un cliente real. No inventes métricas, resultados ni historias de 30X. Es un borrador QA y no una publicación real.",
+        "angle": "",
+        "audienceNeeds": "Elegir procesos de trabajo adecuados para IA y evaluar sus resultados con criterio humano. Hipótesis editorial a contrastar; no inferida de alumnos ni seguidores.",
+        "referenceUrl": "",
+        "providerAttributions": [],
+        "applied": {
+          "format": "carousel",
+          "unitCount": 4,
+          "cta": "Guarda esta guía y elige un proceso para conversar con tu equipo.",
+          "includeExample": true
+        },
+        "notes": [
+          "Borrador generado con IA. Se comprobaron la estructura solicitada, el CTA exacto cuando se indicó y la etiqueta del ejemplo hipotético cuando se pidió. Revisa los hechos, la utilidad del ejemplo y el resto de la dirección editorial antes de aprobar."
+        ]
+      },
+      "assetIds": [
+        "f0d5ea53-208f-4ba3-9f03-326bf3556190"
+      ],
+      "comments": [
+        {
+          "id": "6001f1b8-7a4d-4372-a7b2-f5ddfecc766c",
+          "author": "Editorial QA",
+          "text": "Revisión QA: las cuatro láminas incluyen un ejemplo hipotético y no prometen resultados de 30X. Confirmar claridad antes de publicar; esta prueba no envía contenido a redes.",
+          "createdAt": "2026-10-18T11:56:44.487Z"
+        },
+        {
+          "id": "fd83ada2-c7d4-4f35-be4f-791676a77dc1",
+          "author": "Revisión QA",
+          "text": "Revisor QA: acotar la primera afirmación; el proceso correcto depende del contexto y esta guía es una propuesta educativa.",
+          "createdAt": "2026-10-18T11:58:09.885Z"
+        },
+        {
+          "id": "76cf8ad4-753b-4a49-90e6-02c5f3ed5f14",
+          "author": "Revisión QA",
+          "text": "Cambios solicitados.",
+          "createdAt": "2026-10-18T11:58:14.995Z"
+        },
+        {
+          "id": "aae36a5c-0128-451f-ad4f-c4b817786237",
+          "author": "Revisión QA",
+          "text": "Aprobada.",
+          "createdAt": "2026-10-18T11:58:24.305Z"
+        },
+        {
+          "id": "b879ccc6-29ab-43a3-9e26-26d54c0fb281",
+          "author": "Revisión QA",
+          "text": "Aprobada.",
+          "createdAt": "2026-10-18T11:58:37.597Z"
+        }
+      ],
+      "publicationOrigin": "manual_record",
+      "metricsOrigin": "manual",
+      "metrics": {
+        "views": 120.5,
+        "engagement": 8.25,
+        "leads": 0
+      }
+    },
+    {
+      "id": "221112b9-7604-4ee1-90d3-6ec55531c007",
+      "title": "La revisión humana en un primer piloto de IA",
+      "format": "reel",
+      "channel": "instagram",
+      "generationEngine": "ai",
+      "status": "draft",
+      "hook": "¿Estás lanzando tu primer piloto de inteligencia artificial y te preguntas cómo supervisarlo con criterio?",
+      "script": "Escena 1: Primer paso: contrasta la información generada por la inteligencia artificial con las fuentes y datos internos de tu organización.\n\nEscena 2: Segundo paso: evalúa si el tono, el formato y el enfoque responden exactamente al estándar de calidad que buscas en tu equipo.\n\nEscena 3: Tercer paso: documenta los desvíos encontrados para mejorar las instrucciones en el próximo ciclo de trabajo. Comparte una pregunta de revisión con tu equipo.",
+      "cta": "Comparte una pregunta de revisión con tu equipo.",
+      "scenes": [
+        {
+          "id": "1bcc49d5-3673-4dd2-8b56-0a1918d6ae00",
+          "text": "Primer paso: contrasta la información generada por la inteligencia artificial con las fuentes y datos internos de tu organización.",
+          "duration": 5
+        },
+        {
+          "id": "011551a8-a1bf-4a2f-9698-bfd6f552587d",
+          "text": "Segundo paso: evalúa si el tono, el formato y el enfoque responden exactamente al estándar de calidad que buscas en tu equipo.",
+          "duration": 5
+        },
+        {
+          "id": "138776f9-d4ee-40a3-b388-810a323f20f3",
+          "text": "Tercer paso: documenta los desvíos encontrados para mejorar las instrucciones en el próximo ciclo de trabajo. Comparte una pregunta de revisión con tu equipo.",
+          "duration": 6
+        }
+      ],
+      "editorialBrief": {
+        "instructions": "Para líderes y equipos latinoamericanos que aplican IA en su trabajo. Reel educativo original para 30X: 3 escenas con acciones simples para revisar una respuesta de IA antes de usarla. Muestra qué comprobar y cómo dejar constancia. Sin ejemplos hipotéticos, casos de clientes, porcentajes ni afirmaciones de éxito; no es una publicación real.",
+        "angle": "",
+        "audienceNeeds": "Elegir procesos de trabajo adecuados para IA y evaluar sus resultados con criterio humano. Hipótesis editorial a contrastar; no inferida de alumnos ni seguidores.",
+        "referenceUrl": "",
+        "providerAttributions": [],
+        "applied": {
+          "format": "reel",
+          "unitCount": 3,
+          "cta": "Comparte una pregunta de revisión con tu equipo.",
+          "includeExample": false
+        },
+        "notes": [
+          "Borrador generado con IA. Se comprobaron la estructura solicitada, el CTA exacto cuando se indicó y la etiqueta del ejemplo hipotético cuando se pidió. Revisa los hechos, la utilidad del ejemplo y el resto de la dirección editorial antes de aprobar."
+        ]
+      },
+      "assetIds": [],
+      "comments": []
+    },
+    {
+      "id": "0c70a2bc-9e1f-42e2-ae4f-46f7e91aff3a",
+      "title": "Qué revisar antes de ampliar un piloto de IA",
+      "format": "newsletter",
+      "channel": "linkedin",
+      "generationEngine": "ai",
+      "status": "draft",
+      "hook": "Muchos equipos cometen el error de escalar una herramienta de inteligencia artificial antes de comprobar si realmente resuelve el problema operativo inicial con criterio humano.",
+      "script": "Diagnóstico\nAntes de pensar en ampliar cualquier implementación tecnológica, el primer paso consiste en analizar con detalle los procesos actuales del equipo. No todas las tareas administrativas o repetitivas se benefician de la misma manera de la IA. Conviene aislar una sola actividad donde el volumen de trabajo sea constante, el flujo esté documentado y la revisión final dependa estrictamente del criterio del equipo humano.\n\nPiloto\nEl siguiente paso es diseñar una prueba acotada en el tiempo y con un alcance muy delimitado. Durante esta fase controlada, es fundamental registrar cómo interactúan los colaboradores con la herramienta, qué fricciones aparecen en el uso diario y si el tiempo invertido realmente aporta valor al entregable final. La prueba debe servir para entender las limitaciones técnicas y operativas sin comprometer la operación general de la empresa.\n\nRevisión\nLlega el momento crítico de evaluar el desempeño antes de tomar cualquier decisión de escala. Es necesario contrastar el resultado obtenido con los objetivos planteados al inicio y comprobar si la calidad del trabajo final cumple con los estándares internos. Define una pregunta de revisión para tu próximo piloto.",
+      "cta": "Define una pregunta de revisión para tu próximo piloto.",
+      "scenes": [
+        {
+          "id": "592d2f64-a213-4f74-8085-8e4390d34ffd",
+          "text": "Diagnóstico: Analiza los procesos actuales para identificar una tarea repetitiva y documentada donde la IA pueda aportar valor real bajo supervisión humana.",
+          "duration": 5
+        },
+        {
+          "id": "65db52da-b480-4174-a59f-6a77571ad4d2",
+          "text": "Piloto: Diseña una prueba acotada en el tiempo y el alcance para observar las fricciones operativas y el uso diario del equipo.",
+          "duration": 5
+        },
+        {
+          "id": "54e73a83-6a2d-4e22-89d0-ebb8995e5abb",
+          "text": "Revisión: Contrasta los resultados obtenidos con los objetivos iniciales antes de tomar cualquier decisión de escala.",
+          "duration": 5
+        }
+      ],
+      "editorialBrief": {
+        "instructions": "Newsletter educativa original de QA para líderes y equipos latinoamericanos, en el contexto de formación ejecutiva de 30X. Secciones: Diagnóstico, Piloto, Revisión. Escribe cada título en su propia línea y desarrolla consejos concretos para escoger una tarea, probarla y revisar el resultado humano. No añadas ejemplos hipotéticos ni historias de clientes, datos personales o métricas de éxito. No atribuyas experiencias reales a 30X; no se publicará esta prueba.",
+        "angle": "",
+        "audienceNeeds": "Elegir procesos de trabajo adecuados para IA y evaluar sus resultados con criterio humano. Hipótesis editorial a contrastar; no inferida de alumnos ni seguidores.",
+        "referenceUrl": "",
+        "providerAttributions": [],
+        "applied": {
+          "format": "newsletter",
+          "cta": "Define una pregunta de revisión para tu próximo piloto.",
+          "includeExample": false,
+          "sectionTitles": [
+            "Diagnóstico",
+            "Piloto",
+            "Revisión"
+          ]
+        },
+        "notes": [
+          "Borrador generado con IA. Se comprobaron la estructura solicitada, el CTA exacto cuando se indicó y la etiqueta del ejemplo hipotético cuando se pidió. Revisa los hechos, la utilidad del ejemplo y el resto de la dirección editorial antes de aprobar."
+        ]
+      },
+      "assetIds": [],
+      "comments": []
+    }
+  ],
+  "outcomes": [
+    {
+      "id": "451c9c57-f74f-4de5-9e1b-66d66921538f",
+      "pieceId": "c24f504f-06a7-46d1-8c87-5c6b860a45a7",
+      "channel": "instagram",
+      "segmentId": "cba9a209-77db-460f-8142-318c1b53572c",
+      "title": "QA 30X · Primer piloto de IA con criterio",
+      "publishedAt": "2026-10-18T11:59:00.000Z",
+      "metrics": {
+        "views": 120.5,
+        "engagement": 8.25,
+        "leads": 0
+      },
+      "notes": "MEDICIONES FICTICIAS DE QA. Ninguna pieza se ha publicado en redes y estas cifras no describen resultados de 30X. Ventana de prueba: 7 días. Solo validación del formulario y cálculos de la plataforma.",
+      "origin": "manual",
+      "createdAt": "2026-10-18T12:00:03.006Z",
+      "updatedAt": "2026-10-18T12:00:26.520Z"
+    }
+  ],
+  "assetCount": 1,
+  "publishingReceiptCount": 0,
+  "recordKinds": {
+    "assets": 1,
+    "contextImports": 1,
+    "outcomes": 1,
+    "pieces": 4,
+    "references": 47,
+    "sources": 3,
+    "topicSnapshots": 1
+  }
+}
