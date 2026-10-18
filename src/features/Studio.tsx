@@ -53,7 +53,7 @@ export default function Studio() {
     .sort((a, b) => b.updatedAt.localeCompare(a.updatedAt));
   if (selected) return <PieceEditor key={selected.id} piece={selected} />;
   return (
-    <div className="page">
+    <div className="page studio-page">
       <div className="page-heading">
         <div>
           <h1>Prepara una pieza con un enfoque claro.</h1>
@@ -70,7 +70,11 @@ export default function Studio() {
           Crear contenido
         </Button>
       </div>
-      <div className="tabs studio-tabs">
+      <div
+        className="tabs studio-tabs"
+        role="group"
+        aria-label="Estado de las piezas"
+      >
         {[
           ["all", "Todas las piezas"],
           ["draft", "Borradores"],
@@ -81,6 +85,7 @@ export default function Studio() {
           <button
             key={v}
             className={filter === v ? "active" : ""}
+            aria-pressed={filter === v}
             onClick={() => setFilter(v)}
           >
             {l}
@@ -917,9 +922,14 @@ function PieceEditor({ piece }: { piece: Piece }) {
       </section>
       <div className="editor-layout">
         <section className="card script-editor">
-          <div className="editor-tabs tabs">
+          <div
+            className="editor-tabs tabs"
+            role="group"
+            aria-label="Sección del editor"
+          >
             <button
               className={tab === "script" ? "active" : ""}
+              aria-pressed={tab === "script"}
               onClick={() => setTab("script")}
             >
               <SquarePen size={15} />
@@ -928,12 +938,14 @@ function PieceEditor({ piece }: { piece: Piece }) {
             <button
               ref={resourceTabRef}
               className={tab === "resources" ? "active" : ""}
+              aria-pressed={tab === "resources"}
               onClick={() => setTab("resources")}
             >
               Recursos
             </button>
             <button
               className={tab === "comments" ? "active" : ""}
+              aria-pressed={tab === "comments"}
               onClick={() => setTab("comments")}
             >
               <MessageSquare size={15} />
@@ -1205,7 +1217,7 @@ function PieceEditor({ piece }: { piece: Piece }) {
           <div className="card post-preview">
             <div className="preview-title">
               <EyeIcon />
-              VISTA PREVIA DEL TEXTO
+              Vista previa del texto
             </div>
             <div className="post-author">
               <span style={{ background: state.brand.color }}>

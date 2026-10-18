@@ -16,6 +16,7 @@ import { uploadFilesIndividually } from "../lib/workflow-recovery.mjs";
 import { Badge, Button, EmptyState, IconButton, Modal } from "../components/ui";
 import type { Asset } from "../lib/types";
 import { dateLabel } from "../lib/format";
+import "./studio-flow.css";
 const icons = { image: Image, video: Video, audio: Music, document: FileText };
 const MAX_ASSET_FILE_BYTES = 25 * 1024 * 1024;
 export default function Assets() {
@@ -101,7 +102,7 @@ export default function Assets() {
     }
   }
   return (
-    <div className="page">
+    <div className="page assets-page">
       <div className="page-heading">
         <div>
           <h1>El material para tu próxima pieza.</h1>
@@ -160,7 +161,11 @@ export default function Assets() {
           )}
         </section>
       )}
-      <div className="tabs library-tabs">
+      <div
+        className="tabs library-tabs"
+        role="group"
+        aria-label="Tipo de archivo"
+      >
         {[
           ["all", "Todos"],
           ["image", "Imágenes"],
@@ -171,6 +176,7 @@ export default function Assets() {
           <button
             key={v}
             className={filter === v ? "active" : ""}
+            aria-pressed={filter === v}
             onClick={() => setFilter(v)}
           >
             {l}
@@ -293,6 +299,10 @@ export default function Assets() {
               <FileText size={60} />
             )}
           </div>
+          <p className="asset-detail-meta">
+            {(selected.size / 1024 / 1024).toFixed(2)} MiB ·{" "}
+            {dateLabel(selected.createdAt)}
+          </p>
           <a
             className="button primary"
             href={selected.url}
