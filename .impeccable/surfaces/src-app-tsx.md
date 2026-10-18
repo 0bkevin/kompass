@@ -19,7 +19,7 @@ OWN-WORLD: The approved ink/charcoal surfaces, fine cool-violet dividers and pal
 
 STORY: Enter the right company, identify the next decision, inspect its evidence, work on the piece, and review the result. Public forms and account entry feel part of the same product.
 
-FIRST VIEWPORT: A 240px dark navigation rail, compact 64px contextual toolbar and a spacious working area. One page title, explanatory line and relevant action lead into the working records or next step. Mobile opens the same navigation as an accessible drawer and stacks working panes without shrinking controls.
+FIRST VIEWPORT: A 240px dark navigation rail, compact 64px contextual toolbar and a spacious working area. A short task title and relevant action lead directly into working records. Omit page introductions, advice and promotion. Authentication contains the brand, task and account controls. Mobile opens the same navigation as an accessible drawer and stacks working panes without shrinking controls.
 
 FORM: Existing task-specific layouts, rebuilt inside the user-pinned landing world. Code-led extension of that chosen world, not a new concept tournament. The signature move is the editorial thread: restrained connected workflow stages and persistent need/source context beside the piece. Frequent actions remain immediate; motion is limited to control feedback and overlay continuity.
 
