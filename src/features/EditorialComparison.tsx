@@ -280,7 +280,10 @@ function ComparisonForm({
               ))}
               <p>
                 <strong>Hipótesis para probar: </strong>
-                {factor.hypothesis}
+                {factor.hypothesis.replace(
+                  /^(?:hip[oó]tesis(?:\s+para\s+probar)?\s*:\s*)+/i,
+                  "",
+                )}
               </p>
             </div>
           ))}
