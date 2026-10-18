@@ -1,0 +1,148 @@
+{
+  "scope": "Native browser walkthrough, isolated credential-free demo workspace; no recruited participants, real account untouched.",
+  "date": "2026-10-18",
+  "mobileOpen": {
+    "phase": "mobile-open",
+    "url": "/audience",
+    "viewport": 390,
+    "docWidth": 390,
+    "drawerOpen": true,
+    "backgroundInert": true,
+    "skipLinkInert": true,
+    "bodyOverflow": "hidden",
+    "focus": "Cerrar menú",
+    "touchTargets": [
+      {
+        "name": "Cerrar menú",
+        "width": 44,
+        "height": 44
+      },
+      {
+        "name": "Añadir otra empresa",
+        "width": 132.5,
+        "height": 44
+      },
+      {
+        "name": "Inicio",
+        "width": 212,
+        "height": 44
+      },
+      {
+        "name": "Audiencia",
+        "width": 212,
+        "height": 44
+      },
+      {
+        "name": "Oportunidades",
+        "width": 212,
+        "height": 44
+      },
+      {
+        "name": "Contenido",
+        "width": 212,
+        "height": 44
+      },
+      {
+        "name": "Calendario",
+        "width": 212,
+        "height": 44
+      },
+      {
+        "name": "Resultados",
+        "width": 212,
+        "height": 44
+      },
+      {
+        "name": "Empresa y contenido",
+        "width": 212,
+        "height": 44
+      },
+      {
+        "name": "Más herramientas",
+        "width": 212,
+        "height": 44
+      },
+      {
+        "name": "Explorar fuentes",
+        "width": 212,
+        "height": 44
+      },
+      {
+        "name": "Referencias",
+        "width": 212,
+        "height": 44
+      },
+      {
+        "name": "Archivos",
+        "width": 212,
+        "height": 44
+      },
+      {
+        "name": "Fuentes y equipo",
+        "width": 212,
+        "height": 44
+      },
+      {
+        "name": "Abrir menú",
+        "width": 44,
+        "height": 44
+      }
+    ]
+  },
+  "reverseTabWrap": {
+    "focus": "Cerrar sesión",
+    "insideMenu": true
+  },
+  "currentDestinationDismissal": {
+    "phase": "current-destination-dismissed",
+    "url": "/audience",
+    "drawerOpen": false,
+    "modalDialogs": 0,
+    "backgroundInert": false,
+    "bodyOverflow": "visible",
+    "focus": "Abrir menú"
+  },
+  "companyModalHandoff": {
+    "phase": "company-modal-handoff",
+    "drawerOpen": false,
+    "modalDialogs": ["Añadir una empresa"],
+    "focusWithinCompanyModal": "Añadir una empresa",
+    "companyDialogInert": false
+  },
+  "desktopBreakpointReset": {
+    "phase": "desktop-resize-reset",
+    "viewport": 820,
+    "docWidth": 820,
+    "drawerOpen": false,
+    "drawerRole": null,
+    "overlay": false,
+    "backgroundInert": false,
+    "bodyOverflow": "visible",
+    "closeControlDisplay": "none"
+  },
+  "desktopCurrentLocation": {
+    "phase": "desktop-current-location",
+    "url": "/settings",
+    "viewport": 1280,
+    "docWidth": 1280,
+    "activeDestinations": ["Fuentes y equipo"],
+    "breadcrumb": "30X · espacio de ejemplo/Fuentes y equipo",
+    "drawerRole": null,
+    "mainInert": false
+  },
+  "newDestinationDismissal": {
+    "phase": "new-destination-dismissed",
+    "url": "/home",
+    "drawerOpen": false,
+    "backgroundInert": false,
+    "focus": "Abrir menú"
+  },
+  "escapeDismissal": {
+    "phase": "escape-dismissal",
+    "drawerOpen": false,
+    "overlay": false,
+    "backgroundInert": false,
+    "bodyOverflow": "visible",
+    "focus": "Abrir menú"
+  }
+}
