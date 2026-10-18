@@ -132,3 +132,56 @@ test("an exact CTA extracted from opportunity notes is enforced without a separa
   );
   assert.equal(database.listRecords(brand.id, "pieces").length, before);
 });
+
+test("AI cannot include a labeled hypothetical example when the user chooses Omitir", async () => {
+  const before = database.listRecords(brand.id, "pieces").length;
+  await assert.rejects(
+    createDraft(
+      brand,
+      { ...controls, includeExample: false },
+      transport(valid()),
+    ),
+    (error) => error.status === 502 && /No se guardó/.test(error.message),
+  );
+  assert.equal(database.listRecords(brand.id, "pieces").length, before);
+});
+
+test("a newsletter missing requested section headings fails before claiming controls were applied", async () => {
+  const before = database.listRecords(brand.id, "pieces").length;
+  await assert.rejects(
+    createDraft(
+      brand,
+      {
+        format: "newsletter",
+        instructions: "Secciones: Diagnóstico, Piloto, Revisión.",
+        includeExample: false,
+      },
+      transport({
+        ...valid(),
+        script: "Un texto general sin las secciones solicitadas.",
+      }),
+    ),
+    (error) => error.status === 502 && /No se guardó/.test(error.message),
+  );
+  assert.equal(database.listRecords(brand.id, "pieces").length, before);
+});
+
+test("newsletter section headings may use Markdown and retain the complete authored body", async () => {
+  const script =
+    "# Diagnóstico\nElige una tarea de bajo riesgo.\n\n## 2. Piloto\nPrueba una alternativa.\n\n**Revisión:**\nComprueba el resultado con tu equipo.";
+  const piece = await createDraft(
+    brand,
+    {
+      format: "newsletter",
+      instructions: "Secciones: Diagnóstico, Piloto, Revisión.",
+      includeExample: false,
+    },
+    transport({ ...valid(), script }),
+  );
+  assert.equal(piece.script, script);
+  assert.deepEqual(piece.editorialBrief.applied.sectionTitles, [
+    "Diagnóstico",
+    "Piloto",
+    "Revisión",
+  ]);
+});
