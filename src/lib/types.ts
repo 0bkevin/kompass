@@ -1,0 +1,245 @@
+export type View =
+  | "radar"
+  | "inbox"
+  | "studio"
+  | "calendar"
+  | "assets"
+  | "audience"
+  | "brand"
+  | "settings";
+export type Role = "owner" | "editor" | "reviewer";
+export interface User {
+  id: string;
+  name: string;
+  email: string;
+}
+export interface Segment {
+  id: string;
+  name: string;
+  role: string;
+  stage: string;
+  needs: string;
+  description?: string;
+}
+export interface Brand {
+  id: string;
+  name: string;
+  industry: string;
+  description: string;
+  tone: string;
+  language: string;
+  market: string;
+  website: string;
+  color: string;
+  secondaryColor: string;
+  logoAssetId?: string;
+  goals: string[];
+  pillars: string[];
+  audience: Segment[];
+  weeklyTarget: number;
+  role: Role;
+  createdAt: string;
+}
+export interface Session {
+  user: User | null;
+  brands: Brand[];
+}
+export interface Analysis {
+  hook: string;
+  format: string;
+  hypothesis: string;
+  saturation: "low" | "medium" | "high" | "unknown";
+  saturationReason: string;
+  relevance: number;
+  adaptation: string;
+  segmentIds: string[];
+  signals: string[];
+  confidence: "low" | "medium" | "high";
+  engine: "heuristic" | "ai";
+  analyzedAt: string;
+}
+export interface Trend {
+  score: number;
+  scoreReasons: string[];
+  observedAt: string;
+  previousObservedAt?: string;
+  velocity?: number;
+  metrics?: { score?: number; comments?: number; views?: number };
+  priorityMetric?: {
+    name: string;
+    value: number | null;
+    rank?: number | null;
+    origin: string;
+  };
+  sourceUrl?: string;
+  sampleSize?: number;
+  kind: "popular" | "emerging" | "unclassified";
+  [key: string]: unknown;
+}
+export interface Reference {
+  id: string;
+  title: string;
+  url?: string;
+  text?: string;
+  source: string;
+  platform?: SocialPlatform;
+  language: string;
+  market: string;
+  format: string;
+  status: "new" | "analyzed" | "saved" | "dismissed";
+  tags: string[];
+  assetId?: string;
+  videoId?: string;
+  thumbnailUrl?: string;
+  mediaUrl?: string;
+  contentScope?: "video_audio" | "sampled_video" | "metadata_only";
+  mediaAccess?:
+    | "youtube_url"
+    | "provider_url"
+    | "uploaded_file"
+    | "unavailable";
+  videoAnalysis?: VideoAnalysis;
+  createdAt: string;
+  isDemo?: boolean;
+  analysis?: Analysis;
+  brandRelevance?: { score: number; matchedTerms: string[]; method: "lexical" };
+  trend?: Trend;
+  publishedAt?: string;
+  author?: string;
+  topic?: string;
+  [key: string]: unknown;
+}
+export interface VideoAnalysis {
+  engine: "gemini";
+  status: "completed";
+  contentScope: "video_audio" | "sampled_video";
+  summary: string;
+  hook: { visual: string; verbal: string };
+  structure: string[];
+  onScreenText: string[];
+  audioNotes: string;
+  adaptation: string;
+  observations: {
+    startSeconds: number;
+    endSeconds: number;
+    observation: string;
+  }[];
+  coverage: {
+    mode: string;
+    samplingFps?: number;
+    notes: string;
+  };
+  limitations: string[];
+  analyzedAt: string;
+  model: string;
+}
+export interface Idea {
+  id: string;
+  title: string;
+  angle: string;
+  referenceIds: string[];
+  segmentId?: string;
+  status: "proposed" | "approved" | "dismissed";
+  createdAt: string;
+}
+export interface Scene {
+  id: string;
+  text: string;
+  duration: number;
+  assetId?: string;
+}
+export interface Comment {
+  id: string;
+  author: string;
+  text: string;
+  createdAt: string;
+}
+export interface Piece {
+  id: string;
+  title: string;
+  referenceId?: string;
+  ideaId?: string;
+  segmentId?: string;
+  format: "reel" | "carousel" | "post" | "video" | "newsletter";
+  channel: "instagram" | "linkedin" | "tiktok" | "youtube" | "telegram";
+  status: "draft" | "review" | "approved" | "scheduled" | "published";
+  hook: string;
+  script: string;
+  caption: string;
+  cta: string;
+  scenes: Scene[];
+  assetIds: string[];
+  scheduledFor?: string;
+  publishedAt?: string;
+  createdAt: string;
+  updatedAt: string;
+  assignee?: string;
+  comments?: Comment[];
+  metrics?: { views: number; engagement: number; leads: number };
+  generationEngine?: "heuristic" | "ai";
+  approvalVersion: string;
+  publicationError?: string;
+  publicationReceipt?: unknown;
+}
+export interface Asset {
+  id: string;
+  name: string;
+  type: "image" | "video" | "document" | "audio";
+  mimeType: string;
+  size: number;
+  url: string;
+  createdAt: string;
+  pieceId?: string;
+  origin: "upload" | "template" | "ai" | "render";
+}
+export interface Source {
+  id: string;
+  name: string;
+  type: "hackernews" | "reddit" | "rss" | "gdelt" | "youtube" | "apify";
+  platform?: SocialPlatform;
+  url?: string;
+  query?: string;
+  limit?: number;
+  enabled: boolean;
+  lastSyncedAt?: string;
+  lastError?: string;
+  createdAt: string;
+}
+export type SocialPlatform =
+  | "youtube"
+  | "instagram"
+  | "tiktok"
+  | "facebook"
+  | "x";
+export interface SocialSettings {
+  youtube: { configured: boolean };
+  apify: { configured: boolean };
+  gemini: { configured: boolean; model?: string };
+}
+export interface Member {
+  id: string;
+  name: string;
+  email: string;
+  role: Role;
+}
+export interface Activity {
+  id: string;
+  text: string;
+  createdAt: string;
+}
+export interface Integrations {
+  ai: { configured: boolean; model?: string };
+  telegram: { configured: boolean; chatId?: string; inboxUrl?: string };
+  webhook: { configured: boolean; url?: string };
+}
+export interface BrandState {
+  brand: Brand;
+  references: Reference[];
+  ideas: Idea[];
+  pieces: Piece[];
+  assets: Asset[];
+  sources: Source[];
+  members: Member[];
+  activity: Activity[];
+  integrations: Integrations;
+}

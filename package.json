@@ -1,0 +1,37 @@
+{
+  "name": "30x-radar",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": ">=24"
+  },
+  "scripts": {
+    "dev": "concurrently -k -n api,web \"RADAR_API_ONLY=1 node --env-file-if-exists=.env --watch server/index.mjs\" \"vite --host 0.0.0.0\"",
+    "build": "vite build && tsc -b",
+    "start": "node --env-file-if-exists=.env server/start-host.mjs",
+    "test": "node --test tests/*.test.mjs",
+    "format": "prettier --write src server tests docs *.json *.ts README.md"
+  },
+  "dependencies": {
+    "@mjackson/node-fetch-server": "0.7.0",
+    "@tanstack/react-router": "1.170.45",
+    "@tanstack/react-start": "1.169.3",
+    "express": "^5.1.0",
+    "fast-xml-parser": "^5.3.0",
+    "lucide-react": "^0.468.0",
+    "multer": "^2.0.2",
+    "react": "^19.1.0",
+    "react-dom": "^19.1.0"
+  },
+  "devDependencies": {
+    "@types/node": "^24.0.0",
+    "@types/react": "^19.1.0",
+    "@types/react-dom": "^19.1.0",
+    "@vitejs/plugin-react": "6.0.1",
+    "concurrently": "^9.2.0",
+    "prettier": "^3.6.2",
+    "typescript": "^5.8.0",
+    "vite": "8.3.4"
+  }
+}
