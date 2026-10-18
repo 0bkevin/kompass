@@ -20,6 +20,7 @@ import { createEditorialEvidenceRouter } from "./editorial-evidence.mjs";
 import { createOpportunityFeedbackRouter } from "./opportunity-feedback.mjs";
 import { createPilotEvaluationRouter } from "./pilot-evaluation.mjs";
 import { createResearchReportRouter } from "./research-report.mjs";
+import { stopManagedText } from "./managed-text.mjs";
 import { recoverMediaJobs, stopMediaJobs } from "./media-generation.mjs";
 import {
   createSocialSyncRouter,
@@ -157,6 +158,7 @@ if (
   server.once("error", (error) => {
     discovery.stop();
     socialSync.stop();
+    stopManagedText();
     console.error(
       `No se pudo abrir el puerto ${port} (${error.code || "error"}). Configura PORT y RADAR_API_PORT con un puerto disponible.`,
     );
@@ -166,6 +168,7 @@ if (
     process.on(signal, () => {
       discovery.stop();
       socialSync.stop();
+      stopManagedText();
       void stopMediaJobs().finally(() => {
         server.close(() => process.exit(0));
       });

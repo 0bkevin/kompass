@@ -2,6 +2,13 @@
 // without copying a shared platform credential into its own secret record.
 export function resolveAiConfig(stored, env = process.env) {
   if (stored?.disabled) return null;
+  if (!stored?.apiKey && env.PLATFORM_TEXT_PROVIDER === "codex-chatgpt")
+    return {
+      provider: "codex-chatgpt",
+      model: "ChatGPT · Codex",
+      baseUrl: "https://chatgpt.com",
+      managedBy: "platform",
+    };
   const apiKey = stored?.apiKey || env.OPENAI_API_KEY;
   if (!apiKey?.trim()) return null;
   const managedBy = stored?.apiKey ? "workspace" : "platform";

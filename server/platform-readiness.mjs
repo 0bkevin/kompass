@@ -59,14 +59,23 @@ export function platformReadiness() {
     verification: "configuration-only",
     discovery,
     ai: {
+      provider: ai?.provider || "api",
       configured: !!ai,
       ready: !!ai && aiPolicy.allowed,
+      ...(ai?.provider === "codex-chatgpt"
+        ? {
+            verification: "configuration-only",
+            runtimeVerificationRequired: true,
+          }
+        : {}),
       ...(ai?.dataMode ? { dataMode: ai.dataMode } : {}),
       action: !ai
         ? "Set the platform OPENAI_API_KEY in the deployment secret store."
         : !aiPolicy.allowed
           ? "Provide the operator's current AI permission review in SOURCE_ACCESS_POLICY_FILE."
-          : "Available to workspaces by default; provider quota and connectivity still require a real request.",
+          : ai.provider === "codex-chatgpt"
+            ? "Managed Codex ChatGPT text is configured. Check the normal service sign-in, isolation and a real request; no customer API key is required."
+            : "Available to workspaces by default; provider quota and connectivity still require a real request.",
     },
     media: {
       enabled: process.env.MEDIA_GENERATION_ENABLED === "true",

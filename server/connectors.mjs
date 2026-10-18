@@ -23,6 +23,7 @@ import {
 import { publicPublicationReceipt } from "./publication-receipt.mjs";
 import { publicationAssets } from "./publication-assets.mjs";
 import { assertPublicContentText } from "./content-privacy.mjs";
+import { generateManagedText } from "./managed-text.mjs";
 
 export { publicIntegrations };
 // Below the documented 10,000 requests/IP/hour ceiling. Shared across brands
@@ -283,11 +284,26 @@ export function getAiConfig(brandId) {
 export async function generateStructured(
   brandId,
   { name, schema, instructions, input, image },
-  { fetcher = safeFetch } = {},
+  { fetcher = safeFetch, managedGenerator = generateManagedText, signal } = {},
 ) {
   const config = getAiConfig(brandId);
   if (!config) return null;
   assertAiProviderAllowed(config.baseUrl);
+  if (config.provider === "codex-chatgpt") {
+    if (image)
+      throw integrationError(
+        "Este análisis con ChatGPT admite texto público; no envía imágenes al trabajador de texto.",
+        400,
+      );
+    assertPublicContentText(String(input), "Contexto para IA");
+    return managedGenerator({
+      name,
+      schema,
+      instructions,
+      input: String(input),
+      signal,
+    });
+  }
   if (
     image &&
     !/^data:image\/(?:png|jpeg|webp);base64,[A-Za-z0-9+/=]+$/.test(image)
