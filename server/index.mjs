@@ -16,6 +16,10 @@ import { createCommunityRouter } from "./community.mjs";
 import { createOpportunityAnalysisRouter } from "./opportunity-analysis.mjs";
 import { createGoogleAuthRouter } from "./google-auth.mjs";
 import { createMediaRouter } from "./media-router.mjs";
+import { createEditorialEvidenceRouter } from "./editorial-evidence.mjs";
+import { createOpportunityFeedbackRouter } from "./opportunity-feedback.mjs";
+import { createPilotEvaluationRouter } from "./pilot-evaluation.mjs";
+import { createResearchReportRouter } from "./research-report.mjs";
 import { recoverMediaJobs, stopMediaJobs } from "./media-generation.mjs";
 import {
   createSocialSyncRouter,
@@ -60,6 +64,10 @@ export function createApp({
   app.use("/api", createAudienceInsightsRouter());
   app.use("/api", createCommunityRouter());
   app.use("/api", createOpportunityAnalysisRouter());
+  app.use("/api", createEditorialEvidenceRouter());
+  app.use("/api", createOpportunityFeedbackRouter());
+  app.use("/api", createPilotEvaluationRouter());
+  app.use("/api", createResearchReportRouter());
   app.use("/api", (_req, res) =>
     res.status(404).json({ error: "La ruta de API no existe." }),
   );

@@ -1,6 +1,7 @@
 export type View =
   | "home"
   | "opportunities"
+  | "research"
   | "results"
   | "radar"
   | "inbox"
