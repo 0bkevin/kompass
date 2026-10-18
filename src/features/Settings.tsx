@@ -27,6 +27,8 @@ import {
 } from "lucide-react";
 import { useWorkspace } from "../lib/workspace";
 import { api, json } from "../lib/api";
+import { createSourceDraftGuard } from "../lib/source-draft-guard.mjs";
+import { ProviderBudget } from "./ProviderBudget";
 import {
   Badge,
   Button,
@@ -41,12 +43,20 @@ import type {
   Session,
   SocialPlatform,
   SocialSettings,
+  Source,
 } from "../lib/types";
+
+const sourceHasUrl = (type: Source["type"]) =>
+  ["rss", "reddit", "youtube", "apify"].includes(type);
+const sourceQueryKind = (type: Source["type"]) =>
+  type === "rss" ? null : type === "reddit" ? "community" : "topic";
+const sourcePlatform = (type: Source["type"], platform?: SocialPlatform) =>
+  type === "youtube" ? "youtube" : platform === "tiktok" ? "tiktok" : "instagram";
 
 type SourceDraft = {
   id?: string;
   name: string;
-  type: string;
+  type: Source["type"];
   query: string;
   url: string;
   platform: SocialPlatform;
@@ -111,7 +121,7 @@ const formatDate = (date?: string) =>
     : "Todavía sin sincronizar";
 
 export default function Settings() {
-  const { state, refresh, notify } = useWorkspace();
+  const { state, refresh, notify, registerUnsavedChangesGuard } = useWorkspace();
   const brandId = state.brand.id;
   const brandIdRef = useRef(brandId);
   brandIdRef.current = brandId;
@@ -120,6 +130,24 @@ export default function Settings() {
   const canEdit = owner || state.brand.role === "editor";
   const [source, setSource] = useState<SourceDraft | null>(null);
   const [busy, setBusy] = useState("");
+  const sourceGuardRef = useRef(
+    createSourceDraftGuard<SourceDraft>({
+      confirmDiscard: () =>
+        window.confirm("Hay cambios sin guardar. ¿Salir y descartar esta fuente?"),
+      onDiscard: () => setSource(null),
+    }),
+  );
+  sourceGuardRef.current.sync(source, !!busy);
+  useEffect(
+    () => registerUnsavedChangesGuard(sourceGuardRef.current),
+    [registerUnsavedChangesGuard],
+  );
+  function openSource(draft: SourceDraft) {
+    if (sourceGuardRef.current.open(draft)) setSource(draft);
+  }
+  function closeSource() {
+    sourceGuardRef.current.confirmLeave();
+  }
   const [userId, setUserId] = useState("");
   const [inviteRole, setInviteRole] = useState<Role>("editor");
   const [invitation, setInvitation] = useState<{
@@ -194,7 +222,7 @@ export default function Settings() {
     };
   }, []);
   useEffect(() => {
-    setSource(null);
+    sourceGuardRef.current.discard();
     setInvitation(null);
     setAcceptToken("");
     setSocialSettings(null);
@@ -229,7 +257,7 @@ export default function Settings() {
   }
   async function saveSource(event: FormEvent) {
     event.preventDefault();
-    if (!source) return;
+    if (!source || busy) return;
     const socialType = source.type === "youtube" || source.type === "apify";
     const isConfigured =
       source.type === "youtube"
@@ -248,32 +276,37 @@ export default function Settings() {
         return;
       }
     }
-    await perform(
-      "source-save",
-      async () => {
-        await api(`${base}/sources${source.id ? `/${source.id}` : ""}`, {
-          method: source.id ? "PATCH" : "POST",
-          body: json({
-            name: source.name,
-            type: source.type,
-            query: source.query,
-            url: source.url,
-            enabled: source.enabled && (!socialType || isConfigured),
-            ...(source.type === "youtube"
-              ? { platform: "youtube" }
-              : source.type === "apify"
-                ? {
-                    platform: source.platform,
-                    limit: Number(source.limit || 20),
-                  }
-                : {}),
-          }),
-        });
-        setSource(null);
-        await refresh();
-      },
-      "Fuente guardada. Usa Buscar tendencias en el radar para consultarla.",
-    );
+    if (!sourceGuardRef.current.beginSave()) return;
+    try {
+      await perform(
+        "source-save",
+        async () => {
+          await api(`${base}/sources${source.id ? `/${source.id}` : ""}`, {
+            method: source.id ? "PATCH" : "POST",
+            body: json({
+              name: source.name,
+              type: source.type,
+              ...(sourceQueryKind(source.type) ? { query: source.query } : {}),
+              ...(sourceHasUrl(source.type) ? { url: source.url } : {}),
+              enabled: source.enabled && (!socialType || isConfigured),
+              ...(source.type === "youtube"
+                ? { platform: "youtube" }
+                : source.type === "apify"
+                  ? {
+                      platform: source.platform,
+                      limit: Number(source.limit || 20),
+                    }
+                  : {}),
+            }),
+          });
+          sourceGuardRef.current.discard();
+          await refresh();
+        },
+        "Fuente guardada. Usa Buscar tendencias en el radar para consultarla.",
+      );
+    } finally {
+      sourceGuardRef.current.endSave();
+    }
   }
   async function integration(input: unknown, clear: () => void) {
     await perform(
@@ -360,7 +393,6 @@ export default function Settings() {
     <div className="stack settings-page">
       <div className="page-heading">
         <div>
-          <div className="eyebrow">TU SISTEMA, CONECTADO</div>
           <h1>Fuentes y equipo</h1>
           <p className="muted">
             Define de dónde vienen las señales y quién las convierte en
@@ -372,6 +404,7 @@ export default function Settings() {
         </Badge>
       </div>
 
+      <ProviderBudget />
       <section className="card settings-section">
         <div className="section-heading">
           <div>
@@ -387,7 +420,8 @@ export default function Settings() {
           {canEdit && (
             <Button
               variant="primary"
-              onClick={() => setSource({ ...newSource })}
+              disabled={!!busy}
+              onClick={() => openSource({ ...newSource })}
             >
               <Plus size={17} /> Añadir fuente
             </Button>
@@ -451,8 +485,8 @@ export default function Settings() {
                           overflowWrap: "anywhere",
                         }}
                       >
-                        {item.query ||
-                          item.url ||
+                        {(sourceQueryKind(item.type) && item.query) ||
+                          (sourceHasUrl(item.type) && item.url) ||
                           "Consulta según el contexto de tu marca"}
                       </p>
                       <small className="muted">
@@ -519,14 +553,15 @@ export default function Settings() {
                       </IconButton>
                       <IconButton
                         label={`Editar ${item.name}`}
+                        disabled={!!busy}
                         onClick={() =>
-                          setSource({
+                          openSource({
                             id: item.id,
                             name: item.name,
                             type: item.type,
-                            query: item.query || "",
-                            url: item.url || "",
-                            platform: item.platform || "instagram",
+                            query: sourceQueryKind(item.type) ? item.query || "" : "",
+                            url: sourceHasUrl(item.type) ? item.url || "" : "",
+                            platform: sourcePlatform(item.type, item.platform),
                             limit: String(item.limit || 20),
                             enabled: item.enabled,
                           })
@@ -1286,201 +1321,213 @@ export default function Settings() {
       {source && (
         <Modal
           title={source.id ? "Editar fuente" : "Añadir fuente"}
-          onClose={() => {
-            if (!busy) setSource(null);
-          }}
+          onClose={closeSource}
         >
-          <form onSubmit={saveSource} className="stack">
-            <Field
-              label="Nombre de la fuente"
-              required
-              value={source.name}
-              maxLength={200}
-              onChange={(event) =>
-                setSource({ ...source, name: event.target.value })
-              }
-              placeholder="Ej. Innovación en mi industria"
-            />
-            <Field label="Tipo de fuente">
-              <select
-                value={source.type}
-                onChange={(event) => {
-                  const type = event.target.value;
-                  setSource({
-                    ...source,
-                    type,
-                    enabled:
-                      type === "youtube" || type === "apify"
-                        ? false
-                        : source.enabled,
-                    platform: type === "youtube" ? "youtube" : source.platform,
-                  });
-                }}
-              >
-                {sourceTypes.map((type) => (
-                  <option key={type.value} value={type.value}>
-                    {type.label}
-                  </option>
-                ))}
-              </select>
-            </Field>
-            <p className="muted" style={{ fontSize: 13 }}>
-              {
-                sourceTypes.find((type) => type.value === source.type)
-                  ?.description
-              }
-            </p>
-            {source.type === "rss" && (
+          <form onSubmit={saveSource} aria-busy={busy === "source-save"}>
+            <fieldset
+              className="stack"
+              disabled={!!busy}
+              style={{ border: 0, margin: 0, padding: 0, minWidth: 0 }}
+            >
               <Field
-                label="URL del feed RSS / Atom"
+                label="Nombre de la fuente"
                 required
-                type="url"
-                value={source.url}
+                value={source.name}
+                maxLength={200}
                 onChange={(event) =>
-                  setSource({ ...source, url: event.target.value })
+                  setSource({ ...source, name: event.target.value })
                 }
-                placeholder="https://sitio.com/feed"
+                placeholder="Ej. Innovación en mi industria"
               />
-            )}
-            {source.type === "youtube" && (
-              <>
+              <Field label="Tipo de fuente">
+                <select
+                  value={source.type}
+                  onChange={(event) => {
+                    const type = event.target.value as Source["type"];
+                    setSource({
+                      ...source,
+                      type,
+                      query:
+                        sourceQueryKind(type) &&
+                        sourceQueryKind(type) === sourceQueryKind(source.type)
+                          ? source.query
+                          : "",
+                      url: type === source.type ? source.url : "",
+                      enabled:
+                        type === "youtube" || type === "apify"
+                          ? false
+                          : source.enabled,
+                      platform: sourcePlatform(type, source.platform),
+                    });
+                  }}
+                >
+                  {sourceTypes.map((type) => (
+                    <option key={type.value} value={type.value}>
+                      {type.label}
+                    </option>
+                  ))}
+                </select>
+              </Field>
+              <p className="muted" style={{ fontSize: 13 }}>
+                {
+                  sourceTypes.find((type) => type.value === source.type)
+                    ?.description
+                }
+              </p>
+              {source.type === "rss" && (
                 <Field
-                  label="Tema o consulta de YouTube"
-                  value={source.query}
-                  maxLength={300}
-                  onChange={(event) =>
-                    setSource({ ...source, query: event.target.value })
-                  }
-                  placeholder="rutina de cuidado de la piel"
-                />
-                <Field
-                  label="Canal de YouTube (opcional)"
+                  label="URL del feed RSS / Atom"
+                  required
                   type="url"
                   value={source.url}
                   onChange={(event) =>
                     setSource({ ...source, url: event.target.value })
                   }
-                  placeholder="https://www.youtube.com/@canal"
+                  placeholder="https://sitio.com/feed"
                 />
-                <small className="muted">
-                  Indica una consulta temática o una URL de canal. Se conserva
-                  la URL del video original y las vistas oficiales disponibles.
-                </small>
-              </>
-            )}
-            {source.type === "apify" && (
-              <>
-                <Field label="Red social">
-                  <select
-                    value={source.platform}
+              )}
+              {source.type === "youtube" && (
+                <>
+                  <Field
+                    label="Tema o consulta de YouTube"
+                    value={source.query}
+                    maxLength={300}
                     onChange={(event) =>
-                      setSource({
-                        ...source,
-                        platform: event.target.value as SocialPlatform,
-                      })
+                      setSource({ ...source, query: event.target.value })
                     }
-                  >
-                    <option value="instagram">Instagram</option>
-                    <option value="tiktok">TikTok</option>
-                  </select>
-                </Field>
+                    placeholder="rutina de cuidado de la piel"
+                  />
+                  <Field
+                    label="Canal de YouTube (opcional)"
+                    type="url"
+                    value={source.url}
+                    onChange={(event) =>
+                      setSource({ ...source, url: event.target.value })
+                    }
+                    placeholder="https://www.youtube.com/@canal"
+                  />
+                  <small className="muted">
+                    Indica una consulta temática o una URL de canal. Se conserva
+                    la URL del video original y las vistas oficiales disponibles.
+                  </small>
+                </>
+              )}
+              {source.type === "apify" && (
+                <>
+                  <Field label="Red social">
+                    <select
+                      value={source.platform}
+                      onChange={(event) =>
+                        setSource({
+                          ...source,
+                          platform: event.target.value as SocialPlatform,
+                          url:
+                            event.target.value === source.platform ? source.url : "",
+                        })
+                      }
+                    >
+                      <option value="instagram">Instagram</option>
+                      <option value="tiktok">TikTok</option>
+                    </select>
+                  </Field>
+                  <Field
+                    label="Tema, hashtag o consulta"
+                    value={source.query}
+                    maxLength={300}
+                    onChange={(event) =>
+                      setSource({ ...source, query: event.target.value })
+                    }
+                    placeholder="#rutinafacial"
+                  />
+                  <Field
+                    label={`URL de ${source.platform === "instagram" ? "Instagram" : "TikTok"} (opcional)`}
+                    type="url"
+                    value={source.url}
+                    onChange={(event) =>
+                      setSource({ ...source, url: event.target.value })
+                    }
+                    placeholder={
+                      source.platform === "instagram"
+                        ? "https://www.instagram.com/…"
+                        : "https://www.tiktok.com/@…"
+                    }
+                  />
+                  <Field
+                    label="Máximo de resultados por consulta (1–50)"
+                    type="number"
+                    min={1}
+                    max={50}
+                    step={1}
+                    value={source.limit}
+                    onChange={(event) =>
+                      setSource({ ...source, limit: event.target.value })
+                    }
+                  />
+                  <small className="muted">
+                    Si completas consulta y URL, el backend prioriza la consulta.
+                    El actor puede tener límites o cargos propios.
+                  </small>
+                </>
+              )}
+              {source.type !== "rss" && !selectedSourceSocial && (
                 <Field
-                  label="Tema, hashtag o consulta"
+                  label={
+                    source.type === "reddit"
+                      ? "Comunidad (subreddit)"
+                      : "Tema o consulta en inglés (opcional)"
+                  }
                   value={source.query}
                   maxLength={300}
                   onChange={(event) =>
                     setSource({ ...source, query: event.target.value })
-                  }
-                  placeholder="#rutinafacial"
-                />
-                <Field
-                  label={`URL de ${source.platform === "instagram" ? "Instagram" : "TikTok"} (opcional)`}
-                  type="url"
-                  value={source.url}
-                  onChange={(event) =>
-                    setSource({ ...source, url: event.target.value })
                   }
                   placeholder={
-                    source.platform === "instagram"
-                      ? "https://www.instagram.com/…"
-                      : "https://www.tiktok.com/@…"
+                    source.type === "reddit"
+                      ? "artificial"
+                      : "artificial intelligence"
                   }
                 />
-                <Field
-                  label="Máximo de resultados por consulta (1–50)"
-                  type="number"
-                  min={1}
-                  max={50}
-                  step={1}
-                  value={source.limit}
-                  onChange={(event) =>
-                    setSource({ ...source, limit: event.target.value })
-                  }
-                />
+              )}
+              {source.type === "gdelt" && (
                 <small className="muted">
-                  Si completas consulta y URL, el backend prioriza la consulta.
-                  El actor puede tener límites o cargos propios.
+                  Si dejas la consulta vacía, se utiliza el contexto de tu marca.
+                  Prueba términos concretos en inglés para ampliar cobertura.
                 </small>
-              </>
-            )}
-            {source.type !== "rss" && !selectedSourceSocial && (
-              <Field
-                label={
-                  source.type === "reddit"
-                    ? "Comunidad (subreddit)"
-                    : "Tema o consulta en inglés (opcional)"
-                }
-                value={source.query}
-                maxLength={300}
-                onChange={(event) =>
-                  setSource({ ...source, query: event.target.value })
-                }
-                placeholder={
-                  source.type === "reddit"
-                    ? "artificial"
-                    : "artificial intelligence"
-                }
-              />
-            )}
-            {source.type === "gdelt" && (
-              <small className="muted">
-                Si dejas la consulta vacía, se utiliza el contexto de tu marca.
-                Prueba términos concretos en inglés para ampliar cobertura.
-              </small>
-            )}
-            <label className="row">
-              <input
-                type="checkbox"
-                checked={source.enabled}
-                disabled={selectedSourceSocial && !selectedSourceConfigured}
-                onChange={(event) =>
-                  setSource({ ...source, enabled: event.target.checked })
-                }
-              />{" "}
-              {selectedSourceSocial && !selectedSourceConfigured
-                ? "Activar al configurar el proveedor"
-                : "Activar para la próxima búsqueda"}
-            </label>
-            {selectedSourceSocial && !selectedSourceConfigured && (
-              <p className="small muted">
-                Esta fuente se guardará pausada. Un propietario debe conectar
-                {source.type === "youtube" ? " YouTube" : " Apify"} en Fuentes y
-                equipo antes de activarla.
-              </p>
-            )}
-            <div className="row" style={{ justifyContent: "flex-end" }}>
-              <Button disabled={!!busy} onClick={() => setSource(null)}>
-                Cancelar
-              </Button>
-              <Button
-                type="submit"
-                variant="primary"
-                busy={busy === "source-save"}
-                disabled={!!busy}
-              >
-                Guardar fuente
-              </Button>
-            </div>
+              )}
+              <label className="row">
+                <input
+                  type="checkbox"
+                  checked={source.enabled}
+                  disabled={selectedSourceSocial && !selectedSourceConfigured}
+                  onChange={(event) =>
+                    setSource({ ...source, enabled: event.target.checked })
+                  }
+                />{" "}
+                {selectedSourceSocial && !selectedSourceConfigured
+                  ? "Activar al configurar el proveedor"
+                  : "Activar para la próxima búsqueda"}
+              </label>
+              {selectedSourceSocial && !selectedSourceConfigured && (
+                <p className="small muted">
+                  Esta fuente se guardará pausada. Un propietario debe conectar
+                  {source.type === "youtube" ? " YouTube" : " Apify"} en Fuentes y
+                  equipo antes de activarla.
+                </p>
+              )}
+              <div className="row" style={{ justifyContent: "flex-end" }}>
+                <Button disabled={!!busy} onClick={closeSource}>
+                  Cancelar
+                </Button>
+                <Button
+                  type="submit"
+                  variant="primary"
+                  busy={busy === "source-save"}
+                  disabled={!!busy}
+                >
+                  Guardar fuente
+                </Button>
+              </div>
+            </fieldset>
           </form>
         </Modal>
       )}
