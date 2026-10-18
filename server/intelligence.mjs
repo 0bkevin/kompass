@@ -2055,15 +2055,26 @@ export async function analyzeReference(brand, reference, options = {}) {
         options,
       )
     : null;
-  if (generated)
+  if (generated) {
+    if (
+      ["hook", "hypothesis", "adaptation"].some(
+        (field) =>
+          typeof generated[field] !== "string" || !generated[field].trim(),
+      )
+    )
+      throw integrationError(
+        "La IA devolvió campos inválidos. No se guardó el análisis. Vuelve a intentarlo.",
+        502,
+      );
     analysis = {
       ...analysis,
-      hook: String(generated.hook).slice(0, 1000),
-      hypothesis: String(generated.hypothesis).slice(0, 5000),
-      adaptation: String(generated.adaptation).slice(0, 5000),
+      hook: generated.hook.trim().slice(0, 1000),
+      hypothesis: generated.hypothesis.trim().slice(0, 5000),
+      adaptation: generated.adaptation.trim().slice(0, 5000),
       engine: "ai",
       confidence: enriched.text ? "medium" : "low",
     };
+  }
   analysis.signals.push(...signals);
   const current = getRecord(brand.id, "references", reference.id);
   if (!current)
