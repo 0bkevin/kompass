@@ -195,6 +195,33 @@ test("robots denial prevents the target request even for an approved source", as
   assert.deepEqual(calls, ["https://allowed.example/robots.txt"]);
 });
 
+test("requests identify as kompass while legacy crawler restrictions still block content", async (t) => {
+  grants(grant());
+  let robots = "User-agent: kompass\nAllow: /public";
+  const calls = transport(t, (url, options) => {
+    assert.equal(
+      options.headers["user-agent"],
+      "kompass/1.0 (public editorial feed reader)",
+    );
+    return {
+      body: url.pathname === "/robots.txt" ? robots : "approved content",
+    };
+  });
+  const response = await safeFetch("https://allowed.example/public/article");
+  assert.equal(await response.text(), "approved content");
+  assert.deepEqual(calls, [
+    "https://allowed.example/robots.txt",
+    "https://allowed.example/public/article",
+  ]);
+
+  robots += "\nUser-agent: 30XRadar\nDisallow: /public";
+  await assert.rejects(
+    safeFetch("https://allowed.example/public/article"),
+    /robots/,
+  );
+  assert.deepEqual(calls.slice(2), ["https://allowed.example/robots.txt"]);
+});
+
 test("a permitted page redirect cannot reach a restricted platform", async (t) => {
   grants(grant());
   const calls = transport(t, (url) =>
@@ -258,7 +285,7 @@ test("official RSS allowlist rejects query/path and hostname lookalikes", () => 
 test("robots parser honors product-specific groups, longest match and percent-encoded unreserved paths", () => {
   assert.equal(
     robotsAllows(
-      "User-agent: *\nAllow: /\nUser-agent: 30XRadar\nDisallow: /private\nAllow: /private/public",
+      "User-agent: *\nAllow: /\nUser-agent: KoMpAsS\nDisallow: /private\nAllow: /private/public",
       "https://allowed.example/private/x",
     ),
     false,
@@ -277,6 +304,46 @@ test("robots parser honors product-specific groups, longest match and percent-en
     ),
     false,
   );
+});
+
+test("current and legacy crawler groups must both permit a path", () => {
+  const cases = [
+    {
+      robots:
+        "User-agent: *\nAllow: /\nUser-agent: 30XRadar\nDisallow: /private",
+      path: "/private/article",
+      allowed: false,
+    },
+    {
+      robots:
+        "User-agent: kompass\nAllow: /\nUser-agent: 30XRadar\nDisallow: /private",
+      path: "/private/article",
+      allowed: false,
+    },
+    {
+      robots:
+        "User-agent: kompass\nDisallow: /private\nUser-agent: 30XRadar\nAllow: /",
+      path: "/private/article",
+      allowed: false,
+    },
+    {
+      robots:
+        "User-agent: kompass\nDisallow: /private\nAllow: /private/public\nUser-agent: 30XRadar\nDisallow: /private\nAllow: /private/public",
+      path: "/private/public/article",
+      allowed: true,
+    },
+    {
+      robots: "User-agent: *\nDisallow: /\nUser-agent: kompass\nAllow: /public",
+      path: "/public/article",
+      allowed: true,
+    },
+  ];
+  for (const { robots, path, allowed } of cases)
+    assert.equal(
+      robotsAllows(robots, `https://allowed.example${path}`),
+      allowed,
+      robots,
+    );
 });
 
 test("editing a legacy restricted reference cannot launder its ingestion provenance", async () => {

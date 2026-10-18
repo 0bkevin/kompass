@@ -489,7 +489,7 @@ function SocialDiscoveryPanel() {
             value={query}
             maxLength={200}
             onChange={(event) => setQuery(event.target.value)}
-            placeholder="Por ejemplo: 30X inteligencia artificial"
+            placeholder="Por ejemplo: inteligencia artificial para equipos"
             disabled={busy || !canEdit}
           />
         </Field>

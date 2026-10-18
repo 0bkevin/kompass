@@ -179,7 +179,10 @@ test("API-only mode bypasses any stale web build", async () => {
       `http://127.0.0.1:${apiOnlyServer.address().port}/`,
     );
     assert.equal(response.status, 200);
-    assert.match(await response.text(), /Inicia la interfaz con npm run dev/);
+    assert.equal(
+      await response.text(),
+      "kompass API está activa. Inicia la interfaz con npm run dev.",
+    );
   } finally {
     await new Promise((resolve) => apiOnlyServer.close(resolve));
   }

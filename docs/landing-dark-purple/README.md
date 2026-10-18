@@ -1,4 +1,4 @@
-# Nueva landing pública de 30X Radar
+# Nueva landing pública de kompass
 
 La [revisión de copy y navbar](copy-navbar-refinement.md) aplica la skill de Peter Yang y el titular elegido después por el usuario, «Le damos dirección a tu contenido». Sus capturas corresponden al estado actual; la evidencia siguiente documenta la entrega inicial.
 

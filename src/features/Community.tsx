@@ -185,22 +185,17 @@ export function CommunitySensor({
             setBusy("new");
             setError("");
             try {
-              await api<Poll>(
-                `/api/brands/${brandId}/community-polls`,
-                {
-                  method: "POST",
-                  body: json({
-                    question,
-                    options: options
-                      .split("\n")
-                      .map((value) => value.trim())
-                      .filter(Boolean),
-                    segmentIds: state.brand.audience.map(
-                      (segment) => segment.id,
-                    ),
-                  }),
-                },
-              );
+              await api<Poll>(`/api/brands/${brandId}/community-polls`, {
+                method: "POST",
+                body: json({
+                  question,
+                  options: options
+                    .split("\n")
+                    .map((value) => value.trim())
+                    .filter(Boolean),
+                  segmentIds: state.brand.audience.map((segment) => segment.id),
+                }),
+              });
               if (current.current !== brandId) return;
               dirty.current = false;
               setEditing(false);
@@ -522,7 +517,7 @@ export function CommunityQuestion({ token }: { token: string }) {
         </>
       )}
       <footer>
-        Una pregunta de {data?.companyName || "tu comunidad"} · 30X Radar
+        Una pregunta de {data?.companyName || "tu comunidad"} · kompass
       </footer>
     </main>
   );

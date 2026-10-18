@@ -234,7 +234,7 @@ export function CompanySetup({
                 ref={description}
                 value={text}
                 onChange={(event) => setText(event.target.value)}
-                placeholder="Ej. Somos 30X. Ofrecemos formación en ventas e IA para líderes y equipos de Latinoamérica."
+                placeholder="Ej. Somos una empresa de formación. Ofrecemos cursos de ventas e IA para líderes y equipos de Latinoamérica."
                 rows={4}
                 maxLength={20000}
                 aria-describedby="setup-description-help"

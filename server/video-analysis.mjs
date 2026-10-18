@@ -488,7 +488,7 @@ async function uploadVideo(config, media, fetcher) {
           "content-type": "application/json",
         },
         body: JSON.stringify({
-          file: { display_name: `30x-reference-${randomUUID()}` },
+          file: { display_name: `kompass-reference-${randomUUID()}` },
         }),
       },
       fetcher,

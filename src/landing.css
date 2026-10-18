@@ -115,10 +115,6 @@
   font-weight: 650;
   letter-spacing: -0.7px;
 }
-.lp-brand > span > span {
-  font-weight: 400;
-  color: #d0cbd8;
-}
 .lp-nav,
 .lp-header-actions {
   display: flex;

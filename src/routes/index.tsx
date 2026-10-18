@@ -16,7 +16,7 @@ export const Route = createFileRoute("/")({
   },
   head: () => ({
     meta: [
-      { title: "30X Radar · Le damos dirección a tu contenido" },
+      { title: "kompass · Le damos dirección a tu contenido" },
       {
         name: "description",
         content:

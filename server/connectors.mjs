@@ -168,7 +168,7 @@ export async function safeFetch(value, options = {}) {
   }
   const body = options.body;
   const headers = {
-    "user-agent": "30XRadar/1.0 (public editorial feed reader)",
+    "user-agent": "kompass/1.0 (public editorial feed reader)",
     accept: "*/*",
     ...options.headers,
   };

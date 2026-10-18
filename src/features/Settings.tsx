@@ -662,8 +662,8 @@ export default function Settings() {
           </div>
         )}
         <p className="muted" style={{ fontSize: 12, marginTop: 18 }}>
-          La popularidad de una fuente no demuestra una tendencia global. El
-          radar distingue señales observadas, hipótesis editoriales y datos de
+          La popularidad de una fuente no demuestra una tendencia global.
+          kompass distingue señales observadas, hipótesis editoriales y datos de
           ejemplo.
         </p>
       </section>
@@ -741,7 +741,7 @@ export default function Settings() {
             })}
           </div>
           <div className="social-unsupported-note">
-            Facebook y X aparecen como pendientes: este radar todavía no tiene
+            Facebook y X aparecen como pendientes: kompass todavía no tiene
             adaptadores disponibles para esas redes. No se ejecutarán consultas
             globales ni se presentarán resultados como cobertura completa.
           </div>

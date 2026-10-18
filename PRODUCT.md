@@ -12,7 +12,7 @@ Reuse the user-selected ../30x-track application: React 19, TypeScript, TanStack
 
 ## Users
 
-Companies and their content teams. Each company signs in to its own workspace and starts with its website, public social links and content it can provide. 30X is the originating use case, not the only company supported.
+Companies and their content teams. Each company signs in to its own workspace and starts with its website, public social links and content it can provide.
 
 ## Product Purpose
 
@@ -33,6 +33,8 @@ The challenge requires public content, no individual audience profiles, no acces
 Keep observations separate from editorial hypotheses. No invented metrics, global coverage, causal explanations or success predictions. Connected providers require real credentials; the deployment operator configures shared AI once, workspaces inherit it, and readiness requires both configuration and current access permission. User-facing company setup never requires provider keys. Absent providers expose the local editorial workflow and accurate status. Results can be registered manually and are labeled as such. Scheduling is not automatic publication.
 
 ## Brand Commitments
+
+The application is named `kompass`, written in lowercase on every public and authenticated surface. This name replaces the previous product name across the application.
 
 The user explicitly authorizes a complete replacement visual identity for the public landing: dark by default with purple, informed by Resend and Exa. This scope starts only at the landing. The authenticated workspace and authentication retain their established restrained green, light neutral surfaces and familiar controls. Product truth and operational behavior remain binding across both worlds.
 

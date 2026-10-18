@@ -32,6 +32,10 @@ import {
   BarChart3,
 } from "lucide-react";
 import { api, json } from "./lib/api";
+import {
+  readActiveWorkspace,
+  rememberActiveWorkspace,
+} from "./lib/active-workspace.mjs";
 import type { Brand, BrandState, Session, View } from "./lib/types";
 import { WorkspaceProvider } from "./lib/workspace";
 import { Button, Modal, Field } from "./components/ui";
@@ -300,7 +304,7 @@ export default function App() {
         setActiveId(
           (current) =>
             current ||
-            data.brands.find((b) => b.id === localStorage.getItem("30x-brand"))
+            data.brands.find((b) => b.id === readActiveWorkspace(localStorage))
               ?.id ||
             data.brands[0]?.id ||
             "",
@@ -391,7 +395,7 @@ export default function App() {
     if (!activeId || activeRef.current !== activeId) return;
     setState(null);
     setError("");
-    localStorage.setItem("30x-brand", activeId);
+    rememberActiveWorkspace(localStorage, activeId);
     void refresh({ reportError: true }).catch(() => {});
   }, [activeId, refresh]);
   useEffect(() => {
@@ -468,9 +472,7 @@ export default function App() {
   if (!session.brands.length)
     return (
       <div className="onboarding">
-        <div className="wordmark">
-          30X <span>RADAR</span>
-        </div>
+        <div className="wordmark">kompass</div>
         <div className="onboarding-panel">
           <CompanySetup onCreated={brandCreated} />
         </div>
@@ -528,7 +530,7 @@ export default function App() {
           <span className="wordmark-icon">
             <Radio size={23} />
           </span>
-          30X <span>RADAR</span>
+          kompass
         </Link>
         <div className="workspace-switch">
           <div
@@ -745,7 +747,7 @@ export default function App() {
           )}
         </main>
         <footer className="app-footer">
-          <span>30X Radar · Hecho para encontrar tu próximo ángulo.</span>
+          <span>kompass · Hecho para encontrar tu próximo ángulo.</span>
           <span>Las señales tienen contexto. Las decisiones son tuyas.</span>
         </footer>
       </div>
@@ -899,9 +901,7 @@ function Auth({
   return (
     <div className="auth-page">
       <div className="auth-story">
-        <div className="wordmark">
-          30X <span>RADAR</span>
-        </div>
+        <div className="wordmark">kompass</div>
         <div className="auth-intro">
           <h1>
             Tu audiencia cambia. <br />
@@ -1011,7 +1011,7 @@ function Auth({
                 ? "Crear mi cuenta"
                 : linkGoogle && googleEnabled
                   ? "Entrar y conectar Google"
-                  : "Entrar a mi radar"}
+                  : "Entrar a kompass"}
               <ArrowRight size={17} />
             </Button>
             {signedIn && (

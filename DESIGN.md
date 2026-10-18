@@ -1,5 +1,5 @@
 ---
-name: 30X Radar
+name: kompass
 description: An editorial dark-purple public landing and a calm green working application.
 colors:
   primary: "#136c51"
@@ -172,13 +172,13 @@ components:
     padding: "2px 7px"
 ---
 
-# Design System: 30X Radar
+# Design System: kompass
 
 ## Overview
 
 **Creative North Star: "The Editorial Thread and the Guided Green Workspace"**
 
-30X Radar has two deliberately scoped visual worlds. The public landing at `/` uses an ink-black ground, charcoal layers and pale lavender actions. Hedvig Letters Serif gives promises an editorial voice; Geist gives examples and controls precision. Fine connections, square modules and open dividers make the relationship between an audience need and an editorial decision visible.
+kompass has two deliberately scoped visual worlds. The public landing at `/` uses an ink-black ground, charcoal layers and pale lavender actions. Hedvig Letters Serif gives promises an editorial voice; Geist gives examples and controls precision. Fine connections, square modules and open dividers make the relationship between an audience need and an editorial decision visible.
 
 The authenticated application and authentication retain their established green identity: dark green navigation, light neutral working surfaces, Manrope headings and DM Sans reading text and controls. Familiar forms, divided lists and disclosures support sustained editorial work. The landing identity does not authorize restyling these surfaces.
 

@@ -1,8 +1,10 @@
 <img src="assets/icon.svg" width="56" height="56" alt="">
 
-# 30X Radar · contenido con contexto
+# kompass · contenido con contexto
 
-Plataforma para empresas, medios y creadores: empieza por el contenido de una empresa, conecta necesidades de audiencia con evidencia pública y acompaña la pieza hasta su revisión, calendario y resultados. 30X es el caso inicial; cada empresa tiene su propio espacio, marca, audiencias, fuentes y equipo.
+Plataforma para empresas, medios y creadores: empieza por el contenido de una empresa, conecta necesidades de audiencia con evidencia pública y acompaña la pieza hasta su revisión, calendario y resultados. Cada empresa tiene su propio espacio, marca, audiencias, fuentes y equipo.
+
+El [cambio de nombre a kompass](docs/kompass-rename.md) incluye la compatibilidad y las comprobaciones de la landing, el acceso y la aplicación.
 
 ## Ejecutar
 

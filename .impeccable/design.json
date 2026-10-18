@@ -1,7 +1,7 @@
 {
   "schemaVersion": 2,
   "generatedAt": "2026-10-18T13:23:16.040958+00:00",
-  "title": "Design System: 30X Radar",
+  "title": "Design System: kompass",
   "extensions": {
     "colorMeta": {
       "primary": {
@@ -622,7 +622,7 @@
   ],
   "narrative": {
     "northStar": "The Editorial Thread and the Guided Green Workspace",
-    "overview": "30X Radar has two deliberately scoped visual worlds. The public landing at `/` uses an ink-black ground, charcoal layers and pale lavender actions. Hedvig Letters Serif gives promises an editorial voice; Geist gives examples and controls precision. Fine connections, square modules and open dividers make the relationship between an audience need and an editorial decision visible.\n\nThe authenticated application and authentication retain their established green identity: dark green navigation, light neutral working surfaces, Manrope headings and DM Sans reading text and controls. Familiar forms, divided lists and disclosures support sustained editorial work. The landing identity does not authorize restyling these surfaces.\n\nFrontmatter primitives without a `landing-` prefix belong to the working application and authentication. Every `landing-` token belongs only to the public landing. The landing source scopes its custom properties to its page wrapper; its font faces are locally served. This document records the implemented rules in `src/landing.css`, `src/styles.css` and `src/workspace.css`, rather than a product-wide migration.",
+    "overview": "kompass has two deliberately scoped visual worlds. The public landing at `/` uses an ink-black ground, charcoal layers and pale lavender actions. Hedvig Letters Serif gives promises an editorial voice; Geist gives examples and controls precision. Fine connections, square modules and open dividers make the relationship between an audience need and an editorial decision visible.\n\nThe authenticated application and authentication retain their established green identity: dark green navigation, light neutral working surfaces, Manrope headings and DM Sans reading text and controls. Familiar forms, divided lists and disclosures support sustained editorial work. The landing identity does not authorize restyling these surfaces.\n\nFrontmatter primitives without a `landing-` prefix belong to the working application and authentication. Every `landing-` token belongs only to the public landing. The landing source scopes its custom properties to its page wrapper; its font faces are locally served. This document records the implemented rules in `src/landing.css`, `src/styles.css` and `src/workspace.css`, rather than a product-wide migration.",
     "keyCharacteristics": [
       "Public landing: ink-black, charcoal, lavender, editorial serif promises and precise sans-serif controls.",
       "Workspace and authentication: dark green orientation, light working surfaces, Manrope headings and DM Sans text.",

@@ -7,6 +7,8 @@ related_targets: ["src/features/landing/LandingPage.tsx","src/landing.css"]
 
 # Public landing
 
+Application name: `kompass`, lowercase, on all application surfaces. The user explicitly renamed the complete application. Keep the approved tagline and the two landing typefaces.
+
 Mode: Persuade. Target `/`, `src/routes/index.tsx`, `src/features/landing/`, `src/landing.css`. The user explicitly authorizes replacing the entire previous visual identity, starting only with the public landing. Dark by default, purple, modern, elegant and clear. Workspace and authentication keep their current operation and visual world. No routine approval round: the user has supplied references, constraints, and authority to proceed.
 
 Audience: content teams at companies, media and creators. Job: choose content with audience context and public evidence, then keep the editorial thread through writing, review, planning and results. Primary action: `/home?auth=signup`. Returning access: `/home?auth=login`. Demo: explicit POST to the existing demo API after a button click. Root invitations and legacy links retain their paths.

@@ -95,7 +95,7 @@ const faqs = [
   },
 ];
 
-export function RadarMark({ className = "" }: { className?: string }) {
+export function KompassMark({ className = "" }: { className?: string }) {
   return (
     <svg
       className={className}
@@ -215,7 +215,7 @@ function EditorialExample() {
     <figure className="lp-example" id="ejemplo">
       <figcaption className="lp-example-heading">
         <span>
-          <RadarMark /> De una pregunta al guion
+          <KompassMark /> De una pregunta al guion
         </span>
         <span className="lp-example-label">Ejemplo ilustrativo</span>
       </figcaption>
@@ -418,11 +418,9 @@ export function LandingPage() {
       </a>
       <header className="lp-header">
         <div className="lp-container lp-header-inner">
-          <a className="lp-brand" href="/" aria-label="30X Radar, inicio">
-            <RadarMark />
-            <span>
-              30X <span>Radar</span>
-            </span>
+          <a className="lp-brand" href="/" aria-label="kompass, inicio">
+            <KompassMark />
+            <span>kompass</span>
           </a>
           <nav className="lp-nav" aria-label="Navegación principal">
             <a href="#como-funciona">Cómo funciona</a>
@@ -699,7 +697,7 @@ export function LandingPage() {
         </section>
         <section className="lp-close" aria-labelledby="lp-close-title">
           <div className="lp-container">
-            <RadarMark className="lp-close-mark" />
+            <KompassMark className="lp-close-mark" />
             <h2 id="lp-close-title">
               Crea tu cuenta
               <br />
@@ -715,11 +713,9 @@ export function LandingPage() {
         </section>
       </main>
       <footer className="lp-footer lp-container">
-        <a className="lp-brand" href="/" aria-label="30X Radar, inicio">
-          <RadarMark />
-          <span>
-            30X <span>Radar</span>
-          </span>
+        <a className="lp-brand" href="/" aria-label="kompass, inicio">
+          <KompassMark />
+          <span>kompass</span>
         </a>
         <p>Guiones, revisión y calendario para equipos de contenido.</p>
         <a href="#contenido">

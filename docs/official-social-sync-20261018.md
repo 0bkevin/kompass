@@ -4,7 +4,7 @@ Reviewed on 2026-10-18. Implementation: `server/social-sync.mjs`; regression cov
 
 ## What is implemented
 
-The platform has an official YouTube Data API connector for recent public videos and automatic refresh of raw public video counters. It uses either a platform-managed `YOUTUBE_DATA_API_KEY` or a separately consented read-only YouTube OAuth connection. Signing into Radar with Google does not connect a YouTube channel.
+The platform has an official YouTube Data API connector for recent public videos and automatic refresh of raw public video counters. It uses either a platform-managed `YOUTUBE_DATA_API_KEY` or a separately consented read-only YouTube OAuth connection. Signing into kompass with Google does not connect a YouTube channel.
 
 The catalogue displays public titles, publication dates, links and the counters returned by YouTube. It requests at most 25 recent videos, with 12 as the default. The search covers the last seven days and uses YouTube's publication-date ordering. An identical search uses a 15-minute cache; a different topic can be searched immediately within the deployment's daily budget.
 

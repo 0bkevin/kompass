@@ -1035,7 +1035,7 @@ export function createCoreRouter() {
   });
   router.post("/auth/demo", authRateLimit, async (req, res) => {
     const user = createUser({
-      name: "Explorador de Radar",
+      name: "Explorador de kompass",
       email: `demo-${randomUUID()}@example.invalid`,
       passwordHash: await hashPassword(randomBytes(32).toString("hex")),
     });
@@ -1530,7 +1530,7 @@ export function createCoreRouter() {
 
 function demoBrandInput() {
   return {
-    name: "30X · espacio de ejemplo",
+    name: "Empresa de ejemplo",
     industry: "Educación y transformación con IA",
     description:
       "Espacio de demostración con referencias, hipótesis y piezas ficticias identificadas. Ayudamos a equipos latinoamericanos a convertir la IA en trabajo útil.",
@@ -1757,11 +1757,11 @@ export function seedDemo(brandId) {
   );
   const id = randomUUID();
   const storageName = `${id}.svg`;
-  const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="1200"><rect width="1200" height="1200" fill="#171d17"/><circle cx="1050" cy="100" r="450" fill="#c4f168" opacity=".13"/><text x="100" y="180" font-family="sans-serif" font-size="48" fill="#c4f168">30X · EJEMPLO</text><text x="100" y="510" font-family="sans-serif" font-weight="bold" font-size="102" fill="#f3f5ec">Menos ruido.</text><text x="100" y="640" font-family="sans-serif" font-weight="bold" font-size="102" fill="#f3f5ec">Más criterio.</text><text x="100" y="1050" font-family="sans-serif" font-size="34" fill="#c4f168">Plantilla de demostración · no publicada</text></svg>`;
+  const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="1200"><rect width="1200" height="1200" fill="#171d17"/><circle cx="1050" cy="100" r="450" fill="#c4f168" opacity=".13"/><text x="100" y="180" font-family="sans-serif" font-size="48" fill="#c4f168">kompass · EJEMPLO</text><text x="100" y="510" font-family="sans-serif" font-weight="bold" font-size="102" fill="#f3f5ec">Menos ruido.</text><text x="100" y="640" font-family="sans-serif" font-weight="bold" font-size="102" fill="#f3f5ec">Más criterio.</text><text x="100" y="1050" font-family="sans-serif" font-size="34" fill="#c4f168">Plantilla de demostración · no publicada</text></svg>`;
   fs.writeFileSync(path.join(UPLOAD_DIR, storageName), svg, { mode: 0o600 });
   saveRecord(brandId, "assets", {
     id,
-    name: "30X · tarjeta de ejemplo.svg",
+    name: "kompass · tarjeta de ejemplo.svg",
     type: "image",
     mimeType: "image/svg+xml",
     size: Buffer.byteLength(svg),
