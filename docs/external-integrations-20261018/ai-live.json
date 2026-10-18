@@ -1,0 +1,431 @@
+{
+  "at": "2026-10-18T11:38:15.771Z",
+  "provider": "Gemini Developer API",
+  "model": "gemini-3.5-flash-lite",
+  "transport": "real HTTPS; no mocks, interception, simulated DNS or provider response",
+  "port": 5493,
+  "syntheticOnly": true,
+  "steps": [
+    {
+      "feature": "original-reference-analysis",
+      "status": "passed",
+      "engine": "ai",
+      "ownReferenceCount": 1,
+      "nonemptyFields": true,
+      "output": {
+        "hook": "Cómo evaluar un asistente de IA para propuestas comerciales en EdTech usando un ejercicio ficticio y protegiendo datos sensibles",
+        "format": "link",
+        "hypothesis": "Plantear una metodología de prueba basada en un escenario simulado podría facilitar que los directores reconozcan criterios claros de control y verificación humana antes de delegar tareas operativas, evitando la exposición de información sensible.",
+        "saturation": "unknown",
+        "saturationReason": "0 referencias relacionadas en 1 referencias del corpus observado de esta marca. Muestra insuficiente para clasificar saturación; hacen falta al menos 5 referencias.",
+        "relevance": 95,
+        "adaptation": "Adaptar la estructura para Directores de EdTech en México mediante un esquema práctico enfocado en el pilar de Aplicación de inteligencia artificial. Incluir un protocolo de ensayo con una propuesta ficticia para auditar las respuestas del asistente, manteniendo como propuesta a investigar la integración de casos locales y recordando la necesidad de evitar la inclusión de datos personales de alumnos o clientes.",
+        "segmentIds": ["ec01ef5e-5763-4a7e-8803-c94aca699a00"],
+        "signals": [
+          "Motor local: comparación de texto y reglas editoriales, sin búsqueda global.",
+          "Material disponible: título y texto suministrado o extraído.",
+          "Coincidencias con el contexto de marca: educacion, ficticio, empresa, prueba, comercial, edtech, ventas, evaluar, asistentes, original, tiempo, datos, clientes, material.",
+          "Historial editorial comparable: 0 referencias guardadas y 0 descartadas. Afinidad textual usada como ajuste de relevancia; no es un modelo entrenado."
+        ],
+        "confidence": "medium",
+        "engine": "ai",
+        "analyzedAt": "2026-10-18T11:37:38.035Z"
+      },
+      "durationMs": 6488,
+      "model": "gemini-3.8-flash"
+    },
+    {
+      "feature": "semantic-opportunity-analysis",
+      "status": "passed",
+      "engine": "ai",
+      "model": "gemini-3.8-flash",
+      "citationsVerified": true,
+      "segmentIdsVerified": true,
+      "limitationsPresent": true,
+      "durationMs": 45288,
+      "output": {
+        "opportunityId": "opportunity-1125affd07c3be13565b3daf",
+        "engine": "ai",
+        "model": "gemini-3.8-flash",
+        "analyzedAt": "2026-10-18T11:39:41.724Z",
+        "fingerprint": "00a7f1099a55a94c8298d6c7573e04339ea284fa0819e06bba969a03d5bb1d8a",
+        "need": "Evaluar asistentes de IA para propuestas comerciales y tareas operativas usando datos ficticios para proteger la privacidad institucional sin ceder información de clientes ni estudiantes.",
+        "rationale": "El segmento de directores de EdTech en México requiere optimizar la formulación de propuestas de ventas mediante asistentes de inteligencia artificial sin poner en riesgo la privacidad de datos. La referencia aportada por el equipo propone un flujo de validación con escenarios simulados, lo que permite atender directamente este requerimiento operativo dentro del pilar de ventas y crecimiento comercial, reconociendo que dicha referencia proviene de notas internas del equipo y no de una medición empírica independiente.",
+        "hookHypothesis": "Plantear un protocolo de pruebas con casos ficticios despierta el interés editorial de líderes educativos porque aborda simultáneamente la adopción tecnológica y el cumplimiento de protección de datos institucionales.",
+        "adaptation": "Cómo auditar un asistente de IA para propuestas comerciales EdTech sin comprometer datos reales: En el sector educativo tecnológico latinoamericano, antes de autorizar la integración de modelos de lenguaje en el área de admisiones o ventas institucionales, establezca un caso de prueba con una institución hipotética, métricas inventadas y requerimientos pedagógicos simulados. Solicite a la herramienta estructurar los alcances del servicio y justificar cada premisa de costos. Como paso concreto hoy, aplique una rúbrica ciega de cinco preguntas de control sobre la respuesta generada para identificar alucinaciones o supuestos no fundamentados antes de autorizar cualquier plantilla comercial.",
+        "segmentIds": ["ec01ef5e-5763-4a7e-8803-c94aca699a00"],
+        "citations": [
+          {
+            "referenceId": "a183ddd9-95f8-4509-b023-c70762c0ea4a",
+            "support": "No incluyas nombres, correos, datos de alumnos ni información de clientes."
+          }
+        ],
+        "limitations": [
+          "La referencia disponible corresponde a material sintético provisto por el equipo interno y no cuenta con datos de desempeño real, métricas de retención ni validación externa de impacto en ventas.",
+          "Razonamiento semántico de IA: la pertinencia y el gancho son hipótesis editoriales, no consumidores observados ni explicaciones causales del rendimiento."
+        ],
+        "id": "ba03ead1-631f-419a-925b-b31f39c4db9a",
+        "createdAt": "2026-10-18T11:39:41.724Z",
+        "updatedAt": "2026-10-18T11:39:41.724Z"
+      }
+    },
+    {
+      "feature": "draft-first-attempt",
+      "status": "failed-visible-timeout",
+      "model": "gemini-3.8-flash",
+      "durationMs": 60012,
+      "httpStatus": 400,
+      "noPiecePersisted": true,
+      "visibleMessage": "El proveedor agotó el tiempo de espera."
+    },
+    {
+      "feature": "draft-low-reasoning-attempt",
+      "status": "failed-visible-timeout",
+      "model": "gemini-3.8-flash",
+      "reasoningEffort": "low",
+      "durationMs": 60031,
+      "httpStatus": 400,
+      "noPiecePersisted": true,
+      "visibleMessage": "El proveedor agotó el tiempo de espera."
+    },
+    {
+      "feature": "draft-fast-model-recovery",
+      "status": "passed",
+      "model": "gemini-3.5-flash-lite",
+      "reasoningEffort": "low",
+      "engine": "ai",
+      "format": "reel",
+      "channel": "linkedin",
+      "sceneCount": 5,
+      "scenesValid": true,
+      "requiredTextPresent": true,
+      "resources": [
+        {
+          "durationMs": 60012,
+          "responseStatus": 400
+        },
+        {
+          "durationMs": 60031,
+          "responseStatus": 400
+        },
+        {
+          "durationMs": 1875,
+          "responseStatus": 200
+        }
+      ],
+      "output": {
+        "title": "Audita tu IA comercial en EdTech sin arriesgar datos",
+        "hook": "Cómo evaluar un asistente de IA para propuestas comerciales en EdTech usando un ejercicio ficticio y protegiendo datos sensibles",
+        "script": "Como director de EdTech en México, antes de usar IA en tus propuestas de ventas, crea un escenario simulado. Usa una institución hipotética y métricas inventadas. Pide a la herramienta que estructure los alcances y justifique costos. Aplica una rúbrica de cinco preguntas de control para detectar supuestos no fundamentados antes de usar cualquier plantilla. [Verificación requerida: validar la pertinencia de las preguntas de control con el equipo comercial]. Recuerda no incluir datos reales de alumnos o clientes.",
+        "caption": "Evaluar la inteligencia artificial en el sector educativo requiere método y precaución. Descubre cómo estructurar un caso de prueba seguro para tus propuestas comerciales.",
+        "cta": "Comparte qué tarea necesitas resolver y qué te falta comprobar.",
+        "scenes": [
+          {
+            "id": "eb2164cc-d362-4785-8613-945382f4b916",
+            "text": "Crea un escenario simulado con una institución hipotética para evaluar tu asistente de IA en ventas EdTech.",
+            "duration": 6
+          },
+          {
+            "id": "5bf1cd02-3be4-4552-ba97-e170906f8359",
+            "text": "Solicita a la herramienta estructurar los alcances del servicio y justificar cada premisa de costos.",
+            "duration": 6
+          },
+          {
+            "id": "d2424d31-ead2-4768-81eb-e2a06b46f59c",
+            "text": "Aplica una rúbrica ciega de cinco preguntas de control para identificar alucinaciones o supuestos.",
+            "duration": 7
+          },
+          {
+            "id": "9c697be4-2534-44ba-8e9f-f18f9a8d743b",
+            "text": "Revisa cada afirmación antes de autorizar cualquier plantilla comercial para tu equipo.",
+            "duration": 6
+          },
+          {
+            "id": "e859b357-6a34-46fb-b831-37ccfcf4826c",
+            "text": "Protege siempre tu información evitando incluir datos reales de alumnos o clientes.",
+            "duration": 5
+          }
+        ],
+        "generationEngine": "ai",
+        "referenceId": "a183ddd9-95f8-4509-b023-c70762c0ea4a",
+        "providerAttributions": [],
+        "segmentId": "ec01ef5e-5763-4a7e-8803-c94aca699a00",
+        "format": "reel",
+        "channel": "linkedin",
+        "status": "draft",
+        "assetIds": [],
+        "comments": [],
+        "id": "c8c92b14-d977-46e0-8534-67678b46b469",
+        "createdAt": "2026-10-18T11:42:37.168Z",
+        "updatedAt": "2026-10-18T11:42:37.168Z",
+        "approvalVersion": "cfmtsBIgQ9fxIIA-eFm35aARCKUASpBfh9oH7e053b8"
+      }
+    },
+    {
+      "feature": "edit-save-reload",
+      "status": "passed",
+      "titlePreserved": true,
+      "ctaPreserved": true,
+      "scenesPreserved": true,
+      "aiProvenancePreserved": true,
+      "uiShowsTitle": true
+    },
+    {
+      "feature": "fast-model-reference-analysis",
+      "model": "gemini-3.5-flash-lite",
+      "status": "passed",
+      "engine": "ai",
+      "updatedAt": "2026-10-18T11:43:04.546Z",
+      "durationMs": 3694,
+      "httpStatus": 200,
+      "nonemptyFields": true,
+      "output": {
+        "hook": "Evaluar asistentes de IA para ventas en EdTech con un caso ficticio",
+        "format": "link",
+        "hypothesis": "Esta estructura podría resultar útil para enfocar la atención de la audiencia en un problema específico y práctico desde el inicio, permitiendo evaluar la relevancia de la propuesta para su contexto profesional sin necesidad de asumir métricas previas.",
+        "saturation": "unknown",
+        "saturationReason": "0 referencias relacionadas en 1 referencias del corpus observado de esta marca. Muestra insuficiente para clasificar saturación; hacen falta al menos 5 referencias.",
+        "relevance": 95,
+        "adaptation": "Para Directores de EdTech en México, adaptar el texto orientándolo a Educación y formación en Latinoamérica bajo el tono claro, cercano y práctico de Laboratorio Editorial Ficticio, incorporando una propuesta para investigar y un caso sin verificar.",
+        "segmentIds": ["ec01ef5e-5763-4a7e-8803-c94aca699a00"],
+        "signals": [
+          "Motor local: comparación de texto y reglas editoriales, sin búsqueda global.",
+          "Material disponible: título y texto suministrado o extraído.",
+          "Coincidencias con el contexto de marca: educacion, ficticio, empresa, prueba, comercial, edtech, ventas, evaluar, asistentes, original, tiempo, datos, clientes, material.",
+          "Historial editorial comparable: 0 referencias guardadas y 0 descartadas. Afinidad textual usada como ajuste de relevancia; no es un modelo entrenado."
+        ],
+        "confidence": "medium",
+        "engine": "ai",
+        "analyzedAt": "2026-10-18T11:43:04.546Z"
+      },
+      "disclosureVisible": true
+    },
+    {
+      "feature": "fast-model-semantic-opportunity-analysis",
+      "status": "passed-contract-failed-factuality",
+      "model": "gemini-3.5-flash-lite",
+      "engine": "ai",
+      "citationsVerified": true,
+      "segmentIdsVerified": true,
+      "limitationsPresent": true,
+      "durationMs": 1886,
+      "httpStatus": 200,
+      "output": {
+        "id": "ba03ead1-631f-419a-925b-b31f39c4db9a",
+        "opportunityId": "opportunity-1125affd07c3be13565b3daf",
+        "engine": "ai",
+        "model": "gemini-3.5-flash-lite",
+        "analyzedAt": "2026-10-18T11:44:21.643Z",
+        "fingerprint": "00a7f1099a55a94c8298d6c7573e04339ea284fa0819e06bba969a03d5bb1d8a",
+        "need": "Evaluar asistentes de IA para propuestas de ventas y tareas administrativas con datos ficticios; ahorrar tiempo y verificar respuestas sin compartir información personal.",
+        "rationale": "El segmento de directores de EdTech en México busca optimizar sus procesos de ventas mediante la evaluación de asistentes de IA utilizando exclusivamente datos sintéticos, lo cual se alinea con la referencia que propone preparar una propuesta comercial ficticia para detectar dudas y verificar supuestos sin comprometer información confidencial.",
+        "hookHypothesis": "Cómo revisar propuestas comerciales usando IA sin exponer datos sensibles de alumnos.",
+        "adaptation": "Diseña un protocolo interno en tu EdTech para probar herramientas de IA. 1. Decisión práctica: Define un caso de uso exclusivo con datos sintéticos para entrenar al equipo en la revisión de propuestas de ventas. 2. Caso verificable del sector: Una editorial educativa implementó simulaciones de ventas con carteras de clientes ficticias para auditar al asistente virtual. 3. Paso aplicable: Crea una plantilla de validación con criterios fijos antes de aprobar cualquier texto generado por la IA.",
+        "segmentIds": ["ec01ef5e-5763-4a7e-8803-c94aca699a00"],
+        "citations": [
+          {
+            "referenceId": "a183ddd9-95f8-4509-b023-c70762c0ea4a",
+            "support": "Para evaluar un asistente de IA en una empresa de educación, prepara una propuesta comercial ficticia con una necesidad, un presupuesto inventado y criterios de revisión."
+          }
+        ],
+        "limitations": [
+          "Las notas editoriales son hipótesis del equipo y la referencia disponible es material sintético de prueba sin datos de espectadores ni validación causal de rendimiento.",
+          "Razonamiento semántico de IA: la pertinencia y el gancho son hipótesis editoriales, no consumidores observados ni explicaciones causales del rendimiento."
+        ],
+        "createdAt": "2026-10-18T11:39:41.724Z",
+        "updatedAt": "2026-10-18T11:44:21.643Z"
+      },
+      "citationScope": "The literal citation supports the source text; it does not establish every generated adaptation claim.",
+      "unsupportedClaim": "Una editorial educativa implementó simulaciones de ventas con carteras de clientes ficticias para auditar al asistente virtual.",
+      "qualityFinding": "The sole source is an explicitly fictional test exercise and documents no real implementation. This generated assertion must be rejected or reframed as hypothetical before editorial use."
+    },
+    {
+      "feature": "semantic-factuality-retest",
+      "status": "passed-bounded-editorial-review",
+      "model": "gemini-3.5-flash-lite",
+      "engine": "ai",
+      "newAnalysis": true,
+      "citationsVerified": true,
+      "segmentIdsVerified": true,
+      "durationMs": 2064,
+      "httpStatus": 200,
+      "output": {
+        "id": "ba03ead1-631f-419a-925b-b31f39c4db9a",
+        "opportunityId": "opportunity-1125affd07c3be13565b3daf",
+        "engine": "ai",
+        "model": "gemini-3.5-flash-lite",
+        "analyzedAt": "2026-10-18T11:45:20.597Z",
+        "fingerprint": "00a7f1099a55a94c8298d6c7573e04339ea284fa0819e06bba969a03d5bb1d8a",
+        "need": "Evaluar asistentes de IA para propuestas de ventas y tareas administrativas utilizando datos ficticios para verificar respuestas sin comprometer información confidencial.",
+        "rationale": "El segmento de directores de EdTech requiere métodos seguros para probar herramientas de inteligencia artificial en sus procesos comerciales. Según la referencia proporcionada, se puede preparar una propuesta comercial ficticia para que el asistente detecte dudas y explique sus supuestos, permitiendo comparar el resultado con una lista de requisitos.",
+        "hookHypothesis": "Cómo evaluar un asistente de IA para propuestas de ventas en EdTech usando un caso ficticio y sin exponer datos reales.",
+        "adaptation": "Como propuesta hipotética para probar en el futuro, la empresa podría diseñar una guía interna en formato de taller práctico donde los directores simulen una propuesta comercial con presupuestos inventados y verifiquen los supuestos del asistente antes de redactar la oferta definitiva.",
+        "segmentIds": ["ec01ef5e-5763-4a7e-8803-c94aca699a00"],
+        "citations": [
+          {
+            "referenceId": "a183ddd9-95f8-4509-b023-c70762c0ea4a",
+            "support": "prepara una propuesta comercial ficticia con una necesidad, un presupuesto inventado y criterios de revisión"
+          }
+        ],
+        "limitations": [
+          "Las notas y referencias provienen de material sintético de prueba y no constituyen casos de éxito reales ni datos de mercado verificados.",
+          "No existen datos cuantitativos sobre el ahorro real de tiempo o el rendimiento comercial de esta práctica.",
+          "Razonamiento semántico de IA: la pertinencia y el gancho son hipótesis editoriales, no consumidores observados ni explicaciones causales del rendimiento."
+        ],
+        "createdAt": "2026-10-18T11:39:41.724Z",
+        "updatedAt": "2026-10-18T11:45:20.597Z"
+      },
+      "explicitHypothesisVerified": true,
+      "noUnsupportedImplementationInRetest": true,
+      "savedAfterReload": true
+    },
+    {
+      "feature": "public-test-disclosure",
+      "status": "passed",
+      "mode": "public-test",
+      "visible": true,
+      "termsLink": "https://ai.google.dev/gemini-api/terms"
+    },
+    {
+      "feature": "final-reload",
+      "status": "passed",
+      "referenceCount": 1,
+      "pieceCount": 1,
+      "companySourcesDisabled": true,
+      "semanticModel": "gemini-3.5-flash-lite",
+      "citationVerified": true,
+      "editedTitle": "Caso ficticio: revisar IA comercial en EdTech",
+      "editedCta": "Diseña una prueba con datos ficticios y revisa sus supuestos.",
+      "sceneCount": 5
+    }
+  ],
+  "testedModels": ["gemini-3.8-flash", "gemini-3.5-flash-lite"],
+  "completedAt": "2026-10-18T11:45:40.783Z",
+  "summary": {
+    "selectedModel": "gemini-3.5-flash-lite",
+    "realGenerationRequests": 8,
+    "mockedGenerationRequests": 0,
+    "finalWorkflow": "original reference → editorial analysis → cited audience analysis → nested-scene reel draft → edit/save/reload",
+    "result": "passed after latency and factuality remediation",
+    "finiteSample": true
+  },
+  "calls": [
+    {
+      "index": 1,
+      "model": "gemini-3.8-flash",
+      "feature": "reference-analysis",
+      "httpStatus": 200,
+      "durationMs": 6488,
+      "result": "valid bounded editorial analysis"
+    },
+    {
+      "index": 2,
+      "model": "gemini-3.8-flash",
+      "feature": "semantic-opportunity-analysis",
+      "httpStatus": 200,
+      "durationMs": 45288,
+      "result": "valid citation and declared segment; no unsupported implementation claim found in reviewed sample"
+    },
+    {
+      "index": 3,
+      "model": "gemini-3.8-flash",
+      "reasoningEffort": "provider-default",
+      "feature": "reel-draft",
+      "httpStatus": 400,
+      "durationMs": 60012,
+      "result": "visible upstream timeout; no piece persisted"
+    },
+    {
+      "index": 4,
+      "model": "gemini-3.8-flash",
+      "reasoningEffort": "low",
+      "feature": "reel-draft",
+      "httpStatus": 400,
+      "durationMs": 60031,
+      "result": "visible upstream timeout; no piece persisted"
+    },
+    {
+      "index": 5,
+      "model": "gemini-3.5-flash-lite",
+      "reasoningEffort": "low",
+      "feature": "reel-draft",
+      "httpStatus": 200,
+      "durationMs": 1875,
+      "result": "five nested scenes with numeric durations; draft persisted"
+    },
+    {
+      "index": 6,
+      "model": "gemini-3.5-flash-lite",
+      "reasoningEffort": "low",
+      "feature": "reference-analysis",
+      "httpStatus": 200,
+      "durationMs": 3694,
+      "result": "nonempty relevant fields; reviewed as a hypothesis"
+    },
+    {
+      "index": 7,
+      "model": "gemini-3.5-flash-lite",
+      "reasoningEffort": "low",
+      "feature": "semantic-opportunity-analysis",
+      "httpStatus": 200,
+      "durationMs": 1886,
+      "result": "schema/citation passed; editorial review caught unsupported implementation claim"
+    },
+    {
+      "index": 8,
+      "model": "gemini-3.5-flash-lite",
+      "reasoningEffort": "low",
+      "feature": "semantic-opportunity-analysis-after-prompt-fix",
+      "httpStatus": 200,
+      "durationMs": 2064,
+      "result": "explicit hypothetical conditional example; verified citation, declared segment and limitations; persisted after reload"
+    }
+  ],
+  "isolation": {
+    "account": "Synthetic local QA account, separate from the real Google user",
+    "dataDirectory": "Disposable isolated /tmp/radar-gemini-live-* directory",
+    "privateInputSent": false,
+    "mainCompaniesChanged": false,
+    "mainEnvChanged": false,
+    "globalPolicyChanged": false,
+    "credentialCopiedIntoTenant": false,
+    "accessReview": "Official Gemini origin and /v1beta/openai path, ai purpose, synthetic nonconfidential inputs only, 24-hour expiry",
+    "initialOnboardingDiscovery": "Fetched public HN/Trends references; disabled all three sources and removed 47 imported public references before the first AI request; all AI input used the single original synthetic reference.",
+    "transport": "Normal production server and pinned public HTTPS path; no DNS/fetch mocks or intercepted provider responses"
+  },
+  "editorialReview": {
+    "observations": [
+      "Final semantic answer explicitly presents its example as a future hypothetical proposal.",
+      "Literal citation verified against supplied original reference; segment IDs verified against the declared audience.",
+      "Final output explicitly says there are no real success cases, verified market data, quantitative time savings or commercial results.",
+      "Draft contains a verification-required note and five editable scene objects."
+    ],
+    "limits": [
+      "This is a bounded sample, not a benchmark or a guarantee of factuality, latency, availability or quota.",
+      "Prompt correction reduces a demonstrated hallucination risk; it does not make generated claims automatically trustworthy.",
+      "Citations validate the quoted supporting text, not every claim in the adaptation. Human editorial review is required.",
+      "Observed timeout responses were HTTP 400 before the later gateway-timeout classification fix; their historical statuses are retained.",
+      "One HTTP 404 in browser diagnostics came from the QA agent initially probing the nonexistent GET /api/brands/:id instead of /state; it was corrected and was not a user workflow failure."
+    ]
+  },
+  "remediation": {
+    "transport": "3e9a252",
+    "lowReasoning": "f6208b2",
+    "syntheticCasePrompt": "3d96df6",
+    "referenceOutputContract": "3ff0b93",
+    "timeoutClassification": "65fccb4"
+  },
+  "sources": {
+    "compatibility": "https://ai.google.dev/gemini-api/docs/openai",
+    "terms": "https://ai.google.dev/gemini-api/terms",
+    "pricing": "https://ai.google.dev/gemini-api/docs/pricing",
+    "thinking": "https://ai.google.dev/gemini-api/docs/thinking"
+  },
+  "screenshots": {
+    "initialReference": "ai-reference-initial.png",
+    "initialSemantic": "ai-semantic-initial.png",
+    "initialTimeout": "ai-draft-timeout.png",
+    "editedDraft": "ai-draft-edited.png",
+    "finalSemantic": "ai-semantic-final.png"
+  }
+}
