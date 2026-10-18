@@ -1,0 +1,13 @@
+✔ changing YouTube→Apify→YouTube with omitted platform initializes the target platform on the same paused source (118.976562ms)
+✔ Apify→YouTube without platform discards inherited TikTok platform and URL (32.577424ms)
+✔ explicit incompatible platforms are rejected atomically even during type changes (65.927794ms)
+✔ same-type PATCH keeps valid platform and configuration while Instagram↔TikTok uses explicit current URLs (52.580549ms)
+✔ social type changes remain restricted to editors in the source brand (10.025574ms)
+ℹ tests 5
+ℹ suites 0
+ℹ pass 5
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 463.074956

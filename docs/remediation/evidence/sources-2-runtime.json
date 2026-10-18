@@ -1,0 +1,42 @@
+{
+  "host": "127.0.1.28",
+  "apiPort": 4518,
+  "webPort": 5518,
+  "dataDir": "/tmp/30x-remediation-sources-2",
+  "discoveryEnabled": false,
+  "providerCredentialsConfigured": false,
+  "processes": [
+    {
+      "pid": 194000,
+      "command": "npm run dev"
+    },
+    {
+      "pid": 194038,
+      "command": "sh -c concurrently -k -n api,web \"RADAR_API_ONLY=1 node --env-file-if-exists=.env --watch server/index.mjs\" \"vite --host 0.0.0.0\""
+    },
+    {
+      "pid": 194039,
+      "command": "node /home/ubuntu/.t3/projects/30x-trackt-2/node_modules/.bin/concurrently -k -n api,web RADAR_API_ONLY=1 node --env-file-if-exists=.env --watch server/index.mjs vite --host 0.0.0.0"
+    },
+    {
+      "pid": 194046,
+      "command": "/bin/sh -c RADAR_API_ONLY=1 node --env-file-if-exists=.env --watch server/index.mjs"
+    },
+    {
+      "pid": 194047,
+      "command": "node --env-file-if-exists=.env --watch server/index.mjs"
+    },
+    {
+      "pid": 194048,
+      "command": "/bin/sh -c vite --host 0.0.0.0"
+    },
+    {
+      "pid": 194049,
+      "command": "node /home/ubuntu/.t3/projects/30x-trackt-2/node_modules/.bin/vite --host 0.0.0.0"
+    },
+    {
+      "pid": 199448,
+      "command": "/workspace/.nvm/versions/node/v24.20.0/bin/node --env-file-if-exists=.env server/index.mjs"
+    }
+  ]
+}

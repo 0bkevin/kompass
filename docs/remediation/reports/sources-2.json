@@ -1,0 +1,91 @@
+{
+  "issueId": "sources-2",
+  "agent": "fix_sources_2",
+  "status": "fixed",
+  "rootCause": "El borrador conservaba platform=youtube al cambiar el tipo a Apify. El select nativo mostraba Instagram al no tener una opción youtube, mientras la etiqueta de URL interpretaba el valor residual como TikTok y el PATCH enviaba youtube. sourceInput también heredaba plataformas incompatibles cuando un cliente cambiaba el tipo omitiendo platform.",
+  "changes": [
+    "Settings inicializa una plataforma compatible al abrir el editor y cambiar el tipo: YouTube usa youtube; Apify conserva TikTok cuando corresponde y en el resto de los casos usa Instagram.",
+    "Al cambiar Instagram↔TikTok se borra la URL de la red previa, se conserva la consulta y cambian etiqueta/placeholder con el estado real. El cambio de tipo conserva la limpieza query/url implementada por sources-1.",
+    "sourceInput inicializa una plataforma compatible únicamente al cambiar el tipo de una fuente existente y omitir platform; los PATCH parciales del mismo tipo conservan su configuración. Las plataformas y URLs explícitas incompatibles siguen rechazadas.",
+    "Guardar una referencia de fuente social pausada continúa permitido sin credenciales; se mantienen los controles de activación y búsqueda de proveedores.",
+    "Se añaden cinco pruebas HTTP aisladas con transporte externo prohibido, además de evidencia UI antes/después por T3 preview."
+  ],
+  "files": [
+    "src/features/Settings.tsx",
+    "server/core.mjs",
+    "tests/remediation-sources-2.test.mjs"
+  ],
+  "verification": [
+    {
+      "command": "T3 preview_*: añadir YouTube con canal, guardar pausada, editar→Apify, escribir consulta y guardar sin tocar Red social",
+      "before": "Instagram visible, etiqueta URL de TikTok; PATCH400 con platform=youtube. GET conserva el YouTube original y su URL https://www.youtube.com/@publicqa.",
+      "after": "Instagram visible, etiqueta URL de Instagram; URL anterior vacía automáticamente. PATCH200 platform=instagram, mismo nombre/ID/query, enabled=false y GET coherente. No hubo evento Red social.",
+      "kind": "browser"
+    },
+    {
+      "command": "T3 preview_*: alta sin guardar YouTube→Apify y Guardar fuente",
+      "before": "La misma transición conservaba platform=youtube en el borrador.",
+      "after": "POST201 con platform=instagram y URL vacía; GET persistido coincide y fuente pausada.",
+      "kind": "browser"
+    },
+    {
+      "command": "T3 preview_*: Instagram→TikTok con URL Instagram previa→Instagram→YouTube",
+      "before": "El cambio de plataforma no limpiaba la URL heredada de otra red.",
+      "after": "URL se limpia al cambiar de red; consulta se conserva; etiquetas y provider notices correctos. Los PATCH200 y GET confirman TikTok, Instagram y YouTube.",
+      "kind": "browser"
+    },
+    {
+      "command": "T3 preview_*: iPhone 12 Pro viewport390×844, editar YouTube→Apify, guardar sin tocar Red social, recargar y reabrir",
+      "before": "Fallo original registrado en escritorio.",
+      "after": "PATCH200, Instagram visible/label/payload/GET coinciden, provider Apify, pausa y activación deshabilitada; reload conserva datos; sin overflow horizontal ni errores de consola.",
+      "kind": "browser"
+    },
+    {
+      "command": "node --test tests/remediation-sources-2.test.mjs",
+      "before": "2 fallos/3 pases: type-change con platform omitida rechaza herencia YouTube→Apify y TikTok→YouTube.",
+      "after": "5/5 PASS. Incluye URL YouTube/TikTok persistida con body.url omitida, conservación de metadatos, validación explícita, PATCH parcial y permisos de revisor. Cero solicitudes externas.",
+      "kind": "test"
+    },
+    {
+      "command": "node --test tests/remediation-sources-1.test.mjs tests/social.test.mjs tests/core.test.mjs",
+      "before": "No se modificaron los tests cercanos.",
+      "after": "29/29 PASS, incluidas las siete pruebas sources-1 y gates de proveedores.",
+      "kind": "test"
+    },
+    {
+      "command": "./node_modules/.bin/tsc --noEmit --incremental false",
+      "before": "No necesario para detectar el defecto de estado.",
+      "after": "Exit0, sin errores.",
+      "kind": "test"
+    },
+    {
+      "command": "Cierre de pestaña T3 propia, SIGTERM a concurrently propio y comprobación de procesos/puertos",
+      "before": "Runtime propio API4518/web5518 con DATA_DIR aislado.",
+      "after": "Pestaña cerrada, ningún proceso propio restante y puertos4518/5518 sin aceptar conexiones.",
+      "kind": "http"
+    }
+  ],
+  "artifacts": [
+    "docs/remediation/evidence/sources-2-before.json",
+    "docs/remediation/evidence/sources-2-before-desktop.png",
+    "docs/remediation/evidence/sources-2-after-desktop.json",
+    "docs/remediation/evidence/sources-2-after-desktop-form.png",
+    "docs/remediation/evidence/sources-2-after-desktop-row.png",
+    "docs/remediation/evidence/sources-2-after-mobile-form.png",
+    "docs/remediation/evidence/sources-2-after-mobile-row.png",
+    "docs/remediation/evidence/sources-2-transitions.json",
+    "docs/remediation/evidence/sources-2-reload.json",
+    "docs/remediation/evidence/sources-2-red.tap",
+    "docs/remediation/evidence/sources-2-green.tap",
+    "docs/remediation/evidence/sources-2-nearby.tap",
+    "docs/remediation/evidence/sources-2-typecheck.txt",
+    "docs/remediation/evidence/sources-2-runtime.json",
+    "docs/remediation/evidence/sources-2-cleanup.json"
+  ],
+  "limitations": [
+    "Datos y cuenta sintéticos, sin claves configuradas, consultas de descubrimiento ni llamadas reales a YouTube/Apify. No se acredita entrega, extracción ni cobertura de proveedores reales.",
+    "Móvil comprobado en Chromium con viewport emulado; no se probó un dispositivo físico.",
+    "No se ejecutó build global ni detectores de diseño; la integración final corresponde al coordinador.",
+    "Durante SIGTERM, Node24 --watch imprimió una aserción interna FSEventWrap. El runtime terminó y se verificó la ausencia de procesos y listeners propios; las comprobaciones funcionales habían pasado."
+  ]
+}

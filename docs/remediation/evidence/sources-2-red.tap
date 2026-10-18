@@ -1,0 +1,51 @@
+✖ changing YouTube→Apify→YouTube with omitted platform initializes the target platform on the same paused source (52.419738ms)
+✖ Apify→YouTube without platform discards inherited TikTok platform and URL (18.695232ms)
+✔ explicit incompatible platforms are rejected atomically even during type changes (50.244476ms)
+✔ same-type PATCH keeps valid platform and configuration while Instagram↔TikTok uses explicit current URLs (40.294646ms)
+✔ social type changes remain restricted to editors in the source brand (10.823929ms)
+ℹ tests 5
+ℹ suites 0
+ℹ pass 3
+ℹ fail 2
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 332.139285
+
+✖ failing tests:
+
+test at tests/remediation-sources-2.test.mjs:70:1
+✖ changing YouTube→Apify→YouTube with omitted platform initializes the target platform on the same paused source (52.419738ms)
+  AssertionError [ERR_ASSERTION]: {"error":"Apify admite fuentes de Instagram o TikTok."}
+  
+  400 !== 200
+  
+      at TestContext.<anonymous> (file:///home/ubuntu/.t3/projects/30x-trackt-2/tests/remediation-sources-2.test.mjs:87:12)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async Test.run (node:internal/test_runner/test:1404:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 400,
+    expected: 200,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/remediation-sources-2.test.mjs:101:1
+✖ Apify→YouTube without platform discards inherited TikTok platform and URL (18.695232ms)
+  AssertionError [ERR_ASSERTION]: {"error":"Una fuente YouTube solo puede usar la plataforma YouTube."}
+  
+  400 !== 200
+  
+      at TestContext.<anonymous> (file:///home/ubuntu/.t3/projects/30x-trackt-2/tests/remediation-sources-2.test.mjs:106:10)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async Test.run (node:internal/test_runner/test:1404:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:969:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 400,
+    expected: 200,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }

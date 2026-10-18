@@ -1,0 +1,166 @@
+{
+  "scenario": "UI edit saved YouTube → Apify; no Red social interaction",
+  "synthetic": true,
+  "red": true,
+  "modalOpen": true,
+  "visiblePlatform": "Instagram",
+  "urlLabel": "URL de TikTok (opcional)",
+  "providerNotice": " se guardará pausada. Un propietario debe conectar Apify en Fuentes y equipo antes de activarla.\n\nCancelar\nGuardar fuente",
+  "notifications": [
+    "YouTube no está configurado para esta marca. Configurar proveedor",
+    "Apify admite fuentes de Instagram o TikTok."
+  ],
+  "events": [
+    {
+      "method": "POST",
+      "path": "/api/brands/0b8ae4a7-5dc9-42d2-a2a6-088e53a37de5/sources",
+      "status": 201,
+      "request": {
+        "name": "QA sources-2 YouTube→Apify sintética",
+        "type": "youtube",
+        "query": "responsible AI sintético",
+        "url": "https://www.youtube.com/@publicqa",
+        "enabled": false,
+        "platform": "youtube"
+      },
+      "response": {
+        "name": "QA sources-2 YouTube→Apify sintética",
+        "type": "youtube",
+        "url": "https://www.youtube.com/@publicqa",
+        "query": "responsible AI sintético",
+        "platform": "youtube",
+        "enabled": false,
+        "limit": 20,
+        "id": "84390545-a0db-40a4-873f-08cf97dbaf64",
+        "createdAt": "2026-10-18T05:15:00.605Z",
+        "updatedAt": "2026-10-18T05:15:00.605Z"
+      }
+    },
+    {
+      "method": "PATCH",
+      "path": "/api/brands/0b8ae4a7-5dc9-42d2-a2a6-088e53a37de5/sources/84390545-a0db-40a4-873f-08cf97dbaf64",
+      "status": 400,
+      "request": {
+        "name": "QA sources-2 YouTube→Apify sintética",
+        "type": "apify",
+        "query": "#publicqa sintético",
+        "url": "",
+        "enabled": false,
+        "platform": "youtube",
+        "limit": 20
+      },
+      "response": {
+        "error": "Apify admite fuentes de Instagram o TikTok."
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/api/brands/0b8ae4a7-5dc9-42d2-a2a6-088e53a37de5/sources",
+      "status": 200,
+      "request": null,
+      "response": [
+        {
+          "name": "QA sources-2 YouTube→Apify sintética",
+          "type": "youtube",
+          "url": "https://www.youtube.com/@publicqa",
+          "query": "responsible AI sintético",
+          "platform": "youtube",
+          "enabled": false,
+          "limit": 20,
+          "id": "84390545-a0db-40a4-873f-08cf97dbaf64",
+          "createdAt": "2026-10-18T05:15:00.605Z",
+          "updatedAt": "2026-10-18T05:15:00.605Z"
+        },
+        {
+          "name": "TechCrunch · novedades",
+          "type": "rss",
+          "url": "https://techcrunch.com/feed/",
+          "enabled": false,
+          "id": "0e1a515a-0ed8-4811-8691-ce2cf716c607",
+          "createdAt": "2026-10-18T05:14:47.476Z",
+          "updatedAt": "2026-10-18T05:14:47.476Z"
+        },
+        {
+          "name": "Google Trends · Estados Unidos",
+          "type": "rss",
+          "url": "https://trends.google.com/trending/rss?geo=US",
+          "enabled": true,
+          "id": "504ec03c-b83a-4abd-a2f7-cfd6c4951804",
+          "createdAt": "2026-10-18T05:14:47.474Z",
+          "updatedAt": "2026-10-18T05:14:47.474Z"
+        },
+        {
+          "name": "Hacker News · tecnología",
+          "type": "hackernews",
+          "query": "",
+          "enabled": true,
+          "id": "3e504304-454d-4e9a-b314-7d06e203b508",
+          "createdAt": "2026-10-18T05:14:47.472Z",
+          "updatedAt": "2026-10-18T05:14:47.472Z"
+        },
+        {
+          "name": "Noticias globales · GDELT",
+          "type": "gdelt",
+          "query": "",
+          "enabled": true,
+          "id": "5d9866bf-020c-4ae4-a81d-e8db7fc51e1d",
+          "createdAt": "2026-10-18T05:14:47.471Z",
+          "updatedAt": "2026-10-18T05:14:47.471Z"
+        }
+      ]
+    }
+  ],
+  "readback": {
+    "status": 200,
+    "sources": [
+      {
+        "name": "QA sources-2 YouTube→Apify sintética",
+        "type": "youtube",
+        "url": "https://www.youtube.com/@publicqa",
+        "query": "responsible AI sintético",
+        "platform": "youtube",
+        "enabled": false,
+        "limit": 20,
+        "id": "84390545-a0db-40a4-873f-08cf97dbaf64",
+        "createdAt": "2026-10-18T05:15:00.605Z",
+        "updatedAt": "2026-10-18T05:15:00.605Z"
+      },
+      {
+        "name": "TechCrunch · novedades",
+        "type": "rss",
+        "url": "https://techcrunch.com/feed/",
+        "enabled": false,
+        "id": "0e1a515a-0ed8-4811-8691-ce2cf716c607",
+        "createdAt": "2026-10-18T05:14:47.476Z",
+        "updatedAt": "2026-10-18T05:14:47.476Z"
+      },
+      {
+        "name": "Google Trends · Estados Unidos",
+        "type": "rss",
+        "url": "https://trends.google.com/trending/rss?geo=US",
+        "enabled": true,
+        "id": "504ec03c-b83a-4abd-a2f7-cfd6c4951804",
+        "createdAt": "2026-10-18T05:14:47.474Z",
+        "updatedAt": "2026-10-18T05:14:47.474Z"
+      },
+      {
+        "name": "Hacker News · tecnología",
+        "type": "hackernews",
+        "query": "",
+        "enabled": true,
+        "id": "3e504304-454d-4e9a-b314-7d06e203b508",
+        "createdAt": "2026-10-18T05:14:47.472Z",
+        "updatedAt": "2026-10-18T05:14:47.472Z"
+      },
+      {
+        "name": "Noticias globales · GDELT",
+        "type": "gdelt",
+        "query": "",
+        "enabled": true,
+        "id": "5d9866bf-020c-4ae4-a81d-e8db7fc51e1d",
+        "createdAt": "2026-10-18T05:14:47.471Z",
+        "updatedAt": "2026-10-18T05:14:47.471Z"
+      }
+    ]
+  }
+}

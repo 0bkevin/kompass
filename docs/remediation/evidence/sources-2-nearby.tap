@@ -1,0 +1,37 @@
+✔ registration, session, password validation, login and logout persist safely (380.875135ms)
+✔ brands start empty and users cannot read or mutate other brands (47.243709ms)
+✔ deleting an audience used by approved or published content preserves its links and version (57.026157ms)
+✔ deleting an audience used only by an idea is rejected (22.973065ms)
+✔ capture → analysis → draft → review → approval → schedule with no fabricated publication (60.771896ms)
+✔ private uploads validate formats, hide storage paths and enforce brand isolation (34.540054ms)
+✔ invitation acceptance is single-use; reviewer can review/comment but cannot edit (85.316192ms)
+✔ approval is bound to the displayed content version across review interleavings (94.731317ms)
+✔ unchanged oversized legacy piece text can be saved with an unrelated edit (18.934323ms)
+✔ optional edit preconditions reject stale HTTP writes without breaking older clients (25.555441ms)
+✔ editor may produce content but cannot configure integrations or approve their work (57.003101ms)
+✔ changing a source URL removes old metrics and snapshot history rather than reusing evidence (6.265824ms)
+✔ demo data is explicitly labeled; secret values are encrypted and absent from state (85.02239ms)
+✔ invalid requests and foreign Origin mutations fail with safe JSON errors (11.789485ms)
+✔ original HTTP repro: HN→RSS removes the hidden query and persists the submitted feed on the same source (73.472346ms)
+✔ POST requires a supported type and keeps only applicable query/URL fields for all six connectors (50.853495ms)
+✔ PATCH with omitted or repeated type preserves valid input, removes legacy incompatible fields and retains status/counts (51.563185ms)
+✔ type changes discard inherited URLs before applying fresh values and reject an RSS conversion without a feed atomically (18.326436ms)
+✔ a type change cannot revive a hidden legacy RSS query, but supplied queries take precedence (23.411928ms)
+✔ compatible topic queries survive HN→GDELT while subreddit selectors and feed URLs do not cross types (19.219622ms)
+✔ same-type social partial PATCH keeps platform, URL, query, limits and pause state (17.488402ms)
+✔ social providers fail closed when credentials are not configured (108.351031ms)
+✔ public references redact signed provider media URLs but retain access provenance (0.182946ms)
+✔ YouTube uses official search and batched video metadata without exposing the API key (9.855036ms)
+✔ YouTube channel sources follow the uploads playlist and keep only recent videos (3.870358ms)
+✔ Apify TikTok search uses the verified actor schema, a hard limit and safe token handling (13.176887ms)
+✔ Apify Instagram uses reel search and maps only video results (6.167234ms)
+✔ Apify maps missing counts as absent and rejects unknown/unsafe media URLs (0.386052ms)
+✔ provider rate failures return safe errors without echoing credentials (5.811677ms)
+ℹ tests 29
+ℹ suites 0
+ℹ pass 29
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1113.699237

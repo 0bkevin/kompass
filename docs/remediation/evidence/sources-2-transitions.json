@@ -1,0 +1,255 @@
+{
+  "tiktok": {
+    "transition": {
+      "platform": "tiktok",
+      "url": "",
+      "urlLabel": "URL de TikTok (opcional)",
+      "query": "#publicqa sintético"
+    },
+    "event": {
+      "method": "PATCH",
+      "path": "/api/brands/0b8ae4a7-5dc9-42d2-a2a6-088e53a37de5/sources/84390545-a0db-40a4-873f-08cf97dbaf64",
+      "status": 200,
+      "request": {
+        "name": "QA sources-2 YouTube→Apify sintética",
+        "type": "apify",
+        "query": "#publicqa sintético",
+        "url": "https://www.tiktok.com/@publicqa?lang=es",
+        "enabled": false,
+        "platform": "tiktok",
+        "limit": 20
+      },
+      "response": {
+        "name": "QA sources-2 YouTube→Apify sintética",
+        "type": "apify",
+        "query": "#publicqa sintético",
+        "platform": "tiktok",
+        "enabled": false,
+        "limit": 20,
+        "id": "84390545-a0db-40a4-873f-08cf97dbaf64",
+        "createdAt": "2026-10-18T05:15:00.605Z",
+        "updatedAt": "2026-10-18T05:16:29.543Z",
+        "url": "https://tiktok.com/@publicqa"
+      }
+    },
+    "readback": {
+      "name": "QA sources-2 YouTube→Apify sintética",
+      "type": "apify",
+      "query": "#publicqa sintético",
+      "platform": "tiktok",
+      "enabled": false,
+      "limit": 20,
+      "id": "84390545-a0db-40a4-873f-08cf97dbaf64",
+      "createdAt": "2026-10-18T05:15:00.605Z",
+      "updatedAt": "2026-10-18T05:16:29.543Z",
+      "url": "https://tiktok.com/@publicqa"
+    },
+    "pass": true
+  },
+  "instagram": {
+    "transition": {
+      "platform": "instagram",
+      "url": "",
+      "urlLabel": "URL de Instagram (opcional)",
+      "query": "#publicqa sintético"
+    },
+    "event": {
+      "method": "PATCH",
+      "path": "/api/brands/0b8ae4a7-5dc9-42d2-a2a6-088e53a37de5/sources/84390545-a0db-40a4-873f-08cf97dbaf64",
+      "status": 200,
+      "request": {
+        "name": "QA sources-2 YouTube→Apify sintética",
+        "type": "apify",
+        "query": "#publicqa sintético",
+        "url": "",
+        "enabled": false,
+        "platform": "instagram",
+        "limit": 20
+      },
+      "response": {
+        "name": "QA sources-2 YouTube→Apify sintética",
+        "type": "apify",
+        "query": "#publicqa sintético",
+        "platform": "instagram",
+        "enabled": false,
+        "limit": 20,
+        "id": "84390545-a0db-40a4-873f-08cf97dbaf64",
+        "createdAt": "2026-10-18T05:15:00.605Z",
+        "updatedAt": "2026-10-18T05:16:37.425Z"
+      }
+    },
+    "readback": {
+      "name": "QA sources-2 YouTube→Apify sintética",
+      "type": "apify",
+      "query": "#publicqa sintético",
+      "platform": "instagram",
+      "enabled": false,
+      "limit": 20,
+      "id": "84390545-a0db-40a4-873f-08cf97dbaf64",
+      "createdAt": "2026-10-18T05:15:00.605Z",
+      "updatedAt": "2026-10-18T05:16:37.425Z"
+    },
+    "pass": true
+  },
+  "youtube": {
+    "transition": {
+      "type": "youtube",
+      "url": "",
+      "urlLabel": "Canal de YouTube (opcional)",
+      "query": "#publicqa sintético",
+      "providerNotice": " se guardará pausada. Un propietario debe conectar YouTube en Fuentes y equipo antes de activarla.\n\nCancelar\nGuardar fuente",
+      "hasPlatformSelect": false
+    },
+    "event": {
+      "method": "PATCH",
+      "path": "/api/brands/0b8ae4a7-5dc9-42d2-a2a6-088e53a37de5/sources/84390545-a0db-40a4-873f-08cf97dbaf64",
+      "status": 200,
+      "request": {
+        "name": "QA sources-2 YouTube→Apify sintética",
+        "type": "youtube",
+        "query": "#publicqa sintético",
+        "url": "",
+        "enabled": false,
+        "platform": "youtube"
+      },
+      "response": {
+        "name": "QA sources-2 YouTube→Apify sintética",
+        "type": "youtube",
+        "query": "#publicqa sintético",
+        "platform": "youtube",
+        "enabled": false,
+        "limit": 20,
+        "id": "84390545-a0db-40a4-873f-08cf97dbaf64",
+        "createdAt": "2026-10-18T05:15:00.605Z",
+        "updatedAt": "2026-10-18T05:16:37.796Z"
+      }
+    },
+    "readback": {
+      "name": "QA sources-2 YouTube→Apify sintética",
+      "type": "youtube",
+      "query": "#publicqa sintético",
+      "platform": "youtube",
+      "enabled": false,
+      "limit": 20,
+      "id": "84390545-a0db-40a4-873f-08cf97dbaf64",
+      "createdAt": "2026-10-18T05:15:00.605Z",
+      "updatedAt": "2026-10-18T05:16:37.796Z"
+    },
+    "pass": true
+  },
+  "post": {
+    "form": {
+      "value": "instagram",
+      "platform": "Instagram",
+      "label": "URL de Instagram (opcional)",
+      "url": ""
+    },
+    "event": {
+      "method": "POST",
+      "path": "/api/brands/0b8ae4a7-5dc9-42d2-a2a6-088e53a37de5/sources",
+      "status": 201,
+      "request": {
+        "name": "QA sources-2 alta convertida sintética",
+        "type": "apify",
+        "query": "alta convertida sintética",
+        "url": "",
+        "enabled": false,
+        "platform": "instagram",
+        "limit": 20
+      },
+      "response": {
+        "name": "QA sources-2 alta convertida sintética",
+        "type": "apify",
+        "query": "alta convertida sintética",
+        "platform": "instagram",
+        "limit": 20,
+        "enabled": false,
+        "id": "34cd8b07-72d2-401d-83a3-0e1ea86b8553",
+        "createdAt": "2026-10-18T05:16:45.359Z",
+        "updatedAt": "2026-10-18T05:16:45.359Z"
+      }
+    },
+    "readback": {
+      "name": "QA sources-2 alta convertida sintética",
+      "type": "apify",
+      "query": "alta convertida sintética",
+      "platform": "instagram",
+      "limit": 20,
+      "enabled": false,
+      "id": "34cd8b07-72d2-401d-83a3-0e1ea86b8553",
+      "createdAt": "2026-10-18T05:16:45.359Z",
+      "updatedAt": "2026-10-18T05:16:45.359Z"
+    },
+    "pass": true
+  },
+  "mobile": {
+    "synthetic": true,
+    "device": "Chromium desktop engine, emulated iPhone 12 Pro viewport; no physical device",
+    "checks": {
+      "status200": true,
+      "modalClosed": true,
+      "noPlatformReselection": true,
+      "coherent": true,
+      "paused": true,
+      "gate": true,
+      "query": true,
+      "noHorizontalOverflow": true
+    },
+    "pass": true,
+    "form": {
+      "platform": "instagram",
+      "visiblePlatform": "Instagram",
+      "label": "URL de Instagram (opcional)",
+      "url": "",
+      "activationDisabled": true,
+      "actions": [
+        {
+          "label": "Tipo de fuente",
+          "value": "apify"
+        }
+      ],
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "noHorizontalOverflow": true
+    },
+    "event": {
+      "method": "PATCH",
+      "path": "/api/brands/0b8ae4a7-5dc9-42d2-a2a6-088e53a37de5/sources/84390545-a0db-40a4-873f-08cf97dbaf64",
+      "status": 200,
+      "request": {
+        "name": "QA sources-2 YouTube→Apify sintética",
+        "type": "apify",
+        "query": "#publicqa móvil sintético",
+        "url": "",
+        "enabled": false,
+        "platform": "instagram",
+        "limit": 20
+      },
+      "response": {
+        "name": "QA sources-2 YouTube→Apify sintética",
+        "type": "apify",
+        "query": "#publicqa móvil sintético",
+        "platform": "instagram",
+        "enabled": false,
+        "limit": 20,
+        "id": "84390545-a0db-40a4-873f-08cf97dbaf64",
+        "createdAt": "2026-10-18T05:15:00.605Z",
+        "updatedAt": "2026-10-18T05:16:55.684Z"
+      }
+    },
+    "readback": {
+      "name": "QA sources-2 YouTube→Apify sintética",
+      "type": "apify",
+      "query": "#publicqa móvil sintético",
+      "platform": "instagram",
+      "enabled": false,
+      "limit": 20,
+      "id": "84390545-a0db-40a4-873f-08cf97dbaf64",
+      "createdAt": "2026-10-18T05:15:00.605Z",
+      "updatedAt": "2026-10-18T05:16:55.684Z"
+    },
+    "row": "QA sources-2 YouTube→Apify sintética\nPausada\nInstagram / TikTok · Apify\n\n#publicqa móvil sintético\n\nTodavía sin sincronizar\n\nApify no está configurado para esta marca. Configurar proveedor"
+  }
+}
