@@ -1,0 +1,420 @@
+{
+  "carousel": {
+    "url": "http://127.0.1.22:5512/studio/4e9ee248-d101-4df9-a5a5-35a0ef989b25",
+    "engineText": true,
+    "response": {
+      "url": "/api/brands/80fa6288-6a6a-4b6b-85f0-89802fd2a509/draft",
+      "status": 200,
+      "data": {
+        "title": "Bitácora de faltantes",
+        "hook": "Una forma de trabajar en «Bitácora de faltantes» para Jefas de operaciones de librerías.",
+        "script": "Lámina 1: Una forma de trabajar en «Bitácora de faltantes» para Jefas de operaciones de librerías.\nLa necesidad que guía esta propuesta: Reducir quiebres de inventario sin añadir reuniones. Elige una tarea de tu día a día que permita trabajar en ella.\n\nLámina 2: Registrar el punto de partida\nPara trabajar en «Reducir quiebres de inventario sin añadir reuniones», anota qué tarea está pendiente, qué la bloquea y quién necesita resolverla. Conserva ese registro para poder comparar después.\n\nLámina 3: Ejemplo hipotético\nUn equipo que necesita «Reducir quiebres de inventario sin añadir reuniones» registra una tarea pendiente y un obstáculo, prueba una alternativa y deja anotado qué pudo resolver y qué sigue abierto. Este escenario ilustra el método; no presenta resultados reales.\n\nLámina 4: El siguiente paso\nDescarga la plantilla de inventario.",
+        "caption": "Jefas de operaciones de librerías: Reducir quiebres de inventario sin añadir reuniones.\n\nDescarga la plantilla de inventario.",
+        "cta": "Descarga la plantilla de inventario.",
+        "scenes": [
+          {
+            "id": "011a8e44-7032-4206-9812-d2b92cf043ae",
+            "text": "Lámina 1: Una forma de trabajar en «Bitácora de faltantes» para Jefas de operaciones de librerías.\nLa necesidad que guía esta propuesta: Reducir quiebres de inventario sin añadir reuniones. Elige una tarea de tu día a día que permita trabajar en ella.",
+            "duration": 5
+          },
+          {
+            "id": "ce32adf4-0cc4-4e71-8c53-c25efe40243b",
+            "text": "Lámina 2: Registrar el punto de partida\nPara trabajar en «Reducir quiebres de inventario sin añadir reuniones», anota qué tarea está pendiente, qué la bloquea y quién necesita resolverla. Conserva ese registro para poder comparar después.",
+            "duration": 5
+          },
+          {
+            "id": "b04b3bce-ad05-4d0a-a113-c6ec57eb4c7e",
+            "text": "Lámina 3: Ejemplo hipotético\nUn equipo que necesita «Reducir quiebres de inventario sin añadir reuniones» registra una tarea pendiente y un obstáculo, prueba una alternativa y deja anotado qué pudo resolver y qué sigue abierto. Este escenario ilustra el método; no presenta resultados reales.",
+            "duration": 5
+          },
+          {
+            "id": "339de79e-9a7e-4f4b-8706-9609bf3bff56",
+            "text": "Lámina 4: El siguiente paso\nDescarga la plantilla de inventario.",
+            "duration": 5
+          }
+        ],
+        "generationEngine": "heuristic",
+        "editorialBrief": {
+          "instructions": "Haz un carrusel de 4 láminas. Incluye un ejemplo hipotético, sin cifras ni testimonios. Revisión pendiente: CANARIO_EDITORIAL. CTA final exacto: «Descarga la plantilla de inventario.»",
+          "angle": "",
+          "audienceNeeds": "Reducir quiebres de inventario sin añadir reuniones",
+          "referenceUrl": "",
+          "applied": {
+            "format": "carousel",
+            "unitCount": 4,
+            "cta": "Descarga la plantilla de inventario.",
+            "includeExample": true
+          },
+          "notes": [
+            "La estructura local aplica formato, CTA, cantidad de láminas o escenas y ejemplo hipotético. Revisa manualmente el resto de la dirección editorial; se conserva aquí y no se añade al texto publicable."
+          ]
+        },
+        "segmentId": "qa-ops",
+        "format": "carousel",
+        "channel": "instagram",
+        "status": "draft",
+        "assetIds": [],
+        "comments": [],
+        "id": "4e9ee248-d101-4df9-a5a5-35a0ef989b25",
+        "createdAt": "2026-10-18T05:03:12.136Z",
+        "updatedAt": "2026-10-18T05:03:12.136Z",
+        "approvalVersion": "5uLnaRZ1bWmjoD87-0Npw8sq5703yVzWk5sZow-tJ3E"
+      }
+    },
+    "checks": {
+      "slides": 4,
+      "headings": 4,
+      "cta": "Descarga la plantilla de inventario.",
+      "noInstructionCopy": true,
+      "briefRetained": true,
+      "audienceAndNeed": true,
+      "reviewDisclosure": true
+    }
+  },
+  "reference": {
+    "url": "http://127.0.1.22:5512/studio/7e6ba965-d8ef-450a-b2c4-0937ed06297f",
+    "response": {
+      "url": "/api/brands/80fa6288-6a6a-4b6b-85f0-89802fd2a509/draft",
+      "status": 200,
+      "data": {
+        "title": "Inventario: bitácora pública sintética",
+        "hook": "Una forma de trabajar en «Inventario: bitácora pública sintética» para Docentes rurales.",
+        "script": "Escena 1: Una forma de trabajar en «Inventario: bitácora pública sintética» para Docentes rurales.\nLa necesidad que guía esta propuesta: Preparar clases sin conexión con poco tiempo. Elige una tarea de tu día a día que permita trabajar en ella.\n\nEscena 2: Registrar el punto de partida\nPara trabajar en «Preparar clases sin conexión con poco tiempo», anota qué tarea está pendiente, qué la bloquea y quién necesita resolverla. Conserva ese registro para poder comparar después.\n\nEscena 3: El siguiente paso\nGuarda esta guía para tu próxima clase.",
+        "caption": "Docentes rurales: Preparar clases sin conexión con poco tiempo.\n\nGuarda esta guía para tu próxima clase.",
+        "cta": "Guarda esta guía para tu próxima clase.",
+        "scenes": [
+          {
+            "id": "e0051b52-7c86-4aa7-9dc0-20a1e76b9ca6",
+            "text": "Escena 1: Una forma de trabajar en «Inventario: bitácora pública sintética» para Docentes rurales.\nLa necesidad que guía esta propuesta: Preparar clases sin conexión con poco tiempo. Elige una tarea de tu día a día que permita trabajar en ella.",
+            "duration": 16
+          },
+          {
+            "id": "cce2d1ea-9e23-4e69-b972-f7ad71999344",
+            "text": "Escena 2: Registrar el punto de partida\nPara trabajar en «Preparar clases sin conexión con poco tiempo», anota qué tarea está pendiente, qué la bloquea y quién necesita resolverla. Conserva ese registro para poder comparar después.",
+            "duration": 14
+          },
+          {
+            "id": "ae350123-0dbf-45a6-a1a7-c3ce5f5f71d1",
+            "text": "Escena 3: El siguiente paso\nGuarda esta guía para tu próxima clase.",
+            "duration": 5
+          }
+        ],
+        "generationEngine": "heuristic",
+        "editorialBrief": {
+          "instructions": "Reel en español con 3 escenas para clases sin conexión. No copies frases de la fuente. CTA final exacto: Guarda esta guía para tu próxima clase.",
+          "angle": "Crear un post original para Jefas de operaciones de librerías.",
+          "audienceNeeds": "Preparar clases sin conexión con poco tiempo",
+          "referenceUrl": "https://example.com/qa-studio-inventario",
+          "applied": {
+            "format": "reel",
+            "unitCount": 3,
+            "cta": "Guarda esta guía para tu próxima clase.",
+            "includeExample": false
+          },
+          "notes": [
+            "La estructura local aplica formato, CTA, cantidad de láminas o escenas y ejemplo hipotético. Revisa manualmente el resto de la dirección editorial; se conserva aquí y no se añade al texto publicable."
+          ]
+        },
+        "referenceId": "29e86b84-0072-450d-acb4-79b3178c8fb2",
+        "segmentId": "qa-docentes",
+        "format": "reel",
+        "channel": "tiktok",
+        "status": "draft",
+        "assetIds": [],
+        "comments": [],
+        "id": "7e6ba965-d8ef-450a-b2c4-0937ed06297f",
+        "createdAt": "2026-10-18T05:03:25.608Z",
+        "updatedAt": "2026-10-18T05:03:25.608Z",
+        "approvalVersion": "dOjg0a6ZrMV5V4qcohiVW1QZourNF3HX3FRtBs9G8_w"
+      }
+    },
+    "checks": {
+      "scenes": 3,
+      "headings": 3,
+      "cta": "Guarda esta guía para tu próxima clase.",
+      "noInstructionCopy": true,
+      "audienceAndNeed": true,
+      "referenceId": "29e86b84-0072-450d-acb4-79b3178c8fb2",
+      "referenceUrl": "https://example.com/qa-studio-inventario"
+    }
+  },
+  "opportunity": {
+    "url": "http://127.0.1.22:5512/studio/2c5c31be-d7fe-452a-b784-0ad0e92252ac",
+    "response": {
+      "url": "/api/brands/80fa6288-6a6a-4b6b-85f0-89802fd2a509/draft",
+      "status": 200,
+      "data": {
+        "title": "Inventario: bitácora pública sintética",
+        "hook": "Una forma de trabajar en «Inventario: bitácora pública sintética» para Jefas de operaciones de librerías.",
+        "script": "Asunto: Inventario: bitácora pública sintética\n\nHola, Jefas de operaciones de librerías.\n\nLa necesidad que guía esta propuesta: Reducir quiebres de inventario sin añadir reuniones. Elige una tarea de tu día a día que permita trabajar en ella.\n\nRegistrar\nPara trabajar en «Reducir quiebres de inventario sin añadir reuniones», anota qué tarea está pendiente, qué la bloquea y quién necesita resolverla. Conserva ese registro para poder comparar después.\n\nEjemplo hipotético\nUn equipo que necesita «Reducir quiebres de inventario sin añadir reuniones» registra una tarea pendiente y un obstáculo, prueba una alternativa y deja anotado qué pudo resolver y qué sigue abierto. Este escenario ilustra el método; no presenta resultados reales.\n\nRevisar\nAnota qué hiciste, qué observaste y qué quedó pendiente. Separa lo comprobado de lo que todavía supones antes de repetir la prueba.\n\nDesde Faro · fixture sintética Studio, te proponemos contrastar el registro con tu equipo antes de repetir la prueba.\n\nResponde FICHA para recibir la plantilla.",
+        "caption": "Jefas de operaciones de librerías: Reducir quiebres de inventario sin añadir reuniones.\n\nResponde FICHA para recibir la plantilla.",
+        "cta": "Responde FICHA para recibir la plantilla.",
+        "scenes": [],
+        "generationEngine": "heuristic",
+        "editorialBrief": {
+          "instructions": "Crear un post original para Jefas de operaciones de librerías: explicar una decisión sobre «Bitácora de faltantes», mostrar un ejemplo verificable de Formación operativa en Chile y cerrar con un paso aplicable. Usar el tono Claro, cercano y práctico; contrastar los hechos y aportar un ángulo propio antes de aprobar. El formato es una sugerencia editable, no una predicción.\n\nNewsletter en español con asunto, saludo y dos secciones: Registrar y Revisar. Explica la bitácora de faltantes para librerías. Usa ejemplo hipotético y ninguna cifra ni testimonio. No copies frases de la fuente. CTA final exacto: Responde FICHA para recibir la plantilla.",
+          "angle": "Crear un post original para Jefas de operaciones de librerías.",
+          "audienceNeeds": "Reducir quiebres de inventario sin añadir reuniones",
+          "referenceUrl": "https://example.com/qa-studio-inventario",
+          "applied": {
+            "format": "newsletter",
+            "cta": "Responde FICHA para recibir la plantilla.",
+            "includeExample": true,
+            "sectionTitles": [
+              "Registrar",
+              "Revisar"
+            ]
+          },
+          "notes": [
+            "La estructura local aplica formato, CTA, cantidad de láminas o escenas y ejemplo hipotético. Revisa manualmente el resto de la dirección editorial; se conserva aquí y no se añade al texto publicable."
+          ]
+        },
+        "referenceId": "29e86b84-0072-450d-acb4-79b3178c8fb2",
+        "segmentId": "qa-ops",
+        "format": "newsletter",
+        "channel": "linkedin",
+        "status": "draft",
+        "assetIds": [],
+        "comments": [],
+        "id": "2c5c31be-d7fe-452a-b784-0ad0e92252ac",
+        "createdAt": "2026-10-18T05:03:58.944Z",
+        "updatedAt": "2026-10-18T05:03:58.944Z",
+        "approvalVersion": "3-5ymuEyz3elmniQ4EO9hSWJr66xl9HO04-b_kOMsbY"
+      }
+    },
+    "checks": {
+      "format": "newsletter",
+      "channel": "linkedin",
+      "subject": true,
+      "greeting": true,
+      "sections": true,
+      "cta": "Responde FICHA para recibir la plantilla.",
+      "noResidualPost": true,
+      "briefKeepsOpportunity": true
+    }
+  },
+  "explicitControlsMobile": {
+    "url": "http://127.0.1.22:5512/studio/806d71cc-f20e-47c4-8500-aba6c37a916c",
+    "response": {
+      "url": "/api/brands/80fa6288-6a6a-4b6b-85f0-89802fd2a509/draft",
+      "status": 200,
+      "data": {
+        "title": "Guía para clases sin conexión",
+        "hook": "Una forma de trabajar en «Guía para clases sin conexión» para Docentes rurales.",
+        "script": "Lámina 1: Una forma de trabajar en «Guía para clases sin conexión» para Docentes rurales.\nLa necesidad que guía esta propuesta: Preparar clases sin conexión con poco tiempo. Elige una tarea de tu día a día que permita trabajar en ella.\n\nLámina 2: Registrar el punto de partida\nPara trabajar en «Preparar clases sin conexión con poco tiempo», anota qué tarea está pendiente, qué la bloquea y quién necesita resolverla. Conserva ese registro para poder comparar después.\n\nLámina 3: El siguiente paso\nGuarda esta ficha para tu clase.",
+        "caption": "Docentes rurales: Preparar clases sin conexión con poco tiempo.\n\nGuarda esta ficha para tu clase.",
+        "cta": "Guarda esta ficha para tu clase.",
+        "scenes": [
+          {
+            "id": "378148d3-d66f-4195-b2cd-74382b27e8d9",
+            "text": "Lámina 1: Una forma de trabajar en «Guía para clases sin conexión» para Docentes rurales.\nLa necesidad que guía esta propuesta: Preparar clases sin conexión con poco tiempo. Elige una tarea de tu día a día que permita trabajar en ella.",
+            "duration": 5
+          },
+          {
+            "id": "7152d5eb-9b65-4178-982f-2ad8945c2413",
+            "text": "Lámina 2: Registrar el punto de partida\nPara trabajar en «Preparar clases sin conexión con poco tiempo», anota qué tarea está pendiente, qué la bloquea y quién necesita resolverla. Conserva ese registro para poder comparar después.",
+            "duration": 5
+          },
+          {
+            "id": "86f542f8-bb4a-4f9a-8f34-df04f4bd0369",
+            "text": "Lámina 3: El siguiente paso\nGuarda esta ficha para tu clase.",
+            "duration": 5
+          }
+        ],
+        "generationEngine": "heuristic",
+        "editorialBrief": {
+          "instructions": "Haz 8 láminas con ejemplo hipotético. CTA final exacto: «CTA anterior.»",
+          "angle": "",
+          "audienceNeeds": "Preparar clases sin conexión con poco tiempo",
+          "referenceUrl": "",
+          "applied": {
+            "format": "carousel",
+            "unitCount": 3,
+            "cta": "Guarda esta ficha para tu clase.",
+            "includeExample": false
+          },
+          "notes": [
+            "La estructura local aplica formato, CTA, cantidad de láminas o escenas y ejemplo hipotético. Revisa manualmente el resto de la dirección editorial; se conserva aquí y no se añade al texto publicable."
+          ]
+        },
+        "segmentId": "qa-docentes",
+        "format": "carousel",
+        "channel": "instagram",
+        "status": "draft",
+        "assetIds": [],
+        "comments": [],
+        "id": "806d71cc-f20e-47c4-8500-aba6c37a916c",
+        "createdAt": "2026-10-18T05:05:29.473Z",
+        "updatedAt": "2026-10-18T05:05:29.474Z",
+        "approvalVersion": "Qz7vFI-eyywGKtj7GGjhuA2vCV7n3ZEM_tJzpVl91JE"
+      }
+    },
+    "checks": {
+      "status": 200,
+      "title": "Guía para clases sin conexión",
+      "cta": "Guarda esta ficha para tu clase.",
+      "slides": 3,
+      "controlsOverrideNotes": true,
+      "noExample": true,
+      "noInstructionCopy": true,
+      "audienceAndNeed": true,
+      "pageOverflow": false
+    }
+  },
+  "saved": {
+    "url": "http://127.0.1.22:5512/studio/2c5c31be-d7fe-452a-b784-0ad0e92252ac",
+    "responses": [
+      {
+        "url": "/api/brands/80fa6288-6a6a-4b6b-85f0-89802fd2a509/pieces/2c5c31be-d7fe-452a-b784-0ad0e92252ac",
+        "status": 200,
+        "data": {
+          "title": "Inventario: bitácora pública sintética",
+          "hook": "Una forma de trabajar en «Inventario: bitácora pública sintética» para Jefas de operaciones de librerías.",
+          "script": "Asunto: Inventario: bitácora pública sintética\n\nHola, Jefas de operaciones de librerías.\n\nLa necesidad que guía esta propuesta: Reducir quiebres de inventario sin añadir reuniones. Elige una tarea de tu día a día que permita trabajar en ella.\n\nRegistrar\nPara trabajar en «Reducir quiebres de inventario sin añadir reuniones», anota qué tarea está pendiente, qué la bloquea y quién necesita resolverla. Conserva ese registro para poder comparar después.\n\nEjemplo hipotético\nUn equipo que necesita «Reducir quiebres de inventario sin añadir reuniones» registra una tarea pendiente y un obstáculo, prueba una alternativa y deja anotado qué pudo resolver y qué sigue abierto. Este escenario ilustra el método; no presenta resultados reales.\n\nRevisar\nAnota qué hiciste, qué observaste y qué quedó pendiente. Separa lo comprobado de lo que todavía supones antes de repetir la prueba.\n\nDesde Faro · fixture sintética Studio, te proponemos contrastar el registro con tu equipo antes de repetir la prueba.\n\nResponde FICHA para recibir la plantilla.",
+          "caption": "Jefas de operaciones de librerías: Reducir quiebres de inventario sin añadir reuniones.\n\nResponde FICHA para recibir la plantilla.",
+          "cta": "CTA revisado de QA.",
+          "format": "newsletter",
+          "channel": "linkedin",
+          "scenes": [],
+          "assetIds": [],
+          "comments": [],
+          "generationEngine": "heuristic",
+          "editorialBrief": {
+            "instructions": "Crear un post original para Jefas de operaciones de librerías: explicar una decisión sobre «Bitácora de faltantes», mostrar un ejemplo verificable de Formación operativa en Chile y cerrar con un paso aplicable. Usar el tono Claro, cercano y práctico; contrastar los hechos y aportar un ángulo propio antes de aprobar. El formato es una sugerencia editable, no una predicción.\n\nNewsletter en español con asunto, saludo y dos secciones: Registrar y Revisar. Explica la bitácora de faltantes para librerías. Usa ejemplo hipotético y ninguna cifra ni testimonio. No copies frases de la fuente. CTA final exacto: Responde FICHA para recibir la plantilla.",
+            "angle": "Crear un post original para Jefas de operaciones de librerías.",
+            "audienceNeeds": "Reducir quiebres de inventario sin añadir reuniones",
+            "referenceUrl": "https://example.com/qa-studio-inventario",
+            "applied": {
+              "format": "newsletter",
+              "cta": "Responde FICHA para recibir la plantilla.",
+              "includeExample": true,
+              "sectionTitles": [
+                "Registrar",
+                "Revisar"
+              ]
+            },
+            "notes": [
+              "La estructura local aplica formato, CTA, cantidad de láminas o escenas y ejemplo hipotético. Revisa manualmente el resto de la dirección editorial; se conserva aquí y no se añade al texto publicable."
+            ]
+          },
+          "referenceId": "29e86b84-0072-450d-acb4-79b3178c8fb2",
+          "segmentId": "qa-ops",
+          "status": "draft",
+          "id": "2c5c31be-d7fe-452a-b784-0ad0e92252ac",
+          "createdAt": "2026-10-18T05:03:58.944Z",
+          "updatedAt": "2026-10-18T05:04:39.619Z",
+          "approvalVersion": "JC8Fuj_cHzy8AEQrejBdnPuINsuK8mFqlP1frN5f6FQ"
+        }
+      }
+    ],
+    "script": "Asunto: Inventario: bitácora pública sintética\n\nHola, Jefas de operaciones de librerías.\n\nLa necesidad que guía esta propuesta: Reducir quiebres de inventario sin añadir reuniones. Elige una tarea de tu día a día que permita trabajar en ella.\n\nRegistrar\nPara trabajar en «Reducir quiebres de inventario sin añadir reuniones», anota qué tarea está pendiente, qué la bloquea y quién necesita resolverla. Conserva ese registro para poder comparar después.\n\nEjemplo hipotético\nUn equipo que necesita «Reducir quiebres de inventario sin añadir reuniones» registra una tarea pendiente y un obstáculo, prueba una alternativa y deja anotado qué pudo resolver y qué sigue abierto. Este escenario ilustra el método; no presenta resultados reales.\n\nRevisar\nAnota qué hiciste, qué observaste y qué quedó pendiente. Separa lo comprobado de lo que todavía supones antes de repetir la prueba.\n\nDesde Faro · fixture sintética Studio, te proponemos contrastar el registro con tu equipo antes de repetir la prueba.\n\nResponde FICHA para recibir la plantilla."
+  },
+  "reloaded": {
+    "piece": {
+      "title": "Inventario: bitácora pública sintética",
+      "hook": "Una forma de trabajar en «Inventario: bitácora pública sintética» para Jefas de operaciones de librerías.",
+      "script": "Asunto: Inventario: bitácora pública sintética\n\nHola, Jefas de operaciones de librerías.\n\nLa necesidad que guía esta propuesta: Reducir quiebres de inventario sin añadir reuniones. Elige una tarea de tu día a día que permita trabajar en ella.\n\nRegistrar\nPara trabajar en «Reducir quiebres de inventario sin añadir reuniones», anota qué tarea está pendiente, qué la bloquea y quién necesita resolverla. Conserva ese registro para poder comparar después.\n\nEjemplo hipotético\nUn equipo que necesita «Reducir quiebres de inventario sin añadir reuniones» registra una tarea pendiente y un obstáculo, prueba una alternativa y deja anotado qué pudo resolver y qué sigue abierto. Este escenario ilustra el método; no presenta resultados reales.\n\nRevisar\nAnota qué hiciste, qué observaste y qué quedó pendiente. Separa lo comprobado de lo que todavía supones antes de repetir la prueba.\n\nDesde Faro · fixture sintética Studio, te proponemos contrastar el registro con tu equipo antes de repetir la prueba.\n\nResponde FICHA para recibir la plantilla.",
+      "caption": "Jefas de operaciones de librerías: Reducir quiebres de inventario sin añadir reuniones.\n\nResponde FICHA para recibir la plantilla.",
+      "cta": "CTA revisado de QA.",
+      "format": "newsletter",
+      "channel": "linkedin",
+      "scenes": [],
+      "assetIds": [],
+      "comments": [],
+      "generationEngine": "heuristic",
+      "editorialBrief": {
+        "instructions": "Crear un post original para Jefas de operaciones de librerías: explicar una decisión sobre «Bitácora de faltantes», mostrar un ejemplo verificable de Formación operativa en Chile y cerrar con un paso aplicable. Usar el tono Claro, cercano y práctico; contrastar los hechos y aportar un ángulo propio antes de aprobar. El formato es una sugerencia editable, no una predicción.\n\nNewsletter en español con asunto, saludo y dos secciones: Registrar y Revisar. Explica la bitácora de faltantes para librerías. Usa ejemplo hipotético y ninguna cifra ni testimonio. No copies frases de la fuente. CTA final exacto: Responde FICHA para recibir la plantilla.",
+        "angle": "Crear un post original para Jefas de operaciones de librerías.",
+        "audienceNeeds": "Reducir quiebres de inventario sin añadir reuniones",
+        "referenceUrl": "https://example.com/qa-studio-inventario",
+        "applied": {
+          "format": "newsletter",
+          "cta": "Responde FICHA para recibir la plantilla.",
+          "includeExample": true,
+          "sectionTitles": [
+            "Registrar",
+            "Revisar"
+          ]
+        },
+        "notes": [
+          "La estructura local aplica formato, CTA, cantidad de láminas o escenas y ejemplo hipotético. Revisa manualmente el resto de la dirección editorial; se conserva aquí y no se añade al texto publicable."
+        ]
+      },
+      "referenceId": "29e86b84-0072-450d-acb4-79b3178c8fb2",
+      "segmentId": "qa-ops",
+      "status": "draft",
+      "id": "2c5c31be-d7fe-452a-b784-0ad0e92252ac",
+      "createdAt": "2026-10-18T05:03:58.944Z",
+      "updatedAt": "2026-10-18T05:04:39.619Z",
+      "approvalVersion": "JC8Fuj_cHzy8AEQrejBdnPuINsuK8mFqlP1frN5f6FQ"
+    },
+    "uiCta": "CTA revisado de QA.",
+    "disclosure": true,
+    "overflow": false
+  },
+  "mobile": {
+    "viewport": {
+      "width": 390,
+      "height": 844
+    },
+    "pageOverflow": false,
+    "modalOverflow": false,
+    "fields": [
+      {
+        "name": "referenceId",
+        "width": 330,
+        "fontSize": "16px",
+        "value": ""
+      },
+      {
+        "name": "topic",
+        "width": 330,
+        "fontSize": "16px",
+        "value": "Guía para clases sin conexión"
+      },
+      {
+        "name": "instructions",
+        "width": 330,
+        "fontSize": "16px",
+        "value": "Haz 8 láminas con ejemplo hipotético. CTA final exacto: «CTA anterior.»"
+      },
+      {
+        "name": "format",
+        "width": 330,
+        "fontSize": "16px",
+        "value": "carousel"
+      },
+      {
+        "name": "channel",
+        "width": 330,
+        "fontSize": "16px",
+        "value": "instagram"
+      },
+      {
+        "name": "cta",
+        "width": 330,
+        "fontSize": "16px",
+        "value": "Guarda esta ficha para tu clase."
+      },
+      {
+        "name": "unitCount",
+        "width": 330,
+        "fontSize": "16px",
+        "value": "3"
+      },
+      {
+        "name": "includeExample",
+        "width": 330,
+        "fontSize": "16px",
+        "value": "no"
+      },
+      {
+        "name": "segmentId",
+        "width": 330,
+        "fontSize": "16px",
+        "value": "qa-docentes"
+      }
+    ],
+    "help": "Las notas libres se conservan en un brief para revisión manual. Usa los controles de abajo para aplicar el CTA y la estructura."
+  }
+}

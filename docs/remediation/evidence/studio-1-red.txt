@@ -1,0 +1,149 @@
+✖ idea propia: cuatro láminas, CTA exacto y dirección libre fuera del texto publicable (185.465961ms)
+✖ referencia: Reel de tres escenas adapta la necesidad y conserva procedencia sin copiar la fuente (9.450487ms)
+✖ oportunidad: Newsletter con asunto, saludo y secciones, sin mandato residual de post (7.48455ms)
+✖ 10k instructions and long context remain complete in the brief and survive the piece save roundtrip (11.969837ms)
+ℹ tests 4
+ℹ suites 0
+ℹ pass 0
+ℹ fail 4
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 328.933057
+
+✖ failing tests:
+
+test at tests/remediation-studio-1.test.mjs:71:1
+✖ idea propia: cuatro láminas, CTA exacto y dirección libre fuera del texto publicable (185.465961ms)
+  AssertionError [ERR_ASSERTION]: The input was expected to not match the regular expression /Dirección editorial:|CANARIO_EDITORIAL|Haz un carrusel/. Input:
+  
+  'Haz un carrusel de 4 láminas.\n' +
+    '¿Qué cambia con haz un carrusel de 4 láminas para Jefas de operaciones de librerías?\n' +
+    '¿Qué cambia con haz un carrusel de 4 láminas para Jefas de operaciones de librerías?\n' +
+    '\n' +
+    'Qué significa para Jefas de operaciones de librerías y cómo probarlo sin perder el foco.\n' +
+    'En Chile, comienza por una tarea concreta de Formación operativa relacionada con Reducir quiebres de inventario sin añadir reuniones.\n' +
+    '\n' +
+    'Antes de adoptar la idea, registra cómo resuelves esa tarea hoy. Elige un caso pequeño, define quién revisará el resultado y compara calidad y tiempo. Documenta las limitaciones; no extrapoles una prueba a toda la organización.\n' +
+    '\n' +
+    'Desde Faro · fixture sintética, nuestra propuesta es convertir la conversación en una prueba verificable. Dirección editorial: Haz un carrusel de 4 láminas. Incluye un ejemplo hipotético, sin cifras ni testimonios. Revisión pendiente: CANARIO_EDITORIAL. CTA final exacto: «Descarga la plantilla de inventario.».\n' +
+    '\n' +
+    '¿Qué tarea pondrías a prueba primero? Comparte tu contexto para adaptar el siguiente paso.\n' +
+    '¿Qué cambia con haz un carrusel de 4 láminas para Jefas de operaciones de librerías?\n' +
+    '\n' +
+    'Qué significa para Jefas de operaciones de librerías y cómo probarlo sin perder el foco.\n' +
+    '\n' +
+    'Guarda esta propuesta y compártela con tu equipo.\n' +
+    'Comparte qué caso quieres poner a prueba.\n' +
+    '¿Qué cambia con haz un carrusel de 4 láminas para Jefas de operaciones de librerías?\n' +
+    'Qué significa para Jefas de operaciones de librerías y cómo probarlo sin perder el foco.\n' +
+    'En Chile, comienza por una tarea concreta de Formación operativa relacionada con Reducir quiebres de inventario sin añadir reuniones.\n' +
+    'Antes de adoptar la idea, registra cómo resuelves esa tarea hoy. Elige un caso pequeño, define quién revisará el resultado y compara calidad y tiempo. Documenta las limitaciones; no extrapoles una prueba a toda la organización.\n' +
+    'Desde Faro · fixture sintética, nuestra propuesta es convertir la conversación en una prueba verificable. Dirección editorial: Haz un carrusel de 4 láminas. Incluye un ejemplo hipotético, sin cifras ni testimonios. Revisión pendiente: CANARIO_EDITORIAL. CTA final exacto: «Descarga la plantilla de inventario.».\n' +
+    '¿Qué tarea pondrías a prueba primero? Comparte tu contexto para adaptar el siguiente paso.'
+  
+      at TestContext.<anonymous> (file:///home/ubuntu/.t3/projects/30x-trackt-2/tests/remediation-studio-1.test.mjs:74:10)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async Test.run (node:internal/test_runner/test:1404:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 'Haz un carrusel de 4 láminas.\n¿Qué cambia con haz un carrusel de 4 láminas para Jefas de operaciones de librerías?\n¿Qué cambia con haz un carrusel de 4 láminas para Jefas de operaciones de librerías?\n\nQué significa para Jefas de operaciones de librerías y cómo probarlo sin perder el foco.\nEn Chile, comienza por una tarea concreta de Formación operativa relacionada con Reducir quiebres de inventario sin añadir reuniones.\n\nAntes de adoptar la idea, registra cómo resuelves esa tarea hoy. Elige un caso pequeño, define quién revisará el resultado y compara calidad y tiempo. Documenta las limitaciones; no extrapoles una prueba a toda la organización.\n\nDesde Faro · fixture sintética, nuestra propuesta es convertir la conversación en una prueba verificable. Dirección editorial: Haz un carrusel de 4 láminas. Incluye un ejemplo hipotético, sin cifras ni testimonios. Revisión pendiente: CANARIO_EDITORIAL. CTA final exacto: «Descarga la plantilla de inventario.».\n\n¿Qué tarea pondrías a prueba primero? Comparte tu contexto para adaptar el siguiente paso.\n¿Qué cambia con haz un carrusel de 4 láminas para Jefas de operaciones de librerías?\n\nQué significa para Jefas de operaciones de librerías y cómo probarlo sin perder el foco.\n\nGuarda esta propuesta y compártela con tu equipo.\nComparte qué caso quieres poner a prueba.\n¿Qué cambia con haz un carrusel de 4 láminas para Jefas de operaciones de librerías?\nQué significa para Jefas de operaciones de librerías y cómo probarlo sin perder el foco.\nEn Chile, comienza por una tarea concreta de Formación operativa relacionada con Reducir quiebres de inventario sin añadir reuniones.\nAntes de adoptar la idea, registra cómo resuelves esa tarea hoy. Elige un caso pequeño, define quién revisará el resultado y compara calidad y tiempo. Documenta las limitaciones; no extrapoles una prueba a toda la organización.\nDesde Faro · fixture sintética, nuestra propuesta es convertir la conversación en una prueba verificable. Dirección editorial: Haz un carrusel de 4 láminas. Incluye un ejemplo hipotético, sin cifras ni testimonios. Revisión pendiente: CANARIO_EDITORIAL. CTA final exacto: «Descarga la plantilla de inventario.».\n¿Qué tarea pondrías a prueba primero? Comparte tu contexto para adaptar el siguiente paso.',
+    expected: /Dirección editorial:|CANARIO_EDITORIAL|Haz un carrusel/,
+    operator: 'doesNotMatch',
+    diff: 'simple'
+  }
+
+test at tests/remediation-studio-1.test.mjs:85:1
+✖ referencia: Reel de tres escenas adapta la necesidad y conserva procedencia sin copiar la fuente (9.450487ms)
+  AssertionError [ERR_ASSERTION]: The input was expected to not match the regular expression /Dirección editorial:|Reel en español con|ornitorrinco violeta|Crear un post original/. Input:
+  
+  'Bitácora de faltantes\n' +
+    '¿Qué cambia con bitácora de faltantes para Docentes rurales?\n' +
+    '¿Qué cambia con bitácora de faltantes para Docentes rurales?\n' +
+    '\n' +
+    'Crear un post original con una decisión verificable.\n' +
+    'En Chile, comienza por una tarea concreta de Formación operativa relacionada con Preparar clases sin conexión con poco tiempo.\n' +
+    '\n' +
+    'Antes de adoptar la idea, registra cómo resuelves esa tarea hoy. Elige un caso pequeño, define quién revisará el resultado y compara calidad y tiempo. Documenta las limitaciones; no extrapoles una prueba a toda la organización.\n' +
+    '\n' +
+    'Desde Faro · fixture sintética, nuestra propuesta es convertir la conversación en una prueba verificable. Referencia para consultar: https://example.com/qa-studio-inventario. Dirección editorial: Reel en español con 3 escenas para clases sin conexión. No copies frases de la fuente. CTA final exacto: Guarda esta guía para tu próxima clase..\n' +
+    '\n' +
+    '¿Qué tarea pondrías a prueba primero? Comparte tu contexto para adaptar el siguiente paso.\n' +
+    '¿Qué cambia con bitácora de faltantes para Docentes rurales?\n' +
+    '\n' +
+    'Crear un post original con una decisión verificable.\n' +
+    '\n' +
+    'Guarda esta propuesta y compártela con tu equipo.\n' +
+    'Comparte qué caso quieres poner a prueba.\n' +
+    '¿Qué cambia con bitácora de faltantes para Docentes rurales?\n' +
+    'Crear un post original con una decisión verificable.\n' +
+    'En Chile, comienza por una tarea concreta de Formación operativa relacionada con Preparar clases sin conexión con poco tiempo.\n' +
+    'Antes de adoptar la idea, registra cómo resuelves esa tarea hoy. Elige un caso pequeño, define quién revisará el resultado y compara calidad y tiempo. Documenta las limitaciones; no extrapoles una prueba a toda la organización.\n' +
+    'Desde Faro · fixture sintética, nuestra propuesta es convertir la conversación en una prueba verificable. Referencia para consultar: https://example.com/qa-studio-inventario. Dirección editorial: Reel en español con 3 escenas para clases sin conexión. No copies frases de la fuente. CTA final exacto: Guarda esta guía para tu próxima clase..\n' +
+    '¿Qué tarea pondrías a prueba primero? Comparte tu contexto para adaptar el siguiente paso.'
+  
+      at TestContext.<anonymous> (file:///home/ubuntu/.t3/projects/30x-trackt-2/tests/remediation-studio-1.test.mjs:88:10)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async Test.run (node:internal/test_runner/test:1404:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:969:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 'Bitácora de faltantes\n¿Qué cambia con bitácora de faltantes para Docentes rurales?\n¿Qué cambia con bitácora de faltantes para Docentes rurales?\n\nCrear un post original con una decisión verificable.\nEn Chile, comienza por una tarea concreta de Formación operativa relacionada con Preparar clases sin conexión con poco tiempo.\n\nAntes de adoptar la idea, registra cómo resuelves esa tarea hoy. Elige un caso pequeño, define quién revisará el resultado y compara calidad y tiempo. Documenta las limitaciones; no extrapoles una prueba a toda la organización.\n\nDesde Faro · fixture sintética, nuestra propuesta es convertir la conversación en una prueba verificable. Referencia para consultar: https://example.com/qa-studio-inventario. Dirección editorial: Reel en español con 3 escenas para clases sin conexión. No copies frases de la fuente. CTA final exacto: Guarda esta guía para tu próxima clase..\n\n¿Qué tarea pondrías a prueba primero? Comparte tu contexto para adaptar el siguiente paso.\n¿Qué cambia con bitácora de faltantes para Docentes rurales?\n\nCrear un post original con una decisión verificable.\n\nGuarda esta propuesta y compártela con tu equipo.\nComparte qué caso quieres poner a prueba.\n¿Qué cambia con bitácora de faltantes para Docentes rurales?\nCrear un post original con una decisión verificable.\nEn Chile, comienza por una tarea concreta de Formación operativa relacionada con Preparar clases sin conexión con poco tiempo.\nAntes de adoptar la idea, registra cómo resuelves esa tarea hoy. Elige un caso pequeño, define quién revisará el resultado y compara calidad y tiempo. Documenta las limitaciones; no extrapoles una prueba a toda la organización.\nDesde Faro · fixture sintética, nuestra propuesta es convertir la conversación en una prueba verificable. Referencia para consultar: https://example.com/qa-studio-inventario. Dirección editorial: Reel en español con 3 escenas para clases sin conexión. No copies frases de la fuente. CTA final exacto: Guarda esta guía para tu próxima clase..\n¿Qué tarea pondrías a prueba primero? Comparte tu contexto para adaptar el siguiente paso.',
+    expected: /Dirección editorial:|Reel en español con|ornitorrinco violeta|Crear un post original/,
+    operator: 'doesNotMatch',
+    diff: 'simple'
+  }
+
+test at tests/remediation-studio-1.test.mjs:99:1
+✖ oportunidad: Newsletter con asunto, saludo y secciones, sin mandato residual de post (7.48455ms)
+  AssertionError [ERR_ASSERTION]: The input was expected to not match the regular expression /Dirección editorial:|Crear un post original|Newsletter en español con/. Input:
+  
+  'Bitácora de faltantes\n' +
+    '¿Qué cambia con bitácora de faltantes para Jefas de operaciones de librerías?\n' +
+    '¿Qué cambia con bitácora de faltantes para Jefas de operaciones de librerías?\n' +
+    '\n' +
+    'Crear un post original con una decisión verificable.\n' +
+    'En Chile, comienza por una tarea concreta de Formación operativa relacionada con Reducir quiebres de inventario sin añadir reuniones.\n' +
+    '\n' +
+    'Antes de adoptar la idea, registra cómo resuelves esa tarea hoy. Elige un caso pequeño, define quién revisará el resultado y compara calidad y tiempo. Documenta las limitaciones; no extrapoles una prueba a toda la organización.\n' +
+    '\n' +
+    'Desde Faro · fixture sintética, nuestra propuesta es convertir la conversación en una prueba verificable. Referencia para consultar: https://example.com/qa-studio-inventario. Dirección editorial: Crear un post original para Jefas de operaciones de librerías.\n' +
+    '\n' +
+    'Newsletter en español con asunto, saludo y dos secciones: Registrar y Revisar. Usa ejemplo hipotético y ninguna cifra ni testimonio. CTA final exacto: Responde FICHA para recibir la plantilla..\n' +
+    '\n' +
+    '¿Qué tarea pondrías a prueba primero? Comparte tu contexto para adaptar el siguiente paso.\n' +
+    '¿Qué cambia con bitácora de faltantes para Jefas de operaciones de librerías?\n' +
+    '\n' +
+    'Crear un post original con una decisión verificable.\n' +
+    '\n' +
+    'Guarda esta propuesta y compártela con tu equipo.\n' +
+    'Comparte qué caso quieres poner a prueba.\n' +
+    '¿Qué cambia con bitácora de faltantes para Jefas de operaciones de librerías?\n' +
+    'Crear un post original con una decisión verificable.\n' +
+    'En Chile, comienza por una tarea concreta de Formación operativa relacionada con Reducir quiebres de inventario sin añadir reuniones.\n' +
+    'Antes de adoptar la idea, registra cómo resuelves esa tarea hoy. Elige un caso pequeño, define quién revisará el resultado y compara calidad y tiempo. Documenta las limitaciones; no extrapoles una prueba a toda la organización.\n' +
+    'Desde Faro · fixture sintética, nuestra propuesta es convertir la conversación en una prueba verificable. Referencia para consultar: https://example.com/qa-studio-inventario. Dirección editorial: Crear un post original para Jefas de operaciones de librerías.\n' +
+    '\n' +
+    'Newsletter en español con asunto, saludo y dos secciones: Registrar y Revisar. Usa ejemplo hipotético y ninguna cifra ni testimonio. CTA final exacto: Responde FICHA para recibir la plantilla..\n' +
+    '¿Qué tarea pondrías a prueba primero? Comparte tu contexto para adaptar el siguiente paso.'
+  
+      at TestContext.<anonymous> (file:///home/ubuntu/.t3/projects/30x-trackt-2/tests/remediation-studio-1.test.mjs:103:10)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async Test.run (node:internal/test_runner/test:1404:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:969:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 'Bitácora de faltantes\n¿Qué cambia con bitácora de faltantes para Jefas de operaciones de librerías?\n¿Qué cambia con bitácora de faltantes para Jefas de operaciones de librerías?\n\nCrear un post original con una decisión verificable.\nEn Chile, comienza por una tarea concreta de Formación operativa relacionada con Reducir quiebres de inventario sin añadir reuniones.\n\nAntes de adoptar la idea, registra cómo resuelves esa tarea hoy. Elige un caso pequeño, define quién revisará el resultado y compara calidad y tiempo. Documenta las limitaciones; no extrapoles una prueba a toda la organización.\n\nDesde Faro · fixture sintética, nuestra propuesta es convertir la conversación en una prueba verificable. Referencia para consultar: https://example.com/qa-studio-inventario. Dirección editorial: Crear un post original para Jefas de operaciones de librerías.\n\nNewsletter en español con asunto, saludo y dos secciones: Registrar y Revisar. Usa ejemplo hipotético y ninguna cifra ni testimonio. CTA final exacto: Responde FICHA para recibir la plantilla..\n\n¿Qué tarea pondrías a prueba primero? Comparte tu contexto para adaptar el siguiente paso.\n¿Qué cambia con bitácora de faltantes para Jefas de operaciones de librerías?\n\nCrear un post original con una decisión verificable.\n\nGuarda esta propuesta y compártela con tu equipo.\nComparte qué caso quieres poner a prueba.\n¿Qué cambia con bitácora de faltantes para Jefas de operaciones de librerías?\nCrear un post original con una decisión verificable.\nEn Chile, comienza por una tarea concreta de Formación operativa relacionada con Reducir quiebres de inventario sin añadir reuniones.\nAntes de adoptar la idea, registra cómo resuelves esa tarea hoy. Elige un caso pequeño, define quién revisará el resultado y compara calidad y tiempo. Documenta las limitaciones; no extrapoles una prueba a toda la organización.\nDesde Faro · fixture sintética, nuestra propuesta es convertir la conversación en una prueba verificable. Referencia para consultar: https://example.com/qa-studio-inventario. Dirección editorial: Crear un post original para Jefas de operaciones de librerías.\n\nNewsletter en español con asunto, saludo y dos secciones: Registrar y Revisar. Usa ejemplo hipotético y ninguna cifra ni testimonio. CTA final exacto: Responde FICHA para recibir la plantilla..\n¿Qué tarea pondrías a prueba primero? Comparte tu contexto para adaptar el siguiente paso.',
+    expected: /Dirección editorial:|Crear un post original|Newsletter en español con/,
+    operator: 'doesNotMatch',
+    diff: 'simple'
+  }
+
+test at tests/remediation-studio-1.test.mjs:114:1
+✖ 10k instructions and long context remain complete in the brief and survive the piece save roundtrip (11.969837ms)
+  TypeError: Cannot read properties of undefined (reading 'instructions')
+      at TestContext.<anonymous> (file:///home/ubuntu/.t3/projects/30x-trackt-2/tests/remediation-studio-1.test.mjs:122:37)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async Test.run (node:internal/test_runner/test:1404:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:969:7)

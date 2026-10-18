@@ -1,0 +1,90 @@
+{
+  "issueId": "studio-1",
+  "agent": "fix_studio_1",
+  "status": "fixed",
+  "rootCause": "createDraft componía siempre cinco bloques, usaba instructions como tema de respaldo, pegaba instructions y la adaptación sin interpretar en el guion, y fijaba un CTA ajeno a la petición. El formato sólo cambiaba metadatos.",
+  "changes": [
+    "localDraft genera estructuras distintas: láminas para carrusel, escenas para Reel/video, asunto/saludo/secciones para newsletter y párrafos para post. Conserva cinco unidades por defecto y admite entre tres y ocho elegidas explícitamente.",
+    "La necesidad de la audiencia guía el texto breve y los pasos. instructions y angle completos quedan en editorialBrief; audienceNeeds se conserva completo allí y se resume en el contenido.",
+    "CTA exacto, tema, cantidad y ejemplo tienen controles explícitos validados en el servidor. La sintaxis limitada de notas admite CTA etiquetado, cantidad de láminas/escenas, ejemplo hipotético y títulos de secciones; los controles tienen prioridad.",
+    "El brief visible fuera de los campos publicables explica que las indicaciones libres restantes requieren revisión manual. Conserva procedencia y notas sobre cantidades fuera de rango.",
+    "El brief sobrevive a PATCH y recarga sin convertirlo en contenido exportable/publicable. Campos, canales, audiencia, responsable y límites piece-contract se conservan.",
+    "Formulario del generador con controles de 16 px, foco existente y sin desborde en 390 × 844."
+  ],
+  "files": [
+    "server/intelligence.mjs (helpers localDraftControls/localDraft y región de generación de createDraft)",
+    "src/features/Studio.tsx (NewDraft y details del brief)",
+    "src/lib/types.ts (Piece.editorialBrief opcional)",
+    "tests/remediation-studio-1.test.mjs",
+    "docs/remediation/reports/studio-1.md",
+    "docs/remediation/reports/studio-1.json"
+  ],
+  "verification": [
+    {
+      "command": "node --test tests/remediation-studio-1.test.mjs",
+      "before": "Exit 1: los cuatro casos iniciales fallaban. Tres recorridos copiaban instrucciones; el caso largo carecía de brief.",
+      "after": "Los mismos cuatro escenarios y cuatro casos adicionales pasan dentro de la ejecución cercana de 57 pruebas.",
+      "kind": "test"
+    },
+    {
+      "command": "node --test tests/remediation-studio-1.test.mjs tests/draft-contract.test.mjs tests/intelligence.test.mjs tests/social-intelligence.test.mjs tests/integrated-flow.test.mjs tests/piece-draft.test.mjs tests/workflow-recovery.test.mjs",
+      "before": "La ejecución intermedia detectó expectativas antiguas que exigían instrucciones/adaptaciones en script. El coordinador las actualizó explícitamente, manteniendo límites, contexto completo y guardado.",
+      "after": "Exit 0: 57/57 pasan, incluidas 8 regresiones nuevas, límites de proveedor, contextos de 10k/5k/3k, guardado y conflictos del editor.",
+      "kind": "test"
+    },
+    {
+      "command": "node --check server/intelligence.mjs",
+      "before": "No aplicado.",
+      "after": "Exit 0.",
+      "kind": "test"
+    },
+    {
+      "command": "T3 preview_* en http://127.0.1.22:5512; tab_49_07e54779-9ab2-4979-8a15-674c4eff160a",
+      "before": "El informe adversarial documentó los tres flujos originales con cinco bloques e instrucciones pegadas y CTA fijo.",
+      "after": "Idea propia: 4 láminas + CTA exacto + brief separado. Referencia: 3 escenas TikTok/docentes + CTA exacto + URL. Oportunidad: newsletter asunto/saludo/Registrar/Revisar + CTA exacto, sin mandato residual de post. Todas las creaciones se hicieron por UI con respuestas HTTP 200.",
+      "kind": "browser"
+    },
+    {
+      "command": "Guardar cambios por UI y recargar la ruta del newsletter",
+      "before": "El brief no existía; el guardado anterior sí funcionaba.",
+      "after": "PATCH 200. Se conserva el guion y brief exactos, así como el CTA editado «CTA revisado de QA.», tras recargar.",
+      "kind": "browser"
+    },
+    {
+      "command": "T3 preview_resize 390 × 844 y generación con controles explícitos contradictorios con las notas",
+      "before": "Controles heredaban 14 px; la salida anterior ignoraba CTA y estructura.",
+      "after": "9 controles a 16 px; sin desborde de página o modal. Se generan 3 láminas, CTA del campo y ningún ejemplo aunque las notas pedían 8 y un ejemplo.",
+      "kind": "browser"
+    }
+  ],
+  "contractUpdatesByCoordinator": [
+    "tests/draft-contract.test.mjs conserva 10000 instructions, 5000 angle y 3000 audienceNeeds en brief, mantiene todos los límites y PATCH roundtrip.",
+    "tests/intelligence.test.mjs mueve las instrucciones libres al brief; se conserva el assert de cinco escenas por defecto.",
+    "tests/social-intelligence.test.mjs mueve la adaptación audiovisual al brief; mantiene las exclusiones de texto en pantalla y directivas."
+  ],
+  "artifacts": [
+    "docs/remediation/evidence/studio-1-red.txt",
+    "docs/remediation/evidence/studio-1-nearby.txt",
+    "docs/remediation/evidence/studio-1-green.txt",
+    "docs/remediation/evidence/studio-1-browser.json",
+    "docs/remediation/evidence/studio-1-carousel-brief.png",
+    "docs/remediation/evidence/studio-1-newsletter.png",
+    "docs/remediation/evidence/studio-1-mobile-controls.png"
+  ],
+  "limitations": [
+    "Generación local determinista y de alcance explícito. No se afirma interpretación semántica de dirección libre ni cumplimiento automático de peticiones arbitrarias; el resto del brief requiere revisión manual.",
+    "Datos ficticios: cuenta y marca creadas por API; referencia analizada preparada como fixture sintética en SQLite para disponer de oportunidad. example.com es una procedencia sintética, no una extracción verificada.",
+    "No se usaron claves ni proveedores reales. Los tests cercanos de proveedor usan transportes simulados; no acreditan calidad de un modelo ni entrega/publicación.",
+    "No se ejecutó build ni formato global. La compilación integrada y el cierre definitivo del hallazgo corresponden al coordinador.",
+    "Móvil probado como viewport emulado en navegador de escritorio, no en dispositivo físico."
+  ],
+  "resources": {
+    "host": "127.0.1.22",
+    "apiPort": 4512,
+    "webPort": 5512,
+    "dataDir": "/tmp/30x-remediation-studio-1",
+    "processSession": 46789,
+    "tabId": "tab_49_07e54779-9ab2-4979-8a15-674c4eff160a",
+    "cleanup": "Pestaña propia cerrada. Proceso propio detenido y sesión terminada; ss confirmó puertos 4512/5512 sin escuchas. Node --watch emitió una aserción FSEventWrap durante la detención; no ocurrió durante los recorridos."
+  }
+}

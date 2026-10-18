@@ -1,0 +1,108 @@
+✔ 10,000-character accepted instructions produce a draft that the piece PATCH can save (279.176758ms)
+✔ provider drafts are bounded to every editable piece limit before persistence (33.855653ms)
+✔ long reference analysis and maximum-size segment fields stay within the draft contract (13.035876ms)
+✔ invalid provider field and scene types fail without persisting an AI draft (5.955634ms)
+✔ a company completes context → evidence → original draft → approval → calendar → recorded results without providers (407.551214ms)
+✔ five anonymous voluntary responses become an aggregate signal and change the evidence explanation (137.628788ms)
+✔ context imports, opportunities, polls and outcomes stay isolated across accounts and companies (250.487799ms)
+✔ canonical dedup removes tracking but preserves content query and unrelated topics (2.77117ms)
+✔ RSS and Atom preserve real titles, dates, source URLs and Google approximate traffic (4.780491ms)
+✔ Google Trends identifies queries and countries rather than the shared feed link (224.486916ms)
+✔ legacy Google feed identities are repaired without losing editorial decisions or linked pieces (40.18533ms)
+✔ first snapshot never claims growth; separate observations support actual velocity only (0.573985ms)
+✔ GDELT discovery uses detection date without claiming popularity or publication date (7.345261ms)
+✔ discovery persists source failures, does not duplicate URLs, and refreshes official metrics (30.264995ms)
+✔ topic-specific sources use brand context and RSS query filters unrelated content (2.88341ms)
+✔ preliminary brand relevance matches Spanish sectors to English terms without AI (10.565007ms)
+✔ discovery recalculates lexical relevance without modifying editorial status or analysis (7.140612ms)
+✔ continuous discovery obeys cadence and persists exponential backoff without overlapping runs (9.156353ms)
+✔ continuous discovery never duplicates an active manual refresh (10.273118ms)
+✔ the same article across sources keeps platform metrics separate and adds evidence (26.334777ms)
+✔ real discovery never merges into a similarly named demo reference (14.993839ms)
+✔ saturation is unknown for small samples and qualified as observed brand corpus (2.860915ms)
+✔ URL fetch blocks private, mapped, reserved and DNS-rebinding destinations (5.184681ms)
+✔ AI provider failures are explicit and secret never appears in errors (4.286416ms)
+✖ local analysis and drafts persist useful editable output without API keys (16.02203ms)
+✔ analysis protects simultaneous reference edits and preserves dismissal decisions (9.112156ms)
+✔ publishing requires approval and real connector; webhook delivery is idempotent (15.915989ms)
+✔ uncertain network delivery cannot silently duplicate a publication (9.929338ms)
+✔ piece editor ignores metadata and comment refreshes while preserving dirty text (1.135714ms)
+✔ piece editor adopts new server content when the local draft is clean (0.526945ms)
+✔ piece editor preserves local work and its old baseline on a content conflict (0.213703ms)
+✔ piece editor detects changes to the assignee but ignores token-only metadata (0.204809ms)
+✔ idea propia: cuatro láminas, CTA exacto y dirección libre fuera del texto publicable (263.863978ms)
+✔ referencia: Reel de tres escenas adapta la necesidad y conserva procedencia sin copiar la fuente (10.458467ms)
+✔ oportunidad: Newsletter con asunto, saludo y secciones, sin mandato residual de post (9.019146ms)
+✔ 10k instructions and long context remain complete in the brief and survive the piece save roundtrip (24.665338ms)
+✔ fetchSource dispatches social providers and sync preserves provider provenance without filling absent metrics (218.850223ms)
+✔ YouTube priority is query-local and history compares only the same video (1.645483ms)
+✔ Apify metrics remain provider-reported and small view changes do not label a general trend (0.521957ms)
+▶ social source changes, pauses, and deletion during fetch are skipped without telemetry or references
+  ✔ pause (8.945565ms)
+  ✔ query change (10.285806ms)
+  ✔ URL change (8.612993ms)
+  ✔ type change (9.474673ms)
+  ✔ delete (8.264648ms)
+✔ social source changes, pauses, and deletion during fetch are skipped without telemetry or references (50.654474ms)
+✔ same social video refresh keeps valid analysis but changed media or identity invalidates it (46.024219ms)
+✔ cross-source promotion cannot replace the identity or media behind saved video analysis (34.508087ms)
+✔ different social videos with similar captions do not fuzzy merge (22.330146ms)
+✖ draft fallback uses validated audiovisual observations without copying on-screen text (9.917331ms)
+✔ AI draft receives the complete validated audiovisual context as reference data (14.083396ms)
+✔ analysis API response redacts provider media URL while retaining the private value in storage (7.459132ms)
+✔ asset upload records per-file failures and continues through the batch (1.758453ms)
+✔ draft refresh retry reuses the created piece and never creates it twice (0.467535ms)
+ℹ tests 53
+ℹ suites 0
+ℹ pass 51
+ℹ fail 2
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 947.968984
+
+✖ failing tests:
+
+test at tests/intelligence.test.mjs:727:1
+✖ local analysis and drafts persist useful editable output without API keys (16.02203ms)
+  AssertionError [ERR_ASSERTION]: The expression evaluated to a falsy value:
+  
+    assert.ok(piece.script.includes("Enfoque de pequeñas empresas"))
+  
+      at TestContext.<anonymous> (file:///home/ubuntu/.t3/projects/30x-trackt-2/tests/intelligence.test.mjs:749:10)
+      at async Test.run (node:internal/test_runner/test:1404:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:969:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }
+
+test at tests/social-intelligence.test.mjs:450:1
+✖ draft fallback uses validated audiovisual observations without copying on-screen text (9.917331ms)
+  AssertionError [ERR_ASSERTION]: The input did not match the regular expression /Crear un ejemplo propio de revisión semanal/. Input:
+  
+  'Escena 1: Una forma de trabajar en «Revisión semanal de campañas» para Responsables de marketing.\n' +
+    'La necesidad que guía esta propuesta: Aterrizar ideas en tareas concretas. Elige una tarea de tu día a día que permita trabajar en ella.\n' +
+    '\n' +
+    'Escena 2: Registrar el punto de partida\n' +
+    'Para trabajar en «Aterrizar ideas en tareas concretas», anota qué tarea está pendiente, qué la bloquea y quién necesita resolverla. Conserva ese registro para poder comparar después.\n' +
+    '\n' +
+    'Escena 3: Probar una alternativa\n' +
+    'Elige un caso manejable relacionado con «Revisión semanal de campañas». Acuerda con tu equipo qué cambiarán y cómo comprobarán si la tarea quedó resuelta.\n' +
+    '\n' +
+    'Escena 4: El siguiente paso\n' +
+    'Comparte qué tarea necesitas resolver y qué te falta comprobar.'
+  
+      at TestContext.<anonymous> (file:///home/ubuntu/.t3/projects/30x-trackt-2/tests/social-intelligence.test.mjs:467:10)
+      at async Test.run (node:internal/test_runner/test:1404:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:969:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 'Escena 1: Una forma de trabajar en «Revisión semanal de campañas» para Responsables de marketing.\nLa necesidad que guía esta propuesta: Aterrizar ideas en tareas concretas. Elige una tarea de tu día a día que permita trabajar en ella.\n\nEscena 2: Registrar el punto de partida\nPara trabajar en «Aterrizar ideas en tareas concretas», anota qué tarea está pendiente, qué la bloquea y quién necesita resolverla. Conserva ese registro para poder comparar después.\n\nEscena 3: Probar una alternativa\nElige un caso manejable relacionado con «Revisión semanal de campañas». Acuerda con tu equipo qué cambiarán y cómo comprobarán si la tarea quedó resuelta.\n\nEscena 4: El siguiente paso\nComparte qué tarea necesitas resolver y qué te falta comprobar.',
+    expected: /Crear un ejemplo propio de revisión semanal/,
+    operator: 'match',
+    diff: 'simple'
+  }
