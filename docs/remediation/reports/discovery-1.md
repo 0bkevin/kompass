@@ -1,0 +1,22 @@
+# discovery-1 — RSS público de NASA rechazado por clasificación IPv4
+
+Estado: **fixed**, pendiente de la comprobación integrada del coordinador. Responsable: `fix_discovery_1`. No se modificaron los informes adversariales originales.
+
+La condición `a === 192 && b === 0` de `isPublicAddress` rechazaba todo `192.0.0.0/16`. Incluía por error la dirección pública de NASA `192.0.66.108`: aunque DNS también podía devolver una IPv6 pública, `validatePublicUrl` rechaza correctamente un conjunto que contenga cualquier dirección clasificada como no pública.
+
+Se ajustó únicamente el clasificador IPv4 en `server/connectors.mjs`. Ahora trata `192.0.0.0/24` como especial, permite sus excepciones globalmente alcanzables `192.0.0.9` y `192.0.0.10`, y conserva explícitamente el bloqueo de documentación `192.0.2.0/24`. El resto de las denegaciones IPv4 y el código IPv6 permanecen iguales. La referencia primaria es el [registro IPv4 de IANA](https://www.iana.org/assignments/iana-ipv4-special-registry/), actualizado el 2025-10-09 y consultado durante esta corrección.
+
+Verificación determinista:
+
+- `node --test --test-reporter=tap tests/remediation-discovery-1.test.mjs`: **30/30 PASS** después de la corrección. Antes del cambio, `NASA RSS URL accepts its public 192.0.66.108 DNS result` falló con «No se permite acceder a direcciones privadas o reservadas.». También falló el recorrido real `fetchSource → safeFetch → validatePublicUrl` para el RSS NASA. [Rojo inicial](../evidence/discovery-1-red.tap), [rojo con fixture final](../evidence/discovery-1-red-corrected-fixture.tap), [verde](../evidence/discovery-1-green.tap).
+- La fixture final inyecta DNS `192.0.66.108` y un flujo HTTPS sintético, mientras ejecuta la validación, selección de direcciones del socket, redirecciones y parser RSS de producción. Comprueba una entrada explícitamente sintética, host original y DNS resuelto una sola vez. Una segunda resolución devolvería loopback y haría fallar la prueba.
+- Se recorren exhaustivamente las 256 direcciones de `192.0.0.0/24` y las 256 de `192.0.2.0/24`, además de límites públicos y privados, RFC1918, CGNAT, metadata, link-local, multicast, reservadas, documentación y transiciones IPv6. También se verifican nombres locales, hosts privados codificados, credenciales, puertos y HTTPS obligatorio, DNS mixto, 15 redirecciones no seguras, presupuesto de redirecciones y eliminación de cabeceras sensibles al redirigir.
+- `node --test --test-reporter=tap tests/intelligence.test.mjs tests/company-context.test.mjs`: **33/33 PASS**. Incluye los bloqueos SSRF existentes y los recorridos RSS, descubrimiento y extracción pública. [Resultado](../evidence/discovery-1-nearby.tap).
+
+El primer intento posterior al parche pasó 29/30: el contador interno de un mock devolvía el destino privado de rebinding en la primera resolución. Se corrigió el contador de la fixture, sin cambiar código de producción por ese incidente. Se volvió a ejecutar el test final contra una copia temporal aislada con la condición original del clasificador: **5 PASS / 25 FAIL**, incluidos los dos recorridos NASA; con el clasificador corregido dio **30 PASS / 0 FAIL**. La copia se eliminó y el checkout compartido nunca se revirtió. [Incidente del fixture y resolución](../evidence/discovery-1-test-fixture-incident.json).
+
+La comprobación adicional contra Internet ejecutó **`safeFetch("https://www.nasa.gov/feed/")` real**, con HTTPS obligatorio, límite de 1 MiB y tiempo de espera de 12 segundos: el 2026-10-18 a las 04:56:40 UTC recibió **HTTP 200**, tipo `application/rss+xml`, 297386 bytes y **10 entradas RSS** reconocidas. DNS devolvió `192.0.66.108` y `2a04:fa87:fffd::c000:426c` en una única resolución. Se guardaron metadatos y SHA-256, sin copiar el contenido remoto. No se usaron claves ni proveedores de pago. [Evidencia de lectura pública real](../evidence/discovery-1-nasa-live.json).
+
+No se abrió navegador ni se ejecutó build global. No se iniciaron procesos persistentes ni se usaron los puertos asignados. Los tests y la lectura pública utilizaron SQLite temporal; las bases y la copia de baseline se eliminaron. La disponibilidad futura de NASA no forma parte del contrato determinista. La integración final de la UI y la suite conjunta quedan a cargo del coordinador.
+
+Archivos de implementación: `server/connectors.mjs` (sólo `isPublicAddress`) y `tests/remediation-discovery-1.test.mjs`. [Informe estructurado](discovery-1.json).

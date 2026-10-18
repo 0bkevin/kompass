@@ -1,0 +1,32 @@
+{
+  "checkedAt": "2026-10-18T04:56:40.420Z",
+  "kind": "real-public-read",
+  "synthetic": false,
+  "url": "https://www.nasa.gov/feed/",
+  "lookups": [
+    {
+      "hostname": "www.nasa.gov",
+      "options": {
+        "all": true,
+        "verbatim": true
+      },
+      "addresses": [
+        {
+          "address": "192.0.66.108",
+          "family": 4
+        },
+        {
+          "address": "2a04:fa87:fffd::c000:426c",
+          "family": 6
+        }
+      ]
+    }
+  ],
+  "paidProviders": false,
+  "status": 200,
+  "contentType": "application/rss+xml; charset=UTF-8",
+  "bytes": 297386,
+  "sha256": "a1b48678a8dcd3a86bd207efbb0ee88e2d18a00d72c45f19e291f95062ba9d1f",
+  "feedEntries": 10,
+  "result": "PASS"
+}

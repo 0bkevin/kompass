@@ -1,0 +1,68 @@
+{
+  "issueId": "discovery-1",
+  "agent": "fix_discovery_1",
+  "status": "fixed",
+  "rootCause": "isPublicAddress rejected every 192.0.x.x address as reserved instead of the IANA special-purpose 192.0.0.0/24. This incorrectly rejected NASA's public 192.0.66.108 DNS answer before safeFetch could read its RSS.",
+  "changes": [
+    "Narrow the IPv4 protocol-assignment denial to 192.0.0.0/24, with globally reachable IANA exceptions 192.0.0.9 and 192.0.0.10.",
+    "Preserve a separate explicit denial for documentation range 192.0.2.0/24, all other IPv4 restrictions, and the existing IPv6 classifier.",
+    "Add deterministic regression coverage of NASA validation and the production fetchSource/safeFetch RSS path with injected DNS and a synthetic HTTP stream.",
+    "Verify DNS pinning, mixed public/private DNS rejection, private and special range boundaries, credentials, port restrictions, HTTPS, unsafe redirects, redirect limits and sensitive header stripping.",
+    "Record a controlled real NASA RSS read and an independently documented test-fixture DNS counter incident."
+  ],
+  "files": [
+    "server/connectors.mjs",
+    "tests/remediation-discovery-1.test.mjs",
+    "docs/remediation/reports/discovery-1.md",
+    "docs/remediation/reports/discovery-1.json"
+  ],
+  "verification": [
+    {
+      "command": "node --test --test-reporter=tap tests/remediation-discovery-1.test.mjs",
+      "before": "Original classifier: NASA RSS URL validation rejected DNS address 192.0.66.108 with the private/reserved-address error. The final corrected test fixture reproduced 25 failures and 5 passes in an isolated temporary copy containing the original classifier; the production fetchSource/safeFetch RSS path also failed.",
+      "after": "Fixed classifier: 30 tests passed, zero failed. The public NASA IPv4 result is accepted, a synthetic NASA RSS yields one parsed entry through production fetchSource/safeFetch, and DNS pinning and all tested security restrictions remain enforced.",
+      "kind": "test"
+    },
+    {
+      "command": "node --test --test-reporter=tap tests/intelligence.test.mjs tests/company-context.test.mjs",
+      "before": "Existing nearby tests were preserved unchanged.",
+      "after": "33 tests passed, zero failed, including existing SSRF denials and public discovery/extraction workflows.",
+      "kind": "test"
+    },
+    {
+      "command": "safeFetch('https://www.nasa.gov/feed/', { requireHttps: true, timeout: 12000, maxBytes: 1048576 }); parseFeed(body, source)",
+      "before": "The adversarial report observed this NASA feed rejected locally as private/reserved despite a public HTTP 200 response.",
+      "after": "Real public read at 2026-10-18T04:56:40.420Z: HTTP 200; DNS resolved once to 192.0.66.108 and 2a04:fa87:fffd::c000:426c; 297386 bytes; application/rss+xml; 10 parsed RSS entries. No paid providers or credentials.",
+      "kind": "http"
+    }
+  ],
+  "artifacts": [
+    "docs/remediation/evidence/discovery-1-red.tap",
+    "docs/remediation/evidence/discovery-1-red-corrected-fixture.tap",
+    "docs/remediation/evidence/discovery-1-green.tap",
+    "docs/remediation/evidence/discovery-1-nearby.tap",
+    "docs/remediation/evidence/discovery-1-nasa-live.json",
+    "docs/remediation/evidence/discovery-1-test-fixture-incident.json"
+  ],
+  "limitations": [
+    "Deterministic regression tests inject DNS and a synthetic HTTP response stream; they execute production URL validation, pinning, redirects and RSS parsing without depending on Internet availability.",
+    "The separate real NASA read is a single current observation and does not guarantee future site availability.",
+    "No browser or global build was run. Final combined integration and UI verification belong to the coordinator.",
+    "The first post-fix test run had a DNS mock counter error (29 passed, 1 failed). The fixture was corrected, its final version was rechecked against the original classifier in an isolated temporary copy, and the incident was retained as evidence."
+  ],
+  "references": [
+    {
+      "title": "IANA IPv4 Special-Purpose Address Space",
+      "url": "https://www.iana.org/assignments/iana-ipv4-special-registry/",
+      "registryUpdated": "2025-10-09"
+    }
+  ],
+  "cleanup": {
+    "persistentProcessesStarted": false,
+    "browserTabsOpened": false,
+    "temporaryDatabasesRemoved": true,
+    "isolatedBaselineRemoved": true,
+    "sharedCheckoutRevertedForBaseline": false,
+    "adversarialReportsOverwritten": false
+  }
+}

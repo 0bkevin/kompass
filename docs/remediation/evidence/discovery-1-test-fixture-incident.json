@@ -1,0 +1,29 @@
+{
+  "issueId": "discovery-1",
+  "kind": "test-fixture-incident",
+  "status": "resolved",
+  "phase": "First run after applying the production classifier fix",
+  "command": "node --test --test-reporter=tap tests/remediation-discovery-1.test.mjs",
+  "observed": {
+    "passed": 29,
+    "failed": 1,
+    "test": "NASA RSS discovery uses real safeFetch, pins DNS once and parses a synthetic RSS",
+    "error": "No se permite acceder a direcciones privadas o reservadas."
+  },
+  "rootCause": "The DNS mock used its own mock.callCount() inside the implementation. The in-progress first invocation was not yet recorded, so the fixture supplied the intentional rebinding address 127.0.0.1 on its first call instead of the NASA address. The production validator correctly rejected that private address.",
+  "correction": "Use a local resolutions counter incremented inside the lookup implementation. Its first call deterministically returns 192.0.66.108; later calls would return 127.0.0.1. Keep the final assertion that DNS lookup is called only once.",
+  "reverification": {
+    "isolatedOriginalClassifier": {
+      "passed": 5,
+      "failed": 25,
+      "artifact": "docs/remediation/evidence/discovery-1-red-corrected-fixture.tap"
+    },
+    "fixedClassifier": {
+      "passed": 30,
+      "failed": 0,
+      "artifact": "docs/remediation/evidence/discovery-1-green.tap"
+    }
+  },
+  "productionChangesForIncident": false,
+  "note": "The intermediate 29/30 failure is documented here from the captured tool result; the authoritative red log uses the corrected DNS fixture in an isolated temporary copy, and the green log uses the fixed shared checkout. No shared production source was reverted for baseline verification."
+}

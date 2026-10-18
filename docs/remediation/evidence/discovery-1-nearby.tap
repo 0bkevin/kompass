@@ -1,0 +1,208 @@
+TAP version 13
+# Subtest: public metadata produces editable, explicitly hypothetical company context
+ok 1 - public metadata produces editable, explicitly hypothetical company context
+  ---
+  duration_ms: 15.782288
+  type: 'test'
+  ...
+# Subtest: provided content and extracted excerpts remove scripts and contact details
+ok 2 - provided content and extracted excerpts remove scripts and contact details
+  ---
+  duration_ms: 2.421283
+  type: 'test'
+  ...
+# Subtest: social links remain linked without network requests or invented audience
+ok 3 - social links remain linked without network requests or invented audience
+  ---
+  duration_ms: 0.742631
+  type: 'test'
+  ...
+# Subtest: private URLs, invalid payloads and excessive imports are rejected before fetching
+ok 4 - private URLs, invalid payloads and excessive imports are rejected before fetching
+  ---
+  duration_ms: 1.16685
+  type: 'test'
+  ...
+# Subtest: public-looking domains resolving privately never reach the fetcher
+ok 5 - public-looking domains resolving privately never reach the fetcher
+  ---
+  duration_ms: 0.810854
+  type: 'test'
+  ...
+# Subtest: blocked pages and unsupported responses expose recovery without inventing read content
+ok 6 - blocked pages and unsupported responses expose recovery without inventing read content
+  ---
+  duration_ms: 1.558982
+  type: 'test'
+  ...
+# Subtest: redirect hooks reject social networks, credentials and private login destinations
+ok 7 - redirect hooks reject social networks, credentials and private login destinations
+  ---
+  duration_ms: 1.931012
+  type: 'test'
+  ...
+# Subtest: inspection requires a session and a company is not required yet
+ok 8 - inspection requires a session and a company is not required yet
+  ---
+  duration_ms: 40.831786
+  type: 'test'
+  ...
+# Subtest: cached inspections are user-owned, expire after 30 minutes and are consumed on commit
+ok 9 - cached inspections are user-owned, expire after 30 minutes and are consumed on commit
+  ---
+  duration_ms: 31.993443
+  type: 'test'
+  ...
+# Subtest: context history and deletion stay inside the brand and preserve reviewed brand fields
+ok 10 - context history and deletion stay inside the brand and preserve reviewed brand fields
+  ---
+  duration_ms: 19.212853
+  type: 'test'
+  ...
+# Subtest: partial network failure can be recovered by importing team content
+ok 11 - partial network failure can be recovered by importing team content
+  ---
+  duration_ms: 6.101253
+  type: 'test'
+  ...
+# Subtest: membership revoked during remote inspection prevents storing into a former workspace
+ok 12 - membership revoked during remote inspection prevents storing into a former workspace
+  ---
+  duration_ms: 10.992383
+  type: 'test'
+  ...
+# Subtest: canonical dedup removes tracking but preserves content query and unrelated topics
+ok 13 - canonical dedup removes tracking but preserves content query and unrelated topics
+  ---
+  duration_ms: 2.428303
+  type: 'test'
+  ...
+# Subtest: RSS and Atom preserve real titles, dates, source URLs and Google approximate traffic
+ok 14 - RSS and Atom preserve real titles, dates, source URLs and Google approximate traffic
+  ---
+  duration_ms: 4.069389
+  type: 'test'
+  ...
+# Subtest: Google Trends identifies queries and countries rather than the shared feed link
+ok 15 - Google Trends identifies queries and countries rather than the shared feed link
+  ---
+  duration_ms: 200.36008
+  type: 'test'
+  ...
+# Subtest: legacy Google feed identities are repaired without losing editorial decisions or linked pieces
+ok 16 - legacy Google feed identities are repaired without losing editorial decisions or linked pieces
+  ---
+  duration_ms: 27.721739
+  type: 'test'
+  ...
+# Subtest: first snapshot never claims growth; separate observations support actual velocity only
+ok 17 - first snapshot never claims growth; separate observations support actual velocity only
+  ---
+  duration_ms: 0.401746
+  type: 'test'
+  ...
+# Subtest: GDELT discovery uses detection date without claiming popularity or publication date
+ok 18 - GDELT discovery uses detection date without claiming popularity or publication date
+  ---
+  duration_ms: 5.73433
+  type: 'test'
+  ...
+# Subtest: discovery persists source failures, does not duplicate URLs, and refreshes official metrics
+ok 19 - discovery persists source failures, does not duplicate URLs, and refreshes official metrics
+  ---
+  duration_ms: 25.213946
+  type: 'test'
+  ...
+# Subtest: topic-specific sources use brand context and RSS query filters unrelated content
+ok 20 - topic-specific sources use brand context and RSS query filters unrelated content
+  ---
+  duration_ms: 2.666501
+  type: 'test'
+  ...
+# Subtest: preliminary brand relevance matches Spanish sectors to English terms without AI
+ok 21 - preliminary brand relevance matches Spanish sectors to English terms without AI
+  ---
+  duration_ms: 10.231625
+  type: 'test'
+  ...
+# Subtest: discovery recalculates lexical relevance without modifying editorial status or analysis
+ok 22 - discovery recalculates lexical relevance without modifying editorial status or analysis
+  ---
+  duration_ms: 6.657713
+  type: 'test'
+  ...
+# Subtest: continuous discovery obeys cadence and persists exponential backoff without overlapping runs
+ok 23 - continuous discovery obeys cadence and persists exponential backoff without overlapping runs
+  ---
+  duration_ms: 7.305621
+  type: 'test'
+  ...
+# Subtest: continuous discovery never duplicates an active manual refresh
+ok 24 - continuous discovery never duplicates an active manual refresh
+  ---
+  duration_ms: 8.773494
+  type: 'test'
+  ...
+# Subtest: the same article across sources keeps platform metrics separate and adds evidence
+ok 25 - the same article across sources keeps platform metrics separate and adds evidence
+  ---
+  duration_ms: 21.646956
+  type: 'test'
+  ...
+# Subtest: real discovery never merges into a similarly named demo reference
+ok 26 - real discovery never merges into a similarly named demo reference
+  ---
+  duration_ms: 13.655009
+  type: 'test'
+  ...
+# Subtest: saturation is unknown for small samples and qualified as observed brand corpus
+ok 27 - saturation is unknown for small samples and qualified as observed brand corpus
+  ---
+  duration_ms: 3.442162
+  type: 'test'
+  ...
+# Subtest: URL fetch blocks private, mapped, reserved and DNS-rebinding destinations
+ok 28 - URL fetch blocks private, mapped, reserved and DNS-rebinding destinations
+  ---
+  duration_ms: 5.390532
+  type: 'test'
+  ...
+# Subtest: AI provider failures are explicit and secret never appears in errors
+ok 29 - AI provider failures are explicit and secret never appears in errors
+  ---
+  duration_ms: 4.202329
+  type: 'test'
+  ...
+# Subtest: local analysis and drafts persist useful editable output without API keys
+ok 30 - local analysis and drafts persist useful editable output without API keys
+  ---
+  duration_ms: 9.659001
+  type: 'test'
+  ...
+# Subtest: analysis protects simultaneous reference edits and preserves dismissal decisions
+ok 31 - analysis protects simultaneous reference edits and preserves dismissal decisions
+  ---
+  duration_ms: 9.567753
+  type: 'test'
+  ...
+# Subtest: publishing requires approval and real connector; webhook delivery is idempotent
+ok 32 - publishing requires approval and real connector; webhook delivery is idempotent
+  ---
+  duration_ms: 15.891172
+  type: 'test'
+  ...
+# Subtest: uncertain network delivery cannot silently duplicate a publication
+ok 33 - uncertain network delivery cannot silently duplicate a publication
+  ---
+  duration_ms: 10.830347
+  type: 'test'
+  ...
+1..33
+# tests 33
+# suites 0
+# pass 33
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 620.217917
