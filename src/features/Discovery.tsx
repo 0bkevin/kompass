@@ -5,6 +5,7 @@ import {
   Check,
   ChevronRight,
   Compass,
+  Download,
   ExternalLink,
   Flame,
   Globe2,
@@ -346,9 +347,6 @@ export default function Radar() {
     <div className="page radar-page">
       <div className="page-heading">
         <div>
-          <p className="eyebrow">
-            <span className="signal-dot" /> TU VENTAJA EMPIEZA CON UNA SEÑAL
-          </p>
           <h1>
             El mundo se mueve.
             <br className="small-break" /> Encuentra tu próximo ángulo.
@@ -580,7 +578,6 @@ export default function Radar() {
           <div className="insight-card dark">
             <div className="row">
               <Sparkles size={18} />
-              <span className="eyebrow">EL CRITERIO ES TUYO</span>
             </div>
             <h3>
               Una tendencia.
@@ -961,6 +958,55 @@ export function ReferenceDetail({
     >("loading");
   const busyRef = useRef(false);
   const committedDraftRef = useRef<Piece | null>(null);
+  const attachment = state.assets.find((asset) => asset.id === r.assetId);
+  const attachmentUrl = attachment
+    ? `/api/brands/${encodeURIComponent(state.brand.id)}/assets/${encodeURIComponent(attachment.id)}/file?download=1`
+    : "";
+  const [attachmentCheck, setAttachmentCheck] = useState<{
+    url: string;
+    status: "checking" | "available" | "missing" | "unauthorized" | "error";
+  }>({ url: "", status: "checking" });
+  const [attachmentRetry, setAttachmentRetry] = useState(0);
+  const attachmentStatus =
+    attachmentCheck.url === attachmentUrl
+      ? attachmentCheck.status
+      : "checking";
+  useEffect(() => {
+    if (!attachmentUrl) return;
+    let active = true;
+    const controller = new AbortController();
+    const timeout = setTimeout(() => controller.abort(), 10000);
+    setAttachmentCheck({ url: attachmentUrl, status: "checking" });
+    void fetch(attachmentUrl, {
+      method: "HEAD",
+      credentials: "same-origin",
+      cache: "no-store",
+      signal: controller.signal,
+    })
+      .then((response) => {
+        if (!active) return;
+        setAttachmentCheck({
+          url: attachmentUrl,
+          status: response.ok
+            ? "available"
+            : response.status === 404 || response.status === 410
+              ? "missing"
+              : response.status === 401 || response.status === 403
+                ? "unauthorized"
+                : "error",
+        });
+      })
+      .catch(() => {
+        if (active)
+          setAttachmentCheck({ url: attachmentUrl, status: "error" });
+      })
+      .finally(() => clearTimeout(timeout));
+    return () => {
+      active = false;
+      clearTimeout(timeout);
+      controller.abort();
+    };
+  }, [attachmentUrl, attachmentRetry]);
   const close = useCallback(() => {
     if (!busyRef.current) onClose();
   }, [onClose]);
@@ -1091,16 +1137,75 @@ export function ReferenceDetail({
           </a>
         )}
       </div>
+      {r.originalUrlOmitted && (
+        <p className="small muted">
+          El enlace original se omitió porque no cumple las reglas de citas
+          públicas. El contexto aportado sigue disponible.
+        </p>
+      )}
       <h2 className="detail-title">{r.title}</h2>
       {r.text && <p className="detail-text">{r.text}</p>}
-      {r.assetId &&
-        state.assets.find((a) => a.id === r.assetId)?.type === "image" && (
-          <img
-            className="reference-image"
-            src={state.assets.find((a) => a.id === r.assetId)!.url}
-            alt={r.title}
-          />
-        )}
+      {(r.assetId || r.format === "document") && (
+        <section className="reference-attachment" aria-label="Archivo adjunto">
+          <div className="reference-attachment-info">
+            <strong>Archivo adjunto</strong>
+            {attachment && (
+              <>
+                <span className="reference-attachment-name">
+                  {attachment.name}
+                </span>
+                <span className="small muted">
+                  {attachment.mimeType} ·{" "}
+                  {new Intl.NumberFormat("es").format(attachment.size)} bytes
+                </span>
+              </>
+            )}
+            <p className="small muted">
+              Archivo aportado por el equipo. Su descarga requiere acceso a esta
+              empresa; no es un enlace público.
+            </p>
+          </div>
+          <div className="reference-attachment-action" aria-live="polite">
+            {!attachment ? (
+              <p role="status">
+                No hay un archivo adjunto disponible. Pide al equipo que vuelva a
+                adjuntar el original desde Agregar referencia.
+              </p>
+            ) : attachmentStatus === "available" ? (
+              <a
+                className="button secondary"
+                href={attachmentUrl}
+                download={attachment.name}
+              >
+                <Download size={16} aria-hidden="true" />
+                Descargar original adjunto
+              </a>
+            ) : attachmentStatus === "checking" ? (
+              <p role="status">Comprobando el archivo adjunto…</p>
+            ) : (
+              <>
+                <p role="status">
+                  {attachmentStatus === "missing"
+                    ? "El archivo adjunto ya no está disponible. Pide al equipo que vuelva a adjuntar el original."
+                    : attachmentStatus === "unauthorized"
+                      ? "No se pudo autorizar la descarga. Comprueba tu sesión y tu acceso a esta empresa."
+                      : "No se pudo comprobar el archivo. Vuelve a intentarlo para habilitar la descarga."}
+                </p>
+                <Button onClick={() => setAttachmentRetry((value) => value + 1)}>
+                  Volver a comprobar
+                </Button>
+              </>
+            )}
+          </div>
+        </section>
+      )}
+      {attachment?.type === "image" && (
+        <img
+          className="reference-image"
+          src={attachment.url}
+          alt={r.title}
+        />
+      )}
       {r.trend && (
         <div className="evidence-box">
           <div className="row">
@@ -1150,9 +1255,6 @@ export function ReferenceDetail({
         >
           <div className="video-analysis-heading">
             <div>
-              <p className="eyebrow">
-                <Video size={14} /> EXAMINAR VIDEO
-              </p>
               <h3 id="video-analysis-title">Lectura audiovisual</h3>
             </div>
             {r.videoAnalysis && (
@@ -1262,17 +1364,17 @@ export function ReferenceDetail({
           </p>
           <div className="analysis-grid">
             <div className="analysis-block">
-              <p className="eyebrow">EL GANCHO</p>
+              <h4 className="analysis-label">El gancho</h4>
               <p>{r.analysis.hook}</p>
             </div>
             <div className="analysis-block">
-              <p className="eyebrow">RELEVANCIA PARA TU MARCA</p>
+              <h4 className="analysis-label">Relevancia para tu marca</h4>
               <h3>{r.analysis.relevance}/100</h3>
               <p>{r.analysis.adaptation}</p>
             </div>
             <div className="analysis-block full">
               <div className="row">
-                <p className="eyebrow">POR QUÉ PUDO FUNCIONAR</p>
+                <h4 className="analysis-label">Por qué pudo funcionar</h4>
                 <Badge tone="amber">
                   Hipótesis ·{" "}
                   {r.analysis.confidence === "high"
@@ -1285,7 +1387,7 @@ export function ReferenceDetail({
               <p>{r.analysis.hypothesis}</p>
             </div>
             <div className="analysis-block full">
-              <p className="eyebrow">REPETICIÓN EN LO OBSERVADO</p>
+              <h4 className="analysis-label">Repetición en lo observado</h4>
               <Badge
                 tone={
                   r.analysis.saturation === "low"
@@ -1424,21 +1526,21 @@ function VideoAnalysisResult({ analysis }: { analysis: VideoAnalysis }) {
         </span>
       </div>
       <div className="video-result-block">
-        <p className="eyebrow">RESUMEN</p>
+        <h4 className="analysis-label">Resumen</h4>
         <p>{analysis.summary}</p>
       </div>
       <div className="video-result-grid">
         <div className="video-result-block">
-          <p className="eyebrow">GANCHO VISUAL</p>
+          <h4 className="analysis-label">Gancho visual</h4>
           <p>{analysis.hook.visual}</p>
         </div>
         <div className="video-result-block">
-          <p className="eyebrow">GANCHO VERBAL</p>
+          <h4 className="analysis-label">Gancho verbal</h4>
           <p>{analysis.hook.verbal}</p>
         </div>
       </div>
       <div className="video-result-block">
-        <p className="eyebrow">ESTRUCTURA</p>
+        <h4 className="analysis-label">Estructura</h4>
         {analysis.structure.length ? (
           <ol>
             {analysis.structure.map((part, index) => (
@@ -1450,7 +1552,7 @@ function VideoAnalysisResult({ analysis }: { analysis: VideoAnalysis }) {
         )}
       </div>
       <div className="video-result-block">
-        <p className="eyebrow">TEXTO EN PANTALLA</p>
+        <h4 className="analysis-label">Texto en pantalla</h4>
         {analysis.onScreenText.length ? (
           <ul>
             {analysis.onScreenText.map((item, index) => (
@@ -1462,12 +1564,12 @@ function VideoAnalysisResult({ analysis }: { analysis: VideoAnalysis }) {
         )}
       </div>
       <div className="video-result-block">
-        <p className="eyebrow">AUDIO</p>
+        <h4 className="analysis-label">Audio</h4>
         <p>{analysis.audioNotes}</p>
       </div>
       {analysis.observations.length > 0 && (
         <div className="video-result-block">
-          <p className="eyebrow">OBSERVACIONES POR MOMENTO</p>
+          <h4 className="analysis-label">Observaciones por momento</h4>
           <ol className="video-observations">
             {analysis.observations.map((item, index) => (
               <li key={`${item.startSeconds}-${index}`}>
@@ -1481,7 +1583,7 @@ function VideoAnalysisResult({ analysis }: { analysis: VideoAnalysis }) {
         </div>
       )}
       <div className="video-result-block">
-        <p className="eyebrow">COBERTURA DEL ANÁLISIS</p>
+        <h4 className="analysis-label">Cobertura del análisis</h4>
         <p>
           {analysis.coverage.mode}
           {analysis.coverage.samplingFps != null
@@ -1491,12 +1593,12 @@ function VideoAnalysisResult({ analysis }: { analysis: VideoAnalysis }) {
         </p>
       </div>
       <div className="video-result-block video-adaptation">
-        <p className="eyebrow">ADAPTACIÓN EDITORIAL</p>
+        <h4 className="analysis-label">Adaptación editorial</h4>
         <p>{analysis.adaptation}</p>
       </div>
       {analysis.limitations.length > 0 && (
         <div className="video-limitations">
-          <p className="eyebrow">LIMITACIONES REPORTADAS</p>
+          <h4 className="analysis-label">Limitaciones reportadas</h4>
           <ul>
             {analysis.limitations.map((item, index) => (
               <li key={`${index}-${item}`}>{item}</li>
@@ -1528,7 +1630,6 @@ export function InboxPage() {
     <div className="page">
       <div className="page-heading">
         <div>
-          <p className="eyebrow">TU EQUIPO TAMBIÉN ES UN SENSOR</p>
           <h1>Las referencias, en un solo lugar.</h1>
           <p>
             Lo que viste, lo que te enviaron y lo que vale la pena volver a
@@ -1628,15 +1729,22 @@ export function InboxPage() {
       ) : (
         <EmptyState
           icon={<Link />}
-          title="Nada se pierde si tiene su lugar"
+          title={
+            state.references.length
+              ? "No hay referencias que coincidan"
+              : "Nada se pierde si tiene su lugar"
+          }
           action={
-            <Button onClick={() => setCapture(true)}>
-              Agregar mi primera referencia
-            </Button>
+            !state.references.length ? (
+              <Button onClick={() => setCapture(true)}>
+                Agregar mi primera referencia
+              </Button>
+            ) : undefined
           }
         >
-          Guarda enlaces, texto y capturas para que todo el equipo pueda
-          convertirlos en oportunidades.
+          {state.references.length
+            ? "Prueba otra palabra, borra la búsqueda o revisa el filtro de estado."
+            : "Guarda enlaces, texto y capturas para que todo el equipo pueda convertirlos en oportunidades."}
         </EmptyState>
       )}
       {capture && <CaptureModal onClose={() => setCapture(false)} />}
@@ -1742,8 +1850,13 @@ export function CaptureModal({ onClose }: { onClose: () => void }) {
           name="url"
           type="url"
           placeholder="https://…"
+          aria-describedby="capture-url-hint"
           disabled={busy || !!committedReference}
         />
+        <p id="capture-url-hint" className="small muted">
+          Usa un enlace público sin credenciales. Guardarlo como cita no
+          confirma que se haya leído la página.
+        </p>
         <Field
           label="Título o idea"
           name="title"
@@ -1776,19 +1889,24 @@ export function CaptureModal({ onClose }: { onClose: () => void }) {
           <span>
             {file ? file.name : "Adjuntar captura, video o documento"}
           </span>
-          <small>Hasta 50 MB · Un archivo por referencia</small>
+          <small>
+            Hasta 25 MiB · Un archivo por referencia. TXT, Markdown y CSV en
+            UTF-8.
+          </small>
           <input
             type="file"
-            accept="image/*,video/*,audio/*,.pdf,.txt,.md"
+            accept="image/*,video/*,audio/*,.pdf,.txt,.md,.csv"
             disabled={busy || !!committedReference}
             onChange={(e) => {
               const f = e.target.files?.[0] || null;
               assetCache.current = null;
               setError("");
-              if (f && f.size > 50 * 1024 * 1024) {
+              if (f && f.size > 25 * 1024 * 1024) {
                 setFile(null);
                 e.target.value = "";
-                setError("El archivo supera 50 MB.");
+                setError(
+                  "El archivo supera el máximo de 25 MiB. Selecciona uno más pequeño.",
+                );
                 return;
               }
               setFile(f);
@@ -1799,7 +1917,7 @@ export function CaptureModal({ onClose }: { onClose: () => void }) {
           Las capturas e imágenes se guardan como contexto; no bastan para
           examinar un video. Un video se procesa con Gemini solo cuando alguien
           elige Examinar video y hay acceso al archivo. La carga desde este
-          formulario admite hasta 50 MB; el análisis audiovisual también está
+          formulario admite hasta 25 MiB; el análisis audiovisual también está
           limitado a 20 minutos.
         </p>
         {error && (

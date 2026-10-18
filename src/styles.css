@@ -1492,6 +1492,43 @@ fieldset .field {
   margin-top: 20px;
   border-radius: 8px;
 }
+.reference-attachment {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 16px 24px;
+  margin-top: 20px;
+  padding: 18px 0;
+  border-block: 1px solid var(--border, #dde5de);
+}
+.reference-attachment-info {
+  display: grid;
+  gap: 5px;
+  flex: 1 1 260px;
+  min-width: 0;
+  font-size: 16px;
+  color: var(--ink, #19352b);
+}
+.reference-attachment-name {
+  overflow-wrap: anywhere;
+}
+.reference-attachment-info p,
+.reference-attachment-action p {
+  margin: 0;
+}
+.reference-attachment-action {
+  display: grid;
+  gap: 10px;
+  flex: 0 1 280px;
+  min-width: 0;
+  font-size: 14px;
+  color: var(--ink, #19352b);
+}
+.reference-attachment-action .button {
+  white-space: normal;
+  text-align: center;
+  overflow-wrap: anywhere;
+}
 .evidence-box {
   background: #f2f7ef;
   border: 1px solid #dfead9;
