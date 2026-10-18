@@ -177,6 +177,7 @@ function sourceFingerprint(source) {
     "lastAttemptAt",
     "lastError",
     "lastResultCount",
+    "lastPrivacySkipped",
   ]);
   return digest(
     Object.fromEntries(
@@ -213,6 +214,7 @@ export function recordTopicObservation(brandId, options = {}) {
       source.type !== "youtube" &&
       source.platform !== "youtube" &&
       !source.lastError &&
+      !source.lastPrivacySkipped &&
       (Array.isArray(options.sourceIds)
         ? options.sourceIds.includes(source.id)
         : source.lastSyncedAt &&

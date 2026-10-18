@@ -25,6 +25,7 @@ const TRANSIENT_SOURCE_FIELDS = new Set([
   "lastAttemptAt",
   "lastError",
   "lastResultCount",
+  "lastPrivacySkipped",
 ]);
 const STOP_WORDS = new Set(
   "a al algo ante bajo como con contra cual cuando de del desde donde el ella ellas ellos en entre era es esa ese eso esta estas este esto estos ha hacia hasta hay la las lo los mas me mi mis mucho muy no nos o otra otro para pero por porque que quien se ser si sin sobre son su sus te tiene todo tu un una unas uno unos y ya how the with from your this that into more use are for what why can you their its our was were have has will not and".split(

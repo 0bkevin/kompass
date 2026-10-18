@@ -22,6 +22,7 @@ import {
 
 import { publicPublicationReceipt } from "./publication-receipt.mjs";
 import { publicationAssets } from "./publication-assets.mjs";
+import { assertPublicContentText } from "./content-privacy.mjs";
 
 export { publicIntegrations };
 // Below the documented 10,000 requests/IP/hour ceiling. Shared across brands
@@ -299,6 +300,7 @@ export async function generateStructured(
   const gemini =
     baseUrl === "https://generativelanguage.googleapis.com/v1beta/openai";
   const inputText = String(input).slice(0, 60000);
+  assertPublicContentText(inputText, "Contexto para IA");
   const content = [{ type: "input_text", text: inputText }];
   if (image)
     content.push({ type: "input_image", image_url: image, detail: "auto" });

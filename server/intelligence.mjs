@@ -32,6 +32,10 @@ import { providerAttributionsForReference } from "../src/lib/provider-attributio
 import { fetchSocialSource } from "./social-providers.mjs";
 import { recordTopicObservation } from "./audience-insights.mjs";
 import {
+  assertPublicContentText,
+  inspectPublicContentText,
+} from "./content-privacy.mjs";
+import {
   safeFetch,
   integrationError,
   generateStructured,
@@ -1415,9 +1419,14 @@ export async function syncSources(brand, options = {}) {
         continue;
       }
       let sourceAdded = 0,
-        sourceUpdated = 0;
+        sourceUpdated = 0,
+        privacySkipped = 0;
       repairLegacyGoogleReferences(brand, source, corpus);
       for (const fetchedItem of result.value) {
+        if (!inspectPublicContentText(JSON.stringify(fetchedItem)).allowed) {
+          privacySkipped++;
+          continue;
+        }
         const item = {
           ...fetchedItem,
           sourceId: source.id,
@@ -1578,11 +1587,13 @@ export async function syncSources(brand, options = {}) {
         lastError: undefined,
         lastSyncedAt: new Date().toISOString(),
         lastResultCount: result.value.length,
+        lastPrivacySkipped: privacySkipped,
       });
       results.push({
         id: source.id,
         name: source.name,
         added: sourceAdded,
+        privacySkipped,
         updated: sourceUpdated,
         fetched: result.value.length,
       });
@@ -2000,6 +2011,10 @@ function normalizeDraftOutput(output, engine) {
 }
 
 export async function analyzeReference(brand, reference, options = {}) {
+  assertPublicContentText(
+    `${reference.title || ""}\n${reference.text || ""}`,
+    "Referencia",
+  );
   assertReferenceUseAllowed(
     reference,
     reference.sourceId && getRecord(brand.id, "sources", reference.sourceId),
@@ -2007,6 +2022,10 @@ export async function analyzeReference(brand, reference, options = {}) {
   const { reference: enriched, signals } = await extractMetadata(
     reference,
     options,
+  );
+  assertPublicContentText(
+    `${enriched.title || ""}\n${enriched.text || ""}`,
+    "Referencia",
   );
   assertReferenceUseAllowed(
     enriched,
