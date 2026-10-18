@@ -1,6 +1,7 @@
 import { isIP } from "node:net";
 import { getSecret } from "./db.mjs";
 import { integrationError, isPublicAddress, safeFetch } from "./connectors.mjs";
+import { reserveApifyRun, finishProviderRun } from "./provider-budget.mjs";
 
 const PLATFORM_HOSTS = {
   instagram: new Set(["instagram.com", "www.instagram.com"]),
@@ -722,28 +723,41 @@ async function runApifyActor(actor, token, input, limit, fetcher) {
   url.searchParams.set("maxItems", String(limit));
   url.searchParams.set("maxTotalChargeUsd", "1");
   url.searchParams.set("restartOnError", "false");
-  const response = await fetcher(url.href, {
-    requireHttps: true,
-    maxRedirects: 0,
-    timeout: 75000,
-    maxBytes: 6 * 1024 * 1024,
-    method: "POST",
-    headers: {
-      authorization: `Bearer ${token}`,
-      "content-type": "application/json",
-    },
-    body: JSON.stringify(input),
-  });
-  const result = await readJson(response, "Apify");
-  if (!Array.isArray(result))
-    throw integrationError(
-      "Apify devolvió una salida inesperada; no se guardaron resultados.",
-      502,
-    );
-  return result.slice(0, limit);
+  // The same reservation applies with injected transports: replacing a fetcher
+  // must never bypass the production budget shared by this credential.
+  const reservation = reserveApifyRun(token);
+  let completed = false;
+  try {
+    const response = await fetcher(url.href, {
+      requireHttps: true,
+      maxRedirects: 0,
+      timeout: 75000,
+      maxBytes: 6 * 1024 * 1024,
+      method: "POST",
+      headers: {
+        authorization: `Bearer ${token}`,
+        "content-type": "application/json",
+      },
+      body: JSON.stringify(input),
+    });
+    const result = await readJson(response, "Apify");
+    if (!Array.isArray(result))
+      throw integrationError(
+        "Apify devolvió una salida inesperada; no se guardaron resultados.",
+        502,
+      );
+    completed = true;
+    return result.slice(0, limit);
+  } finally {
+    finishProviderRun(reservation.id, { failed: !completed });
+  }
 }
 
 async function fetchApify(brand, source, { fetcher, now }) {
+  if (source.enabled === false)
+    throw integrationError(
+      "La fuente Apify está pausada. Un propietario debe habilitarla antes de consultar al proveedor.",
+    );
   const config = configFor(brand.id, "apify");
   if (!config)
     throw integrationError(

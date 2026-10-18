@@ -2,6 +2,7 @@ import express from "express";
 import { getSecret, setSecret } from "./db.mjs";
 import { requireAuth, requireBrand, requireOwner } from "./core.mjs";
 import { getSocialSettings } from "./social-providers.mjs";
+import { getApifyBudgetStatus } from "./provider-budget.mjs";
 
 const PROVIDERS = Object.freeze({
   youtube: { secretKey: "youtube", credential: "apiKey", maxCredential: 500 },
@@ -55,6 +56,22 @@ function validatePatch(provider, value) {
 
 export function createSocialRouter() {
   const router = express.Router();
+  router.get(
+    "/brands/:brandId/social/budget",
+    requireAuth,
+    requireBrand,
+    (req, res) => {
+      const settings = getSocialSettings(req.brand.id);
+      const stored = getSecret(req.brand.id, "apify");
+      const credential =
+        !stored?.disabled && (stored?.apiToken || process.env.APIFY_API_TOKEN);
+      const budget =
+        credential && settings.apify.configured
+          ? getApifyBudgetStatus(credential)
+          : null;
+      res.json({ configured: settings.apify.configured, budget });
+    },
+  );
   router.get(
     "/brands/:brandId/social/settings",
     requireAuth,
