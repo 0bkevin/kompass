@@ -1921,11 +1921,10 @@ export function CaptureModal({ onClose }: { onClose: () => void }) {
           />
         </label>
         <p className="small muted">
-          Las capturas e imágenes se guardan como contexto; no bastan para
-          examinar un video. Un video se procesa con Gemini solo cuando alguien
-          elige Examinar video y hay acceso al archivo. La carga desde este
-          formulario admite hasta 25 MiB; el análisis audiovisual también está
-          limitado a 20 minutos.
+          Puedes analizar el texto que aportes y conservar archivos o enlaces
+          como referencias. El análisis audiovisual no está disponible
+          actualmente; subir un video o una captura no lo procesa. Hasta 25 MiB
+          por archivo.
         </p>
         {error && (
           <p className="form-error" role="alert">

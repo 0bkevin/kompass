@@ -1,0 +1,47 @@
+[
+  {
+    "name": "30X-video.mp4",
+    "size": 24,
+    "sha256": "c8c5af84ac765d911a9ab05bc9a19d15d0b1bc5cf0654eff4469ce536410654e"
+  },
+  {
+    "name": "30X-datos.csv",
+    "size": 68,
+    "sha256": "a8ea7f1c11627a306520400bcd0af36e0f79fc222d8d6689192f96e0c8ebda30"
+  },
+  {
+    "name": "30X-invalid-encoding.txt",
+    "size": 5,
+    "sha256": "9e4efed0ff1dbcf37240f82e1aad6c763eb9331434d2b394a6441abbbe3634eb"
+  },
+  {
+    "name": "30X-pixel.png",
+    "size": 68,
+    "sha256": "b96a38502e905a44255d6eca254e6b781481bae4ccb48ffddd8fdaf0863b155e"
+  },
+  {
+    "name": "30X-over-25MiB.txt",
+    "size": 26214401,
+    "sha256": "0765445211e5f3faf9378e5dd89603fe38c13f5863158906ece6fd1369631087"
+  },
+  {
+    "name": "30X-unsupported.exe",
+    "size": 36,
+    "sha256": "67da9d0756508d614c4d594652370fa671e63d2591e5d361eba7b3c877b95203"
+  },
+  {
+    "name": "30X-referencia.md",
+    "size": 133,
+    "sha256": "cc655cfd3315498c86ff5995f8a3c2e2465dc0d00b39f5dda7cecc5af686a93e"
+  },
+  {
+    "name": "30X-ñandú-日本語-🙂.txt",
+    "size": 161,
+    "sha256": "1a0ba237f93132b6f2815794c937ec62fcd45f8c05b1731199500242fb7856c9"
+  },
+  {
+    "name": "30X-delete-me.txt",
+    "size": 28,
+    "sha256": "990d5723ff62acc81e5d7dc8dc5bd794ba54e3f174966d3109fce0f5eb52c125"
+  }
+]

@@ -1,0 +1,23 @@
+[
+  {
+    "nativeDownloadFileName": "30X-ñandú-日本語-🙂.txt",
+    "role": "owner",
+    "sizeBytes": 161,
+    "exactBytesMatch": true,
+    "sha256": "1a0ba237f93132b6f2815794c937ec62fcd45f8c05b1731199500242fb7856c9"
+  },
+  {
+    "nativeDownloadFileName": "30X-referencia.md",
+    "role": "owner-reference",
+    "sizeBytes": 133,
+    "exactBytesMatch": true,
+    "sha256": "cc655cfd3315498c86ff5995f8a3c2e2465dc0d00b39f5dda7cecc5af686a93e"
+  },
+  {
+    "nativeDownloadFileName": "30X-ñandú-日本語-🙂.txt",
+    "role": "reviewer",
+    "sizeBytes": 161,
+    "exactBytesMatch": true,
+    "sha256": "1a0ba237f93132b6f2815794c937ec62fcd45f8c05b1731199500242fb7856c9"
+  }
+]

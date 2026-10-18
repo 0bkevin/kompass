@@ -1,0 +1,40 @@
+✔ youtube stays blocked for environment and tenant keys, including spoofed grants (13.109417ms)
+✔ instagram stays blocked for environment and tenant keys, including spoofed grants (4.912671ms)
+✔ tiktok stays blocked for environment and tenant keys, including spoofed grants (5.819369ms)
+✔ video authorization metadata cannot bypass the server policy (0.366463ms)
+✔ assets-1 real multipart preserves browser UTF-8 names through storage, library and download (240.523541ms)
+✔ assets-1 accepts legacy Latin-1 and explicitly decoded Unicode without a second conversion (99.094548ms)
+✔ assets-1 keeps safe bounded filenames, extensions and valid Unicode at the length boundary (57.918112ms)
+✔ assets-1 keeps private downloads authenticated (8.999616ms)
+✔ assets-1 preserves multipart field and file-count rejections without orphan files (16.804621ms)
+[30X Radar] Request aborted
+✔ assets-1 stops filename readers and removes partial storage when an HTTP upload aborts (14.853548ms)
+✔ assets-1 filename selection preserves the caller's file-size limit and backpressure (12.199594ms)
+✔ assets-2 original 11 MiB ASCII TXT uploads and downloads the same bytes (276.384921ms)
+✔ assets-2 accepts the 10 MiB and inclusive 25 MiB text boundaries (362.953494ms)
+✔ assets-2 25 MiB plus one byte gets a specific size error without storage or library residue (205.478264ms)
+✔ assets-2 validates multibyte UTF-8 across inspection chunks and at EOF (129.206234ms)
+✔ assets-2 rejects binary tails and malformed UTF-8 despite a TXT name and MIME (38.714203ms)
+✔ assets-2 retains supported binary signatures and safe text document downloads (162.957829ms)
+✔ assets-2 per-file recovery keeps valid files when a TXT is invalid (67.649683ms)
+✔ authentication, membership and editor permission still protect the blocked route (80.397093ms)
+✔ public YouTube URL analysis is blocked before any provider or file processing (24.176771ms)
+✔ manual YouTube URL analysis is blocked before any provider or file processing (20.858777ms)
+✔ Apify Instagram MP4 analysis is blocked before any provider or file processing (23.018525ms)
+✔ Apify TikTok MP4 analysis is blocked before any provider or file processing (22.827847ms)
+✔ owned uploaded asset analysis is blocked before any provider or file processing (20.83532ms)
+✔ forged authorization metadata analysis is blocked before any provider or file processing (17.130772ms)
+✔ missing credentials cannot turn policy rejection into a setup instruction (10.013857ms)
+✔ invalid request fields and missing references preserve their validation errors (14.071137ms)
+✔ YouTube URL parser recognizes supported public forms without making requests (0.921971ms)
+✔ MP4 duration parser keeps bounded-container validation without processing media externally (0.421566ms)
+✔ asset upload records per-file failures and continues through the batch (2.115952ms)
+✔ draft refresh retry reuses the created piece and never creates it twice (0.349647ms)
+ℹ tests 31
+ℹ suites 0
+ℹ pass 31
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1510.600065

@@ -185,6 +185,7 @@ export default function Assets() {
               <article className="card asset-card" key={asset.id}>
                 <button
                   className="asset-preview"
+                  aria-label={`Abrir ${asset.name}`}
                   onClick={() => setSelected(asset)}
                 >
                   {asset.type === "image" ? (
@@ -275,7 +276,8 @@ export default function Assets() {
       <div className="callout">
         <Video size={20} />
         <p>
-          Guarda videos y archivos de tu marca para consultarlos y asociarlos a una pieza desde el estudio.
+          Guarda videos y archivos de tu marca para consultarlos y asociarlos a
+          una pieza desde el estudio.
         </p>
       </div>
       {selected && (

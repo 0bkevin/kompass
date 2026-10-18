@@ -1,0 +1,33 @@
+{
+  "names": {
+    "previews": [
+      {
+        "name": "Abrir 30X-video.mp4"
+      },
+      {
+        "name": "Abrir 30X-referencia.md"
+      },
+      {
+        "name": "Abrir 30X-pixel.png"
+      },
+      {
+        "name": "Abrir 30X-datos.csv"
+      },
+      {
+        "name": "Abrir 30X-referencia.md"
+      },
+      {
+        "name": "Abrir 30X-ñandú-日本語-🙂.txt"
+      }
+    ],
+    "unlabelled": 0
+  },
+  "nativeNamedPreview": true,
+  "copy": {
+    "dialog": "Una buena referencia merece quedarseComparte lo que te llamó la atención. Añade contexto para que el análisis tenga mejores señales.Enlace originalUsa un enlace público sin credenciales. Guardarlo como cita no confirma que se haya leído la página.Título o ideaTexto o contextoIdioma originalInglésEspañolPortuguésOtroAdjuntar captura, video o documentoHasta 25 MiB · Un archivo por referencia. TXT, Markdown y CSV en UTF-8.Puedes analizar el texto que aportes y conservar archivos o enlaces como referencias. El análisis audiovisual no está disponible actualmente; subir un video o una captura no lo procesa. Hasta 25 MiB por archivo.CancelarGuardar referencia",
+    "unavailable": true,
+    "oldPromise": false,
+    "width": 390,
+    "scrollWidth": 390
+  }
+}

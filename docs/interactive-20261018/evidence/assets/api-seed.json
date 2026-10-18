@@ -1,0 +1,18 @@
+{
+  "kind": "API fixture setup only; UI assertions recorded separately",
+  "origin": "http://127.0.2.70:5470",
+  "brandId": "4b127456-1a85-4fdb-9096-a08844fb89df",
+  "alternateId": "d5e0806c-22c8-476a-8973-e20032deece7",
+  "draftId": "a6deb512-d6e3-4242-b6d0-b7c2cf906ea4",
+  "audiences": [
+    {
+      "id": "edtech-assets",
+      "name": "Ventas EdTech"
+    },
+    {
+      "id": "healthtech-assets",
+      "name": "Operaciones HealthTech"
+    }
+  ],
+  "roles": ["owner", "reviewer"]
+}

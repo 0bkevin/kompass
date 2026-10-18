@@ -1,0 +1,45 @@
+[
+  {
+    "kind": "Supplementary read-only API assertion after UI actions",
+    "case": "video upload has no audiovisual analysis",
+    "referenceId": "ed0df2c2-085f-4216-a3dc-9c8e317f0b40",
+    "assetId": "a396bb2c-b196-4457-8d0b-6c11ce10fdf8",
+    "videoAnalysis": null,
+    "status": "new"
+  },
+  {
+    "kind": "API fixture preparation only",
+    "case": "approve UI-attached original draft for protected-deletion UI test",
+    "status": 200,
+    "pieceId": "a6deb512-d6e3-4242-b6d0-b7c2cf906ea4",
+    "assetIds": [
+      "bfb13247-1a6f-42f4-89dc-d4df37b5bf9b",
+      "09d64832-d60b-4d68-b85e-9d076c3ec703"
+    ],
+    "pieceStatus": "approved"
+  },
+  {
+    "kind": "Supplementary HTTP authorization assertion",
+    "case": "asset ID from another company",
+    "status": 404,
+    "error": "Archivo no encontrado."
+  },
+  {
+    "kind": "Supplementary HTTP authorization assertion",
+    "case": "reviewer delete",
+    "status": 403,
+    "error": "Necesitas permisos de edición."
+  },
+  {
+    "kind": "Supplementary HTTP authorization assertion",
+    "case": "reviewer upload",
+    "status": 403,
+    "error": "Necesitas permisos de edición."
+  },
+  {
+    "kind": "Supplementary HTTP authorization assertion",
+    "case": "reviewer outside-company collection",
+    "status": 404,
+    "error": "No se encontró la marca."
+  }
+]
