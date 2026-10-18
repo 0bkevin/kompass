@@ -28,14 +28,6 @@
   letter-spacing: -0.025em;
 }
 
-.media-production-heading p {
-  margin-top: 8px;
-  max-width: 65ch;
-  color: var(--muted);
-  font-size: 14px;
-  line-height: 1.7;
-}
-
 .media-production-heading > div {
   min-width: 0;
 }
