@@ -386,8 +386,15 @@ export function CommunityQuestion({ token }: { token: string }) {
   return (
     <main className="public-community">
       <div className="public-community-brand">
-        <MessageCircle size={24} />
-        <span>{data?.companyName || "Tu comunidad"}</span>
+        <a
+          className="public-community-wordmark"
+          href="/"
+          aria-label="kompass, inicio"
+        >
+          <img src="/icon.svg" width="26" height="26" alt="" />
+          kompass
+        </a>
+        <span>Pregunta de {data?.companyName || "tu comunidad"}</span>
       </div>
       {loading ? (
         <p role="status">Abriendo la pregunta…</p>
@@ -461,6 +468,7 @@ export function CommunityQuestion({ token }: { token: string }) {
                       value={segmentId}
                       onChange={(event) => setSegment(event.target.value)}
                       required
+                      disabled={busy}
                     >
                       <option value="" disabled>
                         Elige un grupo
@@ -486,6 +494,7 @@ export function CommunityQuestion({ token }: { token: string }) {
                           checked={optionId === option.id}
                           onChange={() => setOption(option.id)}
                           required
+                          disabled={busy}
                         />
                         <span>{option.label}</span>
                       </label>
@@ -517,7 +526,10 @@ export function CommunityQuestion({ token }: { token: string }) {
         </>
       )}
       <footer>
-        Una pregunta de {data?.companyName || "tu comunidad"} · kompass
+        <span>Una pregunta de {data?.companyName || "tu comunidad"}</span>
+        <a href="/">
+          Conoce kompass <ArrowRight size={14} aria-hidden="true" />
+        </a>
       </footer>
     </main>
   );
