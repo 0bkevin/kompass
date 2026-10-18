@@ -81,35 +81,30 @@ const sourceTypes = [
   {
     value: "rss",
     label: "RSS / Atom",
-    description: "Google Trends oficial o un feed con permiso de uso revisado.",
   },
   {
     value: "hackernews",
     label: "Hacker News",
-    description: "Conversaciones de tecnología y startups en inglés.",
   },
   {
     value: "gdelt",
     label: "GDELT · noticias globales",
-    description: "Cobertura de medios en inglés sobre el tema de tu marca.",
   },
   {
     value: "reddit",
     label: "Reddit · requiere autorización",
-    description:
-      "Recopilación desactivada hasta verificar un acuerdo para este uso.",
+    description: "Recopilación bloqueada: falta autorización de Reddit.",
   },
   {
     value: "youtube",
     label: "YouTube · API oficial",
     description:
-      "Análisis editorial desactivado hasta completar la revisión de uso de datos.",
+      "Análisis editorial bloqueado: falta revisión de uso de datos.",
   },
   {
     value: "apify",
     label: "Instagram / TikTok · Apify",
-    description:
-      "Instagram y TikTok desactivados hasta verificar autorización de la red.",
+    description: "Recopilación bloqueada: falta autorización de la red.",
   },
 ];
 const roleLabel: Record<Role, string> = {
@@ -299,7 +294,7 @@ export default function Settings() {
           sourceGuardRef.current.discard();
           await refresh();
         },
-        "Fuente guardada. Solo las fuentes con permiso revisado pueden activarse.",
+        "Fuente guardada.",
       );
     } finally {
       sourceGuardRef.current.endSave();
@@ -365,7 +360,7 @@ export default function Settings() {
         body: json({}),
       });
       setAcceptToken("");
-      notify("Invitación aceptada. La marca estará disponible al recargar.");
+      notify("Invitación aceptada.");
       window.location.reload();
     });
   }
@@ -374,12 +369,6 @@ export default function Settings() {
     : "";
   const selectedSourceSocial =
     source?.type === "youtube" || source?.type === "apify";
-  const selectedSourceConfigured =
-    source?.type === "youtube"
-      ? socialSettings?.youtube.configured === true
-      : source?.type === "apify"
-        ? socialSettings?.apify.configured === true
-        : false;
   function focusSocialSettings() {
     const details = document.getElementById(
       "additional-integrations",
@@ -396,75 +385,17 @@ export default function Settings() {
       <div className="page-heading">
         <div>
           <h1>Fuentes y equipo</h1>
-          <p className="muted">
-            Define de dónde vienen las señales y quién las convierte en
-            contenido.
-          </p>
         </div>
         <Badge tone={owner ? "green" : "neutral"}>
           {roleLabel[state.brand.role]}
         </Badge>
       </div>
       <nav className="settings-index" aria-label="Secciones de configuración">
-        <a href="#workspace-overview">Tu espacio</a>
         <a href="#social-connections">Redes</a>
         <a href="#discovery-sources">Fuentes</a>
         <a href="#workspace-integrations">Servicios</a>
         <a href="#workspace-team">Equipo</a>
       </nav>
-      <section
-        id="workspace-overview"
-        className="settings-overview settings-section"
-        aria-labelledby="workspace-services-heading"
-      >
-        <div className="section-heading">
-          <div>
-            <h2 id="workspace-services-heading">
-              Tu espacio, listo para trabajar
-            </h2>
-            <p className="muted">
-              Las fuentes disponibles vienen incluidas. Añade el contexto de tu
-              empresa y empieza a descubrir, crear y revisar contenido.
-            </p>
-          </div>
-        </div>
-        <dl className="workspace-services">
-          <div>
-            <dt>Descubrimiento</dt>
-            <dd>
-              {state.sources.some(
-                (source) =>
-                  source.enabled && source.accessPolicy?.allowed === true,
-              )
-                ? "Fuentes disponibles incluidas"
-                : "Sin fuentes activas; puedes aportar contenido propio"}
-            </dd>
-          </div>
-          <div>
-            <dt>Análisis y creación</dt>
-            <dd>
-              {publicTestAi
-                ? "IA de prueba gratuita"
-                : state.integrations.ai.ready
-                  ? state.integrations.ai.managedBy === "platform"
-                    ? "IA gestionada por la plataforma"
-                    : "IA de esta empresa disponible"
-                  : "Motor editorial local disponible"}
-            </dd>
-          </div>
-          <div>
-            <dt>Revisión, calendario y exportación</dt>
-            <dd>Incluidos, sin conexiones adicionales</dd>
-          </div>
-        </dl>
-        {!state.integrations.ai.ready && (
-          <p className="small muted">
-            La IA contextual aún no está disponible en este espacio. La
-            configuración del servicio corresponde al administrador de la
-            plataforma.
-          </p>
-        )}
-      </section>
       <SocialConnections />
       <section id="discovery-sources" className="card settings-section">
         <div className="section-heading">
@@ -472,11 +403,6 @@ export default function Settings() {
             <h2>
               <Rss size={20} /> Fuentes de descubrimiento
             </h2>
-            <p className="muted">
-              Cada resultado conserva su origen y el momento de consulta. Las
-              redes sociales requieren las credenciales y permisos de su
-              proveedor.
-            </p>
           </div>
           {canEdit && (
             <Button
@@ -492,16 +418,9 @@ export default function Settings() {
           <Badge tone="green">
             {state.sources.filter((item) => item.enabled).length} activas
           </Badge>
-          <span className="muted" style={{ fontSize: 13 }}>
-            La búsqueda se ejecuta desde el radar. La cobertura depende de cada
-            fuente.
-          </span>
         </div>
         {state.sources.length === 0 ? (
-          <EmptyState icon={<Search />} title="Conecta tu primera fuente">
-            Añade un feed RSS, noticias de tu sector o una comunidad que tu
-            audiencia ya siga.
-          </EmptyState>
+          <EmptyState icon={<Search />} title="Sin fuentes" />
         ) : (
           <div className="stack" style={{ gap: 0 }}>
             {state.sources.map((item) => {
@@ -554,7 +473,7 @@ export default function Settings() {
                       >
                         {(sourceQueryKind(item.type) && item.query) ||
                           (sourceHasUrl(item.type) && item.url) ||
-                          "Consulta según el contexto de tu marca"}
+                          "Consulta del contexto de empresa"}
                       </p>
                       <small className="muted">
                         {formatDate(item.lastSyncedAt)}
@@ -670,15 +589,10 @@ export default function Settings() {
             })}
           </div>
         )}
-        <p className="muted" style={{ fontSize: 12, marginTop: 18 }}>
-          La popularidad de una fuente no demuestra una tendencia global.
-          kompass distingue señales observadas, hipótesis editoriales y datos de
-          ejemplo.
-        </p>
       </section>
 
       <details id="additional-integrations" className="card settings-section">
-        <summary>Integraciones adicionales y alcance</summary>
+        <summary>Integraciones restringidas</summary>
         <ProviderBudget />
         <section
           id="social-provider-settings"
@@ -689,11 +603,6 @@ export default function Settings() {
               <h2>
                 <Globe size={20} /> Exploración social y video
               </h2>
-              <p className="muted">
-                Estas integraciones están restringidas por las condiciones de
-                uso. Puedes guardar enlaces y aportar contenido propio. No se
-                ejecutan consultas ni se generan cargos de estos conectores.
-              </p>
             </div>
           </div>
           {socialSettingsError && (
@@ -733,7 +642,7 @@ export default function Settings() {
                   </div>
                   <p className="muted">
                     {policy?.reason ||
-                      "Esta integración está bloqueada hasta revisar los permisos para el uso previsto. Una credencial no la activa."}
+                      "Integración bloqueada: faltan permisos de uso."}
                   </p>
                   {owner && socialSettings?.[id].configured && (
                     <Button
@@ -749,15 +658,10 @@ export default function Settings() {
               );
             })}
           </div>
-          <div className="social-unsupported-note">
-            Facebook y X aparecen como pendientes: kompass todavía no tiene
-            adaptadores disponibles para esas redes. No se ejecutarán consultas
-            globales ni se presentarán resultados como cobertura completa.
-          </div>
           {!owner && (
             <p className="muted social-owner-note">
-              <KeyRound size={14} /> Solo el propietario de la marca puede
-              configurar o retirar estas credenciales.
+              <KeyRound size={14} /> Solo el propietario puede cambiar
+              credenciales.
             </p>
           )}
         </section>
@@ -769,10 +673,6 @@ export default function Settings() {
               <h2>
                 <Sparkles size={20} /> Servicios de creación y publicación
               </h2>
-              <p className="muted">
-                La IA de la plataforma se aplica automáticamente cuando está
-                disponible. No necesitas una clave propia para empezar.
-              </p>
             </div>
           </div>
           <div
@@ -804,18 +704,13 @@ export default function Settings() {
             <div className="stack">
               <Badge tone={state.integrations.ai.ready ? "green" : "neutral"}>
                 {publicTestAi
-                  ? "IA de prueba gratuita"
+                  ? "IA de prueba"
                   : state.integrations.ai.ready
                     ? state.integrations.ai.managedBy === "platform"
                       ? "IA de la plataforma disponible"
                       : "IA de esta empresa disponible"
                     : "Motor editorial local disponible"}
               </Badge>
-              <p className="muted">
-                {state.integrations.ai.ready
-                  ? "Los análisis y borradores usan el servicio disponible en tu espacio. Las claves se conservan en el servidor."
-                  : "Puedes preparar borradores y completar el flujo editorial con el motor local. El administrador de la plataforma gestiona la disponibilidad de IA contextual."}
-              </p>
               <details>
                 <summary>Personalizar IA para esta empresa</summary>
                 <form
@@ -847,11 +742,9 @@ export default function Settings() {
                     </Badge>
                   </div>
                   <p className="muted" style={{ fontSize: 13 }}>
-                    Una API key habilita análisis y guiones con IA. Sin ella se
-                    usa una heurística identificada, con evidencia limitada. El
-                    proveedor necesita una revisión del operador sobre derechos
-                    de entrada y tratamiento de datos antes de recibir
-                    contenido. Las consultas pueden tener costo.
+                    El proveedor recibirá contenido de la empresa y puede cobrar
+                    por consulta. Requiere revisión de derechos y tratamiento de
+                    datos.
                   </p>
                   <Field
                     label={
@@ -938,11 +831,8 @@ export default function Settings() {
                   : "Sin conexión de publicación"}
               </Badge>
               <p className="muted" style={{ fontSize: 13 }}>
-                Envía contenido aprobado a un endpoint HTTPS público. El destino
-                debe tener permiso para publicarlo y una revisión del operador
-                para esa URL. Sin conector puedes exportar tus piezas. La grilla
-                organiza fechas; esta entrega no ejecuta publicaciones
-                automáticas.
+                Solo envía piezas aprobadas a una URL autorizada. El calendario
+                no publica automáticamente.
               </p>
               <Field
                 label="URL HTTPS del webhook"
@@ -989,7 +879,7 @@ export default function Settings() {
           )}
           {!owner && (
             <p className="muted" style={{ marginTop: 18, fontSize: 13 }}>
-              <KeyRound size={14} /> Solo un propietario puede cambiar
+              <KeyRound size={14} /> Solo el propietario puede cambiar
               conectores.
             </p>
           )}
@@ -1001,12 +891,13 @@ export default function Settings() {
               <h2>
                 <Users size={20} /> Tu equipo
               </h2>
-              <p className="muted">
-                Un mismo contexto editorial, con permisos claros.
-              </p>
             </div>
             <Badge>{state.members.length}</Badge>
           </div>
+          <p className="small muted">
+            Editor: crea y edita. Revisor: comenta y aprueba. Propietario:
+            administra.
+          </p>
           <div className="stack">
             {state.members.map((member) => (
               <div className="source-row" key={member.id}>
@@ -1079,10 +970,6 @@ export default function Settings() {
               </div>
             ))}
           </div>
-          <p className="muted" style={{ fontSize: 12, margin: "20px 0" }}>
-            El editor capta referencias y prepara piezas. El revisor comenta y
-            aprueba. El propietario administra la marca y sus conexiones.
-          </p>
           {owner && (
             <div
               className="stack"
@@ -1120,7 +1007,7 @@ export default function Settings() {
                         });
                         setInvitation(created);
                       },
-                      "Invitación creada. Comparte el enlace con tu equipo.",
+                      "Invitación creada.",
                     )
                   }
                 >
@@ -1145,8 +1032,7 @@ export default function Settings() {
                     </small>
                   </div>
                   <small className="muted">
-                    Cualquier persona con este enlace podrá aceptar el rol
-                    elegido. No se envió ningún mensaje.
+                    Cualquier persona con el enlace podrá aceptar este rol.
                   </small>
                 </div>
               )}
@@ -1161,12 +1047,11 @@ export default function Settings() {
             }}
             onSubmit={acceptInvitation}
           >
-            <h3>¿Te invitaron a otra marca?</h3>
+            <h3>Aceptar invitación</h3>
             <Field
               label="Token o enlace de invitación"
               value={acceptToken}
               onChange={(event) => setAcceptToken(event.target.value)}
-              placeholder="Pega aquí tu invitación"
             />
             <Button
               type="submit"
@@ -1197,7 +1082,6 @@ export default function Settings() {
                 onChange={(event) =>
                   setSource({ ...source, name: event.target.value })
                 }
-                placeholder="Ej. Innovación en mi industria"
               />
               <Field label="Tipo de fuente">
                 <select
@@ -1228,12 +1112,15 @@ export default function Settings() {
                   ))}
                 </select>
               </Field>
-              <p className="muted" style={{ fontSize: 13 }}>
-                {
-                  sourceTypes.find((type) => type.value === source.type)
-                    ?.description
-                }
-              </p>
+              {sourceTypes.find((type) => type.value === source.type)
+                ?.description && (
+                <p className="muted" style={{ fontSize: 13 }}>
+                  {
+                    sourceTypes.find((type) => type.value === source.type)
+                      ?.description
+                  }
+                </p>
+              )}
               {source.type === "rss" && (
                 <Field
                   label="URL del feed RSS / Atom"
@@ -1255,7 +1142,6 @@ export default function Settings() {
                     onChange={(event) =>
                       setSource({ ...source, query: event.target.value })
                     }
-                    placeholder="rutina de cuidado de la piel"
                   />
                   <Field
                     label="Canal de YouTube (opcional)"
@@ -1267,9 +1153,7 @@ export default function Settings() {
                     placeholder="https://www.youtube.com/@canal"
                   />
                   <small className="muted">
-                    Indica una consulta temática o una URL de canal. Se conserva
-                    la URL del video original y las vistas oficiales
-                    disponibles.
+                    Completa la consulta o el canal.
                   </small>
                 </>
               )}
@@ -1300,7 +1184,6 @@ export default function Settings() {
                     onChange={(event) =>
                       setSource({ ...source, query: event.target.value })
                     }
-                    placeholder="#rutinafacial"
                   />
                   <Field
                     label={`URL de ${source.platform === "instagram" ? "Instagram" : "TikTok"} (opcional)`}
@@ -1327,8 +1210,8 @@ export default function Settings() {
                     }
                   />
                   <small className="muted">
-                    Si completas consulta y URL, el backend prioriza la
-                    consulta. El actor puede tener límites o cargos propios.
+                    La consulta tiene prioridad sobre la URL. Apify puede cobrar
+                    por ejecución.
                   </small>
                 </>
               )}
@@ -1344,18 +1227,11 @@ export default function Settings() {
                   onChange={(event) =>
                     setSource({ ...source, query: event.target.value })
                   }
-                  placeholder={
-                    source.type === "reddit"
-                      ? "artificial"
-                      : "artificial intelligence"
-                  }
                 />
               )}
               {source.type === "gdelt" && (
                 <small className="muted">
-                  Si dejas la consulta vacía, se utiliza el contexto de tu
-                  marca. Prueba términos concretos en inglés para ampliar
-                  cobertura.
+                  Sin consulta, se usa el contexto de la empresa.
                 </small>
               )}
               <label className="row">
@@ -1373,11 +1249,11 @@ export default function Settings() {
                   ? "Recopilación no autorizada en este despliegue"
                   : "Activar para la próxima búsqueda"}
               </label>
-              <p className="small muted">
-                Los feeds adicionales requieren revisión del operador antes de
-                activarse. Guardar una credencial no concede permiso de acceso a
-                una red social.
-              </p>
+              {source.type === "rss" && (
+                <p className="small muted">
+                  El operador debe autorizar el feed antes de activarlo.
+                </p>
+              )}
               <div className="row" style={{ justifyContent: "flex-end" }}>
                 <Button disabled={!!busy} onClick={closeSource}>
                   Cancelar
