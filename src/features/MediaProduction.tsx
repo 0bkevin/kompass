@@ -27,6 +27,7 @@ type MediaJob = {
   error?: string;
   assetIds: string[];
   label?: string;
+  idempotencyKey: string;
 };
 type MediaStatus = {
   capabilities: Record<
@@ -89,6 +90,11 @@ export default function MediaProduction({
       if (!mounted.current || signal?.aborted) return;
       setStatus(result);
       setError("");
+      if (
+        requestKey.current &&
+        result.jobs.some((job) => job.idempotencyKey === requestKey.current)
+      )
+        requestKey.current = null;
       const newlyCompleted = result.jobs.filter(
         (job) =>
           job.pieceId === piece.id &&
