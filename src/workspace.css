@@ -439,9 +439,6 @@ li {
   }
 }
 @media (max-width: 900px) {
-  .sidebar-close {
-    display: flex;
-  }
   .main-content {
     padding: 26px 20px;
   }
@@ -479,6 +476,21 @@ li {
   }
   .auth-intro h1 {
     font-size: 35px;
+  }
+}
+@media (max-width: 760px) {
+  .sidebar-close {
+    display: flex;
+  }
+  .topbar > .mobile-menu,
+  .sidebar .sidebar-close {
+    min-width: 44px;
+    min-height: 44px;
+  }
+  .sidebar .nav-item,
+  .sidebar .new-workspace,
+  .sidebar .extra-navigation summary {
+    min-height: 44px;
   }
 }
 @media (max-width: 600px) {

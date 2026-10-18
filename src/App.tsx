@@ -155,8 +155,18 @@ export default function App() {
   const searchInput = useRef<HTMLInputElement>(null);
   const sidebarRef = useRef<HTMLElement>(null);
   useEffect(() => {
+    const desktop = window.matchMedia("(min-width: 761px)");
+    const closeMobileMenu = () => {
+      if (desktop.matches) setMobile(false);
+    };
+    desktop.addEventListener("change", closeMobileMenu);
+    return () => desktop.removeEventListener("change", closeMobileMenu);
+  }, []);
+  useEffect(() => {
     if (!mobile) return;
     const sidebar = sidebarRef.current;
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
     const controls = () =>
       Array.from(
         sidebar?.querySelectorAll<HTMLElement>(
@@ -185,6 +195,7 @@ export default function App() {
     document.addEventListener("keydown", key);
     return () => {
       document.removeEventListener("keydown", key);
+      document.body.style.overflow = previousOverflow;
       menuTrigger.current?.focus();
     };
   }, [mobile]);
@@ -228,7 +239,10 @@ export default function App() {
   }, []);
   const changeBrand = useCallback(
     (id: string) => {
-      if (id !== activeRef.current && confirmUnsavedChanges()) selectBrand(id);
+      if (id !== activeRef.current && confirmUnsavedChanges()) {
+        setMobile(false);
+        selectBrand(id);
+      }
     },
     [confirmUnsavedChanges, selectBrand],
   );
@@ -372,6 +386,7 @@ export default function App() {
   }, [activeId, view, refresh]);
   const navigate = useCallback(
     (view: View, pieceId?: string) => {
+      setMobile(false);
       void navigateWorkspace(view, pieceId);
     },
     [navigateWorkspace],
@@ -458,7 +473,7 @@ export default function App() {
   ) : null;
   return (
     <div className="app-shell">
-      <a className="skip-link" href="#workspace-main">
+      <a className="skip-link" href="#workspace-main" inert={mobile}>
         Saltar al contenido
       </a>
       {mobile && (
@@ -479,7 +494,12 @@ export default function App() {
         >
           <X size={20} />
         </button>
-        <Link className="wordmark" to="/home" search={(previous) => previous}>
+        <Link
+          className="wordmark"
+          to="/home"
+          search={(previous) => previous}
+          onClick={() => setMobile(false)}
+        >
           <span className="wordmark-icon">
             <Radio size={23} />
           </span>
@@ -493,7 +513,7 @@ export default function App() {
             {(state?.brand.name || session.brands[0].name).slice(0, 1)}
           </div>
           <label>
-            <span className="sr-only">Cambiar de marca</span>
+            <span className="sr-only">Cambiar de empresa</span>
             <select
               value={activeId}
               onChange={(e) => changeBrand(e.target.value)}
@@ -511,10 +531,13 @@ export default function App() {
         <button
           className="new-workspace"
           onClick={() => {
-            if (confirmUnsavedChanges()) setNewBrand(true);
+            if (confirmUnsavedChanges()) {
+              setMobile(false);
+              setNewBrand(true);
+            }
           }}
         >
-          <Plus size={13} /> Crear otra marca
+          <Plus size={13} /> Añadir otra empresa
         </button>
         <nav aria-label="Navegación principal">
           {views
@@ -567,6 +590,7 @@ export default function App() {
         <div className="sidebar-bottom">
           <button
             className={`nav-item ${view === "settings" ? "active" : ""}`}
+            aria-current={view === "settings" ? "page" : undefined}
             onClick={() => navigate("settings")}
           >
             <Settings size={18} />
@@ -595,7 +619,7 @@ export default function App() {
           </div>
         </div>
       </aside>
-      <div className="main-shell">
+      <div className="main-shell" inert={mobile}>
         <header className="topbar">
           <button
             className="icon-button mobile-menu"
