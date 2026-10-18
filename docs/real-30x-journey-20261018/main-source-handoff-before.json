@@ -1,0 +1,61 @@
+{
+  "requests": [
+    {
+      "path": "/api/brands/:id/opportunities/opportunity-362ddbab99c38999a2f766f3/analyze",
+      "status": 200,
+      "elapsedMs": 1763
+    },
+    {
+      "path": "/api/brands/:id/draft",
+      "status": 200,
+      "elapsedMs": 1728
+    }
+  ],
+  "draftRequest": {
+    "referenceId": "2ccea228-8c92-43d6-a865-f938eaaacb4c",
+    "segmentId": "78f5277e-ab83-4e08-a29d-179006ea4d37",
+    "format": "carousel",
+    "channel": "instagram",
+    "instructions": "Como propuesta hipotética para probar en el futuro, los directivos podrían diseñar una matriz de evaluación de agentes de inteligencia artificial en sus procesos internos, estableciendo criterios claros de supervisión humana antes de escalar cualquier implementación tecnológica.\n\nCarrusel de 4 láminas para directivos de Latinoamérica. Tema: qué revisar antes de probar un agente de IA en un proceso interno. Incluye un ejemplo hipotético con datos ficticios, identificado así. Usa solo lo observado en los títulos; no atribuyas casos reales, porcentajes de ahorro ni resultados a 30X. CTA exacto: Define un piloto con criterios de revisión humana."
+  },
+  "citedReference": {
+    "referenceId": "7d722d91-3e9c-490e-a0e9-be5bba32d3a6",
+    "support": "Intel Accelerates Open Infrastructure for the Agentic AI Era"
+  },
+  "draft": {
+    "id": "42d05f12-8040-4e40-8bbd-fd6a0377a29f",
+    "title": "Qué revisar antes de probar un agente de IA en tus procesos internos",
+    "referenceId": "2ccea228-8c92-43d6-a865-f938eaaacb4c",
+    "sceneCount": 4,
+    "script": "Lámina 1: Antes de integrar un agente de inteligencia artificial en tus procesos, necesitas definir criterios claros de supervisión.\n\nLámina 2: Establece una matriz para evaluar el rendimiento, los riesgos y los límites operativos de la herramienta.\n\nLámina 3: Ejemplo hipotético: una empresa diseña un piloto para automatizar respuestas iniciales de soporte, exigiendo que un operador humano valide cada resolución antes de enviarla.\n\nLámina 4: Define un piloto con criterios de revisión humana.",
+    "caption": "Guía práctica para directivos que evalúan la implementación de inteligencia artificial en procesos internos con supervisión adecuada.",
+    "cta": "Define un piloto con criterios de revisión humana.",
+    "engine": "ai",
+    "brief": {
+      "instructions": "Como propuesta hipotética para probar en el futuro, los directivos podrían diseñar una matriz de evaluación de agentes de inteligencia artificial en sus procesos internos, estableciendo criterios claros de supervisión humana antes de escalar cualquier implementación tecnológica.\n\nCarrusel de 4 láminas para directivos de Latinoamérica. Tema: qué revisar antes de probar un agente de IA en un proceso interno. Incluye un ejemplo hipotético con datos ficticios, identificado así. Usa solo lo observado en los títulos; no atribuyas casos reales, porcentajes de ahorro ni resultados a 30X. CTA exacto: Define un piloto con criterios de revisión humana.",
+      "angle": "",
+      "audienceNeeds": "Priorizar un caso de uso de inteligencia artificial para su empresa, definir criterios de evaluación y mantener revisión humana. Hipótesis editorial declarada a partir de la oferta pública de 30X; no describe alumnos, seguidores ni consumo observado.",
+      "referenceUrl": "https://apnews.com/article/openai-chatgpt-ai-artificial-intelligence-safety-789d4f5293fba45a22fcb62ebfbc2a41",
+      "providerAttributions": [
+        {
+          "id": "hn_algolia",
+          "name": "Hacker News / Algolia",
+          "url": "https://hn.algolia.com/"
+        }
+      ],
+      "applied": {
+        "format": "carousel",
+        "unitCount": 4,
+        "cta": "Define un piloto con criterios de revisión humana.",
+        "includeExample": true
+      },
+      "notes": [
+        "Borrador generado con IA. Se comprobaron la estructura solicitada, el CTA exacto cuando se indicó y la etiqueta del ejemplo hipotético cuando se pidió. Revisa los hechos, la utilidad del ejemplo y el resto de la dirección editorial antes de aprobar."
+      ]
+    },
+    "status": "draft"
+  },
+  "draftReference": "OpenAI fires 3 safety researchers in dispute over AI risks",
+  "alerts": [],
+  "path": "/studio/42d05f12-8040-4e40-8bbd-fd6a0377a29f"
+}

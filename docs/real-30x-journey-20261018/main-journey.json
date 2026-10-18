@@ -1,0 +1,145 @@
+{
+  "generationObservedAt": "2026-10-18T12:01:11.225Z",
+  "testKind": "agent-driven-interactive-public-company-context-test",
+  "notHumanParticipantStudy": true,
+  "appOrigin": "http://localhost:3026",
+  "brandId": "eda70de7-c262-4f07-bc9a-cecb6cdcbe16",
+  "publicCompany": {
+    "website": "https://30x.com/",
+    "instagram": "https://www.instagram.com/crece30x/",
+    "sourceIngestion": "both-linked-unread; original factual paraphrase supplied by tester",
+    "publicDescriptionSource": "sources.json"
+  },
+  "engine": "gemini-3.5-flash-lite via managed Google integration",
+  "actualBrowserDraftRequest": {
+    "referenceId": "7d722d91-3e9c-490e-a0e9-be5bba32d3a6",
+    "segmentId": "78f5277e-ab83-4e08-a29d-179006ea4d37",
+    "format": "carousel",
+    "channel": "instagram",
+    "instructions": "Como propuesta hipotética para probar en el futuro, los directivos podrían diseñar una matriz de evaluación de agentes de inteligencia artificial en sus procesos internos, estableciendo criterios claros de supervisión humana antes de escalar cualquier implementación tecnológica.\n\nCarrusel de 4 láminas para directivos de Latinoamérica. Tema: qué revisar antes de probar un agente de IA en un proceso interno. Incluye un ejemplo hipotético con datos ficticios, identificado así. Usa solo lo observado en los títulos; no atribuyas casos reales, porcentajes de ahorro ni resultados a 30X. CTA exacto: Define un piloto con criterios de revisión humana."
+  },
+  "actualBrowserDraftResponse": [
+    {
+      "path": "/api/brands/:id/draft",
+      "status": 200,
+      "elapsedMs": 2136
+    }
+  ],
+  "pieceAtGeneration": {
+    "title": "Criterios para evaluar un agente de IA en tu empresa",
+    "hook": "¿Estás evaluando integrar agentes de inteligencia artificial en tus procesos internos pero no sabes por dónde empezar?",
+    "script": "Lámina 1: Antes de probar un agente de IA en tus procesos internos, necesitas definir criterios claros de evaluación.\n\nLámina 2: Establece métricas de precisión y determina en qué puntos exactos del proceso se requiere supervisión constante.\n\nLámina 3: Ejemplo hipotético: Diseñar un piloto para atención interna donde un humano valida todas las respuestas del agente antes de enviarlas.\n\nLámina 4: Define un piloto con criterios de revisión humana.",
+    "caption": "La implementación de inteligencia artificial en equipos directivos requiere orden y supervisión constante. Conoce cómo estructurar tu próximo piloto.",
+    "cta": "Define un piloto con criterios de revisión humana.",
+    "scenes": [
+      {
+        "id": "621bd8e4-0e26-46f2-9149-a1d2069487ba",
+        "text": "Antes de probar un agente de IA en tus procesos internos, necesitas definir criterios claros de evaluación.",
+        "duration": 5
+      },
+      {
+        "id": "2bf65d29-11e3-4d69-83a7-6113916ff27c",
+        "text": "Establece métricas de precisión y determina en qué puntos exactos del proceso se requiere supervisión constante.",
+        "duration": 5
+      },
+      {
+        "id": "00de3fef-a226-4b30-a2ea-41d4fe5fa5d2",
+        "text": "Ejemplo hipotético: Diseñar un piloto para atención interna donde un humano valida todas las respuestas del agente antes de enviarlas.",
+        "duration": 5
+      },
+      {
+        "id": "00ee4f13-2fd9-4f81-b689-e25c8beafd4e",
+        "text": "Define un piloto con criterios de revisión humana.",
+        "duration": 5
+      }
+    ],
+    "generationEngine": "ai",
+    "editorialBrief": {
+      "instructions": "Como propuesta hipotética para probar en el futuro, los directivos podrían diseñar una matriz de evaluación de agentes de inteligencia artificial en sus procesos internos, estableciendo criterios claros de supervisión humana antes de escalar cualquier implementación tecnológica.\n\nCarrusel de 4 láminas para directivos de Latinoamérica. Tema: qué revisar antes de probar un agente de IA en un proceso interno. Incluye un ejemplo hipotético con datos ficticios, identificado así. Usa solo lo observado en los títulos; no atribuyas casos reales, porcentajes de ahorro ni resultados a 30X. CTA exacto: Define un piloto con criterios de revisión humana.",
+      "angle": "",
+      "audienceNeeds": "Priorizar un caso de uso de inteligencia artificial para su empresa, definir criterios de evaluación y mantener revisión humana. Hipótesis editorial declarada a partir de la oferta pública de 30X; no describe alumnos, seguidores ni consumo observado.",
+      "referenceUrl": "https://www.intel.com/content/www/us/en/newsroom/news/artificial-intelligence/intel-accelerates-open-infrastructure-agentic-ai-era.html",
+      "providerAttributions": [
+        {
+          "id": "hn_algolia",
+          "name": "Hacker News / Algolia",
+          "url": "https://hn.algolia.com/"
+        }
+      ],
+      "applied": {
+        "format": "carousel",
+        "unitCount": 4,
+        "cta": "Define un piloto con criterios de revisión humana.",
+        "includeExample": true
+      },
+      "notes": [
+        "Borrador generado con IA. Se comprobaron la estructura solicitada, el CTA exacto cuando se indicó y la etiqueta del ejemplo hipotético cuando se pidió. Revisa los hechos, la utilidad del ejemplo y el resto de la dirección editorial antes de aprobar."
+      ]
+    },
+    "referenceId": "7d722d91-3e9c-490e-a0e9-be5bba32d3a6",
+    "providerAttributions": [
+      {
+        "id": "hn_algolia",
+        "name": "Hacker News / Algolia",
+        "url": "https://hn.algolia.com/"
+      }
+    ],
+    "segmentId": "78f5277e-ab83-4e08-a29d-179006ea4d37",
+    "format": "carousel",
+    "channel": "instagram",
+    "status": "draft",
+    "assetIds": [],
+    "id": "eb84f864-a41b-439f-b672-b1085c52f55f",
+    "createdAt": "2026-10-18T12:00:57.410Z",
+    "updatedAt": "2026-10-18T12:00:57.410Z",
+    "approvalVersion": "nY4T5fqz47seIDTcAKgbuq978oHhO4-cTw2biyIpCN0"
+  },
+  "primarySource": {
+    "id": "7d722d91-3e9c-490e-a0e9-be5bba32d3a6",
+    "title": "Intel Accelerates Open Infrastructure for the Agentic AI Era",
+    "url": "https://www.intel.com/content/www/us/en/newsroom/news/artificial-intelligence/intel-accelerates-open-infrastructure-agentic-ai-era.html",
+    "text": "",
+    "providerAttributions": [
+      {
+        "id": "hn_algolia",
+        "name": "Hacker News / Algolia",
+        "url": "https://hn.algolia.com/"
+      }
+    ]
+  },
+  "assertions": {
+    "analysisCitationSelectedInsteadOfFirstReference": true,
+    "sceneCountEquals4": true,
+    "numberedScriptContainsAllScenes": true,
+    "hypotheticalExampleLabeled": true,
+    "exactCtaPreserved": true,
+    "referenceMatchesEditorialBrief": true,
+    "sourceIsMetadataOnly": true,
+    "oldDraftPreviewOpeningCount": 1
+  },
+  "finalVerification": {
+    "observedAt": "2026-10-18T12:04:08.900Z",
+    "route": "/studio/eb84f864-a41b-439f-b672-b1085c52f55f",
+    "pieceId": "eb84f864-a41b-439f-b672-b1085c52f55f",
+    "status": "scheduled",
+    "scheduledFor": "2026-10-21T15:30:00.000Z",
+    "updatedAt": "2026-10-18T12:01:42.435Z",
+    "sceneCount": 4,
+    "generationEngine": "ai",
+    "primarySourceMatches": true,
+    "publishButtonDisabled": true,
+    "alerts": []
+  },
+  "workflow": {
+    "reviewSubmitted": true,
+    "ownerApproval": true,
+    "scheduledFor": "2026-10-21T15:30:00.000Z",
+    "calendarVisible": true,
+    "markdownDownloadedAndInspected": true,
+    "csvDownloadedAndInspected": true,
+    "externalPublication": false,
+    "mainResultsScreenEmpty": true,
+    "mainNoFictitiousMetricsEntered": true,
+    "originalSourceMismatchDraft": "42d05f12-8040-4e40-8bbd-fd6a0377a29f retained as draft and explicitly renamed [QA descartado: fuente anterior]"
+  }
+}

@@ -55,9 +55,9 @@ test at tests/ai-draft-controls.test.mjs:53:3
 test at tests/ai-draft-controls.test.mjs:63:1
 ✖ AI panels reach the editable script and stored brief with their requested controls (8.872203ms)
   AssertionError [ERR_ASSERTION]: The expression evaluated to a falsy value:
-  
+
     assert.ok(piece.script.includes(`Lámina ${index + 1}: ${scene.text}`))
-  
+
       at TestContext.<anonymous> (file:///home/ubuntu/.t3/projects/30x-trackt-2/tests/ai-draft-controls.test.mjs:69:12)
       at async Test.run (node:internal/test_runner/test:1404:7)
       at async Test.processPendingSubtests (node:internal/test_runner/test:969:7) {
