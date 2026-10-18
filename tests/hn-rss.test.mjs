@@ -11,14 +11,36 @@ process.env.SOURCE_ACCESS_POLICY_FILE = path.join(
   "no-extra-grants.json",
 );
 const { db } = await import("../server/db.mjs");
-const { webAccessPolicy, sourceAccessPolicy, assertAiProviderAllowed } =
-  await import("../server/access-policy.mjs");
+const {
+  webAccessPolicy,
+  sourceAccessPolicy,
+  assertAiProviderAllowed,
+  assertOutboundAllowed,
+} = await import("../server/access-policy.mjs");
 const { parseFeed, fetchSource } = await import("../server/intelligence.mjs");
 after(() => {
   db.close();
   fs.rmSync(directory, { recursive: true, force: true });
 });
 const FEED = "https://news.ycombinator.com/rss";
+test("official feed can check robots without opening other HN paths", () => {
+  assert.doesNotThrow(() =>
+    assertOutboundAllowed("https://news.ycombinator.com/robots.txt", "robots"),
+  );
+  for (const url of [
+    "http://news.ycombinator.com/robots.txt",
+    "https://news.ycombinator.com/robots.txt?x=1",
+    "https://news.ycombinator.com/robots.txt#x",
+    "https://news.ycombinator.com/item?id=123",
+  ])
+    assert.throws(() => assertOutboundAllowed(url, "robots"));
+  assert.throws(() =>
+    assertOutboundAllowed(
+      "https://news.ycombinator.com/robots.txt",
+      "metadata",
+    ),
+  );
+});
 const source = {
   id: "hn-rss",
   type: "rss",

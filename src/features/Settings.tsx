@@ -414,6 +414,25 @@ export default function Settings() {
             </Button>
           )}
         </div>
+        {canEdit &&
+          !state.sources.some(
+            (item) => item.url === "https://news.ycombinator.com/rss",
+          ) && (
+            <Button
+              variant="secondary"
+              disabled={!!busy}
+              onClick={() =>
+                openSource({
+                  ...newSource,
+                  name: "Hacker News · RSS oficial",
+                  url: "https://news.ycombinator.com/rss",
+                  enabled: true,
+                })
+              }
+            >
+              <Rss size={16} /> Usar RSS de Hacker News
+            </Button>
+          )}
         <div className="row" style={{ flexWrap: "wrap", marginBottom: 20 }}>
           <Badge tone="green">
             {state.sources.filter((item) => item.enabled).length} activas

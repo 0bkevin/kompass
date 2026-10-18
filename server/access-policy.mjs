@@ -333,7 +333,9 @@ export function assertOutboundAllowed(value, purpose = "metadata") {
     purpose === "robots" &&
     url.pathname === "/robots.txt" &&
     !url.search &&
+    !url.hash &&
     (url.origin === "https://trends.google.com" ||
+      url.origin === "https://news.ycombinator.com" ||
       reviews().some(
         (grant) =>
           grant.origin === url.origin &&
