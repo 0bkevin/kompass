@@ -21,7 +21,7 @@ import { Badge, Button, Field } from "../components/ui";
 import "./community.css";
 
 const notice =
-  "Las respuestas son voluntarias y no verificadas. No representan personas únicas ni a toda tu audiencia. Los resultados por grupo aparecen a partir de 5 respuestas.";
+  "Respuestas voluntarias y no verificadas; no son personas únicas.";
 function PollResults({ poll }: { poll: Poll }) {
   return poll.results.length ? (
     <div className="community-results">
@@ -52,8 +52,7 @@ function PollResults({ poll }: { poll: Poll }) {
     </div>
   ) : (
     <p className="community-note">
-      Aún no hay un grupo con 5 respuestas. Las señales se incorporarán
-      automáticamente al reunir esa muestra.
+      Resultados disponibles desde 5 respuestas por grupo.
     </p>
   );
 }
@@ -133,12 +132,8 @@ export function CommunitySensor({
         <div>
           <h2 id="community-heading">
             <MessageCircle size={20} />
-            Escucha a tu comunidad
+            Preguntas públicas
           </h2>
-          <p>
-            Contrasta lo que supones con lo que tu audiencia dice necesitar.
-            Comparte una pregunta pública, sin pedir nombres ni correos.
-          </p>
         </div>
         {canEdit && !editing && (
           <Button
@@ -199,7 +194,7 @@ export function CommunitySensor({
               if (current.current !== brandId) return;
               dirty.current = false;
               setEditing(false);
-              notify("Pregunta creada. Comparte el enlace con tu comunidad.");
+              notify("Pregunta creada.");
               await resource.reload();
             } catch (cause) {
               if (current.current === brandId)
@@ -229,10 +224,6 @@ export function CommunitySensor({
               placeholder="Preparar conversaciones de venta\nAutomatizar tareas repetitivas\nFormar a mi equipo"
             />
           </Field>
-          <p className="community-note">
-            Cada participante elegirá un grupo y un tema. Guardamos conteos
-            agregados; no guardamos respuestas individuales.
-          </p>
           <div className="community-actions">
             <Button type="submit" variant="primary" busy={busy === "new"}>
               Crear enlace público
@@ -281,11 +272,7 @@ export function CommunitySensor({
       )}
       {!loading && !resource.error && !polls.length && !editing && (
         <div className="community-empty">
-          <p>¿Qué tema te ayudaría más esta semana?</p>
-          <span>
-            Las respuestas públicas se convertirán en señales para priorizar
-            oportunidades por grupo.
-          </span>
+          <p>Sin preguntas.</p>
         </div>
       )}
       {polls.map((poll) => (
@@ -409,24 +396,13 @@ export function CommunityQuestion({ token }: { token: string }) {
           {done ? (
             <div className="community-thanks" role="status">
               <CheckCircle2 size={34} />
-              <h1>Gracias por compartir tu interés.</h1>
-              <p>
-                Tu respuesta se agregó al conteo de tu grupo. No creamos un
-                perfil sobre ti.
-              </p>
+              <h1>Respuesta registrada</h1>
             </div>
           ) : (
             <>
               <h1>{data.poll.question}</h1>
-              <p className="public-community-intro">
-                Ayuda a {data.companyName} a crear contenido que te resulte
-                útil. No necesitas registrarte.
-              </p>
               {!data.poll.active ? (
-                <p className="community-paused">
-                  Esta pregunta está pausada. Puedes consultar los resultados
-                  agregados disponibles.
-                </p>
+                <p className="community-paused">Pregunta pausada.</p>
               ) : (
                 <form
                   onSubmit={async (event) => {
@@ -511,7 +487,7 @@ export function CommunityQuestion({ token }: { token: string }) {
                     busy={busy}
                     disabled={!segmentId || !optionId}
                   >
-                    Compartir mi interés
+                    Enviar respuesta
                     <ArrowRight size={16} />
                   </Button>
                 </form>
@@ -521,16 +497,10 @@ export function CommunityQuestion({ token }: { token: string }) {
           {(done || !data.poll.active) && <PollResults poll={data.poll} />}
           <p className="community-note">{notice}</p>
           <p className="public-community-privacy">
-            Sólo guardamos conteos por grupo y tema. No envíes datos personales.
+            Solo se guardan conteos por grupo y tema.
           </p>
         </>
       )}
-      <footer>
-        <span>Una pregunta de {data?.companyName || "tu comunidad"}</span>
-        <a href="/">
-          Conoce kompass <ArrowRight size={14} aria-hidden="true" />
-        </a>
-      </footer>
     </main>
   );
 }
