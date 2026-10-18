@@ -29,6 +29,7 @@ import {
   House,
   Lightbulb,
   BarChart3,
+  FileText,
 } from "lucide-react";
 import { api, json } from "./lib/api";
 import {
@@ -57,6 +58,7 @@ const views: {
     icon: Lightbulb,
     group: "Trabajo",
   },
+  { id: "research", label: "Informe", icon: FileText, group: "Trabajo" },
   { id: "studio", label: "Contenido", icon: Clapperboard, group: "Trabajo" },
   { id: "calendar", label: "Calendario", icon: CalendarDays, group: "Trabajo" },
   { id: "results", label: "Resultados", icon: BarChart3, group: "Trabajo" },
@@ -128,6 +130,8 @@ export default function App() {
           return router.navigate({ to: "/home", ...options });
         case "opportunities":
           return router.navigate({ to: "/opportunities", ...options });
+        case "research":
+          return router.navigate({ to: "/research", ...options });
         case "results":
           return router.navigate({ to: "/results", ...options });
         case "radar":

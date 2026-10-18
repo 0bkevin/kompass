@@ -7,6 +7,7 @@ import { startDiscoveryScheduler } from "./intelligence.mjs";
 import { createStartMiddleware } from "./start-adapter.mjs";
 import { recoverMediaJobs, stopMediaJobs } from "./media-generation.mjs";
 import { startSocialSyncScheduler } from "./social-sync.mjs";
+import { stopManagedText } from "./managed-text.mjs";
 
 const projectRoot = path.resolve(
   path.dirname(fileURLToPath(import.meta.url)),
@@ -83,6 +84,7 @@ export async function startProductionServer({
       shuttingDown = true;
       discovery.stop();
       socialSync.stop();
+      stopManagedText();
       void stopMediaJobs().finally(() => {
         server.close(() => process.exit(0));
       });

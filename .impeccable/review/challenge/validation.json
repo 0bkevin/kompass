@@ -1,0 +1,59 @@
+{
+  "date": "2026-10-18",
+  "build": "npm run build (Vite production + tsc -b), passed after4285094",
+  "tests": {
+    "full": {
+      "passed": 754,
+      "failed": 0,
+      "skipped": 0,
+      "log": "/tmp/kompass-challenge-release-tests.log"
+    },
+    "subsequentMeasurementRegression": {
+      "passed": 7,
+      "scope": "exact timestamp preservation, null clearing, comparison eligibility",
+      "commit": "4285094"
+    }
+  },
+  "browser": {
+    "tool": "T3 collaborative browser",
+    "localProductionBuild": "http://localhost:5200",
+    "syntheticWorkspace": true,
+    "viewports": [
+      {
+        "width": 1440,
+        "height": 1000
+      },
+      {
+        "width": 1280,
+        "height": 800
+      },
+      {
+        "width": 390,
+        "height": 844
+      }
+    ],
+    "horizontalOverflow": false,
+    "actualChecks": [
+      "Save accepted editorial decision, persist and refresh summary",
+      "Save manual pilot: reviewed3/useful2/accepted1, missing costs remain unknown",
+      "Export Markdown report, downloaded10156bytes",
+      "Create draft directly from report and open Studio piece",
+      "Save exact-title-quote manual observation and find it in subsequent report",
+      "Focus report disclosure: visible2px lavender outline; Enter opens it",
+      "Geist and Hedvig Letters Serif loaded",
+      "Console empty after final build/server restart"
+    ],
+    "reducedMotion": {
+      "newReportAnimations": false,
+      "globalReduceRules": "src/styles.css:3164; src/workspace.css:1118",
+      "emulatedInThisPass": false
+    },
+    "captureLimit": "Native browser saves viewport captures; expanded working panels are included separately."
+  },
+  "finish": {
+    "disposition": "ship",
+    "scope": "report, direct draft, manual reference evidence",
+    "review": "finish-review.md"
+  },
+  "production": "Baseline PR2 deployed; newer challenge modules pending final merge/deployment at this record."
+}

@@ -19,6 +19,7 @@ import { Route as WorkspaceHomeRouteImport } from './routes/_workspace/home'
 import { Route as WorkspaceInboxRouteImport } from './routes/_workspace/inbox'
 import { Route as WorkspaceOpportunitiesRouteImport } from './routes/_workspace/opportunities'
 import { Route as WorkspaceRadarRouteImport } from './routes/_workspace/radar'
+import { Route as WorkspaceResearchRouteImport } from './routes/_workspace/research'
 import { Route as WorkspaceResultsRouteImport } from './routes/_workspace/results'
 import { Route as WorkspaceSettingsRouteImport } from './routes/_workspace/settings'
 import { Route as WorkspaceStudioRouteImport } from './routes/_workspace/studio'
@@ -74,6 +75,11 @@ const WorkspaceRadarRoute = WorkspaceRadarRouteImport.update({
   path: '/radar',
   getParentRoute: () => WorkspaceRoute,
 } as any)
+const WorkspaceResearchRoute = WorkspaceResearchRouteImport.update({
+  id: '/research',
+  path: '/research',
+  getParentRoute: () => WorkspaceRoute,
+} as any)
 const WorkspaceResultsRoute = WorkspaceResultsRouteImport.update({
   id: '/results',
   path: '/results',
@@ -110,6 +116,7 @@ export interface FileRoutesByFullPath {
   '/inbox': typeof WorkspaceInboxRoute
   '/opportunities': typeof WorkspaceOpportunitiesRoute
   '/radar': typeof WorkspaceRadarRoute
+  '/research': typeof WorkspaceResearchRoute
   '/results': typeof WorkspaceResultsRoute
   '/settings': typeof WorkspaceSettingsRoute
   '/studio': typeof WorkspaceStudioRouteWithChildren
@@ -126,6 +133,7 @@ export interface FileRoutesByTo {
   '/inbox': typeof WorkspaceInboxRoute
   '/opportunities': typeof WorkspaceOpportunitiesRoute
   '/radar': typeof WorkspaceRadarRoute
+  '/research': typeof WorkspaceResearchRoute
   '/results': typeof WorkspaceResultsRoute
   '/settings': typeof WorkspaceSettingsRoute
   '/studio': typeof WorkspaceStudioRouteWithChildren
@@ -144,6 +152,7 @@ export interface FileRoutesById {
   '/_workspace/inbox': typeof WorkspaceInboxRoute
   '/_workspace/opportunities': typeof WorkspaceOpportunitiesRoute
   '/_workspace/radar': typeof WorkspaceRadarRoute
+  '/_workspace/research': typeof WorkspaceResearchRoute
   '/_workspace/results': typeof WorkspaceResultsRoute
   '/_workspace/settings': typeof WorkspaceSettingsRoute
   '/_workspace/studio': typeof WorkspaceStudioRouteWithChildren
@@ -162,6 +171,7 @@ export interface FileRouteTypes {
     | '/inbox'
     | '/opportunities'
     | '/radar'
+    | '/research'
     | '/results'
     | '/settings'
     | '/studio'
@@ -178,6 +188,7 @@ export interface FileRouteTypes {
     | '/inbox'
     | '/opportunities'
     | '/radar'
+    | '/research'
     | '/results'
     | '/settings'
     | '/studio'
@@ -195,6 +206,7 @@ export interface FileRouteTypes {
     | '/_workspace/inbox'
     | '/_workspace/opportunities'
     | '/_workspace/radar'
+    | '/_workspace/research'
     | '/_workspace/results'
     | '/_workspace/settings'
     | '/_workspace/studio'
@@ -280,6 +292,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof WorkspaceRadarRouteImport
       parentRoute: typeof WorkspaceRoute
     }
+    '/_workspace/research': {
+      id: '/_workspace/research'
+      path: '/research'
+      fullPath: '/research'
+      preLoaderRoute: typeof WorkspaceResearchRouteImport
+      parentRoute: typeof WorkspaceRoute
+    }
     '/_workspace/results': {
       id: '/_workspace/results'
       path: '/results'
@@ -339,6 +358,7 @@ interface WorkspaceRouteChildren {
   WorkspaceInboxRoute: typeof WorkspaceInboxRoute
   WorkspaceOpportunitiesRoute: typeof WorkspaceOpportunitiesRoute
   WorkspaceRadarRoute: typeof WorkspaceRadarRoute
+  WorkspaceResearchRoute: typeof WorkspaceResearchRoute
   WorkspaceResultsRoute: typeof WorkspaceResultsRoute
   WorkspaceSettingsRoute: typeof WorkspaceSettingsRoute
   WorkspaceStudioRoute: typeof WorkspaceStudioRouteWithChildren
@@ -353,6 +373,7 @@ const WorkspaceRouteChildren: WorkspaceRouteChildren = {
   WorkspaceInboxRoute: WorkspaceInboxRoute,
   WorkspaceOpportunitiesRoute: WorkspaceOpportunitiesRoute,
   WorkspaceRadarRoute: WorkspaceRadarRoute,
+  WorkspaceResearchRoute: WorkspaceResearchRoute,
   WorkspaceResultsRoute: WorkspaceResultsRoute,
   WorkspaceSettingsRoute: WorkspaceSettingsRoute,
   WorkspaceStudioRoute: WorkspaceStudioRouteWithChildren,

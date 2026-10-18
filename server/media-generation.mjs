@@ -1,6 +1,7 @@
 import fs from "node:fs";
 import path from "node:path";
 import { randomUUID, createHash } from "node:crypto";
+import { assertPublicContentText } from "./content-privacy.mjs";
 import {
   DATA_DIR,
   UPLOAD_DIR,
@@ -167,6 +168,7 @@ export function createMediaGenerationService({
       prompt: (body.prompt || "").trim(),
       aspectRatio: body.aspectRatio,
     };
+    assertPublicContentText(input.prompt, "Dirección visual");
     const fingerprint = createHash("sha256")
       .update(JSON.stringify(input))
       .digest("hex");
@@ -190,6 +192,10 @@ export function createMediaGenerationService({
         "La pieza no existe en esta empresa.",
         404,
       );
+    assertPublicContentText(
+      `${brand.name || ""}\n${piece.title || ""}\n${piece.hook || ""}\n${piece.script || ""}`,
+      "Contenido visual",
+    );
     const available = capabilities();
     if (!available[input.kind]?.ready)
       throw mediaFailure(
@@ -331,6 +337,10 @@ export function createMediaGenerationService({
     const workDir = path.join(workRoot, job.id);
     controller = new AbortController();
     try {
+      assertPublicContentText(
+        `${job.brandName || ""}\n${job.pieceSnapshot.title || ""}\n${job.pieceSnapshot.hook || ""}\n${job.pieceSnapshot.script || ""}\n${job.prompt || ""}`,
+        "Contenido visual",
+      );
       const available = capabilities();
       if (!available[job.kind]?.ready)
         throw mediaFailure(
@@ -355,6 +365,7 @@ export function createMediaGenerationService({
           job.prompt ||
             "Estilo claro, sobrio y actual; composición limpia. Evita texto salvo que se pida explícitamente.",
         ].join("\n");
+        assertPublicContentText(prompt, "Contenido para la imagen");
         const image = await generateImage({
           prompt,
           aspectRatio: job.aspectRatio,

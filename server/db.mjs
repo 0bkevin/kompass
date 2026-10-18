@@ -1,4 +1,5 @@
 import { resolveAiConfig } from "./integration-config.mjs";
+import { managedTextAvailability } from "./managed-text-readiness.mjs";
 import { DatabaseSync } from "node:sqlite";
 import {
   randomUUID,
@@ -30,6 +31,7 @@ const kinds = new Set([
   "topicSnapshots",
   "communityPolls",
   "opportunityAnalyses",
+  "opportunityFeedback",
   "mediaJobs",
 ]);
 export function initDb() {
@@ -181,11 +183,17 @@ export function publicIntegrations(brandId) {
     ai?.baseUrl || process.env.OPENAI_BASE_URL || "https://api.openai.com/v1",
   );
   const webhook = getSecret(brandId, "webhook");
+  const runtime =
+    ai?.provider === "codex-chatgpt"
+      ? managedTextAvailability()
+      : { ready: true };
   return {
     ai: {
       accessPolicy: policy,
       configured: !!ai,
-      ready: !!ai && policy.allowed,
+      ready: !!ai && policy.allowed && runtime.ready,
+      provider: ai?.provider || "api",
+      ...(runtime.reason ? { reason: runtime.reason } : {}),
       managedBy: ai?.managedBy || "local",
       hasOverride: !!stored,
       ...(ai ? { model: ai.model } : {}),

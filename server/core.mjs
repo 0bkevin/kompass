@@ -31,6 +31,7 @@ import {
 import { canonicalSocialSourceUrl } from "./social-providers.mjs";
 import { PIECE_LIMITS } from "./piece-contract.mjs";
 import { publicCitationUrl } from "./public-citation-url.mjs";
+import { assertPublicContentText } from "./content-privacy.mjs";
 import {
   assertSourceCollectionAllowed,
   sourceAccessPolicy,
@@ -475,6 +476,9 @@ function defaults(brandId) {
 }
 function referenceInput(body, current, req) {
   const result = { ...current };
+  for (const field of ["title", "text"])
+    if (typeof body[field] === "string")
+      assertPublicContentText(body[field], "Referencia");
   if (
     current.id &&
     !referenceUsePolicy(
@@ -591,6 +595,9 @@ function referenceInput(body, current, req) {
 }
 function ideaInput(body, current, req) {
   const result = { ...current };
+  for (const field of ["title", "angle"])
+    if (typeof body[field] === "string")
+      assertPublicContentText(body[field], "Idea");
   if (body.title !== undefined || !current.id)
     result.title = text(body.title, "Título", 300, true);
   if (body.angle !== undefined || !current.id)
@@ -625,6 +632,9 @@ function pieceText(value, key, current, max) {
 }
 function pieceInput(body, current, req) {
   if (current.id) assertPieceMutable(req.brand.id, current.id);
+  for (const field of ["title", "hook", "script", "caption", "cta"])
+    if (typeof body[field] === "string")
+      assertPublicContentText(body[field], "Contenido");
   const result = { ...current };
   if (
     current.status === "published" &&
@@ -679,6 +689,8 @@ function pieceInput(body, current, req) {
       fail(400, `Máximo ${PIECE_LIMITS.scenes} escenas.`);
     result.scenes = body.scenes.map((scene) => {
       object(scene);
+      if (typeof scene.text === "string")
+        assertPublicContentText(scene.text, "Escena");
       return {
         id: text(scene.id || randomUUID(), "ID escena", 100, true),
         text: text(scene.text, "Escena", PIECE_LIMITS.sceneText),
@@ -933,6 +945,34 @@ function isUtf8TextFile(file) {
   } catch (error) {
     if (error.code === "ERR_ENCODING_INVALID_ENCODED_DATA") return false;
     throw error;
+  } finally {
+    fs.closeSync(fd);
+  }
+}
+
+function assertTextAssetPrivacy(file) {
+  const fd = fs.openSync(file.path, "r");
+  const chunk = Buffer.alloc(64 * 1024);
+  const decoder = new TextDecoder("utf-8", { fatal: true });
+  let tail = "";
+  try {
+    let position = 0;
+    while (position < file.size) {
+      const count = fs.readSync(
+        fd,
+        chunk,
+        0,
+        Math.min(chunk.length, file.size - position),
+        position,
+      );
+      if (!count) fail(400, "No se pudo revisar el archivo. Vuelve a subirlo.");
+      const text =
+        tail + decoder.decode(chunk.subarray(0, count), { stream: true });
+      assertPublicContentText(text, "Archivo de texto");
+      tail = text.slice(-4096);
+      position += count;
+    }
+    assertPublicContentText(tail + decoder.decode(), "Archivo de texto");
   } finally {
     fs.closeSync(fd);
   }
@@ -1442,6 +1482,12 @@ export function createCoreRouter() {
             )
           : undefined;
         const [type, mimeType] = detectFile(req.file);
+        const textReview = mimeType.startsWith("text/");
+        assertPublicContentText(
+          cleanUploadName(req.file.originalname),
+          "Nombre del archivo",
+        );
+        if (textReview) assertTextAssetPrivacy(req.file);
         const id = randomUUID();
         const asset = saveRecord(req.brand.id, "assets", {
           id,
@@ -1452,6 +1498,11 @@ export function createCoreRouter() {
           storageName: req.file.filename,
           url: `/api/brands/${req.brand.id}/assets/${id}/file`,
           origin: "upload",
+          privacyReview: {
+            mode: textReview ? "text-patterns" : "manual-required",
+            checkedAt: new Date().toISOString(),
+            complete: false,
+          },
           pieceId,
         });
         addActivity(req.brand.id, `${req.user.name} subió «${asset.name}».`);

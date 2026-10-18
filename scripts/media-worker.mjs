@@ -685,7 +685,7 @@ export function localMediaCapabilities({ refresh = false } = {}) {
     image: {
       ready: signedIn && sandbox.ready,
       provider: "codex-chatgpt",
-      label: "Imagen con tu suscripción de ChatGPT",
+      label: "Imagen con IA de kompass",
       ...(reason ? { reason } : {}),
     },
     video: {

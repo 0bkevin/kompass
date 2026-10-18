@@ -177,6 +177,7 @@ function sourceFingerprint(source) {
     "lastAttemptAt",
     "lastError",
     "lastResultCount",
+    "lastPrivacySkipped",
   ]);
   return digest(
     Object.fromEntries(
@@ -213,6 +214,7 @@ export function recordTopicObservation(brandId, options = {}) {
       source.type !== "youtube" &&
       source.platform !== "youtube" &&
       !source.lastError &&
+      !source.lastPrivacySkipped &&
       (Array.isArray(options.sourceIds)
         ? options.sourceIds.includes(source.id)
         : source.lastSyncedAt &&
@@ -886,7 +888,13 @@ function audienceSignalInput(brand, input) {
 }
 function outcomeInput(input) {
   const body = object(input);
-  onlyFields(body, ["publishedUrl", "publishedAt", "metrics", "notes"]);
+  onlyFields(body, [
+    "publishedUrl",
+    "publishedAt",
+    "measuredAt",
+    "metrics",
+    "notes",
+  ]);
   const supplied = object(body.metrics);
   onlyFields(supplied, ["views", "engagement", "leads"]);
   const metrics = Object.fromEntries(
@@ -913,10 +921,25 @@ function outcomeInput(input) {
       fail(400, "Indica una publicación real con fecha pasada o actual.");
     publishedAt = new Date(time).toISOString();
   }
+  let measuredAt;
+  if (
+    body.measuredAt !== undefined &&
+    body.measuredAt !== null &&
+    body.measuredAt !== ""
+  ) {
+    const time =
+      typeof body.measuredAt === "string" ? Date.parse(body.measuredAt) : NaN;
+    if (!Number.isFinite(time) || time > Date.now())
+      fail(400, "Indica una fecha de medición válida, sin fechas futuras.");
+    measuredAt = new Date(time).toISOString();
+  }
   return {
     metrics,
     ...(Object.hasOwn(body, "publishedUrl") ? { publishedUrl } : {}),
     ...(publishedAt ? { publishedAt } : {}),
+    ...(Object.hasOwn(body, "measuredAt")
+      ? { measuredAt: measuredAt ?? null }
+      : {}),
     ...(body.notes !== undefined
       ? {
           notes: assertAggregateAudienceText(
@@ -1007,6 +1030,14 @@ export function createAudienceInsightsRouter() {
           existing?.publishedAt ||
           piece.publishedAt ||
           new Date().toISOString();
+        const measuredAt = Object.hasOwn(input, "measuredAt")
+          ? input.measuredAt
+          : existing?.measuredAt;
+        if (measuredAt && Date.parse(measuredAt) <= Date.parse(publishedAt))
+          fail(
+            400,
+            "La medición debe ser posterior a la publicación. Revisa ambas fechas.",
+          );
         // An explicit blank removes a mistaken link; an omitted field keeps it.
         const publishedUrl = Object.hasOwn(input, "publishedUrl")
           ? input.publishedUrl
@@ -1020,6 +1051,7 @@ export function createAudienceInsightsRouter() {
           title: piece.title,
           ...(publishedUrl ? { publishedUrl } : {}),
           publishedAt,
+          ...(measuredAt ? { measuredAt } : {}),
           metrics: input.metrics,
           ...(notes !== undefined ? { notes } : {}),
           origin: "manual",
