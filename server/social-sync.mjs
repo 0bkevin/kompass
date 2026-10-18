@@ -170,6 +170,7 @@ export function recoverSocialSync({ now = Date.now() } = {}) {
     const snapshot = JSON.parse(row.data);
     if (
       !approvedPiece(piece) ||
+      snapshot.approvalVersion !== publicPiece(piece).approvalVersion ||
       publicationFor(row.brand_id, piece)?.externalId !== snapshot.externalId
     )
       db.prepare(
@@ -835,6 +836,8 @@ export async function syncOfficialMetrics(brandId, options = {}) {
         if (
           !id ||
           !approvedPiece(piece) ||
+          publicPiece(piece).approvalVersion !==
+            publicPiece(previous).approvalVersion ||
           publicationFor(brandId, piece)?.externalId !== id
         )
           continue;
@@ -862,6 +865,7 @@ export async function syncOfficialMetrics(brandId, options = {}) {
           metrics: nativeMetrics(video.statistics),
           leads: null,
           origin: "official_api",
+          approvalVersion: publicPiece(piece).approvalVersion,
           attribution: "YouTube Data API",
           note: "Contadores públicos acumulados. No verifican propiedad del canal, conversiones ni personas únicas.",
         };

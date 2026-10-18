@@ -936,3 +936,25 @@ test("approval changes invalidate explicit links and unlink prevents legacy fall
     1,
   );
 });
+
+test("in-flight counter reads cannot attach to a newly approved content version", async () => {
+  const f = fixture();
+  const p = piece(f);
+  handler = () => {
+    storage.saveRecord(f.brand.id, "pieces", {
+      ...p,
+      title: "A different reviewed content version",
+    });
+    return json({ items: [{ id, statistics: { viewCount: "999" } }] });
+  };
+  const result = await social.syncOfficialMetrics(f.brand.id, {
+    env,
+    fetchImpl: transport,
+    now,
+  });
+  assert.equal(result.synced, 0);
+  assert.equal(
+    social.socialMetricSnapshots(f.brand.id, { now }).snapshots.length,
+    0,
+  );
+});
