@@ -31,6 +31,7 @@ import { Badge, Button, EmptyState, Field } from "../components/ui";
 import { api, json } from "../lib/api";
 import type { AudienceEvidenceResource } from "../lib/audience-evidence";
 import { formatNames, pieceStatusLabel, safeExternalUrl } from "../lib/format";
+import { safeAudienceEvidenceUrl } from "../lib/evidence-url.mjs";
 import type {
   AudienceSignal,
   Insights,
@@ -2103,6 +2104,7 @@ function SignalRow({
   const [error, setError] = useState("");
   const brandId = state.brand.id;
   const active = useBrandScope(brandId);
+  const evidenceUrl = safeAudienceEvidenceUrl(signal.sourceUrl);
   async function remove() {
     if (busy || !window.confirm("¿Eliminar esta señal de audiencia?")) return;
     setBusy(true);
@@ -2160,9 +2162,9 @@ function SignalRow({
               : ` · ${number(signal.sampleSize)} piezas revisadas`
             : " · Muestra no indicada"}
         </small>
-        {safeExternalUrl(signal.sourceUrl) && (
+        {evidenceUrl && (
           <a
-            href={safeExternalUrl(signal.sourceUrl)}
+            href={evidenceUrl}
             target="_blank"
             rel="noreferrer"
           >
