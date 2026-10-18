@@ -375,6 +375,9 @@ export default function Calendar() {
               </button>
             </div>
           </div>
+          <p className="calendar-scroll-hint">
+            Desliza para ver todos los días.
+          </p>
           <div className="calendar-scroll">
             <div className={`calendar-grid-surface ${mode}`}>
               <div className="calendar-weekdays">
