@@ -569,7 +569,7 @@ export default function App() {
             <span aria-hidden="true">/</span>
             <strong>{current?.label || "Fuentes y equipo"}</strong>
           </div>
-          {["radar", "inbox", "studio", "assets"].includes(view) && (
+          {["radar", "inbox", "studio", "calendar", "assets"].includes(view) && (
             <label className="global-search">
               <Search size={16} />
               <input

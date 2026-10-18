@@ -1,0 +1,12 @@
+{
+  "fixtureSetup": "Local API register/create brand/create pieces/review/approve; 5 synthetic pieces; no AI generation",
+  "desktop": {"width":1440,"height":900},
+  "mobile": {"width":390,"height":844,"documentScrollWidth":390,"calendarClientWidth":356,"calendarScrollWidth":525,"physicalTouchTested":false},
+  "searchBefore": {"calendarInputCount":0},
+  "searchAfter": {"calendarInputCount":1,"query":"IA práctica","matchingCalendarEvents":1,"filteredCsvRows":1,"emptyQueryResultDisablesExport":true},
+  "calendar": {"monthDays":42,"weekDays":7,"pastDateMessage":"Elige una fecha futura para programar la pieza.","initialSchedule":"2026-10-20T14:30:00.000Z","rescheduled":"2026-10-21T16:45:00.000Z","reschedulePersistedAfterNavigation":true,"draftExcludedFromApprovedTray":true,"approvedTrayCollapses":true},
+  "editInvalidation": {"sendDisabledWhileDirty":true,"savedStatus":"draft","scheduledForPresent":false},
+  "delivery": {"transportCallsBeforeExplicitConfirmation":0,"rejectedStatus":"failed","rejectedHttp":403,"acceptedHttp":202,"acceptedReceiptPersistedAfterReload":true,"acceptedRepeatPost":200,"uncertainStatus":"uncertain","uncertainRepeatPost":409,"transportCallsAfterReadAndRepeats":3},
+  "apiGuards": {"unapprovedSchedule":409,"unapprovedPublish":409,"staleApproval":409,"staleDestination":409,"unrelatedWorkspaceRead":404,"unrelatedWorkspacePublish":404,"reviewerRead":200,"reviewerSchedule":403,"reviewerPublish":403},
+  "impeccableDetector": []
+}
