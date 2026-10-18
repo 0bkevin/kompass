@@ -249,10 +249,18 @@ export default function PublishPiece({
             <p role="status">Consultando el estado del conector…</p>
           )}
           {!checking && delivery && !delivery.destination && (
-            <p>
-              {delivery.unavailableReason ||
-                "Conecta un webhook en Fuentes y equipo. Mientras tanto, puedes exportar la pieza."}
-            </p>
+            <>
+              <p>
+                No hay un conector de envío disponible. Usa «Exportar» para
+                llevar esta pieza a tu canal y publicarla allí.
+              </p>
+              {delivery.unavailableReason && (
+                <details>
+                  <summary>Ver estado de la conexión</summary>
+                  <p>{delivery.unavailableReason}</p>
+                </details>
+              )}
+            </>
           )}
           {reviewer && (
             <p>
@@ -267,7 +275,7 @@ export default function PublishPiece({
             </p>
           )}
           {!open && feedback}
-          {!pending && (
+          {!pending && (delivery?.destination || checking || readError) && (
             <Button
               variant="primary"
               disabled={!canSend}
@@ -286,7 +294,7 @@ export default function PublishPiece({
           )}
           {!checking && delivery && !delivery.destination && !reviewer && (
             <Button onClick={() => navigate("settings")}>
-              Ir a Fuentes y equipo
+              Ver opciones de conexión
             </Button>
           )}
         </>

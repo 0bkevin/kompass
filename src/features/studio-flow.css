@@ -1,0 +1,68 @@
+.new-draft-form .draft-options {
+  border-top: 1px solid var(--border);
+  padding-top: 12px;
+}
+
+.draft-options > summary,
+.editor-connector-options > summary {
+  cursor: pointer;
+  color: var(--ink);
+  font-size: 13px;
+  font-weight: 600;
+  padding: 8px 0;
+}
+
+.draft-options-fields {
+  padding-top: 16px;
+}
+
+.draft-engine-note {
+  margin: 0;
+  line-height: 1.6;
+}
+
+.editor-next-step {
+  background: #e6f0e6;
+  border-radius: 12px;
+  padding: 20px 24px;
+  margin-bottom: 24px;
+}
+
+.editor-next-step h2 {
+  font-size: 16px;
+  margin: 0 0 6px;
+}
+
+.editor-next-step > p {
+  max-width: 72ch;
+  margin: 0 0 14px;
+}
+
+.editor-next-step > .button + .button {
+  margin-left: 10px;
+}
+
+.editor-connector-options {
+  border-top: 1px solid #c9d8cb;
+  margin-top: 18px;
+  padding-top: 8px;
+}
+
+.editor-connector-options .publication-actions {
+  margin-top: 12px;
+}
+
+@media (max-width: 600px) {
+  .editor-next-step {
+    padding: 18px;
+  }
+
+  .editor-next-step > .button {
+    width: 100%;
+    white-space: normal;
+  }
+
+  .editor-next-step > .button + .button {
+    margin: 10px 0 0;
+  }
+}

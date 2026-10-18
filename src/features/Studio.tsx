@@ -36,6 +36,7 @@ import {
   timeAgo,
 } from "../lib/format";
 import PublishPiece from "./PublishPiece";
+import "./studio-flow.css";
 
 export default function Studio() {
   const { state, refresh, notify, navigate, selectedPieceId, search } =
@@ -168,9 +169,9 @@ function NewDraft({ onClose }: { onClose: () => void }) {
     if (!busy) onClose();
   }
   return (
-    <Modal title="Démosle forma a tu próxima pieza" onClose={closeWhenIdle}>
+    <Modal title="Crear un borrador" onClose={closeWhenIdle}>
       <form
-        className="stack"
+        className="stack new-draft-form"
         onSubmit={async (e) => {
           e.preventDefault();
           if (busy) return;
@@ -210,7 +211,9 @@ function NewDraft({ onClose }: { onClose: () => void }) {
             }
             onClose();
             navigate("studio", result.piece.id);
-            notify("Primer guion listo. Hazlo tuyo.");
+            notify(
+              "Borrador listo. Revísalo y ajústalo antes de pedir aprobación.",
+            );
           } catch (e) {
             setError((e as Error).message);
           } finally {
@@ -218,28 +221,12 @@ function NewDraft({ onClose }: { onClose: () => void }) {
           }
         }}
       >
-        <Field label="Referencia de origen (opcional)">
-          <select
-            name="referenceId"
-            style={controlStyle}
-            disabled={busy || !!createdPiece}
-          >
-            <option value="">Partir de una idea propia</option>
-            {state.references
-              .filter((r) => r.status !== "dismissed")
-              .map((r) => (
-                <option key={r.id} value={r.id}>
-                  {r.title}
-                </option>
-              ))}
-          </select>
-        </Field>
         <Field label="Tema (opcional)">
           <input
             name="topic"
             style={controlStyle}
             maxLength={200}
-            placeholder="Por ejemplo: una bitácora de faltantes de inventario"
+            placeholder="¿Sobre qué quieres crear contenido?"
             disabled={busy || !!createdPiece}
           />
         </Field>
@@ -251,14 +238,14 @@ function NewDraft({ onClose }: { onClose: () => void }) {
             aria-describedby={
               state.integrations.ai.ready ? undefined : "draft-directions-help"
             }
-            rows={4}
+            rows={3}
             disabled={busy || !!createdPiece}
           />
         </Field>
         {!state.integrations.ai.ready && (
           <p className="small muted" id="draft-directions-help">
-            Las notas libres se conservan en un brief para revisión manual. Usa
-            los controles de abajo para aplicar el CTA y la estructura.
+            Tus notas se guardan para revisión manual. En «Ajustar el borrador»
+            puedes elegir la estructura y el llamado a la acción.
           </p>
         )}
         <div className="form-grid">
@@ -292,48 +279,6 @@ function NewDraft({ onClose }: { onClose: () => void }) {
             </select>
           </Field>
         </div>
-        <Field label="Llamado a la acción exacto (opcional)">
-          <input
-            name="cta"
-            style={controlStyle}
-            maxLength={2000}
-            placeholder="Por ejemplo: Descarga la plantilla de inventario."
-            disabled={busy || !!createdPiece}
-          />
-        </Field>
-        {["carousel", "reel", "video"].includes(format) && (
-          <Field
-            label={
-              format === "carousel"
-                ? "Cantidad de láminas"
-                : "Cantidad de escenas"
-            }
-          >
-            <select
-              name="unitCount"
-              style={controlStyle}
-              disabled={busy || !!createdPiece}
-            >
-              <option value="">Automática (5 por defecto)</option>
-              {[3, 4, 5, 6, 7, 8].map((count) => (
-                <option key={count} value={count}>
-                  {count}
-                </option>
-              ))}
-            </select>
-          </Field>
-        )}
-        <Field label="Ejemplo hipotético">
-          <select
-            name="includeExample"
-            style={controlStyle}
-            disabled={busy || !!createdPiece}
-          >
-            <option value="">Según las notas</option>
-            <option value="yes">Incluir</option>
-            <option value="no">Omitir</option>
-          </select>
-        </Field>
         <Field label="Audiencia">
           <select
             name="segmentId"
@@ -348,35 +293,101 @@ function NewDraft({ onClose }: { onClose: () => void }) {
             ))}
           </select>
         </Field>
-        <div className="callout">
-          <Sparkles size={18} />
-          <p>
-            {state.integrations.ai.ready
-              ? "Usará la IA disponible en tu espacio."
-              : "Usará una estructura local con tu audiencia, formato y controles elegidos. El resto del brief requiere revisión manual. Puedes empezar sin configurar servicios."}
-          </p>
-        </div>
-        {!state.integrations.ai.ready && (
-          <details className="small">
-            <summary>
-              Indicaciones simples que también reconoce en las notas
-            </summary>
-            <p>
-              «4 láminas» o «3 escenas» (de 3 a 8), «ejemplo hipotético» y «CTA
-              final exacto: “Tu texto.”». Para newsletter: «secciones: Registrar
-              y Revisar» (de 2 a 8 títulos cortos). Los controles elegidos
-              tienen prioridad y el formato siempre es el del selector.
-            </p>
-          </details>
-        )}
+        <details className="draft-options">
+          <summary>Ajustar el borrador (opcional)</summary>
+          <div className="stack draft-options-fields">
+            <Field label="Referencia de origen (opcional)">
+              <select
+                name="referenceId"
+                style={controlStyle}
+                disabled={busy || !!createdPiece}
+              >
+                <option value="">Partir de una idea propia</option>
+                {state.references
+                  .filter((r) => r.status !== "dismissed")
+                  .map((r) => (
+                    <option key={r.id} value={r.id}>
+                      {r.title}
+                    </option>
+                  ))}
+              </select>
+            </Field>
+            <Field label="Llamado a la acción exacto (opcional)">
+              <input
+                name="cta"
+                style={controlStyle}
+                maxLength={2000}
+                placeholder="Por ejemplo: Descarga la plantilla de inventario."
+                disabled={busy || !!createdPiece}
+              />
+            </Field>
+            {["carousel", "reel", "video"].includes(format) && (
+              <Field
+                label={
+                  format === "carousel"
+                    ? "Cantidad de láminas"
+                    : "Cantidad de escenas"
+                }
+              >
+                <select
+                  name="unitCount"
+                  style={controlStyle}
+                  disabled={busy || !!createdPiece}
+                >
+                  <option value="">Automática (5 por defecto)</option>
+                  {[3, 4, 5, 6, 7, 8].map((count) => (
+                    <option key={count} value={count}>
+                      {count}
+                    </option>
+                  ))}
+                </select>
+              </Field>
+            )}
+            <Field label="Ejemplo hipotético">
+              <select
+                name="includeExample"
+                style={controlStyle}
+                disabled={busy || !!createdPiece}
+              >
+                <option value="">Según las notas</option>
+                <option value="yes">Incluir</option>
+                <option value="no">Omitir</option>
+              </select>
+            </Field>
+            {!state.integrations.ai.ready && (
+              <details className="small">
+                <summary>
+                  Indicaciones simples que también reconoce en las notas
+                </summary>
+                <p>
+                  «4 láminas» o «3 escenas» (de 3 a 8), «ejemplo hipotético» y
+                  «CTA final exacto: “Tu texto.”». Para newsletter: «secciones:
+                  Registrar y Revisar» (de 2 a 8 títulos cortos). Los controles
+                  elegidos tienen prioridad y el formato siempre es el del
+                  selector.
+                </p>
+              </details>
+            )}
+          </div>
+        </details>
+        <p className="small muted draft-engine-note">
+          {state.integrations.ai.ready
+            ? "Se creará con la IA disponible en tu espacio. Después podrás editarlo y pedir revisión."
+            : "Se creará una estructura local editable. Revisa el contenido antes de pedir aprobación."}
+        </p>
         {error && (
           <p className="form-error" role="alert">
             {error}
           </p>
         )}
-        <Button variant="primary" type="submit" busy={busy}>
+        <Button
+          className="draft-submit"
+          variant="primary"
+          type="submit"
+          busy={busy}
+        >
           {createdPiece ? <ArrowRight size={16} /> : <Sparkles size={16} />}
-          {createdPiece ? "Reintentar actualización" : "Preparar primer guion"}
+          {createdPiece ? "Reintentar actualización" : "Crear borrador"}
         </Button>
       </form>
     </Modal>
@@ -791,6 +802,118 @@ function PieceEditor({ piece }: { piece: Piece }) {
         </details>
       )}
       <ProviderCredits reference={piece} />
+      <section
+        className="editor-next-step"
+        aria-label="Siguiente paso de la pieza"
+      >
+        {approvalConflict && (
+          <div className="stack">
+            <p className="form-error" role="alert">
+              {approvalConflict}
+            </p>
+            {conflictLoadFailed && (
+              <Button disabled={!!busy} onClick={() => void reloadConflict()}>
+                Reintentar carga de la versión actual
+              </Button>
+            )}
+          </div>
+        )}
+        <h2>El siguiente paso</h2>
+        {piece.status === "draft" ? (
+          <>
+            <p>
+              Revisa hechos, enfoque y voz de marca. Al enviar a revisión se
+              guardarán tus cambios.
+            </p>
+            <Button
+              variant={dirty ? "secondary" : "primary"}
+              disabled={readonly || !!busy || blockedByConflict}
+              busy={busy === "submit"}
+              onClick={() => void review("submit")}
+            >
+              <Send size={16} />
+              Enviar a revisión
+            </Button>
+          </>
+        ) : piece.status === "review" ? (
+          <>
+            <p>
+              {state.brand.role === "editor"
+                ? "La pieza está en revisión. Un propietario o revisor debe aprobarla antes de planificarla."
+                : "Confirma que la pieza está lista para sumarse al plan editorial."}
+            </p>
+            <Button
+              variant={dirty ? "secondary" : "primary"}
+              disabled={
+                state.brand.role === "editor" || !!busy || approvalBlocked
+              }
+              busy={busy === "approve"}
+              onClick={() => void review("approve")}
+            >
+              <CheckCircle2 size={16} />
+              Aprobar pieza
+            </Button>
+            <Button
+              disabled={
+                state.brand.role === "editor" || !!busy || approvalBlocked
+              }
+              busy={busy === "request_changes"}
+              onClick={() => void review("request_changes")}
+            >
+              Solicitar cambios
+            </Button>
+          </>
+        ) : piece.status === "approved" ? (
+          <>
+            <p>
+              Elige una fecha en tu calendario editorial. Después podrás
+              exportar el contenido y publicarlo desde tu canal.
+            </p>
+            <Button
+              variant="primary"
+              disabled={readonly || !!busy || dirty || approvalBlocked}
+              onClick={() => setSchedule(true)}
+            >
+              Elegir fecha en el calendario
+            </Button>
+          </>
+        ) : (
+          <>
+            <p>
+              {piece.status === "scheduled"
+                ? "Esta pieza está incluida en la grilla. El calendario organiza; no publica automáticamente."
+                : "Ya hay un registro de envío o publicación. Revisa el recibo, si lo hay, y añade los resultados que observes en tu canal."}
+            </p>
+            <Button
+              variant="primary"
+              onClick={() =>
+                navigate(piece.status === "published" ? "results" : "calendar")
+              }
+            >
+              {piece.status === "published"
+                ? "Registrar resultados"
+                : "Ver en el calendario"}
+            </Button>
+          </>
+        )}
+        {dirty && ["approved", "scheduled"].includes(piece.status) && (
+          <p role="status">
+            Al guardar, la pieza volverá a borrador y necesitará una nueva
+            aprobación. También se retirará su fecha del calendario.
+          </p>
+        )}
+        {["approved", "scheduled", "published"].includes(piece.status) && (
+          <details className="editor-connector-options">
+            <summary>Envío con conector (opcional)</summary>
+            <PublishPiece
+              piece={piece}
+              disabled={!!busy || dirty || approvalBlocked}
+              onBusyChange={(sending) => setBusy(sending ? "publish" : "")}
+              onPublished={acceptSavedPiece}
+            />
+          </details>
+        )}
+      </section>
       <div className="editor-layout">
         <section className="card script-editor">
           <div className="editor-tabs tabs">
@@ -1071,102 +1194,6 @@ function PieceEditor({ piece }: { piece: Piece }) {
               <Send size={17} />
               <Bookmark size={17} />
             </div>
-          </div>
-          <div
-            className={`insight-card review-card ${["approved", "scheduled", "published"].includes(piece.status) ? "publication-review" : ""}`}
-          >
-            {approvalConflict && (
-              <div className="stack">
-                <p className="form-error" role="alert">
-                  {approvalConflict}
-                </p>
-                {conflictLoadFailed && (
-                  <Button
-                    disabled={!!busy}
-                    onClick={() => void reloadConflict()}
-                  >
-                    Reintentar carga de la versión actual
-                  </Button>
-                )}
-              </div>
-            )}
-            <h3>El siguiente paso</h3>
-            {piece.status === "draft" ? (
-              <>
-                <p>
-                  Revisa hechos, enfoque y voz de marca antes de pedir
-                  aprobación.
-                </p>
-                <Button
-                  variant="primary"
-                  disabled={readonly || !!busy}
-                  busy={busy === "submit"}
-                  onClick={() => void review("submit")}
-                >
-                  <Send size={16} />
-                  Enviar a revisión
-                </Button>
-              </>
-            ) : piece.status === "review" ? (
-              <>
-                <p>
-                  Confirma que la pieza está lista para sumarse al plan
-                  editorial.
-                </p>
-                <Button
-                  variant="primary"
-                  disabled={
-                    state.brand.role === "editor" || !!busy || approvalBlocked
-                  }
-                  busy={busy === "approve"}
-                  onClick={() => void review("approve")}
-                >
-                  <CheckCircle2 size={16} />
-                  Aprobar pieza
-                </Button>
-                <Button
-                  disabled={
-                    state.brand.role === "editor" || !!busy || approvalBlocked
-                  }
-                  busy={busy === "request_changes"}
-                  onClick={() => void review("request_changes")}
-                >
-                  Solicitar cambios
-                </Button>
-              </>
-            ) : piece.status === "approved" ? (
-              <>
-                <p>
-                  Ya tiene aprobación. Puedes enviarla ahora o elegir un espacio
-                  en tu grilla.
-                </p>
-                <Button
-                  disabled={readonly || !!busy}
-                  onClick={() => setSchedule(true)}
-                >
-                  Planificar publicación
-                </Button>
-              </>
-            ) : (
-              <>
-                <p>
-                  {piece.status === "scheduled"
-                    ? "Esta pieza está incluida en la grilla. El calendario organiza; no publica automáticamente."
-                    : "El envío mediante conector quedó registrado. Consulta el recibo."}
-                </p>
-                <Button onClick={() => navigate("calendar")}>
-                  Ver en la grilla
-                </Button>
-              </>
-            )}
-            {["approved", "scheduled", "published"].includes(piece.status) && (
-              <PublishPiece
-                piece={piece}
-                disabled={!!busy || dirty || approvalBlocked}
-                onBusyChange={(sending) => setBusy(sending ? "publish" : "")}
-                onPublished={acceptSavedPiece}
-              />
-            )}
           </div>
         </aside>
       </div>
