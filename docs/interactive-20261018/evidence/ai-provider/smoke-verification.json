@@ -1,0 +1,10 @@
+{
+  "provider": "Codex CLI",
+  "transport": "Synthetic in-process HTTPS/DNS for reserved test destinations",
+  "realModelGeneration": true,
+  "modelToolsUsed": false,
+  "persistedEngine": "ai",
+  "requests": 1,
+  "productionProviderKeysUsed": false,
+  "productionCodeBypassed": false
+}
