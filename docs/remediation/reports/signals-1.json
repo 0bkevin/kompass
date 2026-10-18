@@ -1,0 +1,51 @@
+{
+  "issueId": "signals-1",
+  "agent": "fix_signals_1",
+  "status": "fixed",
+  "rootCause": "audienceSignalInput sólo rechazaba email/teléfono en topic y note, por lo que aceptaba la ficha individual explícita con nombre, cargo y necesidad. admissibleSignal también aceptaba sin revisión los textos públicos/editoriales ya almacenados.",
+  "changes": [
+    "Añadido aggregate-privacy.mjs con assertAggregateAudienceText(value, label?), containsAudienceContactDetails(value) y containsIndividualAudienceRecord(value); error status 400 sin reflejar datos.",
+    "Aplicada validación compartida a tema y observación del POST real de señales.",
+    "Aplicado el mismo criterio en admissibleSignal para excluir fichas y contactos antiguos de GET audience-signals y del corpus buildInsights que alimenta oportunidades/análisis, sin borrar SQLite.",
+    "Preservadas observaciones agregadas con empresas, cohortes y citas de autores públicos; detección de fichas etiquetadas y filas CSV/tablas.",
+    "Añadidas cinco pruebas HTTP con cuenta/marca sintéticas, host 127.0.1.14, puerto efímero y SQLite temporal."
+  ],
+  "files": [
+    "server/aggregate-privacy.mjs",
+    "server/audience-insights.mjs",
+    "tests/remediation-signals-1.test.mjs",
+    "docs/remediation/reports/signals-1.md",
+    "docs/remediation/reports/signals-1.json"
+  ],
+  "verification": [
+    {
+      "command": "node --test tests/remediation-signals-1.test.mjs",
+      "before": "Ejecutado antes del arreglo: 1 prueba, 0 PASS, 1 FAIL; el POST HTTP autenticado con FICHA INDIVIDUAL SINTÉTICA, Nombre: Ana Sintética Ejemplo, Cargo y Necesidad individual devolvió 201 en vez de 400 (201 !== 400). Ciclos posteriores confirmaron 201 para ficha sin cabecera y lectura de ficha antigua antes de sus correcciones.",
+      "after": "Cinco pruebas específicas pasan dentro de la ejecución final: ficha exacta y siete variantes estructuradas rechazadas; ocho textos agregados con empresas/cohortes/autores se guardan y recargan; cuatro casos de correo/teléfono en ambos campos devuelven 400 sin eco del dato; tres registros antiguos excluidos de GET audience-signals y de signals en GET insights y borrables por ID.",
+      "kind": "http"
+    },
+    {
+      "command": "node --test tests/remediation-signals-1.test.mjs tests/audience-insights.test.mjs tests/opportunity-analysis.test.mjs tests/community.test.mjs",
+      "before": "La señal roja se obtuvo con la prueba HTTP específica antes de cambiar la implementación.",
+      "after": "39 pruebas, 39 PASS, 0 FAIL; exit code 0; duration_ms 839.191576. Audiencia, aislamiento, roles, agregados comunitarios y análisis de oportunidades mantienen sus pruebas cercanas.",
+      "kind": "test"
+    },
+    {
+      "command": "node --check server/aggregate-privacy.mjs && node --check server/audience-insights.mjs && node --check tests/remediation-signals-1.test.mjs",
+      "before": "No aplica.",
+      "after": "Exit code 0.",
+      "kind": "test"
+    }
+  ],
+  "artifacts": [
+    "tests/remediation-signals-1.test.mjs",
+    "docs/remediation/reports/signals-1.md"
+  ],
+  "limitations": [
+    "Heurística estructural, no identificación universal de personas: puede omitir nombres en prosa libre, identidades ofuscadas o formatos no contemplados. Nombre ambiguo sin atributo personal se permite para preservar empresas/cohortes.",
+    "El patrón previo de teléfono reconoce secuencias de nueve o más dígitos y puede rechazar cifras largas ambiguas dentro del texto.",
+    "El filtrado no borra SQLite ni reescribe actividad histórica u otros artefactos derivados previamente; cubre las lecturas de señales y el corpus actual de insights/análisis.",
+    "No se abrió navegador ni se llamó a IA real: la prueba específica usa HTTP real del servidor usado por UI; pruebas cercanas de proveedor usan transporte simulado.",
+    "No se modificaron los informes adversariales originales, publicLink, growthFor ni outcomeInput. Sin build/formato global, credenciales reales, gasto, commit o push."
+  ]
+}
