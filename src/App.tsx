@@ -78,10 +78,29 @@ const clearInviteSearch = (previous: WorkspaceSearch) => {
   delete next.invite;
   return next;
 };
+const googleAuthErrors: Record<string, string> = {
+  google_cancelled:
+    "No completaste el acceso con Google. Puedes volver a intentarlo o usar tu correo.",
+  google_failed:
+    "No pudimos confirmar tu cuenta de Google. Inténtalo de nuevo o usa tu correo.",
+  google_link_required:
+    "Este correo ya tiene una cuenta. Confirma tu contraseña para conectar Google.",
+  google_unavailable:
+    "El acceso con Google no está disponible ahora. Puedes entrar con tu correo.",
+};
 
 export default function App() {
   const router = useRouter();
   const pathname = useLocation({ select: (location) => location.pathname });
+  const callbackError = useLocation({
+    select: (location) => location.search.authError,
+  });
+  const [authError, setAuthError] = useState(() =>
+    typeof callbackError === "string" &&
+    Object.hasOwn(googleAuthErrors, callbackError)
+      ? callbackError
+      : "",
+  );
   const { view, pieceId } = workspaceLocation(pathname);
   const navigateWorkspace = useCallback(
     (targetView: View, targetPieceId?: string, removeInvite = false) => {
@@ -219,6 +238,28 @@ export default function App() {
     setToast({ message, type });
     setTimeout(() => setToast(null), 6000);
   }, []);
+  useEffect(() => {
+    if (callbackError === undefined) return;
+    if (
+      typeof callbackError === "string" &&
+      Object.hasOwn(googleAuthErrors, callbackError)
+    )
+      setAuthError(callbackError);
+    void router.navigate({
+      to: ".",
+      search: (previous: WorkspaceSearch) => {
+        const next = { ...previous };
+        delete next.authError;
+        return next;
+      },
+      replace: true,
+    });
+  }, [callbackError, router]);
+  useEffect(() => {
+    if (!session?.user || !authError) return;
+    notify(googleAuthErrors[authError], "error");
+    setAuthError("");
+  }, [session?.user, authError, notify]);
   const loadSession = useCallback(async () => {
     try {
       const data = await api<Session>("/api/session");
@@ -343,6 +384,7 @@ export default function App() {
     selectBrand("");
   }, [confirmUnsavedChanges, selectBrand]);
   const authenticated = (data: Session) => {
+    setAuthError("");
     setSession(data);
     selectBrand(data.brands[0]?.id || "");
     setError("");
@@ -372,7 +414,8 @@ export default function App() {
         )}
       </div>
     );
-  if (!session.user) return <Auth onSuccess={authenticated} />;
+  if (!session.user)
+    return <Auth onSuccess={authenticated} initialError={authError} />;
   if (joining)
     return (
       <div className="initial-loader">
@@ -675,15 +718,67 @@ export default function App() {
   );
 }
 
-function Auth({ onSuccess }: { onSuccess: (value: Session) => void }) {
-  const [signup, setSignup] = useState(true),
+function Auth({
+  onSuccess,
+  initialError,
+}: {
+  onSuccess: (value: Session) => void;
+  initialError: string;
+}) {
+  const [signup, setSignup] = useState(!initialError),
     [busy, setBusy] = useState(""),
-    [error, setError] = useState("");
+    [error, setError] = useState(
+      Object.hasOwn(googleAuthErrors, initialError)
+        ? googleAuthErrors[initialError]
+        : "",
+    );
+  const [googleEnabled, setGoogleEnabled] = useState(false);
+  const [linkGoogle, setLinkGoogle] = useState(
+    initialError === "google_link_required",
+  );
+  const [signedIn, setSignedIn] = useState<Session | null>(null);
+  const busyRef = useRef(false);
+  useEffect(() => {
+    const controller = new AbortController();
+    void api<{ google?: { enabled?: boolean } }>("/api/auth/providers", {
+      signal: controller.signal,
+    })
+      .then((providers) => setGoogleEnabled(providers.google?.enabled === true))
+      .catch(() => {
+        // Email and demo remain available if Google is not configured or reachable.
+      });
+    return () => controller.abort();
+  }, []);
+  useEffect(() => {
+    const restore = () => {
+      busyRef.current = false;
+      setBusy("");
+    };
+    window.addEventListener("pageshow", restore);
+    return () => window.removeEventListener("pageshow", restore);
+  }, []);
+  function returnTo() {
+    const target = new URL(window.location.href);
+    target.searchParams.delete("authError");
+    return target.pathname + target.search;
+  }
+  function startGoogle() {
+    if (busyRef.current || !googleEnabled) return;
+    busyRef.current = true;
+    setBusy("google");
+    setError("");
+    const target = new URL("/api/auth/google/start", window.location.origin);
+    target.searchParams.set("returnTo", returnTo());
+    window.location.assign(target.href);
+  }
   async function submit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
+    if (busyRef.current) return;
     const form = new FormData(e.currentTarget);
+    busyRef.current = true;
     setBusy("form");
     setError("");
+    let redirecting = false;
     try {
       const data = await api<Session>(
         `/api/auth/${signup ? "register" : "login"}`,
@@ -696,11 +791,40 @@ function Auth({ onSuccess }: { onSuccess: (value: Session) => void }) {
           }),
         },
       );
+      if (linkGoogle && !signup && googleEnabled) {
+        setSignedIn(data);
+        try {
+          const { startUrl } = await api<{ startUrl: string }>(
+            "/api/auth/google/link",
+            {
+              method: "POST",
+              body: json({
+                password: form.get("password"),
+                returnTo: returnTo(),
+              }),
+            },
+          );
+          const target = new URL(startUrl);
+          if (target.origin !== "https://accounts.google.com")
+            throw new Error(
+              "No pudimos abrir Google. Puedes continuar con tu cuenta.",
+            );
+          redirecting = true;
+          window.location.assign(target.href);
+          return;
+        } catch (e) {
+          setError((e as Error).message);
+          return;
+        }
+      }
       onSuccess(data);
     } catch (e) {
       setError((e as Error).message);
     } finally {
-      setBusy("");
+      if (!redirecting) {
+        busyRef.current = false;
+        setBusy("");
+      }
     }
   }
   return (
@@ -711,8 +835,7 @@ function Auth({ onSuccess }: { onSuccess: (value: Session) => void }) {
         </div>
         <div className="auth-intro">
           <h1>
-            Tu audiencia cambia.
-            <br />
+            Tu audiencia cambia. <br />
             Tu contenido
             <br />
             <em>también puede.</em>
@@ -755,6 +878,33 @@ function Auth({ onSuccess }: { onSuccess: (value: Session) => void }) {
               ? "Crea tu cuenta. Después, empieza por tu web o una publicación."
               : "Tu próxima oportunidad de contenido te espera."}
           </p>
+          {googleEnabled && !linkGoogle && (
+            <>
+              <button
+                type="button"
+                className="google-signin"
+                disabled={!!busy}
+                aria-busy={busy === "google"}
+                onClick={startGoogle}
+              >
+                <img src="/assets/google-g.png" alt="" width="20" height="20" />
+                <span>
+                  {busy === "google"
+                    ? "Abriendo Google…"
+                    : "Continuar con Google"}
+                </span>
+              </button>
+              <div className="or-divider auth-email-divider">
+                <span />o con tu correo
+                <span />
+              </div>
+            </>
+          )}
+          {error && (
+            <p className="form-error auth-feedback" role="alert">
+              {error}
+            </p>
+          )}
           <form onSubmit={submit}>
             {signup && (
               <Field
@@ -782,27 +932,46 @@ function Auth({ onSuccess }: { onSuccess: (value: Session) => void }) {
               required
               autoComplete={signup ? "new-password" : "current-password"}
             />
-            {error && (
-              <p className="form-error" role="alert">
-                {error}
-              </p>
-            )}
             <Button
               type="submit"
               variant="primary"
               busy={busy === "form"}
               disabled={!!busy}
             >
-              {signup ? "Crear mi cuenta" : "Entrar a mi radar"}
+              {signup
+                ? "Crear mi cuenta"
+                : linkGoogle && googleEnabled
+                  ? "Entrar y conectar Google"
+                  : "Entrar a mi radar"}
               <ArrowRight size={17} />
             </Button>
+            {signedIn && (
+              <Button disabled={!!busy} onClick={() => onSuccess(signedIn)}>
+                Continuar con mi cuenta
+              </Button>
+            )}
+            {linkGoogle && !signedIn && (
+              <button
+                type="button"
+                className="text-button auth-skip-link"
+                disabled={!!busy}
+                onClick={() => {
+                  setLinkGoogle(false);
+                  setError("");
+                }}
+              >
+                Entrar solo con contraseña
+              </button>
+            )}
           </form>
           <p className="auth-toggle">
             {signup ? "¿Ya tienes una cuenta?" : "¿Primera vez por aquí?"}{" "}
             <button
               className="text-button"
+              disabled={!!busy}
               onClick={() => {
                 setSignup(!signup);
+                setLinkGoogle(false);
                 setError("");
               }}
             >
@@ -818,6 +987,8 @@ function Auth({ onSuccess }: { onSuccess: (value: Session) => void }) {
             busy={busy === "demo"}
             disabled={!!busy}
             onClick={async () => {
+              if (busyRef.current) return;
+              busyRef.current = true;
               setBusy("demo");
               setError("");
               try {
@@ -830,6 +1001,7 @@ function Auth({ onSuccess }: { onSuccess: (value: Session) => void }) {
               } catch (e) {
                 setError((e as Error).message);
               } finally {
+                busyRef.current = false;
                 setBusy("");
               }
             }}

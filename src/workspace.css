@@ -277,6 +277,49 @@ li {
 .auth-form {
   max-width: 400px;
 }
+@font-face {
+  font-family: "Google Sans";
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url("/fonts/google-sans/google-sans-medium-latin.woff2") format("woff2");
+}
+.google-signin {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  width: 100%;
+  min-height: 44px;
+  padding: 10px 12px;
+  border: 1px solid #747775;
+  border-radius: 4px;
+  background: #fff;
+  color: #1f1f1f;
+  font-family: "Google Sans", sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 20px;
+}
+.google-signin img {
+  flex: 0 0 20px;
+  object-fit: contain;
+}
+.google-signin:hover:not(:disabled) {
+  background: #f8faff;
+}
+.google-signin:active:not(:disabled) {
+  background: #eef3fc;
+}
+.auth-email-divider {
+  margin: 22px 0;
+}
+.auth-feedback {
+  margin-bottom: 20px;
+}
+.auth-skip-link {
+  align-self: center;
+}
 .auth-form h2 {
   font-size: 28px;
   line-height: 1.35;

@@ -167,6 +167,8 @@ Controls have gently curved corners, cards broader corners and larger feature re
 
 Confident and familiar. Primary actions use Action Green with white text; secondary actions use white with a thin border; ghost actions have transparent background and border. All share the control radius, an inline icon/text gap (8px), a minimum height (42px; 43px in journey surfaces) and strong labels. Hover deepens primary green or adds a pale neutral fill to secondary controls without lifting them. Keyboard focus uses an offset outline. Busy buttons show an inline spinner and disable interaction; disabled controls reduce opacity (0.48).
 
+The Google sign-in button follows [Google's official branding requirements](https://developers.google.com/identity/branding-guidelines): the current full-color gradient G, a white surface, `#747775` border, `#1f1f1f` label, 4px corners and locally served Google Sans Medium at 14px/20px. This provider control is an intentional exception to the app font and green control palette. Keep its logo fixed at 20px and its touch target at least 44px high. Its label is “Continuar con Google”; it appears only when the server reports the provider configured. The Google G asset comes from the linked official guidance, and Google Sans includes its OFL license under `public/fonts/google-sans/`.
+
 ### Chips
 
 Small semantic labels, not primary actions. Shared badges use a compact radius and neutral, green, amber or red tone pairs. Journey badges increase legibility with a larger label and roomier line-height; use the existing tone pair from that surface rather than treating every pale green as interchangeable.
