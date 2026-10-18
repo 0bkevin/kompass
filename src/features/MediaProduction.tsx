@@ -168,6 +168,13 @@ export default function MediaProduction({
   }, [load, pending]);
 
   const capability = status?.capabilities[kind];
+  const attachedImage = state.assets.find(
+    (asset) => asset.type === "image" && piece.assetIds.includes(asset.id),
+  );
+  const reusesImage = kind === "video" && !!attachedImage;
+  useEffect(() => {
+    requestKey.current = null;
+  }, [piece.approvalVersion]);
   function editPrompt(next: string) {
     setPrompt(next);
     requestKey.current = null;
@@ -179,7 +186,7 @@ export default function MediaProduction({
       unsaved ||
       pending ||
       !capability?.ready ||
-      !prompt.trim()
+      (!reusesImage && !prompt.trim())
     )
       return;
     setBusy(true);
@@ -191,7 +198,7 @@ export default function MediaProduction({
         body: json({
           pieceId: piece.id,
           kind,
-          prompt: prompt.trim(),
+          prompt: reusesImage ? "" : prompt.trim(),
           aspectRatio: ratio,
           idempotencyKey: requestKey.current,
         }),
@@ -273,7 +280,6 @@ export default function MediaProduction({
           disabled={busy}
           onClick={() => {
             setKind("video");
-            setRatio("9:16");
             requestKey.current = null;
           }}
         >
@@ -308,21 +314,30 @@ export default function MediaProduction({
                 void create();
               }}
             >
-              <Field
-                label={
-                  kind === "image"
-                    ? "¿Cómo quieres que se vea?"
-                    : "Dirección visual del video"
-                }
-              >
-                <textarea
-                  value={prompt}
-                  rows={4}
-                  maxLength={4000}
-                  onChange={(event) => editPrompt(event.target.value)}
-                  disabled={disabled || busy || !capability?.ready}
-                />
-              </Field>
+              {reusesImage ? (
+                <p className="media-unavailable">
+                  Este video usará la imagen «{attachedImage.name}» ya asociada
+                  y los subtítulos del guion guardado. Para crear otra
+                  ilustración, quita esa imagen de los recursos y guarda la
+                  pieza.
+                </p>
+              ) : (
+                <Field
+                  label={
+                    kind === "image"
+                      ? "¿Cómo quieres que se vea?"
+                      : "Dirección visual del video"
+                  }
+                >
+                  <textarea
+                    value={prompt}
+                    rows={4}
+                    maxLength={4000}
+                    onChange={(event) => editPrompt(event.target.value)}
+                    disabled={disabled || busy || !capability?.ready}
+                  />
+                </Field>
+              )}
               <div className="media-create-controls">
                 <Field label="Formato">
                   <select
@@ -348,7 +363,7 @@ export default function MediaProduction({
                     unsaved ||
                     pending ||
                     !capability?.ready ||
-                    !prompt.trim()
+                    (!reusesImage && !prompt.trim())
                   }
                 >
                   <Sparkles size={16} />{" "}
@@ -399,7 +414,9 @@ export default function MediaProduction({
             return (
               <article className="media-job" key={job.id}>
                 <div className="media-job-heading">
-                  <strong>{job.kind === "image" ? "Imagen" : "Video"}</strong>
+                  <strong>
+                    {job.kind === "image" ? "Imagen IA" : "Video animado"}
+                  </strong>
                   <Badge
                     tone={
                       job.status === "completed"

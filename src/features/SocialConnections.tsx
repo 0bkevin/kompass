@@ -434,7 +434,8 @@ function SocialDiscoveryPanel() {
             <Youtube size={20} /> Explora videos de YouTube
           </h2>
           <p>
-            Busca contenido público y consulta sus cifras en la fuente oficial.
+            Busca videos publicados en los últimos 7 días y consulta sus cifras
+            en la fuente oficial.
           </p>
         </div>
         {ready && <Badge tone="green">API oficial disponible</Badge>}
@@ -497,7 +498,7 @@ function SocialDiscoveryPanel() {
           {!data.items.length ? (
             <p className="social-empty">
               {data.query
-                ? "No encontramos videos para esta búsqueda. Prueba un tema más concreto."
+                ? "No encontramos videos de los últimos 7 días para esta búsqueda. Prueba un tema más amplio."
                 : "Escribe un tema para descubrir los primeros videos."}
             </p>
           ) : (
@@ -835,7 +836,7 @@ function AutomaticMetricsPanel() {
         <div className="social-sync-result" role="status">
           <p>
             {syncResult.synced} publicaciones actualizadas ·{" "}
-            {syncResult.skipped} sin datos nuevos.
+            {syncResult.skipped} sin actualizar.
           </p>
           {syncResult.errors.map((item) => (
             <p className="form-error" key={item.pieceId}>
