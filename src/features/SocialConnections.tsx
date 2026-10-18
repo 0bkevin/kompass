@@ -57,7 +57,17 @@ type SocialSnapshot = {
   attribution: string;
   leads: null;
 };
-type MetricsResult = { snapshots: SocialSnapshot[]; lastSyncedAt?: string };
+type PublicationLink = {
+  pieceId: string;
+  publishedUrl: string;
+  externalId: string;
+  linkedAt: string;
+};
+type MetricsResult = {
+  snapshots: SocialSnapshot[];
+  publications?: PublicationLink[];
+  lastSyncedAt?: string;
+};
 type CatalogItem = {
   id: string;
   title: string;
@@ -548,14 +558,29 @@ export function AutomaticMetrics() {
 }
 
 function AutomaticMetricsPanel() {
-  const { state } = useWorkspace();
+  const { state, navigate } = useWorkspace();
   const { base, data: connections, error: connectionError } = useConnections();
   const [data, setData] = useState<MetricsResult | null>(null);
   const [loading, setLoading] = useState(true);
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState("");
   const [syncResult, setSyncResult] = useState<SyncResult | null>(null);
+  const [linkForm, setLinkForm] = useState(false);
+  const [linkBusy, setLinkBusy] = useState("");
+  const [linkMessage, setLinkMessage] = useState("");
+  const [linkedPublication, setLinkedPublication] =
+    useState<PublicationLink | null>(null);
+  const pieceSelect = useRef<HTMLSelectElement>(null);
   const canEdit = state.brand.role !== "reviewer";
+  const canLink = canEdit && !state.brand.isDemo;
+  const eligiblePieces = state.pieces.filter(
+    (piece) =>
+      piece.channel === "youtube" &&
+      ["approved", "scheduled", "published"].includes(piece.status),
+  );
+  useEffect(() => {
+    if (linkForm) pieceSelect.current?.focus();
+  }, [linkForm]);
   const ready = connections?.providers.some((provider) => provider.ready);
   const load = useCallback(
     async (signal?: AbortSignal) => {
@@ -577,7 +602,7 @@ function AutomaticMetricsPanel() {
     return () => controller.abort();
   }, [load]);
   async function sync() {
-    if (busy || !canEdit || !ready) return;
+    if (busy || linkBusy || !canEdit || !ready) return;
     setBusy(true);
     setError("");
     setSyncResult(null);
@@ -599,6 +624,67 @@ function AutomaticMetricsPanel() {
       setBusy(false);
     }
   }
+  async function linkVideo(form: HTMLFormElement) {
+    if (busy || linkBusy || !canLink) return;
+    const values = new FormData(form);
+    setLinkBusy("link");
+    setError("");
+    setLinkMessage("");
+    let savedLink = linkedPublication;
+    try {
+      if (!savedLink) {
+        savedLink = await api<PublicationLink>(`${base}/publications`, {
+          method: "POST",
+          body: json({
+            pieceId: values.get("pieceId"),
+            publishedUrl: String(values.get("publishedUrl") || "").trim(),
+          }),
+        });
+        setLinkedPublication(savedLink);
+      }
+      await load();
+      setLinkForm(false);
+      setLinkedPublication(null);
+      setLinkMessage(
+        "Video vinculado. Pulsa Actualizar cifras para consultar sus contadores públicos.",
+      );
+    } catch (cause) {
+      setError(
+        savedLink
+          ? "El video ya se vinculó, pero no pudimos actualizar la lista. Pulsa Recuperar vínculo para consultarlo sin volver a guardarlo."
+          : failure(
+              cause,
+              "No pudimos vincular el video. Comprueba que la pieza esté aprobada y que el enlace sea de YouTube.",
+            ),
+      );
+    } finally {
+      setLinkBusy("");
+    }
+  }
+  async function unlinkVideo(publication: PublicationLink) {
+    if (busy || linkBusy || !canLink) return;
+    setLinkBusy(publication.pieceId);
+    setError("");
+    setLinkMessage("");
+    try {
+      await api(`${base}/publications/${publication.pieceId}`, {
+        method: "DELETE",
+      });
+      await load();
+      setLinkMessage(
+        "Vínculo y cifras guardadas eliminados. La pieza conserva su estado editorial.",
+      );
+    } catch (cause) {
+      setError(
+        failure(
+          cause,
+          "No pudimos actualizar el vínculo. Vuelve a cargar las cifras antes de reintentar.",
+        ),
+      );
+    } finally {
+      setLinkBusy("");
+    }
+  }
   const latestByPiece = new Map<string, SocialSnapshot>();
   for (const snapshot of data?.snapshots || []) {
     const previous = latestByPiece.get(snapshot.pieceId);
@@ -615,20 +701,108 @@ function AutomaticMetricsPanel() {
     >
       <div className="social-panel-heading">
         <div>
-          <h2 id="automatic-metrics-heading">Cifras desde tus publicaciones</h2>
+          <h2 id="automatic-metrics-heading">Cifras de videos vinculados</h2>
           <p>
             Datos públicos de YouTube, separados de los resultados que registra
             tu equipo.
           </p>
         </div>
-        <Button
-          onClick={() => void sync()}
-          busy={busy}
-          disabled={!canEdit || !ready}
-        >
-          <RefreshCw size={16} /> Actualizar cifras
-        </Button>
+        <div className="social-metric-actions">
+          {canLink && (
+            <Button
+              variant={
+                !data?.publications?.length && !snapshots.length
+                  ? "primary"
+                  : "secondary"
+              }
+              disabled={busy || !!linkBusy}
+              aria-expanded={linkForm}
+              onClick={() => {
+                setLinkForm((open) => !open);
+                setLinkMessage("");
+              }}
+            >
+              <Link2 size={16} />{" "}
+              {linkForm ? "Cerrar formulario" : "Vincular video"}
+            </Button>
+          )}
+          <Button
+            variant={
+              !!data?.publications?.length || !!snapshots.length
+                ? "primary"
+                : "secondary"
+            }
+            onClick={() => void sync()}
+            busy={busy}
+            disabled={!canEdit || !ready || !!linkBusy}
+          >
+            <RefreshCw size={16} /> Actualizar cifras
+          </Button>
+        </div>
       </div>
+      {linkForm && (
+        <form
+          className="social-publication-form"
+          onSubmit={(event) => {
+            event.preventDefault();
+            void linkVideo(event.currentTarget);
+          }}
+        >
+          <p>
+            Relaciona una pieza aprobada con un video público de YouTube. No
+            necesitas introducir cifras manuales ni cambiar su estado editorial.
+          </p>
+          {eligiblePieces.length ? (
+            <>
+              <Field label="Pieza de YouTube">
+                <select
+                  ref={pieceSelect}
+                  name="pieceId"
+                  required
+                  disabled={!!linkBusy || !!linkedPublication}
+                  defaultValue=""
+                >
+                  <option value="" disabled>
+                    Selecciona una pieza aprobada
+                  </option>
+                  {eligiblePieces.map((piece) => (
+                    <option key={piece.id} value={piece.id}>
+                      {piece.title}
+                    </option>
+                  ))}
+                </select>
+              </Field>
+              <Field label="Enlace público del video">
+                <input
+                  name="publishedUrl"
+                  type="url"
+                  required
+                  maxLength={2000}
+                  placeholder="https://www.youtube.com/watch?v=…"
+                  disabled={!!linkBusy || !!linkedPublication}
+                />
+              </Field>
+              <Button
+                type="submit"
+                variant="primary"
+                busy={linkBusy === "link"}
+                disabled={busy || (!!linkBusy && linkBusy !== "link")}
+              >
+                <Link2 size={16} />{" "}
+                {linkedPublication ? "Recuperar vínculo" : "Vincular video"}
+              </Button>
+            </>
+          ) : (
+            <>
+              <p className="small muted">
+                Primero necesitas una pieza para YouTube aprobada, programada o
+                publicada.
+              </p>
+              <Button onClick={() => navigate("studio")}>Ir a contenido</Button>
+            </>
+          )}
+        </form>
+      )}
       <p className="social-scope-note">
         Vincula la URL de un video publicado a una pieza de esta empresa para
         recuperar sus cifras.{" "}
@@ -636,6 +810,17 @@ function AutomaticMetricsPanel() {
           ? `La consulta se repite cada ${connections.automaticSync.intervalMinutes} minutos.`
           : "La sincronización automática aún no está activa."}
       </p>
+      {state.brand.isDemo && (
+        <p className="small muted">
+          Los videos reales se vinculan en una empresa propia. Este espacio
+          contiene datos de demostración.
+        </p>
+      )}
+      {linkMessage && (
+        <p role="status" className="social-link-message">
+          {linkMessage}
+        </p>
+      )}
       {loading && (
         <p className="muted" role="status">
           Cargando las cifras disponibles…
@@ -658,6 +843,42 @@ function AutomaticMetricsPanel() {
                 "Publicación"}
               : {item.error}
             </p>
+          ))}
+        </div>
+      )}
+      {!!data?.publications?.length && (
+        <div className="social-linked-publications">
+          <h3>Videos vinculados</h3>
+          {data.publications.map((publication) => (
+            <div
+              className="social-linked-publication"
+              key={publication.pieceId}
+            >
+              <div>
+                <strong>
+                  {state.pieces.find(
+                    (piece) => piece.id === publication.pieceId,
+                  )?.title || "Pieza de YouTube"}
+                </strong>
+                <a
+                  className="text-button"
+                  href={safeExternalUrl(publication.publishedUrl)}
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  Ver video <ExternalLink size={14} />
+                </a>
+              </div>
+              {canLink && (
+                <Button
+                  disabled={busy || !!linkBusy}
+                  busy={linkBusy === publication.pieceId}
+                  onClick={() => void unlinkVideo(publication)}
+                >
+                  Quitar vínculo
+                </Button>
+              )}
+            </div>
           ))}
         </div>
       )}
