@@ -1,0 +1,188 @@
+{
+  "issueId": "community-1",
+  "date": "2026-10-18",
+  "data": "Ficticios y aislados en /tmp/30x-remediation-community-1",
+  "host": "127.0.1.16",
+  "ports": {
+    "api": 4506,
+    "web": 5506
+  },
+  "browserTab": "tab_4c_07e54779-9ab2-4979-8a15-674c4eff160a",
+  "before": [
+    {
+      "test": "strict-mode-load",
+      "pass": false,
+      "apiStatus": 200,
+      "apiTotal": 0,
+      "sensorLoading": true,
+      "questionVisible": false
+    },
+    {
+      "test": "mounted-zero-to-five-and-update",
+      "pass": false,
+      "beforeTotal": "0 respuestas",
+      "apiTotal": 5,
+      "sensorTotal": "0 respuestas",
+      "signalNotes": [
+        "3 respuestas de 5",
+        "2 respuestas de 5"
+      ]
+    }
+  ],
+  "after": [
+    {
+      "test": "strict-mode-load",
+      "pass": true,
+      "apiStatus": 200,
+      "apiTotal": 0,
+      "sensorText": "Escucha a tu comunidad\n\nContrasta lo que supones con lo que tu audiencia dice necesitar. Comparte una pregunta pública, sin pedir nombres ni correos.\n\nCrear pregunta\nActualizar preguntas y señales\nÚltima consulta: 05:09:55\nPregunta ficticia community-1 montada: ¿qué resolver?\nAbierta\nAbrir pregunta\nCopiar enlace\n0 respuestas\n\nAún no hay un grupo con 5 respuestas. Las señales se incorporarán automáticamente al reunir esa muestra.\n\nPausar\nEliminar\n\nLas respuestas son voluntarias y no verificadas. No representan personas únicas ni a toda tu audiencia. Los resultados por grupo aparecen a partir de 5 respuestas."
+    },
+    {
+      "test": "mounted-zero-to-five-and-update",
+      "pass": true,
+      "question": "Pregunta ficticia community-1 montada: ¿qué resolver?",
+      "beforeTotal": "0 respuestas",
+      "apiTotal": 5,
+      "apiSignals": [
+        {
+          "id": "community_1c6dfe7a5644bd5db0c69a4899f274e1",
+          "note": "2 respuestas de 5 en «Ventas ficticias» seleccionaron este tema. Muestra voluntaria no verificada; no son personas únicas. Esta muestra no representa a toda la audiencia. Pregunta: Pregunta ficticia community-1 montada: ¿qué resolver?"
+        },
+        {
+          "id": "community_b1d9603cbc1b7e64cb81574b07ea4a3c",
+          "note": "3 respuestas de 5 en «Ventas ficticias» seleccionaron este tema. Muestra voluntaria no verificada; no son personas únicas. Esta muestra no representa a toda la audiencia. Pregunta: Pregunta ficticia community-1 montada: ¿qué resolver?"
+        }
+      ],
+      "sensorText": "Escucha a tu comunidad\n\nContrasta lo que supones con lo que tu audiencia dice necesitar. Comparte una pregunta pública, sin pedir nombres ni correos.\n\nActualizar preguntas y señales\nÚltima consulta: 05:10:09\nPregunta\nEntre 2 y 6 temas, uno por línea\n\nCada participante elegirá un grupo y un tema. Guardamos conteos agregados; no guardamos respuestas individuales.\n\nCrear enlace público\nCancelar\nPregunta ficticia community-1 montada: ¿qué resolver?\nAbierta\nAbrir pregunta\nCopiar enlace\n5 respuestas\nIntereses expresados · muestra voluntaria\nGrupo\tTema\tRespuestas\nVentas ficticias\tVentas ficticias\t3 de 5\nVentas ficticias\tFormación ficticia\t2 de 5\nPausar\nEliminar\n\nLas respuestas son voluntarias y no verificadas. No representan personas únicas ni a toda tu audiencia. Los resultados por grupo aparecen a partir de 5 respuestas.",
+      "signalText": "Comunidad · muestra voluntaria\nVentas ficticias\nFormación ficticia\n\n2 respuestas de 5 en «Ventas ficticias» seleccionaron este tema. Muestra voluntaria no verificada; no son personas únicas. Esta muestra no representa a toda la audiencia. Pregunta: Pregunta ficticia community-1 montada: ¿qué resolver?\n\n18 oct · 5 respuestas agregadas\nComunidad · muestra voluntaria\nVentas ficticias\nVentas ficticias\n\n3 respuestas de 5 en «Ventas ficticias» seleccionaron este tema. Muestra voluntaria no verificada; no son personas únicas. Esta muestra no representa a toda la audiencia. Pregunta: Pregunta ficticia community-1 montada: ¿qué resolver?\n\n18 oct · 5 respuestas agregadas"
+    },
+    {
+      "test": "draft-preservation",
+      "pass": true,
+      "proof": "Mismos nodos DOM y valores de pregunta y tema de señal tras refrescar"
+    },
+    {
+      "test": "paired-refresh-error-keeps-snapshot",
+      "simulation": "HTTP503 local sólo en GET community-polls; respuesta pública sexta real en API aislada",
+      "pass": true,
+      "sensorText": "Escucha a tu comunidad\n\nContrasta lo que supones con lo que tu audiencia dice necesitar. Comparte una pregunta pública, sin pedir nombres ni correos.\n\nActualizar preguntas y señales\nÚltima consulta: 05:10:09\nPregunta\nEntre 2 y 6 temas, uno por línea\n\nCada participante elegirá un grupo y un tema. Guardamos conteos agregados; no guardamos respuestas individuales.\n\nCrear enlace público\nCancelar\n\nNo se pudieron actualizar las preguntas y las señales. Fallo sintético community-1 Se conserva la última consulta.\n\nReintentar carga\nPregunta ficticia community-1 montada: ¿qué resolver?\nAbierta\nAbrir pregunta\nCopiar enlace\n5 respuestas\nIntereses expresados · muestra voluntaria\nGrupo\tTema\tRespuestas\nVentas ficticias\tVentas ficticias\t3 de 5\nVentas ficticias\tFormación ficticia\t2 de 5\nPausar\nEliminar\n\nLas respuestas son voluntarias y no verificadas. No representan personas únicas ni a toda tu audiencia. Los resultados por grupo aparecen a partir de 5 respuestas.",
+      "signalText": "Comunidad · muestra voluntaria\nVentas ficticias\nFormación ficticia\n\n2 respuestas de 5 en «Ventas ficticias» seleccionaron este tema. Muestra voluntaria no verificada; no son personas únicas. Esta muestra no representa a toda la audiencia. Pregunta: Pregunta ficticia community-1 montada: ¿qué resolver?\n\n18 oct · 5 respuestas agregadas\nComunidad · muestra voluntaria\nVentas ficticias\nVentas ficticias\n\n3 respuestas de 5 en «Ventas ficticias» seleccionaron este tema. Muestra voluntaria no verificada; no son personas únicas. Esta muestra no representa a toda la audiencia. Pregunta: Pregunta ficticia community-1 montada: ¿qué resolver?\n\n18 oct · 5 respuestas agregadas",
+      "requests": 2,
+      "questionDraft": "Borrador ficticio que debe conservarse"
+    },
+    {
+      "test": "retry-six-and-no-duplicates",
+      "pass": true,
+      "sensorText": "Escucha a tu comunidad\n\nContrasta lo que supones con lo que tu audiencia dice necesitar. Comparte una pregunta pública, sin pedir nombres ni correos.\n\nActualizar preguntas y señales\nÚltima consulta: 05:10:33\nPregunta\nEntre 2 y 6 temas, uno por línea\n\nCada participante elegirá un grupo y un tema. Guardamos conteos agregados; no guardamos respuestas individuales.\n\nCrear enlace público\nCancelar\nPregunta ficticia community-1 montada: ¿qué resolver?\nAbierta\nAbrir pregunta\nCopiar enlace\n6 respuestas\nIntereses expresados · muestra voluntaria\nGrupo\tTema\tRespuestas\nVentas ficticias\tVentas ficticias\t3 de 6\nVentas ficticias\tFormación ficticia\t3 de 6\nPausar\nEliminar\n\nLas respuestas son voluntarias y no verificadas. No representan personas únicas ni a toda tu audiencia. Los resultados por grupo aparecen a partir de 5 respuestas.",
+      "signalText": "Comunidad · muestra voluntaria\nVentas ficticias\nFormación ficticia\n\n3 respuestas de 6 en «Ventas ficticias» seleccionaron este tema. Muestra voluntaria no verificada; no son personas únicas. Esta muestra no representa a toda la audiencia. Pregunta: Pregunta ficticia community-1 montada: ¿qué resolver?\n\n18 oct · 6 respuestas agregadas\nComunidad · muestra voluntaria\nVentas ficticias\nVentas ficticias\n\n3 respuestas de 6 en «Ventas ficticias» seleccionaron este tema. Muestra voluntaria no verificada; no son personas únicas. Esta muestra no representa a toda la audiencia. Pregunta: Pregunta ficticia community-1 montada: ¿qué resolver?\n\n18 oct · 6 respuestas agregadas",
+      "derived": [
+        {
+          "id": "community_1c6dfe7a5644bd5db0c69a4899f274e1",
+          "sampleSize": 6
+        },
+        {
+          "id": "community_b1d9603cbc1b7e64cb81574b07ea4a3c",
+          "sampleSize": 6
+        }
+      ],
+      "questionDraft": "Borrador ficticio que debe conservarse"
+    },
+    {
+      "test": "second-group-threshold-and-bounded-focus",
+      "simulation": "focus/visibility events synthesised; Date.now advanced31s then restored",
+      "pass": true,
+      "before": {
+        "total": "10 respuestas",
+        "rows": [
+          "Ventas ficticias\tVentas ficticias\t3 de 6",
+          "Ventas ficticias\tFormación ficticia\t3 de 6"
+        ],
+        "signals": 2
+      },
+      "after": {
+        "total": "11 respuestas",
+        "rows": [
+          "Ventas ficticias\tVentas ficticias\t3 de 6",
+          "Ventas ficticias\tFormación ficticia\t3 de 6",
+          "Formación ficticia\tVentas ficticias\t2 de 5",
+          "Formación ficticia\tFormación ficticia\t3 de 5"
+        ]
+      },
+      "requestCount": 2,
+      "draftsPreserved": true
+    },
+    {
+      "test": "superseded-refresh-cannot-overwrite-newer-evidence",
+      "simulation": "first GET pair held and deliberately ignores AbortSignal; second pair comes from actual POST success",
+      "pass": true,
+      "beforeRelease": [
+        "Borrador ficticio que debe conservarse",
+        "Pregunta ficticia community-1 montada: ¿qué resolver?"
+      ],
+      "afterRelease": [
+        "Borrador ficticio que debe conservarse",
+        "Pregunta ficticia community-1 montada: ¿qué resolver?"
+      ],
+      "staleRequestsReleased": 2
+    },
+    {
+      "test": "brand-switch-discards-late-other-brand",
+      "simulation": "marcaA GETpair retenido ignorando AbortSignal; selector real cambia aB antes de soltarA",
+      "pass": true,
+      "beforeText": "Escucha a tu comunidad\n\nContrasta lo que supones con lo que tu audiencia dice necesitar. Comparte una pregunta pública, sin pedir nombres ni correos.\n\nCrear pregunta\nActualizar preguntas y señales\nÚltima consulta: 05:12:21\nPregunta exclusiva de marcaB ficticia\nAbierta\nAbrir pregunta\nCopiar enlace\n0 respuestas\n\nAún no hay un grupo con 5 respuestas. Las señales se incorporarán automáticamente al reunir esa muestra.\n\nPausar\nEliminar\n\nLas respuestas son voluntarias y no verificadas. No representan personas únicas ni a toda tu audiencia. Los resultados por grupo aparecen a partir de 5 respuestas.",
+      "afterText": "Escucha a tu comunidad\n\nContrasta lo que supones con lo que tu audiencia dice necesitar. Comparte una pregunta pública, sin pedir nombres ni correos.\n\nCrear pregunta\nActualizar preguntas y señales\nÚltima consulta: 05:12:21\nPregunta exclusiva de marcaB ficticia\nAbierta\nAbrir pregunta\nCopiar enlace\n0 respuestas\n\nAún no hay un grupo con 5 respuestas. Las señales se incorporarán automáticamente al reunir esa muestra.\n\nPausar\nEliminar\n\nLas respuestas son voluntarias y no verificadas. No representan personas únicas ni a toda tu audiencia. Los resultados por grupo aparecen a partir de 5 respuestas."
+    },
+    {
+      "test": "return-to-brandA",
+      "pass": true,
+      "pollCount": 1,
+      "signalCount": 4
+    },
+    {
+      "test": "responsive-controls",
+      "pass": true,
+      "viewport": 390,
+      "documentWidth": 390,
+      "buttonRect": {
+        "x": 16,
+        "y": 219.9140625,
+        "width": 253,
+        "height": 43.5,
+        "top": 219.9140625,
+        "right": 269,
+        "bottom": 263.4140625,
+        "left": 16
+      },
+      "tableWidth": 358
+    }
+  ],
+  "checks": {
+    "nearbyTests": {
+      "command": "node --test tests/community.test.mjs tests/audience-insights.test.mjs",
+      "pass": 22,
+      "fail": 0
+    },
+    "typescript": {
+      "command": "npx tsc --noEmit --pretty false",
+      "exitCode": 0
+    }
+  },
+  "simulations": [
+    "HTTP503 sintetizado sólo en fetch local para community-polls; red normal restaurada antes del retry.",
+    "Para carreras, primer par GET usa API real, retiene respuesta e ignora deliberadamente AbortSignal; el par posterior usa datos reales del fixture.",
+    "Foco/visibilidad sintetizados en navegador, Date.now avanzado31s y restaurado;20pares de eventos produjeron2GET."
+  ],
+  "captures": {
+    "strictBefore": "community-1-strict-before.png",
+    "mismatchBefore": "community-1-update-before.png",
+    "errorAfter": "community-1-error-after.png",
+    "desktopAfter": "community-1-desktop-after.png",
+    "mobileAfter": "community-1-mobile-after.png"
+  },
+  "limitations": [
+    "Navegador de desarrollo con StrictMode; no compilación nueva por contrato de checkout compartido.",
+    "No se probaron personas reales, servicios externos ni dispositivos físicos. El viewport móvil es emulado.",
+    "Los dos endpoints se publican juntos en estado cliente; no se implementó una transacción servidor entre ambos GET. La consistencia de datos se probó tras completar cada respuesta pública.",
+    "El runner Node existente no dispone de DOM; las regresiones React se probaron en el navegador real con las expresiones guardadas, además de los22tests cercanos."
+  ]
+}

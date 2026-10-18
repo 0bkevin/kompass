@@ -1,0 +1,101 @@
+{
+  "issueId": "community-1",
+  "agent": "fix_community_1",
+  "status": "fixed",
+  "rootCause": "CommunitySensor mantenía una lista local cargada sólo al montar o cambiar de marca; Actualizar renovaba únicamente audience-signals. Además, el cleanup vaciaba current.current y el segundo setup de StrictMode no restauraba la marca: respuestas200 eran descartadas y loading permanecía activo.",
+  "changes": [
+    "La ruta de audiencia comparte useAudienceEvidence entre señales y sensor. Cada actualización consulta ambos endpoints y publica ambos resultados juntos.",
+    "La carga cancela la consulta anterior y comprueba instancia activa, controlador y marca antes de publicar. El cleanup/setup de StrictMode vuelve a activar correctamente el recurso.",
+    "Actualizar, la acción visible del sensor y sus reintentos consultan la misma evidencia. Se muestra la hora de última consulta; los fallos conservan el último par completo y ofrecen reintento.",
+    "Creación, pausa, reapertura y eliminación renuevan la evidencia compartida sin acumular ni duplicar señales.",
+    "Foco/visibilidad refrescan al volver si han pasado30s; se ignoran ráfagas y solicitudes en curso. No hay temporizador de polling.",
+    "Los formularios permanecen montados durante refrescos. El sensor se reinicia sólo al cambiar de marca y mantiene su guardia de cambios sin guardar."
+  ],
+  "files": [
+    "src/lib/audience-evidence.ts",
+    "src/features/Community.tsx",
+    "src/features/Journey.tsx (import y AudienceIntelligence)",
+    "src/routes/_workspace/audience.tsx"
+  ],
+  "verification": [
+    {
+      "command": "T3 preview_evaluate: strictMode en docs/remediation/evidence/community-1-browser-checks.json",
+      "before": "GET200, pregunta0 existente, Cargando preguntas persistente y pregunta ausente",
+      "after": "Recarga completa con StrictMode: GET200, total0 y pregunta visible; loading termina",
+      "kind": "browser"
+    },
+    {
+      "command": "T3 preview_evaluate: mountedZeroToFive en docs/remediation/evidence/community-1-browser-checks.json",
+      "before": "Misma pregunta montada0→5 respuestas públicas: Actualizar muestra señales3/5 y2/5, sensor sigue0",
+      "after": "Misma comprobación: sensor5, filas3de5 y2de5, señales3/5 y2/5; nodos/valores de dos formularios abiertos conservados",
+      "kind": "browser"
+    },
+    {
+      "command": "T3 preview_evaluate:503 sintético en GETcommunity-polls; retry visible",
+      "before": "No existía una carga compartida; sensor y señales podían renovarse por separado",
+      "after": "Snapshot5 completo conservado y error visible; retry renueva ambos a6 con2señales y mismosIDs",
+      "kind": "browser"
+    },
+    {
+      "command": "T3 preview_evaluate: segundo grupo4→5 y20ráfagas focus/visibility (Date.now+31s temporal)",
+      "before": "Umbral servidor existente preservado; refresco del sensor no estaba coordinado",
+      "after": "Grupo4 no se muestra; al llegar5 aparecen sus2filas. Total11. Ráfaga produce exactamente2GET,1por recurso",
+      "kind": "browser"
+    },
+    {
+      "command": "T3 preview_evaluate: retener primer parGET ignorandoAbortSignal; POSTnuevo y segundo par antes de soltar primero",
+      "before": "Sin comprobación de versión de carga del sensor",
+      "after": "La respuesta antigua no elimina la pregunta nueva del segundo snapshot",
+      "kind": "browser"
+    },
+    {
+      "command": "T3 selector real marcaA→B con parA retenido; soltarA; volverA",
+      "before": "Protección de marca incompleta en el ciclo de carga StrictMode",
+      "after": "B muestra sólo su pregunta0; A tardío no cambiaB; regresoA recupera pregunta11 y4señales",
+      "kind": "browser"
+    },
+    {
+      "command": "T3 viewport1280×900 y390×844 + captura y dimensionesDOM",
+      "before": "Sin acción de refresco propia del sensor",
+      "after": "Acción, fecha, foco, tabla y conteo visibles; documentWidth=viewport en ambos",
+      "kind": "browser"
+    },
+    {
+      "command": "node --test tests/community.test.mjs tests/audience-insights.test.mjs",
+      "before": "Suite cercana existente",
+      "after": "22PASS,0FAIL",
+      "kind": "test"
+    },
+    {
+      "command": "npx tsc --noEmit --pretty false",
+      "before": "No ejecutado para esta corrección",
+      "after": "exit0",
+      "kind": "test"
+    }
+  ],
+  "artifacts": [
+    "docs/remediation/evidence/community-1-observations.json",
+    "docs/remediation/evidence/community-1-browser-checks.json",
+    "docs/remediation/evidence/community-1-strict-before.png",
+    "docs/remediation/evidence/community-1-update-before.png",
+    "docs/remediation/evidence/community-1-error-after.png",
+    "docs/remediation/evidence/community-1-desktop-after.png",
+    "docs/remediation/evidence/community-1-mobile-after.png"
+  ],
+  "limitations": [
+    "Se probó desarrollo con StrictMode y TypeScript sin generar build; el build integrado y el runtime de producción corresponden al coordinador.",
+    "El runner Node no tiene DOM ni renderer de pruebas. La regresión React se verifica en el navegador T3 real con expresiones reutilizables; no se añadió una prueba de código fuente ni una unidad que simule el efecto de React.",
+    "No existe una transacción servidor entre los dosGET; el estado cliente se publica junto. Las comprobaciones de coherencia se hicieron tras completar las respuestas públicas. Una respuesta que llegue exactamente entre consultas puede requerir otro refresco.",
+    "Foco/visibilidad y errores de red se simularon de forma explícita en el navegador; no se probaron dispositivos físicos, contactos reales ni proveedores externos."
+  ],
+  "cleanup": {
+    "browserTabClosed": "tab_4c_07e54779-9ab2-4979-8a15-674c4eff160a",
+    "devSessionStopped": 16331,
+    "portsConfirmedClosed": [
+      4506,
+      5506
+    ],
+    "debugInstrumentation": "Ninguna añadida al código de producto",
+    "contextFiles": "PRODUCT.md, DESIGN.md y .impeccable/app-surface.md no modificados"
+  }
+}
