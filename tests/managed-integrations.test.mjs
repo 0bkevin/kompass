@@ -275,6 +275,145 @@ test("deployment check reports actual readiness without disclosing secrets or cl
   assert.equal(report.coreReady, true);
 });
 
+test("deployment check reports media and official social configuration without claiming runtime access", () => {
+  const names = [
+    "MEDIA_GENERATION_ENABLED",
+    "YOUTUBE_DATA_API_KEY",
+    "YOUTUBE_API_KEY",
+    "GOOGLE_CLIENT_ID",
+    "GOOGLE_CLIENT_SECRET",
+    "GOOGLE_YOUTUBE_REDIRECT_URI",
+    "SOCIAL_SYNC_ENABLED",
+  ];
+  const previous = Object.fromEntries(
+    names.map((name) => [name, process.env[name]]),
+  );
+  try {
+    for (const name of names) delete process.env[name];
+    process.env.YOUTUBE_API_KEY = "LEGACY_NOT_OFFICIAL_DATA_KEY";
+    let report = platformReadiness();
+    assert.equal(report.media.enabled, false);
+    assert.equal(report.media.provider, "codex-chatgpt");
+    assert.equal(report.media.execution, "local-worker");
+    assert.equal(report.media.verification, "configuration-only");
+    assert.equal(report.media.runtimeVerificationRequired, true);
+    assert.deepEqual(report.media.video, {
+      mode: "local-composition",
+      audio: false,
+    });
+    assert.equal("ready" in report.media, false);
+    assert.deepEqual(report.officialSocial.youtube, {
+      publicDataConfigured: false,
+      accountOAuthConfigured: false,
+    });
+    assert.equal(
+      report.officialSocial.automaticSyncEnabled,
+      true,
+      "the scheduler is enabled by default, independently of credential/connection readiness",
+    );
+    assert.equal(report.officialSocial.runtimeVerificationRequired, true);
+    assert.equal("ready" in report.officialSocial.youtube, false);
+    process.env.MEDIA_GENERATION_ENABLED = "true";
+    process.env.YOUTUBE_DATA_API_KEY = "SIMULATED_OFFICIAL_PUBLIC_DATA_KEY";
+    process.env.GOOGLE_CLIENT_ID =
+      "synthetic-client.apps.googleusercontent.com";
+    process.env.GOOGLE_CLIENT_SECRET = "SIMULATED_OFFICIAL_CLIENT_SECRET";
+    process.env.GOOGLE_YOUTUBE_REDIRECT_URI =
+      "http://localhost:3026/api/social/youtube/callback";
+    process.env.SOCIAL_SYNC_ENABLED = "false";
+    report = platformReadiness();
+    assert.equal(report.media.enabled, true);
+    assert.deepEqual(report.officialSocial.youtube, {
+      publicDataConfigured: true,
+      accountOAuthConfigured: true,
+    });
+    assert.equal(report.officialSocial.automaticSyncEnabled, false);
+    assert.ok(
+      report.restricted.every((provider) => provider.available === false),
+      "new official configuration does not unlock legacy provider policy gates",
+    );
+    assert.equal(report.publishing.automaticSocialPublishing, false);
+    assert.doesNotMatch(
+      JSON.stringify(report),
+      /SIMULATED_OFFICIAL|LEGACY_NOT_OFFICIAL|synthetic-client\.apps/,
+    );
+  } finally {
+    for (const name of names)
+      if (previous[name] === undefined) delete process.env[name];
+      else process.env[name] = previous[name];
+  }
+});
+
+test("official YouTube readiness rejects incomplete OAuth and unsafe or mismatched callbacks", () => {
+  const names = [
+    "GOOGLE_CLIENT_ID",
+    "GOOGLE_CLIENT_SECRET",
+    "GOOGLE_YOUTUBE_REDIRECT_URI",
+    "YOUTUBE_DATA_API_KEY",
+  ];
+  const previous = Object.fromEntries(
+    names.map((name) => [name, process.env[name]]),
+  );
+  try {
+    process.env.GOOGLE_CLIENT_ID =
+      "synthetic-client.apps.googleusercontent.com";
+    process.env.GOOGLE_CLIENT_SECRET = "SIMULATED_OFFICIAL_CLIENT_SECRET";
+    process.env.GOOGLE_YOUTUBE_REDIRECT_URI =
+      "https://example.invalid/api/social/youtube/callback";
+    assert.equal(
+      platformReadiness().officialSocial.youtube.accountOAuthConfigured,
+      true,
+    );
+    for (const callback of [
+      "not a URL",
+      "http://example.invalid/api/social/youtube/callback",
+      "https://example.invalid/api/auth/google/callback",
+      "https://example.invalid/api/social/youtube/callback?state=private",
+      "https://example.invalid/api/social/youtube/callback#private",
+      "https://user:password@example.invalid/api/social/youtube/callback",
+    ]) {
+      process.env.GOOGLE_YOUTUBE_REDIRECT_URI = callback;
+      assert.equal(
+        platformReadiness().officialSocial.youtube.accountOAuthConfigured,
+        false,
+        callback,
+      );
+    }
+    process.env.GOOGLE_YOUTUBE_REDIRECT_URI =
+      "http://127.0.0.1:3026/api/social/youtube/callback";
+    assert.equal(
+      platformReadiness().officialSocial.youtube.accountOAuthConfigured,
+      true,
+    );
+    process.env.GOOGLE_CLIENT_ID = "invalid-client";
+    assert.equal(
+      platformReadiness().officialSocial.youtube.accountOAuthConfigured,
+      false,
+    );
+    process.env.GOOGLE_CLIENT_ID =
+      "synthetic-client.apps.googleusercontent.com";
+    process.env.GOOGLE_CLIENT_SECRET = "   ";
+    assert.equal(
+      platformReadiness().officialSocial.youtube.accountOAuthConfigured,
+      false,
+    );
+    process.env.YOUTUBE_DATA_API_KEY = "   ";
+    assert.equal(
+      platformReadiness().officialSocial.youtube.publicDataConfigured,
+      false,
+    );
+    process.env.YOUTUBE_DATA_API_KEY = "x".repeat(501);
+    assert.equal(
+      platformReadiness().officialSocial.youtube.publicDataConfigured,
+      false,
+    );
+  } finally {
+    for (const name of names)
+      if (previous[name] === undefined) delete process.env[name];
+      else process.env[name] = previous[name];
+  }
+});
+
 test("new spaces need no provider settings and first-use endpoints preserve tenant and role permissions", async () => {
   const server = createApp({ apiOnly: true }).listen(0, "127.0.0.1");
   await new Promise((resolve) => server.once("listening", resolve));
