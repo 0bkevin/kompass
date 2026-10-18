@@ -1,0 +1,52 @@
+TAP version 13
+# Subtest: original HTTP repro: HN→RSS removes the hidden query and persists the submitted feed on the same source
+ok 1 - original HTTP repro: HN→RSS removes the hidden query and persists the submitted feed on the same source
+  ---
+  duration_ms: 91.125265
+  type: 'test'
+  ...
+# Subtest: POST requires a supported type and keeps only applicable query/URL fields for all six connectors
+ok 2 - POST requires a supported type and keeps only applicable query/URL fields for all six connectors
+  ---
+  duration_ms: 103.811394
+  type: 'test'
+  ...
+# Subtest: PATCH with omitted or repeated type preserves valid input, removes legacy incompatible fields and retains status/counts
+ok 3 - PATCH with omitted or repeated type preserves valid input, removes legacy incompatible fields and retains status/counts
+  ---
+  duration_ms: 62.008072
+  type: 'test'
+  ...
+# Subtest: type changes discard inherited URLs before applying fresh values and reject an RSS conversion without a feed atomically
+ok 4 - type changes discard inherited URLs before applying fresh values and reject an RSS conversion without a feed atomically
+  ---
+  duration_ms: 18.851488
+  type: 'test'
+  ...
+# Subtest: a type change cannot revive a hidden legacy RSS query, but supplied queries take precedence
+ok 5 - a type change cannot revive a hidden legacy RSS query, but supplied queries take precedence
+  ---
+  duration_ms: 25.189339
+  type: 'test'
+  ...
+# Subtest: compatible topic queries survive HN→GDELT while subreddit selectors and feed URLs do not cross types
+ok 6 - compatible topic queries survive HN→GDELT while subreddit selectors and feed URLs do not cross types
+  ---
+  duration_ms: 20.58336
+  type: 'test'
+  ...
+# Subtest: same-type social partial PATCH keeps platform, URL, query, limits and pause state
+ok 7 - same-type social partial PATCH keeps platform, URL, query, limits and pause state
+  ---
+  duration_ms: 18.276881
+  type: 'test'
+  ...
+1..7
+# tests 7
+# suites 0
+# pass 7
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 505.35709

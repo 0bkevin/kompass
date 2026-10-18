@@ -1,0 +1,159 @@
+TAP version 13
+# Subtest: original HTTP repro: HN→RSS removes the hidden query and persists the submitted feed on the same source
+not ok 1 - original HTTP repro: HN→RSS removes the hidden query and persists the submitted feed on the same source
+  ---
+  duration_ms: 55.661939
+  type: 'test'
+  location: '/home/ubuntu/.t3/projects/30x-trackt-2/tests/remediation-sources-1.test.mjs:71:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    RSS must not retain an invisible HN query
+    + actual - expected
+    
+    + 'agent reliability'
+    - undefined
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  actual: 'agent reliability'
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///home/ubuntu/.t3/projects/30x-trackt-2/tests/remediation-sources-1.test.mjs:85:12)
+    process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    async Test.run (node:internal/test_runner/test:1404:7)
+    async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3)
+  ...
+# Subtest: POST requires a supported type and keeps only applicable query/URL fields for all six connectors
+not ok 2 - POST requires a supported type and keeps only applicable query/URL fields for all six connectors
+  ---
+  duration_ms: 24.506258
+  type: 'test'
+  location: '/home/ubuntu/.t3/projects/30x-trackt-2/tests/remediation-sources-1.test.mjs:94:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    rss
+    + actual - expected
+    
+    + 'query incompatible'
+    - undefined
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  actual: 'query incompatible'
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///home/ubuntu/.t3/projects/30x-trackt-2/tests/remediation-sources-1.test.mjs:113:12)
+    process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    async Test.run (node:internal/test_runner/test:1404:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:969:7)
+  ...
+# Subtest: PATCH with omitted or repeated type preserves valid input, removes legacy incompatible fields and retains status/counts
+not ok 3 - PATCH with omitted or repeated type preserves valid input, removes legacy incompatible fields and retains status/counts
+  ---
+  duration_ms: 13.854089
+  type: 'test'
+  location: '/home/ubuntu/.t3/projects/30x-trackt-2/tests/remediation-sources-1.test.mjs:121:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    + actual - expected
+    
+    + 'legacy hidden query'
+    - undefined
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  actual: 'legacy hidden query'
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///home/ubuntu/.t3/projects/30x-trackt-2/tests/remediation-sources-1.test.mjs:133:14)
+    process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    async Test.run (node:internal/test_runner/test:1404:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:969:7)
+  ...
+# Subtest: type changes discard inherited URLs before applying fresh values and reject an RSS conversion without a feed atomically
+not ok 4 - type changes discard inherited URLs before applying fresh values and reject an RSS conversion without a feed atomically
+  ---
+  duration_ms: 14.22532
+  type: 'test'
+  location: '/home/ubuntu/.t3/projects/30x-trackt-2/tests/remediation-sources-1.test.mjs:144:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    
+    200 !== 400
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 400
+  actual: 200
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///home/ubuntu/.t3/projects/30x-trackt-2/tests/remediation-sources-1.test.mjs:148:10)
+    process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    async Test.run (node:internal/test_runner/test:1404:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:969:7)
+  ...
+# Subtest: a type change cannot revive a hidden legacy RSS query, but supplied queries take precedence
+not ok 5 - a type change cannot revive a hidden legacy RSS query, but supplied queries take precedence
+  ---
+  duration_ms: 12.904486
+  type: 'test'
+  location: '/home/ubuntu/.t3/projects/30x-trackt-2/tests/remediation-sources-1.test.mjs:162:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    + actual - expected
+    
+    + 'invisible legacy filter'
+    - undefined
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  actual: 'invisible legacy filter'
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///home/ubuntu/.t3/projects/30x-trackt-2/tests/remediation-sources-1.test.mjs:168:12)
+    process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    async Test.run (node:internal/test_runner/test:1404:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:969:7)
+  ...
+# Subtest: compatible topic queries survive HN→GDELT while subreddit selectors and feed URLs do not cross types
+not ok 6 - compatible topic queries survive HN→GDELT while subreddit selectors and feed URLs do not cross types
+  ---
+  duration_ms: 20.555458
+  type: 'test'
+  location: '/home/ubuntu/.t3/projects/30x-trackt-2/tests/remediation-sources-1.test.mjs:174:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    + actual - expected
+    
+    + 'artificial'
+    - undefined
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  actual: 'artificial'
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///home/ubuntu/.t3/projects/30x-trackt-2/tests/remediation-sources-1.test.mjs:186:10)
+    process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    async Test.run (node:internal/test_runner/test:1404:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:969:7)
+  ...
+# Subtest: same-type social partial PATCH keeps platform, URL, query, limits and pause state
+ok 7 - same-type social partial PATCH keeps platform, URL, query, limits and pause state
+  ---
+  duration_ms: 19.751395
+  type: 'test'
+  ...
+1..7
+# tests 7
+# suites 0
+# pass 1
+# fail 6
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 317.396787

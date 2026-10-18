@@ -1,0 +1,11 @@
+{
+  "runningOwnPids": [],
+  "portsClosed": {
+    "4517": true,
+    "5517": true
+  },
+  "ownTabClosed": true,
+  "dataDirRetained": "/tmp/30x-remediation-sources-1",
+  "runtimeExitCode": 143,
+  "terminationNote": "SIGTERM enviado únicamente a procesos con DATA_DIR propio verificado. Durante el cierre simultáneo, el proceso Node --watch registró una aserción nativa de FSWatcher.close (FSEventWrap::GetInitialized). Las pruebas y el recorrido UI ya habían terminado correctamente; después no quedaron procesos activos ni puertos abiertos."
+}

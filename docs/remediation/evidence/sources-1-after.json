@@ -1,0 +1,155 @@
+{
+  "issueId": "sources-1",
+  "fixture": "Fuentes ficticias por UI; no se consultó NASA ni se usaron proveedores reales.",
+  "uiSteps": [
+    "Añadir fuente HN query agent reliability por UI",
+    "Editar por UI a RSS / Atom con https://www.nasa.gov/feed/",
+    "Guardar por UI",
+    "Navegar por UI a Inicio y Fuentes y equipo",
+    "Recargar /settings",
+    "Leer API de fuentes y reabrir modal RSS"
+  ],
+  "afterConversion": {
+    "source": {
+      "name": "QA sources-1 · HN→RSS verde",
+      "type": "rss",
+      "enabled": true,
+      "id": "34477f42-43e4-4d93-b692-37fa72da20b1",
+      "createdAt": "2026-10-18T05:11:38.309Z",
+      "updatedAt": "2026-10-18T05:11:51.970Z",
+      "url": "https://www.nasa.gov/feed/"
+    },
+    "rowText": "QA sources-1 · HN→RSS verde\nActiva\nRSS / Atom\n\nhttps://www.nasa.gov/feed/\n\nTodavía sin sincronizar",
+    "count": 6,
+    "active": 5,
+    "assertions": {
+      "rss": true,
+      "queryRemoved": true,
+      "feedInRow": true,
+      "staleQueryNotInRow": true,
+      "sameId": true,
+      "enabledPreserved": true,
+      "sourceCountPreserved": true,
+      "activeCountPreserved": true
+    }
+  },
+  "legacyRssSummary": {
+    "source": {
+      "name": "QA sources-1 · HN→RSS roja",
+      "type": "rss",
+      "url": "https://www.nasa.gov/feed/",
+      "query": "agent reliability",
+      "enabled": true,
+      "id": "e26a06a3-f4b0-4efa-8b4c-1f019eb3ce7d",
+      "createdAt": "2026-10-18T05:09:29.812Z",
+      "updatedAt": "2026-10-18T05:09:35.878Z"
+    },
+    "rowText": "QA sources-1 · HN→RSS roja\nActiva\nRSS / Atom\n\nhttps://www.nasa.gov/feed/\n\nTodavía sin sincronizar",
+    "assertions": {
+      "legacyQueryStillStored": true,
+      "feedInRow": true,
+      "hiddenQueryNotInRow": true
+    }
+  },
+  "draftChecks": {
+    "rssToHn": {
+      "queryValue": "",
+      "assertion": true
+    },
+    "hnRssHn": {
+      "queryValue": "",
+      "assertion": true
+    }
+  },
+  "mobile": {
+    "viewport": {
+      "width": 390,
+      "height": 844
+    },
+    "documentWidth": 390,
+    "rowText": "QA sources-1 · HN→RSS verde\nActiva\nRSS / Atom\n\nhttps://www.nasa.gov/feed/\n\nTodavía sin sincronizar",
+    "feedInRow": true,
+    "horizontalOverflow": false
+  },
+  "finalApiReadback": {
+    "sourcesStatus": 200,
+    "socialSettingsStatus": 200,
+    "sources": [
+      {
+        "name": "QA sources-1 · HN→RSS verde",
+        "type": "rss",
+        "enabled": true,
+        "id": "34477f42-43e4-4d93-b692-37fa72da20b1",
+        "createdAt": "2026-10-18T05:11:38.309Z",
+        "updatedAt": "2026-10-18T05:11:51.970Z",
+        "url": "https://www.nasa.gov/feed/"
+      },
+      {
+        "name": "QA sources-1 · HN→RSS roja",
+        "type": "rss",
+        "url": "https://www.nasa.gov/feed/",
+        "query": "agent reliability",
+        "enabled": true,
+        "id": "e26a06a3-f4b0-4efa-8b4c-1f019eb3ce7d",
+        "createdAt": "2026-10-18T05:09:29.812Z",
+        "updatedAt": "2026-10-18T05:09:35.878Z"
+      },
+      {
+        "name": "TechCrunch · novedades",
+        "type": "rss",
+        "url": "https://techcrunch.com/feed/",
+        "enabled": false,
+        "id": "7e994cc0-e491-4b45-8ba4-4adf58e193e7",
+        "createdAt": "2026-10-18T05:09:16.121Z",
+        "updatedAt": "2026-10-18T05:09:16.121Z"
+      },
+      {
+        "name": "Google Trends · Estados Unidos",
+        "type": "rss",
+        "url": "https://trends.google.com/trending/rss?geo=US",
+        "enabled": true,
+        "id": "4a90ed76-48b3-4b8f-887e-aea1697a19d9",
+        "createdAt": "2026-10-18T05:09:16.119Z",
+        "updatedAt": "2026-10-18T05:09:16.119Z"
+      },
+      {
+        "name": "Hacker News · tecnología",
+        "type": "hackernews",
+        "query": "",
+        "enabled": true,
+        "id": "7e26e0b2-a4b1-47d2-bc35-fa6287f4cb86",
+        "createdAt": "2026-10-18T05:09:16.118Z",
+        "updatedAt": "2026-10-18T05:09:16.118Z"
+      },
+      {
+        "name": "Noticias globales · GDELT",
+        "type": "gdelt",
+        "query": "",
+        "enabled": true,
+        "id": "0a73148b-bf8f-4c58-a045-003a0859b129",
+        "createdAt": "2026-10-18T05:09:16.116Z",
+        "updatedAt": "2026-10-18T05:09:16.116Z"
+      }
+    ],
+    "providerConfigured": {
+      "youtube": false,
+      "apify": false,
+      "gemini": false
+    }
+  },
+  "checks": {
+    "http": {
+      "pass": 7,
+      "fail": 0
+    },
+    "typecheck": {
+      "command": "./node_modules/.bin/tsc --noEmit",
+      "exitCode": 0
+    },
+    "nearby": {
+      "pass": 40,
+      "fail": 1,
+      "explanation": "La suite existente social-core compartía la misma URL https://example.test/original entre dos tests; el POST del segundo devolvió 200 por la corrección de deduplicación integrada. El coordinador corrigió después esa fixture a /original-to-edit y comunicó social-core aislada exit0. Este agente no repitió ni cambió esos tests."
+    }
+  }
+}

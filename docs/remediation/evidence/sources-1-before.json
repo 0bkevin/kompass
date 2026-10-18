@@ -1,0 +1,45 @@
+{
+  "issueId": "sources-1",
+  "fixture": "Cuenta, empresa y fuente sintéticas; sin consultas a proveedores.",
+  "host": "127.0.1.27",
+  "webPort": 5517,
+  "apiPort": 4517,
+  "dataDir": "/tmp/30x-remediation-sources-1",
+  "steps": [
+    "Alta por UI: Hacker News, query agent reliability",
+    "Editar por UI: RSS / Atom, URL https://www.nasa.gov/feed/",
+    "Guardar por UI; recargar /settings; abrir modal RSS"
+  ],
+  "apiReadback": {
+    "source": {
+      "name": "QA sources-1 · HN→RSS roja",
+      "type": "rss",
+      "url": "https://www.nasa.gov/feed/",
+      "query": "agent reliability",
+      "enabled": true,
+      "id": "e26a06a3-f4b0-4efa-8b4c-1f019eb3ce7d",
+      "createdAt": "2026-10-18T05:09:29.812Z",
+      "updatedAt": "2026-10-18T05:09:35.878Z"
+    },
+    "assertions": {
+      "rss": true,
+      "queryRemoved": false
+    }
+  },
+  "rowReadback": {
+    "rowText": "QA sources-1 · HN→RSS roja\nActiva\nRSS / Atom\n\nagent reliability\n\nTodavía sin sincronizar",
+    "feedInRow": false,
+    "staleQueryVisible": true
+  },
+  "modalFields": {
+    "type": "rss",
+    "url": "https://www.nasa.gov/feed/",
+    "queryFieldVisible": false
+  },
+  "testBefore": {
+    "command": "node --test --test-reporter=tap tests/remediation-sources-1.test.mjs",
+    "pass": 1,
+    "fail": 6
+  },
+  "fixtureCorrection": "La primera ejecución adicional del caso social usó www.tiktok.com como expectativa, pero el canon existente es tiktok.com. Se corrigió sólo esa URL sintética y se repitió rojo; no fue un defecto de producto."
+}

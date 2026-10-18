@@ -1,0 +1,94 @@
+{
+  "issueId": "sources-1",
+  "agent": "fix_sources_1",
+  "status": "fixed",
+  "rootCause": "Formulario y sourceInput conservaban query/url del tipo anterior; el resumen priorizaba query sin comprobar compatibilidad con RSS.",
+  "changes": [
+    "Normalización de query/url en sourceInput según tipo efectivo antes de aplicar el payload nuevo; preserva PATCH parcial y exige URL nueva al convertir a RSS.",
+    "Formulario tipado con Source['type']; descarta consultas incompatibles y URLs al cambiar conector; envía sólo query/url aplicables.",
+    "Resumen RSS usa URL incluso para legacy con query residual; HN/GDELT ignoran URLs residuales.",
+    "Regresión HTTP de POST/PATCH y persistencia SQLite, con estados/metadatos/conteos preservados."
+  ],
+  "files": [
+    "server/core.mjs",
+    "src/features/Settings.tsx",
+    "tests/remediation-sources-1.test.mjs",
+    "docs/remediation/reports/sources-1.md",
+    "docs/remediation/reports/sources-1.json"
+  ],
+  "verification": [
+    {
+      "command": "node --test --test-reporter=tap tests/remediation-sources-1.test.mjs",
+      "before": "1 PASS, 6 FAIL. Caso original falla: RSS retiene query agent reliability.",
+      "after": "7 PASS, 0 FAIL, exit0; fuentes de seis tipos, tipo POST requerido, PATCH tipo omitido/repetido/nuevo, payload nuevo, rechazo atómico y persistencia de estados/conteos.",
+      "kind": "test"
+    },
+    {
+      "command": "T3 preview_* en pestaña propia: alta HN agent reliability→editar RSS NASA→guardar→Inicio→Fuentes y equipo→recargar→API readback→reabrir modal",
+      "before": "RSS guarda query oculta y la fila muestra agent reliability, sin feed.",
+      "after": "Mismo ID; query ausente; https://www.nasa.gov/feed/ visible y editable; enabled=true; 6 fuentes y 5 activas antes/después.",
+      "kind": "browser"
+    },
+    {
+      "command": "T3 preview_*: mostrar RSS legacy residual y cambiar HN→RSS→HN en formulario sin guardar",
+      "before": "Legacy RSS prioriza query residual sobre URL.",
+      "after": "Legacy muestra feed sin mutar registro. El roundtrip de formulario devuelve consulta vacía, sin revivir el texto descartado.",
+      "kind": "browser"
+    },
+    {
+      "command": "T3 preview_resize iphone-12-pro, 390×844; lectura DOM y captura",
+      "before": "No comprobado móvil antes.",
+      "after": "Feed visible; scrollWidth390; sin desbordamiento horizontal.",
+      "kind": "browser"
+    },
+    {
+      "command": "./node_modules/.bin/tsc --noEmit",
+      "before": "No ejecutado antes.",
+      "after": "exit0, sin diagnósticos.",
+      "kind": "test"
+    },
+    {
+      "command": "node --test --test-reporter=tap tests/core.test.mjs tests/social-core.test.mjs tests/intelligence.test.mjs",
+      "before": "Sin ejecución previa de este grupo por este agente.",
+      "after": "40 PASS y 1 FAIL observado en social-core.test.mjs:359: fixture reutiliza URL y deduplicación devuelve200 frente a201 esperado. Coordinador corrigió después fixture a /original-to-edit y comunicó social-core aislada exit0. Este agente no repitió grupo ni modificó tests existentes.",
+      "kind": "test"
+    }
+  ],
+  "artifacts": [
+    "docs/remediation/evidence/sources-1-before.json",
+    "docs/remediation/evidence/sources-1-before-row.png",
+    "docs/remediation/evidence/sources-1-before-modal.png",
+    "docs/remediation/evidence/sources-1-red.tap",
+    "docs/remediation/evidence/sources-1-green.tap",
+    "docs/remediation/evidence/sources-1-after.json",
+    "docs/remediation/evidence/sources-1-after-row.png",
+    "docs/remediation/evidence/sources-1-after-legacy-row.png",
+    "docs/remediation/evidence/sources-1-after-modal.png",
+    "docs/remediation/evidence/sources-1-after-mobile.png",
+    "docs/remediation/evidence/sources-1-nearby.tap",
+    "docs/remediation/evidence/sources-1-typecheck.txt",
+    "docs/remediation/evidence/sources-1-runtime.json",
+    "docs/remediation/evidence/sources-1-cleanup.json"
+  ],
+  "limitations": [
+    "Sin llamadas reales a NASA o proveedores, gasto, claves ni publicaciones. Discovery automático apagado; no acredita sincronización de conectores externos.",
+    "Plataforma/límites sociales sources-2 y guardias modales navigation-2 fuera del hunk asignado.",
+    "No build, format global, commit, subagentes ni compilación integrada. Typecheck sin emisión exit0.",
+    "Móvil emulado Chromium 390×844; sin dispositivo físico.",
+    "Runtime SIGTERM exit143; Node --watch imprimió aserción nativa de FSWatcher.close durante cierre simultáneo, después de todas las pruebas. Sin procesos activos ni puertos abiertos."
+  ],
+  "fixtureCorrection": "Antes del arreglo se corrigió únicamente la URL sintética esperada www.tiktok.com→tiktok.com en el caso social propio y se repitió rojo completo; no era defecto de producto.",
+  "runtime": {
+    "host": "127.0.1.27",
+    "apiPort": 4517,
+    "webPort": 5517,
+    "dataDir": "/tmp/30x-remediation-sources-1",
+    "sessionId": 90805,
+    "tabId": "tab_4d_07e54779-9ab2-4979-8a15-674c4eff160a",
+    "tabClosed": true,
+    "processStopped": true,
+    "portsClosed": true,
+    "exitCode": 143
+  },
+  "handoff": "Hunk producto cerrado y coordinador notificado para sources-2; estado final pendiente de comprobación integrada."
+}

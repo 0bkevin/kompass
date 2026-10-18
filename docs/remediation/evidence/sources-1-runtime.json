@@ -1,0 +1,50 @@
+[
+  {
+    "pid": 177335,
+    "args": "npm run dev                                                 ",
+    "discoveryEnabled": "false",
+    "providerKeysPresent": []
+  },
+  {
+    "pid": 177353,
+    "args": "sh -c concurrently -k -n api,web \"RADAR_API_ONLY=1 node --env-file-if-exists=.env --watch server/index.mjs\" \"vite --host 0.0.0.0\" ",
+    "discoveryEnabled": "false",
+    "providerKeysPresent": []
+  },
+  {
+    "pid": 177354,
+    "args": "node /home/ubuntu/.t3/projects/30x-trackt-2/node_modules/.bin/concurrently -k -n api,web RADAR_API_ONLY=1 node --env-file-if-exists=.env --watch server/index.mjs vite --host 0.0.0.0 ",
+    "discoveryEnabled": "false",
+    "providerKeysPresent": []
+  },
+  {
+    "pid": 177365,
+    "args": "/bin/sh -c RADAR_API_ONLY=1 node --env-file-if-exists=.env --watch server/index.mjs ",
+    "discoveryEnabled": "false",
+    "providerKeysPresent": []
+  },
+  {
+    "pid": 177366,
+    "args": "node --env-file-if-exists=.env --watch server/index.mjs ",
+    "discoveryEnabled": "false",
+    "providerKeysPresent": []
+  },
+  {
+    "pid": 177367,
+    "args": "/bin/sh -c vite --host 0.0.0.0 ",
+    "discoveryEnabled": "false",
+    "providerKeysPresent": []
+  },
+  {
+    "pid": 177371,
+    "args": "node /home/ubuntu/.t3/projects/30x-trackt-2/node_modules/.bin/vite --host 0.0.0.0 ",
+    "discoveryEnabled": "false",
+    "providerKeysPresent": []
+  },
+  {
+    "pid": 185010,
+    "args": "/workspace/.nvm/versions/node/v24.20.0/bin/node --env-file-if-exists=.env server/index.mjs ",
+    "discoveryEnabled": "false",
+    "providerKeysPresent": []
+  }
+]
