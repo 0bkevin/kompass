@@ -1,0 +1,67 @@
+{
+  "issueId": "company-2",
+  "agent": "fix_company_2",
+  "status": "fixed",
+  "rootCause": "La regla de domicilios sólo coincidía al inicio del texto o de línea y consumía toda la línea. Los domicilios inline llegaban a evidence.excerpt y draft.description; los registros históricos se proyectaban sin volver a sanearse.",
+  "changes": [
+    "Redactar campos etiquetados Dirección/Direccion, Address o Domicilio dentro de párrafos, con variantes de mayúsculas, dos puntos y calificadores.",
+    "Conservar prosa empresarial y campos vecinos mediante límites de frase, línea, separadores y siguientes campos; reconocer abreviaturas habituales y continuaciones por coma.",
+    "Redactar antes de truncar y colapsar espacios en la función compartida por texto propio, HTML y texto extraído.",
+    "Sanear la proyección pública de importaciones históricas en descripción, títulos, extractos, motivos, errores textuales y avisos, sin borrar ni modificar la evidencia original o los metadatos.",
+    "Añadir pruebas por HTTP con Express, autenticación y SQLite temporal del importado persistido y del ciclo inspección-caché-confirmación-historial."
+  ],
+  "files": [
+    "server/company-context.mjs",
+    "tests/remediation-company-2.test.mjs",
+    "docs/remediation/reports/company-2.md",
+    "docs/remediation/reports/company-2.json"
+  ],
+  "verification": [
+    {
+      "command": "node --test tests/remediation-company-2.test.mjs",
+      "before": "La comprobación original falló dos veces antes del cambio: 0/1 PASS. La respuesta POST conservaba Calle Inventada 456 y Ciudad Sintética en el extracto. Las variantes y la truncación también fallaron antes del arreglo.",
+      "after": "25/25 PASS. El caso original exige igualdad exacta del extracto y descripción redactados, también tras persistencia y recarga.",
+      "kind": "test"
+    },
+    {
+      "command": "node --test --test-name-pattern='pre-fix history' tests/remediation-company-2.test.mjs",
+      "before": "0/1 PASS: GET devolvía el domicilio y correo originales de una importación histórica sintética.",
+      "after": "La misma prueba pasa dentro de la suite final. Se comprueban descripción, extracto, título, motivo, error, aviso, metadatos y ausencia de mutación del registro SQLite.",
+      "kind": "test"
+    },
+    {
+      "command": "node --test tests/remediation-company-2.test.mjs tests/company-context.test.mjs",
+      "before": "La suite cercana existente no cubría el domicilio inline del informe.",
+      "after": "37/37 PASS. También pasan autenticación, permisos, aislamiento, caché, recuperación y conservación del perfil confirmado.",
+      "kind": "test"
+    },
+    {
+      "command": "./node_modules/.bin/prettier --check server/company-context.mjs tests/remediation-company-2.test.mjs",
+      "before": "Formato aplicado únicamente a los dos archivos propios; los cambios de formato del módulo estaban restringidos a los hunks añadidos.",
+      "after": "Ambos archivos cumplen el formato local.",
+      "kind": "test"
+    }
+  ],
+  "evidence": {
+    "syntheticOnly": true,
+    "beforeExcerptAndDescription": "PRUEBA SINTÉTICA: Nexo ofrece formación de procesos. Contacto ficticio Persona QA; el siguiente dato es su domicilio particular, no una sede de empresa. Dirección: Calle Inventada 456, Ciudad Sintética. Correo: [correo omitido].",
+    "afterExcerptAndDescription": "PRUEBA SINTÉTICA: Nexo ofrece formación de procesos. Contacto ficticio Persona QA; el siguiente dato es su domicilio particular, no una sede de empresa. [domicilio omitido]. Correo: [correo omitido].",
+    "paths": [
+      "POST /api/brands/:brandId/context/import → GET /api/brands/:brandId/context → SQLite",
+      "POST /api/context/inspect → caché de usuario → POST /api/brands/:brandId/context/commit → GET historial",
+      "Extracción HTML con metadatos y párrafos o texto plano mediante transporte sintético simulado"
+    ],
+    "resourcesClosed": "Los hooks de test cierran servidor, conexiones y SQLite y eliminan el directorio temporal. No se abrieron pestañas ni procesos de desarrollo propios."
+  },
+  "artifacts": [
+    "tests/remediation-company-2.test.mjs",
+    "docs/remediation/reports/company-2.md",
+    "docs/remediation/reports/company-2.json"
+  ],
+  "limitations": [
+    "No es un detector universal de PII: la cobertura se refiere a campos de dirección explícitamente etiquetados y delimitados; no garantiza domicilios sin etiqueta, ofuscaciones o todos los formatos postales internacionales.",
+    "Los registros históricos originales permanecen en SQLite para conservar evidencia; se sanea su proyección pública, sin borrado físico retroactivo.",
+    "No se ejecutó navegador ni build; no se modificó UI. El coordinador realiza la comprobación integrada.",
+    "La extracción usa fixtures y transporte simulado: no acredita lectura de un proveedor real ni exactitud de IA. No se usaron claves ni se hicieron solicitudes externas."
+  ]
+}
