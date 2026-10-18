@@ -53,7 +53,19 @@ El chequeo inspecciona configuración sin transmitir datos, revelar claves ni ej
 
 La interfaz muestra los servicios disponibles y mantiene las personalizaciones de IA y conectores adicionales fuera del recorrido inicial. Revisar, planificar y exportar no requieren una conexión. La entrega opcional por webhook requiere el destino autorizado de cada empresa; programar no publica automáticamente.
 
-**Estado de la plataforma en localhost:** Google está conectado. Hacker News y Google Trends respondieron en la nueva [prueba interactiva de fuentes](docs/external-integrations-20261018/discovery.md); GDELT devolvió HTTP 429 y la interfaz mostró el fallo parcial y su recuperación al pausar esa fuente. Gemini de texto está configurado como servicio compartido de plataforma en modo de prueba con contenido público o ficticio, aprobado por el operador; las empresas no necesitan introducir claves. Su prueba de análisis y creación usa material sintético y no permite inferir precisión general ni derechos sobre contenido ajeno. OpenAI permite entrar con la cuenta solicitada, pero no tiene crédito API ni plan de facturación. Los adaptadores sociales y de video permanecen bloqueados. No están activadas todas las integraciones.
+**Estado de la plataforma en localhost:** Google está conectado. Hacker News y Google Trends respondieron en la [prueba interactiva de fuentes](docs/external-integrations-20261018/discovery.md); GDELT puede limitar las consultas con HTTP 429 y la interfaz conserva el fallo parcial. Gemini de texto está configurado como servicio compartido de prueba con contenido público o ficticio, aprobado por el operador. YouTube tiene catálogo y contadores públicos mediante su API oficial, con una clave administrada restringida a ese servicio. Studio crea imágenes con la sesión de ChatGPT de Codex y compone videos animados en MP4. Esto utiliza la suscripción local, sin convertir sus créditos en saldo de API ni activar facturación. Instagram, LinkedIn y TikTok todavía no tienen conectores aprobados. No están activadas todas las integraciones.
+
+## Imágenes, video animado y datos oficiales de YouTube
+
+En Studio, **Crear imagen o video** abre las opciones de formato y dirección visual. Los trabajos continúan en segundo plano y conservan su estado al volver. El resultado aparece en Recursos y en la biblioteca; el usuario lo revisa, lo añade a la pieza y guarda. Modificar una pieza aprobada exige una nueva revisión.
+
+La generación de imágenes requiere Linux con Bubblewrap, Codex CLI con su inicio de sesión normal de ChatGPT y `MEDIA_GENERATION_ENABLED=true`. El trabajador sólo ve su directorio privado y el archivo de autenticación normal montado en modo de lectura; no copia tokens ni accede al navegador o a los archivos de otras empresas. Consume los límites y créditos de esa cuenta. Es un trabajador local de un solo proceso, no una conexión de las suscripciones de todos los clientes. Ver [implementación, límites y documentación oficial](docs/media-generation-20261018/subscription-worker.md).
+
+El video necesita FFmpeg y FFprobe. Produce un MP4 con una ilustración completa, movimiento suave y subtítulos del guion guardado. Reutiliza una imagen asociada cuando existe y lo explica en pantalla; no solicita otra imagen en ese caso. El resultado no incluye audio ni metraje de movimiento generado. La API de Sora retirada no se utiliza.
+
+El operador configura `YOUTUBE_DATA_API_KEY` una vez para el catálogo y los contadores públicos oficiales. La conexión opcional de un canal usa autorización separada de sólo lectura, con `GOOGLE_YOUTUBE_REDIRECT_URI` registrado en el cliente OAuth. En modo de prueba de Google, la cuenta debe estar admitida como usuario de prueba. Entrar con Google no concede acceso a YouTube.
+
+Radar permite buscar videos públicos de los últimos siete días. Resultados permite vincular una pieza de YouTube aprobada a la URL de un video y consultar visualizaciones, me gusta y comentarios, sin inventar leads ni obligar a introducir cifras manuales. La consulta automática se ejecuta cada hora mientras el servidor está activo (`SOCIAL_SYNC_ENABLED=false` la detiene). Los datos conservan fecha y atribución, caducan a los treinta días y se eliminan al quitar el vínculo o desconectar. No se presentan como crecimiento observado ni se envían al análisis editorial con IA. Ver [conector y fuentes oficiales](docs/official-social-sync-20261018.md) y [recorrido real probado](docs/media-generation-20261018/live-platform-qa.md).
 
 ## Recorrido completo
 
@@ -63,8 +75,8 @@ La interfaz muestra los servicios disponibles y mantiene las personalizaciones d
 4. Descubrir referencias y evaluar oportunidades con procedencia, historia, factores editoriales y límites de cobertura.
 5. Profundizar con IA opcional: compara necesidades semánticamente y entrega citas literales verificadas. Sin proveedor existe una lectura preliminar por reglas de texto y equivalencias bilingües.
 6. Crear un borrador original por audiencia, canal y formato; editar, comentar, enviar a revisión y aprobar la versión vigente.
-7. Programar en el calendario y exportar guiones/plan. La programación no publica por sí sola en una red social.
-8. Registrar el enlace de una publicación y sus métricas manuales. Comparar resultados por audiencia y canal; el ajuste editorial requiere contenido propio comparable y suficiente muestra.
+7. Crear y revisar imágenes o un video animado, asociarlos al contenido y guardar. Programar en el calendario y exportar guiones/plan; la programación no publica por sí sola en una red social.
+8. Vincular una URL de YouTube para consultar contadores públicos automáticos, o registrar resultados manuales de otros canales. Comparar los resultados manuales por audiencia y canal; el ajuste editorial requiere contenido propio comparable y suficiente muestra.
 
 La pantalla Inicio propone un siguiente paso según el estado del equipo. Configuración avanzada, archivos y exploración detallada quedan disponibles como herramientas secundarias.
 
@@ -90,13 +102,13 @@ Los límites de reservas Apify se conservan para auditar usos previos, pero no s
 
 `DATA_DIR` contiene SQLite, archivos y la clave de cifrado. Respalda todo el directorio; no copies datos ni credenciales de otro entorno. Credenciales por empresa cifradas en servidor; sesiones HttpOnly, membresías y roles de propietario/editor/revisor. El corpus de audiencia no es un CRM de personas; los datos de autenticación del operador están separados.
 
-`DISCOVERY_ENABLED` y `DISCOVERY_INTERVAL_MS` controlan la búsqueda periódica. Los fallos se muestran por fuente y tienen espera progresiva. La IA contextual requiere una credencial y una revisión vigente del proveedor para esa finalidad; el video permanece restringido. La configuración de ejemplo documenta variables sin incluir secretos.
+`DISCOVERY_ENABLED` y `DISCOVERY_INTERVAL_MS` controlan la búsqueda periódica. Los fallos se muestran por fuente y tienen espera progresiva. La IA contextual requiere una credencial y una revisión vigente del proveedor para esa finalidad. El análisis de videos remotos permanece restringido; la composición local de MP4 es una función distinta. La configuración de ejemplo documenta variables sin incluir secretos.
 
 ## Verificación y límites
 
 Los tests usan SQLite temporal y proveedores simulados, incluyendo recorridos HTTP completos, aislamiento entre empresas, aprobación versionada, señales comunitarias, resultados corregibles, presupuestos concurrentes y análisis semántico con citas verificables. Build incluye TypeScript. Ver [validación](docs/VALIDATION.md) y [trazabilidad del audio](docs/TRANSCRIPT-TO-PRODUCT.md).
 
-El funcionamiento real de proveedores sociales o de IA de pago no fue validado; la prueba de Gemini usa cuota gratuita y material sintético en un entorno aislado. La precisión de las recomendaciones y el ahorro deben medirse con uso real. La conservación/actualización de datos y permisos de cada API debe revisarse antes de una operación pública prolongada; no se afirma cobertura universal ni preparación de SaaS a escala.
+Se comprobaron imágenes reales con la suscripción local, MP4 reproducibles y consultas oficiales de YouTube; los documentos de cada conector distinguen esas pruebas de los proveedores simulados. La prueba de Gemini usa cuota gratuita y material público o sintético. La precisión de las recomendaciones y el ahorro deben medirse con uso real. La conservación/actualización de datos y permisos de cada API debe revisarse antes de una operación pública prolongada; no se afirma cobertura universal ni preparación de SaaS a escala.
 
 La [auditoría adversarial por funcionalidad](docs/adversarial/SUMMARY.md) registra las pruebas interactivas posteriores, sus resultados esperados/observados y los defectos confirmados fuera de la cobertura de los tests automáticos.
 
