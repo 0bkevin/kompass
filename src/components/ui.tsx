@@ -76,7 +76,7 @@ export function EmptyState({
 }: {
   icon?: ReactNode;
   title: string;
-  children: ReactNode;
+  children?: ReactNode;
   action?: ReactNode;
 }) {
   return (
@@ -86,7 +86,7 @@ export function EmptyState({
       </div>
       <div className="empty-copy">
         <h3>{title}</h3>
-        <p>{children}</p>
+        {children && <p>{children}</p>}
         {action && <div className="empty-action">{action}</div>}
       </div>
     </div>
