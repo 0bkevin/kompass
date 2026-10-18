@@ -1,0 +1,32 @@
+✔ registration, session, password validation, login and logout persist safely (386.800674ms)
+✔ brands start empty and users cannot read or mutate other brands (51.566389ms)
+✔ deleting an audience used by approved or published content preserves its links and version (60.902604ms)
+✔ deleting an audience used only by an idea is rejected (28.137145ms)
+✔ capture → analysis → draft → review → approval → schedule with no fabricated publication (64.556135ms)
+✔ private uploads validate formats, hide storage paths and enforce brand isolation (31.655544ms)
+✔ invitation acceptance is single-use; reviewer can review/comment but cannot edit (83.827918ms)
+✔ approval is bound to the displayed content version across review interleavings (93.160207ms)
+✔ unchanged oversized legacy piece text can be saved with an unrelated edit (17.189451ms)
+✔ optional edit preconditions reject stale HTTP writes without breaking older clients (25.386036ms)
+✔ editor may produce content but cannot configure integrations or approve their work (59.113495ms)
+✔ changing a source URL removes old metrics and snapshot history rather than reusing evidence (6.27749ms)
+✔ demo data is explicitly labeled; secret values are encrypted and absent from state (89.400665ms)
+✔ invalid requests and foreign Origin mutations fail with safe JSON errors (13.506085ms)
+✔ assets-1 real multipart preserves browser UTF-8 names through storage, library and download (204.167946ms)
+✔ assets-1 accepts legacy Latin-1 and explicitly decoded Unicode without a second conversion (85.986545ms)
+✔ assets-1 keeps safe bounded filenames, extensions and valid Unicode at the length boundary (57.402985ms)
+✔ assets-1 keeps private downloads authenticated (8.144276ms)
+✔ assets-1 preserves multipart field and file-count rejections without orphan files (13.009315ms)
+[30X Radar] Request aborted
+✔ assets-1 stops filename readers and removes partial storage when an HTTP upload aborts (15.295334ms)
+✔ assets-1 filename selection preserves the caller's file-size limit and backpressure (11.947223ms)
+✔ asset upload records per-file failures and continues through the batch (1.295373ms)
+✔ draft refresh retry reuses the created piece and never creates it twice (0.308416ms)
+ℹ tests 23
+ℹ suites 0
+ℹ pass 23
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1140.99165

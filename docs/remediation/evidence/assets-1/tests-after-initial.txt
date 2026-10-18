@@ -1,0 +1,12 @@
+✔ assets-1 real multipart preserves browser UTF-8 names through storage, library and download (269.941357ms)
+✔ assets-1 accepts legacy Latin-1 and explicitly decoded Unicode without a second conversion (57.659562ms)
+✔ assets-1 keeps safe bounded filenames, extensions and valid Unicode at the length boundary (36.435854ms)
+✔ assets-1 keeps private downloads authenticated (7.70908ms)
+ℹ tests 4
+ℹ suites 0
+ℹ pass 4
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 567.534197

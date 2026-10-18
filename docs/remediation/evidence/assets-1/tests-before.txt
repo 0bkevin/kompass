@@ -1,0 +1,76 @@
+✖ assets-1 real multipart preserves browser UTF-8 names through storage, library and download (111.177885ms)
+✖ assets-1 accepts legacy Latin-1 and explicitly decoded Unicode without a second conversion (61.328817ms)
+✖ assets-1 keeps safe bounded filenames, extensions and valid Unicode at the length boundary (23.899453ms)
+✔ assets-1 keeps private downloads authenticated (8.814846ms)
+ℹ tests 4
+ℹ suites 0
+ℹ pass 1
+ℹ fail 3
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 395.412654
+
+✖ failing tests:
+
+test at tests/remediation-assets-1.test.mjs:109:1
+✖ assets-1 real multipart preserves browser UTF-8 names through storage, library and download (111.177885ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+  
+  + '03-Ã±andÃº & "prueba" #100%.txt'
+  - '03-ñandú & "prueba" #100%.txt'
+        ^
+  
+      at assertRoundTrip (file:///home/ubuntu/.t3/projects/30x-trackt-2/tests/remediation-assets-1.test.mjs:90:10)
+      at TestContext.<anonymous> (file:///home/ubuntu/.t3/projects/30x-trackt-2/tests/remediation-assets-1.test.mjs:116:12)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async Test.run (node:internal/test_runner/test:1404:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: '03-Ã±andÃº & "prueba" #100%.txt',
+    expected: '03-ñandú & "prueba" #100%.txt',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/remediation-assets-1.test.mjs:119:1
+✖ assets-1 accepts legacy Latin-1 and explicitly decoded Unicode without a second conversion (61.328817ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+  
+  + '11-Ã±andÃº-ð\x9F\x99\x82.txt'
+  - '11-ñandú-🙂.txt'
+        ^
+  
+      at assertRoundTrip (file:///home/ubuntu/.t3/projects/30x-trackt-2/tests/remediation-assets-1.test.mjs:90:10)
+      at TestContext.<anonymous> (file:///home/ubuntu/.t3/projects/30x-trackt-2/tests/remediation-assets-1.test.mjs:125:12)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async Test.run (node:internal/test_runner/test:1404:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:969:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: '11-Ã±andÃº-ð\x9F\x99\x82.txt',
+    expected: '11-ñandú-🙂.txt',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/remediation-assets-1.test.mjs:128:1
+✖ assets-1 keeps safe bounded filenames, extensions and valid Unicode at the length boundary (23.899453ms)
+  AssertionError [ERR_ASSERTION]: The expression evaluated to a falsy value:
+  
+    assert.ok(long.name.endsWith(".txt"))
+  
+      at TestContext.<anonymous> (file:///home/ubuntu/.t3/projects/30x-trackt-2/tests/remediation-assets-1.test.mjs:134:10)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async Test.run (node:internal/test_runner/test:1404:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:969:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }

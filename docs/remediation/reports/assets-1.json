@@ -1,0 +1,79 @@
+{
+  "issueId": "assets-1",
+  "agent": "fix_assets_1",
+  "status": "fixed",
+  "rootCause": "Multer/Busboy interpretaba como Latin-1 los bytes UTF-8 de filename sin charset. El originalname ya corrupto se persistía; biblioteca, filtro y Content-Disposition propagaban ese valor. slice(0,200) también podía perder la extensión o cortar un surrogate.",
+  "changes": [
+    "server/upload-filenames.mjs encapsula la selección de charset mediante streamHandler público de Multer 2.4.0: compara el parser Latin-1 principal con metadatos UTF-8. filename* explícito coincide en ambos y se conserva sin otra conversión; filename simple prefiere sólo UTF-8 estrictamente válido, con fallback Latin-1.",
+    "El lector de metadatos tiene fileSize:0, hereda límites, no almacena contenido y se desengancha/destruye al consumir el primer header de archivo o ante fin, error, límite o aborto. Multer conserva la escritura y sus errores/límites.",
+    "Saneamiento de basename para rutas POSIX/Windows y controles C0/DEL; máximo previo de 200 unidades UTF-16, manteniendo extensión normal y pares surrogate completos.",
+    "Content-Disposition usa filename* UTF-8 y escapa los caracteres reservados de RFC 5987.",
+    "Busboy 1.6.0 ya instalado se declara directo; mínimo Multer 2.4.0. Cambio de manifests/lock hecho offline sin modificar node_modules ni instalar paquetes."
+  ],
+  "files": [
+    "server/upload-filenames.mjs",
+    "server/core.mjs",
+    "package.json",
+    "package-lock.json",
+    "tests/remediation-assets-1.test.mjs",
+    "docs/remediation/reports/assets-1.md",
+    "docs/remediation/reports/assets-1.json"
+  ],
+  "verification": [
+    {
+      "command": "node --test tests/remediation-assets-1.test.mjs",
+      "before": "1 PASS/3 FAIL: POST devolvía 03-Ã±andÃº; multipart en chunks devolvía mojibake; el recorte de nombre perdía .txt.",
+      "after": "7/7 PASS. Multipart HTTP real FormData/manual/chunks: español, acentos, japonés/árabe/chino/emoji, porcentajes literales, filename* UTF-8 y Latin-1 con «Ã±», fallback inválido como UTF-8, límites de nombre y descarga con bytes/headers exactos. También campos previos, límites, archivo único, cancelación y tamaño configurable exacto/+1.",
+      "kind": "test"
+    },
+    {
+      "command": "node --test tests/core.test.mjs tests/workflow-recovery.test.mjs tests/remediation-assets-1.test.mjs",
+      "before": "La regresión específica era roja; suite cercana no se ejecutó antes de aplicar el arreglo.",
+      "after": "23/23 PASS. Incluye lectura privada, aislamiento, roles y flujo de cargas parciales existentes.",
+      "kind": "test"
+    },
+    {
+      "command": "T3 preview_* en http://127.0.1.25:5515/assets; tab propio incognito 1280x800",
+      "before": "Tres cargas nativas guardadas con mojibake. ñandú devolvía 0 tarjetas; descarga nativa 03-Ã±andÃº & _prueba_ #100%.txt con contenido exacto.",
+      "after": "Mismas tres fixtures subidas desde UI tras corregir; nombres originales correctos en tarjeta/detalle/API/SQLite. Recarga y búsquedas ñandú/café/日本語 devuelven una tarjeta correcta. Tres descargas nativas con nombres Unicode y bytes idénticos.",
+      "kind": "browser"
+    },
+    {
+      "command": "GET nativo y fetch del navegador a /api/brands/:id/assets/:id/file?download=1; comparación filesystem/fixture/descarga",
+      "before": "La descarga nativa confirmó el nombre corrupto; no se archivó la cabecera raw anterior.",
+      "after": "Tres respuestas 200 text/plain; filename* decodifica al nombre original exacto. Almacenamiento y descargas conservan los 67 bytes y SHA-256 db80066315782e5c6d6d6d040ce8a67bca59dfbd896115f3ec890e44b1065184.",
+      "kind": "http"
+    }
+  ],
+  "artifacts": [
+    "docs/remediation/evidence/assets-1/tests-before.txt",
+    "docs/remediation/evidence/assets-1/tests-after.txt",
+    "docs/remediation/evidence/assets-1/tests-final.txt",
+    "docs/remediation/evidence/assets-1/before-upload.png",
+    "docs/remediation/evidence/assets-1/before-search.png",
+    "docs/remediation/evidence/assets-1/after-upload.png",
+    "docs/remediation/evidence/assets-1/after-search.png",
+    "docs/remediation/evidence/assets-1/after-unicode.png",
+    "docs/remediation/evidence/assets-1/browser-observations.json",
+    "docs/remediation/evidence/assets-1/byte-verification.json",
+    "docs/remediation/evidence/assets-1/cleanup.json",
+    "/tmp/30x-remediation-assets-1/fixtures"
+  ],
+  "limitations": [
+    "Datos y cuentas exclusivamente sintéticos. Navegador T3 Chromium de escritorio; no se validaron otros motores o todos los formatos audiovisuales.",
+    "Sin charset explícito, ciertos bytes Latin-1 también son UTF-8 válido. Se prefiere UTF-8 válido para filename simple; clientes que necesiten un nombre Latin-1 ambiguo deben declarar filename* con charset. Los nombres filename* se respetan sin reparación heurística.",
+    "No se migran nombres históricos ya corruptos: sus bytes/charset originales ya no están disponibles y una conversión ciega podría dañar nombres literales correctos.",
+    "Las comillas del nombre original se conservan en nombre/cabecera; Chromium las cambia por guiones bajos en el archivo local descargado.",
+    "No se modificaron detectFile ni límites de producto (assets-2), UI, autenticación ni autorización. No hubo build, detector, format global, claves, proveedores, publicación ni commits.",
+    "Al detener la instancia propia, Node --watch emitió una aserción nativa durante SIGTERM. La comprobación posterior confirmó cero procesos propios y puertos 4515/5515 cerrados; no quedó ningún recurso activo."
+  ],
+  "environment": {
+    "dataDir": "/tmp/30x-remediation-assets-1",
+    "apiPort": 4515,
+    "webPort": 5515,
+    "host": "127.0.1.25",
+    "tabId": "tab_4i_07e54779-9ab2-4979-8a15-674c4eff160a",
+    "processSession": 90409,
+    "cleanup": "Pestaña propia cerrada; concurrently 216987 terminó la instancia propia. /proc sin procesos con el DATA_DIR asignado y ambos puertos libres. Fixtures preservadas."
+  }
+}

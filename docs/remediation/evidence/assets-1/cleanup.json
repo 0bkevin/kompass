@@ -1,0 +1,17 @@
+{
+  "remainingProcesses": [],
+  "ports": [
+    {
+      "port": 4515,
+      "listening": false
+    },
+    {
+      "port": 5515,
+      "listening": false
+    }
+  ],
+  "tabId": "tab_4i_07e54779-9ab2-4979-8a15-674c4eff160a",
+  "tabClosed": true,
+  "dataDir": "/tmp/30x-remediation-assets-1",
+  "fixturesPreserved": true
+}

@@ -1,0 +1,65 @@
+{
+  "synthetic": true,
+  "before": {
+    "search": "ñandú",
+    "cardCount": 0,
+    "nativeDownloadName": "03-Ã±andÃº & _prueba_ #100%.txt",
+    "bytesEqual": true
+  },
+  "after": [
+    {
+      "name": "03-ñandú & \"prueba\" #100%.txt",
+      "downloadName": "03-ñandú & _prueba_ #100%.txt",
+      "size": 67,
+      "sha256": "db80066315782e5c6d6d6d040ce8a67bca59dfbd896115f3ec890e44b1065184",
+      "browserDownloadBytesEqual": true,
+      "storedBytesEqual": true,
+      "httpResponseBytesEqual": true,
+      "headerNameExact": true,
+      "contentDisposition": "attachment; filename*=UTF-8''03-%C3%B1and%C3%BA%20%26%20%22prueba%22%20%23100%25.txt"
+    },
+    {
+      "name": "04-acción-über-café.txt",
+      "downloadName": "04-acción-über-café.txt",
+      "size": 67,
+      "sha256": "db80066315782e5c6d6d6d040ce8a67bca59dfbd896115f3ec890e44b1065184",
+      "browserDownloadBytesEqual": true,
+      "storedBytesEqual": true,
+      "httpResponseBytesEqual": true,
+      "headerNameExact": true,
+      "contentDisposition": "attachment; filename*=UTF-8''04-acci%C3%B3n-%C3%BCber-caf%C3%A9.txt"
+    },
+    {
+      "name": "05-日本語-العربية-文档-🙂.txt",
+      "downloadName": "05-日本語-العربية-文档-🙂.txt",
+      "size": 67,
+      "sha256": "db80066315782e5c6d6d6d040ce8a67bca59dfbd896115f3ec890e44b1065184",
+      "browserDownloadBytesEqual": true,
+      "storedBytesEqual": true,
+      "httpResponseBytesEqual": true,
+      "headerNameExact": true,
+      "contentDisposition": "attachment; filename*=UTF-8''05-%E6%97%A5%E6%9C%AC%E8%AA%9E-%D8%A7%D9%84%D8%B9%D8%B1%D8%A8%D9%8A%D8%A9-%E6%96%87%E6%A1%A3-%F0%9F%99%82.txt"
+    }
+  ],
+  "searches": [
+    {
+      "query": "ñandú",
+      "cards": [
+        "03-ñandú & \"prueba\" #100%.txt"
+      ]
+    },
+    {
+      "query": "café",
+      "cards": [
+        "04-acción-über-café.txt"
+      ]
+    },
+    {
+      "query": "日本語",
+      "cards": [
+        "05-日本語-العربية-文档-🙂.txt"
+      ]
+    }
+  ],
+  "recordCount": 3
+}
