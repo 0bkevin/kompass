@@ -182,6 +182,24 @@ function validSnapshot(snapshot, brand, now) {
   if (
     !belongsTo(snapshot, brand) ||
     snapshot.isDemo ||
+    snapshot.ingestionRestricted ||
+    RESTRICTED_PROVIDERS.test(
+      [
+        snapshot.platform,
+        snapshot.ingestionProvider,
+        snapshot.mediaProvider,
+        snapshot.metricsOrigin,
+        snapshot.source,
+      ].join(" "),
+    ) ||
+    [
+      snapshot.url,
+      snapshot.sourceUrl,
+      snapshot.ingestionAccess?.url,
+      ...(Array.isArray(snapshot.ingestionAccess?.urls)
+        ? snapshot.ingestionAccess.urls
+        : []),
+    ].some(isRestrictedCollectionUrl) ||
     snapshot.origin !== "public_source_observation" ||
     !/^[a-f0-9]{24}$/.test(snapshot.scope) ||
     snapshot.windowMs !== WEEK ||
