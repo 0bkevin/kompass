@@ -1,0 +1,79 @@
+{
+  "verifiedAt": "2026-10-18T15:13:34Z",
+  "codeCommit": "14f4f3f9e6a5260a4ac2ed9167bf52980963a065",
+  "tests": {
+    "command": "node --test --test-concurrency=4 --test-timeout=120000 tests/*.test.mjs",
+    "passed": 599,
+    "failed": 0,
+    "skipped": 0,
+    "durationMs": 34337.702281,
+    "earlierTimeout": "The 20-second global deadline expired during FFmpeg's four-ratio test under concurrent workload; the bounded confirmation above passed."
+  },
+  "build": {
+    "command": "npm run build",
+    "exitCode": 0,
+    "includesTypeScript": true
+  },
+  "isolatedProductionHost": {
+    "port": 5190,
+    "command": "npm start",
+    "freshDataDirectory": true,
+    "companyData": "synthetic",
+    "imageRequests": 1,
+    "videoReusedAttachedImage": true,
+    "filesAttachedAndSaved": true,
+    "pieceReviewAndApproval": "verified through UI",
+    "browserVideoReadyState": 4,
+    "downloads": [
+      {
+        "file": "illustration.png",
+        "httpStatus": 200,
+        "mimeType": "image/png",
+        "width": 1672,
+        "height": 941,
+        "bytes": 1942944,
+        "sha256": "482eb4d4bb6066e52c015030bf386b0e605eba8ae5e32df9ebe9e7caa018bbff"
+      },
+      {
+        "file": "animated-video.mp4",
+        "httpStatus": 200,
+        "mimeType": "video/mp4",
+        "width": 720,
+        "height": 1280,
+        "duration": 12.083333,
+        "audioStreams": 0,
+        "bytes": 85800,
+        "sha256": "08f4edab95dd875d2df9d76c1fb2e7ecaba6b7639dfad9af9c0c95735303b36d"
+      }
+    ],
+    "socialPublications": 0,
+    "webhookTransport": "simulated in regression tests; exact attached bytes verified"
+  },
+  "isolatedReleasePackage": {
+    "port": 5191,
+    "productionDependenciesOnly": true,
+    "healthHttpStatus": 200,
+    "homeHttpStatus": 200,
+    "containsMediaWorkerScripts": true,
+    "promotedPublicly": false
+  },
+  "existingPublicDeployment": {
+    "url": "https://kompass.kevinbravo.com",
+    "dnsA": "161.153.114.230",
+    "httpsVerified": true,
+    "homeHttpStatus": 200,
+    "healthHttpStatus": 200,
+    "sameOriginInvalidLoginHttpStatus": 401,
+    "applicationPidBeforeAndAfter": 1492132,
+    "existingReleasePreserved": "e26353601006",
+    "applicationRestarted": false,
+    "applicationCodeUpdated": false,
+    "existingDataPreserved": true,
+    "backupServiceResult": "success",
+    "oldHostRedirectHttpStatus": 308,
+    "oldHostRedirectPreservesPathAndQuery": true,
+    "oldHostDnsPresentAtFinalCheck": false,
+    "oldHostRedirectFinalVerification": "curl --resolve radar.kevinbravo.com:443:161.153.114.230",
+    "mediaWorkerInExistingPublicRelease": false
+  }
+}
