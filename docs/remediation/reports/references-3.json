@@ -1,0 +1,83 @@
+{
+  "issueId": "references-3",
+  "agent": "fix_references_3",
+  "status": "fixed",
+  "integrationStatus": "pending_coordinator",
+  "rootCause": "ReferenceDetail mostraba imágenes y URL públicas pero no exponía los documentos asociados por assetId, aunque el asset y su endpoint autenticado ya conservaban nombre y bytes correctos.",
+  "changes": [
+    "El detalle muestra Archivo adjunto con nombre, tipo, tamaño y Descargar original adjunto; el enlace público Ver original permanece separado.",
+    "La descarga usa la ruta del mismo origen con empresa y asset codificados, sin usar URL arbitraria del asset ni relajar citas públicas.",
+    "HEAD autenticado, abortable y con timeout de 10 segundos comprueba disponibilidad; respuestas anteriores se descartan al cerrar o cambiar recurso.",
+    "Ausencia de metadata o404/410 muestran recuperación sin enlace roto;401/403 y fallos temporales tienen mensajes distintos y Volver a comprobar.",
+    "Se preservan la previsualización de imágenes, análisis audiovisual y permisos; sección adaptable a móvil con nombre a 16 px y foco visible."
+  ],
+  "files": [
+    "src/features/Discovery.tsx",
+    "src/styles.css",
+    "tests/remediation-references-3.test.mjs",
+    "docs/remediation/reports/references-3.md",
+    "docs/remediation/reports/references-3.json"
+  ],
+  "verification": [
+    {
+      "command": "T3 preview_upload → Guardar referencia → Abrir referencia → inspeccionar enlaces → clic en Descargar original adjunto; datos ficticios en 127.0.1.20:5510",
+      "before": "TXT199 bytes con GET 200 y SHA correcto; ReferenceDetail carece de enlaces: expectedOriginalLinkPresent=false.",
+      "after": "Misma referencia y asset ofrecen descarga nativa con nombre exacto y 199 bytes; SHA-256 idéntico al fixture. Recarga, móvil390 × 844, teclado y revisor funcionan. URL pública y adjunto autenticado siguen separados.",
+      "kind": "browser"
+    },
+    {
+      "command": "T3 preview_*: archivo propio temporalmente ausente, DELETE de otro adjunto ficticio,503/401/HEAD retenido simulados sólo en transporte local",
+      "before": "El detalle anterior no ofrecía ningún estado de adjunto ni recuperación contextual.",
+      "after": "404 físico y metadata ausente no ofrecen enlaces; mensajes de503/401 son específicos, reintentan sin duplicar datos; cerrar aborta HEAD y reabrir descarta el resultado anterior.",
+      "kind": "browser"
+    },
+    {
+      "command": "node --test tests/remediation-references-3.test.mjs tests/remediation-assets-1.test.mjs tests/remediation-references-2.test.mjs",
+      "before": "Tests de endpoint apoyan las garantías de lectura existentes; el rojo del defecto se probó en UI. Expectativa inicial del test nuevo para usuario ajeno ajustada de403 a404 al contrato vigente de requireBrand.",
+      "after": "17/17 pasan,0fallos,0canceladas. Los3 nuevos verifican bytes/nombre/HEAD, owner/editor/reviewer, anónimo 401, marcas/cuentas ajenas 404, escritura reviewer 403 y ausencias sin perder la cita pública.",
+      "kind": "test"
+    },
+    {
+      "command": "npx tsc --noEmit",
+      "before": "No aplicable.",
+      "after": "exit 0.",
+      "kind": "test"
+    }
+  ],
+  "artifacts": [
+    "docs/remediation/evidence/references-3-browser-checks.json",
+    "docs/remediation/evidence/references-3-original-ñandú.txt",
+    "docs/remediation/evidence/references-3-red-ui.png",
+    "docs/remediation/evidence/references-3-green-ui.png",
+    "docs/remediation/evidence/references-3-desktop-final.png",
+    "docs/remediation/evidence/references-3-mobile-final.png",
+    "docs/remediation/evidence/references-3-public-and-attached-ui.png",
+    "docs/remediation/evidence/references-3-reviewer-ui.png",
+    "docs/remediation/evidence/references-3-physical-missing-ui.png",
+    "docs/remediation/evidence/references-3-metadata-missing-ui.png",
+    "docs/remediation/evidence/references-3-service-error-ui.png",
+    "docs/remediation/evidence/references-3-http-tests.txt",
+    "docs/remediation/evidence/references-3-typescript.txt"
+  ],
+  "limitations": [
+    "Móvil comprobado en viewport emulado Chromium, no dispositivo físico.",
+    "HEAD comprueba disponibilidad en ese momento y no bloquea posteriores cambios al archivo o los permisos.",
+    "503/401 y HEAD retenido fueron simulaciones locales explícitas; no acreditan incidencias ni entrega de proveedores reales.",
+    "No se ejecutó build global; corresponde a integración del coordinador."
+  ],
+  "coordination": [
+    "references-2 preservado: URL pública, advertencia legacy y política de citas sin cambios.",
+    "assets-2 editó exclusivamente CaptureModal mientras este agente modificó ReferenceDetail; navigation-3 editó exclusivamente EmptyState de InboxPage.",
+    "No cambios en servidor, tipos, dependencias ni pruebas originales."
+  ],
+  "cleanup": {
+    "ownTabClosed": true,
+    "devSession": 39074,
+    "processExited": true,
+    "exitCode": 130,
+    "apiPortFree": true,
+    "webPortFree": true,
+    "runtimeDataPreserved": true,
+    "note": "Al recibir SIGINT, Node --watch emitió una aserción FSEventWrap/FSWatcher durante el cierre. El proceso terminó y4510/5510 quedaron libres; no ocurrió en pruebas HTTP sin watch."
+  }
+}

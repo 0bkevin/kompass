@@ -1,0 +1,29 @@
+✔ assets-1 real multipart preserves browser UTF-8 names through storage, library and download (202.396042ms)
+✔ assets-1 accepts legacy Latin-1 and explicitly decoded Unicode without a second conversion (100.261718ms)
+✔ assets-1 keeps safe bounded filenames, extensions and valid Unicode at the length boundary (59.995075ms)
+✔ assets-1 keeps private downloads authenticated (10.063341ms)
+✔ assets-1 preserves multipart field and file-count rejections without orphan files (18.934845ms)
+[30X Radar] Request aborted
+✔ assets-1 stops filename readers and removes partial storage when an HTTP upload aborts (14.641327ms)
+✔ assets-1 filename selection preserves the caller's file-size limit and backpressure (13.999599ms)
+✔ original HTTP repro: manual capture rejects loopback and leaves no stored reference or activity (44.927485ms)
+ℹ {"status":400,"error":"URL debe usar HTTP o HTTPS y un dominio público sin credenciales.","persisted":0}
+✔ POST and PATCH reject private, reserved, normalized local, intranet and non-public URLs without mutation (324.848716ms)
+ℹ 66 inadmissible URL cases rejected on both HTTP write routes
+✔ ordinary public citations and literal public addresses save without DNS, page access or fabricated reading (79.221348ms)
+ℹ 15 admissible citations stored; DNS lookups=0, external fetches=0
+✔ citation privacy and session rules reject embedded contact or credential data without echoing it (56.52508ms)
+✔ legacy inadmissible originals are omitted on readback without rewriting history, and can be corrected or removed (24.834825ms)
+✔ URL-free documents and text still work, and deduplicating a public citation retains its original record (24.40718ms)
+✔ authentication, editor/reviewer permissions, brands and attached assets remain isolated (46.324783ms)
+✔ reference attachment HEAD and download preserve original bytes, name and public provenance separately (299.874433ms)
+✔ attachment reads allow reviewers but preserve authentication and company boundaries (30.736797ms)
+✔ HEAD distinguishes missing physical file and deleted metadata without changing the reference original (9.606112ms)
+ℹ tests 17
+ℹ suites 0
+ℹ pass 17
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 777.84509

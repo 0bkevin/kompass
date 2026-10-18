@@ -1,0 +1,115 @@
+{
+  "issueId": "references-3",
+  "host": "http://127.0.1.20:5510",
+  "dataDir": "/tmp/30x-remediation-references-3",
+  "tabId": "tab_4m_07e54779-9ab2-4979-8a15-674c4eff160a",
+  "dataClassification": "Cuenta, empresa y contenido ficticios. No se visitó el enlace público de ejemplo ni se usaron proveedores externos.",
+  "red": {
+    "referenceId": "bae7a2a1-e1d3-4d7a-9594-e82970786b5a",
+    "assetId": "b48f18f1-6cc0-46fc-b458-11feb30b108a",
+    "name": "references-3-original-ñandú.txt",
+    "mimeType": "text/plain",
+    "fileGetStatus": 200,
+    "bytes": 199,
+    "sha256": "c7868aaed8a502ce7560125f651343d09d25b89d432fdc1b35c585359d31854a",
+    "detailLinks": [],
+    "expectedOriginalLinkPresent": false,
+    "verdict": "FAIL: archivo disponible pero detalle sin acceso al original"
+  },
+  "green": {
+    "sameReferenceAndAsset": true,
+    "linkLabel": "Descargar original adjunto",
+    "href": "/api/brands/09f42b9a-da5c-49ef-a889-7d7ecc1d6284/assets/b48f18f1-6cc0-46fc-b458-11feb30b108a/file?download=1",
+    "fileGetStatus": 200,
+    "downloadedName": "references-3-original-ñandú.txt",
+    "downloadedBytes": 199,
+    "downloadedSha256": "c7868aaed8a502ce7560125f651343d09d25b89d432fdc1b35c585359d31854a",
+    "nativeBrowserCompletedDownloads": 3,
+    "sha256sumComparedWithOriginalFixture": true,
+    "survivesReload": true,
+    "publicOriginalKeptSeparate": {
+      "label": "Ver original",
+      "href": "https://example.com/contenido-publico-ficticio",
+      "visited": false
+    },
+    "mobile": {
+      "viewport": [
+        390,
+        844
+      ],
+      "documentWidth": 390,
+      "dialogWidth": 370,
+      "dialogScrollWidth": 370,
+      "filenameFontSize": "16px",
+      "filenameColor": "rgb(25, 53, 43)",
+      "dialogBackground": "rgb(255, 255, 255)",
+      "downloadLinkCount": 1,
+      "horizontalOverflow": false
+    },
+    "keyboard": {
+      "action": "Tab desde el modal hasta el enlace y Enter",
+      "focusedElement": "Descargar original adjunto",
+      "focusVisible": true,
+      "outline": "rgb(67, 139, 106) solid 3px",
+      "downloadCompleted": true
+    },
+    "reviewer": {
+      "fixtureSetup": "Rol de la cuenta ficticia cambiado temporalmente en su SQLite aislado y restaurado al terminar",
+      "downloadStatus": 200,
+      "bytes": 199,
+      "editorialButtonsDisabled": [
+        "Analizar referencia",
+        "Crear guion"
+      ]
+    },
+    "physicalFileMissing": {
+      "fixtureSetup": "Archivo ficticio movido temporalmente fuera de su ruta y restaurado después",
+      "headStatus": 404,
+      "attachmentDownloadLinks": 0,
+      "publicOriginalStillPresent": true,
+      "visibleMessage": "El archivo adjunto ya no está disponible. Pide al equipo que vuelva a adjuntar el original.",
+      "retryAfterRestoringFile": "Descarga habilitada con el mismo asset"
+    },
+    "metadataRemoved": {
+      "fixtureSetup": "Segundo adjunto ficticio creado y eliminado mediante APIs autenticadas; la eliminación borra assetId de su referencia",
+      "referenceId": "bfa09698-f185-4add-9ae8-1d9edf690aa3",
+      "attachmentDownloadLinks": 0,
+      "visibleMessage": "No hay un archivo adjunto disponible. Pide al equipo que vuelva a adjuntar el original desde Agregar referencia."
+    },
+    "controlled503": {
+      "simulation": "Sólo HEAD local de assets respondió 503; GET y proveedores sin modificar",
+      "downloadLinks": 0,
+      "visibleMessage": "No se pudo comprobar el archivo. Vuelve a intentarlo para habilitar la descarga.",
+      "retryAfterRestoringTransport": "Descarga habilitada sin duplicar referencia"
+    },
+    "controlled401": {
+      "simulation": "Sólo HEAD local de assets respondió 401",
+      "downloadLinks": 0,
+      "visibleMessage": "No se pudo autorizar la descarga. Comprueba tu sesión y tu acceso a esta empresa.",
+      "retryAfterRestoringTransport": "Descarga habilitada"
+    },
+    "heldRequest": {
+      "simulation": "HEAD local retenido hasta AbortSignal; resto de fetch intacto",
+      "loadingMessage": "Comprobando el archivo adjunto…",
+      "abortedOnClose": true,
+      "dialogClosed": true,
+      "reopenedWithRealTransport": "Descarga disponible sin error obsoleto"
+    }
+  },
+  "testFixtureCorrection": "El nuevo test HTTP esperaba403 para un usuario ajeno; requireBrand oculta la marca con404. Se corrigió esa expectativa al contrato existente, sin modificar servidor ni pruebas anteriores.",
+  "limitations": [
+    "Viewport móvil emulado en Chromium; no dispositivo físico.",
+    "HEAD comprueba disponibilidad en ese momento; no bloquea cambios posteriores al archivo o permisos.",
+    "Los 503/401 y la petición retenida se simularon únicamente en el transporte local de HEAD. No equivalen a incidencias reales de proveedores."
+  ],
+  "cleanup": {
+    "ownTabClosed": true,
+    "devSession": 39074,
+    "processExited": true,
+    "exitCode": 130,
+    "apiPortFree": true,
+    "webPortFree": true,
+    "runtimeDataPreserved": true,
+    "note": "Al recibir SIGINT, Node --watch emitió una aserción FSEventWrap/FSWatcher durante el cierre. El proceso terminó y4510/5510 quedaron libres; no ocurrió en pruebas HTTP sin watch."
+  }
+}
