@@ -13,7 +13,19 @@ export const UPLOAD_DIR = path.join(DATA_DIR, "uploads");
 fs.mkdirSync(UPLOAD_DIR, { recursive: true, mode: 0o700 });
 export const db = new DatabaseSync(path.join(DATA_DIR, "radar.sqlite"));
 let secretKey;
-const kinds = new Set(["references", "ideas", "pieces", "assets", "sources"]);
+const kinds = new Set([
+  "references",
+  "ideas",
+  "pieces",
+  "assets",
+  "sources",
+  "contextImports",
+  "audienceSignals",
+  "outcomes",
+  "topicSnapshots",
+  "communityPolls",
+  "opportunityAnalyses",
+]);
 export function initDb() {
   db.exec(`PRAGMA foreign_keys=ON; PRAGMA journal_mode=WAL; PRAGMA busy_timeout=5000;
     CREATE TABLE IF NOT EXISTS users (id TEXT PRIMARY KEY, name TEXT NOT NULL, email TEXT UNIQUE NOT NULL, password_hash TEXT NOT NULL, created_at TEXT NOT NULL);
