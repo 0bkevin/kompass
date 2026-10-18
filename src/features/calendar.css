@@ -261,7 +261,7 @@
   position: relative;
   width: 100%;
   border: 0;
-  border-left: 2px solid var(--calendar-channel);
+  border-left: 1px solid var(--calendar-channel);
   border-radius: 4px;
   background: #edf1f8;
   padding: 6px;

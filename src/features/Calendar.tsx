@@ -11,7 +11,8 @@ import {
   Plus,
 } from "lucide-react";
 import { Badge, Button, EmptyState, IconButton } from "../components/ui";
-import { download, formatNames, statusNames } from "../lib/format";
+import { download, formatNames, pieceStatusLabel } from "../lib/format";
+import { calendarPlanDate } from "../lib/calendar-plan.mjs";
 import type { Piece } from "../lib/types";
 import { useWorkspace } from "../lib/workspace";
 import { ScheduleModal } from "./Studio";
@@ -92,14 +93,14 @@ export default function Calendar() {
   const readonly = state.brand.role === "reviewer";
   const query = search.trim().toLocaleLowerCase("es");
   const matchesSearch = (piece: Piece) =>
-    `${piece.title} ${piece.hook} ${piece.script} ${channelNames[piece.channel]} ${statusNames[piece.status]}`
+    `${piece.title} ${piece.hook} ${piece.script} ${channelNames[piece.channel]} ${pieceStatusLabel(piece)}`
       .toLocaleLowerCase("es")
       .includes(query);
   const scheduled = useMemo<ScheduledEntry[]>(
     () =>
       state.pieces
         .flatMap((piece) => {
-          const date = parseDate(piece.scheduledFor);
+          const date = calendarPlanDate(piece);
           return date ? [{ piece, date, key: dateKey(date) }] : [];
         })
         .sort(
@@ -136,7 +137,6 @@ export default function Calendar() {
     .filter(
       (piece) =>
         piece.status === "approved" &&
-        !parseDate(piece.scheduledFor) &&
         matchesSearch(piece),
     )
     .sort((a, b) => b.updatedAt.localeCompare(a.updatedAt));
@@ -231,7 +231,7 @@ export default function Calendar() {
       piece.title,
       channelNames[piece.channel],
       formatNames[piece.format] || piece.format,
-      statusNames[piece.status],
+      pieceStatusLabel(piece),
       state.brand.audience.find((segment) => segment.id === piece.segmentId)
         ?.name || "Audiencia general",
       state.members.find((member) => member.id === piece.assignee)?.name || "",
@@ -264,7 +264,6 @@ export default function Calendar() {
     <div className="page calendar-page">
       <div className="page-heading">
         <div>
-          <p className="eyebrow">UN PLAN QUE SE PUEDE HACER</p>
           <h1>Tu contenido, en su momento.</h1>
           <p>
             Dale espacio a las buenas ideas. Organiza la grilla y mantén al
@@ -428,7 +427,7 @@ export default function Calendar() {
                           <button
                             key={piece.id}
                             className={`calendar-event channel-${piece.channel} ${piece.status === "published" ? "published" : ""}`}
-                            title={`${piece.title} · ${channelNames[piece.channel]} · ${timeFormat.format(date)} · ${statusNames[piece.status]}`}
+                            title={`${piece.title} · ${channelNames[piece.channel]} · ${timeFormat.format(date)} · ${pieceStatusLabel(piece)}`}
                             onClick={() => navigate("studio", piece.id)}
                           >
                             <span className="calendar-event-meta">
@@ -444,7 +443,7 @@ export default function Calendar() {
                                 {piece.status === "published" && (
                                   <CheckCircle2 size={11} />
                                 )}{" "}
-                                {statusNames[piece.status]}
+                                {pieceStatusLabel(piece)}
                               </span>
                             )}
                           </button>
@@ -512,7 +511,6 @@ export default function Calendar() {
           >
             <div className="calendar-panel-heading">
               <div>
-                <p className="eyebrow">FECHA SELECCIONADA</p>
                 <h2>
                   {shortDate.format(selectedDate)}
                   <span>
@@ -536,7 +534,7 @@ export default function Calendar() {
                         {timeFormat.format(date)}
                       </span>
                       <Badge tone={statusTone(piece.status)}>
-                        {statusNames[piece.status]}
+                        {pieceStatusLabel(piece)}
                       </Badge>
                     </div>
                     <button
@@ -674,8 +672,9 @@ export default function Calendar() {
             <div>
               <strong>Planifica aquí. Publica a tu ritmo.</strong>
               <p>
-                La publicación automática está en el backlog. La grilla organiza
-                el trabajo; exporta tus piezas para publicarlas.
+                Abre la pieza para usar Enviar ahora con un conector, o exporta
+                y publica desde tu canal. Confirma la publicación final y
+                registra el enlace y las métricas en Resultados.
               </p>
             </div>
           </div>
@@ -685,7 +684,6 @@ export default function Calendar() {
       <section className="card calendar-upcoming">
         <div className="section-heading">
           <div>
-            <p className="eyebrow">LO QUE VIENE</p>
             <h2>Próximas en salir</h2>
           </div>
           <span className="small muted">Tu siguiente contenido, en orden</span>
@@ -715,7 +713,7 @@ export default function Calendar() {
                   </span>
                 </button>
                 <Badge tone={statusTone(piece.status)}>
-                  {statusNames[piece.status]}
+                  {pieceStatusLabel(piece)}
                 </Badge>
                 {!readonly && canSchedule(piece) && (
                   <IconButton
