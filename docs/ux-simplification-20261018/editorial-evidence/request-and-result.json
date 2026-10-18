@@ -1,0 +1,38 @@
+{
+  "draftCall": {
+    "path": "/api/brands/661a3963-ee8f-41f0-bd2e-8c1a7b38e4c9/draft",
+    "status": 200,
+    "body": {
+      "referenceId": "1dbc2c23-efd7-49b0-86ba-ba7ba5d26d47",
+      "segmentId": "49b05f7b-cc43-405d-a5e1-c502d9e48522",
+      "format": "carousel",
+      "channel": "instagram",
+      "topic": "[QA UX] Criterios para un piloto de IA",
+      "cta": "Define un piloto con revisión humana.",
+      "unitCount": 4,
+      "includeExample": true,
+      "instructions": "Prueba de interfaz con datos de ejemplo. Explica cómo definir revisión humana. No atribuyas resultados a empresas reales."
+    }
+  },
+  "piece": {
+    "id": "b0934c9c-5e87-461d-a577-7d832b9f5957",
+    "title": "[QA UX] Criterios para un piloto de IA",
+    "format": "carousel",
+    "channel": "instagram",
+    "segmentId": "49b05f7b-cc43-405d-a5e1-c502d9e48522",
+    "referenceId": "1dbc2c23-efd7-49b0-86ba-ba7ba5d26d47",
+    "cta": "Define un piloto con revisión humana.",
+    "scenes": 4,
+    "engine": "heuristic",
+    "status": "draft",
+    "applied": {
+      "format": "carousel",
+      "unitCount": 4,
+      "cta": "Define un piloto con revisión humana.",
+      "includeExample": true
+    }
+  },
+  "nextStep": "El siguiente paso\n\nRevisa hechos, enfoque y voz de marca. Al enviar a revisión se guardarán tus cambios.\n\nEnviar a revisión",
+  "nextStepTop": 292.1953125,
+  "editorTop": 465.984375
+}

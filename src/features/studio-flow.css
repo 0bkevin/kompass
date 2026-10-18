@@ -6,7 +6,7 @@
 .draft-options > summary,
 .editor-connector-options > summary {
   cursor: pointer;
-  color: var(--ink);
+  color: var(--ink, #19352b);
   font-size: 13px;
   font-weight: 600;
   padding: 8px 0;
@@ -50,6 +50,12 @@
 
 .editor-connector-options .publication-actions {
   margin-top: 12px;
+}
+
+@media (min-width: 360px) and (max-width: 600px) {
+  .new-draft-form > .form-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
 }
 
 @media (max-width: 600px) {
