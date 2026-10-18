@@ -4,6 +4,7 @@ import {
   ArrowRight,
   Check,
   CheckCircle2,
+  ChevronDown,
   FileText,
   Globe2,
   Link2,
@@ -161,7 +162,7 @@ export function CompanySetup({
           body: json({
             ...draft,
             goals: ["Crear contenido útil para nuestra audiencia"],
-            color: "#137c64",
+            color: "#bea5f5",
             weeklyTarget: 3,
           }),
         });
@@ -196,8 +197,19 @@ export function CompanySetup({
             aria-current={step === index ? "step" : undefined}
             className={step >= index ? "reached" : ""}
           >
-            <span>{step > index ? <Check size={14} /> : index + 1}</span>
-            {label}
+            <span aria-hidden="true">
+              {step > index ? <Check size={14} /> : index + 1}
+            </span>
+            <div>
+              {label}
+              <small>
+                {step > index
+                  ? "Revisado"
+                  : step === index
+                    ? "Paso actual"
+                    : "Por completar"}
+              </small>
+            </div>
           </li>
         ))}
       </ol>
@@ -247,6 +259,11 @@ export function CompanySetup({
             <details className="setup-more">
               <summary>
                 <Link2 size={16} /> Añadir redes sociales (opcional)
+                <ChevronDown
+                  size={15}
+                  className="setup-disclosure-icon"
+                  aria-hidden="true"
+                />
               </summary>
               <div className="stack">
                 <Field label="Instagram, YouTube u otros enlaces públicos">
@@ -372,7 +389,14 @@ export function CompanySetup({
               event.currentTarget.open = true;
             }}
           >
-            <summary>Mercado y voz de la marca (opcional)</summary>
+            <summary>
+              Mercado y voz de la marca (opcional)
+              <ChevronDown
+                size={15}
+                className="setup-disclosure-icon"
+                aria-hidden="true"
+              />
+            </summary>
             <p className="setup-field-help">
               Empezaremos con {draft.market} y la voz «{draft.tone}». Puedes
               ajustar estos valores ahora o más adelante.
@@ -399,6 +423,11 @@ export function CompanySetup({
               <summary>
                 <FileText size={16} /> Ver qué pudimos leer (
                 {inspection.evidence.length})
+                <ChevronDown
+                  size={15}
+                  className="setup-disclosure-icon"
+                  aria-hidden="true"
+                />
               </summary>
               <ul>
                 {inspection.evidence.map((item) => (
