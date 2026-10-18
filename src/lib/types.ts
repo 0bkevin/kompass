@@ -22,6 +22,7 @@ export interface Segment {
   description?: string;
 }
 export interface Brand {
+  isDemo?: boolean;
   id: string;
   name: string;
   industry: string;
@@ -80,6 +81,7 @@ export interface Reference {
   id: string;
   title: string;
   url?: string;
+  originalUrlOmitted?: boolean;
   text?: string;
   source: string;
   platform?: SocialPlatform;
@@ -94,10 +96,7 @@ export interface Reference {
   mediaUrl?: string;
   contentScope?: "video_audio" | "sampled_video" | "metadata_only";
   mediaAccess?:
-    | "youtube_url"
-    | "provider_url"
-    | "uploaded_file"
-    | "unavailable";
+    "youtube_url" | "provider_url" | "uploaded_file" | "unavailable";
   videoAnalysis?: VideoAnalysis;
   createdAt: string;
   isDemo?: boolean;
@@ -177,9 +176,46 @@ export interface Piece {
   comments?: Comment[];
   metrics?: { views: number; engagement: number; leads: number };
   generationEngine?: "heuristic" | "ai";
+  editorialBrief?: {
+    instructions: string;
+    angle: string;
+    audienceNeeds: string;
+    referenceUrl: string;
+    applied: {
+      format: Piece["format"];
+      unitCount?: number;
+      cta: string;
+      includeExample: boolean;
+      sectionTitles?: string[];
+    };
+    notes: string[];
+  };
   approvalVersion: string;
   publicationError?: string;
-  publicationReceipt?: unknown;
+  publicationReceipt?: PublicationReceipt;
+}
+export type PublicationDestination =
+  | { provider: "telegram"; chatId: string }
+  | { provider: "webhook"; url: string; parametersHidden?: boolean };
+export interface PublicationReceipt {
+  provider: "telegram" | "webhook";
+  publishedAt: string;
+  messageId?: string | number;
+  chatId?: string | number;
+  status?: number;
+  requestId?: string;
+  destination?: PublicationDestination;
+}
+export interface PublicationState {
+  status: "ready" | "sending" | "uncertain" | "failed" | "delivered";
+  pieceStatus: Piece["status"];
+  approvalVersion: string;
+  destination: PublicationDestination | null;
+  destinationKey: string | null;
+  previewText?: string;
+  textTruncated?: boolean;
+  receipt?: PublicationReceipt;
+  error?: string;
 }
 export interface Asset {
   id: string;
@@ -206,11 +242,7 @@ export interface Source {
   createdAt: string;
 }
 export type SocialPlatform =
-  | "youtube"
-  | "instagram"
-  | "tiktok"
-  | "facebook"
-  | "x";
+  "youtube" | "instagram" | "tiktok" | "facebook" | "x";
 export interface SocialSettings {
   youtube: { configured: boolean };
   apify: { configured: boolean };

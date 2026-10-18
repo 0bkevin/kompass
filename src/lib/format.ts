@@ -6,6 +6,12 @@ export const statusNames: Record<Piece["status"], string> = {
   scheduled: "Programado",
   published: "Publicado",
 };
+export function pieceStatusLabel(piece: Piece) {
+  return piece.status === "published" &&
+    piece.publicationReceipt?.provider === "webhook"
+    ? "Aceptado por webhook"
+    : statusNames[piece.status];
+}
 export const saturationNames = {
   low: "Poco explorado",
   medium: "En conversación",
