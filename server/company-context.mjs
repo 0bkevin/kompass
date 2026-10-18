@@ -500,6 +500,22 @@ const TOPICS = [
 function statedAudience(text) {
   // Keep a clearly declared target group more specific than a topic match.
   // This is supplied company context, never an observed consumer profile.
+  const proposed = text.match(
+    /(?:^|[.!?]\s+)audiencia editorial propuesta\s*:\s*([^.!?]{2,500})(?=[.!?]|$)/iu,
+  );
+  if (proposed) {
+    const interest = proposed[1]
+      .trim()
+      .match(/^(.{2,160}?)\s+interesad[oa]s?\s+en\s+(.{3,400})$/iu);
+    const name = redact(interest?.[1] || proposed[1], 120);
+    return {
+      name,
+      role: name,
+      needs: interest
+        ? redact(interest[2], 400)
+        : "Validar qué contenido resulta útil para este grupo propuesto.",
+    };
+  }
   const match = text.match(
     /(?:^|[.!?]\s+)(?:ayudamos|acompañamos|apoyamos)\s+a\s+([^.!?]{2,160}?)\s+que\s+necesita(?:n)?\s+([^.!?]{3,400})(?=[.!?]|$)/iu,
   );
