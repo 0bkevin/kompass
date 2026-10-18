@@ -1,0 +1,92 @@
+{
+  "coreReady": true,
+  "verification": "configuration-only",
+  "discovery": [
+    {
+      "name": "Hacker News",
+      "available": true,
+      "credentialRequired": false
+    },
+    {
+      "name": "GDELT",
+      "available": true,
+      "credentialRequired": false
+    },
+    {
+      "name": "Google Trends",
+      "available": true,
+      "credentialRequired": false
+    }
+  ],
+  "ai": {
+    "configured": false,
+    "ready": false,
+    "action": "Set the platform OPENAI_API_KEY in the deployment secret store."
+  },
+  "media": {
+    "enabled": false,
+    "provider": "codex-chatgpt",
+    "execution": "local-worker",
+    "verification": "runtime-prerequisites-only",
+    "runtimeVerificationRequired": false,
+    "video": {
+      "mode": "local-composition",
+      "audio": false
+    },
+    "action": "Enable MEDIA_GENERATION_ENABLED only after installing Codex and signing in with the authorized ChatGPT account on this server.",
+    "runtime": {
+      "image": {
+        "ready": false,
+        "provider": "codex-chatgpt",
+        "label": "Imagen con tu suscripci\u00f3n de ChatGPT",
+        "reason": "La creaci\u00f3n visual a\u00fan no est\u00e1 activada en este servidor."
+      },
+      "video": {
+        "ready": false,
+        "provider": "local-composition",
+        "label": "Video animado con ilustraci\u00f3n IA, sin audio",
+        "reason": "La creaci\u00f3n visual a\u00fan no est\u00e1 activada en este servidor."
+      },
+      "ratios": ["1:1", "4:5", "9:16", "16:9"]
+    },
+    "liveGenerationVerified": false
+  },
+  "officialSocial": {
+    "verification": "configuration-only",
+    "runtimeVerificationRequired": true,
+    "youtube": {
+      "publicDataConfigured": false,
+      "accountOAuthConfigured": false
+    },
+    "automaticSyncEnabled": false,
+    "action": "Configured credentials do not prove API availability, quota or a company's account authorization. Check each connection at runtime; legacy scraping remains restricted."
+  },
+  "publishing": {
+    "exportReady": true,
+    "automaticSocialPublishing": false,
+    "webhook": "Per-company destination and access review required for optional delivery."
+  },
+  "restricted": [
+    {
+      "provider": "apify",
+      "available": false
+    },
+    {
+      "provider": "youtube",
+      "available": false
+    },
+    {
+      "provider": "gemini",
+      "available": false
+    },
+    {
+      "provider": "reddit",
+      "available": false
+    }
+  ],
+  "operatorActions": [
+    "Configure a platform AI credential once; customers do not need their own key.",
+    "Review the AI provider and record the allowed origin, path, purpose and expiry.",
+    "Social scraping and remote video analysis remain unavailable; credentials alone do not enable them."
+  ]
+}
