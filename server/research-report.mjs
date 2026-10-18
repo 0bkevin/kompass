@@ -160,7 +160,15 @@ export function buildResearchReport(
     snapshots,
   });
   const safeEvidence = editorialEvidence.filter(publicText);
+  const audienceIds = new Set(
+    (brand.audience || []).map((segment) => segment.id).filter(Boolean),
+  );
+  // Corpus coverage includes all available material; priority requires a
+  // match to a currently declared audience before applying the report limit.
   const opportunities = insights.opportunities
+    .filter((opportunity) =>
+      opportunity.segmentIds.some((id) => audienceIds.has(id)),
+    )
     .slice(0, 10)
     .map((opportunity) => {
       const result = annotatedOpportunity(opportunity, safeEvidence);

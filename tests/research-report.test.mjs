@@ -27,6 +27,7 @@ let storage,
   owner,
   reviewer,
   outsider;
+let buildResearchReport, buildInsights;
 function account(name) {
   const user = auth.createUser({
     name,
@@ -59,6 +60,8 @@ async function request(route, { user = owner, method = "GET", body } = {}) {
 before(async () => {
   storage = await import("../server/db.mjs");
   auth = await import("../server/auth.mjs");
+  ({ buildResearchReport } = await import("../server/research-report.mjs"));
+  ({ buildInsights } = await import("../server/audience-insights.mjs"));
   const { createApp } = await import("../server/index.mjs");
   owner = account("Equipo QA");
   reviewer = account("Revisión QA");
@@ -140,6 +143,83 @@ after(async () => {
   fs.rmSync(directory, { recursive: true, force: true });
 });
 const route = () => `/brands/${brand.id}/research-report`;
+
+test("priority filters audience matches before the limit without narrowing corpus coverage", () => {
+  const now = Date.now();
+  const company = {
+    ...brand,
+    description: "Educación aprendizaje formación investigación universidad",
+    pillars: ["IA aplicada"],
+    audience: [
+      {
+        id: "directivos-qa",
+        name: "Directivos",
+        needs: "Elegir el primer proceso del negocio donde probar IA.",
+      },
+    ],
+  };
+  const references = [
+    ...Array.from({ length: 12 }, (_, index) => ({
+      id: `unrelated-${index}`,
+      title: `Torneo ${index}`,
+      topic: `Torneo ${index}`,
+      text: "Educación aprendizaje formación investigación universidad",
+    })),
+    ...["Costos", "Inventario"].map((topic, index) => ({
+      id: `matched-${index}`,
+      title: `${topic} del negocio`,
+      topic: `${topic} del negocio`,
+      text: "Una decisión documentada.",
+    })),
+  ].map((reference) => ({
+    ...reference,
+    status: "saved",
+    sourceId: source.id,
+    ingestionProvider: "hackernews",
+    url: `https://example.com/${reference.id}`,
+    publishedAt: new Date(now - 86400000).toISOString(),
+  }));
+  const options = { references, sources: [source], now };
+  const insights = buildInsights(company, options);
+  assert.equal(insights.opportunities.length, 14);
+  assert.ok(
+    insights.opportunities
+      .slice(0, 10)
+      .every((item) => !item.segmentIds.length),
+    "unrelated proposals rank above matches, exercising filtering before the cap",
+  );
+  const matched = insights.opportunities.filter((item) =>
+    item.segmentIds.includes("directivos-qa"),
+  );
+  assert.equal(matched.length, 2);
+  const report = buildResearchReport(company, options);
+  assert.deepEqual(
+    report.opportunities.map((item) => item.id),
+    matched.map((item) => item.id),
+  );
+  for (const [index, opportunity] of report.opportunities.entries()) {
+    assert.deepEqual(opportunity.segmentIds, ["directivos-qa"]);
+    assert.deepEqual(opportunity.referenceIds, matched[index].referenceIds);
+    assert.deepEqual(
+      opportunity.evidence.map(({ detail, ...citation }) => citation),
+      matched[index].evidence.map(({ detail, ...citation }) => citation),
+    );
+    assert.deepEqual(opportunity.growth, matched[index].growth);
+    assert.deepEqual(opportunity.factors, matched[index].factors);
+  }
+  assert.equal(report.scope.counts.selected, 14);
+  assert.equal(report.scope.counts.publicationDated, 14);
+  assert.equal(report.coverage.references, 14);
+  assert.equal(report.evidence.coverage.summary.counts.uniqueReferences, 14);
+
+  for (const audience of [[], [{ id: "new-audience", needs: "Astronomía" }]]) {
+    const empty = buildResearchReport({ ...company, audience }, options);
+    assert.deepEqual(empty.opportunities, []);
+    assert.deepEqual(empty.scope.counts, report.scope.counts);
+    assert.deepEqual(empty.coverage, report.coverage);
+    assert.deepEqual(empty.evidence.coverage, report.evidence.coverage);
+  }
+});
 
 test("report reads are private, company isolated and do not refresh or mutate sources", async () => {
   assert.equal((await request(route(), { user: null })).status, 401);
