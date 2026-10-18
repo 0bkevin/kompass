@@ -1,0 +1,390 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-10-18T01:51:09.625177+00:00",
+  "title": "Design System: 30X Radar",
+  "extensions": {
+    "colorMeta": {
+      "primary": {
+        "role": "primary",
+        "displayName": "Primary",
+        "tonalRamp": [
+          "oklch(15% 0.0911 166.93)",
+          "oklch(27% 0.0911 166.93)",
+          "oklch(39% 0.0911 166.93)",
+          "oklch(51% 0.0911 166.93)",
+          "oklch(63% 0.0911 166.93)",
+          "oklch(75% 0.0911 166.93)",
+          "oklch(87% 0.0911 166.93)",
+          "oklch(95% 0.0911 166.93)"
+        ]
+      },
+      "primary-hover": {
+        "role": "primary",
+        "displayName": "Primary Hover",
+        "tonalRamp": [
+          "oklch(15% 0.0781 165.97)",
+          "oklch(27% 0.0781 165.97)",
+          "oklch(39% 0.0781 165.97)",
+          "oklch(51% 0.0781 165.97)",
+          "oklch(63% 0.0781 165.97)",
+          "oklch(75% 0.0781 165.97)",
+          "oklch(87% 0.0781 165.97)",
+          "oklch(95% 0.0781 165.97)"
+        ]
+      },
+      "green": {
+        "role": "primary",
+        "displayName": "Green",
+        "tonalRamp": [
+          "oklch(15% 0.0932 168.90)",
+          "oklch(27% 0.0932 168.90)",
+          "oklch(39% 0.0932 168.90)",
+          "oklch(51% 0.0932 168.90)",
+          "oklch(63% 0.0932 168.90)",
+          "oklch(75% 0.0932 168.90)",
+          "oklch(87% 0.0932 168.90)",
+          "oklch(95% 0.0932 168.90)"
+        ]
+      },
+      "navigation": {
+        "role": "neutral",
+        "displayName": "Navigation",
+        "tonalRamp": [
+          "oklch(15% 0.0332 188.95)",
+          "oklch(27% 0.0332 188.95)",
+          "oklch(39% 0.0332 188.95)",
+          "oklch(51% 0.0332 188.95)",
+          "oklch(63% 0.0332 188.95)",
+          "oklch(75% 0.0332 188.95)",
+          "oklch(87% 0.0332 188.95)",
+          "oklch(95% 0.0332 188.95)"
+        ]
+      },
+      "navigation-active": {
+        "role": "neutral",
+        "displayName": "Navigation Active",
+        "tonalRamp": [
+          "oklch(15% 0.0535 163.98)",
+          "oklch(27% 0.0535 163.98)",
+          "oklch(39% 0.0535 163.98)",
+          "oklch(51% 0.0535 163.98)",
+          "oklch(63% 0.0535 163.98)",
+          "oklch(75% 0.0535 163.98)",
+          "oklch(87% 0.0535 163.98)",
+          "oklch(95% 0.0535 163.98)"
+        ]
+      },
+      "navigation-text": {
+        "role": "neutral",
+        "displayName": "Navigation Text",
+        "tonalRamp": [
+          "oklch(15% 0.0204 159.67)",
+          "oklch(27% 0.0204 159.67)",
+          "oklch(39% 0.0204 159.67)",
+          "oklch(51% 0.0204 159.67)",
+          "oklch(63% 0.0204 159.67)",
+          "oklch(75% 0.0204 159.67)",
+          "oklch(87% 0.0204 159.67)",
+          "oklch(95% 0.0204 159.67)"
+        ]
+      },
+      "navigation-active-text": {
+        "role": "neutral",
+        "displayName": "Navigation Active Text",
+        "tonalRamp": [
+          "oklch(15% 0.0186 130.18)",
+          "oklch(27% 0.0186 130.18)",
+          "oklch(39% 0.0186 130.18)",
+          "oklch(51% 0.0186 130.18)",
+          "oklch(63% 0.0186 130.18)",
+          "oklch(75% 0.0186 130.18)",
+          "oklch(87% 0.0186 130.18)",
+          "oklch(95% 0.0186 130.18)"
+        ]
+      },
+      "canvas": {
+        "role": "neutral",
+        "displayName": "Canvas",
+        "tonalRamp": [
+          "oklch(15% 0.0054 117.92)",
+          "oklch(27% 0.0054 117.92)",
+          "oklch(39% 0.0054 117.92)",
+          "oklch(51% 0.0054 117.92)",
+          "oklch(63% 0.0054 117.92)",
+          "oklch(75% 0.0054 117.92)",
+          "oklch(87% 0.0054 117.92)",
+          "oklch(95% 0.0054 117.92)"
+        ]
+      },
+      "paper": {
+        "role": "neutral",
+        "displayName": "Paper",
+        "tonalRamp": [
+          "oklch(15% 0.0000 89.88)",
+          "oklch(27% 0.0000 89.88)",
+          "oklch(39% 0.0000 89.88)",
+          "oklch(51% 0.0000 89.88)",
+          "oklch(63% 0.0000 89.88)",
+          "oklch(75% 0.0000 89.88)",
+          "oklch(87% 0.0000 89.88)",
+          "oklch(95% 0.0000 89.88)"
+        ]
+      },
+      "ink": {
+        "role": "neutral",
+        "displayName": "Ink",
+        "tonalRamp": [
+          "oklch(15% 0.0390 168.48)",
+          "oklch(27% 0.0390 168.48)",
+          "oklch(39% 0.0390 168.48)",
+          "oklch(51% 0.0390 168.48)",
+          "oklch(63% 0.0390 168.48)",
+          "oklch(75% 0.0390 168.48)",
+          "oklch(87% 0.0390 168.48)",
+          "oklch(95% 0.0390 168.48)"
+        ]
+      },
+      "muted": {
+        "role": "neutral",
+        "displayName": "Muted",
+        "tonalRamp": [
+          "oklch(15% 0.0204 164.02)",
+          "oklch(27% 0.0204 164.02)",
+          "oklch(39% 0.0204 164.02)",
+          "oklch(51% 0.0204 164.02)",
+          "oklch(63% 0.0204 164.02)",
+          "oklch(75% 0.0204 164.02)",
+          "oklch(87% 0.0204 164.02)",
+          "oklch(95% 0.0204 164.02)"
+        ]
+      },
+      "border": {
+        "role": "neutral",
+        "displayName": "Border",
+        "tonalRamp": [
+          "oklch(15% 0.0127 149.24)",
+          "oklch(27% 0.0127 149.24)",
+          "oklch(39% 0.0127 149.24)",
+          "oklch(51% 0.0127 149.24)",
+          "oklch(63% 0.0127 149.24)",
+          "oklch(75% 0.0127 149.24)",
+          "oklch(87% 0.0127 149.24)",
+          "oklch(95% 0.0127 149.24)"
+        ]
+      },
+      "next-action": {
+        "role": "neutral",
+        "displayName": "Next Action",
+        "tonalRamp": [
+          "oklch(15% 0.0170 145.44)",
+          "oklch(27% 0.0170 145.44)",
+          "oklch(39% 0.0170 145.44)",
+          "oklch(51% 0.0170 145.44)",
+          "oklch(63% 0.0170 145.44)",
+          "oklch(75% 0.0170 145.44)",
+          "oklch(87% 0.0170 145.44)",
+          "oklch(95% 0.0170 145.44)"
+        ]
+      },
+      "focus": {
+        "role": "primary",
+        "displayName": "Focus",
+        "tonalRamp": [
+          "oklch(15% 0.0895 161.90)",
+          "oklch(27% 0.0895 161.90)",
+          "oklch(39% 0.0895 161.90)",
+          "oklch(51% 0.0895 161.90)",
+          "oklch(63% 0.0895 161.90)",
+          "oklch(75% 0.0895 161.90)",
+          "oklch(87% 0.0895 161.90)",
+          "oklch(95% 0.0895 161.90)"
+        ]
+      }
+    },
+    "typographyMeta": {
+      "headline": {
+        "displayName": "Page Headline",
+        "purpose": "Standard workspace page title."
+      },
+      "title": {
+        "displayName": "Section Title",
+        "purpose": "Operational sections."
+      },
+      "body": {
+        "displayName": "Body",
+        "purpose": "Reading text and field values."
+      },
+      "label": {
+        "displayName": "Label",
+        "purpose": "Visible field labels."
+      }
+    },
+    "shadows": [
+      {
+        "name": "modal",
+        "value": "0 20px 80px #0a2d2430",
+        "purpose": "Dialog elevation above the dimmed workspace."
+      }
+    ],
+    "motion": [
+      {
+        "name": "control-transition",
+        "value": "background 0.18s, transform 0.18s",
+        "purpose": "Shared button state change; current workspace hover does not translate."
+      },
+      {
+        "name": "journey-arrival",
+        "value": "0.55s cubic-bezier(0.16, 1, 0.3, 1)",
+        "purpose": "Next-action entrance, only when reduced motion is not requested."
+      },
+      {
+        "name": "setup-loading",
+        "value": "1.8s ease-in-out infinite",
+        "purpose": "Company content reading progress; disabled for reduced motion."
+      }
+    ],
+    "breakpoints": [
+      {
+        "name": "shell-narrow",
+        "value": "1250px"
+      },
+      {
+        "name": "journey-compact",
+        "value": "1150px"
+      },
+      {
+        "name": "shell-compact",
+        "value": "1100px"
+      },
+      {
+        "name": "search-hidden",
+        "value": "900px"
+      },
+      {
+        "name": "journey-stacked",
+        "value": "800px"
+      },
+      {
+        "name": "navigation-drawer",
+        "value": "760px"
+      },
+      {
+        "name": "community-stacked",
+        "value": "700px"
+      },
+      {
+        "name": "forms-mobile",
+        "value": "600px"
+      },
+      {
+        "name": "journey-mobile",
+        "value": "520px"
+      }
+    ]
+  },
+  "components": [
+    {
+      "name": "Primary Button",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "Shared action control with visible keyboard focus.",
+      "html": "<button class=\"ds-button-primary\">Ver detalles</button>",
+      "css": ".ds-button-primary {display:inline-flex;align-items:center;justify-content:center;gap:8px;border-radius:8px;min-height:42px;padding:11px 16px;font:700 13px \"DM Sans\",sans-serif;cursor:pointer;transition:background .18s,transform .18s;background:#136c51;color:#fff;border:1px solid #136c51;} .ds-button-primary:hover:not(:disabled) {background:#0e563f;} .ds-button-primary:focus-visible {outline:3px solid #438b6a;outline-offset:3px;} .ds-button-primary:disabled {opacity:.48;cursor:not-allowed;} @media(prefers-reduced-motion:reduce) {.ds-button-primary {transition:none;}}"
+    },
+    {
+      "name": "Secondary Button",
+      "kind": "button",
+      "refersTo": "button-secondary",
+      "description": "Shared action control with visible keyboard focus.",
+      "html": "<button class=\"ds-button-secondary\">Ver detalles</button>",
+      "css": ".ds-button-secondary {display:inline-flex;align-items:center;justify-content:center;gap:8px;border-radius:8px;min-height:42px;padding:11px 16px;font:700 13px \"DM Sans\",sans-serif;cursor:pointer;transition:background .18s,transform .18s;background:#fff;color:#19352b;border:1px solid var(--border);} .ds-button-secondary:hover:not(:disabled) {background:#f0f5f2;} .ds-button-secondary:focus-visible {outline:3px solid #438b6a;outline-offset:3px;} .ds-button-secondary:disabled {opacity:.48;cursor:not-allowed;} @media(prefers-reduced-motion:reduce) {.ds-button-secondary {transition:none;}}"
+    },
+    {
+      "name": "Ghost Button",
+      "kind": "button",
+      "refersTo": "button-ghost",
+      "description": "Shared action control with visible keyboard focus.",
+      "html": "<button class=\"ds-button-ghost\">Ver detalles</button>",
+      "css": ".ds-button-ghost {display:inline-flex;align-items:center;justify-content:center;gap:8px;border-radius:8px;min-height:42px;padding:11px 16px;font:700 13px \"DM Sans\",sans-serif;cursor:pointer;transition:background .18s,transform .18s;background:transparent;color:#19352b;border:1px solid transparent;} .ds-button-ghost:hover:not(:disabled) {background:#f0f5f2;} .ds-button-ghost:focus-visible {outline:3px solid #438b6a;outline-offset:3px;} .ds-button-ghost:disabled {opacity:.48;cursor:not-allowed;} @media(prefers-reduced-motion:reduce) {.ds-button-ghost {transition:none;}}"
+    },
+    {
+      "name": "Labeled Field",
+      "kind": "input",
+      "description": "Visible label and editable white field.",
+      "html": "<label class=\"ds-field\"><span>Nombre de la empresa</span><input placeholder=\"Tu empresa\" /></label>",
+      "css": ".ds-field {display:flex;flex-direction:column;gap:7px;font:600 13px \"DM Sans\",sans-serif;color:#40524d;} .ds-field input {font:400 14px \"DM Sans\",sans-serif;color:#263a38;background:#fff;border:1px solid #dfe6e2;border-radius:8px;padding:12px 13px;caret-color:#136c51;transition:border .2s;} .ds-field input::placeholder {color:#69776d;opacity:1;} .ds-field input:focus {border-color:#259d7b;} .ds-field input:focus-visible {outline:3px solid #438b6a;outline-offset:2px;box-shadow:none;} @media(prefers-reduced-motion:reduce){.ds-field input{transition:none;}}",
+      "refersTo": "field-input"
+    },
+    {
+      "name": "Sidebar Navigation",
+      "kind": "nav",
+      "description": "Dark orientation surface with current destination indicated.",
+      "html": "<nav class=\"ds-nav\" aria-label=\"Trabajo\"><button aria-current=\"page\">Inicio</button><button>Audiencia</button></nav>",
+      "css": ".ds-nav{background:#102b29;padding:18px;width:220px;font-family:\"DM Sans\",sans-serif;} .ds-nav button{display:flex;width:100%;text-align:left;margin:3px 0;padding:11px 12px;min-height:42px;border:0;border-radius:7px;font:500 13px \"DM Sans\",sans-serif;background:transparent;color:#c2d1c8;cursor:pointer;} .ds-nav button:hover{background:#1a3933;color:white;} .ds-nav button[aria-current]{background:#2a5140;color:#f2f9ec;font-weight:650;} .ds-nav button:focus-visible{outline:3px solid #438b6a;outline-offset:3px;}",
+      "refersTo": "navigation-active"
+    },
+    {
+      "name": "Neutral Status Badge",
+      "kind": "chip",
+      "description": "Journey neutral status label.",
+      "html": "<span class=\"ds-badge\">En revisión</span>",
+      "css": ".ds-badge{display:inline-flex;align-items:center;gap:4px;font:600 11px/1.6 \"DM Sans\",sans-serif;padding:4px 7px;border-radius:5px;white-space:nowrap;color:#435b50;background:#edf2ed;}"
+    },
+    {
+      "name": "Working Card",
+      "kind": "card",
+      "description": "Shared flat container shown with community form padding.",
+      "html": "<section class=\"ds-card\"><h2>Pregunta a tu comunidad</h2><p>Recoge necesidades para orientar tu contenido.</p></section>",
+      "css": ".ds-card{background:#fff;border:1px solid var(--border);border-radius:12px;padding:24px;color:#19352b;font-family:\"DM Sans\",sans-serif;} .ds-card h2{font:700 18px/1.45 \"Manrope\",sans-serif;letter-spacing:-.35px;margin:0;} .ds-card p{font-size:14px;line-height:1.65;color:#58665f;margin:8px 0 0;}",
+      "refersTo": "card"
+    },
+    {
+      "name": "Next Action Region",
+      "kind": "custom",
+      "description": "Pale green home region that foregrounds one next action.",
+      "html": "<section class=\"ds-next\"><h2>El próximo paso para tu contenido</h2><p>Revisa las oportunidades de tu empresa.</p><button>Ver oportunidades</button></section>",
+      "css": ".ds-next{padding:32px 36px;background:#e6f0e6;border-radius:14px;color:#193b33;font-family:\"DM Sans\",sans-serif;} .ds-next h2{font:700 clamp(20px,2.1vw,26px)/1.35 \"Manrope\",sans-serif;letter-spacing:-.025em;margin:0;} .ds-next p{margin:11px 0 0;color:#3b5948;font-size:15px;line-height:1.65;max-width:72ch;} .ds-next button{display:inline-flex;align-items:center;justify-content:center;gap:8px;border-radius:8px;min-height:42px;padding:11px 16px;font:700 13px \"DM Sans\",sans-serif;cursor:pointer;transition:background .18s,transform .18s;background:#136c51;color:#fff;border:1px solid #136c51;margin-top:23px;} .ds-next button:hover{background:#0e563f;} .ds-next button:focus-visible{outline:3px solid #267c60;outline-offset:3px;} @media(max-width:520px){.ds-next{padding:23px 21px;} .ds-next h2{font-size:21px;}} @media(prefers-reduced-motion:reduce){.ds-next button{transition:none;}}",
+      "refersTo": "next-action"
+    }
+  ],
+  "narrative": {
+    "northStar": "The Guided Green Workspace",
+    "overview": "The established 30X Radar identity pairs dark green navigation with a light neutral working surface. It feels practical, composed and readable: familiar forms, lists and disclosures support sustained editorial work. This records the incumbent application's visual language and its completed extensions.\n\nHierarchy comes from typography, space and restrained green emphasis. The workspace shows a clear action before supporting detail, while evidence remains readable in expanded sections. The interface uses Lucide outline controls and functional UI rather than illustration or simulated materials.",
+    "keyCharacteristics": [
+      "Dark green orientation beside light working surfaces.",
+      "Manrope headings with DM Sans controls and reading text.",
+      "Flat lists, soft bordered forms and restrained tonal emphasis.",
+      "Visible focus and responsive stacking."
+    ],
+    "rules": [
+      {
+        "name": "The Action Emphasis Rule",
+        "body": "Use filled green to identify primary actions; keep supporting actions white or transparent.",
+        "section": "colors"
+      },
+      {
+        "name": "The Two Voices Rule",
+        "body": "Keep Manrope for headings and DM Sans for body text and controls.",
+        "section": "typography"
+      },
+      {
+        "name": "The Quiet Surface Rule",
+        "body": "Use tone and dividers for routine hierarchy; reserve strong elevation for overlays.",
+        "section": "elevation"
+      }
+    ],
+    "dos": [
+      "**Do** retain the dark green shell and light working surface when extending the app.",
+      "**Do** reuse the shared button, field and badge components before introducing a local variant.",
+      "**Do** give keyboard focus a visible offset outline and preserve reduced-motion behavior.",
+      "**Do** use divided rows and disclosures for dense evidence and supporting detail.",
+      "**Do** keep responsive overflow inside tables and wrap long content within its region."
+    ],
+    "donts": [
+      "**Don't** replace the established font pair or green identity for an individual feature.",
+      "**Don't** apply modal-strength shadows to routine forms and lists.",
+      "**Don't** rely on placeholder text or color alone to explain a field or state.",
+      "**Don't** promote incidental legacy type sizes, color variants or decorative labels into new system roles."
+    ]
+  }
+}
