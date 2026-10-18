@@ -180,6 +180,22 @@ li {
   min-height: calc(100vh - 124px);
   outline: none;
 }
+.ai-data-notice {
+  margin: 0 0 24px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid var(--border);
+  color: var(--muted);
+  font-size: 13px;
+  line-height: 1.65;
+}
+.ai-data-notice strong {
+  color: #19352b;
+}
+.ai-data-notice a {
+  color: #136c51;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
 .topbar {
   height: 72px;
   gap: 18px;

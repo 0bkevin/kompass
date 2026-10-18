@@ -289,6 +289,7 @@ export interface Integrations {
     managedBy: "platform" | "workspace" | "local";
     hasOverride: boolean;
     model?: string;
+    dataMode?: "public-test";
     accessPolicy?: AccessPolicy;
   };
   webhook: { configured: boolean; url?: string; accessPolicy?: AccessPolicy };

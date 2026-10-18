@@ -132,6 +132,9 @@ export default function Settings() {
   const base = `/api/brands/${brandId}`;
   const owner = state.brand.role === "owner";
   const canEdit = owner || state.brand.role === "editor";
+  const publicTestAi =
+    state.integrations.ai.ready &&
+    state.integrations.ai.dataMode === "public-test";
   const [source, setSource] = useState<SourceDraft | null>(null);
   const [busy, setBusy] = useState("");
   const sourceGuardRef = useRef(
@@ -430,11 +433,13 @@ export default function Settings() {
           <div>
             <dt>Análisis y creación</dt>
             <dd>
-              {state.integrations.ai.ready
-                ? state.integrations.ai.managedBy === "platform"
-                  ? "IA gestionada por la plataforma"
-                  : "IA de esta empresa disponible"
-                : "Motor editorial local disponible"}
+              {publicTestAi
+                ? "IA de prueba gratuita"
+                : state.integrations.ai.ready
+                  ? state.integrations.ai.managedBy === "platform"
+                    ? "IA gestionada por la plataforma"
+                    : "IA de esta empresa disponible"
+                  : "Motor editorial local disponible"}
             </dd>
           </div>
           <div>
@@ -787,11 +792,13 @@ export default function Settings() {
           {integrationTab === "ai" && (
             <div className="stack">
               <Badge tone={state.integrations.ai.ready ? "green" : "neutral"}>
-                {state.integrations.ai.ready
-                  ? state.integrations.ai.managedBy === "platform"
-                    ? "IA de la plataforma disponible"
-                    : "IA de esta empresa disponible"
-                  : "Motor editorial local disponible"}
+                {publicTestAi
+                  ? "IA de prueba gratuita"
+                  : state.integrations.ai.ready
+                    ? state.integrations.ai.managedBy === "platform"
+                      ? "IA de la plataforma disponible"
+                      : "IA de esta empresa disponible"
+                    : "Motor editorial local disponible"}
               </Badge>
               <p className="muted">
                 {state.integrations.ai.ready

@@ -31,6 +31,7 @@ export function platformReadiness() {
     ai: {
       configured: !!ai,
       ready: !!ai && aiPolicy.allowed,
+      ...(ai?.dataMode ? { dataMode: ai.dataMode } : {}),
       action: !ai
         ? "Set the platform OPENAI_API_KEY in the deployment secret store."
         : !aiPolicy.allowed

@@ -656,6 +656,21 @@ export default function App() {
           </Button>
         </header>
         <main className="main-content" id="workspace-main" tabIndex={-1}>
+          {state?.integrations.ai.ready &&
+            state.integrations.ai.dataMode === "public-test" && (
+              <p className="ai-data-notice" role="note">
+                <strong>IA de prueba gratuita.</strong> Usa solo contenido
+                público o ficticio; Google puede usarlo para mejorar sus
+                productos.{" "}
+                <a
+                  href="https://ai.google.dev/gemini-api/terms"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  Condiciones de Gemini
+                </a>
+              </p>
+            )}
           {error ? (
             <div className="error-panel">
               <AlertCircle />

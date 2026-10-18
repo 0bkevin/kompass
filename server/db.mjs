@@ -188,6 +188,7 @@ export function publicIntegrations(brandId) {
       managedBy: ai?.managedBy || "local",
       hasOverride: !!stored,
       ...(ai ? { model: ai.model } : {}),
+      ...(ai?.dataMode ? { dataMode: ai.dataMode } : {}),
     },
     webhook: {
       accessPolicy: webhookAccessPolicy(webhook?.url),
