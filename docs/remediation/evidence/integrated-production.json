@@ -1,0 +1,80 @@
+{
+  "checkedAt": "2026-10-18T05:48:59.641Z",
+  "runtime": {
+    "mode": "compiled production",
+    "port": 5450,
+    "dataDir": "/tmp/30x-remediation-integrated",
+    "host": "127.0.1.88",
+    "synthetic": true,
+    "externalPublication": false
+  },
+  "initialScheduledPiece": {
+    "brandId": "bd3d2dce-3e9b-48a1-ba05-4a126ceb8285",
+    "pieceId": "19f8a451-f664-4df2-a2f6-6998008391db",
+    "status": "scheduled",
+    "scheduledFor": "2026-10-19T05:44:00.000Z",
+    "approvalVersion": "ZxWN3FGrxSU_muqd95yNUYUHuX6XX1XxGKRgmAPvnYo",
+    "hasOnePiece": true,
+    "market": "Costa Rica",
+    "language": "Español",
+    "referenceId": "67e742aa-efa6-4ce8-bb3d-c505bd8e62c3",
+    "viewport": 1280,
+    "documentWidth": 1280,
+    "gridText": "Tu contenido, en su momento.\n\nDale espacio a las buenas ideas. Organiza la grilla y mantén al equipo en la misma página.\n\nExportar CSV\n1 pieza en tu grilla\nDurante este mes\nEsta semana\n0 / 3 piezas\nObjetivo semanal de tu marca\nOctubre De 2026\nHoy\nMes\nSemana\nLun\nMar\nMié\nJue\nVie\nSáb\nDom\n28\n29\n30\n1\n2\n3\n4\n5\n6\n7\n8\n9\n10\n11\n12\n13\n14\n15\n16\n17\n18\nHoy\n19\n1\nLinkedIn\n05:44\nCuatro pasos para revisar un piloto comercial — prueba sintética\n20\n21\n22\n23\n24\n25\n26\n27\n28\n29\n30\n31\n1\n2\n3\n4\n5\n6\n7\n8\nFecha seleccionada\nZona horaria: UTC\n18 oct\nDomingo\n0\nUna fecha con posibilidades\n\nElige una pieza aprobada para darle un lugar en tu plan.\n\nListas para agendar\n0\n\nLas piezas aprobadas sin fecha aparecerán aquí.\n\nIr al estudio\nPlanifica aquí. Publica a tu ritmo.\n\nAbre la pieza para usar Enviar ahora con un conector, o exporta y publica desde tu canal. Confirma la publicación final y registra el enlace y las métricas en Resultados.\n\nPróximas en salir\nTu siguiente contenido, en orden\n19\nOCT\nCuatro pasos para revisar un piloto comercial — prueba sintética\nLinkedIn · Carrusel · 05:44\nProgramado"
+  },
+  "initialOutcome": {
+    "http": 200,
+    "count": 1,
+    "outcome": {
+      "pieceId": "19f8a451-f664-4df2-a2f6-6998008391db",
+      "channel": "linkedin",
+      "segmentId": "70677b82-9820-44bc-ae2c-4fba43353172",
+      "title": "Cuatro pasos para revisar un piloto comercial — prueba sintética",
+      "publishedUrl": "https://example.com/qa/resultado-sintetico",
+      "publishedAt": "2026-10-18T05:00:00.000Z",
+      "metrics": {
+        "views": 1500.5,
+        "engagement": 75.25,
+        "leads": 3.5
+      },
+      "notes": "Registro sintético para comprobar el flujo completo. Cifras ficticias; no hubo publicación ni resultados comerciales reales.",
+      "origin": "manual",
+      "id": "6e5e80ea-d3be-47d1-8b52-0acd59846719",
+      "createdAt": "2026-10-18T05:46:28.259Z",
+      "updatedAt": "2026-10-18T05:46:28.259Z"
+    },
+    "growth": {
+      "label": "insufficient",
+      "explanation": "Faltan dos observaciones comparables: ventanas de 7 días, mismas fuentes y consultas, separadas por al menos una semana. Una sola consulta no demuestra crecimiento."
+    }
+  },
+  "mobileOutcomeCorrection": {
+    "count": 1,
+    "sameId": true,
+    "sameCreatedAt": true,
+    "metrics": {
+      "views": 1500.5,
+      "engagement": 75.25,
+      "leads": 3.5
+    },
+    "noteCorrected": true,
+    "origin": "manual",
+    "viewport": 390,
+    "documentWidth": 390
+  },
+  "mobileReferencesSearch": {
+    "rows": [
+      "C\nIA para ventas: mide un piloto antes de ampliarlo\nContenido sintético de QA · Hace 50 min"
+    ],
+    "viewport": 390,
+    "documentWidth": 390,
+    "searchFont": "16px"
+  },
+  "flowComplete": true,
+  "notes": [
+    "La creación desde Oportunidades navega directamente al editor; se usó ese recorrido real.",
+    "Las lecturas de verificación usan /state e /insights. Dos sondeos manuales iniciales a rutas inexistentes devolvieron404; no fueron peticiones del flujo UI.",
+    "No hubo errores JavaScript nuevos en el recorrido compilado. Los registros y cifras son ficticios.",
+    "La consulta inicial no se presentó como crecimiento observado; la oportunidad conserva label insufficient."
+  ]
+}

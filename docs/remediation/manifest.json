@@ -1,0 +1,12 @@
+{
+  "startedAt": "2026-10-18T04:55:01.079Z",
+  "baselineTests": {
+    "pass": 170,
+    "fail": 0,
+    "skip": 0,
+    "log": "/tmp/30x-remediation-baseline.log"
+  },
+  "audit": "docs/adversarial/SUMMARY.md",
+  "auditDigest": "03d09d61da0cf30a286fa8c4243151074c5b29f002059f129c13ef60c2a5a953",
+  "scope": "25 independent fix agents; original audit preserved; changes verified after integration"
+}

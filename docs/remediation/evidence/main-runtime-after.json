@@ -1,0 +1,26 @@
+{
+  "port": 3026,
+  "dataDir": "/tmp/30x-trackt2-preview",
+  "counts": {
+    "users": 1,
+    "sessions": 1,
+    "brands": 1,
+    "members": 1,
+    "records": 58,
+    "activity": 7,
+    "secrets": 0,
+    "invitations": 0
+  },
+  "unchangedRecords": true,
+  "quickCheck": "ok",
+  "health": {
+    "status": 200,
+    "body": {
+      "ok": true
+    }
+  },
+  "page": {
+    "status": 200,
+    "bytes": 4777
+  }
+}

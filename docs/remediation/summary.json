@@ -1,0 +1,2575 @@
+{
+  "completedAt": "2026-10-18T05:51:07.764Z",
+  "distinctIssues": 25,
+  "originalFindings": 26,
+  "independentFixAgents": 25,
+  "originalAuditPreserved": {
+    "files": 257,
+    "sha256Verified": true
+  },
+  "validation": {
+    "tests": {
+      "command": "npm test",
+      "exitCode": 0,
+      "tests": 373,
+      "pass": 373,
+      "fail": 0,
+      "cancelled": 0,
+      "skipped": 0,
+      "log": "docs/remediation/evidence/final-tests.log"
+    },
+    "build": {
+      "command": "npm run build",
+      "exitCode": 0,
+      "log": "docs/remediation/evidence/final-build.log"
+    },
+    "browser": {
+      "status": "PASS",
+      "mode": "compiled production server",
+      "host": "127.0.1.88:5450",
+      "syntheticData": true,
+      "checks": [
+        "Empresa general ficticia Lumen Taller QA conserva Costa Rica y Español; el recorrido no depende de una marca 30X.",
+        "Una oportunidad reúne la referencia pública capturada y la necesidad del grupo; la primera observación conserva Sin historial suficiente y no afirma crecimiento.",
+        "Creación desde Oportunidades produce un carrusel de 4 láminas para la audiencia elegida, CTA exacto y ejemplo hipotético; conserva el brief sin pegar instrucciones en el texto publicable.",
+        "Edición de título y gancho, guardado, envío a revisión y aprobación mantienen referencia y brief; la pieza pasa a programada por la acción explícita del calendario.",
+        "Calendario muestra una pieza programada. Descarga nativa CSV contiene exactamente 1 fila de datos y 12 columnas con título, fecha y estado esperados.",
+        "Guardar resultados manuales produce un único registro con 1500.5 visualizaciones, 75.25 interacciones y 3.5 contactos, etiquetado como ficticio en las notas.",
+        "Tras recargar a390px, corregir sólo las notas conserva el mismo outcome ID, createdAt y métricas exactas. Campos a 16px, step any, formulario válido y documento de 390px.",
+        "Buscador de Referencias visible a390px: no coincidencias tiene explicación; piloto devuelve la referencia esperada y borrar restaura una fila y el foco.",
+        "Menú móvil navega a Audiencia; Actualizar preguntas y señales finaliza sin carga eterna. Página y Home no desbordan los 390px.",
+        "Inicio refleja 6 de 6 etapas con actividad tras el recorrido. No se envió una publicación externa ni se utilizaron claves reales."
+      ],
+      "artifacts": [
+        "docs/remediation/evidence/integrated-production.json",
+        "docs/remediation/evidence/integrated-calendar.csv",
+        "docs/remediation/evidence/integrated-calendar-desktop.png",
+        "docs/remediation/evidence/integrated-results-mobile.png",
+        "docs/remediation/evidence/integrated-references-mobile.png",
+        "docs/remediation/evidence/integrated-home-mobile.png"
+      ]
+    },
+    "implementation": {
+      "files": 121,
+      "sha256": "24f7ff308e384efee31f5e4921fdce73d326d8c24b06b74c337aa8baa58a3c06"
+    },
+    "productionBuild": {
+      "files": 74,
+      "sha256": "0d8e7bfafb9e4a7b99f32f8e21e24047381bfad33e6be58225e2b36eb89eb55a"
+    },
+    "digestMethod": "SHA-256 of relative POSIX path + NUL + file bytes + NUL, sorted lexicographically by path components (Python Path ordering); source: src/server/tests plus package/lock/tsconfig/vite; build: dist",
+    "runtime": {
+      "main": {
+        "port": 3026,
+        "dataDir": "/tmp/30x-trackt2-preview",
+        "counts": {
+          "users": 1,
+          "sessions": 1,
+          "brands": 1,
+          "members": 1,
+          "records": 58,
+          "activity": 7,
+          "secrets": 0,
+          "invitations": 0
+        },
+        "unchangedRecords": true,
+        "quickCheck": "ok",
+        "health": {
+          "status": 200,
+          "body": {
+            "ok": true
+          }
+        },
+        "page": {
+          "status": 200,
+          "bytes": 4777
+        }
+      },
+      "qa": {
+        "port": 5450,
+        "dataDir": "/tmp/30x-remediation-integrated",
+        "mode": "compiled production",
+        "externalProviderKeysUnset": true,
+        "discoveryEnabled": false
+      },
+      "unusedOwnedDevServersStopped": true
+    },
+    "dependencies": {
+      "command": "npm ls --depth=0",
+      "exitCode": 0,
+      "busboy": "1.6.0",
+      "multer": "2.4.0"
+    },
+    "completedAt": "2026-10-18T05:50:29.507916+00:00"
+  },
+  "issues": [
+    {
+      "id": "company-1",
+      "severity": "P2",
+      "title": "Guardar un cambio de nombre reemplaza silenciosamente un mercado permitido por la propuesta",
+      "members": [
+        "company-1"
+      ],
+      "agent": "fix_company_1",
+      "apiPort": 4501,
+      "webPort": 5501,
+      "host": "127.0.1.11",
+      "dataDir": "/tmp/30x-remediation-company-1",
+      "report": "docs/remediation/reports/company-1.json",
+      "status": "verified",
+      "resolution": "Cambiar el nombre conserva mercados e idiomas personalizados.",
+      "reportDetails": {
+        "issueId": "company-1",
+        "agent": "fix_company_1",
+        "status": "fixed",
+        "integration": "Pendiente de comprobación integrada del coordinador.",
+        "rootCause": "BrandFields renderizaba market y language con selects cerrados. Un valor válido fuera de sus opciones no se representaba en el DOM; el navegador elegía la primera opción, y brandPatchInput la detectaba como cambio al guardar sólo el nombre. Costa Rica se reemplazaba por Latinoamérica.",
+        "changes": [
+          "Mercado pasa a texto editable con datalist de sugerencias y límite de 150 caracteres coherente con la API. El valor actual se representa aunque no esté sugerido y se preserva también el valor vacío permitido por API.",
+          "Idioma pasa a texto editable con sugerencias de nombres comprensibles Español/Inglés/Portugués; brandInput convierte esos nombres a es/en/pt. Los idiomas personalizados mantienen su texto y el PATCH sólo incluye cambios reales.",
+          "Los identificadores de datalist y ayudas son únicos por formulario mediante useId. Etiquetas, ayudas, foco nativo y estructura responsive existentes se conservan; no se modifica el contrato backend ni la lista de países permitidos."
+        ],
+        "files": [
+          "src/features/Brand.tsx"
+        ],
+        "verification": [
+          {
+            "command": "T3 preview_*: importar texto sintético → Revisar propuesta → Costa Rica → Aplicar → recargar → Perfil → cambiar sólo nombre → Guardar contexto → recargar → GET /api/session y comparar todos los campos",
+            "before": "FAIL: API market=Costa Rica antes; formulario mostraba Latinoamérica; PATCH contenía name+market y persistía Latinoamérica. changedKeys=[name,market].",
+            "after": "PASS: campo y API conservan Costa Rica tras recarga completa; PATCH contiene sólo name. changedKeys=[name]. Sector, descripción, tono, idioma, web, colores, objetivos, pilares, meta semanal y audiencia idénticos.",
+            "kind": "browser"
+          },
+          {
+            "command": "Fixture API local con market='África francófona y Québec (QA sintético)' y language='Français (Canada)' → recargar → UI editar sólo nombre → guardar → recargar → GET /api/session",
+            "before": "El fallo del select cerrado confirmado con Costa Rica también dejaba sin opción estos valores; este caso adicional se ejecutó después del arreglo.",
+            "after": "PASS: mercado e idioma personalizados aparecen íntegros y se conservan; PATCH sólo name y todos los demás campos exactos.",
+            "kind": "browser"
+          },
+          {
+            "command": "T3 perfil: editar market='Centroamérica · Panamá y Costa Rica' y language='日本語' → Guardar contexto → recargar → GET /api/session",
+            "before": "El perfil sólo permitía opciones cerradas.",
+            "after": "PASS: ambos valores libres se guardan y reaparecen exactos; sólo language y market cambian y el resto de datos permanece idéntico.",
+            "kind": "browser"
+          },
+          {
+            "command": "T3 perfil: escribir Inglés → guardar → recargar → GET /api/session y leer campo idioma",
+            "before": "La lista original sólo representaba códigos es/en/pt.",
+            "after": "PASS: PATCH language=en; API language=en; UI muestra Inglés tras recarga y guardar vuelve a deshabilitarse sin diferencias residuales.",
+            "kind": "browser"
+          },
+          {
+            "command": "T3 foco por Tab mercado→idioma y revisión desktop 1280x800 / viewport móvil 390x844",
+            "before": "No se usó el resultado visual anterior como prueba de persistencia.",
+            "after": "PASS: Tab alcanza idioma con contorno sólido de 3px; scrollWidth coincide con viewport en ambos tamaños; ayudas legibles y sin solapamiento. Capturas finales guardadas.",
+            "kind": "browser"
+          },
+          {
+            "command": "node --test tests/company-context.test.mjs tests/core.test.mjs",
+            "before": "No se usaron estos tests API como señal roja del defecto visual.",
+            "after": "PASS: 26 tests, 26 aprobados, 0 fallos.",
+            "kind": "test"
+          },
+          {
+            "command": "Prettier check del prefijo de src/features/Brand.tsx hasta brandPatchInput, que contiene los hunks asignados",
+            "before": "El primer check detectó un salto de línea en el nuevo find; se corrigió sólo ese fragmento.",
+            "after": "PASS: assignedHunkPrettierCheck=true. El check de archivo entero sigue señalando un ternario en el hunk ajeno de Audiencia; comunicado al coordinador sin tocarlo.",
+            "kind": "test"
+          }
+        ],
+        "artifacts": [
+          "docs/remediation/evidence/company-1-api-observations.json",
+          "docs/remediation/evidence/company-1-before-mismatch.png",
+          "docs/remediation/evidence/company-1-before-saved.png",
+          "docs/remediation/evidence/company-1-after-costa-rica.png",
+          "docs/remediation/evidence/company-1-after-custom-api.png",
+          "docs/remediation/evidence/company-1-final-desktop.png",
+          "docs/remediation/evidence/company-1-final-mobile.png"
+        ],
+        "limitations": [
+          "Comprobaciones de UI en desarrollo propio contra APIs y SQLite persistentes aisladas; no se ejecutó build global. El coordinador debe comprobar la integración final.",
+          "Sin test unitario nuevo: el defecto depende de cómo un control nativo representa un valor externo y del envío del formulario real. Una prueba de constante/JSX o de la API sin navegador no ejercitaría la causa. La regresión roja/verde se verificó con el recorrido completo T3.",
+          "Viewport móvil emulado en el navegador de T3; no dispositivo físico ni Safari móvil. El alta de nuevas marcas y otros módulos quedan fuera de esta comprobación acotada posterior al alta.",
+          "Datos exclusivamente sintéticos. Inspección heuristic con texto aportado; no se solicitaron proveedores reales ni lectura externa de fuentes, y las claves se retiraron del proceso."
+        ],
+        "run": {
+          "date": "2026-10-18",
+          "timeWindowUtc": "05:14–05:19",
+          "url": "http://127.0.1.11:5501/brand",
+          "apiPort": 4501,
+          "webPort": 5501,
+          "dataDir": "/tmp/30x-remediation-company-1",
+          "processSessionId": 19372,
+          "tabId": "tab_4f_07e54779-9ab2-4979-8a15-674c4eff160a",
+          "cleanup": "Pestaña propia cerrada y sesión 19372 terminada; ss confirma puertos 4501 y 5501 sin listeners. Base sintética conservada.",
+          "cleanupNote": "Al terminar con SIGTERM, Node --watch emitió una aserción interna en FSWatcher.close. Sucedió durante el cierre deliberado, después de las pruebas; los procesos y puertos propios quedaron cerrados."
+        }
+      }
+    },
+    {
+      "id": "company-2",
+      "severity": "P2",
+      "title": "La redacción conserva direcciones de contacto etiquetadas dentro del párrafo",
+      "members": [
+        "company-2"
+      ],
+      "agent": "fix_company_2",
+      "apiPort": 4502,
+      "webPort": 5502,
+      "host": "127.0.1.12",
+      "dataDir": "/tmp/30x-remediation-company-2",
+      "report": "docs/remediation/reports/company-2.json",
+      "status": "verified",
+      "resolution": "La importación oculta las direcciones de contacto etiquetadas dentro de párrafos, también al leer resultados anteriores.",
+      "reportDetails": {
+        "issueId": "company-2",
+        "agent": "fix_company_2",
+        "status": "fixed",
+        "rootCause": "La regla de domicilios sólo coincidía al inicio del texto o de línea y consumía toda la línea. Los domicilios inline llegaban a evidence.excerpt y draft.description; los registros históricos se proyectaban sin volver a sanearse.",
+        "changes": [
+          "Redactar campos etiquetados Dirección/Direccion, Address o Domicilio dentro de párrafos, con variantes de mayúsculas, dos puntos y calificadores.",
+          "Conservar prosa empresarial y campos vecinos mediante límites de frase, línea, separadores y siguientes campos; reconocer abreviaturas habituales y continuaciones por coma.",
+          "Redactar antes de truncar y colapsar espacios en la función compartida por texto propio, HTML y texto extraído.",
+          "Sanear la proyección pública de importaciones históricas en descripción, títulos, extractos, motivos, errores textuales y avisos, sin borrar ni modificar la evidencia original o los metadatos.",
+          "Añadir pruebas por HTTP con Express, autenticación y SQLite temporal del importado persistido y del ciclo inspección-caché-confirmación-historial."
+        ],
+        "files": [
+          "server/company-context.mjs",
+          "tests/remediation-company-2.test.mjs",
+          "docs/remediation/reports/company-2.md",
+          "docs/remediation/reports/company-2.json"
+        ],
+        "verification": [
+          {
+            "command": "node --test tests/remediation-company-2.test.mjs",
+            "before": "La comprobación original falló dos veces antes del cambio: 0/1 PASS. La respuesta POST conservaba Calle Inventada 456 y Ciudad Sintética en el extracto. Las variantes y la truncación también fallaron antes del arreglo.",
+            "after": "25/25 PASS. El caso original exige igualdad exacta del extracto y descripción redactados, también tras persistencia y recarga.",
+            "kind": "test"
+          },
+          {
+            "command": "node --test --test-name-pattern='pre-fix history' tests/remediation-company-2.test.mjs",
+            "before": "0/1 PASS: GET devolvía el domicilio y correo originales de una importación histórica sintética.",
+            "after": "La misma prueba pasa dentro de la suite final. Se comprueban descripción, extracto, título, motivo, error, aviso, metadatos y ausencia de mutación del registro SQLite.",
+            "kind": "test"
+          },
+          {
+            "command": "node --test tests/remediation-company-2.test.mjs tests/company-context.test.mjs",
+            "before": "La suite cercana existente no cubría el domicilio inline del informe.",
+            "after": "37/37 PASS. También pasan autenticación, permisos, aislamiento, caché, recuperación y conservación del perfil confirmado.",
+            "kind": "test"
+          },
+          {
+            "command": "./node_modules/.bin/prettier --check server/company-context.mjs tests/remediation-company-2.test.mjs",
+            "before": "Formato aplicado únicamente a los dos archivos propios; los cambios de formato del módulo estaban restringidos a los hunks añadidos.",
+            "after": "Ambos archivos cumplen el formato local.",
+            "kind": "test"
+          }
+        ],
+        "evidence": {
+          "syntheticOnly": true,
+          "beforeExcerptAndDescription": "PRUEBA SINTÉTICA: Nexo ofrece formación de procesos. Contacto ficticio Persona QA; el siguiente dato es su domicilio particular, no una sede de empresa. Dirección: Calle Inventada 456, Ciudad Sintética. Correo: [correo omitido].",
+          "afterExcerptAndDescription": "PRUEBA SINTÉTICA: Nexo ofrece formación de procesos. Contacto ficticio Persona QA; el siguiente dato es su domicilio particular, no una sede de empresa. [domicilio omitido]. Correo: [correo omitido].",
+          "paths": [
+            "POST /api/brands/:brandId/context/import → GET /api/brands/:brandId/context → SQLite",
+            "POST /api/context/inspect → caché de usuario → POST /api/brands/:brandId/context/commit → GET historial",
+            "Extracción HTML con metadatos y párrafos o texto plano mediante transporte sintético simulado"
+          ],
+          "resourcesClosed": "Los hooks de test cierran servidor, conexiones y SQLite y eliminan el directorio temporal. No se abrieron pestañas ni procesos de desarrollo propios."
+        },
+        "artifacts": [
+          "tests/remediation-company-2.test.mjs",
+          "docs/remediation/reports/company-2.md",
+          "docs/remediation/reports/company-2.json"
+        ],
+        "limitations": [
+          "No es un detector universal de PII: la cobertura se refiere a campos de dirección explícitamente etiquetados y delimitados; no garantiza domicilios sin etiqueta, ofuscaciones o todos los formatos postales internacionales.",
+          "Los registros históricos originales permanecen en SQLite para conservar evidencia; se sanea su proyección pública, sin borrado físico retroactivo.",
+          "No se ejecutó navegador ni build; no se modificó UI. El coordinador realiza la comprobación integrada.",
+          "La extracción usa fixtures y transporte simulado: no acredita lectura de un proveedor real ni exactitud de IA. No se usaron claves ni se hicieron solicitudes externas."
+        ]
+      }
+    },
+    {
+      "id": "audience-1",
+      "severity": "P2",
+      "title": "Se guardan perfiles con rol y necesidades vacíos al introducir espacios",
+      "members": [
+        "audience-1"
+      ],
+      "agent": "fix_audience_1",
+      "apiPort": 4503,
+      "webPort": 5503,
+      "host": "127.0.1.13",
+      "dataDir": "/tmp/30x-remediation-audience-1",
+      "report": "docs/remediation/reports/audience-1.json",
+      "status": "verified",
+      "resolution": "Se rechazan perfiles con nombre, rol o necesidades vacíos después de quitar espacios.",
+      "reportDetails": {
+        "issueId": "audience-1",
+        "agent": "fix_audience_1",
+        "status": "fixed",
+        "rootCause": "El formulario nativo required aceptaba espacios. brandInput recortaba role/needs con text() sin exigir contenido, por lo que PATCH guardaba strings vacíos y cerraba el modal.",
+        "changes": [
+          "Nombre, rol y necesidades se validan tras trim; se mantienen límites de 150/300/3000 caracteres. Altas POST/PATCH y filas editadas exigen los tres.",
+          "El servidor compara los campos de cada fila con su perfil persistido. Un perfil legacy intacto no bloquea cambios de empresa ni la edición de otro perfil; al modificarlo exige completar rol y necesidades. La marca puede tener audience: [].",
+          "El formulario rechaza blancos y excesos antes del PATCH, conserva las entradas, enfoca el campo inválido y lo vincula al mensaje con aria-invalid/aria-describedby. Mantiene required, deshabilita durante el guardado y recupera controles después de un error.",
+          "Editar conserva description y los demás datos del perfil mediante spread del segmento original."
+        ],
+        "files": [
+          "server/core.mjs: brandInput → audiences.map",
+          "src/features/Brand.tsx: AudiencePage (validación del formulario)",
+          "tests/remediation-audience-1.test.mjs",
+          "docs/remediation/reports/audience-1.md",
+          "docs/remediation/reports/audience-1.json"
+        ],
+        "verification": [
+          {
+            "command": "node --test tests/remediation-audience-1.test.mjs",
+            "before": "1 PASS, 6 FAIL. Repro original: esperado 400, real 200; role/needs vacíos persistidos.",
+            "after": "7 PASS. Rechazos atómicos, espacios Unicode, límites exactos, POST, PATCH, compatibilidad legacy y reintento corregido con descripción conservada.",
+            "kind": "test"
+          },
+          {
+            "command": "node --test tests/remediation-audience-1.test.mjs tests/core.test.mjs tests/audience-insights.test.mjs",
+            "before": "Repro específica roja documentada arriba.",
+            "after": "34 PASS, 0 FAIL.",
+            "kind": "test"
+          },
+          {
+            "command": "T3 preview_* en http://127.0.1.13:5503/audience, pestaña exclusiva incognito",
+            "before": "Nombre válido + tres espacios en rol/necesidades: required=true y checkValidity=true. Guardar cerró modal; GET state confirmó role/needs vacíos.",
+            "after": "Mismo caso: modal abierto, texto intacto, foco role, alerta concreta y 0 PATCH. Corregir sólo rol señala needs; espacios Unicode en nombre señalan name; 3001 caracteres se conservan para corregir. Corregir todos guarda una vez con texto recortado y persiste tras recarga.",
+            "kind": "browser"
+          },
+          {
+            "command": "PATCH /api/brands/:brandId con perfil nuevo role='   ', needs='   '",
+            "before": "200 y perfil vacío persistido.",
+            "after": "400 con error de rol obligatorio; array de audiencia idéntico antes/después.",
+            "kind": "http"
+          },
+          {
+            "command": "T3: editar perfil con description existente, rechazo local, fallo 503 simulado y reintento real",
+            "before": "El formulario sólo confiaba en required y construía el perfil sin description.",
+            "after": "Todos los textos sobreviven al rechazo local y al 503 simulado. Controles disponibles después del error; reintento real 200, recarga conserva descripción y necesidad corregida.",
+            "kind": "browser"
+          },
+          {
+            "command": "T3: PATCH retenido y liberado con transporte local explícito",
+            "before": "Sin comprobación específica previa.",
+            "after": "aria-busy=true, fieldset y Guardar perfil deshabilitados, una petición; liberar realiza el guardado real.",
+            "kind": "browser"
+          },
+          {
+            "command": "T3: escritorio 1280×800 y viewport móvil 390×844",
+            "before": "Captura histórica propia del perfil vacío.",
+            "after": "Error y foco legibles; modal móvil dentro de viewport (x=10..380), sin overflow horizontal del documento.",
+            "kind": "browser"
+          },
+          {
+            "command": "npx tsc --noEmit",
+            "before": "No se usa para acreditar el defecto funcional.",
+            "after": "Exit 0, sin emitir archivos ni ejecutar build.",
+            "kind": "test"
+          }
+        ],
+        "artifacts": [
+          "docs/remediation/evidence/audience-1-before.png",
+          "docs/remediation/evidence/audience-1-after-desktop.png",
+          "docs/remediation/evidence/audience-1-after-mobile.png",
+          "docs/remediation/evidence/audience-1-state.json"
+        ],
+        "limitations": [
+          "Datos sintéticos, instancia aislada y ningún proveedor externo. El 503 y el retraso de PATCH se simularon explícitamente en la pestaña propia.",
+          "La compatibilidad conserva perfiles legacy incompletos sin migrarlos automáticamente. Sólo las filas nuevas o modificadas están obligadas a completarlos.",
+          "Se probó viewport móvil en navegador de escritorio; no dispositivo físico ni lector de pantalla.",
+          "Sin build global ni detector de diseño, reservados al coordinador. Pendiente revisión integrada.",
+          "Al detener npm run dev, el watcher nativo de Node mostró una aserción de FSWatcher durante su cierre. El proceso finalizó y ss confirmó los puertos 4503/5503 sin listeners."
+        ],
+        "resources": {
+          "tabClosed": true,
+          "processSession": 4410,
+          "apiPort": 4503,
+          "webPort": 5503,
+          "portsClosed": true,
+          "dataDir": "/tmp/30x-remediation-audience-1"
+        }
+      }
+    },
+    {
+      "id": "signals-1",
+      "severity": "P2",
+      "title": "Se guardan fichas individuales con nombre en el corpus de señales",
+      "members": [
+        "signals-1"
+      ],
+      "agent": "fix_signals_1",
+      "apiPort": 4504,
+      "webPort": 5504,
+      "host": "127.0.1.14",
+      "dataDir": "/tmp/30x-remediation-signals-1",
+      "report": "docs/remediation/reports/signals-1.json",
+      "status": "verified",
+      "resolution": "Las fichas individuales explícitas se rechazan y las señales históricas inadmisibles quedan fuera del análisis.",
+      "reportDetails": {
+        "issueId": "signals-1",
+        "agent": "fix_signals_1",
+        "status": "fixed",
+        "rootCause": "audienceSignalInput sólo rechazaba email/teléfono en topic y note, por lo que aceptaba la ficha individual explícita con nombre, cargo y necesidad. admissibleSignal también aceptaba sin revisión los textos públicos/editoriales ya almacenados.",
+        "changes": [
+          "Añadido aggregate-privacy.mjs con assertAggregateAudienceText(value, label?), containsAudienceContactDetails(value) y containsIndividualAudienceRecord(value); error status 400 sin reflejar datos.",
+          "Aplicada validación compartida a tema y observación del POST real de señales.",
+          "Aplicado el mismo criterio en admissibleSignal para excluir fichas y contactos antiguos de GET audience-signals y del corpus buildInsights que alimenta oportunidades/análisis, sin borrar SQLite.",
+          "Preservadas observaciones agregadas con empresas, cohortes y citas de autores públicos; detección de fichas etiquetadas y filas CSV/tablas.",
+          "Añadidas cinco pruebas HTTP con cuenta/marca sintéticas, host 127.0.1.14, puerto efímero y SQLite temporal."
+        ],
+        "files": [
+          "server/aggregate-privacy.mjs",
+          "server/audience-insights.mjs",
+          "tests/remediation-signals-1.test.mjs",
+          "docs/remediation/reports/signals-1.md",
+          "docs/remediation/reports/signals-1.json"
+        ],
+        "verification": [
+          {
+            "command": "node --test tests/remediation-signals-1.test.mjs",
+            "before": "Ejecutado antes del arreglo: 1 prueba, 0 PASS, 1 FAIL; el POST HTTP autenticado con FICHA INDIVIDUAL SINTÉTICA, Nombre: Ana Sintética Ejemplo, Cargo y Necesidad individual devolvió 201 en vez de 400 (201 !== 400). Ciclos posteriores confirmaron 201 para ficha sin cabecera y lectura de ficha antigua antes de sus correcciones.",
+            "after": "Cinco pruebas específicas pasan dentro de la ejecución final: ficha exacta y siete variantes estructuradas rechazadas; ocho textos agregados con empresas/cohortes/autores se guardan y recargan; cuatro casos de correo/teléfono en ambos campos devuelven 400 sin eco del dato; tres registros antiguos excluidos de GET audience-signals y de signals en GET insights y borrables por ID.",
+            "kind": "http"
+          },
+          {
+            "command": "node --test tests/remediation-signals-1.test.mjs tests/audience-insights.test.mjs tests/opportunity-analysis.test.mjs tests/community.test.mjs",
+            "before": "La señal roja se obtuvo con la prueba HTTP específica antes de cambiar la implementación.",
+            "after": "39 pruebas, 39 PASS, 0 FAIL; exit code 0; duration_ms 839.191576. Audiencia, aislamiento, roles, agregados comunitarios y análisis de oportunidades mantienen sus pruebas cercanas.",
+            "kind": "test"
+          },
+          {
+            "command": "node --check server/aggregate-privacy.mjs && node --check server/audience-insights.mjs && node --check tests/remediation-signals-1.test.mjs",
+            "before": "No aplica.",
+            "after": "Exit code 0.",
+            "kind": "test"
+          }
+        ],
+        "artifacts": [
+          "tests/remediation-signals-1.test.mjs",
+          "docs/remediation/reports/signals-1.md"
+        ],
+        "limitations": [
+          "Heurística estructural, no identificación universal de personas: puede omitir nombres en prosa libre, identidades ofuscadas o formatos no contemplados. Nombre ambiguo sin atributo personal se permite para preservar empresas/cohortes.",
+          "El patrón previo de teléfono reconoce secuencias de nueve o más dígitos y puede rechazar cifras largas ambiguas dentro del texto.",
+          "El filtrado no borra SQLite ni reescribe actividad histórica u otros artefactos derivados previamente; cubre las lecturas de señales y el corpus actual de insights/análisis.",
+          "No se abrió navegador ni se llamó a IA real: la prueba específica usa HTTP real del servidor usado por UI; pruebas cercanas de proveedor usan transporte simulado.",
+          "No se modificaron los informes adversariales originales, publicLink, growthFor ni outcomeInput. Sin build/formato global, credenciales reales, gasto, commit o push."
+        ]
+      }
+    },
+    {
+      "id": "signals-2",
+      "severity": "P2",
+      "title": "La validación de datos personales se elude mediante la URL de evidencia",
+      "members": [
+        "signals-2"
+      ],
+      "agent": "fix_signals_2",
+      "apiPort": 4505,
+      "webPort": 5505,
+      "host": "127.0.1.15",
+      "dataDir": "/tmp/30x-remediation-signals-2",
+      "report": "docs/remediation/reports/signals-2.json",
+      "status": "verified",
+      "resolution": "Las URL con datos de contacto detectables se rechazan conservando identificadores públicos legítimos.",
+      "reportDetails": {
+        "issueId": "signals-2",
+        "agent": "fix_signals_2",
+        "status": "fixed",
+        "rootCause": "publicLink comprobaba el origen y algunos nombres de parámetros, pero no el contenido de ruta, valores o fragmento. Las lecturas de señales antiguas sólo comprobaban topic/note y podían incluir sourceUrl con contacto en GET, insights y el contexto de IA.",
+        "changes": [
+          "Nuevo detector local de privacidad de URL con percent-decoding repetido y tolerante a escapes malformados; sin DNS, fetch, scraping ni proveedor.",
+          "Rechazo de correo en componentes de URL y de campos explícitos de contacto, teléfono, identidad o nombre combinado con atributos personales; errores sin reflejar contacto.",
+          "publicLink aplica el detector a sourceUrl pública/editorial opcional, publishedUrl y citationUrl, preservando las restricciones previas de origen y sesión.",
+          "admissibleSignal excluye señales antiguas con URL de contacto en las lecturas y en el corpus de insights/IA, conservando el almacenamiento histórico.",
+          "Se conservan IDs largos, handles, nombres de autores/empresas sin contexto personal, parámetros funcionales y sourceUrl comunitaria relativa. No se cambiaron pesos, crecimiento, resultados ni UI."
+        ],
+        "files": [
+          "server/url-privacy.mjs",
+          "server/audience-insights.mjs (import, publicLink y comprobación URL de admissibleSignal)",
+          "tests/remediation-signals-2.test.mjs",
+          "docs/remediation/reports/signals-2.md",
+          "docs/remediation/reports/signals-2.json"
+        ],
+        "verification": [
+          {
+            "command": "node --test tests/remediation-signals-2.test.mjs",
+            "before": "29 casos: 27 fallos, 2 éxitos; POST aceptó email ficticio en ruta/contact query y variantes encoded con 201; lecturas expusieron URL legacy.",
+            "after": "Los mismos 29 casos pasaron: POST rechaza con 400 sin persistir/reflejar contacto; legacy excluido de GET/insights sin borrar almacenamiento; URLs públicas y IDs largos preservados.",
+            "kind": "test"
+          },
+          {
+            "command": "node --test tests/remediation-signals-2.test.mjs tests/opportunity-analysis.test.mjs",
+            "before": "El test rojo acreditó entrada de URLs legacy al corpus de insights. La comprobación adicional del transporte de IA se añadió tras el arreglo.",
+            "after": "42/42: 30 casos de remediación más 12 cercanos de análisis. Ruta real de IA con transporte inyectado ficticio confirma que señales legacy de contacto no llegan al payload del proveedor; ninguna llamada a proveedor real.",
+            "kind": "test"
+          },
+          {
+            "command": "node --test tests/remediation-signals-1.test.mjs tests/audience-insights.test.mjs",
+            "before": "No se modificaron los tests existentes.",
+            "after": "18/18: permisos, aislamiento, validación de texto agregado, citas, comunidad, crecimiento y resultados preservados.",
+            "kind": "test"
+          },
+          {
+            "command": "./node_modules/.bin/prettier --check server/url-privacy.mjs tests/remediation-signals-2.test.mjs; node --check server/url-privacy.mjs; node --check server/audience-insights.mjs; node --check tests/remediation-signals-2.test.mjs",
+            "before": "No aplicable.",
+            "after": "Formato propio y sintaxis correctos. Sin build o format global.",
+            "kind": "test"
+          }
+        ],
+        "artifacts": [
+          "docs/remediation/evidence/signals-2-red.txt",
+          "docs/remediation/evidence/signals-2-green.txt",
+          "docs/remediation/evidence/signals-2-nearby.txt",
+          "docs/remediation/evidence/signals-2-analysis.txt"
+        ],
+        "limitations": [
+          "Datos y credencial de proveedor exclusivamente ficticios; el transporte de IA es simulado y no acredita entrega, precisión o calidad de un proveedor real.",
+          "No hubo recorrido nuevo de navegador. Se verificó por HTTP el mismo POST consumido por la UI; no se editó la interfaz.",
+          "No se visitaron URLs externas, resolvieron DNS ni comprobó extracción. Una cita pública no acredita lectura independiente.",
+          "No se hace NER ni se clasifican nombres arbitrarios o números sin contexto como contactos; se preservan nombres editoriales y IDs de contenido legítimos.",
+          "No hubo borrado masivo ni auditoría de todos los históricos ajenos a señales. La integración y build final corresponden al coordinador."
+        ],
+        "cleanup": "Servidores locales de test cerrados, SQLite temporal cerrada y directorios temporales eliminados. Sin pestañas ni procesos propios persistentes."
+      }
+    },
+    {
+      "id": "community-1",
+      "severity": "P2",
+      "title": "El sensor mantiene conteos antiguos aunque Actualizar renueve sus señales",
+      "members": [
+        "community-1"
+      ],
+      "agent": "fix_community_1",
+      "apiPort": 4506,
+      "webPort": 5506,
+      "host": "127.0.1.16",
+      "dataDir": "/tmp/30x-remediation-community-1",
+      "report": "docs/remediation/reports/community-1.json",
+      "status": "verified",
+      "coordinatorObservation": "En dev StrictMode, CommunitySensor.current se pone vacío en cleanup del efecto y no se restaura en setup repetido; GET community-polls devuelve200 polls[], pero loading persiste. Revisar ciclo load además del refresco original. Runtime QA127.0.1.88:5450, api4450. No ampliar a otras features.",
+      "resolution": "Actualizar consulta preguntas y señales y refresca sus conteos conjuntamente.",
+      "reportDetails": {
+        "issueId": "community-1",
+        "agent": "fix_community_1",
+        "status": "fixed",
+        "rootCause": "CommunitySensor mantenía una lista local cargada sólo al montar o cambiar de marca; Actualizar renovaba únicamente audience-signals. Además, el cleanup vaciaba current.current y el segundo setup de StrictMode no restauraba la marca: respuestas200 eran descartadas y loading permanecía activo.",
+        "changes": [
+          "La ruta de audiencia comparte useAudienceEvidence entre señales y sensor. Cada actualización consulta ambos endpoints y publica ambos resultados juntos.",
+          "La carga cancela la consulta anterior y comprueba instancia activa, controlador y marca antes de publicar. El cleanup/setup de StrictMode vuelve a activar correctamente el recurso.",
+          "Actualizar, la acción visible del sensor y sus reintentos consultan la misma evidencia. Se muestra la hora de última consulta; los fallos conservan el último par completo y ofrecen reintento.",
+          "Creación, pausa, reapertura y eliminación renuevan la evidencia compartida sin acumular ni duplicar señales.",
+          "Foco/visibilidad refrescan al volver si han pasado30s; se ignoran ráfagas y solicitudes en curso. No hay temporizador de polling.",
+          "Los formularios permanecen montados durante refrescos. El sensor se reinicia sólo al cambiar de marca y mantiene su guardia de cambios sin guardar."
+        ],
+        "files": [
+          "src/lib/audience-evidence.ts",
+          "src/features/Community.tsx",
+          "src/features/Journey.tsx (import y AudienceIntelligence)",
+          "src/routes/_workspace/audience.tsx"
+        ],
+        "verification": [
+          {
+            "command": "T3 preview_evaluate: strictMode en docs/remediation/evidence/community-1-browser-checks.json",
+            "before": "GET200, pregunta0 existente, Cargando preguntas persistente y pregunta ausente",
+            "after": "Recarga completa con StrictMode: GET200, total0 y pregunta visible; loading termina",
+            "kind": "browser"
+          },
+          {
+            "command": "T3 preview_evaluate: mountedZeroToFive en docs/remediation/evidence/community-1-browser-checks.json",
+            "before": "Misma pregunta montada0→5 respuestas públicas: Actualizar muestra señales3/5 y2/5, sensor sigue0",
+            "after": "Misma comprobación: sensor5, filas3de5 y2de5, señales3/5 y2/5; nodos/valores de dos formularios abiertos conservados",
+            "kind": "browser"
+          },
+          {
+            "command": "T3 preview_evaluate:503 sintético en GETcommunity-polls; retry visible",
+            "before": "No existía una carga compartida; sensor y señales podían renovarse por separado",
+            "after": "Snapshot5 completo conservado y error visible; retry renueva ambos a6 con2señales y mismosIDs",
+            "kind": "browser"
+          },
+          {
+            "command": "T3 preview_evaluate: segundo grupo4→5 y20ráfagas focus/visibility (Date.now+31s temporal)",
+            "before": "Umbral servidor existente preservado; refresco del sensor no estaba coordinado",
+            "after": "Grupo4 no se muestra; al llegar5 aparecen sus2filas. Total11. Ráfaga produce exactamente2GET,1por recurso",
+            "kind": "browser"
+          },
+          {
+            "command": "T3 preview_evaluate: retener primer parGET ignorandoAbortSignal; POSTnuevo y segundo par antes de soltar primero",
+            "before": "Sin comprobación de versión de carga del sensor",
+            "after": "La respuesta antigua no elimina la pregunta nueva del segundo snapshot",
+            "kind": "browser"
+          },
+          {
+            "command": "T3 selector real marcaA→B con parA retenido; soltarA; volverA",
+            "before": "Protección de marca incompleta en el ciclo de carga StrictMode",
+            "after": "B muestra sólo su pregunta0; A tardío no cambiaB; regresoA recupera pregunta11 y4señales",
+            "kind": "browser"
+          },
+          {
+            "command": "T3 viewport1280×900 y390×844 + captura y dimensionesDOM",
+            "before": "Sin acción de refresco propia del sensor",
+            "after": "Acción, fecha, foco, tabla y conteo visibles; documentWidth=viewport en ambos",
+            "kind": "browser"
+          },
+          {
+            "command": "node --test tests/community.test.mjs tests/audience-insights.test.mjs",
+            "before": "Suite cercana existente",
+            "after": "22PASS,0FAIL",
+            "kind": "test"
+          },
+          {
+            "command": "npx tsc --noEmit --pretty false",
+            "before": "No ejecutado para esta corrección",
+            "after": "exit0",
+            "kind": "test"
+          }
+        ],
+        "artifacts": [
+          "docs/remediation/evidence/community-1-observations.json",
+          "docs/remediation/evidence/community-1-browser-checks.json",
+          "docs/remediation/evidence/community-1-strict-before.png",
+          "docs/remediation/evidence/community-1-update-before.png",
+          "docs/remediation/evidence/community-1-error-after.png",
+          "docs/remediation/evidence/community-1-desktop-after.png",
+          "docs/remediation/evidence/community-1-mobile-after.png"
+        ],
+        "limitations": [
+          "Se probó desarrollo con StrictMode y TypeScript sin generar build; el build integrado y el runtime de producción corresponden al coordinador.",
+          "El runner Node no tiene DOM ni renderer de pruebas. La regresión React se verifica en el navegador T3 real con expresiones reutilizables; no se añadió una prueba de código fuente ni una unidad que simule el efecto de React.",
+          "No existe una transacción servidor entre los dosGET; el estado cliente se publica junto. Las comprobaciones de coherencia se hicieron tras completar las respuestas públicas. Una respuesta que llegue exactamente entre consultas puede requerir otro refresco.",
+          "Foco/visibilidad y errores de red se simularon de forma explícita en el navegador; no se probaron dispositivos físicos, contactos reales ni proveedores externos."
+        ],
+        "cleanup": {
+          "browserTabClosed": "tab_4c_07e54779-9ab2-4979-8a15-674c4eff160a",
+          "devSessionStopped": 16331,
+          "portsConfirmedClosed": [
+            4506,
+            5506
+          ],
+          "debugInstrumentation": "Ninguna añadida al código de producto",
+          "contextFiles": "PRODUCT.md, DESIGN.md y .impeccable/app-surface.md no modificados"
+        }
+      }
+    },
+    {
+      "id": "discovery-1",
+      "severity": "P2",
+      "title": "El clasificador bloquea el RSS público de NASA al tratar 192.0/16 como reservado",
+      "members": [
+        "discovery-1"
+      ],
+      "agent": "fix_discovery_1",
+      "apiPort": 4507,
+      "webPort": 5507,
+      "host": "127.0.1.17",
+      "dataDir": "/tmp/30x-remediation-discovery-1",
+      "report": "docs/remediation/reports/discovery-1.json",
+      "status": "verified",
+      "resolution": "El RSS público de NASA vuelve a poder leerse conservando los bloqueos de destinos privados.",
+      "reportDetails": {
+        "issueId": "discovery-1",
+        "agent": "fix_discovery_1",
+        "status": "fixed",
+        "rootCause": "isPublicAddress rejected every 192.0.x.x address as reserved instead of the IANA special-purpose 192.0.0.0/24. This incorrectly rejected NASA's public 192.0.66.108 DNS answer before safeFetch could read its RSS.",
+        "changes": [
+          "Narrow the IPv4 protocol-assignment denial to 192.0.0.0/24, with globally reachable IANA exceptions 192.0.0.9 and 192.0.0.10.",
+          "Preserve a separate explicit denial for documentation range 192.0.2.0/24, all other IPv4 restrictions, and the existing IPv6 classifier.",
+          "Add deterministic regression coverage of NASA validation and the production fetchSource/safeFetch RSS path with injected DNS and a synthetic HTTP stream.",
+          "Verify DNS pinning, mixed public/private DNS rejection, private and special range boundaries, credentials, port restrictions, HTTPS, unsafe redirects, redirect limits and sensitive header stripping.",
+          "Record a controlled real NASA RSS read and an independently documented test-fixture DNS counter incident."
+        ],
+        "files": [
+          "server/connectors.mjs",
+          "tests/remediation-discovery-1.test.mjs",
+          "docs/remediation/reports/discovery-1.md",
+          "docs/remediation/reports/discovery-1.json"
+        ],
+        "verification": [
+          {
+            "command": "node --test --test-reporter=tap tests/remediation-discovery-1.test.mjs",
+            "before": "Original classifier: NASA RSS URL validation rejected DNS address 192.0.66.108 with the private/reserved-address error. The final corrected test fixture reproduced 25 failures and 5 passes in an isolated temporary copy containing the original classifier; the production fetchSource/safeFetch RSS path also failed.",
+            "after": "Fixed classifier: 30 tests passed, zero failed. The public NASA IPv4 result is accepted, a synthetic NASA RSS yields one parsed entry through production fetchSource/safeFetch, and DNS pinning and all tested security restrictions remain enforced.",
+            "kind": "test"
+          },
+          {
+            "command": "node --test --test-reporter=tap tests/intelligence.test.mjs tests/company-context.test.mjs",
+            "before": "Existing nearby tests were preserved unchanged.",
+            "after": "33 tests passed, zero failed, including existing SSRF denials and public discovery/extraction workflows.",
+            "kind": "test"
+          },
+          {
+            "command": "safeFetch('https://www.nasa.gov/feed/', { requireHttps: true, timeout: 12000, maxBytes: 1048576 }); parseFeed(body, source)",
+            "before": "The adversarial report observed this NASA feed rejected locally as private/reserved despite a public HTTP 200 response.",
+            "after": "Real public read at 2026-10-18T04:56:40.420Z: HTTP 200; DNS resolved once to 192.0.66.108 and 2a04:fa87:fffd::c000:426c; 297386 bytes; application/rss+xml; 10 parsed RSS entries. No paid providers or credentials.",
+            "kind": "http"
+          }
+        ],
+        "artifacts": [
+          "docs/remediation/evidence/discovery-1-red.tap",
+          "docs/remediation/evidence/discovery-1-red-corrected-fixture.tap",
+          "docs/remediation/evidence/discovery-1-green.tap",
+          "docs/remediation/evidence/discovery-1-nearby.tap",
+          "docs/remediation/evidence/discovery-1-nasa-live.json",
+          "docs/remediation/evidence/discovery-1-test-fixture-incident.json"
+        ],
+        "limitations": [
+          "Deterministic regression tests inject DNS and a synthetic HTTP response stream; they execute production URL validation, pinning, redirects and RSS parsing without depending on Internet availability.",
+          "The separate real NASA read is a single current observation and does not guarantee future site availability.",
+          "No browser or global build was run. Final combined integration and UI verification belong to the coordinator.",
+          "The first post-fix test run had a DNS mock counter error (29 passed, 1 failed). The fixture was corrected, its final version was rechecked against the original classifier in an isolated temporary copy, and the incident was retained as evidence."
+        ],
+        "references": [
+          {
+            "title": "IANA IPv4 Special-Purpose Address Space",
+            "url": "https://www.iana.org/assignments/iana-ipv4-special-registry/",
+            "registryUpdated": "2025-10-09"
+          }
+        ],
+        "cleanup": {
+          "persistentProcessesStarted": false,
+          "browserTabsOpened": false,
+          "temporaryDatabasesRemoved": true,
+          "isolatedBaselineRemoved": true,
+          "sharedCheckoutRevertedForBaseline": false,
+          "adversarialReportsOverwritten": false
+        }
+      }
+    },
+    {
+      "id": "duplicate-reference",
+      "severity": "P2",
+      "title": "La captura manual duplica publicaciones y aumenta la evidencia contada",
+      "members": [
+        "references-1",
+        "opportunities-2"
+      ],
+      "agent": "fix_duplicate_reference",
+      "apiPort": 4508,
+      "webPort": 5508,
+      "host": "127.0.1.18",
+      "dataDir": "/tmp/30x-remediation-duplicate-reference",
+      "report": "docs/remediation/reports/duplicate-reference.json",
+      "status": "verified",
+      "resolution": "Capturar la misma publicación reutiliza el registro y cuenta una sola evidencia.",
+      "reportDetails": {
+        "issueId": "duplicate-reference",
+        "members": [
+          "references-1",
+          "opportunities-2"
+        ],
+        "agent": "fix_duplicate_reference",
+        "status": "fixed",
+        "integrationStatus": "pending_coordinator_verification",
+        "rootCause": "El POST manual insertaba siempre. Las oportunidades contaban filas antes de agrupar por tema; los snapshots sólo deduplicaban la URL literal. Una publicación podía representar varias evidencias independientes.",
+        "changes": [
+          "Identidad de publicación compartida y conservadora: elimina secciones y tracking conocido, preserva parámetros de negocio y fragment routes; URL original intacta.",
+          "POST de referencias transaccional e idempotente por identidad dentro de la marca: 201 nueva, 200 existente; no modifica estado, procedencia, análisis, idioma ni actividad al reutilizar.",
+          "Deduplicación global antes de agrupar oportunidades, cobertura y pasos del recorrido, con representante estable de copias históricas y conservación de todos los registros y vínculos; el lookup histórico de piezas conserva el corpus completo por ID.",
+          "Snapshots nuevos cuentan publicaciones únicas y versionan el scope; los anteriores se conservan pero no se comparan con el nuevo criterio.",
+          "Adjuntos distintos sin URL y textos sin identidad verificable no se fusionan; marcas y demo/real permanecen separados."
+        ],
+        "files": [
+          "server/reference-identity.mjs",
+          "server/core.mjs",
+          "server/audience-insights.mjs",
+          "tests/remediation-duplicate-reference.test.mjs"
+        ],
+        "verification": [
+          {
+            "command": "node --test --test-reporter=tap tests/remediation-duplicate-reference.test.mjs",
+            "before": "Reproducción HTTP original: dos IDs distintos, referenceCount=2, evidenceCount=2, fallo esperado 2 !== 1. Suite ampliada: 7 fallos y 2 pases.",
+            "after": "10/10 PASS. Reproducción original: mismo ID, referenceCount=1, evidenceCount=1. Incluye 16 solicitudes concurrentes, copias persistidas, snapshots, conservación de vínculos y contexto histórico de piezas, adjuntos, marcas y parámetros reales. La décima prueba detectó una regresión de la implementación parcial (51 en vez de 59 puntos al perder el tema de una pieza enlazada a una copia); corregida antes de la entrega.",
+            "kind": "http"
+          },
+          {
+            "command": "node --test --test-reporter=tap tests/audience-insights.test.mjs tests/core.test.mjs tests/capture-retry.test.mjs tests/opportunity-analysis.test.mjs tests/intelligence.test.mjs tests/remediation-opportunities-1.test.mjs",
+            "before": "No ejecutado como línea base; el fallo concreto está capturado en los artefactos rojos propios.",
+            "after": "Primera pasada 74/74 PASS. Última pasada compartida: 72/74 PASS; intelligence.test.mjs conserva la expectativa antigua de dirección literal en guion (cambio studio-1); opportunity-analysis.test.mjs pretende dos evidencias independientes pero clona la misma URL y createdAt, por lo que sólo cuenta un representante. Ambos contratos coordinados con root; sin modificar tests ajenos.",
+            "kind": "test"
+          },
+          {
+            "command": "node --check server/reference-identity.mjs; node --check server/core.mjs; node --check server/audience-insights.mjs; node --check tests/remediation-duplicate-reference.test.mjs",
+            "before": "No aplicable al módulo y test nuevos.",
+            "after": "Sin errores de sintaxis.",
+            "kind": "test"
+          }
+        ],
+        "artifacts": [
+          "docs/remediation/evidence/duplicate-reference-before.tap",
+          "docs/remediation/evidence/duplicate-reference-extended-before.tap",
+          "docs/remediation/evidence/duplicate-reference-linked-copy-before.tap",
+          "docs/remediation/evidence/duplicate-reference-after.tap",
+          "docs/remediation/evidence/duplicate-reference-nearby.tap"
+        ],
+        "limitations": [
+          "Fixtures sintéticas y SQLite temporal; sin proveedores reales, redirecciones/alias externos ni comprobación visual de UI.",
+          "Concurrencia comprobada mediante 16 HTTP simultáneos contra una instancia; no se ejecutó una segunda instancia API.",
+          "Los snapshots anteriores no tienen identidades suficientes para corregir cuentas retrospectivamente; se preservan y se requiere historial nuevo comparable.",
+          "Último run cercano con dos incompatibilidades de contratos coordinadas: dirección literal en guion y fixture de fingerprint que duplica URL; el coordinador integra esos ajustes.",
+          "Validación DNS/fuentes privadas fuera de este grupo; corresponde a references-2."
+        ],
+        "resources": {
+          "host": "127.0.1.18",
+          "apiPort": 4508,
+          "webPort": 5508,
+          "dataRoot": "/tmp/30x-remediation-duplicate-reference",
+          "cleanup": "Cada ejecución cierra su servidor HTTP y SQLite y elimina su subdirectorio temporal; no se abrieron pestañas ni servidor web."
+        }
+      }
+    },
+    {
+      "id": "references-2",
+      "severity": "P2",
+      "title": "La captura manual admite fuentes de loopback fuera del límite de contenido público",
+      "members": [
+        "references-2"
+      ],
+      "agent": "fix_references_2",
+      "apiPort": 4509,
+      "webPort": 5509,
+      "host": "127.0.1.19",
+      "dataDir": "/tmp/30x-remediation-references-2",
+      "report": "docs/remediation/reports/references-2.json",
+      "status": "verified",
+      "resolution": "Se rechazan URL locales o reservadas conocidas y se omiten los enlaces históricos inadmisibles.",
+      "reportDetails": {
+        "issueId": "references-2",
+        "agent": "fix_references_2",
+        "status": "fixed",
+        "integrationStatus": "pending_coordinator",
+        "rootCause": "referenceInput aceptaba toda URL HTTP/HTTPS sin credenciales; no aplicaba la política local de citas públicas a IP literales privadas/reservadas ni hosts locales/intranet. publicReference exponía el enlace histórico sin comprobar admisibilidad.",
+        "changes": [
+          "Extraída a server/public-citation-url.mjs la política de publicLink, compartida por referencias y citas de audiencia/resultados, con los mismos mensajes y límites de cada consumidor.",
+          "Reutilizadas isPublicAddress y containsUrlContactDetails. Se comprueba el hostname normalizado por URL, puntos DNS finales, sufijos locales/reservados, puertos estándar, credenciales, protocolo, sesiones y datos personales, sin DNS ni solicitudes de página.",
+          "POST/PATCH de referencias rechazan URL inadmisibles antes de persistir o invalidar análisis. La deduplicación transaccional existente permanece intacta.",
+          "publicReference omite URL histórica inadmisible y devuelve originalUrlOmitted sin modificar almacenamiento; GET referencias y state mantienen el contexto, y PATCH puede corregir/quitar el enlace o actualizar estado.",
+          "El detalle explica la omisión; captura explica el límite de enlace público y la diferencia entre citar y leer. Los errores conservan los campos."
+        ],
+        "files": [
+          "server/public-citation-url.mjs",
+          "server/core.mjs",
+          "server/audience-insights.mjs",
+          "src/features/Discovery.tsx",
+          "src/lib/types.ts",
+          "tests/remediation-references-2.test.mjs",
+          "docs/remediation/reports/references-2.md",
+          "docs/remediation/reports/references-2.json"
+        ],
+        "verification": [
+          {
+            "command": "node --test tests/remediation-references-2.test.mjs",
+            "before": "1/1 falla: POST original devuelve 201 y readback contiene 1 referencia.",
+            "after": "7/7 pasan. Caso original 400 y 0 referencias/actividad; 66 URL negativas en POST/PATCH; 15 citas admisibles; adjuntos/texto; roles/marcas; privacidad; legacy; deduplicación. Cero DNS y fetch externos.",
+            "kind": "test"
+          },
+          {
+            "command": "node --test tests/core.test.mjs tests/audience-insights.test.mjs tests/remediation-signals-2.test.mjs tests/remediation-results-1.test.mjs tests/remediation-duplicate-reference.test.mjs tests/remediation-discovery-1.test.mjs tests/capture-retry.test.mjs tests/social-core.test.mjs tests/social-intelligence.test.mjs tests/integrated-flow.test.mjs tests/video-analysis.test.mjs",
+            "before": "La primera ejecución de social-core revela dos fixtures con .test que esperaban crear referencias públicas.",
+            "after": "140/140 pasan con las tres URL de fixture corregidas a example.com por el coordinador, manteniendo todas las aserciones.",
+            "kind": "test"
+          },
+          {
+            "command": "npx tsc --noEmit",
+            "before": "No aplicable.",
+            "after": "exit 0.",
+            "kind": "test"
+          },
+          {
+            "command": "T3 preview_* en http://127.0.1.19:5509/inbox; pestaña propia incognito; 1280×800 y 390×844.",
+            "before": "La UI guarda loopback, el GET lo conserva y detalle ofrece Ver original con ese href. Nunca se abrió el destino.",
+            "after": "POST 400 conserva URL/título/contexto; el mismo formulario corregido a NASA guarda 201; después de recarga GET/state muestran la cita pública. Legacy no expone URL/Ver original y muestra explicación; fila SQL intacta. Sin desborde horizontal móvil.",
+            "kind": "browser"
+          }
+        ],
+        "artifacts": [
+          "docs/remediation/evidence/references-2/red.tap",
+          "docs/remediation/evidence/references-2/green.tap",
+          "docs/remediation/evidence/references-2/nearby-final.tap",
+          "docs/remediation/evidence/references-2/related-social.tap",
+          "docs/remediation/evidence/references-2/typecheck.txt",
+          "docs/remediation/evidence/references-2/browser-checks.json",
+          "docs/remediation/evidence/references-2/before-private-original.png",
+          "docs/remediation/evidence/references-2/private-rejected-desktop.png",
+          "docs/remediation/evidence/references-2/private-rejected-mobile.png",
+          "docs/remediation/evidence/references-2/legacy-original-omitted-desktop.png",
+          "docs/remediation/evidence/references-2/legacy-original-omitted-mobile.png",
+          "docs/remediation/evidence/references-2/public-corrected-desktop.png",
+          "docs/remediation/evidence/references-2/public-corrected-mobile.png"
+        ],
+        "limitations": [
+          "Validación local determinista de admisibilidad de una cita; no prueba que el contenido sea accesible, público en su totalidad o haya sido leído.",
+          "No resuelve DNS, no sigue redirecciones ni inspecciona páginas o autenticación remota. Un nombre con apariencia pública podría resolver a una red privada o servir contenido restringido; cualquier futura lectura debe usar la protección de safeFetch.",
+          "No se observó ni se afirma SSRF, lectura privada, publicación o entrega real a proveedores.",
+          "No se ejecutó build global; corresponde a integración del coordinador.",
+          "La comprobación móvil usa viewport emulado, no un dispositivo físico."
+        ],
+        "coordination": [
+          "El coordinador autorizó extraer publicLink y añadir el saneamiento de publicReference.",
+          "El coordinador actualizó tres URL de fixtures en tests/social-core.test.mjs de example.test a example.com, sin relajar validación ni alterar aserciones.",
+          "No se tocaron upload/detectFile, brandInput, sourceInput, pieceInput, señales ni outcomes fuera de la extracción acordada del wrapper de citas."
+        ],
+        "cleanup": {
+          "ownTabClosed": true,
+          "devSession": 36266,
+          "processExited": true,
+          "apiPortFree": true,
+          "webPortFree": true,
+          "runtimeDataPreserved": true,
+          "note": "Node --watch emitió una aserción de FSWatcher al recibir SIGINT; terminó y los puertos quedaron libres. Las pruebas HTTP usaron servidores sin watch."
+        }
+      }
+    },
+    {
+      "id": "references-3",
+      "severity": "P2",
+      "title": "El detalle de una referencia documental no permite consultar su adjunto",
+      "members": [
+        "references-3"
+      ],
+      "agent": "fix_references_3",
+      "apiPort": 4510,
+      "webPort": 5510,
+      "host": "127.0.1.20",
+      "dataDir": "/tmp/30x-remediation-references-3",
+      "report": "docs/remediation/reports/references-3.json",
+      "status": "verified",
+      "resolution": "El detalle permite descargar el adjunto original y distingue ausencia de archivo de errores recuperables.",
+      "reportDetails": {
+        "issueId": "references-3",
+        "agent": "fix_references_3",
+        "status": "fixed",
+        "integrationStatus": "pending_coordinator",
+        "rootCause": "ReferenceDetail mostraba imágenes y URL públicas pero no exponía los documentos asociados por assetId, aunque el asset y su endpoint autenticado ya conservaban nombre y bytes correctos.",
+        "changes": [
+          "El detalle muestra Archivo adjunto con nombre, tipo, tamaño y Descargar original adjunto; el enlace público Ver original permanece separado.",
+          "La descarga usa la ruta del mismo origen con empresa y asset codificados, sin usar URL arbitraria del asset ni relajar citas públicas.",
+          "HEAD autenticado, abortable y con timeout de 10 segundos comprueba disponibilidad; respuestas anteriores se descartan al cerrar o cambiar recurso.",
+          "Ausencia de metadata o404/410 muestran recuperación sin enlace roto;401/403 y fallos temporales tienen mensajes distintos y Volver a comprobar.",
+          "Se preservan la previsualización de imágenes, análisis audiovisual y permisos; sección adaptable a móvil con nombre a 16 px y foco visible."
+        ],
+        "files": [
+          "src/features/Discovery.tsx",
+          "src/styles.css",
+          "tests/remediation-references-3.test.mjs",
+          "docs/remediation/reports/references-3.md",
+          "docs/remediation/reports/references-3.json"
+        ],
+        "verification": [
+          {
+            "command": "T3 preview_upload → Guardar referencia → Abrir referencia → inspeccionar enlaces → clic en Descargar original adjunto; datos ficticios en 127.0.1.20:5510",
+            "before": "TXT199 bytes con GET 200 y SHA correcto; ReferenceDetail carece de enlaces: expectedOriginalLinkPresent=false.",
+            "after": "Misma referencia y asset ofrecen descarga nativa con nombre exacto y 199 bytes; SHA-256 idéntico al fixture. Recarga, móvil390 × 844, teclado y revisor funcionan. URL pública y adjunto autenticado siguen separados.",
+            "kind": "browser"
+          },
+          {
+            "command": "T3 preview_*: archivo propio temporalmente ausente, DELETE de otro adjunto ficticio,503/401/HEAD retenido simulados sólo en transporte local",
+            "before": "El detalle anterior no ofrecía ningún estado de adjunto ni recuperación contextual.",
+            "after": "404 físico y metadata ausente no ofrecen enlaces; mensajes de503/401 son específicos, reintentan sin duplicar datos; cerrar aborta HEAD y reabrir descarta el resultado anterior.",
+            "kind": "browser"
+          },
+          {
+            "command": "node --test tests/remediation-references-3.test.mjs tests/remediation-assets-1.test.mjs tests/remediation-references-2.test.mjs",
+            "before": "Tests de endpoint apoyan las garantías de lectura existentes; el rojo del defecto se probó en UI. Expectativa inicial del test nuevo para usuario ajeno ajustada de403 a404 al contrato vigente de requireBrand.",
+            "after": "17/17 pasan,0fallos,0canceladas. Los3 nuevos verifican bytes/nombre/HEAD, owner/editor/reviewer, anónimo 401, marcas/cuentas ajenas 404, escritura reviewer 403 y ausencias sin perder la cita pública.",
+            "kind": "test"
+          },
+          {
+            "command": "npx tsc --noEmit",
+            "before": "No aplicable.",
+            "after": "exit 0.",
+            "kind": "test"
+          }
+        ],
+        "artifacts": [
+          "docs/remediation/evidence/references-3-browser-checks.json",
+          "docs/remediation/evidence/references-3-original-ñandú.txt",
+          "docs/remediation/evidence/references-3-red-ui.png",
+          "docs/remediation/evidence/references-3-green-ui.png",
+          "docs/remediation/evidence/references-3-desktop-final.png",
+          "docs/remediation/evidence/references-3-mobile-final.png",
+          "docs/remediation/evidence/references-3-public-and-attached-ui.png",
+          "docs/remediation/evidence/references-3-reviewer-ui.png",
+          "docs/remediation/evidence/references-3-physical-missing-ui.png",
+          "docs/remediation/evidence/references-3-metadata-missing-ui.png",
+          "docs/remediation/evidence/references-3-service-error-ui.png",
+          "docs/remediation/evidence/references-3-http-tests.txt",
+          "docs/remediation/evidence/references-3-typescript.txt"
+        ],
+        "limitations": [
+          "Móvil comprobado en viewport emulado Chromium, no dispositivo físico.",
+          "HEAD comprueba disponibilidad en ese momento y no bloquea posteriores cambios al archivo o los permisos.",
+          "503/401 y HEAD retenido fueron simulaciones locales explícitas; no acreditan incidencias ni entrega de proveedores reales.",
+          "No se ejecutó build global; corresponde a integración del coordinador."
+        ],
+        "coordination": [
+          "references-2 preservado: URL pública, advertencia legacy y política de citas sin cambios.",
+          "assets-2 editó exclusivamente CaptureModal mientras este agente modificó ReferenceDetail; navigation-3 editó exclusivamente EmptyState de InboxPage.",
+          "No cambios en servidor, tipos, dependencias ni pruebas originales."
+        ],
+        "cleanup": {
+          "ownTabClosed": true,
+          "devSession": 39074,
+          "processExited": true,
+          "exitCode": 130,
+          "apiPortFree": true,
+          "webPortFree": true,
+          "runtimeDataPreserved": true,
+          "note": "Al recibir SIGINT, Node --watch emitió una aserción FSEventWrap/FSWatcher durante el cierre. El proceso terminó y4510/5510 quedaron libres; no ocurrió en pruebas HTTP sin watch."
+        }
+      }
+    },
+    {
+      "id": "opportunities-1",
+      "severity": "P2",
+      "title": "Descensos y muestras estables reciben la etiqueta verde «Crecimiento observado»",
+      "members": [
+        "opportunities-1"
+      ],
+      "agent": "fix_opportunities_1",
+      "apiPort": 4511,
+      "webPort": 5511,
+      "host": "127.0.1.21",
+      "dataDir": "/tmp/30x-remediation-opportunities-1",
+      "report": "docs/remediation/reports/opportunities-1.json",
+      "status": "verified",
+      "resolution": "Estabilidad y descenso se muestran como tales; crecimiento exige aumentos comparables.",
+      "reportDetails": {
+        "issueId": "opportunities-1",
+        "agent": "fix_opportunities_1",
+        "status": "fixed",
+        "rootCause": "growthFor asignaba observed a toda comparación que no fuera un aumento pequeño; la UI convertía observed en «Crecimiento observado» verde incluso para descensos e igualdad.",
+        "changes": [
+          "growthFor devuelve stable para igualdad y declining para descenso; observed y early_signal quedan reservados a aumentos comparables.",
+          "La explicación conserva conteos, fechas y alcance de las fuentes y describe la dirección real sin atribuir alcance, éxito ni tendencia global.",
+          "Contrato TypeScript ampliado y presentación compartida por Oportunidades e Inicio: stable neutral, declining ámbar, observed verde."
+        ],
+        "files": [
+          "server/audience-insights.mjs (solo growthFor)",
+          "src/lib/journey-types.ts (solo growth.label)",
+          "src/features/Journey.tsx (solo helper de crecimiento y consumidores)",
+          "tests/remediation-opportunities-1.test.mjs"
+        ],
+        "verification": [
+          {
+            "command": "node --test --test-reporter=tap tests/remediation-opportunities-1.test.mjs",
+            "before": "Exit 1: 9 PASS, 4 FAIL. 0→0 y 1→1 devolvían observed en vez de stable; 3→1 y 3→0 observed en vez de declining.",
+            "after": "Exit 0: 13 PASS. Cubre además cold start, una observación, 1→4, 0→2, consultas/fuentes distintas, ventanas desiguales/caducadas, demo y YouTube nativo con historia RSS positiva comparable.",
+            "kind": "test"
+          },
+          {
+            "command": "node --test --test-reporter=tap tests/audience-insights.test.mjs",
+            "before": "No ejecutado antes del cambio; no se atribuye un resultado anterior.",
+            "after": "Exit 0: 13 PASS.",
+            "kind": "test"
+          },
+          {
+            "command": "node --test tests/audience-insights.test.mjs tests/opportunity-analysis.test.mjs",
+            "before": "No ejecutado antes del cambio.",
+            "after": "Se detuvo tras 103,9 s sin progreso después de 20 PASS, en «only one analysis per brand runs at a time while another workspace can proceed». Resultado cancelado: 20 PASS, 1 CANCELLED; no cuenta como verde. Coordinador avisado.",
+            "kind": "test"
+          },
+          {
+            "command": "T3 preview_status → preview_open(reuseExistingTab:false, profileId:'incognito', open:false), host http://127.0.1.21:5511; preview_select/type/click/evaluate/snapshot",
+            "before": "El rojo de esta tarea está demostrado por tests; UI anterior documentada en docs/adversarial/reports/opportunities.md.",
+            "after": "Fixtures sintéticas, ventanas de 7 días terminadas 2026-10-10 y 2026-10-18, mismas fuentes/consulta. API HTTP 200 y UI: 0→0/1→1 stable neutral; 3→1 declining ámbar y texto 1 frente a 3; 1→4 observed verde; 0→2 early_signal. Cold start y YouTube insufficient. 0→0 conserva una referencia vigente; Inicio muestra las dos filas estables sin reclamar crecimiento. Viewport móvil 390×844: documento y badge sin desbordamiento.",
+            "kind": "browser"
+          }
+        ],
+        "artifacts": [
+          "docs/remediation/evidence/opportunities-1-before.tap",
+          "docs/remediation/evidence/opportunities-1-after.tap",
+          "docs/remediation/evidence/opportunities-1-nearby.tap",
+          "docs/remediation/evidence/opportunities-1-browser.json",
+          "docs/remediation/evidence/opportunities-1-cold.png",
+          "docs/remediation/evidence/opportunities-1-decline.png",
+          "docs/remediation/evidence/opportunities-1-stable-zero.png",
+          "docs/remediation/evidence/opportunities-1-stable-mobile.png",
+          "/tmp/30x-remediation-opportunities-1/audit/seed.mjs",
+          "/tmp/30x-remediation-opportunities-1/audit/manifest.json"
+        ],
+        "limitations": [
+          "Toda la evidencia es sintética y local, sin proveedores, claves, gasto ni observaciones reales de audiencia; no se acredita calidad longitudinal real.",
+          "No se ejecutó build global ni suite global; validación integrada corresponde al coordinador.",
+          "La combinación de tests cancelada queda registrada como tal.",
+          "Pestaña propia tab_48 cerrada y desarrollo propio detenido; ss confirmó 4511/5511 libres. Node --watch emitió una aserción FSEventWrap al cerrarse después de las comprobaciones."
+        ]
+      }
+    },
+    {
+      "id": "studio-1",
+      "severity": "P2",
+      "title": "La estructura local pega la dirección editorial en el guion e ignora el formato y CTA pedidos",
+      "members": [
+        "studio-1"
+      ],
+      "agent": "fix_studio_1",
+      "apiPort": 4512,
+      "webPort": 5512,
+      "host": "127.0.1.22",
+      "dataDir": "/tmp/30x-remediation-studio-1",
+      "report": "docs/remediation/reports/studio-1.json",
+      "status": "verified",
+      "resolution": "El borrador aplica formato, cantidad, CTA y ejemplo; conserva las notas libres en un brief para revisión.",
+      "reportDetails": {
+        "issueId": "studio-1",
+        "agent": "fix_studio_1",
+        "status": "fixed",
+        "rootCause": "createDraft componía siempre cinco bloques, usaba instructions como tema de respaldo, pegaba instructions y la adaptación sin interpretar en el guion, y fijaba un CTA ajeno a la petición. El formato sólo cambiaba metadatos.",
+        "changes": [
+          "localDraft genera estructuras distintas: láminas para carrusel, escenas para Reel/video, asunto/saludo/secciones para newsletter y párrafos para post. Conserva cinco unidades por defecto y admite entre tres y ocho elegidas explícitamente.",
+          "La necesidad de la audiencia guía el texto breve y los pasos. instructions y angle completos quedan en editorialBrief; audienceNeeds se conserva completo allí y se resume en el contenido.",
+          "CTA exacto, tema, cantidad y ejemplo tienen controles explícitos validados en el servidor. La sintaxis limitada de notas admite CTA etiquetado, cantidad de láminas/escenas, ejemplo hipotético y títulos de secciones; los controles tienen prioridad.",
+          "El brief visible fuera de los campos publicables explica que las indicaciones libres restantes requieren revisión manual. Conserva procedencia y notas sobre cantidades fuera de rango.",
+          "El brief sobrevive a PATCH y recarga sin convertirlo en contenido exportable/publicable. Campos, canales, audiencia, responsable y límites piece-contract se conservan.",
+          "Formulario del generador con controles de 16 px, foco existente y sin desborde en 390 × 844."
+        ],
+        "files": [
+          "server/intelligence.mjs (helpers localDraftControls/localDraft y región de generación de createDraft)",
+          "src/features/Studio.tsx (NewDraft y details del brief)",
+          "src/lib/types.ts (Piece.editorialBrief opcional)",
+          "tests/remediation-studio-1.test.mjs",
+          "docs/remediation/reports/studio-1.md",
+          "docs/remediation/reports/studio-1.json"
+        ],
+        "verification": [
+          {
+            "command": "node --test tests/remediation-studio-1.test.mjs",
+            "before": "Exit 1: los cuatro casos iniciales fallaban. Tres recorridos copiaban instrucciones; el caso largo carecía de brief.",
+            "after": "Los mismos cuatro escenarios y cuatro casos adicionales pasan dentro de la ejecución cercana de 57 pruebas.",
+            "kind": "test"
+          },
+          {
+            "command": "node --test tests/remediation-studio-1.test.mjs tests/draft-contract.test.mjs tests/intelligence.test.mjs tests/social-intelligence.test.mjs tests/integrated-flow.test.mjs tests/piece-draft.test.mjs tests/workflow-recovery.test.mjs",
+            "before": "La ejecución intermedia detectó expectativas antiguas que exigían instrucciones/adaptaciones en script. El coordinador las actualizó explícitamente, manteniendo límites, contexto completo y guardado.",
+            "after": "Exit 0: 57/57 pasan, incluidas 8 regresiones nuevas, límites de proveedor, contextos de 10k/5k/3k, guardado y conflictos del editor.",
+            "kind": "test"
+          },
+          {
+            "command": "node --check server/intelligence.mjs",
+            "before": "No aplicado.",
+            "after": "Exit 0.",
+            "kind": "test"
+          },
+          {
+            "command": "T3 preview_* en http://127.0.1.22:5512; tab_49_07e54779-9ab2-4979-8a15-674c4eff160a",
+            "before": "El informe adversarial documentó los tres flujos originales con cinco bloques e instrucciones pegadas y CTA fijo.",
+            "after": "Idea propia: 4 láminas + CTA exacto + brief separado. Referencia: 3 escenas TikTok/docentes + CTA exacto + URL. Oportunidad: newsletter asunto/saludo/Registrar/Revisar + CTA exacto, sin mandato residual de post. Todas las creaciones se hicieron por UI con respuestas HTTP 200.",
+            "kind": "browser"
+          },
+          {
+            "command": "Guardar cambios por UI y recargar la ruta del newsletter",
+            "before": "El brief no existía; el guardado anterior sí funcionaba.",
+            "after": "PATCH 200. Se conserva el guion y brief exactos, así como el CTA editado «CTA revisado de QA.», tras recargar.",
+            "kind": "browser"
+          },
+          {
+            "command": "T3 preview_resize 390 × 844 y generación con controles explícitos contradictorios con las notas",
+            "before": "Controles heredaban 14 px; la salida anterior ignoraba CTA y estructura.",
+            "after": "9 controles a 16 px; sin desborde de página o modal. Se generan 3 láminas, CTA del campo y ningún ejemplo aunque las notas pedían 8 y un ejemplo.",
+            "kind": "browser"
+          }
+        ],
+        "contractUpdatesByCoordinator": [
+          "tests/draft-contract.test.mjs conserva 10000 instructions, 5000 angle y 3000 audienceNeeds en brief, mantiene todos los límites y PATCH roundtrip.",
+          "tests/intelligence.test.mjs mueve las instrucciones libres al brief; se conserva el assert de cinco escenas por defecto.",
+          "tests/social-intelligence.test.mjs mueve la adaptación audiovisual al brief; mantiene las exclusiones de texto en pantalla y directivas."
+        ],
+        "artifacts": [
+          "docs/remediation/evidence/studio-1-red.txt",
+          "docs/remediation/evidence/studio-1-nearby.txt",
+          "docs/remediation/evidence/studio-1-green.txt",
+          "docs/remediation/evidence/studio-1-browser.json",
+          "docs/remediation/evidence/studio-1-carousel-brief.png",
+          "docs/remediation/evidence/studio-1-newsletter.png",
+          "docs/remediation/evidence/studio-1-mobile-controls.png"
+        ],
+        "limitations": [
+          "Generación local determinista y de alcance explícito. No se afirma interpretación semántica de dirección libre ni cumplimiento automático de peticiones arbitrarias; el resto del brief requiere revisión manual.",
+          "Datos ficticios: cuenta y marca creadas por API; referencia analizada preparada como fixture sintética en SQLite para disponer de oportunidad. example.com es una procedencia sintética, no una extracción verificada.",
+          "No se usaron claves ni proveedores reales. Los tests cercanos de proveedor usan transportes simulados; no acreditan calidad de un modelo ni entrega/publicación.",
+          "No se ejecutó build ni formato global. La compilación integrada y el cierre definitivo del hallazgo corresponden al coordinador.",
+          "Móvil probado como viewport emulado en navegador de escritorio, no en dispositivo físico."
+        ],
+        "resources": {
+          "host": "127.0.1.22",
+          "apiPort": 4512,
+          "webPort": 5512,
+          "dataDir": "/tmp/30x-remediation-studio-1",
+          "processSession": 46789,
+          "tabId": "tab_49_07e54779-9ab2-4979-8a15-674c4eff160a",
+          "cleanup": "Pestaña propia cerrada. Proceso propio detenido y sesión terminada; ss confirmó puertos 4512/5512 sin escuchas. Node --watch emitió una aserción FSEventWrap durante la detención; no ocurrió durante los recorridos."
+        }
+      }
+    },
+    {
+      "id": "calendar-1",
+      "severity": "P2",
+      "title": "Una fecha residual mantiene un borrador sin aprobación en la grilla y el CSV",
+      "members": [
+        "calendar-1"
+      ],
+      "agent": "fix_calendar_1",
+      "apiPort": 4513,
+      "webPort": 5513,
+      "host": "127.0.1.23",
+      "dataDir": "/tmp/30x-remediation-calendar-1",
+      "report": "docs/remediation/reports/calendar-1.json",
+      "status": "verified",
+      "resolution": "Los borradores y las fechas residuales inválidas quedan fuera de grilla, contadores y CSV.",
+      "reportDetails": {
+        "issueId": "calendar-1",
+        "agent": "fix_calendar_1",
+        "status": "fixed",
+        "cleanup": {
+          "runtimeSession": 45113,
+          "runtimeStopped": true,
+          "portsClosed": [
+            4513,
+            5513
+          ],
+          "ownTabClosed": "tab_4p_07e54779-9ab2-4979-8a15-674c4eff160a",
+          "dataDirPreserved": "/tmp/30x-remediation-calendar-1",
+          "note": "Controlled SIGTERM teardown exited 143. Node 24 watch mode printed its known FSEventWrap/FSWatcher.close assertion while closing watchers; both own listener ports were verified closed. No runtime functional error occurred during QA."
+        },
+        "rootCause": "pieceInput copied scheduledFor from the current record and only changed it when a client explicitly sent scheduledFor. Calendar treated every parseable date as a plan, including draft/review/approved records whose approval was invalidated.",
+        "changes": [
+          "Enforce server invariant: scheduledFor is cleared whenever the resulting status is outside scheduled/published, including editorial PATCH requests that omit scheduledFor and transitions back to approved.",
+          "Use calendarPlanDate as the single eligibility gate before deriving grid, period/weekly counts, selected-day agenda, upcoming entries and CSV. Only scheduled/published records with finite dates participate.",
+          "Keep approved pieces with legacy residual dates in the ready-to-schedule tray without treating their date as a plan. Preserve all legacy records, published dates, receipts, comments, approval/version gates and reviewer/workspace permissions."
+        ],
+        "files": [
+          "server/core.mjs",
+          "src/features/Calendar.tsx",
+          "src/lib/calendar-plan.mjs",
+          "src/lib/calendar-plan.d.mts",
+          "tests/remediation-calendar-1.test.mjs"
+        ],
+        "verification": [
+          {
+            "command": "node --test tests/remediation-calendar-1.test.mjs",
+            "before": "Original real HTTP scheduled→draft editorial PATCH, omitting scheduledFor, failed: retained 2026-10-20T05:34:28.202Z instead of undefined (0/1).",
+            "after": "7/7 pass: omitted/explicit dates, draft/review/approved transitions, rescheduling/date validation, current edit version, reviewer 403/outsider 404, published metadata protection, immutable legacy rows and calendar date eligibility.",
+            "kind": "test"
+          },
+          {
+            "command": "node --test tests/core.test.mjs tests/integrated-flow.test.mjs",
+            "before": "Existing nearby contracts retained.",
+            "after": "17/17 pass, no failures/cancellations/skips.",
+            "kind": "test"
+          },
+          {
+            "command": "npx tsc -b --pretty false",
+            "before": "New calendar eligibility seam requires a declaration consumed by TypeScript.",
+            "after": "Exit 0; no diagnostics.",
+            "kind": "test"
+          },
+          {
+            "command": "T3 preview interactive desktop at http://127.0.1.23:5513/calendar, 1280×800",
+            "before": "Synthetic legacy draft with residual date appeared in month summary (2), grid and upcoming next to one valid scheduled piece.",
+            "after": "Same legacy draft remains stored but disappears from plan. Expanded seven-row fixture excludes dated draft/review/approved and invalid-date scheduled; valid scheduled/published remain. October count 2, selected future week count 1; approved residual appears only in tray. Studio UI edit clears the date and returns to draft.",
+            "kind": "browser"
+          },
+          {
+            "command": "T3 preview native CSV download and Python csv.DictReader verification",
+            "before": "Historical audit CSV included an unapproved draft; current pre-fix browser reproduced the same eligibility failure.",
+            "after": "October export has exactly 2 rows/12 columns: valid scheduled + published history; date/hour/title/UTC/state exact, including accepted-webhook label. Next-month record excluded. After UI/API edits, export has exactly 1 row/12 columns, published history only.",
+            "kind": "browser"
+          },
+          {
+            "command": "T3 preview interactive mobile 390×844",
+            "before": "Residual dates could imply false planning regardless of viewport.",
+            "after": "Approved residual can be scheduled through UI, same id/count and review history, no duplicate. Subsequent original API PATCH without null clears the date and reload removes it. Seven records preserved, no page overflow. Week 19–25 October has zero events/count, and export is disabled.",
+            "kind": "browser"
+          }
+        ],
+        "artifacts": [
+          "docs/remediation/evidence/calendar-1/red-test.log",
+          "docs/remediation/evidence/calendar-1/red-draft-counted.png",
+          "docs/remediation/evidence/calendar-1/30x-remediation-calendar-1-green.log",
+          "docs/remediation/evidence/calendar-1/30x-remediation-calendar-1-nearby.log",
+          "docs/remediation/evidence/calendar-1/30x-remediation-calendar-1-types.log",
+          "docs/remediation/evidence/calendar-1/browser-fixture.json",
+          "docs/remediation/evidence/calendar-1/browser-checks.json",
+          "docs/remediation/evidence/calendar-1/csv-check.json",
+          "docs/remediation/evidence/calendar-1/green-october.csv",
+          "docs/remediation/evidence/calendar-1/green-after-invalidations.csv",
+          "docs/remediation/evidence/calendar-1/green-month.png",
+          "docs/remediation/evidence/calendar-1/green-week.png",
+          "docs/remediation/evidence/calendar-1/ui-edit-invalidates.png",
+          "docs/remediation/evidence/calendar-1/mobile-before-plan.png",
+          "docs/remediation/evidence/calendar-1/mobile-scheduled-valid.png",
+          "docs/remediation/evidence/calendar-1/mobile-after-invalidations.png",
+          "docs/remediation/evidence/calendar-1/mobile-empty-week.png"
+        ],
+        "limitations": [
+          "Interactive QA uses only synthetic local records and a synthetic published webhook receipt. No external publication/provider was called; scheduling is not delivery.",
+          "Browser timezone was UTC. Pure date tests preserve an explicit UTC−06 offset; no browser timezone or DST switch was performed.",
+          "Legacy invalid rows are retained for correction/history and excluded by eligibility; no destructive backfill or silent mass migration was performed.",
+          "Integration-wide build and final full suite remain the coordinator's responsibility."
+        ]
+      }
+    },
+    {
+      "id": "results-1",
+      "severity": "P2",
+      "title": "Las notas de resultados permiten guardar fichas identificables de contactos",
+      "members": [
+        "results-1"
+      ],
+      "agent": "fix_results_1",
+      "apiPort": 4514,
+      "webPort": 5514,
+      "host": "127.0.1.24",
+      "dataDir": "/tmp/30x-remediation-results-1",
+      "report": "docs/remediation/reports/results-1.json",
+      "status": "verified",
+      "resolution": "Las notas rechazan fichas identificables explícitas y conservan las métricas anteriores ante un error.",
+      "reportDetails": {
+        "issueId": "results-1",
+        "agent": "fix_results_1",
+        "status": "fixed",
+        "rootCause": "outcomeInput sólo limitaba notes a texto de 5000 caracteres: no aplicaba el contrato de datos agregados. learningFor devolvía notes sin proyección de privacidad y el POST de corrección volvía a guardar existing.notes si se omitía el campo.",
+        "changes": [
+          "outcomeInput valida notes con assertAggregateAudienceText después de aplicar el límite existente de 5000. Rechaza contactos explícitos y estructuras de ficha individual antes de mutar resultados, piezas o actividad; el error no refleja el contenido rechazado.",
+          "learningFor omite únicamente notes no agregadas de los resultados antiguos. Conserva métricas, IDs, fechas, conteos y filas, sin migración ni borrado masivo.",
+          "Al corregir sólo métricas, el fallback de notes antiguas pasa por la misma proyección. Conserva notas agregadas válidas, permite borrado explícito y actualiza el mismo outcome por pieceId.",
+          "Journey muestra ayuda asociada a notes mediante aria-describedby. El alert existente conserva notas y métricas al rechazar; no se modifican las tres métricas ni sus step."
+        ],
+        "files": [
+          "server/audience-insights.mjs",
+          "src/features/Journey.tsx",
+          "tests/remediation-results-1.test.mjs"
+        ],
+        "verification": [
+          {
+            "command": "node --test tests/remediation-results-1.test.mjs",
+            "before": "Exit 1; 2 PASS y 4 FAIL. La cadena literal devolvía 200, persistía la ficha y la exponía en insights.",
+            "after": "Exit 0; 6/6 PASS. Rechazo literal, corrección atómica, variantes email/teléfono/ficha/CSV, límite 5000, omisión antigua, corrección sólo métricas, comparación 3+3 y límites de roles/marca.",
+            "kind": "test"
+          },
+          {
+            "command": "node --test tests/remediation-results-1.test.mjs tests/audience-insights.test.mjs tests/remediation-signals-1.test.mjs tests/remediation-signals-2.test.mjs",
+            "before": "La suite específica anterior acreditó el defecto antes de cambiar el servidor.",
+            "after": "Exit 0; 54/54 PASS. Incluye protecciones de URLs de señales/publicaciones, aprobación, bloqueo de publicación, transacciones y aprendizaje.",
+            "kind": "test"
+          },
+          {
+            "command": "T3 preview_* own tab; select synthetic approved piece in /results, enter literal note and 1500/100/10, submit, reload, GET /insights",
+            "before": "UI guardó y mostró tras recarga SINTÉTICO. Contacto individual: Persona QA, persona-qa@example.com, teléfono +52 55 1234 5678; pidió formación.; SQLite e insights conservaron notes.",
+            "after": "POST real de UI devuelve 400 con ayuda sin reflejar datos. Conserva la nota escrita y 1500/100/10 para corregir. Recargar la fila antigua omite notes manteniendo métricas; SQLite mantiene esa fila hasta su corrección explícita.",
+            "kind": "browser"
+          },
+          {
+            "command": "T3 preview_* correct note to aggregate learning, submit and reload at 390x844 and 1280x800",
+            "before": "La ficha literal quedaba en el resultado publicado.",
+            "after": "Nota agregada persiste; 1 outcome, mismo ID/createdAt/publishedAt/pieceId y métricas 1500/100/10. Sin contacto en pantalla ni desbordamiento horizontal; alert de rechazo y ayuda accesibles.",
+            "kind": "browser"
+          }
+        ],
+        "artifacts": [
+          "docs/remediation/evidence/results-1/test-before.txt",
+          "docs/remediation/evidence/results-1/test-after.txt",
+          "docs/remediation/evidence/results-1/browser-checks.json",
+          "docs/remediation/evidence/results-1/before-reload.png",
+          "docs/remediation/evidence/results-1/legacy-note-omitted.png",
+          "docs/remediation/evidence/results-1/rejected-desktop.png",
+          "docs/remediation/evidence/results-1/rejected-mobile.png",
+          "docs/remediation/evidence/results-1/corrected-mobile.png",
+          "docs/remediation/evidence/results-1/corrected-desktop.png"
+        ],
+        "limitations": [
+          "Datos de cuenta, empresa, audiencia, pieza, contacto y métricas exclusivamente sintéticos. No acredita rendimiento de negocio, publicación social ni entrega de un proveedor.",
+          "Se probó desarrollo propio y SQLite aislada /tmp/30x-remediation-results-1; no se ejecutó build/format global. Compilación y recorrido integrado corresponden al coordinador.",
+          "La detección reutiliza sin cambios el helper compartido de contactos explícitos y fichas estructuradas. No pretende identificar todos los nombres sueltos ni toda paráfrasis de datos personales.",
+          "Las notas antiguas personales permanecen en el almacenamiento previo y se omiten en las lecturas de insights; se eliminan sólo de la fila corregida al omitir/reemplazar notes. No se hizo un borrado masivo.",
+          "Móvil comprobado con viewport emulado, no con dispositivo físico. results-2 (fracciones/step) queda fuera de este cambio."
+        ],
+        "resources": {
+          "host": "127.0.1.24",
+          "apiPort": 4514,
+          "webPort": 5514,
+          "dataDir": "/tmp/30x-remediation-results-1",
+          "tabId": "tab_4h_07e54779-9ab2-4979-8a15-674c4eff160a",
+          "cleanup": "Pestaña propia cerrada y proceso propio detenido; puertos 4514/5514 liberados."
+        }
+      }
+    },
+    {
+      "id": "assets-1",
+      "severity": "P2",
+      "title": "Los nombres UTF-8 se corrompen al subir y dejan de encontrarse por su nombre original",
+      "members": [
+        "assets-1"
+      ],
+      "agent": "fix_assets_1",
+      "apiPort": 4515,
+      "webPort": 5515,
+      "host": "127.0.1.25",
+      "dataDir": "/tmp/30x-remediation-assets-1",
+      "report": "docs/remediation/reports/assets-1.json",
+      "status": "verified",
+      "resolution": "Los nombres Unicode nuevos se conservan al subir, buscar y descargar el archivo original.",
+      "reportDetails": {
+        "issueId": "assets-1",
+        "agent": "fix_assets_1",
+        "status": "fixed",
+        "rootCause": "Multer/Busboy interpretaba como Latin-1 los bytes UTF-8 de filename sin charset. El originalname ya corrupto se persistía; biblioteca, filtro y Content-Disposition propagaban ese valor. slice(0,200) también podía perder la extensión o cortar un surrogate.",
+        "changes": [
+          "server/upload-filenames.mjs encapsula la selección de charset mediante streamHandler público de Multer 2.4.0: compara el parser Latin-1 principal con metadatos UTF-8. filename* explícito coincide en ambos y se conserva sin otra conversión; filename simple prefiere sólo UTF-8 estrictamente válido, con fallback Latin-1.",
+          "El lector de metadatos tiene fileSize:0, hereda límites, no almacena contenido y se desengancha/destruye al consumir el primer header de archivo o ante fin, error, límite o aborto. Multer conserva la escritura y sus errores/límites.",
+          "Saneamiento de basename para rutas POSIX/Windows y controles C0/DEL; máximo previo de 200 unidades UTF-16, manteniendo extensión normal y pares surrogate completos.",
+          "Content-Disposition usa filename* UTF-8 y escapa los caracteres reservados de RFC 5987.",
+          "Busboy 1.6.0 ya instalado se declara directo; mínimo Multer 2.4.0. Cambio de manifests/lock hecho offline sin modificar node_modules ni instalar paquetes."
+        ],
+        "files": [
+          "server/upload-filenames.mjs",
+          "server/core.mjs",
+          "package.json",
+          "package-lock.json",
+          "tests/remediation-assets-1.test.mjs",
+          "docs/remediation/reports/assets-1.md",
+          "docs/remediation/reports/assets-1.json"
+        ],
+        "verification": [
+          {
+            "command": "node --test tests/remediation-assets-1.test.mjs",
+            "before": "1 PASS/3 FAIL: POST devolvía 03-Ã±andÃº; multipart en chunks devolvía mojibake; el recorte de nombre perdía .txt.",
+            "after": "7/7 PASS. Multipart HTTP real FormData/manual/chunks: español, acentos, japonés/árabe/chino/emoji, porcentajes literales, filename* UTF-8 y Latin-1 con «Ã±», fallback inválido como UTF-8, límites de nombre y descarga con bytes/headers exactos. También campos previos, límites, archivo único, cancelación y tamaño configurable exacto/+1.",
+            "kind": "test"
+          },
+          {
+            "command": "node --test tests/core.test.mjs tests/workflow-recovery.test.mjs tests/remediation-assets-1.test.mjs",
+            "before": "La regresión específica era roja; suite cercana no se ejecutó antes de aplicar el arreglo.",
+            "after": "23/23 PASS. Incluye lectura privada, aislamiento, roles y flujo de cargas parciales existentes.",
+            "kind": "test"
+          },
+          {
+            "command": "T3 preview_* en http://127.0.1.25:5515/assets; tab propio incognito 1280x800",
+            "before": "Tres cargas nativas guardadas con mojibake. ñandú devolvía 0 tarjetas; descarga nativa 03-Ã±andÃº & _prueba_ #100%.txt con contenido exacto.",
+            "after": "Mismas tres fixtures subidas desde UI tras corregir; nombres originales correctos en tarjeta/detalle/API/SQLite. Recarga y búsquedas ñandú/café/日本語 devuelven una tarjeta correcta. Tres descargas nativas con nombres Unicode y bytes idénticos.",
+            "kind": "browser"
+          },
+          {
+            "command": "GET nativo y fetch del navegador a /api/brands/:id/assets/:id/file?download=1; comparación filesystem/fixture/descarga",
+            "before": "La descarga nativa confirmó el nombre corrupto; no se archivó la cabecera raw anterior.",
+            "after": "Tres respuestas 200 text/plain; filename* decodifica al nombre original exacto. Almacenamiento y descargas conservan los 67 bytes y SHA-256 db80066315782e5c6d6d6d040ce8a67bca59dfbd896115f3ec890e44b1065184.",
+            "kind": "http"
+          }
+        ],
+        "artifacts": [
+          "docs/remediation/evidence/assets-1/tests-before.txt",
+          "docs/remediation/evidence/assets-1/tests-after.txt",
+          "docs/remediation/evidence/assets-1/tests-final.txt",
+          "docs/remediation/evidence/assets-1/before-upload.png",
+          "docs/remediation/evidence/assets-1/before-search.png",
+          "docs/remediation/evidence/assets-1/after-upload.png",
+          "docs/remediation/evidence/assets-1/after-search.png",
+          "docs/remediation/evidence/assets-1/after-unicode.png",
+          "docs/remediation/evidence/assets-1/browser-observations.json",
+          "docs/remediation/evidence/assets-1/byte-verification.json",
+          "docs/remediation/evidence/assets-1/cleanup.json",
+          "/tmp/30x-remediation-assets-1/fixtures"
+        ],
+        "limitations": [
+          "Datos y cuentas exclusivamente sintéticos. Navegador T3 Chromium de escritorio; no se validaron otros motores o todos los formatos audiovisuales.",
+          "Sin charset explícito, ciertos bytes Latin-1 también son UTF-8 válido. Se prefiere UTF-8 válido para filename simple; clientes que necesiten un nombre Latin-1 ambiguo deben declarar filename* con charset. Los nombres filename* se respetan sin reparación heurística.",
+          "No se migran nombres históricos ya corruptos: sus bytes/charset originales ya no están disponibles y una conversión ciega podría dañar nombres literales correctos.",
+          "Las comillas del nombre original se conservan en nombre/cabecera; Chromium las cambia por guiones bajos en el archivo local descargado.",
+          "No se modificaron detectFile ni límites de producto (assets-2), UI, autenticación ni autorización. No hubo build, detector, format global, claves, proveedores, publicación ni commits.",
+          "Al detener la instancia propia, Node --watch emitió una aserción nativa durante SIGTERM. La comprobación posterior confirmó cero procesos propios y puertos 4515/5515 cerrados; no quedó ningún recurso activo."
+        ],
+        "environment": {
+          "dataDir": "/tmp/30x-remediation-assets-1",
+          "apiPort": 4515,
+          "webPort": 5515,
+          "host": "127.0.1.25",
+          "tabId": "tab_4i_07e54779-9ab2-4979-8a15-674c4eff160a",
+          "processSession": 90409,
+          "cleanup": "Pestaña propia cerrada; concurrently 216987 terminó la instancia propia. /proc sin procesos con el DATA_DIR asignado y ambos puertos libres. Fixtures preservadas."
+        }
+      }
+    },
+    {
+      "id": "assets-2",
+      "severity": "P2",
+      "title": "Un TXT válido de 11 MiB falla pese al límite anunciado de 25 MB",
+      "members": [
+        "assets-2"
+      ],
+      "agent": "fix_assets_2",
+      "apiPort": 4516,
+      "webPort": 5516,
+      "host": "127.0.1.26",
+      "dataDir": "/tmp/30x-remediation-assets-2",
+      "report": "docs/remediation/reports/assets-2.json",
+      "status": "verified",
+      "resolution": "Los TXT UTF-8 válidos se aceptan hasta 25 MiB inclusive; el exceso tiene un error específico y no deja archivos parciales.",
+      "reportDetails": {
+        "issueId": "assets-2",
+        "agent": "fix_assets_2",
+        "status": "fixed",
+        "rootCause": "detectFile sólo reconocía texto cuando file.size<=10MiB y únicamente inspeccionaba el primer1KiB. Así, un TXT ASCII válido de11MiB recibía400 Formato no admitido pese al límite UI de25MiB. Además, el parser multipart permitía50MiB, otro límite distinto.",
+        "changes": [
+          "Se aplica25MiB inclusivos (26.214.400bytes) como máximo real del archivo en el parser multipart de assets y en la UI.",
+          "El error LIMIT_FILE_SIZE de esta ruta se normaliza a413 con un mensaje específico de25MiB y recuperación. El manejo de otros errores multipart y las demás rutas permanecen a cargo de sus handlers.",
+          "TXT, Markdown y CSV se verifican como UTF-8 estricto, sin controles binarios, a lo largo de todos sus bytes usando un buffer fijo de64KiB y TextDecoder streaming. Se aceptan caracteres multibyte divididos entre bloques; las secuencias incompletas se rechazan al finalizar.",
+          "Se distinguen los errores de tamaño, texto/codificación inválidos y formato no admitido. El MIME declarado es sólo candidato a texto; no evita inspeccionar el contenido.",
+          "La ayuda visible y accesible indica25MiB y UTF-8, CSV aparece en el selector y los tamaños de tarjetas usanMiB.",
+          "Se conserva filenameAwareUpload, selección de charset/nombre, saneamiento, headers de descarga, autenticación y recuperación individual por archivo. Las firmas existentes de formatos soportados conservan su comportamiento.",
+          "CaptureModal usa la misma ruta de assets: sus dos ayudas, guardia de selección y error pasan de50MB a25MiB; se informaUTF-8 y se incluyeCSV en accept. Cambio coordinado sin tocarReferenceDetail."
+        ],
+        "files": [
+          "server/core.mjs",
+          "src/features/Assets.tsx",
+          "src/features/Discovery.tsx (sólo CaptureModal)",
+          "tests/remediation-assets-2.test.mjs",
+          "docs/remediation/reports/assets-2.md",
+          "docs/remediation/reports/assets-2.json",
+          "docs/remediation/evidence/assets-2-red.txt",
+          "docs/remediation/evidence/assets-2-green-tests.txt",
+          "docs/remediation/evidence/assets-2-core-tests.txt",
+          "docs/remediation/evidence/assets-2-browser.json",
+          "docs/remediation/evidence/assets-2-fixtures.json",
+          "docs/remediation/evidence/assets-2-red-ui.png",
+          "docs/remediation/evidence/assets-2-green-ui.png",
+          "docs/remediation/evidence/assets-2-batch-retry-ui.png",
+          "docs/remediation/evidence/assets-2-batch-recovered-ui.png",
+          "docs/remediation/evidence/assets-2-mobile-ui.png",
+          "docs/remediation/evidence/assets-2-capture-copy.txt"
+        ],
+        "verification": [
+          {
+            "command": "node --test --test-name-pattern='original 11 MiB' tests/remediation-assets-2.test.mjs",
+            "before": "Ejecutado dos veces sin cambios:400 Formato no admitido; expected201;1 fallo. Mismos11.534.336bytes ASCII y SHA-2561309fb8522d7deec22b712f936fddc4cf81fd13588c6fa2f1554972741e2674c.",
+            "after": "La misma prueba queda verde dentro del conjunto final:201, documento text/plain, biblioteca persistida, descarga200 y bytes exactamente iguales.",
+            "kind": "http"
+          },
+          {
+            "command": "node --test tests/remediation-assets-1.test.mjs tests/remediation-assets-2.test.mjs tests/workflow-recovery.test.mjs",
+            "before": "assets-2 original11MiB rojo antes de la corrección; los demás casos se añadieron para cubrir límites y preservación.",
+            "after": "16/16PASS:7assets-1,7assets-2 y2workflow-recovery. Incluye aborto multipart, límites/backpressure, nombresUnicode/Latin1/filename*, autenticación, formatos soportados, descarga exacta, límites10/11/25MiB y25MiB+1, UTF-8 entre chunks y alEOF, otra codificación y binario tras1KiB, limpieza y continuidad del lote.",
+            "kind": "test"
+          },
+          {
+            "command": "node --test tests/core.test.mjs",
+            "before": "No ejecutado para establecer una línea base de este defecto; suite de preservación cercana.",
+            "after": "14/14PASS, incluida carga privada con validación de formato, aislamiento y roles.",
+            "kind": "test"
+          },
+          {
+            "command": "T3 preview_*; http://127.0.1.26:5516/assets; pestaña propia tab_4l_07e54779-9ab2-4979-8a15-674c4eff160a",
+            "before": "Subir15-texto-11MiB.txt desde el input real produce400, resultado individual Formato no admitido y biblioteca vacía mientras se anuncia Hasta25MB.",
+            "after": "Misma fixture física:201, resultado Guardado y una sola entrada en biblioteca. GET de descarga200 con11.534.336bytes y el mismo SHA-256. Ayuda25MiB/UTF-8 visible.",
+            "kind": "browser"
+          },
+          {
+            "command": "T3 preview_upload lote [texto-25MiB-mas-1.txt,binario-renombrado.txt,recuperacion-valida.txt], seguido de Reintentar actualización",
+            "before": "Sin una prueba adicional previa de este lote específico.",
+            "after": "Exceso rechazado localmente con tamaño25MiB, binario rechazado porHTTP400UTF-8/binario y archivo válido guardado201. Una respuesta GET/state503 fue simulada exclusivamente en la pestaña propia. El botón de recuperación realiza sólo GET/state200, deja una entrada del válido y no repitePOST. El fetch original se restauró.",
+            "kind": "browser"
+          },
+          {
+            "command": "T3 preview_resize390x844 y comprobaciónDOM",
+            "before": "No se observó antes del arreglo este viewport específico.",
+            "after": "documentWidth390, viewport390, resultado358px, sin scroll horizontal. Ayuda asociada al botón mediante aria-describedby; límites y errores legibles.",
+            "kind": "browser"
+          },
+          {
+            "command": "node --input-type=module; script inline preservado en docs/remediation/evidence/assets-2-capture-copy.txt",
+            "before": "CaptureModal conservaba dos ayudas50MB, guardia50*1024*1024 y error50MB para la misma ruta ya limitada a25MiB.",
+            "after": "Verificación localPASS: las dos ayudas25MiB, UTF-8/CSV y guardia/error25MiB son coherentes; TypeScript.transpileModule sin erroresTSX. Runtime sigue cerrado.",
+            "kind": "test"
+          }
+        ],
+        "artifacts": [
+          "docs/remediation/evidence/assets-2-red.txt",
+          "docs/remediation/evidence/assets-2-green-tests.txt",
+          "docs/remediation/evidence/assets-2-core-tests.txt",
+          "docs/remediation/evidence/assets-2-browser.json",
+          "docs/remediation/evidence/assets-2-fixtures.json",
+          "docs/remediation/evidence/assets-2-red-ui.png",
+          "docs/remediation/evidence/assets-2-green-ui.png",
+          "docs/remediation/evidence/assets-2-batch-retry-ui.png",
+          "docs/remediation/evidence/assets-2-batch-recovered-ui.png",
+          "docs/remediation/evidence/assets-2-mobile-ui.png",
+          "/tmp/30x-remediation-assets-2/fixtures/manifest.json",
+          "/tmp/30x-remediation-assets-2/radar.sqlite",
+          "docs/remediation/evidence/assets-2-capture-copy.txt"
+        ],
+        "limits": {
+          "maxFileBytes": 26214400,
+          "maxFileMiB": 25,
+          "inclusive": true,
+          "textEncoding": "UTF-8 estricto",
+          "textInspectionBufferBytes": 65536,
+          "textMimeTypes": [
+            "text/plain",
+            "text/markdown",
+            "text/csv"
+          ],
+          "boundaries": [
+            {
+              "bytes": 10485760,
+              "label": "10MiB",
+              "httpStatus": 201,
+              "downloadBytesEqual": true
+            },
+            {
+              "bytes": 11534336,
+              "label": "11MiB",
+              "httpStatus": 201,
+              "downloadBytesEqual": true
+            },
+            {
+              "bytes": 26214400,
+              "label": "25MiB",
+              "httpStatus": 201,
+              "downloadBytesEqual": true
+            },
+            {
+              "bytes": 26214401,
+              "label": "25MiB+1",
+              "httpStatus": 413,
+              "stored": false
+            }
+          ]
+        },
+        "limitations": [
+          "Los casos de medios conservados usan firmas mínimas de transporte; no acreditan decodificación, reproducción ni validez integral de cada contenedor. Ese reconocimiento preexistente no se rediseñó.",
+          "El TXT ahora exigeUTF-8 válido: otra codificación obtiene un error específico con la acción de volver a guardarlo enUTF-8, reflejada también en la ayuda.",
+          "La igualdad de descarga se verificó medianteHTTP real desde Node y fetch en la pestaña. Un click de descarga nativa coincidió con un reinicio de node--watch durante el ajuste final de formato y recibió error de proxy; no se obtuvo un archivo de descarga del SO como evidencia.",
+          "La prueba de recuperación usa un503 sintético una vez en window.fetch de la pestaña propia; no representa una caída real de almacenamiento. Cargas/descargas y persistencia fueron reales y aisladas.",
+          "No build, formato global, dependencias, proveedores reales, publicación ni datos principales. El coordinador conserva la comprobación integrada final.",
+          "El ajuste final acotado de CaptureModal se verificó localmente por copia/límite y sintaxisTSX; no se volvió a abrir un runtime ni se afirma una nueva comprobación nativa de ese modal."
+        ],
+        "environment": {
+          "date": "2026-10-18",
+          "apiPort": 4516,
+          "webPort": 5516,
+          "host": "127.0.1.26",
+          "dataDir": "/tmp/30x-remediation-assets-2",
+          "processSession": 4696,
+          "tabId": "tab_4l_07e54779-9ab2-4979-8a15-674c4eff160a",
+          "cleanup": "Pestaña propia cerrada; procesos propios detenidos conSIGTERM; ss confirma4516/5516 sin listeners. El watcherNode24 imprimió una aserción durante su cierre, después de las pruebas; sesión4696 terminada. Bases yfixtures propias conservadas; las bases temporales de tests se eliminan al terminar."
+        }
+      }
+    },
+    {
+      "id": "sources-1",
+      "severity": "P2",
+      "title": "Cambiar HN a RSS conserva una consulta oculta y el resumen oculta el feed real",
+      "members": [
+        "sources-1"
+      ],
+      "agent": "fix_sources_1",
+      "apiPort": 4517,
+      "webPort": 5517,
+      "host": "127.0.1.27",
+      "dataDir": "/tmp/30x-remediation-sources-1",
+      "report": "docs/remediation/reports/sources-1.json",
+      "status": "verified",
+      "resolution": "Cambiar el tipo de fuente elimina consultas incompatibles y el resumen muestra el feed RSS real.",
+      "reportDetails": {
+        "issueId": "sources-1",
+        "agent": "fix_sources_1",
+        "status": "fixed",
+        "rootCause": "Formulario y sourceInput conservaban query/url del tipo anterior; el resumen priorizaba query sin comprobar compatibilidad con RSS.",
+        "changes": [
+          "Normalización de query/url en sourceInput según tipo efectivo antes de aplicar el payload nuevo; preserva PATCH parcial y exige URL nueva al convertir a RSS.",
+          "Formulario tipado con Source['type']; descarta consultas incompatibles y URLs al cambiar conector; envía sólo query/url aplicables.",
+          "Resumen RSS usa URL incluso para legacy con query residual; HN/GDELT ignoran URLs residuales.",
+          "Regresión HTTP de POST/PATCH y persistencia SQLite, con estados/metadatos/conteos preservados."
+        ],
+        "files": [
+          "server/core.mjs",
+          "src/features/Settings.tsx",
+          "tests/remediation-sources-1.test.mjs",
+          "docs/remediation/reports/sources-1.md",
+          "docs/remediation/reports/sources-1.json"
+        ],
+        "verification": [
+          {
+            "command": "node --test --test-reporter=tap tests/remediation-sources-1.test.mjs",
+            "before": "1 PASS, 6 FAIL. Caso original falla: RSS retiene query agent reliability.",
+            "after": "7 PASS, 0 FAIL, exit0; fuentes de seis tipos, tipo POST requerido, PATCH tipo omitido/repetido/nuevo, payload nuevo, rechazo atómico y persistencia de estados/conteos.",
+            "kind": "test"
+          },
+          {
+            "command": "T3 preview_* en pestaña propia: alta HN agent reliability→editar RSS NASA→guardar→Inicio→Fuentes y equipo→recargar→API readback→reabrir modal",
+            "before": "RSS guarda query oculta y la fila muestra agent reliability, sin feed.",
+            "after": "Mismo ID; query ausente; https://www.nasa.gov/feed/ visible y editable; enabled=true; 6 fuentes y 5 activas antes/después.",
+            "kind": "browser"
+          },
+          {
+            "command": "T3 preview_*: mostrar RSS legacy residual y cambiar HN→RSS→HN en formulario sin guardar",
+            "before": "Legacy RSS prioriza query residual sobre URL.",
+            "after": "Legacy muestra feed sin mutar registro. El roundtrip de formulario devuelve consulta vacía, sin revivir el texto descartado.",
+            "kind": "browser"
+          },
+          {
+            "command": "T3 preview_resize iphone-12-pro, 390×844; lectura DOM y captura",
+            "before": "No comprobado móvil antes.",
+            "after": "Feed visible; scrollWidth390; sin desbordamiento horizontal.",
+            "kind": "browser"
+          },
+          {
+            "command": "./node_modules/.bin/tsc --noEmit",
+            "before": "No ejecutado antes.",
+            "after": "exit0, sin diagnósticos.",
+            "kind": "test"
+          },
+          {
+            "command": "node --test --test-reporter=tap tests/core.test.mjs tests/social-core.test.mjs tests/intelligence.test.mjs",
+            "before": "Sin ejecución previa de este grupo por este agente.",
+            "after": "40 PASS y 1 FAIL observado en social-core.test.mjs:359: fixture reutiliza URL y deduplicación devuelve200 frente a201 esperado. Coordinador corrigió después fixture a /original-to-edit y comunicó social-core aislada exit0. Este agente no repitió grupo ni modificó tests existentes.",
+            "kind": "test"
+          }
+        ],
+        "artifacts": [
+          "docs/remediation/evidence/sources-1-before.json",
+          "docs/remediation/evidence/sources-1-before-row.png",
+          "docs/remediation/evidence/sources-1-before-modal.png",
+          "docs/remediation/evidence/sources-1-red.tap",
+          "docs/remediation/evidence/sources-1-green.tap",
+          "docs/remediation/evidence/sources-1-after.json",
+          "docs/remediation/evidence/sources-1-after-row.png",
+          "docs/remediation/evidence/sources-1-after-legacy-row.png",
+          "docs/remediation/evidence/sources-1-after-modal.png",
+          "docs/remediation/evidence/sources-1-after-mobile.png",
+          "docs/remediation/evidence/sources-1-nearby.tap",
+          "docs/remediation/evidence/sources-1-typecheck.txt",
+          "docs/remediation/evidence/sources-1-runtime.json",
+          "docs/remediation/evidence/sources-1-cleanup.json"
+        ],
+        "limitations": [
+          "Sin llamadas reales a NASA o proveedores, gasto, claves ni publicaciones. Discovery automático apagado; no acredita sincronización de conectores externos.",
+          "Plataforma/límites sociales sources-2 y guardias modales navigation-2 fuera del hunk asignado.",
+          "No build, format global, commit, subagentes ni compilación integrada. Typecheck sin emisión exit0.",
+          "Móvil emulado Chromium 390×844; sin dispositivo físico.",
+          "Runtime SIGTERM exit143; Node --watch imprimió aserción nativa de FSWatcher.close durante cierre simultáneo, después de todas las pruebas. Sin procesos activos ni puertos abiertos."
+        ],
+        "fixtureCorrection": "Antes del arreglo se corrigió únicamente la URL sintética esperada www.tiktok.com→tiktok.com en el caso social propio y se repitió rojo completo; no era defecto de producto.",
+        "runtime": {
+          "host": "127.0.1.27",
+          "apiPort": 4517,
+          "webPort": 5517,
+          "dataDir": "/tmp/30x-remediation-sources-1",
+          "sessionId": 90805,
+          "tabId": "tab_4d_07e54779-9ab2-4979-8a15-674c4eff160a",
+          "tabClosed": true,
+          "processStopped": true,
+          "portsClosed": true,
+          "exitCode": 143
+        },
+        "handoff": "Hunk producto cerrado y coordinador notificado para sources-2; estado final pendiente de comprobación integrada."
+      }
+    },
+    {
+      "id": "sources-2",
+      "severity": "P2",
+      "title": "YouTube→Apify muestra Instagram pero conserva plataforma incompatible y rechaza el guardado",
+      "members": [
+        "sources-2"
+      ],
+      "agent": "fix_sources_2",
+      "apiPort": 4518,
+      "webPort": 5518,
+      "host": "127.0.1.28",
+      "dataDir": "/tmp/30x-remediation-sources-2",
+      "report": "docs/remediation/reports/sources-2.json",
+      "status": "verified",
+      "resolution": "Cambiar entre YouTube y Apify mantiene una plataforma compatible con lo que muestra el formulario.",
+      "reportDetails": {
+        "issueId": "sources-2",
+        "agent": "fix_sources_2",
+        "status": "fixed",
+        "rootCause": "El borrador conservaba platform=youtube al cambiar el tipo a Apify. El select nativo mostraba Instagram al no tener una opción youtube, mientras la etiqueta de URL interpretaba el valor residual como TikTok y el PATCH enviaba youtube. sourceInput también heredaba plataformas incompatibles cuando un cliente cambiaba el tipo omitiendo platform.",
+        "changes": [
+          "Settings inicializa una plataforma compatible al abrir el editor y cambiar el tipo: YouTube usa youtube; Apify conserva TikTok cuando corresponde y en el resto de los casos usa Instagram.",
+          "Al cambiar Instagram↔TikTok se borra la URL de la red previa, se conserva la consulta y cambian etiqueta/placeholder con el estado real. El cambio de tipo conserva la limpieza query/url implementada por sources-1.",
+          "sourceInput inicializa una plataforma compatible únicamente al cambiar el tipo de una fuente existente y omitir platform; los PATCH parciales del mismo tipo conservan su configuración. Las plataformas y URLs explícitas incompatibles siguen rechazadas.",
+          "Guardar una referencia de fuente social pausada continúa permitido sin credenciales; se mantienen los controles de activación y búsqueda de proveedores.",
+          "Se añaden cinco pruebas HTTP aisladas con transporte externo prohibido, además de evidencia UI antes/después por T3 preview."
+        ],
+        "files": [
+          "src/features/Settings.tsx",
+          "server/core.mjs",
+          "tests/remediation-sources-2.test.mjs"
+        ],
+        "verification": [
+          {
+            "command": "T3 preview_*: añadir YouTube con canal, guardar pausada, editar→Apify, escribir consulta y guardar sin tocar Red social",
+            "before": "Instagram visible, etiqueta URL de TikTok; PATCH400 con platform=youtube. GET conserva el YouTube original y su URL https://www.youtube.com/@publicqa.",
+            "after": "Instagram visible, etiqueta URL de Instagram; URL anterior vacía automáticamente. PATCH200 platform=instagram, mismo nombre/ID/query, enabled=false y GET coherente. No hubo evento Red social.",
+            "kind": "browser"
+          },
+          {
+            "command": "T3 preview_*: alta sin guardar YouTube→Apify y Guardar fuente",
+            "before": "La misma transición conservaba platform=youtube en el borrador.",
+            "after": "POST201 con platform=instagram y URL vacía; GET persistido coincide y fuente pausada.",
+            "kind": "browser"
+          },
+          {
+            "command": "T3 preview_*: Instagram→TikTok con URL Instagram previa→Instagram→YouTube",
+            "before": "El cambio de plataforma no limpiaba la URL heredada de otra red.",
+            "after": "URL se limpia al cambiar de red; consulta se conserva; etiquetas y provider notices correctos. Los PATCH200 y GET confirman TikTok, Instagram y YouTube.",
+            "kind": "browser"
+          },
+          {
+            "command": "T3 preview_*: iPhone 12 Pro viewport390×844, editar YouTube→Apify, guardar sin tocar Red social, recargar y reabrir",
+            "before": "Fallo original registrado en escritorio.",
+            "after": "PATCH200, Instagram visible/label/payload/GET coinciden, provider Apify, pausa y activación deshabilitada; reload conserva datos; sin overflow horizontal ni errores de consola.",
+            "kind": "browser"
+          },
+          {
+            "command": "node --test tests/remediation-sources-2.test.mjs",
+            "before": "2 fallos/3 pases: type-change con platform omitida rechaza herencia YouTube→Apify y TikTok→YouTube.",
+            "after": "5/5 PASS. Incluye URL YouTube/TikTok persistida con body.url omitida, conservación de metadatos, validación explícita, PATCH parcial y permisos de revisor. Cero solicitudes externas.",
+            "kind": "test"
+          },
+          {
+            "command": "node --test tests/remediation-sources-1.test.mjs tests/social.test.mjs tests/core.test.mjs",
+            "before": "No se modificaron los tests cercanos.",
+            "after": "29/29 PASS, incluidas las siete pruebas sources-1 y gates de proveedores.",
+            "kind": "test"
+          },
+          {
+            "command": "./node_modules/.bin/tsc --noEmit --incremental false",
+            "before": "No necesario para detectar el defecto de estado.",
+            "after": "Exit0, sin errores.",
+            "kind": "test"
+          },
+          {
+            "command": "Cierre de pestaña T3 propia, SIGTERM a concurrently propio y comprobación de procesos/puertos",
+            "before": "Runtime propio API4518/web5518 con DATA_DIR aislado.",
+            "after": "Pestaña cerrada, ningún proceso propio restante y puertos4518/5518 sin aceptar conexiones.",
+            "kind": "http"
+          }
+        ],
+        "artifacts": [
+          "docs/remediation/evidence/sources-2-before.json",
+          "docs/remediation/evidence/sources-2-before-desktop.png",
+          "docs/remediation/evidence/sources-2-after-desktop.json",
+          "docs/remediation/evidence/sources-2-after-desktop-form.png",
+          "docs/remediation/evidence/sources-2-after-desktop-row.png",
+          "docs/remediation/evidence/sources-2-after-mobile-form.png",
+          "docs/remediation/evidence/sources-2-after-mobile-row.png",
+          "docs/remediation/evidence/sources-2-transitions.json",
+          "docs/remediation/evidence/sources-2-reload.json",
+          "docs/remediation/evidence/sources-2-red.tap",
+          "docs/remediation/evidence/sources-2-green.tap",
+          "docs/remediation/evidence/sources-2-nearby.tap",
+          "docs/remediation/evidence/sources-2-typecheck.txt",
+          "docs/remediation/evidence/sources-2-runtime.json",
+          "docs/remediation/evidence/sources-2-cleanup.json"
+        ],
+        "limitations": [
+          "Datos y cuenta sintéticos, sin claves configuradas, consultas de descubrimiento ni llamadas reales a YouTube/Apify. No se acredita entrega, extracción ni cobertura de proveedores reales.",
+          "Móvil comprobado en Chromium con viewport emulado; no se probó un dispositivo físico.",
+          "No se ejecutó build global ni detectores de diseño; la integración final corresponde al coordinador.",
+          "Durante SIGTERM, Node24 --watch imprimió una aserción interna FSEventWrap. El runtime terminó y se verificó la ausencia de procesos y listeners propios; las comprobaciones funcionales habían pasado."
+        ]
+      }
+    },
+    {
+      "id": "providers-1",
+      "severity": "P2",
+      "title": "Los conectores de publicación se configuran, pero no se pueden usar desde la interfaz",
+      "members": [
+        "providers-1"
+      ],
+      "agent": "fix_providers_1",
+      "apiPort": 4519,
+      "webPort": 5519,
+      "host": "127.0.1.29",
+      "dataDir": "/tmp/30x-remediation-providers-1",
+      "report": "docs/remediation/reports/providers-1.json",
+      "status": "verified",
+      "resolution": "La interfaz permite un envío explícito con confirmación de destino y versión, permisos y recibos.",
+      "reportDetails": {
+        "issueId": "providers-1",
+        "agent": "fix_providers_1",
+        "status": "fixed",
+        "rootCause": "La configuración y publishPiece existían, pero Studio no exponía una acción de envío ni consultaba el diario de publicación. La UI no podía distinguir un rechazo reintentable de un envío pendiente o incierto. Al completar el flujo se reprodujeron dos fallos de integración: webhook HTTP5xx/408 tratado como rechazo definitivo y Telegram sin message_id tratado como éxito.",
+        "changes": [
+          "Acción Enviar ahora para piezas aprobadas/programadas, confirmación protegida con destino real y vista previa del texto que recibirá Telegram. Los cambios locales, permisos o versión desactualizada bloquean el envío.",
+          "GET /api/brands/:brandId/pieces/:id/publish devuelve estado seguro, destino sin parámetros sensibles, vista previa, recibo, versión y huella opaca del conector. No envía ni muta la pieza.",
+          "POST publish conserva requireEditor y exige expectedApprovalVersion y expectedDestinationKey antes del transporte. Cambiar la aprobación o desconectar/cambiar el destino invalida una confirmación abierta.",
+          "Busy/doble clic, errores visibles, reintento explícito sólo tras rechazo y consulta sin reenvío para sending/uncertain. Una respuesta del navegador perdida se reconcilia con GET.",
+          "Recibos persistidos y etiquetas de aceptación del webhook en Studio/Home/Calendario/Resultados/CSV; HTTP2xx no se presenta como prueba de publicación final en una red.",
+          "Conservados locks, idempotencia, journal y assertPieceMutable. HTTP5xx/408 del webhook y éxito Telegram sin recibo válido quedan inciertos y bloquean nuevos envíos."
+        ],
+        "files": [
+          "src/features/PublishPiece.tsx",
+          "src/features/publish-piece.css",
+          "src/features/Studio.tsx",
+          "src/features/Calendar.tsx",
+          "src/features/Journey.tsx",
+          "src/lib/types.ts",
+          "src/lib/format.ts",
+          "server/connectors.mjs",
+          "server/intelligence.mjs",
+          "tests/remediation-providers-1.test.mjs"
+        ],
+        "verification": [
+          {
+            "command": "T3 preview_evaluate: approved-piece action assertion on http://127.0.1.29:5519/studio/:pieceId",
+            "before": "FAIL: sólo Exportar/Planificar publicación, sin acción de envío con ambos conectores configurados.",
+            "after": "PASS: Enviar ahora habilitado con chat visible; también sigue habilitado tras Planificar por UI, sin envío al guardar el calendario.",
+            "kind": "browser"
+          },
+          {
+            "command": "node --test tests/remediation-providers-1.test.mjs",
+            "before": "8 fallos: GET publish devolvía404. Sondas añadidas antes de su corrección: HTTP500 guardaba failed; Telegram sin message_id devolvía200.",
+            "after": "10 pruebas específicas PASS, incluido HTTP408, con SQLite temporal y transporte HTTPS sustituido; cero solicitudes a proveedores reales.",
+            "kind": "test"
+          },
+          {
+            "command": "node --test tests/remediation-providers-1.test.mjs tests/intelligence.test.mjs tests/core.test.mjs",
+            "before": "La prueba específica fallaba en el contrato nuevo.",
+            "after": "45 PASS, 0 fallos; se mantienen aprobación, autenticación, aislamiento, permisos y bloqueo de edición/eliminación durante envío incierto.",
+            "kind": "test"
+          },
+          {
+            "command": "./node_modules/.bin/tsc --noEmit --pretty false",
+            "before": "No se ejecutó build global.",
+            "after": "PASS sin diagnósticos.",
+            "kind": "test"
+          },
+          {
+            "command": "T3 preview_click/press/evaluate/snapshot: confirmar/cancelar/programar/enviar/reintentar/recargar en runtime simulado providers-1",
+            "before": "Flujo original aprobado/programado inaccesible.",
+            "after": "PASS desktop1280x800 y viewport390x844: destino y texto explicados; Tab/Escape/foco; cambios locales bloquean; busy no confirma publicación; rechazo permite reintento explícito; incertidumbre persiste sin botón de reenvío; pérdida de respuesta del navegador se reconcilia sin duplicar.",
+            "kind": "browser"
+          },
+          {
+            "command": "T3 preview_*: Home/Resultados/Calendario y Exportar CSV con recibo webhook simulado",
+            "before": "El estado published se mostraba genéricamente como Publicado.",
+            "after": "PASS: Aceptado por webhook en Home, selector Results, evento/agenda Calendar y fila CSV. Conteo agregado: envíos registrados.",
+            "kind": "browser"
+          }
+        ],
+        "artifacts": [
+          "docs/remediation/evidence/providers-1/before-approved.png",
+          "docs/remediation/evidence/providers-1/approved-confirmation-desktop.png",
+          "docs/remediation/evidence/providers-1/scheduled-confirmation-mobile.png",
+          "docs/remediation/evidence/providers-1/telegram-receipt-mobile.png",
+          "docs/remediation/evidence/providers-1/webhook-rejected.png",
+          "docs/remediation/evidence/providers-1/webhook-accepted-desktop.png",
+          "docs/remediation/evidence/providers-1/uncertain-after-reload.png",
+          "docs/remediation/evidence/providers-1/browser-checks.json",
+          "docs/remediation/evidence/providers-1/simulated-transport-events.ndjson",
+          "docs/remediation/evidence/providers-1/simulated-runtime.mjs",
+          "docs/remediation/evidence/providers-1/tests-final.txt"
+        ],
+        "limitations": [
+          "Todas las cuentas, piezas, destinos, credenciales y respuestas son ficticios. No hubo envío externo, credencial real, gasto ni verificación de entrega de proveedores reales.",
+          "El recorrido interactivo se verificó con T3 preview_*; las pruebas Node cubren los endpoints reales con transporte sustituido, no un navegador E2E persistente.",
+          "Un HTTP2xx del webhook confirma aceptación del endpoint. La publicación final en el canal debe comprobarse en el servicio del operador.",
+          "Un envío uncertain o sending no se desbloquea automáticamente: primero hay que comprobar el destino. No se añadió una acción que borre el journal para reenviar.",
+          "Telegram mantiene su contrato de mensaje de texto hasta4096 caracteres; la confirmación muestra exactamente el texto recortado y avisa si se recorta. No envía recursos adjuntos.",
+          "POST publish requiere ahora la versión/huella de GET; clientes HTTP anteriores con body{} reciben409. La firma interna publishPiece(brand,value,{fetcher}) sigue compatible.",
+          "Para verificar la etiqueta en Calendario/CSV se añadió sólo a la pieza ficticia del webhook una fecha local de planificación en la base QA; esto no modifica la elegibilidad ni el modelo del producto.",
+          "No se ejecutó build global, detector de diseño, cambio de dependencias, commits ni subagentes. Integración final a cargo del coordinador."
+        ],
+        "cleanup": {
+          "ownPreviewClosed": true,
+          "ownServersStopped": true,
+          "apiPort": 4519,
+          "webPort": 5519,
+          "dataDir": "/tmp/30x-remediation-providers-1",
+          "host": "127.0.1.29"
+        }
+      }
+    },
+    {
+      "id": "navigation-1",
+      "severity": "P2",
+      "title": "Recargar Audiencia pierde el perfil en edición sin advertencia",
+      "members": [
+        "navigation-1"
+      ],
+      "agent": "fix_navigation_1",
+      "apiPort": 4520,
+      "webPort": 5520,
+      "host": "127.0.1.30",
+      "dataDir": "/tmp/30x-remediation-navigation-1",
+      "report": "docs/remediation/reports/navigation-1.json",
+      "status": "verified",
+      "resolution": "Recargar o salir de Audiencia protege los cambios pendientes y permite cancelar sin perder campos.",
+      "reportDetails": {
+        "issueId": "navigation-1",
+        "agent": "fix_navigation_1",
+        "status": "fixed",
+        "rootCause": "AudiencePage sólo mantenía un booleano local para closeEditing. No registraba registerUnsavedChangesGuard; App no detectaba sus cambios al recargar, navegar ni cambiar de empresa. Ese booleano tampoco reconocía revertir el formulario a su estado inicial.",
+        "changes": [
+          "Registro de guardia en el mecanismo existente de Workspace/App, con cleanup automático del efecto al desmontar.",
+          "Baseline capturado del formulario montado y comparación de FormData actual; abrir sin cambios o revertir exactamente no advierte.",
+          "Una decisión de descarte para navegación, cambio de empresa, Escape, fondo, cerrar y el botón Cancelar. Rechazar no altera inputs ni errores.",
+          "Lock de guardado síncrono mediante ref: no permite descartes ni submits duplicados mientras hay una petición pendiente. Guardar correctamente o confirmar descarte limpia la guardia.",
+          "Se conservan la validación de blancos/límites de audience-1 y los cambios de mercados/idiomas de company-1; BrandFields no se modifica."
+        ],
+        "files": [
+          "src/features/Brand.tsx",
+          "docs/remediation/reports/navigation-1.md",
+          "docs/remediation/reports/navigation-1.json"
+        ],
+        "verification": [
+          {
+            "command": "T3 preview: Nueva audiencia; escribir Audiencia PERDER AL RECARGAR; preview_navigate misma URL /audience; preview_status; rechazar beforeunload; comprobar FormData",
+            "before": "Sin diálogo; modal=false, input=null, lost=true. Capturas before-form/before-reloaded.",
+            "after": "Diálogo nativo type=beforeunload; rechazar conserva el nombre y el modal. Repetido con sólo el nombre en el código final.",
+            "kind": "browser"
+          },
+          {
+            "command": "T3 preview: nombre y necesidades; rol con tres espacios; Guardar perfil; rechazar recarga, Escape, fondo, cerrar, Cancelar, Inicio y cambio Norte→Sur",
+            "before": "La recarga perdía el formulario; la guardia global no conocía esa edición.",
+            "after": "Todos los intentos consultados generan beforeunload/confirm nativo. Rechazar mantiene nombre, rol con espacios, necesidades, error obligatorio y aria-invalid=true; ruta /audience y marca Norte permanecen.",
+            "kind": "browser"
+          },
+          {
+            "command": "T3 preview: corregir rol; Guardar perfil; GET /api/brands/{north,south}/state; recargar",
+            "before": "La edición perdida requería volver a introducir datos.",
+            "after": "Se guarda un perfil en Norte; Sur conserva sólo su perfil. Modal cerrado y recarga posterior sin advertencia.",
+            "kind": "browser"
+          },
+          {
+            "command": "T3 preview: abrir nuevo sin editar→Escape; editar/revertir nombre→Cancelar; abrir existente sin editar→recargar; editar/revertir necesidades→Cancelar",
+            "before": "El booleano de dirty seguía activo aunque se revirtiera el cambio.",
+            "after": "Los cuatro cierres/recargas terminan sin diálogo; el baseline real coincide con los valores revertidos.",
+            "kind": "browser"
+          },
+          {
+            "command": "T3 preview_evaluate: retener sólo PATCH de Norte en Promise; dos form.requestSubmit() síncronos; intentar Escape/fondo/cerrar/Inicio/cambio de marca y recargar; rechazar beforeunload; liberar PATCH real",
+            "before": "La exclusión de submits dependía de busy de React y la edición no estaba registrada para navegación.",
+            "after": "patches=1, pending=1; modal=true, aria-busy=true, fieldset.disabled=true, ruta y marca originales. Sin confirm de descarte durante guardado; recarga presenta beforeunload. Al liberar, guarda una vez y cierra.",
+            "kind": "browser"
+          },
+          {
+            "command": "T3 preview: simular 503 sólo en PATCH de Sur; Guardar; Cancelar y rechazar; restaurar fetch; reintentar Guardar; GET ambas marcas",
+            "before": "Control de recuperación requerido para verificar que no se pierde la edición al rechazar la salida.",
+            "after": "Necesidades y mensaje Fallo temporal sintético de guardado. permanecen; busy vuelve a false. Reintento real guarda en Sur sin modificar Norte. Simulación retirada.",
+            "kind": "browser"
+          },
+          {
+            "command": "T3 preview: aceptar descarte en Cancelar, en cambio Norte→Sur y en navegación a Inicio; navegar/recargar después",
+            "before": "No había guardia global para proteger las salidas.",
+            "after": "Descarte confirmado cierra; no guarda la edición; Sur muestra su perfil. Navegar y recargar tras desmontar AudiencePage no presenta advertencia residual.",
+            "kind": "browser"
+          },
+          {
+            "command": "node --test tests/remediation-audience-1.test.mjs tests/audience-insights.test.mjs",
+            "before": "No corresponde: pruebas cercanas usadas para detectar regresiones.",
+            "after": "20 tests PASS, 0 FAIL.",
+            "kind": "test"
+          },
+          {
+            "command": "typescript.transpileModule(src/features/Brand.tsx, reportDiagnostics:true)",
+            "before": "No corresponde.",
+            "after": "Brand.tsx: TSX transpile diagnostics PASS; sin build ni emisión.",
+            "kind": "test"
+          }
+        ],
+        "artifacts": [
+          "docs/remediation/evidence/navigation-1-before-form.png",
+          "docs/remediation/evidence/navigation-1-before-reloaded.png",
+          "docs/remediation/evidence/navigation-1-after-reload-cancelled.png",
+          "docs/remediation/evidence/navigation-1-after-error-preserved.png"
+        ],
+        "limitations": [
+          "Comprobación interactiva en T3/Chromium a 1280×800; no prueba cierre físico de pestaña ni otros navegadores.",
+          "No se añadió test Node que compare JSX o constantes: la seam del fallo es el montaje real de AudiencePage y beforeunload de TanStack/App; se comprobó con navegación real y diálogos nativos, antes y después.",
+          "No se ejecutó build ni format global; compilación integrada y typecheck completo corresponden al coordinador.",
+          "Retención PATCH y respuesta 503 fueron simulaciones explícitas locales del navegador; las escrituras finales y lecturas de aislamiento sí usaron el API y SQLite temporal reales.",
+          "El navegador permite confirmar beforeunload durante un guardado; la aplicación bloquea descartes internos y advierte al recargar, sin intentar impedir la decisión nativa del navegador."
+        ],
+        "environment": {
+          "url": "http://127.0.1.30:5520",
+          "apiPort": 4520,
+          "webPort": 5520,
+          "dataDir": "/tmp/30x-remediation-navigation-1",
+          "date": "2026-10-18",
+          "tabId": "tab_4k_07e54779-9ab2-4979-8a15-674c4eff160a",
+          "runtimeSession": 64716,
+          "viewportCSS": {
+            "width": 1280,
+            "height": 800
+          },
+          "runtimeStopped": true,
+          "tabClosed": true
+        },
+        "fixtures": {
+          "account": "qa-navigation-remediation@example.com",
+          "north": "ca3e120a-5cb8-4a9c-9d61-5ce1507492ff",
+          "south": "ac640987-b921-4e26-84ea-9091550bfc86",
+          "synthetic": true
+        }
+      }
+    },
+    {
+      "id": "navigation-3",
+      "severity": "P2",
+      "title": "La búsqueda de Referencias desaparece en móvil sin alternativa",
+      "members": [
+        "navigation-3"
+      ],
+      "agent": "fix_navigation_3",
+      "apiPort": 4521,
+      "webPort": 5521,
+      "host": "127.0.1.31",
+      "dataDir": "/tmp/30x-remediation-navigation-3",
+      "report": "docs/remediation/reports/navigation-3.json",
+      "status": "verified",
+      "resolution": "La búsqueda de Referencias sigue visible en móvil y permite filtrar, borrar y conservar el foco.",
+      "reportDetails": {
+        "issueId": "navigation-3",
+        "agent": "/root/fix_navigation_3",
+        "status": "fixed",
+        "rootCause": "El único control que alimenta search del workspace estaba oculto por display:none en dos capas CSS heredadas: bajo1050px en styles.css y bajo900px en workspace.css. Referencias carecía de otro control.",
+        "changes": [
+          "La misma búsqueda permanece visible en todas las anchuras; bajo900px ocupa una segunda fila del encabezado sin competir con menú, contexto o captura. Input16px y controles dentro del viewport.",
+          "Borrar búsqueda y Escape restauran la lista completa y conservan el foco en el input. El botón de borrado tiene nombre accesible, área42×42 y foco visible.",
+          "Texto, placeholder, iconos y foco tienen contraste comprobado. El encabezado mantiene el contexto de una empresa con nombre largo y no desborda.",
+          "Referencias distingue no tener contenido de no encontrar coincidencias e indica cómo recuperar resultados; hunk coordinado con references-3.",
+          "La condición de las secciones buscables se conserva: Oportunidades no recibe una segunda búsqueda. DESIGN.md registra el nuevo comportamiento."
+        ],
+        "files": [
+          "src/App.tsx",
+          "src/workspace.css",
+          "src/features/Discovery.tsx (sólo EmptyState de InboxPage)",
+          "DESIGN.md"
+        ],
+        "verification": [
+          {
+            "kind": "browser",
+            "command": "T3 preview_resize390px + preview_evaluate .global-search input / getClientRects / display; repetir tras cambio",
+            "before": "Input presente en DOM pero no visible; label display:none;3 referencias reales del fixture presentes y sin alternativa de búsqueda.",
+            "after": "Input visible,16px; ancho de documento390; ALFA muestra únicamente el ID49a4af6a-1261-4f85-9bbe-e159a4501e87. El mismo control permanece visible a320/768/901/1024/1440."
+          },
+          {
+            "kind": "browser",
+            "command": "T3 preview_type ALFA→ZZZ-sin-resultado→preview_click Borrar búsqueda en390/768/901/1024/1440",
+            "before": "La interacción móvil era imposible porque el único input estaba oculto.",
+            "after": "15/15 comprobaciones: referencia/ID exacto, cero coincidencias con explicación adecuada y restauración de los3 IDs originales con foco en el input; sin overflow."
+          },
+          {
+            "kind": "browser",
+            "command": "T3 teclado Tab/Enter/Escape, menú, captura, cambio nativo de marca y navegación",
+            "before": "Sin búsqueda móvil alcanzable.",
+            "after": "9 comprobaciones adicionales: borrado por teclado, foco visible, Escape, preservación tras menú/modal, aislamiento de marca, búsqueda no duplicada en Oportunidades, reseteo al volver a Referencias, límites320px y contraste.24/24 comprobaciones registradas en browser-checks.json."
+          },
+          {
+            "kind": "test",
+            "command": "node --test tests/legacy-navigation.test.mjs tests/workflow-recovery.test.mjs tests/remediation-navigation-2.test.mjs",
+            "before": "Sin test unitario de CSS que pueda demostrar el síntoma real; se usa la seam del navegador, con reproducción roja anterior.",
+            "after": "13 tests pasan;0 fallos, cancelaciones u omitidos."
+          },
+          {
+            "kind": "test",
+            "command": "npx tsc --noEmit",
+            "before": "No se modifican contratos del backend ni tipos compartidos.",
+            "after": "Exit0, sin diagnósticos."
+          }
+        ],
+        "artifacts": [
+          "docs/remediation/evidence/navigation-3/browser-checks.json",
+          "docs/remediation/evidence/navigation-3/before-mobile-hidden-search.png",
+          "docs/remediation/evidence/navigation-3/after-mobile-alfa.png",
+          "docs/remediation/evidence/navigation-3/after-tablet-beta.png",
+          "docs/remediation/evidence/navigation-3/after-desktop-alfa.png",
+          "docs/remediation/evidence/navigation-3/after-mobile-no-matches.png",
+          "docs/remediation/evidence/navigation-3/after-320-boundaries.png",
+          "docs/remediation/evidence/navigation-3/nearby-tests.log",
+          "docs/remediation/evidence/navigation-3/types.log"
+        ],
+        "limitations": [
+          "Navegador nativo T3/Chromium con viewports CSS emulados; no prueba de dispositivo físico o Safari.",
+          "La búsqueda conserva el filtrado local del estado cargado de la empresa; esta corrección no añade un motor de búsqueda remoto ni cambia su alcance.",
+          "No se usan proveedores ni credenciales reales. Todos los datos de prueba son ficticios.",
+          "Runtime y pestaña propios cerrados. Al enviar SIGTERM apareció una aserción de Node24 --watch FSEventWrap durante el cierre, también vista por otros agentes; los puertos4521 y5521 quedaron libres. No hubo error funcional de búsqueda durante las pruebas."
+        ]
+      }
+    },
+    {
+      "id": "signals-3",
+      "severity": "P3",
+      "title": "El formulario permite temas más largos que el límite real de guardado",
+      "members": [
+        "signals-3"
+      ],
+      "agent": "fix_signals_3",
+      "apiPort": 4522,
+      "webPort": 5522,
+      "host": "127.0.1.32",
+      "dataDir": "/tmp/30x-remediation-signals-3",
+      "report": "docs/remediation/reports/signals-3.json",
+      "status": "verified",
+      "resolution": "El tema se limita a los 160 caracteres admitidos; el texto largo se muestra completo sin desbordar.",
+      "reportDetails": {
+        "issueId": "signals-3",
+        "agent": "fix_signals_3",
+        "status": "fixed",
+        "rootCause": "AudienceSignalForm declaraba maxLength200 aunque signalInput valida el tema con boundedText(...,160). Un texto de161 era válido en HTML y fallaba recién al persistir. Los títulos de señales guardadas tampoco permitían partir cadenas continuas de160 caracteres, provocando desborde horizontal móvil.",
+        "changes": [
+          "El campo Tema o necesidad usa maxLength160, conserva su nombre y validación obligatoria y muestra una ayuda visible asociada mediante aria-describedby.",
+          "Los títulos y observaciones de .journey-signal usan overflow-wrap:anywhere. El contenido se conserva completo y enlaces/acciones permanecen dentro de la fila.",
+          "No se modifican el contrato del servidor, permisos, aislamiento, privacidad, guardias de cambios, envío ni otros componentes de Journey."
+        ],
+        "files": [
+          "src/features/Journey.tsx",
+          "src/features/journey.css"
+        ],
+        "verification": [
+          {
+            "command": "T3 preview_type/click/evaluate: rellenar señal pública sintética con A×161, nota, URL example.com y muestra5; Guardar señal",
+            "before": "maxLength200, longitud161, validity.valid=true; POST400 Tema: longitud inválida (máximo160); GET0 señales. Campos conservados.",
+            "after": "La misma entrada nativa queda en160; una tecla adicional no la amplía. Ayuda Máximo160caracteres asociada al campo; nota, URL y muestra intactas. Guardar persiste exactamente A×160 en una señal con los valores originales; formulario se vacía sólo al completar.",
+            "kind": "browser"
+          },
+          {
+            "command": "HTTP real desde preview_evaluate: POST tema C×161 y GET; POST B×160 y GET en la marca aislada",
+            "before": "El servidor ya tenía el límite correcto160; el error estaba en la UI.",
+            "after": "161 devuelve400 sin mutación (1→1);160 devuelve201 y contenido exacto (1→2). No se almacena el tema rechazado.",
+            "kind": "http"
+          },
+          {
+            "command": "T3 preview_resize390×844, preview_type É×158+🚀+X, Tab/Shift+Tab/Enter, GET y recarga",
+            "before": "Un campo200 permitía contenido sobre el límite real; el listado con A×160/B×160 desbordaba el documento a1935px.",
+            "after": "Unicode queda en160 unidades UTF16, incluido el emoji íntegro, y se guarda exactamente una vez por Enter (2→3); Tab enfoca note con outline3px. Campo16px y ayuda legible. Tras la corrección CSS, documento390/390 y cada fila358/358, sin truncar el tema, con citas y eliminar dentro del viewport.",
+            "kind": "browser"
+          },
+          {
+            "command": "T3 preview_navigate recarga, seleccionar Señales y validación por aria-ref fresco, introducir D×161 y guardar",
+            "before": "Había3 señales válidas persistidas con IDs únicos.",
+            "after": "Las3señales e IDs permanecen. La UI limita D×161 a D×160 y guarda una sola señal nueva (3→4,4 IDs únicos), conserva nota/URL/muestra y limpia el formulario al éxito; documento390/390 después del guardado.",
+            "kind": "browser"
+          },
+          {
+            "command": "node --test tests/remediation-signals-1.test.mjs tests/remediation-signals-2.test.mjs",
+            "before": "No se cambian las pruebas ni las defensas de privacidad existentes.",
+            "after": "35/35 PASS;0fail,0cancelled,0skipped. Salida0.",
+            "kind": "test"
+          },
+          {
+            "command": "./node_modules/.bin/tsc --noEmit --incremental false",
+            "before": "Comprobación del JSX y props después del cambio pequeño.",
+            "after": "Salida0, sin diagnósticos.",
+            "kind": "test"
+          },
+          {
+            "command": "Cerrar pestaña propia y detener concurrently cuyo DATA_DIR es /tmp/30x-remediation-signals-3; verificar procesos y sockets",
+            "before": "Runtime propio API4522/web5522 y pestaña incognito exclusiva.",
+            "after": "Pestaña cerrada;0 procesos con ese DATA_DIR y puertos4522/5522 sin listener. No se tocan otros runtimes.",
+            "kind": "http"
+          }
+        ],
+        "artifacts": [
+          "docs/remediation/evidence/signals-3/observed.json",
+          "docs/remediation/evidence/signals-3/before-161-rejected-server.png",
+          "docs/remediation/evidence/signals-3/after-160-limited-ui.png",
+          "docs/remediation/evidence/signals-3/mobile-390-unicode-form.png",
+          "docs/remediation/evidence/signals-3/mobile-390-wrapped-persisted-signals.png",
+          "docs/remediation/evidence/signals-3/nearby-tests.log",
+          "docs/remediation/evidence/signals-3/typecheck.log",
+          "docs/remediation/evidence/signals-3/cleanup.json"
+        ],
+        "limitations": [
+          "Datos, cuenta, audiencia, notas y enlaces de evidencia sintéticos; no se usaron credenciales, descubrimiento ni proveedores externos. No se acredita representatividad o calidad de contenido real.",
+          "Escritorio1280×800 y móvil390×844 comprobados en Chromium con viewport emulado; no dispositivo físico ni Safari.",
+          "El límite cuenta unidades UTF16, coherente con maxlength HTML y el contrato actual JavaScript; no se amplió ni reinterpretó el límite del servidor.",
+          "No se añadió un test que sólo lea una constante de JSX: el síntoma se reprodujo y verificó con interacción nativa y HTTP real. El build global e integración final corresponden al coordinador.",
+          "Durante SIGTERM de Node24 --watch apareció la aserción interna FSEventWrap en el cierre del watcher. El runtime terminó y se comprobó la ausencia de procesos y listeners; las comprobaciones funcionales habían pasado.",
+          "Una acción de selección tras recargar usó el nombre accesible anterior sin el contador, agotó su espera y no mutó datos. Se corrigió el selector usando la referencia del snapshot fresco y se completó la comprobación final."
+        ]
+      }
+    },
+    {
+      "id": "discovery-2",
+      "severity": "P3",
+      "title": "Hacker News deja entidades HTML hexadecimales visibles en las referencias",
+      "members": [
+        "discovery-2"
+      ],
+      "agent": "fix_discovery_2",
+      "apiPort": 4523,
+      "webPort": 5523,
+      "host": "127.0.1.33",
+      "dataDir": "/tmp/30x-remediation-discovery-2",
+      "report": "docs/remediation/reports/discovery-2.json",
+      "status": "verified",
+      "resolution": "Las entidades HTML de Hacker News se leen correctamente, sin doble decodificación ni ejecutar etiquetas.",
+      "reportDetails": {
+        "issueId": "discovery-2",
+        "agent": "fix_discovery_2",
+        "status": "fixed",
+        "rootCause": "clean replaced only a small list of named entities and decimal &#39; in a chained sequence. Hexadecimal and other numeric references survived in HN titles/body, while &amp;lt; could be decoded twice. HN refreshes also retained existing non-social body text, leaving historical malformed text unchanged.",
+        "changes": [
+          "Decode recognized named references and decimal/hexadecimal Unicode scalar references in one pass after stripping actual markup. Include Latin-1 named characters for Spanish/Portuguese and common typography; preserve unknown/malformed references as evidence.",
+          "Replace null, surrogate and out-of-range numeric references with U+FFFD without throwing; keep encoded tags as literal text for existing React rendering.",
+          "Store the prior HN normalizer's output only in an ephemeral WeakMap keyed by parsed provider objects. Refresh historical body text only for the same HN source/publication when the existing body exactly equals that current provider response normalized by the old algorithm.",
+          "Preserve modified editorial annotations, status, tags, analysis, provenance, IDs and approved pieces. Opportunity fingerprints change when repaired evidence text changes and remain stable on repeated unchanged refreshes.",
+          "Add regression tests at fetchSource/syncSources and verify imported reference cards/detail interactively in the native T3 browser at desktop/mobile, including storage readback after reload."
+        ],
+        "files": [
+          "server/intelligence.mjs",
+          "tests/remediation-discovery-2.test.mjs",
+          "docs/remediation/evidence/discovery-2-browser-seed.mjs",
+          "docs/remediation/reports/discovery-2.md",
+          "docs/remediation/reports/discovery-2.json"
+        ],
+        "verification": [
+          {
+            "command": "node --test tests/remediation-discovery-2.test.mjs",
+            "before": "Original reproduction: 8 tests, 2 passed and 6 failed, including original &#x2F;/&#x27; symptoms, Unicode, ordinary named typography, double decoding and persisted HN text. Follow-up legacy test: 9 passed / 1 failed before the refresh repair. Latin-1 follow-up: 10 passed / 1 failed before extending named characters.",
+            "after": "Final suite: 11 tests passed, 0 failed/cancelled/skipped. FetchSource calls both HN modes through a controlled JSON transport; syncSources persists readable title/body, keeps one reference after repetition, repairs exact legacy body matches, preserves changed annotations and approved piece/version, and updates the opportunity fingerprint only when its evidence changes.",
+            "kind": "test"
+          },
+          {
+            "command": "node --test tests/intelligence.test.mjs tests/social-intelligence.test.mjs tests/company-context.test.mjs tests/opportunity-analysis.test.mjs tests/remediation-discovery-1.test.mjs",
+            "before": "Existing nearby suites preserved unchanged by this agent.",
+            "after": "90 passed, 0 failed/cancelled/skipped. Provider transport, RSS, safeFetch/SSRF, analysis/draft and opportunity fingerprint behavior retained.",
+            "kind": "test"
+          },
+          {
+            "command": "Native T3 preview: own tab at http://127.0.1.33:5523/radar → Explorar → reload → Explorar; desktop 1280×800 and mobile 390×844.",
+            "before": "Original adversarial evidence showed hexadecimal entities literally in the HN card/detail. A synthetic HN provider payload was ingested through production syncSources, without external calls.",
+            "after": "Card and detail contain https://, apostrophe, ñ é 😀 🚀 and © – … €. Encoded <tag> and <img onerror=...> remain literal text; no injected image node or payload execution. Double-encoded &lt;/&#x27;/&quot; remain encoded after one pass. UI title/body exactly match API/SQLite readback after reload, same reference ID and 47 points/8 comments; no horizontal page overflow at either viewport.",
+            "kind": "browser"
+          }
+        ],
+        "artifacts": [
+          "docs/remediation/evidence/discovery-2-red.tap",
+          "docs/remediation/evidence/discovery-2-legacy-red.tap",
+          "docs/remediation/evidence/discovery-2-latin-red.tap",
+          "docs/remediation/evidence/discovery-2-green.tap",
+          "docs/remediation/evidence/discovery-2-nearby.tap",
+          "docs/remediation/evidence/discovery-2-browser-seed.mjs",
+          "docs/remediation/evidence/discovery-2-browser-seed.json",
+          "docs/remediation/evidence/discovery-2/browser-checks.json",
+          "docs/remediation/evidence/discovery-2/card-desktop.png",
+          "docs/remediation/evidence/discovery-2/detail-desktop.png",
+          "docs/remediation/evidence/discovery-2/detail-mobile.png",
+          "docs/remediation/evidence/discovery-2/detail-mobile-after-reload.png",
+          "docs/remediation/evidence/discovery-2/lifecycle.json"
+        ],
+        "limitations": [
+          "Provider responses and account/company were explicitly synthetic. No live Hacker News request, credentials, paid provider or publication was used; this verifies parsing, persistence and rendering, not live provider availability.",
+          "The named table covers XML, Latin-1 and common typography, not the full HTML5 named-entity catalog. Unsupported names and malformed references remain literal instead of being guessed or recursively decoded.",
+          "Historical correction is conservative and refresh-driven: it does not rewrite the database globally. A body that differs from the current HN response under the old normalizer is preserved, including annotations or provider text that has changed.",
+          "Piece approval versions cover editorial piece content. Refreshing evidence leaves existing piece records untouched; the separate opportunity fingerprint reflects changed evidence. This agent did not change approval policy.",
+          "Browser checks exercise the supplied encoded markup payload as React text; they do not establish a general-purpose HTML sanitizer guarantee.",
+          "No global build was run. The coordinator owns final combined build/test and compiled UI validation."
+        ],
+        "cleanup": {
+          "ownTabClosed": true,
+          "tabId": "tab_4r_07e54779-9ab2-4979-8a15-674c4eff160a",
+          "ownPortsReleased": [
+            4523,
+            5523
+          ],
+          "processGroupStopped": 267754,
+          "dataDirPreserved": "/tmp/30x-remediation-discovery-2",
+          "nodeWatchShutdownNote": "Node --watch asserted in FSEventWrap/FSWatcher.close during intentional SIGTERM teardown. Both own listeners were verified closed; the running app and tests had succeeded before teardown.",
+          "adversarialReportsOverwritten": false
+        }
+      }
+    },
+    {
+      "id": "results-2",
+      "severity": "P3",
+      "title": "API y UI discrepan sobre fracciones y bloquean una corrección de notas",
+      "members": [
+        "results-2"
+      ],
+      "agent": "fix_results_2",
+      "apiPort": 4524,
+      "webPort": 5524,
+      "host": "127.0.1.34",
+      "dataDir": "/tmp/30x-remediation-results-2",
+      "report": "docs/remediation/reports/results-2.json",
+      "status": "verified",
+      "resolution": "Corregir sólo las notas conserva los decimales exactos y el mismo registro de resultados.",
+      "reportDetails": {
+        "issueId": "results-2",
+        "agent": "/root/fix_results_2",
+        "status": "fixed",
+        "rootCause": "OutcomeForm impone step=1 a las tres métricas, aunque outcomeInput acepta números finitos entre 0 y 10^12. Las fracciones ya persistidas activaban stepMismatch y el navegador bloqueaba un submit de corrección de notas antes de enviar HTTP.",
+        "changes": [
+          "Las tres métricas de OutcomeForm usan step=\"any\", alineando la edición con el contrato API finito existente.",
+          "Se conservan required, min=0 y max=10^12, las cifras originales, el registro manual, la validación de notas agregadas y las guardias de guardado y navegación. No se altera el servidor ni se redondean los datos."
+        ],
+        "files": [
+          "src/features/Journey.tsx"
+        ],
+        "verification": [
+          {
+            "command": "T3 preview: API POST outcome 300.5/30.25/3.5 → cargar /results → seleccionar pieza → corregir sólo nota → Actualizar registro",
+            "before": "API200; los3inputs mostraron stepMismatch=true y formValid=false; click no produjo POST y persistió nota inicial.",
+            "after": "Los3inputs son válidos; click produjo un único POST200 con métricas exactas y nota nueva, mismo outcomeID y createdAt, un solo registro; confirmado de nuevo tras recargar.",
+            "kind": "browser"
+          },
+          {
+            "command": "T3 preview a390×844: recargar, seleccionar pieza, modificar sólo nota, Tab al botón y Enter, recargar de nuevo",
+            "before": "El contrato step=1 bloqueaba estas mismas fracciones independientemente del breakpoint.",
+            "after": "La nota móvil persistió en el mismo outcome y las3métricas permanecen exactas; foco visible3px, campos16px y documentWidth=viewportWidth=390.",
+            "kind": "browser"
+          },
+          {
+            "command": "HTTP POST outcome: cada métrica con negativo, >10^12, cadena y null; views1e400/NaN/Infinity; ceros y máximo inclusivo",
+            "before": "Se conserva el contrato existente sin cambios.",
+            "after": "15casos inválidos400 sin cambiar el outcome;0 y10^12 inclusivos200 con mismoID. Se restauraron300.5/30.25/3.5. Los3inputs reales además mantienen min/max/required y admiten0.125.",
+            "kind": "http"
+          },
+          {
+            "command": "node --test tests/remediation-results-1.test.mjs tests/audience-insights.test.mjs",
+            "before": "Suites vecinas existentes, sin modificaciones.",
+            "after": "19/19 tests; 0 fallos, 0 cancelados, 0 omitidos; exit 0.",
+            "kind": "test"
+          }
+        ],
+        "artifacts": [
+          "docs/remediation/evidence/results-2/observations.json",
+          "docs/remediation/evidence/results-2/red-decimals-block-submit.png",
+          "docs/remediation/evidence/results-2/green-note-corrected-desktop.png",
+          "docs/remediation/evidence/results-2/mobile-keyboard-submit-focus.png",
+          "docs/remediation/evidence/results-2/mobile-reload-preserves-decimals.png",
+          "docs/remediation/evidence/results-2/nearby-tests.log"
+        ],
+        "limitations": [
+          "Todos los nombres, métricas, notas y URLs corresponden a una empresa y pieza ficticias aisladas. La aprobación inicial se preparó como fixture de estado; esta corrección no acredita el flujo completo de aprobación.",
+          "Se verificó registro manual, no publicación externa ni proveedores reales.",
+          "La prueba móvil usa viewport Chromium de390px y teclado del navegador; no acredita un dispositivo físico ni un teclado virtual específico.",
+          "No se añade un test que sólo replique step; la comprobación regresiva atraviesa los inputs y submit reales mediante T3. El coordinador ejecutará build y suite integrados."
+        ]
+      }
+    },
+    {
+      "id": "navigation-2",
+      "severity": "P3",
+      "title": "Fuentes y equipo descarta una fuente en edición con Escape sin confirmación",
+      "members": [
+        "navigation-2"
+      ],
+      "agent": "fix_navigation_2",
+      "apiPort": 4525,
+      "webPort": 5525,
+      "host": "127.0.1.35",
+      "dataDir": "/tmp/30x-remediation-navigation-2",
+      "report": "docs/remediation/reports/navigation-2.json",
+      "status": "verified",
+      "resolution": "Escape y las demás salidas protegen la fuente en edición; cancelar conserva el formulario.",
+      "reportDetails": {
+        "issueId": "navigation-2",
+        "agent": "fix_navigation_2",
+        "status": "fixed",
+        "rootCause": "Settings cerraba el modal mediante setSource(null) desde Escape, fondo y Cancelar, sin comparar un baseline ni registrar registerUnsavedChangesGuard. El modal compartido invocaba correctamente onClose; la decisión de descarte faltaba en Settings.",
+        "changes": [
+          "Controlador del borrador de fuente con baseline tomado al abrir desde el borrador ya normalizado por los cambios sources-1/sources-2; compara todos los campos y no considera el orden de propiedades una edición.",
+          "Escape, clic fuera, Cancelar y Cerrar usan la misma confirmación de descarte. Rechazar conserva todos los campos; aceptar limpia el borrador y su baseline.",
+          "Registro con registerUnsavedChangesGuard y el patrón existente useRef/useEffect para navegación interna, cambio de empresa y beforeunload.",
+          "Bloqueo síncrono antes de guardar para evitar envíos duplicados; busy bloquea cierres/navegación y deshabilita campos y nuevas aperturas de fuente. Error conserva el borrador; éxito limpia la guardia.",
+          "Sin cambios en formularios ni persistencia de credenciales, sourceInput, payloads de fuentes o lógica de normalización por tipo/plataforma."
+        ],
+        "files": [
+          "src/features/Settings.tsx",
+          "src/lib/source-draft-guard.mjs",
+          "src/lib/source-draft-guard.d.mts",
+          "tests/remediation-navigation-2.test.mjs",
+          "docs/remediation/reports/navigation-2.md",
+          "docs/remediation/reports/navigation-2.json",
+          "docs/remediation/evidence/navigation-2-before-edit.png",
+          "docs/remediation/evidence/navigation-2-before-discard.png",
+          "docs/remediation/evidence/navigation-2-after-escape-rejected.png",
+          "docs/remediation/evidence/navigation-2-after-reload-rejected.png",
+          "docs/remediation/evidence/navigation-2-busy.png",
+          "docs/remediation/evidence/navigation-2-after-save.png",
+          "docs/remediation/evidence/navigation-2-desktop.png",
+          "docs/remediation/evidence/navigation-2-mobile.png",
+          "docs/remediation/evidence/navigation-2-browser.json"
+        ],
+        "verification": [
+          {
+            "command": "T3 preview_*: /settings → Añadir fuente → Nombre Fuente sintética sin guardar → Escape → preview_status + evaluación del modal",
+            "before": "FAIL reproducido antes del arreglo: dialog:null, modal cerrado y nombre ya no disponible; capturas antes/después del descarte.",
+            "after": "Confirm nativo Hay cambios sin guardar. ¿Salir y descartar esta fuente?; rechazar conserva modal y nombre exacto, aceptar cierra; nueva apertura/cierre sin cambios no advierte.",
+            "kind": "browser"
+          },
+          {
+            "command": "T3 preview_*: fondo, Cancelar y Cerrar; rechazar confirmación; comparar todos los inputs/selects/checkbox",
+            "before": "Cierres directos sin política de cambios en Settings; el síntoma original medido fue Escape.",
+            "after": "Las tres vías solicitan confirmación; rechazo conserva idénticos nombre, tipo, URL y checkbox. Escape aceptado limpia sin advertencias posteriores.",
+            "kind": "browser"
+          },
+          {
+            "command": "T3 preview_*: activar handlers de navegación a Inicio y cambio a marca sintética Sur desde DOM; preview_status/preview_dialog rechazar y aceptar",
+            "before": "No se registraba guardia de fuentes; no se ejecutó comparación de estas rutas antes del cambio.",
+            "after": "Rechazar conserva /settings, empresa original y formulario. Aceptar navega a /home o cambia de empresa y cierra fuente sin persistir cambios descartados.",
+            "kind": "browser"
+          },
+          {
+            "command": "T3 preview_evaluate programa location.reload(); preview_status; preview_dialog rechazar/aceptar",
+            "before": "No se registraba guardia de fuentes; reproducción histórica de navigation-2 limitada a Escape.",
+            "after": "beforeunload nativo; rechazar conserva todos los campos, aceptar recarga y descarta. Tras guardar y reabrir sin editar, recarga sin advertencia falsa y fuente sigue guardada.",
+            "kind": "browser"
+          },
+          {
+            "command": "T3 preview_* con POST local de fuente retenido; dos submits síncronos; Escape/fondo/Cerrar/navegación; liberar POST; GET /sources",
+            "before": "La guardia de descarte y un cerrojo síncrono específico no existían.",
+            "after": "Una sola petición para dos submits; campos deshabilitados, cierres y navegación bloqueados sin confirmaciones; al liberar se guarda una única fuente y se cierra el formulario.",
+            "kind": "browser"
+          },
+          {
+            "command": "T3 preview_* con un PATCH local de fuente respondiendo 503 sintético; reintentar con transporte restaurado",
+            "before": "No se ejecutó una comparación de fallo de red previa.",
+            "after": "Error explícito, campos intactos y botón disponible; retry correcto guarda y permite navegar sin advertencias residuales.",
+            "kind": "browser"
+          },
+          {
+            "command": "node --test tests/remediation-navigation-2.test.mjs tests/remediation-sources-1.test.mjs tests/remediation-sources-2.test.mjs",
+            "before": "El control previo del síntoma falló en navegador; el controlador se extrajo como seam nueva para pruebas conductuales, sin comparar texto de JSX.",
+            "after": "17/17 PASS: 5 pruebas del controlador y 12 de normalización/persistencia de sources-1/sources-2.",
+            "kind": "test"
+          },
+          {
+            "command": "TypeScript transpileModule sobre src/features/Settings.tsx con reportDiagnostics; inspección T3 1280×800 y 390×844",
+            "before": "Sin diagnóstico sintáctico comparativo; el cambio incorpora fieldset para busy.",
+            "after": "0 diagnósticos sintácticos; controles, foco y acciones visibles. En móvil documento 390px, modal 370px, sin overflow horizontal.",
+            "kind": "browser"
+          }
+        ],
+        "artifacts": [
+          "docs/remediation/evidence/navigation-2-before-edit.png",
+          "docs/remediation/evidence/navigation-2-before-discard.png",
+          "docs/remediation/evidence/navigation-2-after-escape-rejected.png",
+          "docs/remediation/evidence/navigation-2-after-reload-rejected.png",
+          "docs/remediation/evidence/navigation-2-busy.png",
+          "docs/remediation/evidence/navigation-2-after-save.png",
+          "docs/remediation/evidence/navigation-2-desktop.png",
+          "docs/remediation/evidence/navigation-2-mobile.png",
+          "docs/remediation/evidence/navigation-2-browser.json"
+        ],
+        "limitations": [
+          "Se verificó el runtime de desarrollo con datos ficticios y dos marcas aisladas en /tmp/30x-remediation-navigation-2; no se usaron proveedores ni claves reales.",
+          "Latencia y un error HTTP 503 fueron simulaciones explícitas de fetch para una sola operación local de fuente; no acreditan entrega o comportamiento de proveedores reales.",
+          "No se ejecutó build ni format global ni se tocaron dependencias; compilación y recorrido integrado final corresponden al coordinador.",
+          "Un preview_press tras el arreglo agotó su espera mientras estaba abierto el confirm nativo; preview_status y preview_dialog verificaron y resolvieron ese diálogo. No fue un fallo de la guardia.",
+          "Al detener el runtime, Node --watch emitió una aserción nativa en FSWatcher.close tras cambios externos del servidor; la sesión terminó y los puertos propios quedaron libres. Ocurrió después de las comprobaciones funcionales."
+        ],
+        "cleanup": {
+          "tabClosed": true,
+          "tabId": "tab_4g_07e54779-9ab2-4979-8a15-674c4eff160a",
+          "runtimeSession": 18588,
+          "runtimeStopped": true,
+          "exclusivePortsFree": [
+            4525,
+            5525
+          ]
+        }
+      }
+    }
+  ]
+}

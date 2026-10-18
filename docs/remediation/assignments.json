@@ -1,0 +1,379 @@
+[
+  {
+    "id": "company-1",
+    "severity": "P2",
+    "title": "Guardar un cambio de nombre reemplaza silenciosamente un mercado permitido por la propuesta",
+    "members": [
+      "company-1"
+    ],
+    "agent": "fix_company_1",
+    "apiPort": 4501,
+    "webPort": 5501,
+    "host": "127.0.1.11",
+    "dataDir": "/tmp/30x-remediation-company-1",
+    "report": "docs/remediation/reports/company-1.json",
+    "status": "verified"
+  },
+  {
+    "id": "company-2",
+    "severity": "P2",
+    "title": "La redacción conserva direcciones de contacto etiquetadas dentro del párrafo",
+    "members": [
+      "company-2"
+    ],
+    "agent": "fix_company_2",
+    "apiPort": 4502,
+    "webPort": 5502,
+    "host": "127.0.1.12",
+    "dataDir": "/tmp/30x-remediation-company-2",
+    "report": "docs/remediation/reports/company-2.json",
+    "status": "verified"
+  },
+  {
+    "id": "audience-1",
+    "severity": "P2",
+    "title": "Se guardan perfiles con rol y necesidades vacíos al introducir espacios",
+    "members": [
+      "audience-1"
+    ],
+    "agent": "fix_audience_1",
+    "apiPort": 4503,
+    "webPort": 5503,
+    "host": "127.0.1.13",
+    "dataDir": "/tmp/30x-remediation-audience-1",
+    "report": "docs/remediation/reports/audience-1.json",
+    "status": "verified"
+  },
+  {
+    "id": "signals-1",
+    "severity": "P2",
+    "title": "Se guardan fichas individuales con nombre en el corpus de señales",
+    "members": [
+      "signals-1"
+    ],
+    "agent": "fix_signals_1",
+    "apiPort": 4504,
+    "webPort": 5504,
+    "host": "127.0.1.14",
+    "dataDir": "/tmp/30x-remediation-signals-1",
+    "report": "docs/remediation/reports/signals-1.json",
+    "status": "verified"
+  },
+  {
+    "id": "signals-2",
+    "severity": "P2",
+    "title": "La validación de datos personales se elude mediante la URL de evidencia",
+    "members": [
+      "signals-2"
+    ],
+    "agent": "fix_signals_2",
+    "apiPort": 4505,
+    "webPort": 5505,
+    "host": "127.0.1.15",
+    "dataDir": "/tmp/30x-remediation-signals-2",
+    "report": "docs/remediation/reports/signals-2.json",
+    "status": "verified"
+  },
+  {
+    "id": "community-1",
+    "severity": "P2",
+    "title": "El sensor mantiene conteos antiguos aunque Actualizar renueve sus señales",
+    "members": [
+      "community-1"
+    ],
+    "agent": "fix_community_1",
+    "apiPort": 4506,
+    "webPort": 5506,
+    "host": "127.0.1.16",
+    "dataDir": "/tmp/30x-remediation-community-1",
+    "report": "docs/remediation/reports/community-1.json",
+    "status": "verified",
+    "coordinatorObservation": "En dev StrictMode, CommunitySensor.current se pone vacío en cleanup del efecto y no se restaura en setup repetido; GET community-polls devuelve200 polls[], pero loading persiste. Revisar ciclo load además del refresco original. Runtime QA127.0.1.88:5450, api4450. No ampliar a otras features."
+  },
+  {
+    "id": "discovery-1",
+    "severity": "P2",
+    "title": "El clasificador bloquea el RSS público de NASA al tratar 192.0/16 como reservado",
+    "members": [
+      "discovery-1"
+    ],
+    "agent": "fix_discovery_1",
+    "apiPort": 4507,
+    "webPort": 5507,
+    "host": "127.0.1.17",
+    "dataDir": "/tmp/30x-remediation-discovery-1",
+    "report": "docs/remediation/reports/discovery-1.json",
+    "status": "verified"
+  },
+  {
+    "id": "duplicate-reference",
+    "severity": "P2",
+    "title": "La captura manual duplica publicaciones y aumenta la evidencia contada",
+    "members": [
+      "references-1",
+      "opportunities-2"
+    ],
+    "agent": "fix_duplicate_reference",
+    "apiPort": 4508,
+    "webPort": 5508,
+    "host": "127.0.1.18",
+    "dataDir": "/tmp/30x-remediation-duplicate-reference",
+    "report": "docs/remediation/reports/duplicate-reference.json",
+    "status": "verified"
+  },
+  {
+    "id": "references-2",
+    "severity": "P2",
+    "title": "La captura manual admite fuentes de loopback fuera del límite de contenido público",
+    "members": [
+      "references-2"
+    ],
+    "agent": "fix_references_2",
+    "apiPort": 4509,
+    "webPort": 5509,
+    "host": "127.0.1.19",
+    "dataDir": "/tmp/30x-remediation-references-2",
+    "report": "docs/remediation/reports/references-2.json",
+    "status": "verified"
+  },
+  {
+    "id": "references-3",
+    "severity": "P2",
+    "title": "El detalle de una referencia documental no permite consultar su adjunto",
+    "members": [
+      "references-3"
+    ],
+    "agent": "fix_references_3",
+    "apiPort": 4510,
+    "webPort": 5510,
+    "host": "127.0.1.20",
+    "dataDir": "/tmp/30x-remediation-references-3",
+    "report": "docs/remediation/reports/references-3.json",
+    "status": "verified"
+  },
+  {
+    "id": "opportunities-1",
+    "severity": "P2",
+    "title": "Descensos y muestras estables reciben la etiqueta verde «Crecimiento observado»",
+    "members": [
+      "opportunities-1"
+    ],
+    "agent": "fix_opportunities_1",
+    "apiPort": 4511,
+    "webPort": 5511,
+    "host": "127.0.1.21",
+    "dataDir": "/tmp/30x-remediation-opportunities-1",
+    "report": "docs/remediation/reports/opportunities-1.json",
+    "status": "verified"
+  },
+  {
+    "id": "studio-1",
+    "severity": "P2",
+    "title": "La estructura local pega la dirección editorial en el guion e ignora el formato y CTA pedidos",
+    "members": [
+      "studio-1"
+    ],
+    "agent": "fix_studio_1",
+    "apiPort": 4512,
+    "webPort": 5512,
+    "host": "127.0.1.22",
+    "dataDir": "/tmp/30x-remediation-studio-1",
+    "report": "docs/remediation/reports/studio-1.json",
+    "status": "verified"
+  },
+  {
+    "id": "calendar-1",
+    "severity": "P2",
+    "title": "Una fecha residual mantiene un borrador sin aprobación en la grilla y el CSV",
+    "members": [
+      "calendar-1"
+    ],
+    "agent": "fix_calendar_1",
+    "apiPort": 4513,
+    "webPort": 5513,
+    "host": "127.0.1.23",
+    "dataDir": "/tmp/30x-remediation-calendar-1",
+    "report": "docs/remediation/reports/calendar-1.json",
+    "status": "verified"
+  },
+  {
+    "id": "results-1",
+    "severity": "P2",
+    "title": "Las notas de resultados permiten guardar fichas identificables de contactos",
+    "members": [
+      "results-1"
+    ],
+    "agent": "fix_results_1",
+    "apiPort": 4514,
+    "webPort": 5514,
+    "host": "127.0.1.24",
+    "dataDir": "/tmp/30x-remediation-results-1",
+    "report": "docs/remediation/reports/results-1.json",
+    "status": "verified"
+  },
+  {
+    "id": "assets-1",
+    "severity": "P2",
+    "title": "Los nombres UTF-8 se corrompen al subir y dejan de encontrarse por su nombre original",
+    "members": [
+      "assets-1"
+    ],
+    "agent": "fix_assets_1",
+    "apiPort": 4515,
+    "webPort": 5515,
+    "host": "127.0.1.25",
+    "dataDir": "/tmp/30x-remediation-assets-1",
+    "report": "docs/remediation/reports/assets-1.json",
+    "status": "verified"
+  },
+  {
+    "id": "assets-2",
+    "severity": "P2",
+    "title": "Un TXT válido de 11 MiB falla pese al límite anunciado de 25 MB",
+    "members": [
+      "assets-2"
+    ],
+    "agent": "fix_assets_2",
+    "apiPort": 4516,
+    "webPort": 5516,
+    "host": "127.0.1.26",
+    "dataDir": "/tmp/30x-remediation-assets-2",
+    "report": "docs/remediation/reports/assets-2.json",
+    "status": "verified"
+  },
+  {
+    "id": "sources-1",
+    "severity": "P2",
+    "title": "Cambiar HN a RSS conserva una consulta oculta y el resumen oculta el feed real",
+    "members": [
+      "sources-1"
+    ],
+    "agent": "fix_sources_1",
+    "apiPort": 4517,
+    "webPort": 5517,
+    "host": "127.0.1.27",
+    "dataDir": "/tmp/30x-remediation-sources-1",
+    "report": "docs/remediation/reports/sources-1.json",
+    "status": "verified"
+  },
+  {
+    "id": "sources-2",
+    "severity": "P2",
+    "title": "YouTube→Apify muestra Instagram pero conserva plataforma incompatible y rechaza el guardado",
+    "members": [
+      "sources-2"
+    ],
+    "agent": "fix_sources_2",
+    "apiPort": 4518,
+    "webPort": 5518,
+    "host": "127.0.1.28",
+    "dataDir": "/tmp/30x-remediation-sources-2",
+    "report": "docs/remediation/reports/sources-2.json",
+    "status": "verified"
+  },
+  {
+    "id": "providers-1",
+    "severity": "P2",
+    "title": "Los conectores de publicación se configuran, pero no se pueden usar desde la interfaz",
+    "members": [
+      "providers-1"
+    ],
+    "agent": "fix_providers_1",
+    "apiPort": 4519,
+    "webPort": 5519,
+    "host": "127.0.1.29",
+    "dataDir": "/tmp/30x-remediation-providers-1",
+    "report": "docs/remediation/reports/providers-1.json",
+    "status": "verified"
+  },
+  {
+    "id": "navigation-1",
+    "severity": "P2",
+    "title": "Recargar Audiencia pierde el perfil en edición sin advertencia",
+    "members": [
+      "navigation-1"
+    ],
+    "agent": "fix_navigation_1",
+    "apiPort": 4520,
+    "webPort": 5520,
+    "host": "127.0.1.30",
+    "dataDir": "/tmp/30x-remediation-navigation-1",
+    "report": "docs/remediation/reports/navigation-1.json",
+    "status": "verified"
+  },
+  {
+    "id": "navigation-3",
+    "severity": "P2",
+    "title": "La búsqueda de Referencias desaparece en móvil sin alternativa",
+    "members": [
+      "navigation-3"
+    ],
+    "agent": "fix_navigation_3",
+    "apiPort": 4521,
+    "webPort": 5521,
+    "host": "127.0.1.31",
+    "dataDir": "/tmp/30x-remediation-navigation-3",
+    "report": "docs/remediation/reports/navigation-3.json",
+    "status": "verified"
+  },
+  {
+    "id": "signals-3",
+    "severity": "P3",
+    "title": "El formulario permite temas más largos que el límite real de guardado",
+    "members": [
+      "signals-3"
+    ],
+    "agent": "fix_signals_3",
+    "apiPort": 4522,
+    "webPort": 5522,
+    "host": "127.0.1.32",
+    "dataDir": "/tmp/30x-remediation-signals-3",
+    "report": "docs/remediation/reports/signals-3.json",
+    "status": "verified"
+  },
+  {
+    "id": "discovery-2",
+    "severity": "P3",
+    "title": "Hacker News deja entidades HTML hexadecimales visibles en las referencias",
+    "members": [
+      "discovery-2"
+    ],
+    "agent": "fix_discovery_2",
+    "apiPort": 4523,
+    "webPort": 5523,
+    "host": "127.0.1.33",
+    "dataDir": "/tmp/30x-remediation-discovery-2",
+    "report": "docs/remediation/reports/discovery-2.json",
+    "status": "verified"
+  },
+  {
+    "id": "results-2",
+    "severity": "P3",
+    "title": "API y UI discrepan sobre fracciones y bloquean una corrección de notas",
+    "members": [
+      "results-2"
+    ],
+    "agent": "fix_results_2",
+    "apiPort": 4524,
+    "webPort": 5524,
+    "host": "127.0.1.34",
+    "dataDir": "/tmp/30x-remediation-results-2",
+    "report": "docs/remediation/reports/results-2.json",
+    "status": "verified"
+  },
+  {
+    "id": "navigation-2",
+    "severity": "P3",
+    "title": "Fuentes y equipo descarta una fuente en edición con Escape sin confirmación",
+    "members": [
+      "navigation-2"
+    ],
+    "agent": "fix_navigation_2",
+    "apiPort": 4525,
+    "webPort": 5525,
+    "host": "127.0.1.35",
+    "dataDir": "/tmp/30x-remediation-navigation-2",
+    "report": "docs/remediation/reports/navigation-2.json",
+    "status": "verified"
+  }
+]

@@ -1,0 +1,65 @@
+[
+  {
+    "issueId": "signals-1",
+    "status": "PASS",
+    "kind": "interactive browser + HTTP readback",
+    "runtime": "isolated dev, 127.0.1.88:5450",
+    "synthetic": true,
+    "expected": "Explicit individual card rejected, valid aggregate accepted, failed form retained",
+    "observed": {
+      "errorVisible": true,
+      "noteRetained": true,
+      "signalCountAfterInvalid": 0,
+      "signalCountAfterCorrection": 1
+    },
+    "screenshot": "docs/remediation/evidence/integrated-signals-1-rejected.png",
+    "checkedAt": "2026-10-18T05:00:27.993338+00:00"
+  },
+  {
+    "issueId": "duplicate-reference",
+    "status": "PASS",
+    "kind": "interactive browser + HTTP readback",
+    "runtime": "isolated dev, 127.0.1.88:5450",
+    "synthetic": true,
+    "expected": "Repeated capture with tracking retains a single publication and original record",
+    "observed": {
+      "referencesAfterInitial": 1,
+      "referencesAfterUICapture": 1,
+      "originalTitlePreserved": true,
+      "successVisible": true
+    },
+    "checkedAt": "2026-10-18T05:04:54.107198+00:00"
+  },
+  {
+    "issueId": "community-1",
+    "status": "PASS",
+    "kind": "browser state in coordinator session",
+    "runtime": "isolated dev, 127.0.1.88:5450",
+    "synthetic": true,
+    "expected": "Empty community query finishes after StrictMode lifecycle, no endless loading",
+    "observed": {
+      "loadingText": false,
+      "sensorVisible": true,
+      "horizontalOverflow": false
+    },
+    "checkedAt": "2026-10-18T05:18:16.452370+00:00"
+  },
+  {
+    "issueId": "company-1",
+    "status": "PASS",
+    "kind": "interactive browser + HTTP readback",
+    "runtime": "isolated dev, 127.0.1.88:5450",
+    "synthetic": true,
+    "expected": "Editing name changes only name, preserving custom market and language",
+    "observed": {
+      "changedKeys": [
+        "name"
+      ],
+      "marketBefore": "Costa Rica",
+      "marketAfter": "Costa Rica",
+      "languageBefore": "Español",
+      "languageAfter": "Español"
+    },
+    "checkedAt": "2026-10-18T05:20:26.432096+00:00"
+  }
+]

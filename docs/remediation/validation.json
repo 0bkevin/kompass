@@ -1,0 +1,95 @@
+{
+  "tests": {
+    "command": "npm test",
+    "exitCode": 0,
+    "tests": 373,
+    "pass": 373,
+    "fail": 0,
+    "cancelled": 0,
+    "skipped": 0,
+    "log": "docs/remediation/evidence/final-tests.log"
+  },
+  "build": {
+    "command": "npm run build",
+    "exitCode": 0,
+    "log": "docs/remediation/evidence/final-build.log"
+  },
+  "browser": {
+    "status": "PASS",
+    "mode": "compiled production server",
+    "host": "127.0.1.88:5450",
+    "syntheticData": true,
+    "checks": [
+      "Empresa general ficticia Lumen Taller QA conserva Costa Rica y Español; el recorrido no depende de una marca 30X.",
+      "Una oportunidad reúne la referencia pública capturada y la necesidad del grupo; la primera observación conserva Sin historial suficiente y no afirma crecimiento.",
+      "Creación desde Oportunidades produce un carrusel de 4 láminas para la audiencia elegida, CTA exacto y ejemplo hipotético; conserva el brief sin pegar instrucciones en el texto publicable.",
+      "Edición de título y gancho, guardado, envío a revisión y aprobación mantienen referencia y brief; la pieza pasa a programada por la acción explícita del calendario.",
+      "Calendario muestra una pieza programada. Descarga nativa CSV contiene exactamente 1 fila de datos y 12 columnas con título, fecha y estado esperados.",
+      "Guardar resultados manuales produce un único registro con 1500.5 visualizaciones, 75.25 interacciones y 3.5 contactos, etiquetado como ficticio en las notas.",
+      "Tras recargar a390px, corregir sólo las notas conserva el mismo outcome ID, createdAt y métricas exactas. Campos a 16px, step any, formulario válido y documento de 390px.",
+      "Buscador de Referencias visible a390px: no coincidencias tiene explicación; piloto devuelve la referencia esperada y borrar restaura una fila y el foco.",
+      "Menú móvil navega a Audiencia; Actualizar preguntas y señales finaliza sin carga eterna. Página y Home no desbordan los 390px.",
+      "Inicio refleja 6 de 6 etapas con actividad tras el recorrido. No se envió una publicación externa ni se utilizaron claves reales."
+    ],
+    "artifacts": [
+      "docs/remediation/evidence/integrated-production.json",
+      "docs/remediation/evidence/integrated-calendar.csv",
+      "docs/remediation/evidence/integrated-calendar-desktop.png",
+      "docs/remediation/evidence/integrated-results-mobile.png",
+      "docs/remediation/evidence/integrated-references-mobile.png",
+      "docs/remediation/evidence/integrated-home-mobile.png"
+    ]
+  },
+  "implementation": {
+    "files": 121,
+    "sha256": "24f7ff308e384efee31f5e4921fdce73d326d8c24b06b74c337aa8baa58a3c06"
+  },
+  "productionBuild": {
+    "files": 74,
+    "sha256": "0d8e7bfafb9e4a7b99f32f8e21e24047381bfad33e6be58225e2b36eb89eb55a"
+  },
+  "digestMethod": "SHA-256 of relative POSIX path + NUL + file bytes + NUL, sorted lexicographically by path components (Python Path ordering); source: src/server/tests plus package/lock/tsconfig/vite; build: dist",
+  "runtime": {
+    "main": {
+      "port": 3026,
+      "dataDir": "/tmp/30x-trackt2-preview",
+      "counts": {
+        "users": 1,
+        "sessions": 1,
+        "brands": 1,
+        "members": 1,
+        "records": 58,
+        "activity": 7,
+        "secrets": 0,
+        "invitations": 0
+      },
+      "unchangedRecords": true,
+      "quickCheck": "ok",
+      "health": {
+        "status": 200,
+        "body": {
+          "ok": true
+        }
+      },
+      "page": {
+        "status": 200,
+        "bytes": 4777
+      }
+    },
+    "qa": {
+      "port": 5450,
+      "dataDir": "/tmp/30x-remediation-integrated",
+      "mode": "compiled production",
+      "externalProviderKeysUnset": true,
+      "discoveryEnabled": false
+    },
+    "unusedOwnedDevServersStopped": true
+  },
+  "dependencies": {
+    "command": "npm ls --depth=0",
+    "exitCode": 0,
+    "busboy": "1.6.0",
+    "multer": "2.4.0"
+  },
+  "completedAt": "2026-10-18T05:50:29.507916+00:00"
+}
