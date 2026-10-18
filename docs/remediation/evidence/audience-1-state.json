@@ -1,0 +1,121 @@
+{
+  "issueId": "audience-1",
+  "fixture": "Datos sintéticos; original empty row deliberately retained as legacy evidence.",
+  "before": {
+    "requiredSatisfiedBySpaces": true,
+    "patchStatus": 200,
+    "profile": {
+      "name": "Blancos — reproducción sintética",
+      "role": "",
+      "needs": ""
+    },
+    "tests": {
+      "pass": 1,
+      "fail": 6
+    }
+  },
+  "after": {
+    "needsRejected": {
+      "error": "«Necesidades e intereses» es obligatorio. Escribe texto, no solo espacios.",
+      "focus": "needs",
+      "name": "Blancos — corregir prueba sintética",
+      "role": "  Responsable de operaciones  ",
+      "needs": "   ",
+      "patchCount": 0
+    },
+    "nameUnicodeWhitespaceRejected": {
+      "error": "«Nombre del perfil» es obligatorio. Escribe texto, no solo espacios.",
+      "focus": "name",
+      "name": "  　",
+      "role": "  Responsable de operaciones  ",
+      "patchCount": 0
+    },
+    "lengthRejected": {
+      "error": "«Necesidades e intereses» admite hasta 3000 caracteres. Acorta el texto para guardar.",
+      "focus": "needs",
+      "needsLength": 3001,
+      "name": "  Operaciones — QA sintética 　",
+      "role": "  Responsable de operaciones  ",
+      "patchCount": 0
+    },
+    "busy": {
+      "busy": "true",
+      "fieldsetDisabled": true,
+      "saveDisabled": true,
+      "error": null,
+      "patchCount": 1
+    },
+    "serverErrorSimulation": {
+      "dialogPresent": true,
+      "error": "Fallo de guardado simulado. Reintenta con el texto conservado.",
+      "name": "Operaciones — QA sintética",
+      "role": "Responsable de operaciones",
+      "needs": "  Formar al equipo y comparar resultados. 　",
+      "fieldsetDisabled": false,
+      "saveDisabled": false,
+      "busy": "false"
+    },
+    "mobile": {
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "dialog": {
+        "left": 10,
+        "right": 380,
+        "width": 370
+      },
+      "documentOverflow": false,
+      "error": "«Necesidades e intereses» es obligatorio. Escribe texto, no solo espacios.",
+      "focus": "needs",
+      "role": "Responsable de operaciones",
+      "needs": " 　",
+      "alertStyle": {
+        "color": "rgb(168, 65, 65)",
+        "background": "rgb(252, 238, 238)",
+        "fontSize": "12px",
+        "wordBreak": "normal"
+      }
+    },
+    "correctedCreation": {
+      "dialogPresent": false,
+      "audience": [
+        {
+          "id": "6333f776-2f2c-4d0d-be85-da9bfff6f354",
+          "name": "Blancos — reproducción sintética",
+          "role": "",
+          "stage": "Explorando",
+          "needs": "",
+          "description": ""
+        },
+        {
+          "id": "7bb856cc-b9c9-42b3-b27f-6002a9348465",
+          "name": "Operaciones — QA sintética",
+          "role": "Responsable de operaciones",
+          "stage": "Explorando",
+          "needs": "Coordinar decisiones y medir resultados del equipo.",
+          "description": ""
+        }
+      ]
+    },
+    "finalReload": {
+      "afterFullReload": true,
+      "profile": {
+        "id": "7bb856cc-b9c9-42b3-b27f-6002a9348465",
+        "name": "Operaciones — QA sintética",
+        "role": "Responsable de operaciones",
+        "stage": "Explorando",
+        "needs": "Formar al equipo y comparar resultados.",
+        "description": "Contexto editorial sintético que debe conservarse."
+      },
+      "profileVisible": true,
+      "descriptionPreserved": true,
+      "onlyTwoProfiles": true
+    },
+    "http": {
+      "status": 400,
+      "error": "El rol o responsabilidad es obligatorio. Escribe texto, no solo espacios.",
+      "audienceUnchanged": true
+    }
+  }
+}

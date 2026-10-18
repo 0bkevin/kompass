@@ -1,0 +1,90 @@
+{
+  "issueId": "audience-1",
+  "agent": "fix_audience_1",
+  "status": "fixed",
+  "rootCause": "El formulario nativo required aceptaba espacios. brandInput recortaba role/needs con text() sin exigir contenido, por lo que PATCH guardaba strings vacíos y cerraba el modal.",
+  "changes": [
+    "Nombre, rol y necesidades se validan tras trim; se mantienen límites de 150/300/3000 caracteres. Altas POST/PATCH y filas editadas exigen los tres.",
+    "El servidor compara los campos de cada fila con su perfil persistido. Un perfil legacy intacto no bloquea cambios de empresa ni la edición de otro perfil; al modificarlo exige completar rol y necesidades. La marca puede tener audience: [].",
+    "El formulario rechaza blancos y excesos antes del PATCH, conserva las entradas, enfoca el campo inválido y lo vincula al mensaje con aria-invalid/aria-describedby. Mantiene required, deshabilita durante el guardado y recupera controles después de un error.",
+    "Editar conserva description y los demás datos del perfil mediante spread del segmento original."
+  ],
+  "files": [
+    "server/core.mjs: brandInput → audiences.map",
+    "src/features/Brand.tsx: AudiencePage (validación del formulario)",
+    "tests/remediation-audience-1.test.mjs",
+    "docs/remediation/reports/audience-1.md",
+    "docs/remediation/reports/audience-1.json"
+  ],
+  "verification": [
+    {
+      "command": "node --test tests/remediation-audience-1.test.mjs",
+      "before": "1 PASS, 6 FAIL. Repro original: esperado 400, real 200; role/needs vacíos persistidos.",
+      "after": "7 PASS. Rechazos atómicos, espacios Unicode, límites exactos, POST, PATCH, compatibilidad legacy y reintento corregido con descripción conservada.",
+      "kind": "test"
+    },
+    {
+      "command": "node --test tests/remediation-audience-1.test.mjs tests/core.test.mjs tests/audience-insights.test.mjs",
+      "before": "Repro específica roja documentada arriba.",
+      "after": "34 PASS, 0 FAIL.",
+      "kind": "test"
+    },
+    {
+      "command": "T3 preview_* en http://127.0.1.13:5503/audience, pestaña exclusiva incognito",
+      "before": "Nombre válido + tres espacios en rol/necesidades: required=true y checkValidity=true. Guardar cerró modal; GET state confirmó role/needs vacíos.",
+      "after": "Mismo caso: modal abierto, texto intacto, foco role, alerta concreta y 0 PATCH. Corregir sólo rol señala needs; espacios Unicode en nombre señalan name; 3001 caracteres se conservan para corregir. Corregir todos guarda una vez con texto recortado y persiste tras recarga.",
+      "kind": "browser"
+    },
+    {
+      "command": "PATCH /api/brands/:brandId con perfil nuevo role='   ', needs='   '",
+      "before": "200 y perfil vacío persistido.",
+      "after": "400 con error de rol obligatorio; array de audiencia idéntico antes/después.",
+      "kind": "http"
+    },
+    {
+      "command": "T3: editar perfil con description existente, rechazo local, fallo 503 simulado y reintento real",
+      "before": "El formulario sólo confiaba en required y construía el perfil sin description.",
+      "after": "Todos los textos sobreviven al rechazo local y al 503 simulado. Controles disponibles después del error; reintento real 200, recarga conserva descripción y necesidad corregida.",
+      "kind": "browser"
+    },
+    {
+      "command": "T3: PATCH retenido y liberado con transporte local explícito",
+      "before": "Sin comprobación específica previa.",
+      "after": "aria-busy=true, fieldset y Guardar perfil deshabilitados, una petición; liberar realiza el guardado real.",
+      "kind": "browser"
+    },
+    {
+      "command": "T3: escritorio 1280×800 y viewport móvil 390×844",
+      "before": "Captura histórica propia del perfil vacío.",
+      "after": "Error y foco legibles; modal móvil dentro de viewport (x=10..380), sin overflow horizontal del documento.",
+      "kind": "browser"
+    },
+    {
+      "command": "npx tsc --noEmit",
+      "before": "No se usa para acreditar el defecto funcional.",
+      "after": "Exit 0, sin emitir archivos ni ejecutar build.",
+      "kind": "test"
+    }
+  ],
+  "artifacts": [
+    "docs/remediation/evidence/audience-1-before.png",
+    "docs/remediation/evidence/audience-1-after-desktop.png",
+    "docs/remediation/evidence/audience-1-after-mobile.png",
+    "docs/remediation/evidence/audience-1-state.json"
+  ],
+  "limitations": [
+    "Datos sintéticos, instancia aislada y ningún proveedor externo. El 503 y el retraso de PATCH se simularon explícitamente en la pestaña propia.",
+    "La compatibilidad conserva perfiles legacy incompletos sin migrarlos automáticamente. Sólo las filas nuevas o modificadas están obligadas a completarlos.",
+    "Se probó viewport móvil en navegador de escritorio; no dispositivo físico ni lector de pantalla.",
+    "Sin build global ni detector de diseño, reservados al coordinador. Pendiente revisión integrada.",
+    "Al detener npm run dev, el watcher nativo de Node mostró una aserción de FSWatcher durante su cierre. El proceso finalizó y ss confirmó los puertos 4503/5503 sin listeners."
+  ],
+  "resources": {
+    "tabClosed": true,
+    "processSession": 4410,
+    "apiPort": 4503,
+    "webPort": 5503,
+    "portsClosed": true,
+    "dataDir": "/tmp/30x-remediation-audience-1"
+  }
+}
