@@ -1,0 +1,50 @@
+{
+  "testEnvironment": "isolated synthetic Google readiness; external Google requests blocked; no real login",
+  "results": [
+    {
+      "name": "Configured Google appears on signup and login; 390px layout fits",
+      "passed": true
+    },
+    {
+      "name": "Provider disabled preserves email and demo fallback",
+      "passed": true
+    },
+    {
+      "name": "Provider network-failure preserves email and demo fallback",
+      "passed": true
+    },
+    {
+      "name": "Unrecognized callback __proto__ cannot render inherited object values",
+      "passed": true
+    },
+    {
+      "name": "Unrecognized callback constructor cannot render inherited object values",
+      "passed": true
+    },
+    {
+      "name": "Callback google_cancelled is actionable and cleans only authError",
+      "passed": true
+    },
+    {
+      "name": "Callback google_failed is actionable and cleans only authError",
+      "passed": true
+    },
+    {
+      "name": "Callback google_link_required is actionable and cleans only authError",
+      "passed": true
+    },
+    {
+      "name": "Callback google_unavailable is actionable and cleans only authError",
+      "passed": true
+    },
+    {
+      "name": "Google navigation locks all auth actions and preserves return path/invite",
+      "passed": true
+    },
+    {
+      "name": "Existing account explicitly verifies password and starts secure Google linking",
+      "passed": true
+    }
+  ],
+  "pageErrors": []
+}

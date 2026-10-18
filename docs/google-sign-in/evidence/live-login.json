@@ -1,0 +1,41 @@
+{
+  "projectId": "radar-auth-20261018-kevin",
+  "publishingStatus": "Testing",
+  "scope": ["openid", "email", "profile"],
+  "privateCredentials": {
+    "ignoredEnv": true,
+    "mode": "0600",
+    "valuesInReport": false
+  },
+  "firstSignIn": {
+    "origin": "http://localhost:3026",
+    "path": "/home",
+    "signedIn": true,
+    "expectedAccount": true,
+    "newCompanySetup": true,
+    "brandCount": 0
+  },
+  "repeatSignIn": {
+    "origin": "http://localhost:3026",
+    "path": "/home",
+    "signedIn": true,
+    "expectedAccount": true,
+    "brandCount": 0,
+    "authError": null,
+    "onboarding": true,
+    "sameUser": true
+  },
+  "layout": {
+    "width": 390,
+    "scrollWidth": 390,
+    "button": [
+      {
+        "width": 342,
+        "height": 44,
+        "label": "Continuar con Google"
+      }
+    ]
+  },
+  "transport": "Real Google OAuth authorization and token verification; no provider simulation in these two sign-ins",
+  "humanVerification": "Account owner completed Google's phone challenge; no MFA bypass"
+}

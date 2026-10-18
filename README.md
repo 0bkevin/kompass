@@ -24,6 +24,18 @@ npm start
 
 En producción `npm start` sirve interfaz y API desde `PORT`. Requiere un proceso Node persistente y almacenamiento duradero; configura HTTPS y proxy en el host. La configuración de proveedores corresponde al operador del despliegue; las empresas heredan los servicios de plataforma sin introducir claves. Esta entrega no despliega un SaaS público.
 
+## Entrar con Google
+
+La [configuración local verificada](docs/google-sign-in/README.md) documenta el proyecto creado y las dos entradas reales con Google en `http://localhost:3026`. Las credenciales de este entorno ya están instaladas privadamente; el proyecto permanece en modo de prueba para localhost.
+
+El operador configura un cliente OAuth de tipo **Aplicación web** en Google Auth Platform, con la marca de la aplicación, público y usuarios de prueba si el proyecto sigue en modo de prueba. Registra el URI de redirección exacto, incluido esquema, dominio, puerto y ruta: `https://radar.tudominio.com/api/auth/google/callback` en producción; por ejemplo `http://localhost:5173/api/auth/google/callback` en desarrollo con el proxy Vite. Usa el dominio y puerto reales del despliegue; no intercambies `localhost` y `127.0.0.1`. Google exige coincidencia exacta con el cliente configurado. Consulta [OpenID Connect de Google](https://developers.google.com/identity/openid-connect/openid-connect#settingup) y la [configuración de aplicaciones web](https://developers.google.com/identity/protocols/oauth2/web-server#creatingcred).
+
+Guarda `GOOGLE_CLIENT_ID`, `GOOGLE_CLIENT_SECRET` y `GOOGLE_REDIRECT_URI` en el entorno privado del servidor y reinicia el proceso. No uses el prefijo `VITE_`, no incluyas el secreto en el navegador ni lo guardes en Git. El flujo pide únicamente `openid email profile` para identificar la cuenta; no solicita acceso a Gmail, Drive ni Calendar.
+
+El botón **Continuar con Google** aparece cuando el servidor tiene la configuración completa. Su disponibilidad confirma configuración, no que Google haya aceptado las credenciales o el dominio: valida el recorrido con una cuenta autorizada en ese proyecto antes de habilitarlo para todos. Sin configuración o si no se puede consultar la disponibilidad, siguen funcionando correo/contraseña y la demo. El botón usa el [recurso oficial y las pautas de marca de Google](https://developers.google.com/identity/branding-guidelines); el tipo Google Sans se sirve localmente bajo su licencia OFL.
+
+Una cuenta nueva entra en el asistente de empresa; una cuenta que regresa conserva sus espacios. Si el correo ya pertenece a una cuenta con contraseña, la aplicación exige confirmar esa contraseña y elegir **Entrar y conectar Google** antes de asociarla. Compartir correo no vincula cuentas automáticamente. La cancelación permite volver a intentar o entrar con contraseña, y las invitaciones se conservan al volver.
+
 ## Servicios incluidos y configuración de plataforma
 
 Cada empresa nueva recibe fuentes públicas permitidas (Hacker News, GDELT y Google Trends, con país adicional cuando el mercado coincide). Al completar contexto y audiencia, Inicio ejecuta la primera búsqueda automáticamente. Las entradas concurrentes comparten el trabajo; volver a Inicio no repite una consulta completada o fallida. El usuario puede reintentar de forma explícita desde el aviso o actualizar el radar. Los ejemplos no disparan consultas automáticas.
