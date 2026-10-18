@@ -45,6 +45,7 @@ import type {
   SocialSettings,
   Source,
 } from "../lib/types";
+import "./discovery-settings.css";
 
 const sourceHasUrl = (type: Source["type"]) =>
   ["rss", "reddit", "youtube", "apify"].includes(type);
@@ -384,9 +385,10 @@ export default function Settings() {
       "additional-integrations",
     ) as HTMLDetailsElement | null;
     if (details) details.open = true;
-    document
-      .getElementById("social-provider-settings")
-      ?.scrollIntoView({ behavior: "smooth", block: "start" });
+    document.getElementById("social-provider-settings")?.scrollIntoView({
+      behavior: "instant",
+      block: "start",
+    });
   }
 
   return (
@@ -403,9 +405,16 @@ export default function Settings() {
           {roleLabel[state.brand.role]}
         </Badge>
       </div>
-
+      <nav className="settings-index" aria-label="Secciones de configuración">
+        <a href="#workspace-overview">Tu espacio</a>
+        <a href="#social-connections">Redes</a>
+        <a href="#discovery-sources">Fuentes</a>
+        <a href="#workspace-integrations">Servicios</a>
+        <a href="#workspace-team">Equipo</a>
+      </nav>
       <section
-        className="card settings-section"
+        id="workspace-overview"
+        className="settings-overview settings-section"
         aria-labelledby="workspace-services-heading"
       >
         <div className="section-heading">
@@ -457,7 +466,7 @@ export default function Settings() {
         )}
       </section>
       <SocialConnections />
-      <section className="card settings-section">
+      <section id="discovery-sources" className="card settings-section">
         <div className="section-heading">
           <div>
             <h2>
@@ -559,7 +568,7 @@ export default function Settings() {
                         <p
                           role="status"
                           style={{
-                            color: "var(--danger, #b33d40)",
+                            color: "var(--negative)",
                             fontSize: 13,
                             marginBottom: 0,
                           }}
@@ -673,7 +682,7 @@ export default function Settings() {
         <ProviderBudget />
         <section
           id="social-provider-settings"
-          className="card settings-section social-settings-section"
+          className="social-settings-section"
         >
           <div className="section-heading">
             <div>
@@ -754,7 +763,7 @@ export default function Settings() {
         </section>
       </details>
       <div className="settings-grid">
-        <section className="card settings-section">
+        <section id="workspace-integrations" className="card settings-section">
           <div className="section-heading">
             <div>
               <h2>
@@ -986,7 +995,7 @@ export default function Settings() {
           )}
         </section>
 
-        <section className="card settings-section">
+        <section id="workspace-team" className="card settings-section">
           <div className="section-heading">
             <div>
               <h2>
@@ -1078,7 +1087,7 @@ export default function Settings() {
             <div
               className="stack"
               style={{
-                borderTop: "1px solid var(--border, #e5e7de)",
+                borderTop: "1px solid var(--border)",
                 paddingTop: 20,
               }}
             >
@@ -1146,7 +1155,7 @@ export default function Settings() {
           <form
             className="stack"
             style={{
-              borderTop: "1px solid var(--border, #e5e7de)",
+              borderTop: "1px solid var(--border)",
               paddingTop: 20,
               marginTop: 22,
             }}

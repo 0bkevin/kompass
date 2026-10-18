@@ -246,6 +246,7 @@ export default function SocialConnections() {
   }
   return (
     <section
+      id="social-connections"
       className="card settings-section social-connections"
       aria-labelledby="social-connections-heading"
     >

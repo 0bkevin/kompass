@@ -34,7 +34,10 @@ export function ProviderBudget() {
     return () => controller.abort();
   }, [state.brand.id, revision]);
   return (
-    <details className="provider-budget">
+    <details
+      className="provider-budget"
+      aria-label="Límites y estado de costo de los conectores"
+    >
       <summary>Control de costo de los conectores</summary>
       <div>
         <p>
@@ -43,7 +46,9 @@ export function ProviderBudget() {
           red; una credencial de Apify no los activa.
         </p>
         {error ? (
-          <p role="alert">{error}</p>
+          <p className="form-error" role="alert">
+            {error}
+          </p>
         ) : !data ? (
           <p role="status">Consultando límites…</p>
         ) : data.budget ? (
