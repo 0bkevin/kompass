@@ -74,6 +74,7 @@ test("official Gemini base sends its documented chat schema and reads a complete
       const body = JSON.parse(options.body);
       assert.deepEqual(body, {
         model: "synthetic-gemini-model",
+        reasoning_effort: "low",
         messages: [
           { role: "system", content: input.instructions },
           { role: "user", content: [{ type: "text", text: input.input }] },
@@ -225,6 +226,7 @@ test("a lookalike reviewed hostname retains the Responses transport", async () =
         assert.equal(body.instructions, input.instructions);
         assert.deepEqual(body.text.format.schema, input.schema);
         assert.equal("messages" in body, false);
+        assert.equal("reasoning_effort" in body, false);
         return Response.json({ output_text: '{"ok":true}' });
       },
     });

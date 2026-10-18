@@ -317,6 +317,9 @@ export async function generateStructured(
         gemini
           ? {
               model: config.model,
+              // Google's default thinking can exceed an interactive request's
+              // deadline; low is supported by its documented compatibility API.
+              reasoning_effort: "low",
               messages: [
                 { role: "system", content: instructions },
                 {
