@@ -1,0 +1,22 @@
+{
+  "status": 200,
+  "method": "heuristic",
+  "draftName": "30X QA · IA práctica para equipos",
+  "evidence": [
+    {
+      "id": "45424e20-7242-419b-a849-52609657ceef",
+      "url": "https://qa-owned.example.com/30x",
+      "title": "30X QA · IA práctica para equipos",
+      "excerpt": "Empresa sintética de prueba: formación en inteligencia artificial para líderes y equipos de Latinoamérica. 30X QA · IA práctica para equipos IA práctica para líderes y equipos 30X QA ayuda a equipos a documentar procesos comerciales y aplicar inteligencia artificial con revisión humana. Este contenido es sintético para pruebas.",
+      "status": "read",
+      "platform": "website",
+      "permissionUrls": [
+        "https://qa-owned.example.com/30x"
+      ]
+    }
+  ],
+  "warnings": [
+    "Las sugerencias de marca y audiencia son hipótesis basadas en el contenido aportado. Confírmalas; no describen consumidores observados."
+  ],
+  "companiesBefore": 2
+}
