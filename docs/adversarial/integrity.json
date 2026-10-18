@@ -1,0 +1,22 @@
+{
+  "checkedAt": "2026-10-18T02:31:38.679Z",
+  "implementationDigest": "03d09d61da0cf30a286fa8c4243151074c5b29f002059f129c13ef60c2a5a953",
+  "implementationUnchanged": true,
+  "fileCount": 141,
+  "reports": 21,
+  "uniqueAgentNames": 21,
+  "cases": 343,
+  "verdicts": {
+    "PASS": 300,
+    "FAIL": 28,
+    "BLOCKED": 15
+  },
+  "reportFindings": 26,
+  "severity": {
+    "P1": 0,
+    "P2": 22,
+    "P3": 4
+  },
+  "screenshots": 141,
+  "artifactAndSourceProblems": []
+}

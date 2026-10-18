@@ -1,0 +1,241 @@
+{
+  "feature": "Resultados y aprendizaje",
+  "slug": "results",
+  "url": "http://127.0.0.25:4115",
+  "status": "FAIL",
+  "cases": [
+    {
+      "name": "Sin métricas",
+      "expected": "Mostrar ausencia de resultados; no fabricar métricas ni conclusiones.",
+      "actual": "UI indicó que aún no hay métricas; insights.learning.outcomes=[] antes de registrar la primera pieza.",
+      "verdict": "PASS",
+      "evidence": [
+        "docs/adversarial/evidence/results-empty.png"
+      ]
+    },
+    {
+      "name": "Selección de pieza exacta",
+      "expected": "Listar approved/scheduled/published, excluir draft y conservar audiencia/canal/formato de la pieza elegida.",
+      "actual": "Selector listó A aprobada, B programada y C publicada; excluyó D borrador. A mostró LinkedIn/Post/Ventas QA; B Instagram/Reel/Formación QA; C Instagram/Reel/Ventas QA.",
+      "verdict": "PASS",
+      "evidence": [
+        "docs/adversarial/evidence/results-registered.png",
+        "docs/adversarial/evidence/results-observations.json"
+      ]
+    },
+    {
+      "name": "Registro manual desde aprobada",
+      "expected": "Guardar URL, fecha, métricas y nota; cambiar sólo esa pieza a published sin envío a una red.",
+      "actual": "A guardó URL example.com/publicaciones/qa-results-a, 2026-10-17T12:00Z y 1234/87/9; API/SQLite: status published, metricsOrigin manual, publicationOrigin manual_record. Sólo POST outcome y lecturas locales en la acción.",
+      "verdict": "PASS",
+      "evidence": [
+        "docs/adversarial/evidence/results-registered.png",
+        "docs/adversarial/evidence/results-observations.json"
+      ]
+    },
+    {
+      "name": "Pieza programada y cero",
+      "expected": "Registrar publicación manual de una pieza scheduled y conservar cero como dato válido.",
+      "actual": "B pasó a published con 0/0/0; UI mostró Formación QA/Instagram con una pieza y cero en los tres contadores.",
+      "verdict": "PASS",
+      "evidence": [
+        "docs/adversarial/evidence/results-exact-totals.png",
+        "docs/adversarial/evidence/results-observations.json"
+      ]
+    },
+    {
+      "name": "Pieza publicada",
+      "expected": "Permitir incorporar resultados a una pieza ya published.",
+      "actual": "C guardó 300/30/3 con fecha 2026-10-10T12:00Z; apareció en tabla y registros sin crear otra pieza.",
+      "verdict": "PASS",
+      "evidence": [
+        "docs/adversarial/evidence/results-observations.json"
+      ]
+    },
+    {
+      "name": "Corregir y recargar sin duplicación",
+      "expected": "Actualizar el mismo outcome, conservar la nueva URL/nota/cifras al recargar y precargar el formulario.",
+      "actual": "A conservó outcome 8c3093d1-267d-486b-90c3-915c38a3cf1f y createdAt; cambió URL a qa-results-a-corregida y cifras a 1500/100/10. Recarga/formulario/SQLite coincidieron. No pieceId duplicados en 19 outcomes finales.",
+      "verdict": "PASS",
+      "evidence": [
+        "docs/adversarial/evidence/results-observations.json",
+        "docs/adversarial/evidence/results-personal-notes.png"
+      ]
+    },
+    {
+      "name": "Validación UI",
+      "expected": "Impedir envío de negativos, fracciones, exceso de límite y fecha futura.",
+      "actual": "-1 inválido por min; 1.5 por step; 1000000000001 por max; 2027-01-01 por fecha máxima. Ninguno sustituyó el registro previo.",
+      "verdict": "PASS",
+      "evidence": [
+        "docs/adversarial/evidence/results-observations.json",
+        "docs/adversarial/evidence/results-fraction-correction.png"
+      ]
+    },
+    {
+      "name": "Validación API de números y fechas",
+      "expected": "Responder 400 a negativos, NaN/cadena/null, infinito, >10^12 y fechas futuras/inválidas; aceptar 10^12 inclusivo.",
+      "actual": "Casos inválidos devolvieron 400; 1e400 también 400. Tres métricas exactamente 10^12 devolvieron 200. Fixture restaurada después.",
+      "verdict": "PASS",
+      "evidence": [
+        "docs/adversarial/evidence/results-observations.json"
+      ]
+    },
+    {
+      "name": "Enlaces privados y personales",
+      "expected": "Rechazar IP privada/loopback, credenciales y parámetros de correo.",
+      "actual": "UI rechazó http://127.0.0.1/privado y ?email=persona-qa@example.com con error; API rechazó además 192.168.1.1 y user:password@example.com con 400.",
+      "verdict": "PASS",
+      "evidence": [
+        "docs/adversarial/evidence/results-url-personal-rejected.png",
+        "docs/adversarial/evidence/results-observations.json"
+      ]
+    },
+    {
+      "name": "Sin aprobación",
+      "expected": "Borrador ausente del selector y POST outcome rechazado sin convertirlo en publicado.",
+      "actual": "D no apareció en UI; POST devolvió 409 «La pieza necesita estar aprobada...» y siguió draft.",
+      "verdict": "PASS",
+      "evidence": [
+        "docs/adversarial/evidence/results-empty.png",
+        "docs/adversarial/evidence/results-observations.json"
+      ]
+    },
+    {
+      "name": "Rol revisor",
+      "expected": "Consultar resultados sin formulario de escritura; POST outcome 403.",
+      "actual": "UI mostró aviso de acceso de revisor y ningún formulario; POST 403 «Necesitas permisos de edición.». Rol preparado y restaurado sólo en la base propia.",
+      "verdict": "PASS",
+      "evidence": [
+        "docs/adversarial/evidence/results-reviewer.png",
+        "docs/adversarial/evidence/results-observations.json"
+      ]
+    },
+    {
+      "name": "Sumas exactas por audiencia y canal",
+      "expected": "19 outcomes sintéticos repartidos sin mezclar canales: ventas/linkedin 9,14200,3330,125; formación/instagram 7,6000,900,6; ventas/instagram 2,500,210,5; formación/linkedin 1,100,90,1.",
+      "actual": "Tabla UI coincidió exactamente con los cuatro grupos y con sumas independientes desde SQLite; ninguna pieza se contó dos veces.",
+      "verdict": "PASS",
+      "evidence": [
+        "docs/adversarial/evidence/results-exact-totals.png",
+        "docs/adversarial/evidence/results-observations.json"
+      ]
+    },
+    {
+      "name": "Muestra insuficiente y exclusión de contextos",
+      "expected": "Dos piezas del tema y tres de base no ajustan prioridad; piezas de otro segmento/canal/formato/ventana no completan la muestra.",
+      "actual": "Automatización ventas quedó en 34 con mensaje «hacen falta al menos 3... y 3...» aun con cuatro señuelos con otro contexto.",
+      "verdict": "PASS",
+      "evidence": [
+        "docs/adversarial/evidence/results-observations.json"
+      ]
+    },
+    {
+      "name": "Comparación comparable 3+3",
+      "expected": "Medianas 30% frente a 10% y ajuste descriptivo acotado +8 para mismo segmento/canal/formato/ventana.",
+      "actual": "Tras añadir T3, prioridad pasó 34→42; UI y API mostraron 3+3, LinkedIn/post, 7–14 días, 30.0% vs 10.0%, +8 y límite sin atribución causal.",
+      "verdict": "PASS",
+      "evidence": [
+        "docs/adversarial/evidence/results-learning.png",
+        "docs/adversarial/evidence/results-observations.json"
+      ]
+    },
+    {
+      "name": "Base cero y afirmaciones",
+      "expected": "No dividir por cero ni calcular mejora/ROI/causalidad; explicar límite.",
+      "actual": "Formación/Instagram/Reel 3+3 mostró 30.0% frente a 0.0%, delta 0, «La referencia es cero»; se mantuvo prioridad 32. No afirmó rendimiento real, ROI ni causalidad.",
+      "verdict": "PASS",
+      "evidence": [
+        "docs/adversarial/evidence/results-observations.json",
+        "docs/adversarial/evidence/results-learning.png"
+      ]
+    },
+    {
+      "name": "Datos individuales en notas",
+      "expected": "Mantener el corpus dentro del límite de datos agregados; rechazar o anonimizar una ficha de contacto identificable.",
+      "actual": "UI guardó nombre ficticio, email y teléfono juntos con interés de formación. API devolvió 200; persistieron y se mostraron tras recarga.",
+      "verdict": "FAIL",
+      "evidence": [
+        "docs/adversarial/evidence/results-personal-notes.png",
+        "docs/adversarial/evidence/results-observations.json"
+      ]
+    },
+    {
+      "name": "Corrección UI de valores aceptados por API",
+      "expected": "Un registro válido para API debe poder corregirse en la UI sin sustituir sus cifras para superar validación.",
+      "actual": "API aceptó 300.5/30.25/3.5 (200). Al recargar, los tres campos step=1 resultaron inválidos; cambiar sólo la nota y guardar no produjo actualización. Se restauró 300/30/3 al acabar.",
+      "verdict": "FAIL",
+      "evidence": [
+        "docs/adversarial/evidence/results-fraction-correction.png",
+        "docs/adversarial/evidence/results-observations.json"
+      ]
+    }
+  ],
+  "findings": [
+    {
+      "id": "results-1",
+      "severity": "P2",
+      "title": "Las notas de resultados permiten guardar fichas identificables de contactos",
+      "steps": [
+        "Entrar como editor/propietario y seleccionar una pieza aprobada o publicada en /results.",
+        "En «Periodo de medición y aprendizajes», escribir una ficha sintética con nombre, correo, teléfono e interés individual.",
+        "Guardar, recargar y revisar el registro y GET insights."
+      ],
+      "expected": "Rechazar o anonimizar la ficha individual, manteniendo resultados y aprendizajes agregados conforme al límite del producto.",
+      "actual": "Se guardó sin aviso ni anonimización: «SINTÉTICO. Contacto individual: Persona QA, persona-qa@example.com, teléfono +52 55 1234 5678; pidió formación.». El texto se persistió en outcomes.notes y volvió a mostrarse tras recargar. Es un control ausente en las notas; no se demostró exposición entre cuentas ni se usaron personas reales.",
+      "evidence": [
+        "docs/adversarial/evidence/results-personal-notes.png",
+        "docs/adversarial/evidence/results-observations.json"
+      ],
+      "source": [
+        "PRODUCT.md:31",
+        "docs/TRANSCRIPT-TO-PRODUCT.md:24",
+        "server/audience-insights.mjs:905",
+        "src/features/Journey.tsx:2623"
+      ]
+    },
+    {
+      "id": "results-2",
+      "severity": "P3",
+      "title": "API y UI discrepan sobre fracciones y bloquean una corrección de notas",
+      "steps": [
+        "POST outcome de una pieza publicada con métricas 300.5/30.25/3.5; comprobar 200.",
+        "Recargar /results y seleccionar esa pieza.",
+        "Cambiar sólo la nota y pulsar «Actualizar registro»."
+      ],
+      "expected": "El formulario debe aceptar los valores admitidos por API o la API debe aplicar la misma regla de enteros; corregir una nota no debe obligar a cambiar cifras válidas previamente guardadas.",
+      "actual": "Los campos de las tres métricas quedaron con validity.valid=false por step=1; el navegador bloqueó el submit y la nota anterior siguió persistida. El contrato API documentado exige finitos en rango y no exige enteros; el hallazgo es la incompatibilidad de edición, no que aceptar fracciones por sí solo viole ese contrato.",
+      "evidence": [
+        "docs/adversarial/evidence/results-fraction-correction.png",
+        "docs/adversarial/evidence/results-observations.json"
+      ],
+      "source": [
+        "server/audience-insights.mjs:640",
+        "src/features/Journey.tsx:2596",
+        "src/features/Journey.tsx:2607",
+        "src/features/Journey.tsx:2618"
+      ]
+    }
+  ],
+  "limitations": [
+    "Todas las métricas, referencias, nombres y contactos son fixtures sintéticas. No demuestran rendimiento real, ahorro, ROI ni representatividad.",
+    "Se auditó el build existente sin recompilar ni modificar código de producto. Piezas, referencias y muestras comparables se prepararon en SQLite propia; registrar y corregir se probó mediante UI nativa T3.",
+    "No se realizó publicación externa ni se usaron claves/proveedores reales. Se verificó el registro manual y su procedencia; no es una prueba de integración de publicación social.",
+    "La aprobación se preparó como fixture de estado; esta revisión no audita todo el flujo de revisión versionada ni todos los roles o escenarios de concurrencia.",
+    "La validación de URL se probó con IPs y parámetros explícitos; no cubre todos los nombres DNS ni todas las formas posibles de datos personales."
+  ],
+  "artifacts": [
+    "docs/adversarial/evidence/results-observations.json",
+    "docs/adversarial/evidence/results-empty.png",
+    "docs/adversarial/evidence/results-registered.png",
+    "docs/adversarial/evidence/results-url-personal-rejected.png",
+    "docs/adversarial/evidence/results-learning.png",
+    "docs/adversarial/evidence/results-exact-totals.png",
+    "docs/adversarial/evidence/results-personal-notes.png",
+    "docs/adversarial/evidence/results-fraction-correction.png",
+    "docs/adversarial/evidence/results-reviewer.png",
+    "/tmp/30x-adversarial-results/radar.sqlite",
+    "/tmp/results-fixtures.mjs",
+    "/tmp/results-learning-fixtures.mjs"
+  ]
+}

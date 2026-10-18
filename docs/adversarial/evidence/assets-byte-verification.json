@@ -1,0 +1,107 @@
+{
+  "nativeBrowserDownloads": [
+    {
+      "downloadName": "03-Ã±andÃº & _prueba_ #100%.txt",
+      "originalName": "03-ñandú & \"prueba\" #100%.txt",
+      "bytes": 57,
+      "sha256": "807a5dfe79c37ef39890096f49fb96a13eecf1f70226553ddb7b6d9e223d2ab4",
+      "exactBytesEqual": true
+    },
+    {
+      "downloadName": "02-documento.pdf",
+      "originalName": "02-documento.pdf",
+      "bytes": 73,
+      "sha256": "efeeb6e32419bdbcb85dda1d4b2cb059048c248e15e2da270a473e5140cc74e2",
+      "exactBytesEqual": true
+    },
+    {
+      "downloadName": "01-imagen.png",
+      "originalName": "01-imagen.png",
+      "bytes": 68,
+      "sha256": "cbcd8e1d517ee2a94209c6174f5b66190e33f2dbf03a90897d9efd993fb0b580",
+      "exactBytesEqual": true
+    }
+  ],
+  "fixtures": [
+    {
+      "name": "13-seguro-html.txt",
+      "bytes": 73,
+      "sha256": "518c7af965ff0aae52cfe54bb7e8b0c600d007ff7dc3eb38b2d7319d09f59793"
+    },
+    {
+      "name": "03-ñandú & \"prueba\" #100%.txt",
+      "bytes": 57,
+      "sha256": "807a5dfe79c37ef39890096f49fb96a13eecf1f70226553ddb7b6d9e223d2ab4"
+    },
+    {
+      "name": "14-seguro-svg.txt",
+      "bytes": 86,
+      "sha256": "9d1e885f6aa8962e562593b64bcd29ef16a8761ad33f868e28a3997013945ec4"
+    },
+    {
+      "name": "10-reintento.md",
+      "bytes": 60,
+      "sha256": "0459b6a8a6acf4b2651bd1aa9455a61e0363056e4e973384dac54ad0924cb07e"
+    },
+    {
+      "name": "12-sin-uso.txt",
+      "bytes": 17,
+      "sha256": "bf439b4dc82ee9f7560f935246b672f9d4f0b0ee5822fb583cbc9677b1e061a9"
+    },
+    {
+      "name": "11-borrador.txt",
+      "bytes": 29,
+      "sha256": "131738a1e691ea0372a4773fcbba0574cd0831d702edd8a2799cc1f01ca4b14d"
+    },
+    {
+      "name": "04-no-admitido.exe",
+      "bytes": 21,
+      "sha256": "efffb33c62c1b16c9e2c270d67b55def5de2eac4b1ce4a6988644d5798886e58"
+    },
+    {
+      "name": "02-documento.pdf",
+      "bytes": 73,
+      "sha256": "efeeb6e32419bdbcb85dda1d4b2cb059048c248e15e2da270a473e5140cc74e2"
+    },
+    {
+      "name": "16-texto-10MiB.txt",
+      "bytes": 10485760,
+      "sha256": "ab3ff9446627f62f1542d9caa143ce2853ffbaf03329c90c21ac953148bdde81"
+    },
+    {
+      "name": "15-texto-11MiB.txt",
+      "bytes": 11534336,
+      "sha256": "c88d8e1cb7dd89d75ff537e04a0447d1493f1b6db8aa9c523c9cb165c87a76ef"
+    },
+    {
+      "name": "07-activo.svg",
+      "bytes": 97,
+      "sha256": "bee1e022f6b48d3f30500bf924fe8694a94a1d6f417cd5b673ac4ea36eb312c4"
+    },
+    {
+      "name": "06-activo.html",
+      "bytes": 74,
+      "sha256": "dc0a512a8c8c549a42de74e3dc86248f4046f25db3cee8bdebc4f33961261bcd"
+    },
+    {
+      "name": "05-mime-falso.png",
+      "bytes": 38,
+      "sha256": "fa748ec2dc73dc17f46fce38f44819ec859abb3e8157a6147291a856c4f94228"
+    },
+    {
+      "name": "09-supera-limite.png",
+      "bytes": 26214401,
+      "sha256": "db418ab7a612ad0efad3688d25a19a96ec78489901a6921bbf5cbab8a762274c"
+    },
+    {
+      "name": "01-imagen.png",
+      "bytes": 68,
+      "sha256": "cbcd8e1d517ee2a94209c6174f5b66190e33f2dbf03a90897d9efd993fb0b580"
+    },
+    {
+      "name": "08-limite-exacto.png",
+      "bytes": 26214400,
+      "sha256": "e1982588bcfd4cfade1f939152e954885316b2b83ad8c89dcb6f0a08f0a07b25"
+    }
+  ]
+}

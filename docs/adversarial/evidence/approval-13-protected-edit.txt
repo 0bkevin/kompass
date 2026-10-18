@@ -1,0 +1,6 @@
+{
+  "http": 409,
+  "body": {
+    "error": "Los cambios de contenido requieren volver a borrador o revisión para renovar la aprobación."
+  }
+}

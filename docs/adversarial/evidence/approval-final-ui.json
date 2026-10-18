@@ -1,0 +1,16 @@
+{
+  "url": "http://127.0.0.23:4113/studio/6e62e922-1e78-40e7-a369-b694eea0365d",
+  "visibleText": "Saltar al contenido\n30X\nRADAR\nQ\nCambiar de marca\nQA Approval sintética\nEspacio de trabajo\nCrear otra marca\nInicio\nAudiencia\nOportunidades\nContenido\nCalendario\nResultados\nEmpresa y contenido\nMás herramientas\nFuentes y equipo\nQ\nQA Approval owner\nAdministrador\nQA Approval sintética\n/\nContenido\nAgregar referencia\nTodas las piezas\nQA Approval · pieza sintética\nProgramado\nActualizado Ahora\nEstructura local\nExportar\nGuardar cambios\nGuion y enfoque\nRecursos\nComentarios (7)\nTítulo de trabajo\nCanal\nlinkedin\ninstagram\ntiktok\nyoutube\ntelegram\nAudiencia\nGeneral\nAudiencia sintética\nGancho · la primera razón para quedarse\nGuion o cuerpo del contenido\nCaption o texto de acompañamiento\nLlamado a la acción\nResponsable\nSin asignar\nQA Approval editor\nQA Approval owner\nQA Approval reviewer\nVISTA PREVIA DEL TEXTO\nQ\nQA Approval sintética\nlinkedin · Programado\nGancho QA v1: aprobación exacta\n\nTexto sintético v4 editado tras aprobación. Requiere nueva aprobación.\n\nComenta tu criterio QA\n\nEl siguiente paso\n\nEsta pieza está incluida en la grilla. El calendario organiza; no publica automáticamente.\n\nVer en la grilla\n30X Radar · Hecho para encontrar tu próximo ángulo.\nLas señales tienen contexto. Las decisiones son tuyas.",
+  "network": [
+    {
+      "url": "http://127.0.0.23:4113/api/session",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.23:4113/api/brands/08454cb1-593b-45e5-bff7-afa58f58684f/state",
+      "method": "GET",
+      "status": 200
+    }
+  ]
+}

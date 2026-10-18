@@ -1,0 +1,757 @@
+{
+  "synthetic": true,
+  "scope": "Only own temporary DB; no provider integration or weeks of elapsed observation",
+  "baseUrl": "http://127.0.0.19:4109",
+  "brandId": "e98c4fa7-7661-489b-b7ab-59979c452988",
+  "session": {
+    "pid": 3852545,
+    "execSessionId": 69217,
+    "tabId": "tab_3u_07e54779-9ab2-4979-8a15-674c4eff160a"
+  },
+  "cold": {
+    "coverage": {
+      "references": 6,
+      "sources": 2,
+      "activeSources": 2,
+      "errors": [],
+      "hasHistory": false,
+      "notes": [
+        "Cobertura limitada a las fuentes configuradas y el material que el equipo aportó. No representa todas las redes ni toda la audiencia.",
+        "Los segmentos y necesidades son declarados por la empresa; las coincidencias son hipótesis editoriales, no perfiles ni consumidores observados.",
+        "Todavía no hay dos ventanas históricas comparables. Las oportunidades no se presentan como tendencias crecientes.",
+        "Las referencias de demostración se excluyeron de los resultados reales."
+      ]
+    },
+    "opportunities": [
+      {
+        "title": "EMBUDO EdTech",
+        "referenceIds": [
+          "qa-sales-2",
+          "qa-sales-1"
+        ],
+        "segmentIds": [
+          "sales-edtech"
+        ],
+        "relevance": 54,
+        "growth": {
+          "label": "insufficient",
+          "explanation": "Faltan dos observaciones comparables: ventanas de 7 días, mismas fuentes y consultas, separadas por al menos una semana. Una sola consulta no demuestra crecimiento."
+        },
+        "evidence": [
+          {
+            "referenceId": "qa-sales-2",
+            "title": "Seguimiento educativo de demos comerciales",
+            "url": "https://example.com/edtech/followup",
+            "source": "HN sintético del laboratorio",
+            "observedAt": "2026-10-18T02:02:26.292657Z",
+            "detail": "Texto disponible para comparación editorial. HN sintético del laboratorio reporta 3 comentarios, 20 puntos para esta publicación; no se comparan ni suman con otras redes."
+          },
+          {
+            "referenceId": "qa-sales-1",
+            "title": "Cerrar demos EdTech con diagnóstico comercial",
+            "url": "https://example.com/edtech/funnel",
+            "source": "RSS sintético del laboratorio",
+            "observedAt": "2026-10-18T02:02:26.292657Z",
+            "detail": "Texto disponible para comparación editorial. RSS sintético del laboratorio reporta 100 vistas, 4 me gusta, 2 comentarios para esta publicación; no se comparan ni suman con otras redes."
+          }
+        ]
+      },
+      {
+        "title": "Coordinación aplicada",
+        "referenceIds": [
+          "qa-shared-1"
+        ],
+        "segmentIds": [
+          "sales-edtech",
+          "health-ops"
+        ],
+        "relevance": 51,
+        "growth": {
+          "label": "insufficient",
+          "explanation": "Faltan dos observaciones comparables: ventanas de 7 días, mismas fuentes y consultas, separadas por al menos una semana. Una sola consulta no demuestra crecimiento."
+        },
+        "evidence": [
+          {
+            "referenceId": "qa-shared-1",
+            "title": "Demos EdTech y turnos de pacientes",
+            "url": "https://example.com/shared",
+            "source": "RSS sintético del laboratorio",
+            "observedAt": "2026-10-18T02:02:26.292657Z",
+            "detail": "Texto disponible para comparación editorial. Sin métricas verificadas de rendimiento."
+          }
+        ]
+      },
+      {
+        "title": "Turnos clínicos",
+        "referenceIds": [
+          "qa-health-1"
+        ],
+        "segmentIds": [
+          "health-ops"
+        ],
+        "relevance": 51,
+        "growth": {
+          "label": "insufficient",
+          "explanation": "Faltan dos observaciones comparables: ventanas de 7 días, mismas fuentes y consultas, separadas por al menos una semana. Una sola consulta no demuestra crecimiento."
+        },
+        "evidence": [
+          {
+            "referenceId": "qa-health-1",
+            "title": "Organizar turnos y admisión clínica",
+            "url": "https://example.com/health/triage",
+            "source": "RSS sintético del laboratorio",
+            "observedAt": "2026-10-18T02:02:26.292657Z",
+            "detail": "Texto disponible para comparación editorial. RSS sintético del laboratorio reporta 200 vistas, 20 me gusta para esta publicación; no se comparan ni suman con otras redes."
+          }
+        ]
+      },
+      {
+        "title": "Astrofotografía lunar",
+        "referenceIds": [
+          "qa-unrelated-1"
+        ],
+        "segmentIds": [],
+        "relevance": 10,
+        "growth": {
+          "label": "insufficient",
+          "explanation": "Faltan dos observaciones comparables: ventanas de 7 días, mismas fuentes y consultas, separadas por al menos una semana. Una sola consulta no demuestra crecimiento."
+        },
+        "evidence": [
+          {
+            "referenceId": "qa-unrelated-1",
+            "title": "Telescopios y cráteres lunares",
+            "url": "https://example.com/moon",
+            "source": "RSS sintético del laboratorio",
+            "observedAt": "2026-10-18T02:02:26.292657Z",
+            "detail": "Texto disponible para comparación editorial. RSS sintético del laboratorio reporta 999999999 vistas, 900000 me gusta para esta publicación; no se comparan ni suman con otras redes."
+          }
+        ]
+      }
+    ]
+  },
+  "duplicate": {
+    "coverage": {
+      "references": 8,
+      "sources": 2,
+      "activeSources": 2,
+      "errors": [],
+      "hasHistory": false,
+      "notes": [
+        "Cobertura limitada a las fuentes configuradas y el material que el equipo aportó. No representa todas las redes ni toda la audiencia.",
+        "Los segmentos y necesidades son declarados por la empresa; las coincidencias son hipótesis editoriales, no perfiles ni consumidores observados.",
+        "Todavía no hay dos ventanas históricas comparables. Las oportunidades no se presentan como tendencias crecientes.",
+        "Las referencias de demostración se excluyeron de los resultados reales."
+      ]
+    },
+    "opportunities": [
+      {
+        "id": "opportunity-c53340f81807198c5cc4a18c",
+        "title": "Ventas EdTech",
+        "referenceIds": [
+          "dd3acfc7-b970-4c39-b5ef-82ccbb97ac14",
+          "5648e52e-e478-4b56-9636-dd72237e288c"
+        ],
+        "segmentIds": [
+          "sales-edtech"
+        ],
+        "relevance": 57,
+        "confidence": "low",
+        "reasons": [
+          "2 referencias disponibles sobre este tema en el material de esta empresa.",
+          "Hipótesis de pertinencia para Ventas EdTech: coincide con la necesidad declarada «Cerrar demos EdTech con diagnóstico del embudo comercial y seguimiento educativo» (cerrar, demos, edtech, diagnostico, embudo, comercial, seguimiento, educativo, concept_sales). No demuestra consumo ni afinidad de personas.",
+          "Prioridad editorial por coincidencias de texto; no es probabilidad de éxito ni una clasificación de rendimiento.",
+          "Aprendizaje editorial pendiente: hacen falta al menos 3 publicaciones propias de este tema y 3 de otros temas del mismo segmento, canal, formato y ventana aproximada de medición. Sin esa muestra no se ajusta la prioridad por resultados."
+        ],
+        "evidence": [
+          {
+            "referenceId": "dd3acfc7-b970-4c39-b5ef-82ccbb97ac14",
+            "title": "Cerrar demos EdTech con diagnóstico comercial",
+            "url": "https://example.com/edtech/funnel",
+            "source": "Equipo",
+            "observedAt": "2026-10-18T02:03:24.239Z",
+            "detail": "Texto disponible para comparación editorial. Sin métricas verificadas de rendimiento."
+          },
+          {
+            "referenceId": "5648e52e-e478-4b56-9636-dd72237e288c",
+            "title": "Cerrar demos EdTech con diagnóstico comercial",
+            "url": "https://example.com/edtech/funnel",
+            "source": "Equipo",
+            "observedAt": "2026-10-18T02:03:18.090Z",
+            "detail": "Texto disponible para comparación editorial. Sin métricas verificadas de rendimiento."
+          }
+        ],
+        "growth": {
+          "label": "insufficient",
+          "explanation": "Faltan dos observaciones comparables: ventanas de 7 días, mismas fuentes y consultas, separadas por al menos una semana. Una sola consulta no demuestra crecimiento."
+        }
+      },
+      {
+        "id": "opportunity-bee12adbc031e09f0a4a543d",
+        "title": "EMBUDO EdTech",
+        "referenceIds": [
+          "qa-sales-2",
+          "qa-sales-1"
+        ],
+        "segmentIds": [
+          "sales-edtech"
+        ],
+        "relevance": 54,
+        "confidence": "low",
+        "reasons": [
+          "2 referencias disponibles sobre este tema en el material de esta empresa.",
+          "Hipótesis de pertinencia para Ventas EdTech: coincide con la necesidad declarada «Cerrar demos EdTech con diagnóstico del embudo comercial y seguimiento educativo» (cerrar, demos, edtech, diagnostico, embudo, comercial, seguimiento, educativo, concept_sales). No demuestra consumo ni afinidad de personas.",
+          "Prioridad editorial por coincidencias de texto; no es probabilidad de éxito ni una clasificación de rendimiento.",
+          "Aprendizaje editorial pendiente: hacen falta al menos 3 publicaciones propias de este tema y 3 de otros temas del mismo segmento, canal, formato y ventana aproximada de medición. Sin esa muestra no se ajusta la prioridad por resultados."
+        ],
+        "evidence": [
+          {
+            "referenceId": "qa-sales-2",
+            "title": "Seguimiento educativo de demos comerciales",
+            "url": "https://example.com/edtech/followup",
+            "source": "HN sintético del laboratorio",
+            "observedAt": "2026-10-18T02:02:26.292657Z",
+            "detail": "Texto disponible para comparación editorial. HN sintético del laboratorio reporta 3 comentarios, 20 puntos para esta publicación; no se comparan ni suman con otras redes."
+          },
+          {
+            "referenceId": "qa-sales-1",
+            "title": "Cerrar demos EdTech con diagnóstico comercial",
+            "url": "https://example.com/edtech/funnel",
+            "source": "RSS sintético del laboratorio",
+            "observedAt": "2026-10-18T02:02:26.292657Z",
+            "detail": "Texto disponible para comparación editorial. RSS sintético del laboratorio reporta 100 vistas, 4 me gusta, 2 comentarios para esta publicación; no se comparan ni suman con otras redes."
+          }
+        ],
+        "growth": {
+          "label": "insufficient",
+          "explanation": "Faltan dos observaciones comparables: ventanas de 7 días, mismas fuentes y consultas, separadas por al menos una semana. Una sola consulta no demuestra crecimiento."
+        }
+      },
+      {
+        "id": "opportunity-c84ffb7e02799c6a2210775f",
+        "title": "Coordinación aplicada",
+        "referenceIds": [
+          "qa-shared-1"
+        ],
+        "segmentIds": [
+          "sales-edtech",
+          "health-ops"
+        ],
+        "relevance": 51,
+        "confidence": "low",
+        "reasons": [
+          "1 referencia disponible sobre este tema en el material de esta empresa.",
+          "Hipótesis de pertinencia para Ventas EdTech: coincide con la necesidad declarada «Cerrar demos EdTech con diagnóstico del embudo comercial y seguimiento educativo» (cerrar, demos, edtech, embudo, comercial, seguimiento, educativo, concept_sales). No demuestra consumo ni afinidad de personas.",
+          "Hipótesis de pertinencia para Operaciones salud: coincide con la necesidad declarada «Organizar turnos de pacientes con admisión clínica y espera asistencial» (organizar, turnos, pacientes, admision, clinica, espera, asistencial). No demuestra consumo ni afinidad de personas.",
+          "Prioridad editorial por coincidencias de texto; no es probabilidad de éxito ni una clasificación de rendimiento.",
+          "Aprendizaje editorial pendiente: hacen falta al menos 3 publicaciones propias de este tema y 3 de otros temas del mismo segmento, canal, formato y ventana aproximada de medición. Sin esa muestra no se ajusta la prioridad por resultados."
+        ],
+        "evidence": [
+          {
+            "referenceId": "qa-shared-1",
+            "title": "Demos EdTech y turnos de pacientes",
+            "url": "https://example.com/shared",
+            "source": "RSS sintético del laboratorio",
+            "observedAt": "2026-10-18T02:02:26.292657Z",
+            "detail": "Texto disponible para comparación editorial. Sin métricas verificadas de rendimiento."
+          }
+        ],
+        "growth": {
+          "label": "insufficient",
+          "explanation": "Faltan dos observaciones comparables: ventanas de 7 días, mismas fuentes y consultas, separadas por al menos una semana. Una sola consulta no demuestra crecimiento."
+        }
+      },
+      {
+        "id": "opportunity-29a2172422370ea2ce717114",
+        "title": "Turnos clínicos",
+        "referenceIds": [
+          "qa-health-1"
+        ],
+        "segmentIds": [
+          "health-ops"
+        ],
+        "relevance": 51,
+        "confidence": "low",
+        "reasons": [
+          "1 referencia disponible sobre este tema en el material de esta empresa.",
+          "Hipótesis de pertinencia para Operaciones salud: coincide con la necesidad declarada «Organizar turnos de pacientes con admisión clínica y espera asistencial» (organizar, turnos, pacientes, admision, clinica, espera, asistencial). No demuestra consumo ni afinidad de personas.",
+          "Prioridad editorial por coincidencias de texto; no es probabilidad de éxito ni una clasificación de rendimiento.",
+          "Aprendizaje editorial pendiente: hacen falta al menos 3 publicaciones propias de este tema y 3 de otros temas del mismo segmento, canal, formato y ventana aproximada de medición. Sin esa muestra no se ajusta la prioridad por resultados."
+        ],
+        "evidence": [
+          {
+            "referenceId": "qa-health-1",
+            "title": "Organizar turnos y admisión clínica",
+            "url": "https://example.com/health/triage",
+            "source": "RSS sintético del laboratorio",
+            "observedAt": "2026-10-18T02:02:26.292657Z",
+            "detail": "Texto disponible para comparación editorial. RSS sintético del laboratorio reporta 200 vistas, 20 me gusta para esta publicación; no se comparan ni suman con otras redes."
+          }
+        ],
+        "growth": {
+          "label": "insufficient",
+          "explanation": "Faltan dos observaciones comparables: ventanas de 7 días, mismas fuentes y consultas, separadas por al menos una semana. Una sola consulta no demuestra crecimiento."
+        }
+      },
+      {
+        "id": "opportunity-cd087f862e19c1b3949d7602",
+        "title": "Astrofotografía lunar",
+        "referenceIds": [
+          "qa-unrelated-1"
+        ],
+        "segmentIds": [],
+        "relevance": 10,
+        "confidence": "low",
+        "reasons": [
+          "1 referencia disponible sobre este tema en el material de esta empresa.",
+          "No hay coincidencias suficientes con necesidades de un segmento. Revisa la pertinencia antes de producir.",
+          "Prioridad editorial por coincidencias de texto; no es probabilidad de éxito ni una clasificación de rendimiento.",
+          "Aprendizaje editorial pendiente: hacen falta al menos 3 publicaciones propias de este tema y 3 de otros temas del mismo segmento, canal, formato y ventana aproximada de medición. Sin esa muestra no se ajusta la prioridad por resultados."
+        ],
+        "evidence": [
+          {
+            "referenceId": "qa-unrelated-1",
+            "title": "Telescopios y cráteres lunares",
+            "url": "https://example.com/moon",
+            "source": "RSS sintético del laboratorio",
+            "observedAt": "2026-10-18T02:02:26.292657Z",
+            "detail": "Texto disponible para comparación editorial. RSS sintético del laboratorio reporta 999999999 vistas, 900000 me gusta para esta publicación; no se comparan ni suman con otras redes."
+          }
+        ],
+        "growth": {
+          "label": "insufficient",
+          "explanation": "Faltan dos observaciones comparables: ventanas de 7 días, mismas fuentes y consultas, separadas por al menos una semana. Una sola consulta no demuestra crecimiento."
+        }
+      }
+    ]
+  },
+  "history": {
+    "single": {
+      "hasHistory": false,
+      "opportunities": [
+        {
+          "title": "Ventas EdTech",
+          "growth": {
+            "label": "insufficient",
+            "explanation": "Faltan dos observaciones comparables: ventanas de 7 días, mismas fuentes y consultas, separadas por al menos una semana. Una sola consulta no demuestra crecimiento."
+          }
+        },
+        {
+          "title": "EMBUDO EdTech",
+          "growth": {
+            "label": "insufficient",
+            "explanation": "Faltan dos observaciones comparables: ventanas de 7 días, mismas fuentes y consultas, separadas por al menos una semana. Una sola consulta no demuestra crecimiento."
+          }
+        },
+        {
+          "title": "Coordinación aplicada",
+          "growth": {
+            "label": "insufficient",
+            "explanation": "Faltan dos observaciones comparables: ventanas de 7 días, mismas fuentes y consultas, separadas por al menos una semana. Una sola consulta no demuestra crecimiento."
+          }
+        },
+        {
+          "title": "Turnos clínicos",
+          "growth": {
+            "label": "insufficient",
+            "explanation": "Faltan dos observaciones comparables: ventanas de 7 días, mismas fuentes y consultas, separadas por al menos una semana. Una sola consulta no demuestra crecimiento."
+          }
+        },
+        {
+          "title": "Astrofotografía lunar",
+          "growth": {
+            "label": "insufficient",
+            "explanation": "Faltan dos observaciones comparables: ventanas de 7 días, mismas fuentes y consultas, separadas por al menos una semana. Una sola consulta no demuestra crecimiento."
+          }
+        }
+      ]
+    },
+    "different-scope": {
+      "hasHistory": false,
+      "opportunities": [
+        {
+          "title": "Ventas EdTech",
+          "growth": {
+            "label": "insufficient",
+            "explanation": "Faltan dos observaciones comparables: ventanas de 7 días, mismas fuentes y consultas, separadas por al menos una semana. Una sola consulta no demuestra crecimiento."
+          }
+        },
+        {
+          "title": "EMBUDO EdTech",
+          "growth": {
+            "label": "insufficient",
+            "explanation": "Faltan dos observaciones comparables: ventanas de 7 días, mismas fuentes y consultas, separadas por al menos una semana. Una sola consulta no demuestra crecimiento."
+          }
+        },
+        {
+          "title": "Coordinación aplicada",
+          "growth": {
+            "label": "insufficient",
+            "explanation": "Faltan dos observaciones comparables: ventanas de 7 días, mismas fuentes y consultas, separadas por al menos una semana. Una sola consulta no demuestra crecimiento."
+          }
+        },
+        {
+          "title": "Turnos clínicos",
+          "growth": {
+            "label": "insufficient",
+            "explanation": "Faltan dos observaciones comparables: ventanas de 7 días, mismas fuentes y consultas, separadas por al menos una semana. Una sola consulta no demuestra crecimiento."
+          }
+        },
+        {
+          "title": "Astrofotografía lunar",
+          "growth": {
+            "label": "insufficient",
+            "explanation": "Faltan dos observaciones comparables: ventanas de 7 días, mismas fuentes y consultas, separadas por al menos una semana. Una sola consulta no demuestra crecimiento."
+          }
+        }
+      ]
+    },
+    "wrong-window": {
+      "hasHistory": false,
+      "opportunities": [
+        {
+          "title": "Ventas EdTech",
+          "growth": {
+            "label": "insufficient",
+            "explanation": "Faltan dos observaciones comparables: ventanas de 7 días, mismas fuentes y consultas, separadas por al menos una semana. Una sola consulta no demuestra crecimiento."
+          }
+        },
+        {
+          "title": "EMBUDO EdTech",
+          "growth": {
+            "label": "insufficient",
+            "explanation": "Faltan dos observaciones comparables: ventanas de 7 días, mismas fuentes y consultas, separadas por al menos una semana. Una sola consulta no demuestra crecimiento."
+          }
+        },
+        {
+          "title": "Coordinación aplicada",
+          "growth": {
+            "label": "insufficient",
+            "explanation": "Faltan dos observaciones comparables: ventanas de 7 días, mismas fuentes y consultas, separadas por al menos una semana. Una sola consulta no demuestra crecimiento."
+          }
+        },
+        {
+          "title": "Turnos clínicos",
+          "growth": {
+            "label": "insufficient",
+            "explanation": "Faltan dos observaciones comparables: ventanas de 7 días, mismas fuentes y consultas, separadas por al menos una semana. Una sola consulta no demuestra crecimiento."
+          }
+        },
+        {
+          "title": "Astrofotografía lunar",
+          "growth": {
+            "label": "insufficient",
+            "explanation": "Faltan dos observaciones comparables: ventanas de 7 días, mismas fuentes y consultas, separadas por al menos una semana. Una sola consulta no demuestra crecimiento."
+          }
+        }
+      ]
+    },
+    "comparable": {
+      "hasHistory": true,
+      "opportunities": [
+        {
+          "title": "Ventas EdTech",
+          "growth": {
+            "label": "observed",
+            "explanation": "0 publicaciones fechadas en la ventana terminada el 2026-10-18, frente a 0 en la terminada el 2026-10-10; mismas 2 fuentes configuradas. No se observó aumento de frecuencia. No mide alcance, éxito ni una tendencia global."
+          }
+        },
+        {
+          "title": "EMBUDO EdTech",
+          "growth": {
+            "label": "observed",
+            "explanation": "4 publicaciones fechadas en la ventana terminada el 2026-10-18, frente a 1 en la terminada el 2026-10-10; mismas 2 fuentes configuradas. Aumentó la frecuencia en esta muestra. No mide alcance, éxito ni una tendencia global."
+          }
+        },
+        {
+          "title": "Coordinación aplicada",
+          "growth": {
+            "label": "early_signal",
+            "explanation": "2 publicaciones fechadas en la ventana terminada el 2026-10-18, frente a 0 en la terminada el 2026-10-10; mismas 2 fuentes configuradas. Aumento con una muestra pequeña; verificar en próximas observaciones. No mide alcance, éxito ni una tendencia global."
+          }
+        },
+        {
+          "title": "Turnos clínicos",
+          "growth": {
+            "label": "observed",
+            "explanation": "1 publicaciones fechadas en la ventana terminada el 2026-10-18, frente a 3 en la terminada el 2026-10-10; mismas 2 fuentes configuradas. No se observó aumento de frecuencia. No mide alcance, éxito ni una tendencia global."
+          }
+        },
+        {
+          "title": "Astrofotografía lunar",
+          "growth": {
+            "label": "observed",
+            "explanation": "1 publicaciones fechadas en la ventana terminada el 2026-10-18, frente a 1 en la terminada el 2026-10-10; mismas 2 fuentes configuradas. No se observó aumento de frecuencia. No mide alcance, éxito ni una tendencia global."
+          }
+        }
+      ]
+    },
+    "stale": {
+      "hasHistory": false,
+      "opportunities": [
+        {
+          "title": "Ventas EdTech",
+          "growth": {
+            "label": "insufficient",
+            "explanation": "Faltan dos observaciones comparables: ventanas de 7 días, mismas fuentes y consultas, separadas por al menos una semana. Una sola consulta no demuestra crecimiento."
+          }
+        },
+        {
+          "title": "EMBUDO EdTech",
+          "growth": {
+            "label": "insufficient",
+            "explanation": "Faltan dos observaciones comparables: ventanas de 7 días, mismas fuentes y consultas, separadas por al menos una semana. Una sola consulta no demuestra crecimiento."
+          }
+        },
+        {
+          "title": "Coordinación aplicada",
+          "growth": {
+            "label": "insufficient",
+            "explanation": "Faltan dos observaciones comparables: ventanas de 7 días, mismas fuentes y consultas, separadas por al menos una semana. Una sola consulta no demuestra crecimiento."
+          }
+        },
+        {
+          "title": "Turnos clínicos",
+          "growth": {
+            "label": "insufficient",
+            "explanation": "Faltan dos observaciones comparables: ventanas de 7 días, mismas fuentes y consultas, separadas por al menos una semana. Una sola consulta no demuestra crecimiento."
+          }
+        },
+        {
+          "title": "Astrofotografía lunar",
+          "growth": {
+            "label": "insufficient",
+            "explanation": "Faltan dos observaciones comparables: ventanas de 7 días, mismas fuentes y consultas, separadas por al menos una semana. Una sola consulta no demuestra crecimiento."
+          }
+        }
+      ]
+    }
+  },
+  "priorityEditorial": {
+    "status": 201,
+    "signal": {
+      "segmentId": "health-ops",
+      "topic": "Turnos clínicos",
+      "note": "Hipótesis editorial sintética para contraste de prioridad.",
+      "sourceType": "editorial",
+      "id": "91c6593d-f9e7-4e15-9a41-ff8da6718c29",
+      "createdAt": "2026-10-18T02:05:01.300Z",
+      "updatedAt": "2026-10-18T02:05:01.300Z"
+    },
+    "scores": [
+      {
+        "title": "Ventas EdTech",
+        "relevance": 57,
+        "segmentIds": [
+          "sales-edtech"
+        ],
+        "reasons": []
+      },
+      {
+        "title": "Coordinación aplicada",
+        "relevance": 54,
+        "segmentIds": [
+          "sales-edtech",
+          "health-ops"
+        ],
+        "reasons": [
+          "Hipótesis de pertinencia para Operaciones salud: coincide con la necesidad declarada «Organizar turnos de pacientes con admisión clínica y espera asistencial» (organizar, turnos, pacientes, admision, clinica, espera, asistencial); hay 0 observaciones públicas y 1 hipótesis editoriales de contraste; la evidencia pública tiene mayor peso. No demuestra consumo ni afinidad de personas."
+        ]
+      },
+      {
+        "title": "EMBUDO EdTech",
+        "relevance": 54,
+        "segmentIds": [
+          "sales-edtech"
+        ],
+        "reasons": []
+      },
+      {
+        "title": "Turnos clínicos",
+        "relevance": 54,
+        "segmentIds": [
+          "health-ops"
+        ],
+        "reasons": [
+          "Hipótesis de pertinencia para Operaciones salud: coincide con la necesidad declarada «Organizar turnos de pacientes con admisión clínica y espera asistencial» (organizar, turnos, pacientes, admision, clinica, espera, asistencial); hay 0 observaciones públicas y 1 hipótesis editoriales de contraste; la evidencia pública tiene mayor peso. No demuestra consumo ni afinidad de personas."
+        ]
+      },
+      {
+        "title": "Astrofotografía lunar",
+        "relevance": 10,
+        "segmentIds": [],
+        "reasons": []
+      }
+    ]
+  },
+  "priorityPublic": {
+    "status": 201,
+    "signal": {
+      "segmentId": "health-ops",
+      "topic": "Turnos clínicos",
+      "note": "Observación pública sintética de pacientes y admisión, sin datos personales.",
+      "sourceType": "public_content",
+      "sourceUrl": "https://example.com/health/triage",
+      "sampleSize": 10,
+      "id": "6ce6494a-1e9c-4e63-94c2-b470565d1051",
+      "createdAt": "2026-10-18T02:05:01.522Z",
+      "updatedAt": "2026-10-18T02:05:01.522Z"
+    },
+    "scores": [
+      {
+        "title": "Coordinación aplicada",
+        "relevance": 60,
+        "segmentIds": [
+          "health-ops",
+          "sales-edtech"
+        ],
+        "reasons": [
+          "Hipótesis de pertinencia para Operaciones salud: coincide con la necesidad declarada «Organizar turnos de pacientes con admisión clínica y espera asistencial» (organizar, turnos, pacientes, admision, clinica, espera, asistencial); hay 1 observaciones públicas y 0 hipótesis editoriales de contraste; la evidencia pública tiene mayor peso. No demuestra consumo ni afinidad de personas."
+        ]
+      },
+      {
+        "title": "Turnos clínicos",
+        "relevance": 60,
+        "segmentIds": [
+          "health-ops"
+        ],
+        "reasons": [
+          "Hipótesis de pertinencia para Operaciones salud: coincide con la necesidad declarada «Organizar turnos de pacientes con admisión clínica y espera asistencial» (organizar, turnos, pacientes, admision, clinica, espera, asistencial); hay 1 observaciones públicas y 0 hipótesis editoriales de contraste; la evidencia pública tiene mayor peso. No demuestra consumo ni afinidad de personas."
+        ]
+      },
+      {
+        "title": "Ventas EdTech",
+        "relevance": 57,
+        "segmentIds": [
+          "sales-edtech"
+        ],
+        "reasons": []
+      },
+      {
+        "title": "EMBUDO EdTech",
+        "relevance": 54,
+        "segmentIds": [
+          "sales-edtech"
+        ],
+        "reasons": []
+      },
+      {
+        "title": "Astrofotografía lunar",
+        "relevance": 10,
+        "segmentIds": [],
+        "reasons": []
+      }
+    ]
+  },
+  "cta": {
+    "url": "http://127.0.0.19:4109/studio/c4822a68-559e-4971-8e70-71307512d43f",
+    "pieces": [
+      {
+        "id": "c4822a68-559e-4971-8e70-71307512d43f",
+        "title": "Demos EdTech y turnos de pacientes",
+        "referenceId": "qa-shared-1",
+        "segmentId": "health-ops",
+        "format": "carousel",
+        "channel": "instagram",
+        "status": "draft"
+      }
+    ]
+  },
+  "demo": {
+    "opportunities": [
+      {
+        "title": "Ejemplo ilustrativo controlado",
+        "isDemo": true,
+        "growth": {
+          "label": "insufficient",
+          "explanation": "Ejemplo ilustrativo: no representa crecimiento observado."
+        },
+        "referenceIds": [
+          "qa-demo-only"
+        ],
+        "segmentIds": [
+          "sales-edtech"
+        ]
+      }
+    ],
+    "coverage": {
+      "references": 1,
+      "sources": 0,
+      "activeSources": 0,
+      "errors": [],
+      "hasHistory": false,
+      "notes": [
+        "Cobertura limitada a las fuentes configuradas y el material que el equipo aportó. No representa todas las redes ni toda la audiencia.",
+        "Los segmentos y necesidades son declarados por la empresa; las coincidencias son hipótesis editoriales, no perfiles ni consumidores observados.",
+        "No hay fuentes activas. Configura una fuente o añade referencias públicas para comenzar.",
+        "Todavía no hay dos ventanas históricas comparables. Las oportunidades no se presentan como tendencias crecientes.",
+        "Todas las oportunidades de este espacio son ejemplos de demostración."
+      ]
+    }
+  },
+  "youtubeFixture": {
+    "synthetic": true,
+    "notes": "Fixture included an unsupported metrics.score and deliberately incorrect prior analysis.segmentIds and brandRelevance; supported provider origin for metrics.score was not demonstrated. Only native evidence, growth and affinity are claimed validated here.",
+    "title": "Aprendizaje comercial en video",
+    "segmentIds": [
+      "sales-edtech"
+    ],
+    "relevance": 54,
+    "growth": {
+      "label": "insufficient",
+      "explanation": "Las métricas nativas de YouTube se muestran por video; no se convierten en una puntuación ni una tendencia de rendimiento."
+    },
+    "evidence": [
+      {
+        "referenceId": "qa-yt-only",
+        "title": "Cerrar demos EdTech en video sintético",
+        "url": "https://www.youtube.com/watch?v=syntheticQA",
+        "source": "YouTube Data API (simulado)",
+        "observedAt": "2026-10-18T02:05:21.228109Z",
+        "detail": "Solo título y metadatos disponibles; el contenido completo no fue observado. YouTube Data API (simulado) reporta 123 vistas, 7 me gusta, 1 comentarios para esta publicación; no se comparan ni suman con otras redes."
+      }
+    ],
+    "factors": [
+      {
+        "factor": "hook",
+        "label": "Gancho",
+        "observation": "Título disponible: «Cerrar demos EdTech en video sintético».",
+        "limitation": "El título o texto puede inspirar una hipótesis editorial; no hay una observación registrada de la apertura audiovisual ni evidencia de su efecto."
+      },
+      {
+        "factor": "format",
+        "label": "Formato",
+        "observation": "Formato registrado en los metadatos: video.",
+        "limitation": "La etiqueta del formato no confirma la estructura creativa, el montaje ni una ventaja de rendimiento."
+      },
+      {
+        "factor": "topic",
+        "label": "Tema",
+        "observation": "Agrupación editorial propuesta: «Aprendizaje comercial en video».",
+        "limitation": "Es una hipótesis para organizar contenido; no identifica intereses individuales, una categoría inferida de YouTube ni una tendencia comprobada."
+      },
+      {
+        "factor": "timing",
+        "label": "Momento",
+        "observation": "No hay una fecha de publicación verificable ni una primera detección registrada.",
+        "limitation": "Una fecha o detección aislada no demuestra que el horario haya causado resultados ni determina cuándo conviene publicar."
+      },
+      {
+        "factor": "publisher",
+        "label": "Publicador",
+        "observation": "La referencia no incluye atribución del autor, canal o medio original.",
+        "limitation": "La atribución no informa sobre seguidores, perfiles de audiencia, influencia ni cuánto aportó quien publicó al resultado."
+      },
+      {
+        "factor": "performance",
+        "label": "Rendimiento",
+        "observation": "Valores observados: 123 vistas, 7 likes, 1 comentarios, 99999999 puntos. Origen: origen no especificado. Observación: 2026-10-18T02:05:21.228Z.",
+        "limitation": "Las vistas, likes o puntos no demuestran éxito, afinidad ni causalidad. Sin dos observaciones comparables no se estima crecimiento. Las métricas de distintas redes no se suman ni se comparan como equivalentes."
+      }
+    ]
+  },
+  "filters": {
+    "sales": "Saltar al contenido\n30X\nRADAR\nL\nCambiar de marca\nLaboratorio de oportunidades\nEspacio de trabajo\nCrear otra marca\nInicio\nAudiencia\nOportunidades\nContenido\nCalendario\nResultados\nEmpresa y contenido\nMás herramientas\nFuentes y equipo\nQ\nQA Oportunidades\nAdministrador\nLaboratorio de oportunidades\n/\nOportunidades\nAgregar referencia\nOportunidades que tienen sentido para tu audiencia.\n\nEntiende la señal, comprueba la evidencia y decide qué convertir en contenido propio.\n\nDescubrir referencias\nAudiencia\nTodas las audiencias\nVentas EdTech\nOperaciones salud\nBuscar oportunidad\nActualizar\nIncluir señales sin relación identificada con mi audiencia\nSin historial suficiente\nPost · LinkedIn\nEMBUDO EdTech\n\nCrear un post original para Ventas EdTech: explicar una decisión sobre «EMBUDO EdTech», mostrar un ejemplo verificable de Servicios profesionales en Latinoamérica y cerrar con un paso aplicable. Usar el tono Claro y práctico; contrastar los hechos y aportar un ángulo propio antes de aprobar. El formato es una sugerencia editable, no una predicción.\n\nVentas EdTech\nEntender y crear\nSin historial suficiente\nPost · LinkedIn\nCoordinación aplicada\n\nCrear un post original para Ventas EdTech, Operaciones salud: explicar una decisión sobre «Coordinación aplicada», mostrar un ejemplo verificable de Servicios profesionales en Latinoamérica y cerrar con un paso aplicable. Usar el tono Claro y práctico; contrastar los hechos y aportar un ángulo propio antes de aprobar. El formato es una sugerencia editable, no una predicción.\n\nVentas EdTech\nOperaciones salud\nEntender y crear\n6 referencias · 2 fuentes activas\n30X Radar · Hecho para encontrar tu próximo ángulo.\nLas señales tienen contexto. Las decisiones son tuyas.",
+    "health": "Saltar al contenido\n30X\nRADAR\nL\nCambiar de marca\nLaboratorio de oportunidades\nEspacio de trabajo\nCrear otra marca\nInicio\nAudiencia\nOportunidades\nContenido\nCalendario\nResultados\nEmpresa y contenido\nMás herramientas\nFuentes y equipo\nQ\nQA Oportunidades\nAdministrador\nLaboratorio de oportunidades\n/\nOportunidades\nAgregar referencia\nOportunidades que tienen sentido para tu audiencia.\n\nEntiende la señal, comprueba la evidencia y decide qué convertir en contenido propio.\n\nDescubrir referencias\nAudiencia\nTodas las audiencias\nVentas EdTech\nOperaciones salud\nBuscar oportunidad\nActualizar\nIncluir señales sin relación identificada con mi audiencia\nSin historial suficiente\nPost · LinkedIn\nCoordinación aplicada\n\nCrear un post original para Ventas EdTech, Operaciones salud: explicar una decisión sobre «Coordinación aplicada», mostrar un ejemplo verificable de Servicios profesionales en Latinoamérica y cerrar con un paso aplicable. Usar el tono Claro y práctico; contrastar los hechos y aportar un ángulo propio antes de aprobar. El formato es una sugerencia editable, no una predicción.\n\nVentas EdTech\nOperaciones salud\nEntender y crear\nSin historial suficiente\nPost · LinkedIn\nTurnos clínicos\n\nCrear un post original para Operaciones salud: explicar una decisión sobre «Turnos clínicos», mostrar un ejemplo verificable de Servicios profesionales en Latinoamérica y cerrar con un paso aplicable. Usar el tono Claro y práctico; contrastar los hechos y aportar un ángulo propio antes de aprobar. El formato es una sugerencia editable, no una predicción.\n\nOperaciones salud\nEntender y crear\n6 referencias · 2 fuentes activas\n30X Radar · Hecho para encontrar tu próximo ángulo.\nLas señales tienen contexto. Las decisiones son tuyas.",
+    "searchTurnos": "Saltar al contenido\n30X\nRADAR\nL\nCambiar de marca\nLaboratorio de oportunidades\nEspacio de trabajo\nCrear otra marca\nInicio\nAudiencia\nOportunidades\nContenido\nCalendario\nResultados\nEmpresa y contenido\nMás herramientas\nFuentes y equipo\nQ\nQA Oportunidades\nAdministrador\nLaboratorio de oportunidades\n/\nOportunidades\nAgregar referencia\nOportunidades que tienen sentido para tu audiencia.\n\nEntiende la señal, comprueba la evidencia y decide qué convertir en contenido propio.\n\nDescubrir referencias\nAudiencia\nTodas las audiencias\nVentas EdTech\nOperaciones salud\nBuscar oportunidad\nActualizar\nIncluir señales sin relación identificada con mi audiencia\nSin historial suficiente\nPost · LinkedIn\nCoordinación aplicada\n\nCrear un post original para Ventas EdTech, Operaciones salud: explicar una decisión sobre «Coordinación aplicada», mostrar un ejemplo verificable de Servicios profesionales en Latinoamérica y cerrar con un paso aplicable. Usar el tono Claro y práctico; contrastar los hechos y aportar un ángulo propio antes de aprobar. El formato es una sugerencia editable, no una predicción.\n\nVentas EdTech\nOperaciones salud\nEntender y crear\nSin historial suficiente\nPost · LinkedIn\nTurnos clínicos\n\nCrear un post original para Operaciones salud: explicar una decisión sobre «Turnos clínicos», mostrar un ejemplo verificable de Servicios profesionales en Latinoamérica y cerrar con un paso aplicable. Usar el tono Claro y práctico; contrastar los hechos y aportar un ángulo propio antes de aprobar. El formato es una sugerencia editable, no una predicción.\n\nOperaciones salud\nEntender y crear\n6 referencias · 2 fuentes activas\n30X Radar · Hecho para encontrar tu próximo ángulo.\nLas señales tienen contexto. Las decisiones son tuyas."
+  }
+}

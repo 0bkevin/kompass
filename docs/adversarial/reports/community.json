@@ -1,0 +1,183 @@
+{
+  "feature": "Sensor comunitario: gestión y pregunta pública",
+  "slug": "community",
+  "url": "http://127.0.0.16:4106",
+  "status": "FAIL",
+  "cases": [
+    {
+      "name": "Crear encuesta por UI con opciones y grupos correctos",
+      "expected": "Crear exactamente una pregunta con 2 opciones y los 2 grupos de la empresa sintética.",
+      "actual": "UI creó la pregunta; API ySQLite contienen Automatizar ventas/Formar al equipo y Ventas sintéticas/Formación sintética con sus IDs correctos; total 0.",
+      "verdict": "PASS",
+      "evidence": [
+        "docs/adversarial/evidence/community-observations.json"
+      ]
+    },
+    {
+      "name": "Validación de creación vacía e inválida",
+      "expected": "Vacío, una opción, duplicados por mayúsculas y contacto rechazan sin crear encuestas.",
+      "actual": "Pregunta vacía detenida por required; servidor rechazó una opción, duplicados y pregunta con correo. Se conservó 1 encuesta. Error visible y cancelación disponibles.",
+      "verdict": "PASS",
+      "evidence": [
+        "docs/adversarial/evidence/community-invalid.png",
+        "docs/adversarial/evidence/community-observations.json"
+      ]
+    },
+    {
+      "name": "Enlace público y primera respuesta sin sesión",
+      "expected": "Sin sesión se permite elegir grupo/tema; submit vacío desactivado; respuesta 1 no expone desgloses.",
+      "actual": "Tras Cerrar sesión, /api/session devolvió user:null; UI pública habilitó envío sólo con grupo/tema. Respuesta 1: Ventas/Automatizar=1, resultados[], señales 0.",
+      "verdict": "PASS",
+      "evidence": [
+        "docs/adversarial/evidence/community-observations.json"
+      ]
+    },
+    {
+      "name": "Umbral por grupo a 4 y total global 8",
+      "expected": "Cuatro respuestas en cada grupo siguen sin desgloses ni señales aunque global 8.",
+      "actual": "Respuesta 4 de Ventas enviada por UI; fixtures propias llevaron Formación a 4. API total 8 y results[]; sin señales antes del quinto voto de Ventas.",
+      "verdict": "PASS",
+      "evidence": [
+        "docs/adversarial/evidence/community-observations.json"
+      ]
+    },
+    {
+      "name": "Quinta respuesta y ocultación del grupo insuficiente",
+      "expected": "Ventas 5 habilita sólo Ventas, con 3/5 y 2/5; Formación 4 sigue oculta.",
+      "actual": "Quinta de Ventas enviada por UI: tabla pública yAPI muestran exactamente 3/5 y 2/5. SQLite:3+2 en Ventas y 4 en Formación;2 señales únicamente de Ventas.",
+      "verdict": "PASS",
+      "evidence": [
+        "docs/adversarial/evidence/community-threshold-five.png",
+        "docs/adversarial/evidence/community-observations.json"
+      ]
+    },
+    {
+      "name": "Atribución exacta y señales de ambos grupos",
+      "expected": "ConFormación 5: filas 0/5 y 5/5; exactamente 3 señales no nulas y procedencia de encuesta.",
+      "actual": "API total 10; tabla recuperada por recarga coincide. Notas/UI/SQLite: Ventas 3/5,2/5 y Formación 5/5; señal community,aggregate=true, sampleSize 5 y pollId correctos. Cero votos no genera señal.",
+      "verdict": "PASS",
+      "evidence": [
+        "docs/adversarial/evidence/community-reloaded-ten.png",
+        "docs/adversarial/evidence/community-observations.json"
+      ]
+    },
+    {
+      "name": "Contadores sin registros personales del participante",
+      "expected": "Sólo contador por grupo/tema; cuerpo con email o campos extra rechazado.",
+      "actual": "SQLite guarda 3 celdas agregadas; no tabla de participantes. Campoemail devolvió 400 y texto sintético no apareció en records. Cuenta operadora permanece en autenticación separada.",
+      "verdict": "PASS",
+      "evidence": [
+        "docs/adversarial/evidence/community-observations.json"
+      ]
+    },
+    {
+      "name": "Cautelas sobre representatividad y repetición",
+      "expected": "No afirmar personas únicas ni muestra representativa; el reenvío tras recarga se entiende como respuesta voluntaria no verificada.",
+      "actual": "UI de gestión, pública y señales contienen cautelas explícitas. Misma sesión anónima pudo responder tras recarga; se contaron respuestas y ninguna UI afirmó identidades únicas.",
+      "verdict": "PASS",
+      "evidence": [
+        "docs/adversarial/evidence/community-threshold-five.png",
+        "docs/adversarial/evidence/community-paused.png",
+        "docs/adversarial/evidence/community-observations.json"
+      ]
+    },
+    {
+      "name": "Gestor abierto y botón Actualizar tras respuestas externas",
+      "expected": "Actualizar debe permitir comparar conteos y señales vigentes sin contradicciones en la misma vista.",
+      "actual": "API pasó 9→10 y apareció Formación; gestor siguió 9. Después API 11 conVentas 3/6,3/6; Actualizar renovó señales a 3/6 pero tabla siguiótotal 10 y 3/5,2/5. Recarga de documento recuperó datos.",
+      "verdict": "FAIL",
+      "evidence": [
+        "docs/adversarial/evidence/community-stale-nine.png",
+        "docs/adversarial/evidence/community-update-mismatch.png",
+        "docs/adversarial/evidence/community-reloaded-ten.png",
+        "docs/adversarial/evidence/community-observations.json"
+      ]
+    },
+    {
+      "name": "Pausa y reapertura por UI",
+      "expected": "Pausa persiste, conserva resultados, bloquea envío 409; Reabrir restablece recepción sin perder conteos.",
+      "actual": "Pausar UI produjo active=false; enlace anónimo recargado mostró pausa y tabla, sin formulario. POST 409 mantuvo total 10. Reabrir UI produjo active=true y siguiente respuesta fue 200,total 11.",
+      "verdict": "PASS",
+      "evidence": [
+        "docs/adversarial/evidence/community-paused.png",
+        "docs/adversarial/evidence/community-observations.json"
+      ]
+    },
+    {
+      "name": "Respuestas inválidas y administración anónima",
+      "expected": "Grupo/opción ajenos, faltantes, JSON nulo y campos personales no incrementan; gestión exige sesión.",
+      "actual": "Cinco solicitudes inválidas 400, total siguió 10. Tras logout, GET gestión/PATCH/DELETE devolvieron 401. No se guardaron datos del cuerpo rechazado.",
+      "verdict": "PASS",
+      "evidence": [
+        "docs/adversarial/evidence/community-observations.json"
+      ]
+    },
+    {
+      "name": "Eliminar, cancelar, confirmar y desaparición de señales",
+      "expected": "Cancelar conserva 1 encuesta; confirmar elimina encuesta y 3 señales; recarga deja vacío y enlace deja de funcionar.",
+      "actual": "Cancelación conservó 1,total 11. Confirmación UI: gestor vacío; tras recarga señales vacías; SQLite communityPolls 0/audienceSignals 0. GET/POST público 404.",
+      "verdict": "PASS",
+      "evidence": [
+        "docs/adversarial/evidence/community-deleted.png",
+        "docs/adversarial/evidence/community-observations.json"
+      ]
+    },
+    {
+      "name": "Estado de error público y reintento",
+      "expected": "Enlace borrado muestra error legible y reintento sin inventar resultados.",
+      "actual": "UI mostró No pudimos abrir esta pregunta / No se encontró esta pregunta / Reintentar; pulsarlo conservó 404 y estado legible.",
+      "verdict": "PASS",
+      "evidence": [
+        "docs/adversarial/evidence/community-deleted.png",
+        "docs/adversarial/evidence/community-observations.json"
+      ]
+    }
+  ],
+  "findings": [
+    {
+      "id": "community-1",
+      "severity": "P2",
+      "title": "El sensor mantiene conteos antiguos aunque Actualizar renueve sus señales",
+      "steps": [
+        "Crear pregunta sintética con dos grupos y dos opciones mediante la UI.",
+        "Acumular respuestas sintéticas hasta Ventas 5 (3/2) y Formación 4; abrir /audience y mantener el gestor montado.",
+        "Enviar quinta respuesta de Formación desde la API pública propia: API total 10, pero UI continúa total 9 y omite Formación.",
+        "Recargar documento: se recuperan total 10 y ambos grupos.",
+        "Abrir Señales y validación; enviar otra respuesta de Ventas/Formar al equipo (API total 11, Ventas 3/6 y 3/6).",
+        "Pulsar Actualizar en Qué respalda tus decisiones."
+      ],
+      "expected": "La acción visible para actualizar evidencia debe permitir que señales y resultados del sensor reflejen el mismo conjunto de respuestas, o el sensor debe tener una actualización explícita y fecha de consulta.",
+      "actual": "Las señales pasan a 3 respuestas de 6 pero la encuesta en la misma página continúa con total 10 y Ventas 3 de 5 y 2 de 5. Antes también permaneció en total 9 tras alcanzarse 5 en Formación. La recarga del documento recupera exactitud; no se observó pérdida en SQLite.",
+      "evidence": [
+        "docs/adversarial/evidence/community-update-mismatch.png",
+        "docs/adversarial/evidence/community-stale-nine.png",
+        "docs/adversarial/evidence/community-reloaded-ten.png",
+        "docs/adversarial/evidence/community-observations.json"
+      ],
+      "source": [
+        "src/features/Community.tsx:93",
+        "src/features/Community.tsx:107",
+        "src/features/Community.tsx:310",
+        "src/features/Journey.tsx:1885"
+      ]
+    }
+  ],
+  "limitations": [
+    "Sólo build existente servido por node server/start-host.mjs, sin rebuild, format ni cambios de implementación.",
+    "Datos enteramente sintéticos propios; cuenta operadora qa-community@example.com. No se usó demo ni proveedores ni personas reales.",
+    "Respuestas 1,4 y 5 deVentas se enviaron por UI; otras fueron fixtures/API pública propias, identificadas en observaciones.",
+    "No se probaron todos los roles, concurrencia, límite 60/10 min ni eliminación/cambio de grupos en el perfil; fuera del alcance asignado del sensor.",
+    "La ausencia de registros personales se verificó para tablas yrecords del sensor en esta base; no equivale a una auditoría integral de infraestructura o logs externos.",
+    "Se utilizó sólo tab_3 r y host 127.0.0.16. Se conserva /tmp/30 x-adversarial-community para reproducción; la encuesta se borró intencionalmente al probar su eliminación."
+  ],
+  "artifacts": [
+    "docs/adversarial/evidence/community-observations.json",
+    "docs/adversarial/evidence/community-invalid.png",
+    "docs/adversarial/evidence/community-threshold-five.png",
+    "docs/adversarial/evidence/community-stale-nine.png",
+    "docs/adversarial/evidence/community-reloaded-ten.png",
+    "docs/adversarial/evidence/community-paused.png",
+    "docs/adversarial/evidence/community-update-mismatch.png",
+    "docs/adversarial/evidence/community-deleted.png"
+  ]
+}

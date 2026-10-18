@@ -1,0 +1,6 @@
+{
+  "http": 409,
+  "body": {
+    "error": "Transición inválida: draft → scheduled. Primero envía la pieza a revisión y apruébala."
+  }
+}

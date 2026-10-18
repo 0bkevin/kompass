@@ -1,0 +1,223 @@
+{
+  "feature": "Equipo, roles e aislamiento",
+  "slug": "permissions",
+  "url": "http://127.0.0.29:4119",
+  "status": "PARTIAL",
+  "cases": [
+    {
+      "name": "Invitación de editor por enlace",
+      "expected": "Un propietario crea un enlace de un uso, válido siete días; B obtiene editor al aceptarlo.",
+      "actual": "UI creó invitación Editor y fecha de vencimiento a siete días. B aceptó el enlace completo por UI; session/state y recarga conservaron editor.",
+      "verdict": "PASS",
+      "evidence": [
+        "docs/adversarial/evidence/permissions-api.json"
+      ]
+    },
+    {
+      "name": "Invitación de revisor por enlace",
+      "expected": "El rol Revisor elegido por el owner se asigna al nuevo miembro.",
+      "actual": "Tras retirar B, A creó invitación Revisor por UI. B aceptó enlace completo; equipo y session mostraron reviewer. Sin mensajes externos.",
+      "verdict": "PASS",
+      "evidence": [
+        "docs/adversarial/evidence/permissions-api.json",
+        "docs/adversarial/evidence/permissions-reviewer-team.png"
+      ]
+    },
+    {
+      "name": "Invitación reutilizada",
+      "expected": "El enlace consumido debe rechazarse y no duplicar membresía.",
+      "actual": "Segundo intento UI devolvió invitación vencida/utilizada/no existe; miembros siguieron siendo dos y SQLite marcó un solo uso.",
+      "verdict": "PASS",
+      "evidence": [
+        "docs/adversarial/evidence/permissions-api.json"
+      ]
+    },
+    {
+      "name": "Invitación caducada",
+      "expected": "Un token vencido no crea membresía ni se consume.",
+      "actual": "Token sintético API con expires_at=1 en SQLite propia fue rechazado desde UI; permaneció sin usar.",
+      "verdict": "PASS",
+      "evidence": [
+        "docs/adversarial/evidence/permissions-api.json"
+      ]
+    },
+    {
+      "name": "Invitación vacía o inválida",
+      "expected": "Vacío no se envía y el token inválido ofrece error recuperable.",
+      "actual": "Aceptar deshabilitado en vacío; invalido produjo Pega un token o enlace de invitación válido. El campo permitió corregir y aceptar una invitación válida.",
+      "verdict": "PASS",
+      "evidence": [
+        "docs/adversarial/evidence/permissions-api.json"
+      ]
+    },
+    {
+      "name": "Roles de invitación no permitidos",
+      "expected": "Ni owner ni cadena vacía pueden emitirse como invitación.",
+      "actual": "API de propietario rechazó ambos roles con 400 Rol no es válido.",
+      "verdict": "PASS",
+      "evidence": [
+        "docs/adversarial/evidence/permissions-api.json"
+      ]
+    },
+    {
+      "name": "Copiar enlace: acción y mensaje",
+      "expected": "El botón debe completar la escritura y dar confirmación.",
+      "actual": "Dos clics UI mostraron Enlace copiado, sin errores de escritura observados.",
+      "verdict": "PASS",
+      "evidence": [
+        "docs/adversarial/evidence/permissions-api.json"
+      ]
+    },
+    {
+      "name": "Copiar enlace: lectura literal real",
+      "expected": "Comparar el texto realmente leído del portapapeles con el enlace mostrado.",
+      "actual": "navigator.clipboard.readText devolvió NotAllowedError: Read permission denied. No se verificó contenido literal global.",
+      "verdict": "BLOCKED",
+      "evidence": [
+        "docs/adversarial/evidence/permissions-api.json"
+      ]
+    },
+    {
+      "name": "Editor modifica por UI y persiste",
+      "expected": "Editor puede editar una pieza y guardar.",
+      "actual": "Cambió título por UI, GET confirmó el nuevo título y una recarga lo conservó.",
+      "verdict": "PASS",
+      "evidence": [
+        "docs/adversarial/evidence/permissions-api.json",
+        "docs/adversarial/evidence/permissions-editor.png"
+      ]
+    },
+    {
+      "name": "Editor no aprueba ni administra",
+      "expected": "Editor no aprueba, invita, cambia roles, retira miembros ni configura conectores/contexto.",
+      "actual": "Aprobar/Solicitar cambios deshabilitados; no controles de miembros en equipo. API devolvió 403 para review, invitations, miembros, brand, integrations y context/commit.",
+      "verdict": "PASS",
+      "evidence": [
+        "docs/adversarial/evidence/permissions-api.json"
+      ]
+    },
+    {
+      "name": "Reviewer lee, comenta y aprueba por UI",
+      "expected": "Revisor puede leer/comentar/aprobar la versión actual, con edición bloqueada.",
+      "actual": "Campos editoriales deshabilitados al recargar; comentario UI persistió; Aprobar cambió estado a approved y añadió comentario Aprobada.",
+      "verdict": "PASS",
+      "evidence": [
+        "docs/adversarial/evidence/permissions-api.json",
+        "docs/adversarial/evidence/permissions-reviewer-approval.png"
+      ]
+    },
+    {
+      "name": "Reviewer no crea ni modifica",
+      "expected": "Revisor no crea/edita piezas, archivos, señales, encuestas, resultados, contexto ni ejecuta IA.",
+      "actual": "API devolvió 403 para POST/PATCH pieces, assets, audience-signals, polls, outcome, draft/analyze, análisis de oportunidad, referencias y administración. Aprobación con versión inválida devolvió 409.",
+      "verdict": "PASS",
+      "evidence": [
+        "docs/adversarial/evidence/permissions-api.json"
+      ]
+    },
+    {
+      "name": "Owner cambia rol y retira por UI",
+      "expected": "El propietario cambia permisos y puede retirar un miembro; estado persistente actualizado.",
+      "actual": "Selector cambió B de reviewer a editor. Retirar redujo miembros de 2 a 1; API posterior denegó acceso del retirado a state y archivo.",
+      "verdict": "PASS",
+      "evidence": [
+        "docs/adversarial/evidence/permissions-api.json"
+      ]
+    },
+    {
+      "name": "Último propietario protegido",
+      "expected": "Ni cambiar el último owner ni borrarlo puede dejar empresa sin dueño.",
+      "actual": "UI oculta select/retirar de sí mismo; PATCH role=reviewer y DELETE de último owner devolvieron 409 La marca necesita al menos un propietario.",
+      "verdict": "PASS",
+      "evidence": [
+        "docs/adversarial/evidence/permissions-api.json"
+      ]
+    },
+    {
+      "name": "Aislamiento de corpus y gestión por empresa",
+      "expected": "Una cuenta ajena no accede a estado, contexto, señales, resultados, encuestas o IA por ID conocido.",
+      "actual": "Antes de incorporación y tras retirada, B recibió 404 para A; A recibió 404 para B. Se repitió con corpus A existente en todos los tipos probados.",
+      "verdict": "PASS",
+      "evidence": [
+        "docs/adversarial/evidence/permissions-api.json"
+      ]
+    },
+    {
+      "name": "Aislamiento de archivos",
+      "expected": "Archivo privado sólo accesible a miembros de la empresa; ID ajeno en empresa propia también falla.",
+      "actual": "Owner leyó archivo sintético. B retirado obtuvo 404 en URL A; pedir mismo assetId bajo empresa B dio 404 Archivo no encontrado.",
+      "verdict": "PASS",
+      "evidence": [
+        "docs/adversarial/evidence/permissions-api.json"
+      ]
+    },
+    {
+      "name": "IDs cruzados y relaciones adivinadas",
+      "expected": "ID válido de otra empresa no permite editar ni enlazar registro/responsable.",
+      "actual": "PATCH pieza A bajo B devolvió 404; crear pieza B con referenceId A o assignee A devolvió 400.",
+      "verdict": "PASS",
+      "evidence": [
+        "docs/adversarial/evidence/permissions-api.json"
+      ]
+    },
+    {
+      "name": "Asignación masiva",
+      "expected": "role, isDemo, userId e id enviados por cliente no elevan permisos ni sustituyen marcas ajenas.",
+      "actual": "PATCH owner conservó ID A/owner y no añadió isDemo/userId; POST con ID B generó otro ID propio sin flags. Editor inyectó flags al editar pieza; se ignoraron y su rol no cambió.",
+      "verdict": "PASS",
+      "evidence": [
+        "docs/adversarial/evidence/permissions-api.json"
+      ]
+    },
+    {
+      "name": "Revocación durante edición abierta",
+      "expected": "La siguiente mutación debe usar el rol vigente del servidor.",
+      "actual": "Editor dejó título modificado sin guardar; A lo cambió a reviewer por API; Guardar UI dio 403 y el título persistido quedó intacto. Tras recarga se bloqueó edición.",
+      "verdict": "PASS",
+      "evidence": [
+        "docs/adversarial/evidence/permissions-api.json",
+        "docs/adversarial/evidence/permissions-revoked-save.png"
+      ]
+    },
+    {
+      "name": "Cambio de empresa y URL ajena sin caché de contenido",
+      "expected": "Al cambiar empresa o abrir pieza ajena no quedan campos/texto del contexto anterior.",
+      "actual": "Selector A→B mostró sólo pieza B y eliminó texto A del DOM. B sin pertenencia abrió URL A y vio su propia lista B, sin datos de A.",
+      "verdict": "PASS",
+      "evidence": [
+        "docs/adversarial/evidence/permissions-api.json",
+        "docs/adversarial/evidence/permissions-foreign-piece.png"
+      ]
+    },
+    {
+      "name": "Logout y nuevo login secuencial",
+      "expected": "Cerrar sesión limpia UI, invalida su sesión y no reusa datos al cambiar cuenta.",
+      "actual": "Logout mostró formulario sin texto privado; session null y state 401. SQLite redujo en una la sesión B; sucesivos logins A/B mostraron sólo empresas autorizadas.",
+      "verdict": "PASS",
+      "evidence": [
+        "docs/adversarial/evidence/permissions-api.json",
+        "docs/adversarial/evidence/permissions-logout.png"
+      ]
+    }
+  ],
+  "findings": [],
+  "limitations": [
+    "Lectura real de portapapeles bloqueada por permiso del navegador. Se verificaron botón/mensaje, no la recuperación literal desde clipboard.",
+    "No se enviaron invitaciones por correo ni mensajes externos: el producto sólo generó enlaces locales.",
+    "Proveedores externos y generación de contenido excluidos; las solicitudes IA probadas se limitaron a verificar rechazo de roles/cuentas sin permiso.",
+    "Revocación probada durante una edición abierta antes del guardado; no se midieron carreras dentro de operaciones externas ya en vuelo.",
+    "Fixtures sintéticas API/SQLite y archivo de texto propio; las pruebas no representan datos ni credenciales de producción. Se conservó DATA_DIR completo.",
+    "UI invitación aceptada mediante formulario con enlace completo; no se probó alta de un usuario nuevo directamente desde query invite sin empresa previa."
+  ],
+  "artifacts": [
+    "docs/adversarial/evidence/permissions-api.json",
+    "docs/adversarial/evidence/permissions-editor.png",
+    "docs/adversarial/evidence/permissions-revoked-save.png",
+    "docs/adversarial/evidence/permissions-reviewer-approval.png",
+    "docs/adversarial/evidence/permissions-reviewer-team.png",
+    "docs/adversarial/evidence/permissions-foreign-piece.png",
+    "docs/adversarial/evidence/permissions-logout.png",
+    "/tmp/30x-adversarial-permissions/radar.sqlite",
+    "/tmp/30x-adversarial-permissions/audit/ids.json"
+  ]
+}

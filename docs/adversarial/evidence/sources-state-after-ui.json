@@ -1,0 +1,110 @@
+{
+  "synthetic": true,
+  "brandId": "d45ed6d5-dfb6-4b10-931b-804082cf2b82",
+  "records": [
+    {
+      "name": "Noticias globales · GDELT",
+      "type": "gdelt",
+      "query": "",
+      "enabled": false,
+      "id": "facdcae3-1c5e-4158-aeda-8d430af330ef",
+      "createdAt": "2026-10-18T02:17:17.326Z",
+      "updatedAt": "2026-10-18T02:19:34.174Z"
+    },
+    {
+      "name": "Hacker News · tecnología",
+      "type": "hackernews",
+      "query": "",
+      "enabled": false,
+      "id": "432156c5-60e5-4ddf-8af1-f78d52810e4f",
+      "createdAt": "2026-10-18T02:17:17.328Z",
+      "updatedAt": "2026-10-18T02:19:34.171Z"
+    },
+    {
+      "name": "Google Trends · Estados Unidos",
+      "type": "rss",
+      "url": "https://trends.google.com/trending/rss?geo=US",
+      "enabled": false,
+      "id": "e1233ccc-3a21-4ec8-bd49-f86755713b2d",
+      "createdAt": "2026-10-18T02:17:17.329Z",
+      "updatedAt": "2026-10-18T02:19:34.168Z"
+    },
+    {
+      "name": "TechCrunch · novedades",
+      "type": "rss",
+      "url": "https://techcrunch.com/feed/",
+      "enabled": false,
+      "id": "b784a9cf-68e1-444b-ae88-618ff4e20c48",
+      "createdAt": "2026-10-18T02:17:17.331Z",
+      "updatedAt": "2026-10-18T02:17:17.331Z"
+    },
+    {
+      "name": "QA RSS",
+      "type": "rss",
+      "url": "http://127.0.0.1/private-feed",
+      "query": "",
+      "enabled": true,
+      "id": "beef1ca1-c7ec-493e-a7c0-15e056e42de5",
+      "createdAt": "2026-10-18T02:17:44.225Z",
+      "updatedAt": "2026-10-18T02:19:47.621Z",
+      "lastSyncedAt": "2026-10-18T02:19:41.865Z",
+      "lastResultCount": 20,
+      "lastError": "QA RSS: No se permite acceder a direcciones privadas o reservadas.",
+      "lastAttemptAt": "2026-10-18T02:19:47.621Z"
+    },
+    {
+      "name": "QA HN",
+      "type": "rss",
+      "url": "https://www.nasa.gov/feed/",
+      "query": "agent reliability",
+      "enabled": false,
+      "id": "117c2df4-a97f-4cf4-a0ae-27a0344945ad",
+      "createdAt": "2026-10-18T02:17:52.246Z",
+      "updatedAt": "2026-10-18T02:19:34.166Z"
+    },
+    {
+      "name": "QA GDELT",
+      "type": "gdelt",
+      "url": "",
+      "query": "\"artificial intelligence\" sourcelang:spanish",
+      "enabled": false,
+      "id": "2ba082fe-f82b-40bd-9710-16bbe0d9f47b",
+      "createdAt": "2026-10-18T02:17:57.606Z",
+      "updatedAt": "2026-10-18T02:19:34.162Z"
+    },
+    {
+      "name": "QA Reddit",
+      "type": "reddit",
+      "url": "",
+      "query": "artificial",
+      "enabled": false,
+      "id": "6fad5719-dcbe-47d9-ae24-d6155a242fbd",
+      "createdAt": "2026-10-18T02:17:58.050Z",
+      "updatedAt": "2026-10-18T02:19:34.159Z"
+    },
+    {
+      "name": "QA YouTube",
+      "type": "youtube",
+      "url": "https://www.youtube.com/@GoogleDevelopers",
+      "query": "",
+      "platform": "youtube",
+      "enabled": false,
+      "limit": 20,
+      "id": "5947f2d4-ade8-4b0f-b0a8-26adc120b3ff",
+      "createdAt": "2026-10-18T02:18:31.809Z",
+      "updatedAt": "2026-10-18T02:18:31.809Z"
+    },
+    {
+      "name": "QA Apify",
+      "type": "apify",
+      "url": "https://tiktok.com/@publicqa/video/123456789",
+      "query": "#artificialintelligence",
+      "platform": "tiktok",
+      "limit": 50,
+      "enabled": false,
+      "id": "ffc6cc54-dbfa-4aff-af34-ccd155980406",
+      "createdAt": "2026-10-18T02:19:06.805Z",
+      "updatedAt": "2026-10-18T02:19:25.143Z"
+    }
+  ]
+}

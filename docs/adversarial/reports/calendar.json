@@ -1,0 +1,186 @@
+{
+  "feature": "Programación, calendario y exportación",
+  "slug": "calendar",
+  "url": "http://127.0.0.24:4114",
+  "status": "FAIL",
+  "cases": [
+    {
+      "name": "Estado inicial y conteos exactos",
+      "expected": "Con 7 piezas sintéticas, sólo las 3 programadas con fecha aparecen; octubre 2, noviembre 1, bandeja aprobadas 2; borrador y revisión sin fecha quedan fuera.",
+      "actual": "Los valores iniciales coincidieron con la API. El mes incluye visualmente días contiguos; el resumen/exportación excluye noviembre cuando octubre es el periodo activo.",
+      "verdict": "PASS",
+      "evidence": [
+        "docs/adversarial/evidence/calendar-observations.json"
+      ]
+    },
+    {
+      "name": "Programar aprobada y recargar",
+      "expected": "Agendar por UI el 21/10/2026 14:35 UTC, conservar canal LinkedIn y audiencia cal-lideres y persistir tras recarga.",
+      "actual": "UI guardó scheduledFor=2026-10-21T14:35:00.000Z y status=scheduled, sin alterar canal/audiencia/guion. Octubre pasó a 3 y el día 21 a 2; la recarga conservó los datos.",
+      "verdict": "PASS",
+      "evidence": [
+        "docs/adversarial/evidence/calendar-week-normal.png",
+        "docs/adversarial/evidence/calendar-observations.json"
+      ]
+    },
+    {
+      "name": "Validar vacío y pasado",
+      "expected": "No guardar fechas vacías o pasadas; conservar el diálogo para corregirlas.",
+      "actual": "Vacío activó required nativo (valid=false). 17/10/2026 14:35 devolvió HTTP 400 y «Elige una fecha futura para programar la pieza». Se corrigió y guardó después.",
+      "verdict": "PASS",
+      "evidence": [
+        "docs/adversarial/evidence/calendar-past-validation.png",
+        "docs/adversarial/evidence/calendar-observations.json"
+      ]
+    },
+    {
+      "name": "Reprogramación",
+      "expected": "Mover la misma pieza del 21/10 14:35 al 23/10 17:45 sin duplicarla.",
+      "actual": "Reprogramar en el panel del día guardó 2026-10-23T17:45:00.000Z. Salió del día 21, apareció en el 23, mismo id, total octubre=3.",
+      "verdict": "PASS",
+      "evidence": [
+        "docs/adversarial/evidence/calendar-observations.json"
+      ]
+    },
+    {
+      "name": "Aprobación invalidada con diálogo abierto",
+      "expected": "Si una aprobada vuelve a borrador por corrección concurrente, el diálogo antiguo no debe programarla.",
+      "actual": "Con diálogo abierto, fixture API cambió status a draft y el contenido. Guardar desde UI devolvió 409: draft→scheduled inválido; no programó.",
+      "verdict": "PASS",
+      "evidence": [
+        "docs/adversarial/evidence/calendar-stale-approval.png",
+        "docs/adversarial/evidence/calendar-observations.json"
+      ]
+    },
+    {
+      "name": "Editar programada desde UI",
+      "expected": "Guardar un guion corregido invalida la aprobación y retira la programación.",
+      "actual": "La UI guardó el guion, volvió la pieza a draft, eliminó scheduledFor y pidió Enviar a revisión. La grilla dejó de incluirla.",
+      "verdict": "PASS",
+      "evidence": [
+        "docs/adversarial/evidence/calendar-ui-edit-invalidates.png",
+        "docs/adversarial/evidence/calendar-observations.json"
+      ]
+    },
+    {
+      "name": "Mes, semana, anterior, siguiente, hoy y abrir pieza",
+      "expected": "Navegación consistente, 42 celdas mes y 7 semana; semana 19–25 octubre=3, 12–18=0, noviembre=1. Abrir evento debe conservar id/datos.",
+      "actual": "Mes y semana, ambos sentidos y Hoy funcionaron con esos conteos. El evento abrió el estudio de su id con canal y audiencia correctos. La lista Próximas estaba ordenada por fecha.",
+      "verdict": "PASS",
+      "evidence": [
+        "docs/adversarial/evidence/calendar-week-normal.png",
+        "docs/adversarial/evidence/calendar-observations.json"
+      ]
+    },
+    {
+      "name": "CSV: contenido, periodo, fechas y escape",
+      "expected": "CSV de octubre con exactamente 3 filas/12 columnas; fechas y audiencias exactas; comas/comillas/saltos válidos y fórmulas neutralizadas; sin la pieza de noviembre.",
+      "actual": "Descarga UI parseada con csv.DictReader: 3 filas, 12 columnas, horarios 21/10 09:10 y 14:35, 22/10 16:20 UTC, audiencias correctas. Título/guion multilínea y comillas escapadas; =SUM y @ prefijados con apóstrofo. Noviembre excluido.",
+      "verdict": "PASS",
+      "evidence": [
+        "docs/adversarial/evidence/calendar-export-normal.csv",
+        "docs/adversarial/evidence/calendar-observations.json"
+      ]
+    },
+    {
+      "name": "Exportación de pieza Markdown",
+      "expected": "Exportar desde el estudio abierto por calendario preserva título, gancho, guion, caption, CTA y fuente sintética.",
+      "actual": "Se leyó el archivo descargado: los campos y saltos coinciden, fuente Idea propia. Este formato no incluye metadatos de fecha/audiencia; la fecha se verificó en el CSV.",
+      "verdict": "PASS",
+      "evidence": [
+        "docs/adversarial/evidence/calendar-piece-export.md",
+        "docs/adversarial/evidence/calendar-observations.json"
+      ]
+    },
+    {
+      "name": "Revisor sólo consulta",
+      "expected": "Ocultar controles de agendar/reprogramar; impedir cambios en servidor y edición en estudio.",
+      "actual": "Cuenta ficticia con membresía reviewer sintética: sin controles de escritura en calendario, nota de sólo consulta; PATCH devuelve 403 Necesitas permisos de edición. Estudio usa fieldset disabled, todos los campos efectivamente deshabilitados.",
+      "verdict": "PASS",
+      "evidence": [
+        "docs/adversarial/evidence/calendar-reviewer-calendar.png",
+        "docs/adversarial/evidence/calendar-reviewer-studio.png",
+        "docs/adversarial/evidence/calendar-observations.json"
+      ]
+    },
+    {
+      "name": "Borrador con fecha residual",
+      "expected": "Una pieza que volvió a borrador y requiere revisión no debe seguir contándose como plan vigente ni exportarse en él.",
+      "actual": "PATCH válido scheduled→draft con cambio editorial conserva scheduledFor si se omite null. Tras recarga la UI mostró borrador en grilla, Próximas y CSV; resumen de octubre y semana=2 frente a 1 pieza status scheduled en API.",
+      "verdict": "FAIL",
+      "evidence": [
+        "docs/adversarial/evidence/calendar-draft-still-counted.png",
+        "docs/adversarial/evidence/calendar-export-draft-dated.csv",
+        "docs/adversarial/evidence/calendar-observations.json"
+      ]
+    },
+    {
+      "name": "Cambio de zona horaria",
+      "expected": "Verificar conversión al cambiar de zona y límites de día/DST.",
+      "actual": "Sólo se probó navegador y servidor UTC. No se cambió zona horaria ni se cubrió DST.",
+      "verdict": "BLOCKED",
+      "evidence": [
+        "docs/adversarial/evidence/calendar-observations.json"
+      ]
+    }
+  ],
+  "findings": [
+    {
+      "id": "calendar-1",
+      "severity": "P2",
+      "title": "Una fecha residual mantiene un borrador sin aprobación en la grilla y el CSV",
+      "steps": [
+        "Crear/aprobar una pieza sintética y programarla para 2026-10-22T16:20:00.000Z.",
+        "Como editor/propietario ejecutar PATCH /api/brands/:brandId/pieces/:id con {status:'draft',title:'QA Instagram corregido sin aprobación',script:'Revisión sintética pendiente; no debe contarse como programada.'}, omitiendo scheduledFor. API acepta 200 y conserva scheduledFor.",
+        "Recargar /calendar, seleccionar el 22 de octubre y pasar a Semana del 19–25.",
+        "Exportar CSV desde esa vista y leer su contenido."
+      ],
+      "expected": "Al invalidar aprobación y abandonar scheduled, retirar la fecha de programación o excluir borradores/revisión del plan, próximos y exportación; octubre y semana deberían contar 1 pieza programada en esta fixture.",
+      "actual": "El borrador corregido conserva 22/10 16:20. Calendario muestra 2 piezas, lo coloca en Próximas en salir y lo exporta con Estado=Borrador. La edición normal desde UI sí limpia la fecha; el fallo requiere estado aceptado por API, no se reprodujo originándolo por el editor UI. No hubo publicación externa ni un borrador etiquetado como publicado.",
+      "evidence": [
+        "docs/adversarial/evidence/calendar-draft-still-counted.png",
+        "docs/adversarial/evidence/calendar-export-draft-dated.csv",
+        "docs/adversarial/evidence/calendar-observations.json"
+      ],
+      "source": [
+        "server/core.mjs:663",
+        "server/core.mjs:672",
+        "src/features/Calendar.tsx:98",
+        "src/features/Calendar.tsx:129",
+        "src/features/Calendar.tsx:145"
+      ]
+    }
+  ],
+  "limitations": [
+    "Base propia con datos exclusivamente sintéticos; no mide exactitud de datos reales ni proveedores.",
+    "Zona probada: UTC. Sin cambios de zona ni límites DST.",
+    "No se ofrecen vista Lista completa ni filtros de canal/estado/audiencia en Calendario en este build; sí existe Próximas en salir. No se afirma probar filtros inexistentes.",
+    "No se encontró control explícito de cancelar programación; se verificó retirada al editar la pieza por UI.",
+    "Programar organiza el plan. No se configuraron proveedores ni se enviaron publicaciones o mensajes a terceros; no se probó publicación real.",
+    "La membresía reviewer se creó como fixture SQLite propia después de registrar la cuenta ficticia por API; el flujo de invitación no se evaluó.",
+    "Sin build, format ni cambios de código de producto. Se revisó el build existente; las referencias de código sólo apoyan fallos observados en navegador."
+  ],
+  "artifacts": [
+    "docs/adversarial/evidence/calendar-observations.json",
+    "docs/adversarial/evidence/calendar-week-normal.png",
+    "docs/adversarial/evidence/calendar-past-validation.png",
+    "docs/adversarial/evidence/calendar-stale-approval.png",
+    "docs/adversarial/evidence/calendar-ui-edit-invalidates.png",
+    "docs/adversarial/evidence/calendar-export-normal.csv",
+    "docs/adversarial/evidence/calendar-piece-export.md",
+    "docs/adversarial/evidence/calendar-reviewer-calendar.png",
+    "docs/adversarial/evidence/calendar-reviewer-studio.png",
+    "docs/adversarial/evidence/calendar-draft-still-counted.png",
+    "docs/adversarial/evidence/calendar-export-draft-dated.csv",
+    "docs/adversarial/reports/calendar.md",
+    "docs/adversarial/reports/calendar.json"
+  ],
+  "runtime": {
+    "dataDir": "/tmp/30x-adversarial-calendar",
+    "sessionId": 36823,
+    "pid": 3883332,
+    "tabId": "tab_40_07e54779-9ab2-4979-8a15-674c4eff160a",
+    "stopped": true,
+    "tabClosed": true
+  }
+}

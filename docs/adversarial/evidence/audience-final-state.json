@@ -1,0 +1,47 @@
+{
+  "synthetic": true,
+  "main": {
+    "id": "0a10f572-0221-4ec1-8256-ebe625201875",
+    "audience": [
+      {
+        "id": "06fe6beb-fdef-4854-ba33-f397ff898ee5",
+        "name": "Ventas IA — prueba sintética",
+        "role": "Directora comercial",
+        "stage": "Implementando",
+        "needs": "Automatizar seguimiento de ventas con IA sin perder el criterio humano.",
+        "description": ""
+      },
+      {
+        "id": "eca9f7d6-041b-4fe2-9260-8db9b87621d8",
+        "name": "EdTech validación — prueba sintética",
+        "role": "Directora de formación",
+        "stage": "Escalando",
+        "needs": "Medir aprendizaje y retroalimentación con IA en cursos EdTech.",
+        "description": ""
+      },
+      {
+        "id": "8e128450-3d77-4a32-8e7a-b6c8037c8249",
+        "name": "Blancos — reproducción sintética",
+        "role": "",
+        "stage": "Explorando",
+        "needs": "",
+        "description": ""
+      }
+    ],
+    "pieces": [
+      {
+        "id": "d524f10d-8c3d-41de-b718-bcd3bd18ef01",
+        "title": "Diseñar una rúbrica para medir aprendizaje y retroalimentación con IA en cursos EdTech.",
+        "segmentId": "eca9f7d6-041b-4fe2-9260-8db9b87621d8",
+        "format": "post",
+        "channel": "linkedin",
+        "script": "¿Qué cambia con diseñar una rúbrica para medir aprendizaje y retroalimentación con ia en cursos edtech para EdTech validación — prueba sintética?\n\nQué significa para EdTech validación — prueba sintética y cómo probarlo sin perder el foco.\nEn Latinoamérica, comienza por una tarea concreta de Formación en IA para empresas relacionada con Medir aprendizaje y retroalimentación con IA en cursos EdTech..\n\nAntes de adoptar la idea, registra cómo resuelves esa tarea hoy. Elige un caso pequeño, define quién revisará el resultado y compara calidad y tiempo. Documenta las limitaciones; no extrapoles una prueba a toda la organización.\n\nDesde Empresa sintética QA audiencia, nuestra propuesta es convertir la conversación en una prueba verificable. Dirección editorial: Diseñar una rúbrica para medir aprendizaje y retroalimentación con IA en cursos EdTech. Fixture sintética..\n\n¿Qué tarea pondrías a prueba primero? Comparte tu contexto para adaptar el siguiente paso."
+      }
+    ]
+  },
+  "limit": {
+    "id": "81505549-7aa7-46cd-b134-2ce37ea63a47",
+    "count": 30,
+    "all30Exact": true
+  }
+}

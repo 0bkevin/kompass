@@ -1,0 +1,35 @@
+{
+  "desktop": {
+    "width": 728,
+    "contentHeight": 1385,
+    "capturedHeight": 1385,
+    "consoleMessages": [
+      {
+        "level": "log",
+        "text": "{\"features\":21,\"cases\":343,\"distinctIssues\":25,\"overflow\":false}"
+      }
+    ],
+    "screenshot": {
+      "mimeType": "image/png",
+      "width": 728,
+      "height": 1385
+    }
+  },
+  "mobileLayout": {
+    "width": 360,
+    "contentHeight": 2186,
+    "capturedHeight": 2186,
+    "consoleMessages": [
+      {
+        "level": "log",
+        "text": "{\"features\":21,\"cases\":343,\"distinctIssues\":25,\"overflow\":false}"
+      }
+    ],
+    "screenshot": {
+      "mimeType": "image/png",
+      "width": 360,
+      "height": 2186
+    }
+  },
+  "notes": "Final desktop and mobile layout previews; status contrast updated after initial mobile layout check. Filtering, empty state and row count assertions passed without console errors."
+}

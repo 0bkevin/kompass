@@ -1,0 +1,6 @@
+{
+  "http": 403,
+  "body": {
+    "error": "Necesitas permisos de edición."
+  }
+}

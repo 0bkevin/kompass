@@ -1,0 +1,230 @@
+{
+  "brand": {
+    "name": "Laboratorio Faro · fixture sintética",
+    "industry": "Formación operativa",
+    "description": "Ayudamos a equipos a evaluar decisiones con evidencia. No tenemos cifras de ahorro medidas ni clientes publicados.",
+    "tone": "Sobrio, claro, sin promesas de ROI",
+    "language": "Español",
+    "market": "Chile",
+    "website": "",
+    "color": "#c4f168",
+    "secondaryColor": "#161b17",
+    "goals": [
+      "Generar contenido relevante y útil"
+    ],
+    "pillars": [
+      "operaciones",
+      "inventario",
+      "calidad"
+    ],
+    "weeklyTarget": 3,
+    "audience": [
+      {
+        "id": "qa-ops",
+        "name": "Jefas de operaciones de librerías",
+        "role": "Operaciones",
+        "stage": "Exploración",
+        "needs": "Reducir quiebres de inventario sin añadir reuniones",
+        "description": "Equipos pequeños de librerías chilenas"
+      },
+      {
+        "id": "qa-teachers",
+        "name": "Docentes rurales de secundaria",
+        "role": "Docente",
+        "stage": "Inicio",
+        "needs": "Preparar clases sin conexión con recursos reutilizables",
+        "description": "Escuelas con conectividad limitada"
+      }
+    ],
+    "id": "c114cd2b-8aa2-4559-86cf-271d44d25248",
+    "createdAt": "2026-10-18T02:07:47.778Z"
+  },
+  "records": [
+    {
+      "kind": "references",
+      "id": "f05f7fbe-b725-49a5-8874-94095b855045",
+      "data": {
+        "source": "manual",
+        "language": "Español",
+        "market": "Sin definir",
+        "format": "post",
+        "status": "new",
+        "tags": [
+          "inventario",
+          "operaciones"
+        ],
+        "title": "Inventario: bitácora pública sintética",
+        "text": "FUENTE SINTÉTICA DE PRUEBA. Una librería anota faltantes al cierre de cada jornada. No se midió ahorro ni cambio en ventas. FRASE CANARIO NO COPIAR: El ornitorrinco violeta domina las estanterías. La bitácora tiene tres columnas: título, faltante y fecha. Es una descripción, no un estudio ni consejo estadístico.",
+        "url": "https://example.com/qa-studio-inventario",
+        "id": "f05f7fbe-b725-49a5-8874-94095b855045",
+        "createdAt": "2026-10-18T02:07:47.796Z",
+        "updatedAt": "2026-10-18T02:07:47.796Z"
+      }
+    },
+    {
+      "kind": "pieces",
+      "id": "3ac07713-9be9-478e-9dd0-a9a0747cf951",
+      "data": {
+        "title": "Explica una rutina para detectar faltantes sin reuniones.",
+        "hook": "¿Qué cambia con explica una rutina para detectar faltantes sin reuniones para Jefas de operaciones de librerías?",
+        "script": "¿Qué cambia con explica una rutina para detectar faltantes sin reuniones para Jefas de operaciones de librerías?\n\nQué significa para Jefas de operaciones de librerías y cómo probarlo sin perder el foco.\nEn Chile, comienza por una tarea concreta de Formación operativa relacionada con Reducir quiebres de inventario sin añadir reuniones.\n\nAntes de adoptar la idea, registra cómo resuelves esa tarea hoy. Elige un caso pequeño, define quién revisará el resultado y compara calidad y tiempo. Documenta las limitaciones; no extrapoles una prueba a toda la organización.\n\nDesde Laboratorio Faro · fixture sintética, nuestra propuesta es convertir la conversación en una prueba verificable. Dirección editorial: Explica una rutina para detectar faltantes sin reuniones. Haz un carrusel de 4 láminas con títulos concretos y un ejemplo hipotético de una librería. No inventes ahorro, ventas ni testimonios. No copies ninguna frase de la referencia. CTA final exacto: Descarga la plantilla de inventario..\n\n¿Qué tarea pondrías a prueba primero? Comparte tu contexto para adaptar el siguiente paso.",
+        "caption": "¿Qué cambia con explica una rutina para detectar faltantes sin reuniones para Jefas de operaciones de librerías?\n\nQué significa para Jefas de operaciones de librerías y cómo probarlo sin perder el foco.\n\nGuarda esta propuesta y compártela con tu equipo.",
+        "cta": "Comparte qué caso quieres poner a prueba.",
+        "scenes": [
+          {
+            "id": "ec465531-5e07-4cd1-b361-c15c0dd8d158",
+            "text": "¿Qué cambia con explica una rutina para detectar faltantes sin reuniones para Jefas de operaciones de librerías?",
+            "duration": 5
+          },
+          {
+            "id": "1863d584-7cfe-4a1a-9546-bfff8e8f364c",
+            "text": "Qué significa para Jefas de operaciones de librerías y cómo probarlo sin perder el foco.\nEn Chile, comienza por una tarea concreta de Formación operativa relacionada con Reducir quiebres de inventario sin añadir reuniones.",
+            "duration": 14
+          },
+          {
+            "id": "bf871bf9-91c5-4d53-93ee-7ef9a76b1fac",
+            "text": "Antes de adoptar la idea, registra cómo resuelves esa tarea hoy. Elige un caso pequeño, define quién revisará el resultado y compara calidad y tiempo. Documenta las limitaciones; no extrapoles una prueba a toda la organización.",
+            "duration": 15
+          },
+          {
+            "id": "3989f31e-e5cf-452c-ad7c-be6d07d8d448",
+            "text": "Desde Laboratorio Faro · fixture sintética, nuestra propuesta es convertir la conversación en una prueba verificable. Dirección editorial: Explica una rutina para detectar faltantes sin reuniones. Haz un carrusel de 4 láminas con títulos concretos y un ejemplo hipotético de una librería. No inventes ahorro, ventas ni testimonios. No copies ninguna frase de la referencia. CTA final exacto: Descarga la plantilla de inventario..",
+            "duration": 20
+          },
+          {
+            "id": "8149a0ed-35e0-4c5b-89b6-e40f4a7c1989",
+            "text": "¿Qué tarea pondrías a prueba primero? Comparte tu contexto para adaptar el siguiente paso.",
+            "duration": 6
+          }
+        ],
+        "generationEngine": "heuristic",
+        "segmentId": "qa-ops",
+        "format": "carousel",
+        "channel": "instagram",
+        "status": "draft",
+        "assetIds": [],
+        "comments": [],
+        "id": "3ac07713-9be9-478e-9dd0-a9a0747cf951",
+        "createdAt": "2026-10-18T02:07:57.528Z",
+        "updatedAt": "2026-10-18T02:07:57.528Z"
+      }
+    },
+    {
+      "kind": "pieces",
+      "id": "05a0e59a-0e31-4b31-b094-c00a7a1a8196",
+      "data": {
+        "title": "QA límite corregido · clase sin conexión",
+        "hook": "Una clase lista aunque falle la señal.",
+        "script": "Escena 1: Elige un texto que ya puedas imprimir.\nEscena 2: Prepara tres preguntas y una actividad en papel.\nEscena 3: Prueba la ficha sin conexión antes de la clase.\nEjemplo hipotético; no afirma resultados medidos.",
+        "caption": "Recurso de prueba para docentes rurales. No requiere conexión.",
+        "cta": "Guarda esta ficha para tu próxima clase.",
+        "format": "reel",
+        "channel": "youtube",
+        "scenes": [
+          {
+            "id": "858a8e40-3a45-45b8-ad26-d47ab8eabcc6",
+            "text": "¿Qué cambia con inventario: bitácora pública sintética para Docentes rurales de secundaria?",
+            "duration": 5
+          },
+          {
+            "id": "277c0cfd-b389-4cec-8690-c9b5bdf61f38",
+            "text": "Qué significa para Docentes rurales de secundaria y cómo probarlo sin perder el foco.\nEn Chile, comienza por una tarea concreta de Formación operativa relacionada con Preparar clases sin conexión con recursos reutilizables.",
+            "duration": 14
+          },
+          {
+            "id": "8870db54-8050-42b9-9cdd-f9cccf5b53c5",
+            "text": "Antes de adoptar la idea, registra cómo resuelves esa tarea hoy. Elige un caso pequeño, define quién revisará el resultado y compara calidad y tiempo. Documenta las limitaciones; no extrapoles una prueba a toda la organización.",
+            "duration": 15
+          },
+          {
+            "id": "e5ffdaa1-02e5-46dc-8f3d-ae36993b8cda",
+            "text": "Desde Laboratorio Faro · fixture sintética, nuestra propuesta es convertir la conversación en una prueba verificable. Referencia para consultar: https://example.com/qa-studio-inventario. Dirección editorial: Adapta sólo la idea de llevar una bitácora a docentes rurales: un reel con 3 escenas habladas para preparar una clase sin conexión. Prohibido hablar de ventas, ahorro o inventario de librerías como necesidad de docentes. No copies la frase canario ni las frases de la fuente. CTA exacto: Guarda esta ficha para tu próxima clase..",
+            "duration": 20
+          },
+          {
+            "id": "6827796d-cbf1-4cf9-8690-58557a7d83c8",
+            "text": "¿Qué tarea pondrías a prueba primero? Comparte tu contexto para adaptar el siguiente paso.",
+            "duration": 6
+          }
+        ],
+        "assetIds": [
+          "8110f612-3543-4191-b6b8-689587679890"
+        ],
+        "comments": [],
+        "generationEngine": "heuristic",
+        "referenceId": "f05f7fbe-b725-49a5-8874-94095b855045",
+        "segmentId": "qa-ops",
+        "status": "draft",
+        "id": "05a0e59a-0e31-4b31-b094-c00a7a1a8196",
+        "createdAt": "2026-10-18T02:08:18.004Z",
+        "updatedAt": "2026-10-18T02:09:08.978Z",
+        "assignee": "55727b77-58c3-407d-b7c3-4069135b904c"
+      }
+    },
+    {
+      "kind": "assets",
+      "id": "8110f612-3543-4191-b6b8-689587679890",
+      "data": {
+        "id": "8110f612-3543-4191-b6b8-689587679890",
+        "name": "qa-ficha-studio.txt",
+        "type": "document",
+        "mimeType": "text/plain",
+        "size": 61,
+        "storageName": "e05bd9de-9519-4600-bc81-80f0f3b99d26",
+        "url": "/api/brands/c114cd2b-8aa2-4559-86cf-271d44d25248/assets/8110f612-3543-4191-b6b8-689587679890/file",
+        "origin": "upload",
+        "createdAt": "2026-10-18T02:08:44.366Z",
+        "updatedAt": "2026-10-18T02:08:44.366Z"
+      }
+    },
+    {
+      "kind": "pieces",
+      "id": "678a958d-085e-4792-af8c-f4a99ec43b68",
+      "data": {
+        "title": "QA validación corregida",
+        "hook": "¿Qué cambia con inventario: bitácora pública sintética para Jefas de operaciones de librerías?",
+        "script": "¿Qué cambia con inventario: bitácora pública sintética para Jefas de operaciones de librerías?\n\nQué significa para Jefas de operaciones de librerías y cómo probarlo sin perder el foco.\nEn Chile, comienza por una tarea concreta de Formación operativa relacionada con Reducir quiebres de inventario sin añadir reuniones.\n\nAntes de adoptar la idea, registra cómo resuelves esa tarea hoy. Elige un caso pequeño, define quién revisará el resultado y compara calidad y tiempo. Documenta las limitaciones; no extrapoles una prueba a toda la organización.\n\nDesde Laboratorio Faro · fixture sintética, nuestra propuesta es convertir la conversación en una prueba verificable. Referencia para consultar: https://example.com/qa-studio-inventario. Dirección editorial: Crear un post original para Jefas de operaciones de librerías: explicar una decisión sobre «inventario», mostrar un ejemplo verificable de Formación operativa en Chile y cerrar con un paso aplicable. Usar el tono Sobrio, claro, sin promesas de ROI; contrastar los hechos y aportar un ángulo propio antes de aprobar. El formato es una sugerencia editable, no una predicción.\n\nNewsletter en español con asunto, saludo y dos secciones: Registrar y Revisar. Explica la bitácora de faltantes para librerías. Usa ejemplo hipotético y ninguna cifra ni testimonio. No copies frases de la fuente. CTA final exacto: Responde FICHA para recibir la plantilla..\n\n¿Qué tarea pondrías a prueba primero? Comparte tu contexto para adaptar el siguiente paso.",
+        "caption": "¿Qué cambia con inventario: bitácora pública sintética para Jefas de operaciones de librerías?\n\nQué significa para Jefas de operaciones de librerías y cómo probarlo sin perder el foco.\n\nGuarda esta propuesta y compártela con tu equipo.",
+        "cta": "CTA corregido de QA.",
+        "format": "newsletter",
+        "channel": "linkedin",
+        "scenes": [
+          {
+            "id": "38a8f8ee-c738-4670-8a4c-2eaee295cb83",
+            "text": "¿Qué cambia con inventario: bitácora pública sintética para Jefas de operaciones de librerías?",
+            "duration": 5
+          },
+          {
+            "id": "087bb3f5-a341-4e3a-9b68-f8e0a1a5f8de",
+            "text": "Qué significa para Jefas de operaciones de librerías y cómo probarlo sin perder el foco.\nEn Chile, comienza por una tarea concreta de Formación operativa relacionada con Reducir quiebres de inventario sin añadir reuniones.",
+            "duration": 14
+          },
+          {
+            "id": "f7dc8a7d-1859-456e-8545-3cad534a8471",
+            "text": "Antes de adoptar la idea, registra cómo resuelves esa tarea hoy. Elige un caso pequeño, define quién revisará el resultado y compara calidad y tiempo. Documenta las limitaciones; no extrapoles una prueba a toda la organización.",
+            "duration": 15
+          },
+          {
+            "id": "319f81c1-f6ba-4b30-93a0-c7c557d5904d",
+            "text": "Desde Laboratorio Faro · fixture sintética, nuestra propuesta es convertir la conversación en una prueba verificable. Referencia para consultar: https://example.com/qa-studio-inventario. Dirección editorial: Crear un post original para Jefas de operaciones de librerías: explicar una decisión sobre «inventario», mostrar un ejemplo verificable de Formación operativa en Chile y cerrar con un paso aplicable. Usar el tono Sobrio, claro, sin promesas de ROI; contrastar los hechos y aportar un ángulo propio antes de aprobar. El formato es una sugerencia editable, no una predicción.\n\nNewsletter en español con asunto, saludo y dos secciones: Registrar y Revisar. Explica la bitácora de faltantes para librerías. Usa ejemplo hipotético y ninguna cifra ni testimonio. No copies frases de la fuente. CTA final exacto: Responde FICHA para recibir la plantilla..",
+            "duration": 20
+          },
+          {
+            "id": "319387fc-473d-471b-8877-b03021d62acf",
+            "text": "¿Qué tarea pondrías a prueba primero? Comparte tu contexto para adaptar el siguiente paso.",
+            "duration": 6
+          }
+        ],
+        "assetIds": [],
+        "comments": [],
+        "generationEngine": "heuristic",
+        "referenceId": "f05f7fbe-b725-49a5-8874-94095b855045",
+        "segmentId": "qa-ops",
+        "status": "draft",
+        "id": "678a958d-085e-4792-af8c-f4a99ec43b68",
+        "createdAt": "2026-10-18T02:09:24.361Z",
+        "updatedAt": "2026-10-18T02:09:46.094Z"
+      }
+    }
+  ]
+}

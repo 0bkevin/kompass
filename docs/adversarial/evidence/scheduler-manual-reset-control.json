@@ -1,0 +1,60 @@
+{
+  "simulated": true,
+  "explanation": "Prior failures=8/6h is a fixture, manual success is syncSources with simulated RSS. This is separate from the real BBC manual UI success.",
+  "expected": {
+    "retryBeforeOldDeadline": true,
+    "failuresAfterFirstNewFailure": 1,
+    "delayMinutes": 20
+  },
+  "observed": {
+    "previous": {
+      "lastAttemptAt": 1792290497135,
+      "failures": 8,
+      "nextAttemptAt": 1792312097135
+    },
+    "manualResult": {
+      "added": 1,
+      "updated": 0,
+      "errors": [],
+      "sources": [
+        {
+          "id": "reset-control",
+          "name": "SIMULADA control de reset manual",
+          "added": 1,
+          "updated": 0,
+          "fetched": 1
+        }
+      ]
+    },
+    "manualSource": {
+      "id": "reset-control",
+      "name": "SIMULADA control de reset manual",
+      "type": "rss",
+      "enabled": true,
+      "url": "https://example.com/reset-control.xml",
+      "createdAt": "2026-10-18T02:29:17.133Z",
+      "updatedAt": "2026-10-18T02:29:17.246Z",
+      "lastSyncedAt": "2026-10-18T02:29:17.246Z",
+      "lastResultCount": 1
+    },
+    "now": 1792291157246,
+    "calls": 1,
+    "after": {
+      "lastAttemptAt": 1792291157246,
+      "failures": 8,
+      "nextAttemptAt": 1792312757246
+    },
+    "retryBeforeOldDeadline": true,
+    "delayMinutes": 360
+  },
+  "verdicts": {
+    "manualSuccessSupersedesOldDeadline": "PASS"
+  },
+  "policyObservation": {
+    "productRequirementConfirmed": false,
+    "resetsFailureStreak": false,
+    "experimentalHypothesisVerdict": "FAIL",
+    "productDefect": false,
+    "note": "Full streak reset was an experimental hypothesis; no explicit product promise was found. The documented retry behavior passes."
+  }
+}

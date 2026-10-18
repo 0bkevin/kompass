@@ -1,0 +1,222 @@
+{
+  "feature": "Empresa y contenido después del alta",
+  "slug": "company",
+  "url": "http://127.0.0.13:4103/brand",
+  "status": "FAIL",
+  "cases": [
+    {
+      "name": "Importación vacía",
+      "expected": "Rechazar sin crear una importación y explicar cómo continuar.",
+      "actual": "UI: «Agrega una web, un enlace o un texto para empezar». Historial sigue vacío.",
+      "verdict": "PASS",
+      "evidence": [
+        "Observación UI /brand, 2026-10-18 01:53 UTC"
+      ]
+    },
+    {
+      "name": "URL inválida y corrección",
+      "expected": "Mostrar error recuperable, permitir corregir y reintentar.",
+      "actual": "«nota una web» produce «Usa una URL pública válida». Corregir a https://example.com y completar texto/enlaces permite guardar la importación.",
+      "verdict": "PASS",
+      "evidence": [
+        "Observación UI /brand; POST /context/import devuelve error400 y después201",
+        "docs/adversarial/evidence/company-import-statuses.png"
+      ]
+    },
+    {
+      "name": "Estados read/linked/failed/provided y procedencia",
+      "expected": "example.com leído, LinkedIn sólo enlazado, URL inexistente fallida y texto aportado sin verificación externa.",
+      "actual": "API conserva cuatro evidencias con estados exactos read,linked,failed,provided. UI muestra Contenido leído, Solo enlace, No se pudo leer y Texto aportado; resumen 2 con contenido,1 enlazada,1 sin lectura. Error HTTP404 visible.",
+      "verdict": "PASS",
+      "evidence": [
+        "docs/adversarial/evidence/company-import-statuses.png",
+        "docs/adversarial/evidence/company-api-observations.json"
+      ]
+    },
+    {
+      "name": "Redacción de correo y teléfono",
+      "expected": "Omitir los contactos sintéticos del texto aportado y la descripción propuesta.",
+      "actual": "contacto.qa@example.com y +57 300 123 4567 se sustituyen por [correo omitido] y [teléfono omitido] en excerpt y draft.description.",
+      "verdict": "PASS",
+      "evidence": [
+        "docs/adversarial/evidence/company-import-statuses.png",
+        "docs/adversarial/evidence/company-api-observations.json"
+      ]
+    },
+    {
+      "name": "No sobrescribir el perfil al importar",
+      "expected": "Guardar fuentes/propuesta sin modificar nombre, mercado, tono, pilares ni audiencia confirmados.",
+      "actual": "Tras importar, API /session mantiene Nexo QA · confirmado, México, Rigurosa y concreta, pilares ventas B2B/operaciones y audiencia segment-qa.",
+      "verdict": "PASS",
+      "evidence": [
+        "docs/adversarial/evidence/company-import-statuses.png",
+        "docs/adversarial/evidence/company-api-observations.json"
+      ]
+    },
+    {
+      "name": "Revisar, editar y aplicar explícitamente",
+      "expected": "Guardar exactamente nombre, sector, descripción, tono, pilares, mercado y web revisados; no aplicar audiencia inferida automáticamente.",
+      "actual": "La propuesta advierte que reemplazará el contexto. Aplicar persiste Nexo QA · revisado, Operaciones y formación, descripción QA, Costa Rica, tono Sobrio/directo/basado en evidencia, dos pilares elegidos y web vacía; conserva audiencia segment-qa.",
+      "verdict": "PASS",
+      "evidence": [
+        "docs/adversarial/evidence/company-applied-costa-rica.png",
+        "docs/adversarial/evidence/company-api-observations.json"
+      ]
+    },
+    {
+      "name": "Recargar después de aplicar",
+      "expected": "Mantener contexto aplicado y el historial original con su procedencia.",
+      "actual": "Navegación completa a /brand conserva nombre revisado y API confirma Costa Rica; el historial sigue mostrando la importación mixta original.",
+      "verdict": "PASS",
+      "evidence": [
+        "docs/adversarial/evidence/company-market-before-save.png",
+        "docs/adversarial/evidence/company-api-observations.json"
+      ]
+    },
+    {
+      "name": "Editar sólo el nombre en Perfil de empresa",
+      "expected": "Conservar el mercado Costa Rica confirmado desde la propuesta.",
+      "actual": "El select muestra Latinoamérica mientras la vista lateral y API dicen Costa Rica. Cambiar únicamente Nombre de la marca y Guardar contexto guarda también Latinoamérica, sin confirmación de cambio de mercado.",
+      "verdict": "FAIL",
+      "evidence": [
+        "docs/adversarial/evidence/company-market-before-save.png",
+        "docs/adversarial/evidence/company-market-after-save.png",
+        "docs/adversarial/evidence/company-api-observations.json"
+      ]
+    },
+    {
+      "name": "Recuperar fuente fallida con texto aportado",
+      "expected": "Poder continuar pegando texto, identificándolo como aportado y conservando la lectura fallida anterior.",
+      "actual": "Nueva importación sólo de texto produce provided. Hasta su eliminación explícita, la importación previa conserva su failed HTTP404. No cambia el perfil.",
+      "verdict": "PASS",
+      "evidence": [
+        "docs/adversarial/evidence/company-api-observations.json"
+      ]
+    },
+    {
+      "name": "Redacción de domicilio inline sintético",
+      "expected": "Omitir un domicilio de contacto expresamente etiquetado Dirección aunque aparezca en el párrafo, según el contrato de redacción.",
+      "actual": "Dos textos sintéticos mantienen la dirección en excerpt/draft.description y UI, incluso al recargar. Uno identifica explícitamente el dato como domicilio particular de Persona QA. Los correos sí se omiten. No se usaron datos personales reales.",
+      "verdict": "FAIL",
+      "evidence": [
+        "docs/adversarial/evidence/company-inline-contact-address.png",
+        "docs/adversarial/evidence/company-api-observations.json"
+      ]
+    },
+    {
+      "name": "Eliminar importación: cancelar, confirmar y recargar",
+      "expected": "Cancelar conserva la importación; confirmar elimina sólo esa fuente y conserva el contexto ya aplicado.",
+      "actual": "Confirm muestra advertencia correcta. Cancelar conserva ambas importaciones; confirmar elimina la original mixta. Tras recargar queda la importación de recuperación y el perfil conserva nombre/sector/tono/pilares/audiencia; mercado sigue en el valor ya sobrescrito del hallazgo company-1.",
+      "verdict": "PASS",
+      "evidence": [
+        "docs/adversarial/evidence/company-api-observations.json"
+      ]
+    },
+    {
+      "name": "Revisor consulta pero no modifica",
+      "expected": "Historial/perfil legibles; importar, eliminar y modificar perfil reservados al propietario.",
+      "actual": "Cuenta reviewer sintética sin formulario de importación ni controles de eliminar/revisar propuesta; fieldset y Guardar contexto deshabilitados. POST import, DELETE import y PATCH perfil responden403 con «Solo el propietario puede realizar esta acción».",
+      "verdict": "PASS",
+      "evidence": [
+        "docs/adversarial/evidence/company-reviewer-readonly.png",
+        "docs/adversarial/evidence/company-api-observations.json"
+      ]
+    },
+    {
+      "name": "Lectura real de contenido social",
+      "expected": "Sólo afirmar lectura cuando exista acceso/proveedor comprobado.",
+      "actual": "Sin credenciales, LinkedIn permanece linked y avisa que no se leyó perfil ni audiencia. La lectura social real no puede comprobarse en este entorno; su ausencia no se cuenta como integración aprobada.",
+      "verdict": "BLOCKED",
+      "evidence": [
+        "docs/adversarial/evidence/company-import-statuses.png"
+      ]
+    }
+  ],
+  "findings": [
+    {
+      "id": "company-1",
+      "severity": "P2",
+      "title": "Guardar un cambio de nombre reemplaza silenciosamente un mercado permitido por la propuesta",
+      "steps": [
+        "Entrar como owner en /brand y guardar una importación por web/texto.",
+        "Abrir Revisar propuesta de contexto. Introducir mercado Costa Rica, nombre Nexo QA · revisado, tono y pilares elegidos; aplicar explícitamente.",
+        "Comprobar API /session: market=Costa Rica. Recargar /brand y abrir Perfil de empresa.",
+        "Observar select Mercado principal=Latinoamérica y vista lateral/API=Costa Rica.",
+        "Cambiar únicamente Nombre de la marca a Nexo QA · nombre corregido y pulsar Guardar contexto.",
+        "Consultar /session o recargar: market ahora es Latinoamérica."
+      ],
+      "expected": "Editar un campo conserva el mercado que el usuario ya confirmó. Un mercado permitido en la propuesta debe seguir representándose en el formulario del perfil.",
+      "actual": "La propuesta admite mercado libre. El select del perfil tiene opciones fijas sin Costa Rica y cae en la primera opción. brandPatchInput detecta esa diferencia involuntaria y la envía en el PATCH junto al nombre; se pierde la selección de mercado.",
+      "evidence": [
+        "docs/adversarial/evidence/company-applied-costa-rica.png",
+        "docs/adversarial/evidence/company-market-before-save.png",
+        "docs/adversarial/evidence/company-market-after-save.png",
+        "docs/adversarial/evidence/company-api-observations.json"
+      ],
+      "source": [
+        "src/features/Journey.tsx:1707",
+        "src/features/Brand.tsx:50",
+        "src/features/Brand.tsx:197",
+        "src/features/Brand.tsx:356"
+      ]
+    },
+    {
+      "id": "company-2",
+      "severity": "P2",
+      "title": "La redacción conserva direcciones de contacto etiquetadas dentro del párrafo",
+      "steps": [
+        "Entrar como owner en /brand, desplegar Agregar redes, enlaces o texto propio.",
+        "Pegar: «PRUEBA SINTÉTICA: Nexo ofrece formación de procesos. Contacto ficticio Persona QA; el siguiente dato es su domicilio particular, no una sede de empresa. Dirección: Calle Inventada 456, Ciudad Sintética. Correo: persona.qa@example.com.»",
+        "Pulsar Importar y preparar contexto y revisar Texto aportado.",
+        "Consultar GET /api/brands/:brandId/context: comprobar excerpt y draft.description; recargar."
+      ],
+      "expected": "El contrato de contexto exige redactar contactos en extractos. El domicilio explícito sintético debería omitirse junto al correo.",
+      "actual": "La UI y el registro persistido mantienen «Dirección: Calle Inventada 456, Ciudad Sintética»; sólo omiten el correo. La regla de domicilio sólo coincide al inicio del texto o de una línea. Es un fallo parcial de redacción dentro del workspace, reproducido exclusivamente con datos ficticios; no demuestra filtración de datos reales ni ruptura de aislamiento.",
+      "evidence": [
+        "docs/adversarial/evidence/company-inline-contact-address.png",
+        "docs/adversarial/evidence/company-api-observations.json"
+      ],
+      "source": [
+        "docs/IMPLEMENTATION.md:9",
+        "server/company-context.mjs:153",
+        "server/company-context.mjs:588",
+        "server/company-context.mjs:608"
+      ]
+    }
+  ],
+  "limitations": [
+    "Alcance: /brand después del alta. Cuenta y marca iniciales creadas por API como fixtures sintéticas; importaciones, aplicación, guardado y eliminación probados mediante UI.",
+    "Build existente y servidor real. Sin build, format ni cambios de aplicación. Fuentes públicas: example.com, URL404 de ese mismo dominio y enlace social sintético sin lectura.",
+    "No se validó contenido social real ni IA de proveedor; las claves OPENAI/GEMINI/YOUTUBE/APIFY se retiraron del proceso. Inspección observada=heuristic.",
+    "No cubre onboarding, edición de audiencias, otros navegadores/tamaños, concurrencia entre editores ni aislamiento completo entre marcas.",
+    "El segundo fallo usa domicilio ficticio expresamente marcado; no hubo contactos personales reales ni envío de datos a terceros.",
+    "La importación mixta fue eliminada desde UI al probar eliminación. Sus evidencias y respuesta previa están conservadas en company-api-observations.json."
+  ],
+  "artifacts": [
+    "docs/adversarial/reports/company.md",
+    "docs/adversarial/reports/company.json",
+    "docs/adversarial/evidence/company-api-observations.json",
+    "docs/adversarial/evidence/company-import-statuses.png",
+    "docs/adversarial/evidence/company-applied-costa-rica.png",
+    "docs/adversarial/evidence/company-market-before-save.png",
+    "docs/adversarial/evidence/company-market-after-save.png",
+    "docs/adversarial/evidence/company-reviewer-readonly.png",
+    "docs/adversarial/evidence/company-inline-contact-address.png"
+  ],
+  "run": {
+    "date": "2026-10-18",
+    "timeWindowUtc": "01:52–01:56",
+    "commit": "549e0bbf5b5858eb79bf069d847daee269ad344e",
+    "dataDir": "/tmp/30x-adversarial-company",
+    "port": 4103,
+    "host": "127.0.0.13",
+    "sessionId": 47170,
+    "pid": 3827362,
+    "tabId": "tab_3o_07e54779-9ab2-4979-8a15-674c4eff160a",
+    "accounts": [
+      "qa-company@example.com",
+      "qa-company-reviewer@example.com"
+    ],
+    "fixtureBrandId": "2a941489-80b7-4afa-ad3e-28f6ec32d386"
+  }
+}

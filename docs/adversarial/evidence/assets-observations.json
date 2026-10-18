@@ -1,0 +1,228 @@
+{
+  "uploadPartial": "Saltar al contenido\n30X\nRADAR\nQ\nCambiar de marca\nQA Archivos Sintética\nEspacio de trabajo\nCrear otra marca\nInicio\nAudiencia\nOportunidades\nContenido\nCalendario\nResultados\nEmpresa y contenido\nMás herramientas\nExplorar fuentes\nReferencias\nArchivos\nFuentes y equipo\nQ\nQA Assets Sintético\nAdministrador\nQA Archivos Sintética\n/\nArchivos\nAgregar referencia\nTodo lo que necesitas para crear.\n\nImágenes, videos, documentos y referencias, con acceso para tu equipo.\n\nSubir archivos\nResultado de la carga\n02-documento.pdf: Guardado\n03-ñandú & \"prueba\" #100%.txt: Guardado\n04-no-admitido.exe: No se pudo subir — Formato no admitido. Sube PNG, JPG, WebP, GIF, PDF, texto, audio o MP4/WebM válidos.\n05-mime-falso.png: No se pudo subir — Formato no admitido. Sube PNG, JPG, WebP, GIF, PDF, texto, audio o MP4/WebM válidos.\n06-activo.html: No se pudo subir — Formato no admitido. Sube PNG, JPG, WebP, GIF, PDF, texto, audio o MP4/WebM válidos.\n07-activo.svg: No se pudo subir — Formato no admitido. Sube PNG, JPG, WebP, GIF, PDF, texto, audio o MP4/WebM válidos.\n08-limite-exacto.png: Guardado\n09-supera-limite.png: No se pudo subir — 09-supera-limite.png supera el límite de 25 MB.\nTodos\nImágenes\nVideos\nDocumentos\nAudio\n08-limite-exacto.png\n25.00 MB · 18 oct\nImagen\n03-Ã±andÃº & \"prueba\" #100%.txt\n0.00 MB · 18 oct\nDocumento\n02-documento.pdf\n0.00 MB · 18 oct\nDocumento\n01-imagen.png\n0.00 MB · 18 oct\nImagen\n\nGuarda videos y archivos de tu marca para consultarlos y asociarlos a una pieza desde el estudio.\n\n30X Radar · Hecho para encontrar tu próximo ángulo.\nLas señales tienen contexto. Las decisiones son tuyas.",
+  "byteChecks": [
+    {
+      "name": "08-limite-exacto.png",
+      "url": "/api/brands/c42d2a80-3855-4fbb-9084-f3f4ec2a9b7e/assets/347bb8d2-c8b9-4254-834d-932870fd1e77/file",
+      "status": 200,
+      "bytes": 26214400,
+      "sha256": "e1982588bcfd4cfade1f939152e954885316b2b83ad8c89dcb6f0a08f0a07b25",
+      "headers": {
+        "type": "image/png",
+        "disposition": "inline; filename*=UTF-8''08-limite-exacto.png",
+        "csp": "default-src 'none'; style-src 'unsafe-inline'; sandbox",
+        "nosniff": "nosniff",
+        "cache": "private, no-store"
+      }
+    },
+    {
+      "name": "03-Ã±andÃº & \"prueba\" #100%.txt",
+      "url": "/api/brands/c42d2a80-3855-4fbb-9084-f3f4ec2a9b7e/assets/d245a6d1-e1ff-4bb4-8361-6fa02de1692c/file",
+      "status": 200,
+      "bytes": 57,
+      "sha256": "807a5dfe79c37ef39890096f49fb96a13eecf1f70226553ddb7b6d9e223d2ab4",
+      "headers": {
+        "type": "text/plain; charset=utf-8",
+        "disposition": "attachment; filename*=UTF-8''03-%C3%83%C2%B1and%C3%83%C2%BA%20%26%20%22prueba%22%20%23100%25.txt",
+        "csp": "default-src 'none'; style-src 'unsafe-inline'; sandbox",
+        "nosniff": "nosniff",
+        "cache": "private, no-store"
+      }
+    },
+    {
+      "name": "02-documento.pdf",
+      "url": "/api/brands/c42d2a80-3855-4fbb-9084-f3f4ec2a9b7e/assets/a6ee18e2-f703-4471-aa86-74325ee59b6c/file",
+      "status": 200,
+      "bytes": 73,
+      "sha256": "efeeb6e32419bdbcb85dda1d4b2cb059048c248e15e2da270a473e5140cc74e2",
+      "headers": {
+        "type": "application/pdf",
+        "disposition": "attachment; filename*=UTF-8''02-documento.pdf",
+        "csp": "default-src 'none'; style-src 'unsafe-inline'; sandbox",
+        "nosniff": "nosniff",
+        "cache": "private, no-store"
+      }
+    },
+    {
+      "name": "01-imagen.png",
+      "url": "/api/brands/c42d2a80-3855-4fbb-9084-f3f4ec2a9b7e/assets/d7b2c75d-f9f9-40f9-9694-9db2d293b0f8/file",
+      "status": 200,
+      "bytes": 68,
+      "sha256": "cbcd8e1d517ee2a94209c6174f5b66190e33f2dbf03a90897d9efd993fb0b580",
+      "headers": {
+        "type": "image/png",
+        "disposition": "inline; filename*=UTF-8''01-imagen.png",
+        "csp": "default-src 'none'; style-src 'unsafe-inline'; sandbox",
+        "nosniff": "nosniff",
+        "cache": "private, no-store"
+      }
+    }
+  ],
+  "safeContent": [
+    {
+      "name": "14-seguro-svg.txt",
+      "status": 200,
+      "type": "text/plain; charset=utf-8",
+      "disposition": "attachment; filename*=UTF-8''14-seguro-svg.txt",
+      "csp": "default-src 'none'; style-src 'unsafe-inline'; sandbox",
+      "nosniff": "nosniff",
+      "body": "<svg xmlns=\"http://www.w3.org/2000/svg\"><text>Own inert SVG bytes as text</text></svg>"
+    },
+    {
+      "name": "13-seguro-html.txt",
+      "status": 200,
+      "type": "text/plain; charset=utf-8",
+      "disposition": "attachment; filename*=UTF-8''13-seguro-html.txt",
+      "csp": "default-src 'none'; style-src 'unsafe-inline'; sandbox",
+      "nosniff": "nosniff",
+      "body": "<!doctype html><title>QA-INERT</title><p>Own inert HTML bytes as text</p>"
+    }
+  ],
+  "associationPersisted": {
+    "title": "QA asociación sintética",
+    "hook": "Gancho sintético",
+    "script": "Contenido propio para validar asociación",
+    "caption": "Contexto sintético",
+    "cta": "Revisar",
+    "format": "post",
+    "channel": "linkedin",
+    "scenes": [],
+    "assetIds": [
+      "d7b2c75d-f9f9-40f9-9694-9db2d293b0f8"
+    ],
+    "comments": [],
+    "segmentId": "aud-assets",
+    "status": "draft",
+    "id": "6fccb1d4-bc0d-4a32-a5e9-feec8a309bd8",
+    "createdAt": "2026-10-18T02:17:58.892Z",
+    "updatedAt": "2026-10-18T02:18:09.274Z",
+    "approvalVersion": "fPAsVgdB5J5xtHlEOpX9svzWV4s_CJnsceyOe50lnMU"
+  },
+  "delete": {
+    "assets": [
+      {
+        "id": "48f71658-50c3-441a-be08-470c85fbcd70",
+        "name": "14-seguro-svg.txt"
+      },
+      {
+        "id": "91d392ad-1c31-43ec-95cd-eda27922b833",
+        "name": "13-seguro-html.txt"
+      },
+      {
+        "id": "0d532e98-084b-4074-85c2-e1cf8717511d",
+        "name": "10-reintento.md"
+      },
+      {
+        "id": "347bb8d2-c8b9-4254-834d-932870fd1e77",
+        "name": "08-limite-exacto.png"
+      },
+      {
+        "id": "d245a6d1-e1ff-4bb4-8361-6fa02de1692c",
+        "name": "03-Ã±andÃº & \"prueba\" #100%.txt"
+      },
+      {
+        "id": "a6ee18e2-f703-4471-aa86-74325ee59b6c",
+        "name": "02-documento.pdf"
+      },
+      {
+        "id": "d7b2c75d-f9f9-40f9-9694-9db2d293b0f8",
+        "name": "01-imagen.png"
+      }
+    ],
+    "pieces": [
+      {
+        "id": "797367bb-762d-427d-9be6-92de81e20c2f",
+        "status": "draft",
+        "assetIds": [],
+        "scenes": [
+          {
+            "id": "escena-assets",
+            "text": "Escena sintética",
+            "duration": 5
+          }
+        ]
+      },
+      {
+        "id": "6fccb1d4-bc0d-4a32-a5e9-feec8a309bd8",
+        "status": "approved",
+        "assetIds": [
+          "d7b2c75d-f9f9-40f9-9694-9db2d293b0f8"
+        ],
+        "scenes": []
+      }
+    ],
+    "deletedFiles": [
+      {
+        "id": "732b2ee4-41b3-4719-8140-97da479b1b67",
+        "status": 404
+      },
+      {
+        "id": "a32a47d2-ab6e-48ef-bc10-d0b5c955c90e",
+        "status": 404
+      }
+    ]
+  },
+  "wrongBrand": {
+    "status": 404,
+    "body": "{\"error\":\"Archivo no encontrado.\"}"
+  },
+  "anonymous": {
+    "text": "{\"error\":\"Inicia sesión para continuar.\"}",
+    "network": [
+      {
+        "url": "http://127.0.0.26:4116/api/brands/c42d2a80-3855-4fbb-9084-f3f4ec2a9b7e/assets/d7b2c75d-f9f9-40f9-9694-9db2d293b0f8/file",
+        "method": "GET",
+        "status": 401,
+        "failed": false,
+        "timestamp": "2026-10-18T02:19:00.259Z"
+      }
+    ]
+  },
+  "outsider": {
+    "text": "{\"error\":\"No se encontró la marca.\"}",
+    "network": [
+      {
+        "url": "http://127.0.0.26:4116/api/brands/c42d2a80-3855-4fbb-9084-f3f4ec2a9b7e/assets/d7b2c75d-f9f9-40f9-9694-9db2d293b0f8/file",
+        "method": "GET",
+        "status": 404,
+        "failed": false,
+        "timestamp": "2026-10-18T02:19:09.005Z"
+      }
+    ]
+  },
+  "reviewerDisabled": [
+    "          - button \"Subir archivos\" [disabled] [ref=t3-90dce0d8-o5o-e158] [box=1094,127,150,44]:",
+    "            - text: Subir archivos",
+    "                - button \"Eliminar archivo\" [disabled] [ref=t3-90dce0d8-o5o-e183] [box=449,498,32,32]:",
+    "                - button \"Eliminar archivo\" [disabled] [ref=t3-90dce0d8-o5o-e201] [box=698,498,32,32]:",
+    "                - button \"Eliminar archivo\" [disabled] [ref=t3-90dce0d8-o5o-e219] [box=946,498,32,32]:",
+    "                - button \"Eliminar archivo\" [disabled] [ref=t3-90dce0d8-o5o-e235] [box=1194,498,32,32]:",
+    "                - button \"Eliminar archivo\" [disabled] [ref=t3-90dce0d8-o5o-e253] [box=449,806,32,32]:",
+    "                - button \"Eliminar archivo\" [disabled] [ref=t3-90dce0d8-o5o-e271] [box=698,806,32,32]:",
+    "                - button \"Eliminar archivo\" [disabled] [ref=t3-90dce0d8-o5o-e287] [box=946,806,32,32]:"
+  ],
+  "textLimit": "Saltar al contenido\n30X\nRADAR\nQ\nCambiar de marca\nQA Archivos Empresa B Sintética\nQA Archivos Sintética\nEspacio de trabajo\nCrear otra marca\nInicio\nAudiencia\nOportunidades\nContenido\nCalendario\nResultados\nEmpresa y contenido\nMás herramientas\nExplorar fuentes\nReferencias\nArchivos\nFuentes y equipo\nQ\nQA Assets Sintético\nAdministrador\nQA Archivos Sintética\n/\nArchivos\nAgregar referencia\nTodo lo que necesitas para crear.\n\nImágenes, videos, documentos y referencias, con acceso para tu equipo.\n\nSubir archivos\nResultado de la carga\n15-texto-11MiB.txt: No se pudo subir — Formato no admitido. Sube PNG, JPG, WebP, GIF, PDF, texto, audio o MP4/WebM válidos.\nTodos\nImágenes\nVideos\nDocumentos\nAudio\nDale un lugar a tus recursos\n\nSube material de marca o referencias. Puedes asociarlos a tus piezas desde el estudio. Hasta 25 MB por archivo.\n\nSubir mis primeros archivos\n\nGuarda videos y archivos de tu marca para consultarlos y asociarlos a una pieza desde el estudio.\n\n30X Radar · Hecho para encontrar tu próximo ángulo.\nLas señales tienen contexto. Las decisiones son tuyas.\nNo se pudo subir ningún archivo. Revisa el resultado por archivo.",
+  "downloads": [
+    {
+      "fileName": "03-Ã±andÃº & _prueba_ #100%.txt",
+      "path": "/home/ubuntu/.t3/userdata/server-browser/downloads/1e27337bc57d10e922da3ec950cfff944709142d0bf08bf8080fc0b33ea92a7f/78212450-72f9-423a-b3c8-298f53b3399c",
+      "sizeBytes": 57,
+      "url": "http://127.0.0.26:4116/api/brands/c42d2a80-3855-4fbb-9084-f3f4ec2a9b7e/assets/d245a6d1-e1ff-4bb4-8361-6fa02de1692c/file",
+      "completedAt": "2026-10-18T02:17:30.113Z"
+    },
+    {
+      "fileName": "02-documento.pdf",
+      "path": "/home/ubuntu/.t3/userdata/server-browser/downloads/1e27337bc57d10e922da3ec950cfff944709142d0bf08bf8080fc0b33ea92a7f/4f37e8a7-0c91-45c6-b2b8-4ebab92981e9",
+      "sizeBytes": 73,
+      "url": "http://127.0.0.26:4116/api/brands/c42d2a80-3855-4fbb-9084-f3f4ec2a9b7e/assets/a6ee18e2-f703-4471-aa86-74325ee59b6c/file",
+      "completedAt": "2026-10-18T02:17:42.861Z"
+    },
+    {
+      "fileName": "01-imagen.png",
+      "path": "/home/ubuntu/.t3/userdata/server-browser/downloads/1e27337bc57d10e922da3ec950cfff944709142d0bf08bf8080fc0b33ea92a7f/17fd3757-d928-4285-8ca1-8346adcbb97b",
+      "sizeBytes": 68,
+      "url": "http://127.0.0.26:4116/api/brands/c42d2a80-3855-4fbb-9084-f3f4ec2a9b7e/assets/d7b2c75d-f9f9-40f9-9694-9db2d293b0f8/file",
+      "completedAt": "2026-10-18T02:17:43.478Z"
+    }
+  ]
+}

@@ -1,0 +1,109 @@
+{
+  "synthetic": true,
+  "method": "Clones añadidos como fixtures por API; acciones de editar/cancelar/toggle/eliminar mediante herramientas T3 preview",
+  "results": [
+    {
+      "type": "rss",
+      "editedAndCancelled": {
+        "row": "QA Delete rss editada\nPausada\nRSS / Atom\n\nhttps://example.com/feed\n\nTodavía sin sincronizar",
+        "record": {
+          "name": "QA Delete rss editada",
+          "type": "rss",
+          "url": "https://example.com/feed",
+          "enabled": false,
+          "id": "a6fcac72-4797-45cd-8e66-a78c973dd07f",
+          "createdAt": "2026-10-18T02:20:25.142Z",
+          "updatedAt": "2026-10-18T02:20:33.966Z",
+          "query": ""
+        }
+      }
+    },
+    {
+      "type": "hackernews",
+      "editedAndCancelled": {
+        "row": "QA Delete hackernews editada\nPausada\nHacker News\n\ntest systems\n\nTodavía sin sincronizar",
+        "record": {
+          "name": "QA Delete hackernews editada",
+          "type": "hackernews",
+          "query": "test systems",
+          "enabled": false,
+          "id": "a3ef7cba-c96e-449f-8ddc-5dd4659294ed",
+          "createdAt": "2026-10-18T02:20:25.147Z",
+          "updatedAt": "2026-10-18T02:20:35.616Z",
+          "url": ""
+        }
+      }
+    },
+    {
+      "type": "gdelt",
+      "editedAndCancelled": {
+        "row": "QA Delete gdelt editada\nPausada\nGDELT · noticias globales\n\nreliable systems\n\nTodavía sin sincronizar",
+        "record": {
+          "name": "QA Delete gdelt editada",
+          "type": "gdelt",
+          "query": "reliable systems",
+          "enabled": false,
+          "id": "cfa6e570-ae9d-4e8d-873f-8e408513a5d5",
+          "createdAt": "2026-10-18T02:20:25.152Z",
+          "updatedAt": "2026-10-18T02:20:37.216Z",
+          "url": ""
+        }
+      }
+    },
+    {
+      "type": "reddit",
+      "editedAndCancelled": {
+        "row": "QA Delete reddit editada\nPausada\nReddit · acceso limitado\n\nartificial\n\nTodavía sin sincronizar",
+        "record": {
+          "name": "QA Delete reddit editada",
+          "type": "reddit",
+          "query": "artificial",
+          "enabled": false,
+          "id": "3c25b3fe-9923-4caf-8fb0-8e29a5456d6b",
+          "createdAt": "2026-10-18T02:20:25.157Z",
+          "updatedAt": "2026-10-18T02:20:38.923Z",
+          "url": ""
+        }
+      }
+    },
+    {
+      "type": "youtube",
+      "editedAndCancelled": {
+        "row": "QA Delete youtube editada\nPausada\nYouTube · API oficial\n\ntechnology\n\nTodavía sin sincronizar\n\nYouTube no está configurado para esta marca. Configurar proveedor",
+        "record": {
+          "name": "QA Delete youtube editada",
+          "type": "youtube",
+          "query": "technology",
+          "platform": "youtube",
+          "enabled": false,
+          "limit": 20,
+          "id": "053d0baa-e3da-4f3e-8a02-1dd67b90b4a0",
+          "createdAt": "2026-10-18T02:20:25.163Z",
+          "updatedAt": "2026-10-18T02:20:39.568Z"
+        }
+      }
+    },
+    {
+      "type": "apify",
+      "editedAndCancelled": {
+        "row": "QA Delete apify editada\nPausada\nInstagram / TikTok · Apify\n\n#technology\n\nTodavía sin sincronizar\n\nApify no está configurado para esta marca. Configurar proveedor",
+        "record": {
+          "name": "QA Delete apify editada",
+          "type": "apify",
+          "query": "#technology",
+          "platform": "instagram",
+          "limit": 1,
+          "enabled": false,
+          "id": "504e299a-ded8-4e68-94df-86b5dc3f3cd1",
+          "createdAt": "2026-10-18T02:20:25.167Z",
+          "updatedAt": "2026-10-18T02:20:40.652Z"
+        }
+      }
+    }
+  ],
+  "afterReload": {
+    "remainingClones": [],
+    "cancelledNewAbsent": true
+  }
+}
+

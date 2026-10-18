@@ -1,0 +1,113 @@
+{
+  "feature": "Alta guiada de empresa",
+  "slug": "onboarding",
+  "url": "http://127.0.0.12:4102",
+  "status": "PASS",
+  "cases": [
+    {
+      "name": "Contenido vacío",
+      "expected": "Preparación bloqueada sin ninguna fuente.",
+      "actual": "Preparar mi empresa aparece deshabilitado con web, enlaces y texto vacíos.",
+      "verdict": "PASS",
+      "evidence": [
+        "Snapshot T3 del paso 1 antes de introducir fuentes (01:52 UTC): botón Preparar mi empresa disabled."
+      ]
+    },
+    {
+      "name": "URL inválida y privada en web",
+      "expected": "Rechazar entradas inválidas y loopback sin avanzar ni crear marca.",
+      "actual": "esto-no-es-una-url y http://127.0.0.1:4102 reciben HTTP 400 y alerta Solo se permiten URLs públicas HTTP/HTTPS sin credenciales ni direcciones privadas.; permanece en paso 1.",
+      "verdict": "PASS",
+      "evidence": [
+        "docs/adversarial/evidence/onboarding-url-privada.png",
+        "POST /api/context/inspect HTTP 400 (01:53:02 y 01:53:05 UTC)."
+      ]
+    },
+    {
+      "name": "Texto propio sin proveedor",
+      "expected": "Aceptar texto, identificar origen aportado y presentar hipótesis editable sin consumidores observados.",
+      "actual": "Paso 2 con descripción propia, industria/temas heurísticos editables; evidencia Contenido aportado por tu equipo y aviso explícito hipótesis/no consumidores observados.",
+      "verdict": "PASS",
+      "evidence": [
+        "docs/adversarial/evidence/onboarding-texto-procedencia.png"
+      ]
+    },
+    {
+      "name": "Campos obligatorios vacíos",
+      "expected": "No avanzar ni crear marca sin nombre o sin primera audiencia/necesidad.",
+      "actual": "Nombre de empresa vacío bloquea paso 2; audiencia y necesidad vacías bloquean Abrir mi espacio por validación nativa.",
+      "verdict": "PASS",
+      "evidence": [
+        "Validación nativa observada con nombre vacío y, después, audiencia/necesidad vacías: validity.valid=false y Please fill out this field.; el asistente no avanzó."
+      ]
+    },
+    {
+      "name": "Edición y atrás/avanzar",
+      "expected": "Conservar correcciones al volver del paso 3 al 2 y avanzar.",
+      "actual": "Los seis campos corregidos de empresa se conservaron y la audiencia/necesidad editadas reaparecieron al regresar al paso 3.",
+      "verdict": "PASS",
+      "evidence": [
+        "docs/adversarial/evidence/onboarding-confirmacion-audiencia.png",
+        "docs/adversarial/evidence/onboarding-data.json"
+      ]
+    },
+    {
+      "name": "Confirmación, doble clic y persistencia",
+      "expected": "Crear una sola marca con sólo la audiencia revisada, campos editados y evidencia; persistir tras recarga.",
+      "actual": "Doble clic en Abrir mi espacio produjo un POST /brands y un commit. SQLite: una marca, una audiencia editada, dos sugerencias sólo en historial. Recarga conservó empresa y audiencia visibles.",
+      "verdict": "PASS",
+      "evidence": [
+        "docs/adversarial/evidence/onboarding-audiencia-persistida.png",
+        "docs/adversarial/evidence/onboarding-data.json",
+        "POST /api/brands 201 y /context/commit 201 observados una vez al hacer doble clic (01:53:51 UTC)."
+      ]
+    },
+    {
+      "name": "Enlace social aislado y reintento",
+      "expected": "Guardar referencia social como linked sin inferir contenido/audiencia, permitir completar manualmente; URL privada rechazada y reintento válido recuperable.",
+      "actual": "URL social privada 192.168.1.5 devolvió 400; corrección a instagram.com/qa_lumbre_cooperativa con doble clic produjo una inspección válida. Propuesta vacía sin audiencias; evidencia linked, excerpt vacío, aviso contenido sin leer. Marca Lumbre Social QA guardó sólo campos/audiencia manuales y la referencia linked.",
+      "verdict": "PASS",
+      "evidence": [
+        "docs/adversarial/evidence/onboarding-social-enlace.png",
+        "docs/adversarial/evidence/onboarding-data.json"
+      ]
+    },
+    {
+      "name": "Web pública real y normalización",
+      "expected": "example.com sin esquema debe leerse realmente, exponerse como read y conservar texto/URL/procedencia después de confirmar y recargar.",
+      "actual": "UI preparó Example Domain y descripción pública de example.com; evidencia Página leída. Se editó nombre/sector/temas/mercado, se definió primera audiencia y guardó; tras recarga la nueva marca permanece.",
+      "verdict": "PASS",
+      "evidence": [
+        "docs/adversarial/evidence/onboarding-web-publica.png",
+        "docs/adversarial/evidence/onboarding-data.json"
+      ]
+    }
+  ],
+  "findings": [],
+  "limitations": [
+    "Alcance: tres altas en navegador de escritorio 1280×800, con texto ficticio propio, un control público real example.com y una URL social guardada. No es cobertura universal.",
+    "Sin OPENAI_API_KEY, GEMINI_API_KEY, YOUTUBE_API_KEY ni APIFY_API_TOKEN; se verificó fallback heurístico y honestidad de etiquetas. No se probó IA ni extracción mediante proveedores sociales reales.",
+    "La persistencia cubierta es después de confirmar el alta; no se verificó recuperación de un borrador del asistente tras recargar antes de guardar.",
+    "El reintento cubierto es corregir entradas rechazadas y volver a preparar; no se indujeron errores de red en el intervalo entre crear marca y confirmar fuentes."
+  ],
+  "artifacts": [
+    "docs/adversarial/evidence/onboarding-url-privada.png",
+    "docs/adversarial/evidence/onboarding-texto-procedencia.png",
+    "docs/adversarial/evidence/onboarding-confirmacion-audiencia.png",
+    "docs/adversarial/evidence/onboarding-audiencia-persistida.png",
+    "docs/adversarial/evidence/onboarding-social-enlace.png",
+    "docs/adversarial/evidence/onboarding-web-publica.png",
+    "docs/adversarial/evidence/onboarding-data.json"
+  ],
+  "run": {
+    "date": "2026-10-18",
+    "dataDir": "/tmp/30x-adversarial-onboarding",
+    "command": "env -u OPENAI_API_KEY -u GEMINI_API_KEY -u YOUTUBE_API_KEY -u APIFY_API_TOKEN DATA_DIR=/tmp/30x-adversarial-onboarding PORT=4102 DISCOVERY_ENABLED=false node server/start-host.mjs",
+    "pid": 3826864,
+    "execSession": 76056,
+    "tabId": "tab_3n_07e54779-9ab2-4979-8a15-674c4eff160a",
+    "account": "qa-onboarding@example.com",
+    "build": "Build existente, sin ejecutar build ni format.",
+    "processStatus": "Finalizado con SIGTERM al PID propio 3826864; puerto 4102 cerrado. Pestaña propia cerrada; datos temporales conservados."
+  }
+}

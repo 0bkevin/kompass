@@ -1,0 +1,198 @@
+{
+  "feature": "Generación y edición de borradores",
+  "slug": "studio",
+  "url": "http://127.0.0.22:4112",
+  "status": "FAIL",
+  "cases": [
+    {
+      "name": "Identificación del motor sin credenciales",
+      "expected": "La UI debe anunciar que preparará una estructura local y distinguirla de IA real.",
+      "actual": "Nuevo guion anuncia «Usará una estructura local basada en tu marca»; Oportunidades anuncia «sin IA conectada»; los tres editores muestran «Estructura local» y generationEngine=heuristic.",
+      "verdict": "PASS",
+      "evidence": [
+        "docs/adversarial/evidence/studio-local-carousel.png",
+        "docs/adversarial/evidence/studio-generated.json"
+      ]
+    },
+    {
+      "name": "Idea propia: carrusel de cuatro láminas para Instagram",
+      "expected": "Usar audiencia de operaciones, producir cuatro láminas concretas en español con ejemplo hipotético y CTA «Descarga la plantilla de inventario.» sin pegar instrucciones como contenido.",
+      "actual": "Se guardó carousel/instagram/qa-ops; el cuerpo devuelve cinco párrafos genéricos, incorpora literalmente «Dirección editorial: ... Haz un carrusel de 4 láminas ...» y el campo CTA dice «Comparte qué caso quieres poner a prueba.»; no hay cuatro láminas ni ejemplo.",
+      "verdict": "FAIL",
+      "evidence": [
+        "docs/adversarial/evidence/studio-directions-and-cta.png",
+        "docs/adversarial/evidence/studio-generated.json"
+      ]
+    },
+    {
+      "name": "Referencia: reel para otra audiencia y TikTok",
+      "expected": "Conservar referencia, cambiar al segmento docente y preparar tres escenas habladas sobre clases sin conexión, con CTA «Guarda esta ficha para tu próxima clase.».",
+      "actual": "La pieza conserva referenceId y URL, reel/tiktok/qa-teachers; menciona la necesidad docente, pero devuelve el mismo esqueleto genérico de cinco escenas, pega la instrucción y mantiene el CTA genérico.",
+      "verdict": "FAIL",
+      "evidence": [
+        "docs/adversarial/evidence/studio-local-reference.png",
+        "docs/adversarial/evidence/studio-generated.json"
+      ]
+    },
+    {
+      "name": "Creación desde Oportunidades al elegir Newsletter",
+      "expected": "Abrir el editor con una newsletter para la audiencia y canal elegidos, con asunto, saludo, secciones Registrar/Revisar y CTA especificado.",
+      "actual": "La UI crea y abre una pieza newsletter/linkedin/qa-ops ligada a la referencia correcta. El texto sigue siendo el esqueleto genérico, pega instrucciones de newsletter y también «Crear un post original...» procedente de la recomendación anterior. No desarrolla asunto, saludo ni secciones; CTA genérico.",
+      "verdict": "FAIL",
+      "evidence": [
+        "docs/adversarial/evidence/studio-opportunity-newsletter.png",
+        "docs/adversarial/evidence/studio-ui-responses.json"
+      ]
+    },
+    {
+      "name": "Audiencia, necesidad, idioma, procedencia y hechos en las muestras",
+      "expected": "Las dos audiencias deben aparecer en sus respectivos textos en español, conservar la URL cuando hay referencia y no copiar la frase canario ni inventar cifras/testimonios.",
+      "actual": "Los nombres y las necesidades de operaciones/docentes aparecen en los borradores correspondientes. El texto está en español y conserva https://example.com/qa-studio-inventario. No contiene «El ornitorrinco violeta domina las estanterías», cifras de ahorro/ventas, testimonios ni casos presentados como reales. Esto sólo valida estas muestras sintéticas; la adaptación sustantiva falló en los casos anteriores.",
+      "verdict": "PASS",
+      "evidence": [
+        "docs/adversarial/evidence/studio-generated.json",
+        "docs/adversarial/evidence/studio-ui-responses.json"
+      ]
+    },
+    {
+      "name": "Edición, guardado y recarga",
+      "expected": "Guardar título, gancho, guion, caption, CTA, audiencia, canal y responsable; recuperarlos exactamente tras recargar.",
+      "actual": "Se sustituyeron los cinco textos, se cambió TikTok a YouTube, docentes a operaciones y se asignó QA Studio. Tras recargar los ocho campos conservaban los valores. El guion manual de tres escenas siguió completo. Las modificaciones posteriores de validación también persistieron al corregirse.",
+      "verdict": "PASS",
+      "evidence": [
+        "docs/adversarial/evidence/studio-piece-export.md",
+        "docs/adversarial/evidence/studio-final-state.json"
+      ]
+    },
+    {
+      "name": "Asociación de recurso",
+      "expected": "Marcar un activo de la biblioteca desde Recursos, guardar y recargar debe conservar la asociación.",
+      "actual": "Se subió por API una fixture de texto qa-ficha-studio.txt; la acción auditada fue marcarla y guardar desde la UI. Tras recargar, el checkbox estaba checked y assetIds conservaba 8110f612-3543-4191-b6b8-689587679890.",
+      "verdict": "PASS",
+      "evidence": [
+        "docs/adversarial/evidence/studio-final-state.json"
+      ]
+    },
+    {
+      "name": "Cancelar salida con cambios sin guardar",
+      "expected": "Una salida del editor debe pedir confirmación y, al cancelarla, conservar el texto local.",
+      "actual": "Al cambiar el título a CAMBIO LOCAL SIN GUARDAR y pulsar Todas las piezas apareció la confirmación «Hay cambios sin guardar...». Al descartarla permanecieron la misma ruta y el título local.",
+      "verdict": "PASS",
+      "evidence": [
+        "docs/adversarial/evidence/studio-observations.json",
+        "docs/adversarial/evidence/studio-conflict.png"
+      ]
+    },
+    {
+      "name": "Conflicto de edición y descarte explícito",
+      "expected": "Una versión del servidor modificada desde la línea base debe impedir que un guardado UI obsoleto la sobrescriba; el borrador local debe permanecer y el descarte exigir confirmación.",
+      "actual": "Con título local pendiente se preparó una escritura API propia como editor B sintético. Guardar por UI devolvió 409 y mostró Conflicto de edición; localTitle seguía CAMBIO LOCAL SIN GUARDAR, serverTitle era VERSIÓN SERVIDOR · editor B sintético y Guardar cambios estaba deshabilitado. Cancelar el descarte conservó local; aceptar cargó la versión servidor.",
+      "verdict": "PASS",
+      "evidence": [
+        "docs/adversarial/evidence/studio-conflict.png",
+        "docs/adversarial/evidence/studio-observations.json"
+      ]
+    },
+    {
+      "name": "Título vacío y CTA por encima de límite; corrección",
+      "expected": "Rechazar título vacío y CTA de 2001 caracteres sin alterar servidor ni perder el estado local; permitir guardar tras corregir.",
+      "actual": "Los clics UI devolvieron 400: «title: longitud inválida (máximo 2000).» y «cta: longitud inválida (máximo 2000).». El servidor retuvo la última versión y la UI conservó la edición; corregir título y CTA produjo 200 y guardó ambos.",
+      "verdict": "PASS",
+      "evidence": [
+        "docs/adversarial/evidence/studio-ui-responses.json",
+        "docs/adversarial/evidence/studio-final-state.json"
+      ]
+    },
+    {
+      "name": "Instrucciones de creación por encima de límite",
+      "expected": "Rechazar 10001 caracteres, conservar el formulario y no crear otra pieza.",
+      "actual": "Preparar primer guion por UI devolvió 400 «Las instrucciones deben ser texto de hasta 10.000 caracteres.». El textarea retuvo longitud 10001 y la lista siguió con tres piezas.",
+      "verdict": "PASS",
+      "evidence": [
+        "docs/adversarial/evidence/studio-instruction-limit.png",
+        "docs/adversarial/evidence/studio-ui-responses.json"
+      ]
+    },
+    {
+      "name": "Exportación de pieza editada",
+      "expected": "Exportar por UI debe descargar Markdown con los textos y procedencia actuales.",
+      "actual": "Se descargó QA persistencia · clase sin conexión.md de 530 bytes. La inspección del archivo confirmó título, formato Reel, canal youtube, gancho, guion manual íntegro, caption, CTA y URL de origen.",
+      "verdict": "PASS",
+      "evidence": [
+        "docs/adversarial/evidence/studio-piece-export.md"
+      ]
+    },
+    {
+      "name": "Edición separada de formato y escenas",
+      "expected": "Si existen controles de formato/escenas en el editor, probar edición y persistencia.",
+      "actual": "El editor de esta build no ofrece esos controles; permite editar el guion como texto. No se reemplazó la acción UI por escrituras API para afirmar cobertura.",
+      "verdict": "BLOCKED",
+      "evidence": [
+        "src/features/Studio.tsx:637",
+        "docs/adversarial/evidence/studio-final-state.json"
+      ]
+    },
+    {
+      "name": "Generación con proveedor de IA real",
+      "expected": "Validar cumplimiento editorial y exactitud con un proveedor real configurado.",
+      "actual": "No hay claves ni proveedor configurado; se verificaron sólo el aviso y la estructura local. No se usaron mocks ni créditos y no se atribuye precisión a IA real.",
+      "verdict": "BLOCKED",
+      "evidence": [
+        "docs/adversarial/evidence/studio-local-carousel.png"
+      ]
+    }
+  ],
+  "findings": [
+    {
+      "id": "studio-1",
+      "severity": "P2",
+      "title": "La estructura local pega la dirección editorial en el guion e ignora el formato y CTA pedidos",
+      "steps": [
+        "Arrancar la build sin claves y preparar una marca con las dos audiencias sintéticas de studio-final-state.json.",
+        "En /studio pulsar Crear contenido y elegir Instagram, Carrusel y Jefas de operaciones de librerías.",
+        "Pedir cuatro láminas, un ejemplo hipotético y CTA final exacto «Descarga la plantilla de inventario.»; pulsar Preparar primer guion.",
+        "Leer el guion y el campo Llamado a la acción. Repetir con referencia, TikTok/Reel y docentes, o desde Oportunidades con Newsletter."
+      ],
+      "expected": "Una estructura local puede ser preliminar, pero debe reflejar el formato elegido y la dirección proporcionada sin presentar las instrucciones como texto para publicar; el CTA solicitado debe quedar en su campo o declararse claramente que no pudo aplicarse.",
+      "actual": "En tres creaciones UI, los metadatos son correctos pero el contenido usa la misma plantilla de cinco bloques/escenas. Incluye literalmente «Dirección editorial:» y las instrucciones; CTA fijo «Comparte qué caso quieres poner a prueba.». Carrusel carece de cuatro láminas y newsletter de asunto/saludo/secciones. Desde Oportunidades incluso queda «Crear un post original...» junto a la instrucción de newsletter. La edición manual permite recuperar el flujo; el defecto no se clasifica P1.",
+      "evidence": [
+        "docs/adversarial/evidence/studio-directions-and-cta.png",
+        "docs/adversarial/evidence/studio-generated.json",
+        "docs/adversarial/evidence/studio-local-reference.png",
+        "docs/adversarial/evidence/studio-opportunity-newsletter.png",
+        "docs/adversarial/evidence/studio-ui-responses.json"
+      ],
+      "source": [
+        "server/intelligence.mjs:1861",
+        "server/intelligence.mjs:1865",
+        "server/intelligence.mjs:1873",
+        "server/intelligence.mjs:1874",
+        "src/features/Journey.tsx:830"
+      ]
+    }
+  ],
+  "limitations": [
+    "Sin integración de IA real: las conclusiones de contenido corresponden exclusivamente a generationEngine=heuristic.",
+    "Fixtures sintéticas, sin datos de audiencia observada ni proveedores públicos/privados reales. example.com es procedencia sintética; no se afirma extracción de esa página.",
+    "El conflicto se provocó con una segunda escritura API autorizada en la misma cuenta, simulando editor B; se verificó el guardado y resolución mediante UI. No se abrieron pestañas ni cuentas de otros revisores.",
+    "No hay controles separados de formato o escenas en el editor de esta build. Se auditó edición del guion como texto y asociación de recursos.",
+    "Aprobación, calendario y publicación quedan fuera de esta revisión.",
+    "Sólo se revisó español, idioma de la marca de prueba; no se afirma soporte multilingüe universal."
+  ],
+  "artifacts": [
+    "docs/adversarial/reports/studio.md",
+    "docs/adversarial/reports/studio.json",
+    "docs/adversarial/evidence/studio-generated.json",
+    "docs/adversarial/evidence/studio-final-state.json",
+    "docs/adversarial/evidence/studio-ui-responses.json",
+    "docs/adversarial/evidence/studio-observations.json",
+    "docs/adversarial/evidence/studio-local-carousel.png",
+    "docs/adversarial/evidence/studio-local-reference.png",
+    "docs/adversarial/evidence/studio-directions-and-cta.png",
+    "docs/adversarial/evidence/studio-opportunity-newsletter.png",
+    "docs/adversarial/evidence/studio-conflict.png",
+    "docs/adversarial/evidence/studio-instruction-limit.png",
+    "docs/adversarial/evidence/studio-piece-export.md"
+  ]
+}
+

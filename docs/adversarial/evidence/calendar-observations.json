@@ -1,0 +1,246 @@
+{
+  "environment": {
+    "url": "http://127.0.0.24:4114",
+    "dataDir": "/tmp/30x-adversarial-calendar",
+    "sessionId": 36823,
+    "pid": 3883332,
+    "tabId": "tab_40_07e54779-9ab2-4979-8a15-674c4eff160a",
+    "browserTimezone": "UTC",
+    "synthetic": true
+  },
+  "fixtures": {
+    "brandId": "376c196f-833f-41eb-911b-d2f93ee55bd8",
+    "pieces": [
+      {
+        "id": "7c2987c9-8cbc-4683-9171-db02a165c1ef",
+        "title": "=QA, \"Futuro\"\nLíderes",
+        "status": "approved",
+        "channel": "linkedin",
+        "segmentId": "cal-lideres"
+      },
+      {
+        "id": "7b1ac41f-27b4-4fb2-b42f-d1e569cf6753",
+        "title": "QA aprobación que cambiará",
+        "status": "approved",
+        "channel": "instagram",
+        "segmentId": "cal-equipos"
+      },
+      {
+        "id": "3d76d44a-bddc-4322-a7cd-45397d6e7ee5",
+        "title": "QA borrador sin agenda",
+        "status": "draft",
+        "channel": "tiktok",
+        "segmentId": "cal-lideres"
+      },
+      {
+        "id": "8cd0dc12-6cf4-42c4-9e00-a824fea63fd8",
+        "title": "QA en revisión sin agenda",
+        "status": "review",
+        "channel": "youtube",
+        "segmentId": "cal-equipos"
+      },
+      {
+        "id": "79e3ff2f-3f2b-493f-8f1c-fa1f117bc7d4",
+        "title": "QA LinkedIn miércoles",
+        "status": "scheduled",
+        "channel": "linkedin",
+        "segmentId": "cal-lideres",
+        "scheduledFor": "2026-10-21T09:10:00.000Z"
+      },
+      {
+        "id": "bf91eaea-99ee-4c2a-9708-2f00680d5fb5",
+        "title": "QA Instagram jueves",
+        "status": "scheduled",
+        "channel": "instagram",
+        "segmentId": "cal-equipos",
+        "scheduledFor": "2026-10-22T16:20:00.000Z"
+      },
+      {
+        "id": "080376c4-9616-4fa6-92c1-cfa21d96ce4e",
+        "title": "QA YouTube noviembre",
+        "status": "scheduled",
+        "channel": "youtube",
+        "segmentId": "cal-equipos",
+        "scheduledFor": "2026-11-02T11:25:00.000Z"
+      }
+    ]
+  },
+  "observations": [
+    {
+      "case": "programar",
+      "chosenLocal": "2026-10-21T14:35",
+      "persisted": "2026-10-21T14:35:00.000Z",
+      "status": "scheduled",
+      "channel": "linkedin",
+      "segmentId": "cal-lideres",
+      "summaryOctober": 3,
+      "selectedDayCount": 2,
+      "reloadVerified": true
+    },
+    {
+      "case": "validacion-vacio",
+      "value": "",
+      "valid": false,
+      "validationMessage": "Please fill out this field.",
+      "dialogRemainedOpen": true
+    },
+    {
+      "case": "validacion-pasado",
+      "value": "2026-10-17T14:35",
+      "httpStatus": 400,
+      "message": "Elige una fecha futura para programar la pieza.",
+      "saved": false
+    },
+    {
+      "case": "reprogramar",
+      "from": "2026-10-21T14:35:00.000Z",
+      "to": "2026-10-23T17:45:00.000Z",
+      "oldDayCount": 1,
+      "newDayCount": 1,
+      "totalOctober": 3
+    },
+    {
+      "case": "aprobacion-invalidada-dialogo-abierto",
+      "fixtureApiStatus": 200,
+      "currentStatus": "draft",
+      "scheduleStatus": 409,
+      "message": "Transición inválida: draft → scheduled. Primero envía la pieza a revisión y apruébala."
+    },
+    {
+      "case": "edicion-ui-programada",
+      "statusAfterSave": "draft",
+      "scheduledForAbsent": true,
+      "script": "Guion corregido mediante UI; requiere nueva aprobación.",
+      "calendarOctoberAfter": 2
+    },
+    {
+      "case": "navegacion",
+      "monthOctober": 3,
+      "week19to25October": 3,
+      "week12to18October": 0,
+      "monthNovember": 1,
+      "weekArticles": 7,
+      "monthArticles": 42,
+      "previousNextTodayWorked": true
+    },
+    {
+      "case": "csv-normal",
+      "file": "calendar-export-normal.csv",
+      "rows": 3,
+      "columns": 12,
+      "dates": [
+        "2026-10-21 09:10 UTC",
+        "2026-10-21 14:35 UTC",
+        "2026-10-22 16:20 UTC"
+      ],
+      "newlinesAndQuotesParsed": true,
+      "formulaPrefixEscaped": true,
+      "audiencesMatch": true,
+      "novemberExcluded": true
+    },
+    {
+      "case": "markdown",
+      "file": "calendar-piece-export.md",
+      "titleHookScriptCaptionCtaSourceMatch": true,
+      "source": "Idea propia",
+      "containsScheduledDate": false
+    },
+    {
+      "case": "reviewer",
+      "syntheticMembershipSetup": "SQLite propia, tras registrar cuenta ficticia por API",
+      "role": "reviewer",
+      "calendarWriteControls": [],
+      "apiPatchStatus": 403,
+      "apiError": "Necesitas permisos de edición.",
+      "fieldsetDisabled": true,
+      "effectivelyDisabledFields": true
+    },
+    {
+      "case": "draft-dated",
+      "fixtureMutation": {
+        "method": "PATCH",
+        "pieceId": "bf91eaea-99ee-4c2a-9708-2f00680d5fb5",
+        "body": {
+          "status": "draft",
+          "title": "QA Instagram corregido sin aprobación",
+          "script": "Revisión sintética pendiente; no debe contarse como programada."
+        },
+        "httpStatus": 200,
+        "retainedScheduledFor": "2026-10-22T16:20:00.000Z"
+      },
+      "apiScheduledOctoberCount": 1,
+      "uiOctoberCount": 2,
+      "uiWeekCount": 2,
+      "upcomingContainsDraft": true,
+      "csvContainsDraft": true
+    }
+  ],
+  "finalState": {
+    "at": "2026-10-18T02:15:21.017Z",
+    "brandId": "376c196f-833f-41eb-911b-d2f93ee55bd8",
+    "role": "reviewer",
+    "pieces": [
+      {
+        "id": "080376c4-9616-4fa6-92c1-cfa21d96ce4e",
+        "title": "QA YouTube noviembre",
+        "status": "scheduled",
+        "scheduledFor": "2026-11-02T11:25:00.000Z",
+        "channel": "youtube",
+        "segmentId": "cal-equipos",
+        "script": "Línea uno, con \"comillas\".\nLínea dos; auditoría sintética."
+      },
+      {
+        "id": "bf91eaea-99ee-4c2a-9708-2f00680d5fb5",
+        "title": "QA Instagram corregido sin aprobación",
+        "status": "draft",
+        "scheduledFor": "2026-10-22T16:20:00.000Z",
+        "channel": "instagram",
+        "segmentId": "cal-equipos",
+        "script": "Revisión sintética pendiente; no debe contarse como programada."
+      },
+      {
+        "id": "79e3ff2f-3f2b-493f-8f1c-fa1f117bc7d4",
+        "title": "QA LinkedIn miércoles",
+        "status": "scheduled",
+        "scheduledFor": "2026-10-21T09:10:00.000Z",
+        "channel": "linkedin",
+        "segmentId": "cal-lideres",
+        "script": "Línea uno, con \"comillas\".\nLínea dos; auditoría sintética."
+      },
+      {
+        "id": "8cd0dc12-6cf4-42c4-9e00-a824fea63fd8",
+        "title": "QA en revisión sin agenda",
+        "status": "review",
+        "channel": "youtube",
+        "segmentId": "cal-equipos",
+        "script": "Línea uno, con \"comillas\".\nLínea dos; auditoría sintética."
+      },
+      {
+        "id": "3d76d44a-bddc-4322-a7cd-45397d6e7ee5",
+        "title": "QA borrador sin agenda",
+        "status": "draft",
+        "channel": "tiktok",
+        "segmentId": "cal-lideres",
+        "script": "Línea uno, con \"comillas\".\nLínea dos; auditoría sintética."
+      },
+      {
+        "id": "7b1ac41f-27b4-4fb2-b42f-d1e569cf6753",
+        "title": "QA aprobación invalidada por corrección",
+        "status": "approved",
+        "channel": "instagram",
+        "segmentId": "cal-equipos",
+        "script": "Contenido corregido después de abrir la programación"
+      },
+      {
+        "id": "7c2987c9-8cbc-4683-9171-db02a165c1ef",
+        "title": "=QA, \"Futuro\"\nLíderes",
+        "status": "draft",
+        "channel": "linkedin",
+        "segmentId": "cal-lideres",
+        "script": "Guion corregido mediante UI; requiere nueva aprobación."
+      }
+    ],
+    "reviewerFieldsetDisabled": true,
+    "reviewerFieldsEffectivelyDisabled": true
+  }
+}

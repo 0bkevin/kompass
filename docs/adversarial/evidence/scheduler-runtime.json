@@ -1,0 +1,2738 @@
+{
+  "simulated": true,
+  "wallStartedAt": "2026-10-18T02:27:18.266Z",
+  "pid": 3926878,
+  "cases": [
+    {
+      "name": "Minimum cadence, exact 10-minute boundary, and repeat",
+      "expected": "0 calls at 599999 ms; 1 at 600000 ms; second only after another 600000 ms.",
+      "actual": {
+        "before": 0,
+        "first": 1,
+        "beforeSecond": 1,
+        "afterSecond": 2,
+        "successState": {
+          "lastAttemptAt": 1792291039310,
+          "failures": 0,
+          "nextAttemptAt": 1792291639310
+        }
+      },
+      "verdict": "PASS"
+    },
+    {
+      "name": "Non-reentrancy within a scheduler",
+      "expected": "Concurrent ticks invoke discovery once; immediate repeated tick respects cadence.",
+      "actual": {
+        "concurrent": 1,
+        "finalEntries": 1
+      },
+      "verdict": "PASS"
+    },
+    {
+      "name": "Brands and sources eligibility",
+      "expected": "Only brand with enabled sources discovered; disabled source never fetched.",
+      "actual": {
+        "calls": [
+          {
+            "brand": "scheduler-suite",
+            "now": 1792290439310,
+            "mode": "success"
+          }
+        ],
+        "fetches": [
+          {
+            "url": "https://example.com/suite-primary.xml",
+            "mode": "success",
+            "now": 1792290439310
+          }
+        ],
+        "emptyScheduler": null,
+        "disabledScheduler": null
+      },
+      "verdict": "PASS"
+    },
+    {
+      "name": "All-source failures exponential backoff and 6-hour cap",
+      "expected": "Delay minutes 20,40,80,160,320,360,360,360,360,360; failure count saturates at 8; no call 1 ms before each boundary.",
+      "actual": {
+        "delays": [
+          20,
+          40,
+          80,
+          160,
+          320,
+          360,
+          360,
+          360,
+          360,
+          360
+        ],
+        "counts": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          8,
+          8
+        ],
+        "boundaryCounts": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10
+        ],
+        "calls": 10
+      },
+      "verdict": "PASS"
+    },
+    {
+      "name": "Full success clears failed streak",
+      "expected": "After prior failures, failures=0 and nextAttemptAt=now+10 min.",
+      "actual": {
+        "lastAttemptAt": 1792435639310,
+        "failures": 0,
+        "nextAttemptAt": 1792436239310
+      },
+      "verdict": "PASS"
+    },
+    {
+      "name": "Partial failure preserves successful results and clears backoff",
+      "expected": "One failed source plus one successful RSS persists reference and resets failures=0/cadence=10 min.",
+      "actual": {
+        "scheduler": {
+          "lastAttemptAt": 1792291639310,
+          "failures": 0,
+          "nextAttemptAt": 1792292239310
+        },
+        "result": {
+          "added": 1,
+          "updated": 0,
+          "errors": [
+            "SIMULADA suite-secondary: Fallo RSS SIMULADO, sin red"
+          ],
+          "sources": [
+            {
+              "id": "suite-secondary",
+              "name": "SIMULADA suite-secondary",
+              "added": 0,
+              "error": "SIMULADA suite-secondary: Fallo RSS SIMULADO, sin red"
+            },
+            {
+              "id": "suite-primary",
+              "name": "SIMULADA suite-primary",
+              "added": 1,
+              "updated": 0,
+              "fetched": 1
+            }
+          ]
+        },
+        "sources": [
+          {
+            "id": "suite-secondary",
+            "name": "SIMULADA suite-secondary",
+            "type": "rss",
+            "enabled": true,
+            "url": "https://example.com/suite-secondary.xml",
+            "createdAt": "2026-10-18T02:27:19.600Z",
+            "updatedAt": "2026-10-18T02:27:19.610Z",
+            "lastError": "SIMULADA suite-secondary: Fallo RSS SIMULADO, sin red",
+            "lastAttemptAt": "2026-10-18T02:27:19.610Z"
+          },
+          {
+            "id": "suite-primary",
+            "name": "SIMULADA suite-primary",
+            "type": "rss",
+            "enabled": true,
+            "url": "https://example.com/suite-primary.xml",
+            "createdAt": "2026-10-18T02:27:19.598Z",
+            "updatedAt": "2026-10-18T02:27:19.614Z",
+            "lastAttemptAt": "2026-10-18T02:27:19.604Z",
+            "lastSyncedAt": "2026-10-18T02:27:19.614Z",
+            "lastResultCount": 1
+          }
+        ],
+        "references": [
+          {
+            "title": "SIMULADA: Automatización responsable para equipos",
+            "sourceId": "suite-primary"
+          }
+        ]
+      },
+      "verdict": "PASS"
+    },
+    {
+      "name": "Thrown discovery error",
+      "expected": "Error does not reject tick; failure=1 and activity explains pending update.",
+      "actual": {
+        "scheduler": {
+          "lastAttemptAt": 1792290439310,
+          "failures": 1,
+          "nextAttemptAt": 1792291639310
+        },
+        "activity": [
+          {
+            "text": "Actualización automática pendiente: Fallo superior SIMULADO"
+          }
+        ]
+      },
+      "verdict": "PASS"
+    },
+    {
+      "name": "stop suppresses subsequent ticks",
+      "expected": "No discovery calls or scheduler metadata after stop.",
+      "actual": {
+        "calls": [],
+        "scheduler": null
+      },
+      "verdict": "PASS"
+    },
+    {
+      "name": "DISCOVERY_ENABLED=false",
+      "expected": "No discovery calls or metadata when disabled.",
+      "actual": {
+        "calls": [],
+        "scheduler": null
+      },
+      "verdict": "PASS"
+    },
+    {
+      "name": "Scheduled retry after successful UI manual refresh",
+      "expected": "The next eligible scheduled tick runs and preserves imported references even if discovery fails.",
+      "actual": {
+        "before": {
+          "now": 1792289803003,
+          "nowISO": "2026-10-18T02:16:43.003Z",
+          "mode": "failure",
+          "selected": [
+            "scheduler-ui"
+          ],
+          "calls": [
+            {
+              "brand": "scheduler-ui",
+              "now": 1792289803003,
+              "mode": "failure"
+            }
+          ],
+          "fetches": [
+            {
+              "url": "https://www.nasa.gov/feed/",
+              "mode": "failure",
+              "now": 1792289803003
+            }
+          ],
+          "scheduler": {
+            "lastAttemptAt": 1792289803003,
+            "failures": 1,
+            "nextAttemptAt": 1792291003003
+          },
+          "sources": [
+            {
+              "id": "ui-primary",
+              "name": "BBC tecnología · actualización manual pública",
+              "type": "rss",
+              "enabled": true,
+              "url": "https://feeds.bbci.co.uk/news/technology/rss.xml",
+              "createdAt": "2026-10-18T02:27:43.000Z",
+              "updatedAt": "2026-10-18T02:28:20.537Z",
+              "lastAttemptAt": "2026-10-18T02:27:47.506Z",
+              "query": "",
+              "lastSyncedAt": "2026-10-18T02:28:20.537Z",
+              "lastResultCount": 21
+            }
+          ],
+          "references": [
+            {
+              "id": "e9e8ab15-534e-472a-9a11-e33a09f81ad0",
+              "title": "Tech Now",
+              "sourceId": "ui-primary",
+              "source": "BBC tecnología · actualización manual pública",
+              "url": "https://www.bbc.co.uk/iplayer/episode/m0032301?at_medium=RSS&amp;at_campaign=rss",
+              "status": "new"
+            },
+            {
+              "id": "f7ada562-ba2c-4a2f-b60f-04c81cddc566",
+              "title": "Tech Now",
+              "sourceId": "ui-primary",
+              "source": "BBC tecnología · actualización manual pública",
+              "url": "https://www.bbc.co.uk/iplayer/episode/m0032d9k?at_medium=RSS&amp;at_campaign=rss",
+              "status": "new"
+            },
+            {
+              "id": "d27169fb-6208-4112-8a4b-4ad991e41fd8",
+              "title": "Tech Now",
+              "sourceId": "ui-primary",
+              "source": "BBC tecnología · actualización manual pública",
+              "url": "https://www.bbc.co.uk/iplayer/episode/m0032n6v?at_medium=RSS&amp;at_campaign=rss",
+              "status": "new"
+            },
+            {
+              "id": "45e6f73b-22ae-493e-8ae7-e6a1507cf6e4",
+              "title": "Tech Now",
+              "sourceId": "ui-primary",
+              "source": "BBC tecnología · actualización manual pública",
+              "url": "https://www.bbc.co.uk/iplayer/episode/m0032yng?at_medium=RSS&amp;at_campaign=rss",
+              "status": "new"
+            },
+            {
+              "id": "68d35108-2228-4ae6-a6cd-a5190be4e29e",
+              "title": "Tech Life",
+              "sourceId": "ui-primary",
+              "source": "BBC tecnología · actualización manual pública",
+              "url": "https://www.bbc.co.uk/sounds/play/w3ct8jyg?at_medium=RSS&amp;at_campaign=rss",
+              "status": "new"
+            },
+            {
+              "id": "3b41374b-ffa0-4777-9432-8641533b745a",
+              "title": "Tech Life",
+              "sourceId": "ui-primary",
+              "source": "BBC tecnología · actualización manual pública",
+              "url": "https://www.bbc.co.uk/sounds/play/w3ct8jyh?at_medium=RSS&amp;at_campaign=rss",
+              "status": "new"
+            },
+            {
+              "id": "03cf5013-e79e-4aef-9f3a-b2e17e8e784e",
+              "title": "Tech Life",
+              "sourceId": "ui-primary",
+              "source": "BBC tecnología · actualización manual pública",
+              "url": "https://www.bbc.co.uk/sounds/play/w3ct8jyj?at_medium=RSS&amp;at_campaign=rss",
+              "status": "new"
+            },
+            {
+              "id": "1e2f4849-ee93-4e8b-a588-636dc699e819",
+              "title": "Tech Life",
+              "sourceId": "ui-primary",
+              "source": "BBC tecnología · actualización manual pública",
+              "url": "https://www.bbc.co.uk/sounds/play/w3ct8jyk?at_medium=RSS&amp;at_campaign=rss",
+              "status": "new"
+            },
+            {
+              "id": "227bd195-a1be-4374-85e3-b0af40c1e9c8",
+              "title": "Phase Eight and Hobbs owner hit by cyber-attack, as H&M probes separate hack claim",
+              "sourceId": "ui-primary",
+              "source": "BBC tecnología · actualización manual pública",
+              "url": "https://www.bbc.co.uk/news/articles/cwly38gjkejko?at_medium=RSS&amp;at_campaign=rss",
+              "status": "new"
+            },
+            {
+              "id": "c585f0d8-a90a-4162-8551-a3b3ae542d7a",
+              "title": "Bumble bought for $1.3bn in 'bet on the future of humanity'",
+              "sourceId": "ui-primary",
+              "source": "BBC tecnología · actualización manual pública",
+              "url": "https://www.bbc.co.uk/news/articles/cm9qzwjgnjxlo?at_medium=RSS&amp;at_campaign=rss",
+              "status": "new"
+            },
+            {
+              "id": "5e1b7c46-9b25-4f48-ac73-4a6c08c3ee49",
+              "title": "How long will humans be needed for translation?",
+              "sourceId": "ui-primary",
+              "source": "BBC tecnología · actualización manual pública",
+              "url": "https://www.bbc.co.uk/news/articles/c1wxdjx27ypo?at_medium=RSS&amp;at_campaign=rss",
+              "status": "new"
+            },
+            {
+              "id": "6dd21a6e-1e04-40e9-a9ab-2f101b1cf157",
+              "title": "'I applied for 200 jobs' - How 'spray and pray' AI job applications can backfire",
+              "sourceId": "ui-primary",
+              "source": "BBC tecnología · actualización manual pública",
+              "url": "https://www.bbc.co.uk/news/articles/c623dnkn8pkyo?at_medium=RSS&amp;at_campaign=rss",
+              "status": "new"
+            },
+            {
+              "id": "feff3a39-f33f-4c4c-82d9-2b235bee6f70",
+              "title": "Toilet paper and secret recorders: What we know about the arrest of the Saudi OpenAI engineer",
+              "sourceId": "ui-primary",
+              "source": "BBC tecnología · actualización manual pública",
+              "url": "https://www.bbc.co.uk/news/articles/cm04054ykqqqo?at_medium=RSS&amp;at_campaign=rss",
+              "status": "new"
+            },
+            {
+              "id": "93efa19a-8bba-4b5b-a0a0-7715c0d0c806",
+              "title": "AI giant Anthropic woos potential investors ahead of stock market debut",
+              "sourceId": "ui-primary",
+              "source": "BBC tecnología · actualización manual pública",
+              "url": "https://www.bbc.co.uk/news/articles/cqzjx448vxkgo?at_medium=RSS&amp;at_campaign=rss",
+              "status": "new"
+            },
+            {
+              "id": "0de008b2-f51e-423d-974d-df880147a21a",
+              "title": "GTA 6 - all you need to know about Rockstar's blockbuster game",
+              "sourceId": "ui-primary",
+              "source": "BBC tecnología · actualización manual pública",
+              "url": "https://www.bbc.co.uk/news/articles/c9q20djz4wno?at_medium=RSS&amp;at_campaign=rss",
+              "status": "new"
+            },
+            {
+              "id": "fb08e590-eb10-42dc-bb35-43734f920090",
+              "title": "Living with a stink? Technology might help",
+              "sourceId": "ui-primary",
+              "source": "BBC tecnología · actualización manual pública",
+              "url": "https://www.bbc.co.uk/news/articles/cr6240q1w136o?at_medium=RSS&amp;at_campaign=rss",
+              "status": "new"
+            },
+            {
+              "id": "1dcca03b-4fe8-4bd6-a84e-7c30774cd6c3",
+              "title": "Porn showing choking or incest to be banned from early November, government says",
+              "sourceId": "ui-primary",
+              "source": "BBC tecnología · actualización manual pública",
+              "url": "https://www.bbc.co.uk/news/articles/cmpqgepejr2ro?at_medium=RSS&amp;at_campaign=rss",
+              "status": "new"
+            },
+            {
+              "id": "45db5353-dae8-4174-a3d6-8d46f3f73a5d",
+              "title": "Snapchat and Instagram grooming becoming 'easier'",
+              "sourceId": "ui-primary",
+              "source": "BBC tecnología · actualización manual pública",
+              "url": "https://www.bbc.co.uk/news/articles/cq33xd6j1dv5o?at_medium=RSS&amp;at_campaign=rss",
+              "status": "new"
+            },
+            {
+              "id": "d9f8c01b-9b91-45fd-b984-9f2f36f3afe6",
+              "title": "Russian man linked to deadly London hospitals hack arrested",
+              "sourceId": "ui-primary",
+              "source": "BBC tecnología · actualización manual pública",
+              "url": "https://www.bbc.co.uk/news/articles/c9vgr61kml3mo?at_medium=RSS&amp;at_campaign=rss",
+              "status": "new"
+            },
+            {
+              "id": "1c6b31b4-4a5a-44f4-99b4-6eed02a3729c",
+              "title": "Toxic algorithms wouldn't let them go - now Australia wants an off switch",
+              "sourceId": "ui-primary",
+              "source": "BBC tecnología · actualización manual pública",
+              "url": "https://www.bbc.co.uk/news/articles/cwr7y8er1n8vo?at_medium=RSS&amp;at_campaign=rss",
+              "status": "new"
+            },
+            {
+              "id": "c6d33da5-8df5-44c5-baf0-6fe7907b5c97",
+              "title": "No further action against government adviser's wife over Palestine Action post, police say",
+              "sourceId": "ui-primary",
+              "source": "BBC tecnología · actualización manual pública",
+              "url": "https://www.bbc.co.uk/news/articles/cv8ez40yz950o?at_medium=RSS&amp;at_campaign=rss",
+              "status": "new"
+            }
+          ],
+          "activity": [
+            {
+              "text": "Radar actualizado: 21 referencias nuevas, 0 actualizadas y 0 fuentes con errores.",
+              "created_at": "2026-10-18T02:28:20.541Z"
+            },
+            {
+              "text": "Radar actualizado: 0 referencias nuevas, 0 actualizadas y 1 fuentes con errores.",
+              "created_at": "2026-10-18T02:27:47.509Z"
+            },
+            {
+              "text": "Radar actualizado: 0 referencias nuevas, 0 actualizadas y 1 fuentes con errores.",
+              "created_at": "2026-10-18T02:27:43.005Z"
+            }
+          ],
+          "lastResult": {
+            "added": 0,
+            "updated": 0,
+            "errors": [
+              "NASA RSS · actualización manual pública: Fallo RSS SIMULADO, sin red"
+            ],
+            "sources": [
+              {
+                "id": "ui-primary",
+                "name": "NASA RSS · actualización manual pública",
+                "added": 0,
+                "error": "NASA RSS · actualización manual pública: Fallo RSS SIMULADO, sin red"
+              }
+            ]
+          }
+        },
+        "after": {
+          "now": 1792291100537,
+          "nowISO": "2026-10-18T02:38:20.537Z",
+          "mode": "failure",
+          "selected": [
+            "scheduler-ui"
+          ],
+          "calls": [
+            {
+              "brand": "scheduler-ui",
+              "now": 1792289803003,
+              "mode": "failure"
+            },
+            {
+              "brand": "scheduler-ui",
+              "now": 1792291100537,
+              "mode": "failure"
+            }
+          ],
+          "fetches": [
+            {
+              "url": "https://www.nasa.gov/feed/",
+              "mode": "failure",
+              "now": 1792289803003
+            },
+            {
+              "url": "https://feeds.bbci.co.uk/news/technology/rss.xml",
+              "mode": "failure",
+              "now": 1792291100537
+            }
+          ],
+          "scheduler": {
+            "lastAttemptAt": 1792291100537,
+            "failures": 2,
+            "nextAttemptAt": 1792293500537
+          },
+          "sources": [
+            {
+              "id": "ui-primary",
+              "name": "BBC tecnología · actualización manual pública",
+              "type": "rss",
+              "enabled": true,
+              "url": "https://feeds.bbci.co.uk/news/technology/rss.xml",
+              "createdAt": "2026-10-18T02:27:43.000Z",
+              "updatedAt": "2026-10-18T02:28:41.035Z",
+              "lastAttemptAt": "2026-10-18T02:28:41.035Z",
+              "query": "",
+              "lastSyncedAt": "2026-10-18T02:28:20.537Z",
+              "lastResultCount": 21,
+              "lastError": "BBC tecnología · actualización manual pública: Fallo RSS SIMULADO, sin red"
+            }
+          ],
+          "references": [
+            {
+              "id": "e9e8ab15-534e-472a-9a11-e33a09f81ad0",
+              "title": "Tech Now",
+              "sourceId": "ui-primary",
+              "source": "BBC tecnología · actualización manual pública",
+              "url": "https://www.bbc.co.uk/iplayer/episode/m0032301?at_medium=RSS&amp;at_campaign=rss",
+              "status": "new"
+            },
+            {
+              "id": "f7ada562-ba2c-4a2f-b60f-04c81cddc566",
+              "title": "Tech Now",
+              "sourceId": "ui-primary",
+              "source": "BBC tecnología · actualización manual pública",
+              "url": "https://www.bbc.co.uk/iplayer/episode/m0032d9k?at_medium=RSS&amp;at_campaign=rss",
+              "status": "new"
+            },
+            {
+              "id": "d27169fb-6208-4112-8a4b-4ad991e41fd8",
+              "title": "Tech Now",
+              "sourceId": "ui-primary",
+              "source": "BBC tecnología · actualización manual pública",
+              "url": "https://www.bbc.co.uk/iplayer/episode/m0032n6v?at_medium=RSS&amp;at_campaign=rss",
+              "status": "new"
+            },
+            {
+              "id": "45e6f73b-22ae-493e-8ae7-e6a1507cf6e4",
+              "title": "Tech Now",
+              "sourceId": "ui-primary",
+              "source": "BBC tecnología · actualización manual pública",
+              "url": "https://www.bbc.co.uk/iplayer/episode/m0032yng?at_medium=RSS&amp;at_campaign=rss",
+              "status": "new"
+            },
+            {
+              "id": "68d35108-2228-4ae6-a6cd-a5190be4e29e",
+              "title": "Tech Life",
+              "sourceId": "ui-primary",
+              "source": "BBC tecnología · actualización manual pública",
+              "url": "https://www.bbc.co.uk/sounds/play/w3ct8jyg?at_medium=RSS&amp;at_campaign=rss",
+              "status": "new"
+            },
+            {
+              "id": "3b41374b-ffa0-4777-9432-8641533b745a",
+              "title": "Tech Life",
+              "sourceId": "ui-primary",
+              "source": "BBC tecnología · actualización manual pública",
+              "url": "https://www.bbc.co.uk/sounds/play/w3ct8jyh?at_medium=RSS&amp;at_campaign=rss",
+              "status": "new"
+            },
+            {
+              "id": "03cf5013-e79e-4aef-9f3a-b2e17e8e784e",
+              "title": "Tech Life",
+              "sourceId": "ui-primary",
+              "source": "BBC tecnología · actualización manual pública",
+              "url": "https://www.bbc.co.uk/sounds/play/w3ct8jyj?at_medium=RSS&amp;at_campaign=rss",
+              "status": "new"
+            },
+            {
+              "id": "1e2f4849-ee93-4e8b-a588-636dc699e819",
+              "title": "Tech Life",
+              "sourceId": "ui-primary",
+              "source": "BBC tecnología · actualización manual pública",
+              "url": "https://www.bbc.co.uk/sounds/play/w3ct8jyk?at_medium=RSS&amp;at_campaign=rss",
+              "status": "new"
+            },
+            {
+              "id": "227bd195-a1be-4374-85e3-b0af40c1e9c8",
+              "title": "Phase Eight and Hobbs owner hit by cyber-attack, as H&M probes separate hack claim",
+              "sourceId": "ui-primary",
+              "source": "BBC tecnología · actualización manual pública",
+              "url": "https://www.bbc.co.uk/news/articles/cwly38gjkejko?at_medium=RSS&amp;at_campaign=rss",
+              "status": "new"
+            },
+            {
+              "id": "c585f0d8-a90a-4162-8551-a3b3ae542d7a",
+              "title": "Bumble bought for $1.3bn in 'bet on the future of humanity'",
+              "sourceId": "ui-primary",
+              "source": "BBC tecnología · actualización manual pública",
+              "url": "https://www.bbc.co.uk/news/articles/cm9qzwjgnjxlo?at_medium=RSS&amp;at_campaign=rss",
+              "status": "new"
+            },
+            {
+              "id": "5e1b7c46-9b25-4f48-ac73-4a6c08c3ee49",
+              "title": "How long will humans be needed for translation?",
+              "sourceId": "ui-primary",
+              "source": "BBC tecnología · actualización manual pública",
+              "url": "https://www.bbc.co.uk/news/articles/c1wxdjx27ypo?at_medium=RSS&amp;at_campaign=rss",
+              "status": "new"
+            },
+            {
+              "id": "6dd21a6e-1e04-40e9-a9ab-2f101b1cf157",
+              "title": "'I applied for 200 jobs' - How 'spray and pray' AI job applications can backfire",
+              "sourceId": "ui-primary",
+              "source": "BBC tecnología · actualización manual pública",
+              "url": "https://www.bbc.co.uk/news/articles/c623dnkn8pkyo?at_medium=RSS&amp;at_campaign=rss",
+              "status": "new"
+            },
+            {
+              "id": "feff3a39-f33f-4c4c-82d9-2b235bee6f70",
+              "title": "Toilet paper and secret recorders: What we know about the arrest of the Saudi OpenAI engineer",
+              "sourceId": "ui-primary",
+              "source": "BBC tecnología · actualización manual pública",
+              "url": "https://www.bbc.co.uk/news/articles/cm04054ykqqqo?at_medium=RSS&amp;at_campaign=rss",
+              "status": "new"
+            },
+            {
+              "id": "93efa19a-8bba-4b5b-a0a0-7715c0d0c806",
+              "title": "AI giant Anthropic woos potential investors ahead of stock market debut",
+              "sourceId": "ui-primary",
+              "source": "BBC tecnología · actualización manual pública",
+              "url": "https://www.bbc.co.uk/news/articles/cqzjx448vxkgo?at_medium=RSS&amp;at_campaign=rss",
+              "status": "new"
+            },
+            {
+              "id": "0de008b2-f51e-423d-974d-df880147a21a",
+              "title": "GTA 6 - all you need to know about Rockstar's blockbuster game",
+              "sourceId": "ui-primary",
+              "source": "BBC tecnología · actualización manual pública",
+              "url": "https://www.bbc.co.uk/news/articles/c9q20djz4wno?at_medium=RSS&amp;at_campaign=rss",
+              "status": "new"
+            },
+            {
+              "id": "fb08e590-eb10-42dc-bb35-43734f920090",
+              "title": "Living with a stink? Technology might help",
+              "sourceId": "ui-primary",
+              "source": "BBC tecnología · actualización manual pública",
+              "url": "https://www.bbc.co.uk/news/articles/cr6240q1w136o?at_medium=RSS&amp;at_campaign=rss",
+              "status": "new"
+            },
+            {
+              "id": "1dcca03b-4fe8-4bd6-a84e-7c30774cd6c3",
+              "title": "Porn showing choking or incest to be banned from early November, government says",
+              "sourceId": "ui-primary",
+              "source": "BBC tecnología · actualización manual pública",
+              "url": "https://www.bbc.co.uk/news/articles/cmpqgepejr2ro?at_medium=RSS&amp;at_campaign=rss",
+              "status": "new"
+            },
+            {
+              "id": "45db5353-dae8-4174-a3d6-8d46f3f73a5d",
+              "title": "Snapchat and Instagram grooming becoming 'easier'",
+              "sourceId": "ui-primary",
+              "source": "BBC tecnología · actualización manual pública",
+              "url": "https://www.bbc.co.uk/news/articles/cq33xd6j1dv5o?at_medium=RSS&amp;at_campaign=rss",
+              "status": "new"
+            },
+            {
+              "id": "d9f8c01b-9b91-45fd-b984-9f2f36f3afe6",
+              "title": "Russian man linked to deadly London hospitals hack arrested",
+              "sourceId": "ui-primary",
+              "source": "BBC tecnología · actualización manual pública",
+              "url": "https://www.bbc.co.uk/news/articles/c9vgr61kml3mo?at_medium=RSS&amp;at_campaign=rss",
+              "status": "new"
+            },
+            {
+              "id": "1c6b31b4-4a5a-44f4-99b4-6eed02a3729c",
+              "title": "Toxic algorithms wouldn't let them go - now Australia wants an off switch",
+              "sourceId": "ui-primary",
+              "source": "BBC tecnología · actualización manual pública",
+              "url": "https://www.bbc.co.uk/news/articles/cwr7y8er1n8vo?at_medium=RSS&amp;at_campaign=rss",
+              "status": "new"
+            },
+            {
+              "id": "c6d33da5-8df5-44c5-baf0-6fe7907b5c97",
+              "title": "No further action against government adviser's wife over Palestine Action post, police say",
+              "sourceId": "ui-primary",
+              "source": "BBC tecnología · actualización manual pública",
+              "url": "https://www.bbc.co.uk/news/articles/cv8ez40yz950o?at_medium=RSS&amp;at_campaign=rss",
+              "status": "new"
+            }
+          ],
+          "activity": [
+            {
+              "text": "Radar actualizado: 0 referencias nuevas, 0 actualizadas y 1 fuentes con errores.",
+              "created_at": "2026-10-18T02:28:41.042Z"
+            },
+            {
+              "text": "Radar actualizado: 21 referencias nuevas, 0 actualizadas y 0 fuentes con errores.",
+              "created_at": "2026-10-18T02:28:20.541Z"
+            },
+            {
+              "text": "Radar actualizado: 0 referencias nuevas, 0 actualizadas y 1 fuentes con errores.",
+              "created_at": "2026-10-18T02:27:47.509Z"
+            },
+            {
+              "text": "Radar actualizado: 0 referencias nuevas, 0 actualizadas y 1 fuentes con errores.",
+              "created_at": "2026-10-18T02:27:43.005Z"
+            }
+          ],
+          "lastResult": {
+            "added": 0,
+            "updated": 0,
+            "errors": [
+              "BBC tecnología · actualización manual pública: Fallo RSS SIMULADO, sin red"
+            ],
+            "sources": [
+              {
+                "id": "ui-primary",
+                "name": "BBC tecnología · actualización manual pública",
+                "added": 0,
+                "error": "BBC tecnología · actualización manual pública: Fallo RSS SIMULADO, sin red"
+              }
+            ]
+          }
+        },
+        "delayMinutes": 40
+      },
+      "verdict": "PASS"
+    }
+  ],
+  "commands": [
+    {
+      "action": "suite",
+      "wallAt": "2026-10-18T02:27:19.643Z",
+      "result": [
+        {
+          "name": "Minimum cadence, exact 10-minute boundary, and repeat",
+          "expected": "0 calls at 599999 ms; 1 at 600000 ms; second only after another 600000 ms.",
+          "actual": {
+            "before": 0,
+            "first": 1,
+            "beforeSecond": 1,
+            "afterSecond": 2,
+            "successState": {
+              "lastAttemptAt": 1792291039310,
+              "failures": 0,
+              "nextAttemptAt": 1792291639310
+            }
+          },
+          "verdict": "PASS"
+        },
+        {
+          "name": "Non-reentrancy within a scheduler",
+          "expected": "Concurrent ticks invoke discovery once; immediate repeated tick respects cadence.",
+          "actual": {
+            "concurrent": 1,
+            "finalEntries": 1
+          },
+          "verdict": "PASS"
+        },
+        {
+          "name": "Brands and sources eligibility",
+          "expected": "Only brand with enabled sources discovered; disabled source never fetched.",
+          "actual": {
+            "calls": [
+              {
+                "brand": "scheduler-suite",
+                "now": 1792290439310,
+                "mode": "success"
+              }
+            ],
+            "fetches": [
+              {
+                "url": "https://example.com/suite-primary.xml",
+                "mode": "success",
+                "now": 1792290439310
+              }
+            ],
+            "emptyScheduler": null,
+            "disabledScheduler": null
+          },
+          "verdict": "PASS"
+        },
+        {
+          "name": "All-source failures exponential backoff and 6-hour cap",
+          "expected": "Delay minutes 20,40,80,160,320,360,360,360,360,360; failure count saturates at 8; no call 1 ms before each boundary.",
+          "actual": {
+            "delays": [
+              20,
+              40,
+              80,
+              160,
+              320,
+              360,
+              360,
+              360,
+              360,
+              360
+            ],
+            "counts": [
+              1,
+              2,
+              3,
+              4,
+              5,
+              6,
+              7,
+              8,
+              8,
+              8
+            ],
+            "boundaryCounts": [
+              1,
+              2,
+              3,
+              4,
+              5,
+              6,
+              7,
+              8,
+              9,
+              10
+            ],
+            "calls": 10
+          },
+          "verdict": "PASS"
+        },
+        {
+          "name": "Full success clears failed streak",
+          "expected": "After prior failures, failures=0 and nextAttemptAt=now+10 min.",
+          "actual": {
+            "lastAttemptAt": 1792435639310,
+            "failures": 0,
+            "nextAttemptAt": 1792436239310
+          },
+          "verdict": "PASS"
+        },
+        {
+          "name": "Partial failure preserves successful results and clears backoff",
+          "expected": "One failed source plus one successful RSS persists reference and resets failures=0/cadence=10 min.",
+          "actual": {
+            "scheduler": {
+              "lastAttemptAt": 1792291639310,
+              "failures": 0,
+              "nextAttemptAt": 1792292239310
+            },
+            "result": {
+              "added": 1,
+              "updated": 0,
+              "errors": [
+                "SIMULADA suite-secondary: Fallo RSS SIMULADO, sin red"
+              ],
+              "sources": [
+                {
+                  "id": "suite-secondary",
+                  "name": "SIMULADA suite-secondary",
+                  "added": 0,
+                  "error": "SIMULADA suite-secondary: Fallo RSS SIMULADO, sin red"
+                },
+                {
+                  "id": "suite-primary",
+                  "name": "SIMULADA suite-primary",
+                  "added": 1,
+                  "updated": 0,
+                  "fetched": 1
+                }
+              ]
+            },
+            "sources": [
+              {
+                "id": "suite-secondary",
+                "name": "SIMULADA suite-secondary",
+                "type": "rss",
+                "enabled": true,
+                "url": "https://example.com/suite-secondary.xml",
+                "createdAt": "2026-10-18T02:27:19.600Z",
+                "updatedAt": "2026-10-18T02:27:19.610Z",
+                "lastError": "SIMULADA suite-secondary: Fallo RSS SIMULADO, sin red",
+                "lastAttemptAt": "2026-10-18T02:27:19.610Z"
+              },
+              {
+                "id": "suite-primary",
+                "name": "SIMULADA suite-primary",
+                "type": "rss",
+                "enabled": true,
+                "url": "https://example.com/suite-primary.xml",
+                "createdAt": "2026-10-18T02:27:19.598Z",
+                "updatedAt": "2026-10-18T02:27:19.614Z",
+                "lastAttemptAt": "2026-10-18T02:27:19.604Z",
+                "lastSyncedAt": "2026-10-18T02:27:19.614Z",
+                "lastResultCount": 1
+              }
+            ],
+            "references": [
+              {
+                "title": "SIMULADA: Automatización responsable para equipos",
+                "sourceId": "suite-primary"
+              }
+            ]
+          },
+          "verdict": "PASS"
+        },
+        {
+          "name": "Thrown discovery error",
+          "expected": "Error does not reject tick; failure=1 and activity explains pending update.",
+          "actual": {
+            "scheduler": {
+              "lastAttemptAt": 1792290439310,
+              "failures": 1,
+              "nextAttemptAt": 1792291639310
+            },
+            "activity": [
+              {
+                "text": "Actualización automática pendiente: Fallo superior SIMULADO"
+              }
+            ]
+          },
+          "verdict": "PASS"
+        },
+        {
+          "name": "stop suppresses subsequent ticks",
+          "expected": "No discovery calls or scheduler metadata after stop.",
+          "actual": {
+            "calls": [],
+            "scheduler": null
+          },
+          "verdict": "PASS"
+        },
+        {
+          "name": "DISCOVERY_ENABLED=false",
+          "expected": "No discovery calls or metadata when disabled.",
+          "actual": {
+            "calls": [],
+            "scheduler": null
+          },
+          "verdict": "PASS"
+        },
+        {
+          "name": "Successful UI manual refresh followed by scheduled failure resets streak",
+          "expected": "A successful manual refresh supersedes the failed streak; first later failure should be failures=1 with 20 min delay.",
+          "actual": {
+            "before": {
+              "now": 1792289803003,
+              "nowISO": "2026-10-18T02:16:43.003Z",
+              "mode": "failure",
+              "selected": [
+                "scheduler-ui"
+              ],
+              "calls": [
+                {
+                  "brand": "scheduler-ui",
+                  "now": 1792289803003,
+                  "mode": "failure"
+                }
+              ],
+              "fetches": [
+                {
+                  "url": "https://www.nasa.gov/feed/",
+                  "mode": "failure",
+                  "now": 1792289803003
+                }
+              ],
+              "scheduler": {
+                "lastAttemptAt": 1792289803003,
+                "failures": 1,
+                "nextAttemptAt": 1792291003003
+              },
+              "sources": [
+                {
+                  "id": "ui-primary",
+                  "name": "BBC tecnología · actualización manual pública",
+                  "type": "rss",
+                  "enabled": true,
+                  "url": "https://feeds.bbci.co.uk/news/technology/rss.xml",
+                  "createdAt": "2026-10-18T02:27:43.000Z",
+                  "updatedAt": "2026-10-18T02:28:20.537Z",
+                  "lastAttemptAt": "2026-10-18T02:27:47.506Z",
+                  "query": "",
+                  "lastSyncedAt": "2026-10-18T02:28:20.537Z",
+                  "lastResultCount": 21
+                }
+              ],
+              "references": [
+                {
+                  "id": "e9e8ab15-534e-472a-9a11-e33a09f81ad0",
+                  "title": "Tech Now",
+                  "sourceId": "ui-primary",
+                  "source": "BBC tecnología · actualización manual pública",
+                  "url": "https://www.bbc.co.uk/iplayer/episode/m0032301?at_medium=RSS&amp;at_campaign=rss",
+                  "status": "new"
+                },
+                {
+                  "id": "f7ada562-ba2c-4a2f-b60f-04c81cddc566",
+                  "title": "Tech Now",
+                  "sourceId": "ui-primary",
+                  "source": "BBC tecnología · actualización manual pública",
+                  "url": "https://www.bbc.co.uk/iplayer/episode/m0032d9k?at_medium=RSS&amp;at_campaign=rss",
+                  "status": "new"
+                },
+                {
+                  "id": "d27169fb-6208-4112-8a4b-4ad991e41fd8",
+                  "title": "Tech Now",
+                  "sourceId": "ui-primary",
+                  "source": "BBC tecnología · actualización manual pública",
+                  "url": "https://www.bbc.co.uk/iplayer/episode/m0032n6v?at_medium=RSS&amp;at_campaign=rss",
+                  "status": "new"
+                },
+                {
+                  "id": "45e6f73b-22ae-493e-8ae7-e6a1507cf6e4",
+                  "title": "Tech Now",
+                  "sourceId": "ui-primary",
+                  "source": "BBC tecnología · actualización manual pública",
+                  "url": "https://www.bbc.co.uk/iplayer/episode/m0032yng?at_medium=RSS&amp;at_campaign=rss",
+                  "status": "new"
+                },
+                {
+                  "id": "68d35108-2228-4ae6-a6cd-a5190be4e29e",
+                  "title": "Tech Life",
+                  "sourceId": "ui-primary",
+                  "source": "BBC tecnología · actualización manual pública",
+                  "url": "https://www.bbc.co.uk/sounds/play/w3ct8jyg?at_medium=RSS&amp;at_campaign=rss",
+                  "status": "new"
+                },
+                {
+                  "id": "3b41374b-ffa0-4777-9432-8641533b745a",
+                  "title": "Tech Life",
+                  "sourceId": "ui-primary",
+                  "source": "BBC tecnología · actualización manual pública",
+                  "url": "https://www.bbc.co.uk/sounds/play/w3ct8jyh?at_medium=RSS&amp;at_campaign=rss",
+                  "status": "new"
+                },
+                {
+                  "id": "03cf5013-e79e-4aef-9f3a-b2e17e8e784e",
+                  "title": "Tech Life",
+                  "sourceId": "ui-primary",
+                  "source": "BBC tecnología · actualización manual pública",
+                  "url": "https://www.bbc.co.uk/sounds/play/w3ct8jyj?at_medium=RSS&amp;at_campaign=rss",
+                  "status": "new"
+                },
+                {
+                  "id": "1e2f4849-ee93-4e8b-a588-636dc699e819",
+                  "title": "Tech Life",
+                  "sourceId": "ui-primary",
+                  "source": "BBC tecnología · actualización manual pública",
+                  "url": "https://www.bbc.co.uk/sounds/play/w3ct8jyk?at_medium=RSS&amp;at_campaign=rss",
+                  "status": "new"
+                },
+                {
+                  "id": "227bd195-a1be-4374-85e3-b0af40c1e9c8",
+                  "title": "Phase Eight and Hobbs owner hit by cyber-attack, as H&M probes separate hack claim",
+                  "sourceId": "ui-primary",
+                  "source": "BBC tecnología · actualización manual pública",
+                  "url": "https://www.bbc.co.uk/news/articles/cwly38gjkejko?at_medium=RSS&amp;at_campaign=rss",
+                  "status": "new"
+                },
+                {
+                  "id": "c585f0d8-a90a-4162-8551-a3b3ae542d7a",
+                  "title": "Bumble bought for $1.3bn in 'bet on the future of humanity'",
+                  "sourceId": "ui-primary",
+                  "source": "BBC tecnología · actualización manual pública",
+                  "url": "https://www.bbc.co.uk/news/articles/cm9qzwjgnjxlo?at_medium=RSS&amp;at_campaign=rss",
+                  "status": "new"
+                },
+                {
+                  "id": "5e1b7c46-9b25-4f48-ac73-4a6c08c3ee49",
+                  "title": "How long will humans be needed for translation?",
+                  "sourceId": "ui-primary",
+                  "source": "BBC tecnología · actualización manual pública",
+                  "url": "https://www.bbc.co.uk/news/articles/c1wxdjx27ypo?at_medium=RSS&amp;at_campaign=rss",
+                  "status": "new"
+                },
+                {
+                  "id": "6dd21a6e-1e04-40e9-a9ab-2f101b1cf157",
+                  "title": "'I applied for 200 jobs' - How 'spray and pray' AI job applications can backfire",
+                  "sourceId": "ui-primary",
+                  "source": "BBC tecnología · actualización manual pública",
+                  "url": "https://www.bbc.co.uk/news/articles/c623dnkn8pkyo?at_medium=RSS&amp;at_campaign=rss",
+                  "status": "new"
+                },
+                {
+                  "id": "feff3a39-f33f-4c4c-82d9-2b235bee6f70",
+                  "title": "Toilet paper and secret recorders: What we know about the arrest of the Saudi OpenAI engineer",
+                  "sourceId": "ui-primary",
+                  "source": "BBC tecnología · actualización manual pública",
+                  "url": "https://www.bbc.co.uk/news/articles/cm04054ykqqqo?at_medium=RSS&amp;at_campaign=rss",
+                  "status": "new"
+                },
+                {
+                  "id": "93efa19a-8bba-4b5b-a0a0-7715c0d0c806",
+                  "title": "AI giant Anthropic woos potential investors ahead of stock market debut",
+                  "sourceId": "ui-primary",
+                  "source": "BBC tecnología · actualización manual pública",
+                  "url": "https://www.bbc.co.uk/news/articles/cqzjx448vxkgo?at_medium=RSS&amp;at_campaign=rss",
+                  "status": "new"
+                },
+                {
+                  "id": "0de008b2-f51e-423d-974d-df880147a21a",
+                  "title": "GTA 6 - all you need to know about Rockstar's blockbuster game",
+                  "sourceId": "ui-primary",
+                  "source": "BBC tecnología · actualización manual pública",
+                  "url": "https://www.bbc.co.uk/news/articles/c9q20djz4wno?at_medium=RSS&amp;at_campaign=rss",
+                  "status": "new"
+                },
+                {
+                  "id": "fb08e590-eb10-42dc-bb35-43734f920090",
+                  "title": "Living with a stink? Technology might help",
+                  "sourceId": "ui-primary",
+                  "source": "BBC tecnología · actualización manual pública",
+                  "url": "https://www.bbc.co.uk/news/articles/cr6240q1w136o?at_medium=RSS&amp;at_campaign=rss",
+                  "status": "new"
+                },
+                {
+                  "id": "1dcca03b-4fe8-4bd6-a84e-7c30774cd6c3",
+                  "title": "Porn showing choking or incest to be banned from early November, government says",
+                  "sourceId": "ui-primary",
+                  "source": "BBC tecnología · actualización manual pública",
+                  "url": "https://www.bbc.co.uk/news/articles/cmpqgepejr2ro?at_medium=RSS&amp;at_campaign=rss",
+                  "status": "new"
+                },
+                {
+                  "id": "45db5353-dae8-4174-a3d6-8d46f3f73a5d",
+                  "title": "Snapchat and Instagram grooming becoming 'easier'",
+                  "sourceId": "ui-primary",
+                  "source": "BBC tecnología · actualización manual pública",
+                  "url": "https://www.bbc.co.uk/news/articles/cq33xd6j1dv5o?at_medium=RSS&amp;at_campaign=rss",
+                  "status": "new"
+                },
+                {
+                  "id": "d9f8c01b-9b91-45fd-b984-9f2f36f3afe6",
+                  "title": "Russian man linked to deadly London hospitals hack arrested",
+                  "sourceId": "ui-primary",
+                  "source": "BBC tecnología · actualización manual pública",
+                  "url": "https://www.bbc.co.uk/news/articles/c9vgr61kml3mo?at_medium=RSS&amp;at_campaign=rss",
+                  "status": "new"
+                },
+                {
+                  "id": "1c6b31b4-4a5a-44f4-99b4-6eed02a3729c",
+                  "title": "Toxic algorithms wouldn't let them go - now Australia wants an off switch",
+                  "sourceId": "ui-primary",
+                  "source": "BBC tecnología · actualización manual pública",
+                  "url": "https://www.bbc.co.uk/news/articles/cwr7y8er1n8vo?at_medium=RSS&amp;at_campaign=rss",
+                  "status": "new"
+                },
+                {
+                  "id": "c6d33da5-8df5-44c5-baf0-6fe7907b5c97",
+                  "title": "No further action against government adviser's wife over Palestine Action post, police say",
+                  "sourceId": "ui-primary",
+                  "source": "BBC tecnología · actualización manual pública",
+                  "url": "https://www.bbc.co.uk/news/articles/cv8ez40yz950o?at_medium=RSS&amp;at_campaign=rss",
+                  "status": "new"
+                }
+              ],
+              "activity": [
+                {
+                  "text": "Radar actualizado: 21 referencias nuevas, 0 actualizadas y 0 fuentes con errores.",
+                  "created_at": "2026-10-18T02:28:20.541Z"
+                },
+                {
+                  "text": "Radar actualizado: 0 referencias nuevas, 0 actualizadas y 1 fuentes con errores.",
+                  "created_at": "2026-10-18T02:27:47.509Z"
+                },
+                {
+                  "text": "Radar actualizado: 0 referencias nuevas, 0 actualizadas y 1 fuentes con errores.",
+                  "created_at": "2026-10-18T02:27:43.005Z"
+                }
+              ],
+              "lastResult": {
+                "added": 0,
+                "updated": 0,
+                "errors": [
+                  "NASA RSS · actualización manual pública: Fallo RSS SIMULADO, sin red"
+                ],
+                "sources": [
+                  {
+                    "id": "ui-primary",
+                    "name": "NASA RSS · actualización manual pública",
+                    "added": 0,
+                    "error": "NASA RSS · actualización manual pública: Fallo RSS SIMULADO, sin red"
+                  }
+                ]
+              }
+            },
+            "after": {
+              "now": 1792291100537,
+              "nowISO": "2026-10-18T02:38:20.537Z",
+              "mode": "failure",
+              "selected": [
+                "scheduler-ui"
+              ],
+              "calls": [
+                {
+                  "brand": "scheduler-ui",
+                  "now": 1792289803003,
+                  "mode": "failure"
+                },
+                {
+                  "brand": "scheduler-ui",
+                  "now": 1792291100537,
+                  "mode": "failure"
+                }
+              ],
+              "fetches": [
+                {
+                  "url": "https://www.nasa.gov/feed/",
+                  "mode": "failure",
+                  "now": 1792289803003
+                },
+                {
+                  "url": "https://feeds.bbci.co.uk/news/technology/rss.xml",
+                  "mode": "failure",
+                  "now": 1792291100537
+                }
+              ],
+              "scheduler": {
+                "lastAttemptAt": 1792291100537,
+                "failures": 2,
+                "nextAttemptAt": 1792293500537
+              },
+              "sources": [
+                {
+                  "id": "ui-primary",
+                  "name": "BBC tecnología · actualización manual pública",
+                  "type": "rss",
+                  "enabled": true,
+                  "url": "https://feeds.bbci.co.uk/news/technology/rss.xml",
+                  "createdAt": "2026-10-18T02:27:43.000Z",
+                  "updatedAt": "2026-10-18T02:28:41.035Z",
+                  "lastAttemptAt": "2026-10-18T02:28:41.035Z",
+                  "query": "",
+                  "lastSyncedAt": "2026-10-18T02:28:20.537Z",
+                  "lastResultCount": 21,
+                  "lastError": "BBC tecnología · actualización manual pública: Fallo RSS SIMULADO, sin red"
+                }
+              ],
+              "references": [
+                {
+                  "id": "e9e8ab15-534e-472a-9a11-e33a09f81ad0",
+                  "title": "Tech Now",
+                  "sourceId": "ui-primary",
+                  "source": "BBC tecnología · actualización manual pública",
+                  "url": "https://www.bbc.co.uk/iplayer/episode/m0032301?at_medium=RSS&amp;at_campaign=rss",
+                  "status": "new"
+                },
+                {
+                  "id": "f7ada562-ba2c-4a2f-b60f-04c81cddc566",
+                  "title": "Tech Now",
+                  "sourceId": "ui-primary",
+                  "source": "BBC tecnología · actualización manual pública",
+                  "url": "https://www.bbc.co.uk/iplayer/episode/m0032d9k?at_medium=RSS&amp;at_campaign=rss",
+                  "status": "new"
+                },
+                {
+                  "id": "d27169fb-6208-4112-8a4b-4ad991e41fd8",
+                  "title": "Tech Now",
+                  "sourceId": "ui-primary",
+                  "source": "BBC tecnología · actualización manual pública",
+                  "url": "https://www.bbc.co.uk/iplayer/episode/m0032n6v?at_medium=RSS&amp;at_campaign=rss",
+                  "status": "new"
+                },
+                {
+                  "id": "45e6f73b-22ae-493e-8ae7-e6a1507cf6e4",
+                  "title": "Tech Now",
+                  "sourceId": "ui-primary",
+                  "source": "BBC tecnología · actualización manual pública",
+                  "url": "https://www.bbc.co.uk/iplayer/episode/m0032yng?at_medium=RSS&amp;at_campaign=rss",
+                  "status": "new"
+                },
+                {
+                  "id": "68d35108-2228-4ae6-a6cd-a5190be4e29e",
+                  "title": "Tech Life",
+                  "sourceId": "ui-primary",
+                  "source": "BBC tecnología · actualización manual pública",
+                  "url": "https://www.bbc.co.uk/sounds/play/w3ct8jyg?at_medium=RSS&amp;at_campaign=rss",
+                  "status": "new"
+                },
+                {
+                  "id": "3b41374b-ffa0-4777-9432-8641533b745a",
+                  "title": "Tech Life",
+                  "sourceId": "ui-primary",
+                  "source": "BBC tecnología · actualización manual pública",
+                  "url": "https://www.bbc.co.uk/sounds/play/w3ct8jyh?at_medium=RSS&amp;at_campaign=rss",
+                  "status": "new"
+                },
+                {
+                  "id": "03cf5013-e79e-4aef-9f3a-b2e17e8e784e",
+                  "title": "Tech Life",
+                  "sourceId": "ui-primary",
+                  "source": "BBC tecnología · actualización manual pública",
+                  "url": "https://www.bbc.co.uk/sounds/play/w3ct8jyj?at_medium=RSS&amp;at_campaign=rss",
+                  "status": "new"
+                },
+                {
+                  "id": "1e2f4849-ee93-4e8b-a588-636dc699e819",
+                  "title": "Tech Life",
+                  "sourceId": "ui-primary",
+                  "source": "BBC tecnología · actualización manual pública",
+                  "url": "https://www.bbc.co.uk/sounds/play/w3ct8jyk?at_medium=RSS&amp;at_campaign=rss",
+                  "status": "new"
+                },
+                {
+                  "id": "227bd195-a1be-4374-85e3-b0af40c1e9c8",
+                  "title": "Phase Eight and Hobbs owner hit by cyber-attack, as H&M probes separate hack claim",
+                  "sourceId": "ui-primary",
+                  "source": "BBC tecnología · actualización manual pública",
+                  "url": "https://www.bbc.co.uk/news/articles/cwly38gjkejko?at_medium=RSS&amp;at_campaign=rss",
+                  "status": "new"
+                },
+                {
+                  "id": "c585f0d8-a90a-4162-8551-a3b3ae542d7a",
+                  "title": "Bumble bought for $1.3bn in 'bet on the future of humanity'",
+                  "sourceId": "ui-primary",
+                  "source": "BBC tecnología · actualización manual pública",
+                  "url": "https://www.bbc.co.uk/news/articles/cm9qzwjgnjxlo?at_medium=RSS&amp;at_campaign=rss",
+                  "status": "new"
+                },
+                {
+                  "id": "5e1b7c46-9b25-4f48-ac73-4a6c08c3ee49",
+                  "title": "How long will humans be needed for translation?",
+                  "sourceId": "ui-primary",
+                  "source": "BBC tecnología · actualización manual pública",
+                  "url": "https://www.bbc.co.uk/news/articles/c1wxdjx27ypo?at_medium=RSS&amp;at_campaign=rss",
+                  "status": "new"
+                },
+                {
+                  "id": "6dd21a6e-1e04-40e9-a9ab-2f101b1cf157",
+                  "title": "'I applied for 200 jobs' - How 'spray and pray' AI job applications can backfire",
+                  "sourceId": "ui-primary",
+                  "source": "BBC tecnología · actualización manual pública",
+                  "url": "https://www.bbc.co.uk/news/articles/c623dnkn8pkyo?at_medium=RSS&amp;at_campaign=rss",
+                  "status": "new"
+                },
+                {
+                  "id": "feff3a39-f33f-4c4c-82d9-2b235bee6f70",
+                  "title": "Toilet paper and secret recorders: What we know about the arrest of the Saudi OpenAI engineer",
+                  "sourceId": "ui-primary",
+                  "source": "BBC tecnología · actualización manual pública",
+                  "url": "https://www.bbc.co.uk/news/articles/cm04054ykqqqo?at_medium=RSS&amp;at_campaign=rss",
+                  "status": "new"
+                },
+                {
+                  "id": "93efa19a-8bba-4b5b-a0a0-7715c0d0c806",
+                  "title": "AI giant Anthropic woos potential investors ahead of stock market debut",
+                  "sourceId": "ui-primary",
+                  "source": "BBC tecnología · actualización manual pública",
+                  "url": "https://www.bbc.co.uk/news/articles/cqzjx448vxkgo?at_medium=RSS&amp;at_campaign=rss",
+                  "status": "new"
+                },
+                {
+                  "id": "0de008b2-f51e-423d-974d-df880147a21a",
+                  "title": "GTA 6 - all you need to know about Rockstar's blockbuster game",
+                  "sourceId": "ui-primary",
+                  "source": "BBC tecnología · actualización manual pública",
+                  "url": "https://www.bbc.co.uk/news/articles/c9q20djz4wno?at_medium=RSS&amp;at_campaign=rss",
+                  "status": "new"
+                },
+                {
+                  "id": "fb08e590-eb10-42dc-bb35-43734f920090",
+                  "title": "Living with a stink? Technology might help",
+                  "sourceId": "ui-primary",
+                  "source": "BBC tecnología · actualización manual pública",
+                  "url": "https://www.bbc.co.uk/news/articles/cr6240q1w136o?at_medium=RSS&amp;at_campaign=rss",
+                  "status": "new"
+                },
+                {
+                  "id": "1dcca03b-4fe8-4bd6-a84e-7c30774cd6c3",
+                  "title": "Porn showing choking or incest to be banned from early November, government says",
+                  "sourceId": "ui-primary",
+                  "source": "BBC tecnología · actualización manual pública",
+                  "url": "https://www.bbc.co.uk/news/articles/cmpqgepejr2ro?at_medium=RSS&amp;at_campaign=rss",
+                  "status": "new"
+                },
+                {
+                  "id": "45db5353-dae8-4174-a3d6-8d46f3f73a5d",
+                  "title": "Snapchat and Instagram grooming becoming 'easier'",
+                  "sourceId": "ui-primary",
+                  "source": "BBC tecnología · actualización manual pública",
+                  "url": "https://www.bbc.co.uk/news/articles/cq33xd6j1dv5o?at_medium=RSS&amp;at_campaign=rss",
+                  "status": "new"
+                },
+                {
+                  "id": "d9f8c01b-9b91-45fd-b984-9f2f36f3afe6",
+                  "title": "Russian man linked to deadly London hospitals hack arrested",
+                  "sourceId": "ui-primary",
+                  "source": "BBC tecnología · actualización manual pública",
+                  "url": "https://www.bbc.co.uk/news/articles/c9vgr61kml3mo?at_medium=RSS&amp;at_campaign=rss",
+                  "status": "new"
+                },
+                {
+                  "id": "1c6b31b4-4a5a-44f4-99b4-6eed02a3729c",
+                  "title": "Toxic algorithms wouldn't let them go - now Australia wants an off switch",
+                  "sourceId": "ui-primary",
+                  "source": "BBC tecnología · actualización manual pública",
+                  "url": "https://www.bbc.co.uk/news/articles/cwr7y8er1n8vo?at_medium=RSS&amp;at_campaign=rss",
+                  "status": "new"
+                },
+                {
+                  "id": "c6d33da5-8df5-44c5-baf0-6fe7907b5c97",
+                  "title": "No further action against government adviser's wife over Palestine Action post, police say",
+                  "sourceId": "ui-primary",
+                  "source": "BBC tecnología · actualización manual pública",
+                  "url": "https://www.bbc.co.uk/news/articles/cv8ez40yz950o?at_medium=RSS&amp;at_campaign=rss",
+                  "status": "new"
+                }
+              ],
+              "activity": [
+                {
+                  "text": "Radar actualizado: 0 referencias nuevas, 0 actualizadas y 1 fuentes con errores.",
+                  "created_at": "2026-10-18T02:28:41.042Z"
+                },
+                {
+                  "text": "Radar actualizado: 21 referencias nuevas, 0 actualizadas y 0 fuentes con errores.",
+                  "created_at": "2026-10-18T02:28:20.541Z"
+                },
+                {
+                  "text": "Radar actualizado: 0 referencias nuevas, 0 actualizadas y 1 fuentes con errores.",
+                  "created_at": "2026-10-18T02:27:47.509Z"
+                },
+                {
+                  "text": "Radar actualizado: 0 referencias nuevas, 0 actualizadas y 1 fuentes con errores.",
+                  "created_at": "2026-10-18T02:27:43.005Z"
+                }
+              ],
+              "lastResult": {
+                "added": 0,
+                "updated": 0,
+                "errors": [
+                  "BBC tecnología · actualización manual pública: Fallo RSS SIMULADO, sin red"
+                ],
+                "sources": [
+                  {
+                    "id": "ui-primary",
+                    "name": "BBC tecnología · actualización manual pública",
+                    "added": 0,
+                    "error": "BBC tecnología · actualización manual pública: Fallo RSS SIMULADO, sin red"
+                  }
+                ]
+              }
+            },
+            "delayMinutes": 40
+          },
+          "verdict": "FAIL"
+        }
+      ]
+    },
+    {
+      "action": "ui-success",
+      "wallAt": "2026-10-18T02:27:19.685Z",
+      "result": {
+        "now": 1792290439663,
+        "nowISO": "2026-10-18T02:27:19.663Z",
+        "mode": "success",
+        "selected": [
+          "scheduler-ui"
+        ],
+        "calls": [
+          {
+            "brand": "scheduler-ui",
+            "now": 1792290439663,
+            "mode": "success"
+          }
+        ],
+        "fetches": [
+          {
+            "url": "https://example.com/ui-secondary.xml",
+            "mode": "success",
+            "now": 1792290439663
+          },
+          {
+            "url": "https://example.com/ui-primary.xml",
+            "mode": "success",
+            "now": 1792290439663
+          }
+        ],
+        "scheduler": {
+          "lastAttemptAt": 1792290439663,
+          "failures": 0,
+          "nextAttemptAt": 1792291039663
+        },
+        "sources": [
+          {
+            "id": "ui-paused",
+            "name": "SIMULADA ui-paused",
+            "type": "rss",
+            "enabled": false,
+            "url": "https://example.com/ui-paused.xml",
+            "createdAt": "2026-10-18T02:27:19.661Z",
+            "updatedAt": "2026-10-18T02:27:19.661Z"
+          },
+          {
+            "id": "ui-secondary",
+            "name": "SIMULADA ui-secondary",
+            "type": "rss",
+            "enabled": true,
+            "url": "https://example.com/ui-secondary.xml",
+            "createdAt": "2026-10-18T02:27:19.660Z",
+            "updatedAt": "2026-10-18T02:27:19.667Z",
+            "lastSyncedAt": "2026-10-18T02:27:19.667Z",
+            "lastResultCount": 1
+          },
+          {
+            "id": "ui-primary",
+            "name": "SIMULADA ui-primary",
+            "type": "rss",
+            "enabled": true,
+            "url": "https://example.com/ui-primary.xml",
+            "createdAt": "2026-10-18T02:27:19.658Z",
+            "updatedAt": "2026-10-18T02:27:19.671Z",
+            "lastSyncedAt": "2026-10-18T02:27:19.671Z",
+            "lastResultCount": 1
+          }
+        ],
+        "references": [
+          {
+            "id": "38a3dd08-55e1-4f35-87d4-556a417f69ee",
+            "title": "SIMULADA: Automatización responsable para equipos",
+            "sourceId": "ui-primary",
+            "source": "SIMULADA ui-primary",
+            "url": "https://example.com/scheduler/primary",
+            "status": "new"
+          },
+          {
+            "id": "c6a4fd9f-80dd-48ed-a1ab-27c1030779e9",
+            "title": "SIMULADA: Control de calidad educativo",
+            "sourceId": "ui-secondary",
+            "source": "SIMULADA ui-secondary",
+            "url": "https://example.com/scheduler/secondary",
+            "status": "new"
+          }
+        ],
+        "activity": [
+          {
+            "text": "Radar actualizado: 2 referencias nuevas, 0 actualizadas y 0 fuentes con errores.",
+            "created_at": "2026-10-18T02:27:19.674Z"
+          }
+        ],
+        "lastResult": {
+          "added": 2,
+          "updated": 0,
+          "errors": [],
+          "sources": [
+            {
+              "id": "ui-secondary",
+              "name": "SIMULADA ui-secondary",
+              "added": 1,
+              "updated": 0,
+              "fetched": 1
+            },
+            {
+              "id": "ui-primary",
+              "name": "SIMULADA ui-primary",
+              "added": 1,
+              "updated": 0,
+              "fetched": 1
+            }
+          ]
+        }
+      }
+    },
+    {
+      "action": "ui-failure",
+      "wallAt": "2026-10-18T02:27:25.050Z",
+      "result": {
+        "now": 1792291039671,
+        "nowISO": "2026-10-18T02:37:19.671Z",
+        "mode": "failure",
+        "selected": [
+          "scheduler-ui"
+        ],
+        "calls": [
+          {
+            "brand": "scheduler-ui",
+            "now": 1792290439663,
+            "mode": "success"
+          },
+          {
+            "brand": "scheduler-ui",
+            "now": 1792291039671,
+            "mode": "failure"
+          }
+        ],
+        "fetches": [
+          {
+            "url": "https://example.com/ui-secondary.xml",
+            "mode": "success",
+            "now": 1792290439663
+          },
+          {
+            "url": "https://example.com/ui-primary.xml",
+            "mode": "success",
+            "now": 1792290439663
+          },
+          {
+            "url": "https://example.com/ui-secondary.xml",
+            "mode": "failure",
+            "now": 1792291039671
+          },
+          {
+            "url": "https://example.com/ui-primary.xml",
+            "mode": "failure",
+            "now": 1792291039671
+          }
+        ],
+        "scheduler": {
+          "lastAttemptAt": 1792291039671,
+          "failures": 1,
+          "nextAttemptAt": 1792292239671
+        },
+        "sources": [
+          {
+            "id": "ui-paused",
+            "name": "SIMULADA ui-paused",
+            "type": "rss",
+            "enabled": false,
+            "url": "https://example.com/ui-paused.xml",
+            "createdAt": "2026-10-18T02:27:19.661Z",
+            "updatedAt": "2026-10-18T02:27:19.661Z"
+          },
+          {
+            "id": "ui-secondary",
+            "name": "SIMULADA ui-secondary",
+            "type": "rss",
+            "enabled": true,
+            "url": "https://example.com/ui-secondary.xml",
+            "createdAt": "2026-10-18T02:27:19.660Z",
+            "updatedAt": "2026-10-18T02:27:25.041Z",
+            "lastSyncedAt": "2026-10-18T02:27:19.667Z",
+            "lastResultCount": 1,
+            "lastError": "SIMULADA ui-secondary: Fallo RSS SIMULADO, sin red",
+            "lastAttemptAt": "2026-10-18T02:27:25.041Z"
+          },
+          {
+            "id": "ui-primary",
+            "name": "SIMULADA ui-primary",
+            "type": "rss",
+            "enabled": true,
+            "url": "https://example.com/ui-primary.xml",
+            "createdAt": "2026-10-18T02:27:19.658Z",
+            "updatedAt": "2026-10-18T02:27:25.044Z",
+            "lastSyncedAt": "2026-10-18T02:27:19.671Z",
+            "lastResultCount": 1,
+            "lastError": "SIMULADA ui-primary: Fallo RSS SIMULADO, sin red",
+            "lastAttemptAt": "2026-10-18T02:27:25.044Z"
+          }
+        ],
+        "references": [
+          {
+            "id": "38a3dd08-55e1-4f35-87d4-556a417f69ee",
+            "title": "SIMULADA: Automatización responsable para equipos",
+            "sourceId": "ui-primary",
+            "source": "SIMULADA ui-primary",
+            "url": "https://example.com/scheduler/primary",
+            "status": "new"
+          },
+          {
+            "id": "c6a4fd9f-80dd-48ed-a1ab-27c1030779e9",
+            "title": "SIMULADA: Control de calidad educativo",
+            "sourceId": "ui-secondary",
+            "source": "SIMULADA ui-secondary",
+            "url": "https://example.com/scheduler/secondary",
+            "status": "new"
+          }
+        ],
+        "activity": [
+          {
+            "text": "Radar actualizado: 0 referencias nuevas, 0 actualizadas y 2 fuentes con errores.",
+            "created_at": "2026-10-18T02:27:25.046Z"
+          },
+          {
+            "text": "Radar actualizado: 2 referencias nuevas, 0 actualizadas y 0 fuentes con errores.",
+            "created_at": "2026-10-18T02:27:19.674Z"
+          }
+        ],
+        "lastResult": {
+          "added": 0,
+          "updated": 0,
+          "errors": [
+            "SIMULADA ui-secondary: Fallo RSS SIMULADO, sin red",
+            "SIMULADA ui-primary: Fallo RSS SIMULADO, sin red"
+          ],
+          "sources": [
+            {
+              "id": "ui-secondary",
+              "name": "SIMULADA ui-secondary",
+              "added": 0,
+              "error": "SIMULADA ui-secondary: Fallo RSS SIMULADO, sin red"
+            },
+            {
+              "id": "ui-primary",
+              "name": "SIMULADA ui-primary",
+              "added": 0,
+              "error": "SIMULADA ui-primary: Fallo RSS SIMULADO, sin red"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "action": "ui-partial",
+      "wallAt": "2026-10-18T02:27:36.277Z",
+      "result": {
+        "now": 1792292239671,
+        "nowISO": "2026-10-18T02:57:19.671Z",
+        "mode": "partial",
+        "selected": [
+          "scheduler-ui"
+        ],
+        "calls": [
+          {
+            "brand": "scheduler-ui",
+            "now": 1792290439663,
+            "mode": "success"
+          },
+          {
+            "brand": "scheduler-ui",
+            "now": 1792291039671,
+            "mode": "failure"
+          },
+          {
+            "brand": "scheduler-ui",
+            "now": 1792292239671,
+            "mode": "partial"
+          }
+        ],
+        "fetches": [
+          {
+            "url": "https://example.com/ui-secondary.xml",
+            "mode": "success",
+            "now": 1792290439663
+          },
+          {
+            "url": "https://example.com/ui-primary.xml",
+            "mode": "success",
+            "now": 1792290439663
+          },
+          {
+            "url": "https://example.com/ui-secondary.xml",
+            "mode": "failure",
+            "now": 1792291039671
+          },
+          {
+            "url": "https://example.com/ui-primary.xml",
+            "mode": "failure",
+            "now": 1792291039671
+          },
+          {
+            "url": "https://example.com/ui-secondary.xml",
+            "mode": "partial",
+            "now": 1792292239671
+          },
+          {
+            "url": "https://example.com/ui-primary.xml",
+            "mode": "partial",
+            "now": 1792292239671
+          }
+        ],
+        "scheduler": {
+          "lastAttemptAt": 1792292239671,
+          "failures": 0,
+          "nextAttemptAt": 1792292839671
+        },
+        "sources": [
+          {
+            "id": "ui-paused",
+            "name": "SIMULADA ui-paused",
+            "type": "rss",
+            "enabled": false,
+            "url": "https://example.com/ui-paused.xml",
+            "createdAt": "2026-10-18T02:27:19.661Z",
+            "updatedAt": "2026-10-18T02:27:19.661Z"
+          },
+          {
+            "id": "ui-secondary",
+            "name": "SIMULADA ui-secondary",
+            "type": "rss",
+            "enabled": true,
+            "url": "https://example.com/ui-secondary.xml",
+            "createdAt": "2026-10-18T02:27:19.660Z",
+            "updatedAt": "2026-10-18T02:27:36.148Z",
+            "lastSyncedAt": "2026-10-18T02:27:19.667Z",
+            "lastResultCount": 1,
+            "lastError": "SIMULADA ui-secondary: Fallo RSS SIMULADO, sin red",
+            "lastAttemptAt": "2026-10-18T02:27:36.148Z"
+          },
+          {
+            "id": "ui-primary",
+            "name": "SIMULADA ui-primary",
+            "type": "rss",
+            "enabled": true,
+            "url": "https://example.com/ui-primary.xml",
+            "createdAt": "2026-10-18T02:27:19.658Z",
+            "updatedAt": "2026-10-18T02:27:36.237Z",
+            "lastSyncedAt": "2026-10-18T02:27:36.237Z",
+            "lastResultCount": 1,
+            "lastAttemptAt": "2026-10-18T02:27:25.044Z"
+          }
+        ],
+        "references": [
+          {
+            "id": "38a3dd08-55e1-4f35-87d4-556a417f69ee",
+            "title": "SIMULADA: Automatización responsable para equipos",
+            "sourceId": "ui-primary",
+            "source": "SIMULADA ui-primary",
+            "url": "https://example.com/scheduler/primary",
+            "status": "new"
+          },
+          {
+            "id": "c6a4fd9f-80dd-48ed-a1ab-27c1030779e9",
+            "title": "SIMULADA: Control de calidad educativo",
+            "sourceId": "ui-secondary",
+            "source": "SIMULADA ui-secondary",
+            "url": "https://example.com/scheduler/secondary",
+            "status": "new"
+          }
+        ],
+        "activity": [
+          {
+            "text": "Radar actualizado: 0 referencias nuevas, 1 actualizadas y 1 fuentes con errores.",
+            "created_at": "2026-10-18T02:27:36.270Z"
+          },
+          {
+            "text": "Radar actualizado: 0 referencias nuevas, 0 actualizadas y 2 fuentes con errores.",
+            "created_at": "2026-10-18T02:27:25.046Z"
+          },
+          {
+            "text": "Radar actualizado: 2 referencias nuevas, 0 actualizadas y 0 fuentes con errores.",
+            "created_at": "2026-10-18T02:27:19.674Z"
+          }
+        ],
+        "lastResult": {
+          "added": 0,
+          "updated": 1,
+          "errors": [
+            "SIMULADA ui-secondary: Fallo RSS SIMULADO, sin red"
+          ],
+          "sources": [
+            {
+              "id": "ui-secondary",
+              "name": "SIMULADA ui-secondary",
+              "added": 0,
+              "error": "SIMULADA ui-secondary: Fallo RSS SIMULADO, sin red"
+            },
+            {
+              "id": "ui-primary",
+              "name": "SIMULADA ui-primary",
+              "added": 0,
+              "updated": 1,
+              "fetched": 1
+            }
+          ]
+        }
+      }
+    },
+    {
+      "action": "manual-prepare",
+      "wallAt": "2026-10-18T02:27:43.009Z",
+      "result": {
+        "now": 1792289803003,
+        "nowISO": "2026-10-18T02:16:43.003Z",
+        "mode": "failure",
+        "selected": [
+          "scheduler-ui"
+        ],
+        "calls": [
+          {
+            "brand": "scheduler-ui",
+            "now": 1792289803003,
+            "mode": "failure"
+          }
+        ],
+        "fetches": [
+          {
+            "url": "https://www.nasa.gov/feed/",
+            "mode": "failure",
+            "now": 1792289803003
+          }
+        ],
+        "scheduler": {
+          "lastAttemptAt": 1792289803003,
+          "failures": 1,
+          "nextAttemptAt": 1792291003003
+        },
+        "sources": [
+          {
+            "id": "ui-primary",
+            "name": "NASA RSS · actualización manual pública",
+            "type": "rss",
+            "enabled": true,
+            "url": "https://www.nasa.gov/feed/",
+            "createdAt": "2026-10-18T02:27:43.000Z",
+            "updatedAt": "2026-10-18T02:27:43.004Z",
+            "lastError": "NASA RSS · actualización manual pública: Fallo RSS SIMULADO, sin red",
+            "lastAttemptAt": "2026-10-18T02:27:43.004Z"
+          }
+        ],
+        "references": [],
+        "activity": [
+          {
+            "text": "Radar actualizado: 0 referencias nuevas, 0 actualizadas y 1 fuentes con errores.",
+            "created_at": "2026-10-18T02:27:43.005Z"
+          }
+        ],
+        "lastResult": {
+          "added": 0,
+          "updated": 0,
+          "errors": [
+            "NASA RSS · actualización manual pública: Fallo RSS SIMULADO, sin red"
+          ],
+          "sources": [
+            {
+              "id": "ui-primary",
+              "name": "NASA RSS · actualización manual pública",
+              "added": 0,
+              "error": "NASA RSS · actualización manual pública: Fallo RSS SIMULADO, sin red"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "action": "state",
+      "wallAt": "2026-10-18T02:27:47.556Z",
+      "result": {
+        "now": 1792289803003,
+        "nowISO": "2026-10-18T02:16:43.003Z",
+        "mode": "failure",
+        "selected": [
+          "scheduler-ui"
+        ],
+        "calls": [
+          {
+            "brand": "scheduler-ui",
+            "now": 1792289803003,
+            "mode": "failure"
+          }
+        ],
+        "fetches": [
+          {
+            "url": "https://www.nasa.gov/feed/",
+            "mode": "failure",
+            "now": 1792289803003
+          }
+        ],
+        "scheduler": {
+          "lastAttemptAt": 1792289803003,
+          "failures": 1,
+          "nextAttemptAt": 1792291003003
+        },
+        "sources": [
+          {
+            "id": "ui-primary",
+            "name": "NASA RSS · actualización manual pública",
+            "type": "rss",
+            "enabled": true,
+            "url": "https://www.nasa.gov/feed/",
+            "createdAt": "2026-10-18T02:27:43.000Z",
+            "updatedAt": "2026-10-18T02:27:47.506Z",
+            "lastError": "NASA RSS · actualización manual pública: No se permite acceder a direcciones privadas o reservadas.",
+            "lastAttemptAt": "2026-10-18T02:27:47.506Z"
+          }
+        ],
+        "references": [],
+        "activity": [
+          {
+            "text": "Radar actualizado: 0 referencias nuevas, 0 actualizadas y 1 fuentes con errores.",
+            "created_at": "2026-10-18T02:27:47.509Z"
+          },
+          {
+            "text": "Radar actualizado: 0 referencias nuevas, 0 actualizadas y 1 fuentes con errores.",
+            "created_at": "2026-10-18T02:27:43.005Z"
+          }
+        ],
+        "lastResult": {
+          "added": 0,
+          "updated": 0,
+          "errors": [
+            "NASA RSS · actualización manual pública: Fallo RSS SIMULADO, sin red"
+          ],
+          "sources": [
+            {
+              "id": "ui-primary",
+              "name": "NASA RSS · actualización manual pública",
+              "added": 0,
+              "error": "NASA RSS · actualización manual pública: Fallo RSS SIMULADO, sin red"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "action": "state",
+      "wallAt": "2026-10-18T02:28:24.539Z",
+      "result": {
+        "now": 1792289803003,
+        "nowISO": "2026-10-18T02:16:43.003Z",
+        "mode": "failure",
+        "selected": [
+          "scheduler-ui"
+        ],
+        "calls": [
+          {
+            "brand": "scheduler-ui",
+            "now": 1792289803003,
+            "mode": "failure"
+          }
+        ],
+        "fetches": [
+          {
+            "url": "https://www.nasa.gov/feed/",
+            "mode": "failure",
+            "now": 1792289803003
+          }
+        ],
+        "scheduler": {
+          "lastAttemptAt": 1792289803003,
+          "failures": 1,
+          "nextAttemptAt": 1792291003003
+        },
+        "sources": [
+          {
+            "id": "ui-primary",
+            "name": "BBC tecnología · actualización manual pública",
+            "type": "rss",
+            "enabled": true,
+            "url": "https://feeds.bbci.co.uk/news/technology/rss.xml",
+            "createdAt": "2026-10-18T02:27:43.000Z",
+            "updatedAt": "2026-10-18T02:28:20.537Z",
+            "lastAttemptAt": "2026-10-18T02:27:47.506Z",
+            "query": "",
+            "lastSyncedAt": "2026-10-18T02:28:20.537Z",
+            "lastResultCount": 21
+          }
+        ],
+        "references": [
+          {
+            "id": "e9e8ab15-534e-472a-9a11-e33a09f81ad0",
+            "title": "Tech Now",
+            "sourceId": "ui-primary",
+            "source": "BBC tecnología · actualización manual pública",
+            "url": "https://www.bbc.co.uk/iplayer/episode/m0032301?at_medium=RSS&amp;at_campaign=rss",
+            "status": "new"
+          },
+          {
+            "id": "f7ada562-ba2c-4a2f-b60f-04c81cddc566",
+            "title": "Tech Now",
+            "sourceId": "ui-primary",
+            "source": "BBC tecnología · actualización manual pública",
+            "url": "https://www.bbc.co.uk/iplayer/episode/m0032d9k?at_medium=RSS&amp;at_campaign=rss",
+            "status": "new"
+          },
+          {
+            "id": "d27169fb-6208-4112-8a4b-4ad991e41fd8",
+            "title": "Tech Now",
+            "sourceId": "ui-primary",
+            "source": "BBC tecnología · actualización manual pública",
+            "url": "https://www.bbc.co.uk/iplayer/episode/m0032n6v?at_medium=RSS&amp;at_campaign=rss",
+            "status": "new"
+          },
+          {
+            "id": "45e6f73b-22ae-493e-8ae7-e6a1507cf6e4",
+            "title": "Tech Now",
+            "sourceId": "ui-primary",
+            "source": "BBC tecnología · actualización manual pública",
+            "url": "https://www.bbc.co.uk/iplayer/episode/m0032yng?at_medium=RSS&amp;at_campaign=rss",
+            "status": "new"
+          },
+          {
+            "id": "68d35108-2228-4ae6-a6cd-a5190be4e29e",
+            "title": "Tech Life",
+            "sourceId": "ui-primary",
+            "source": "BBC tecnología · actualización manual pública",
+            "url": "https://www.bbc.co.uk/sounds/play/w3ct8jyg?at_medium=RSS&amp;at_campaign=rss",
+            "status": "new"
+          },
+          {
+            "id": "3b41374b-ffa0-4777-9432-8641533b745a",
+            "title": "Tech Life",
+            "sourceId": "ui-primary",
+            "source": "BBC tecnología · actualización manual pública",
+            "url": "https://www.bbc.co.uk/sounds/play/w3ct8jyh?at_medium=RSS&amp;at_campaign=rss",
+            "status": "new"
+          },
+          {
+            "id": "03cf5013-e79e-4aef-9f3a-b2e17e8e784e",
+            "title": "Tech Life",
+            "sourceId": "ui-primary",
+            "source": "BBC tecnología · actualización manual pública",
+            "url": "https://www.bbc.co.uk/sounds/play/w3ct8jyj?at_medium=RSS&amp;at_campaign=rss",
+            "status": "new"
+          },
+          {
+            "id": "1e2f4849-ee93-4e8b-a588-636dc699e819",
+            "title": "Tech Life",
+            "sourceId": "ui-primary",
+            "source": "BBC tecnología · actualización manual pública",
+            "url": "https://www.bbc.co.uk/sounds/play/w3ct8jyk?at_medium=RSS&amp;at_campaign=rss",
+            "status": "new"
+          },
+          {
+            "id": "227bd195-a1be-4374-85e3-b0af40c1e9c8",
+            "title": "Phase Eight and Hobbs owner hit by cyber-attack, as H&M probes separate hack claim",
+            "sourceId": "ui-primary",
+            "source": "BBC tecnología · actualización manual pública",
+            "url": "https://www.bbc.co.uk/news/articles/cwly38gjkejko?at_medium=RSS&amp;at_campaign=rss",
+            "status": "new"
+          },
+          {
+            "id": "c585f0d8-a90a-4162-8551-a3b3ae542d7a",
+            "title": "Bumble bought for $1.3bn in 'bet on the future of humanity'",
+            "sourceId": "ui-primary",
+            "source": "BBC tecnología · actualización manual pública",
+            "url": "https://www.bbc.co.uk/news/articles/cm9qzwjgnjxlo?at_medium=RSS&amp;at_campaign=rss",
+            "status": "new"
+          },
+          {
+            "id": "5e1b7c46-9b25-4f48-ac73-4a6c08c3ee49",
+            "title": "How long will humans be needed for translation?",
+            "sourceId": "ui-primary",
+            "source": "BBC tecnología · actualización manual pública",
+            "url": "https://www.bbc.co.uk/news/articles/c1wxdjx27ypo?at_medium=RSS&amp;at_campaign=rss",
+            "status": "new"
+          },
+          {
+            "id": "6dd21a6e-1e04-40e9-a9ab-2f101b1cf157",
+            "title": "'I applied for 200 jobs' - How 'spray and pray' AI job applications can backfire",
+            "sourceId": "ui-primary",
+            "source": "BBC tecnología · actualización manual pública",
+            "url": "https://www.bbc.co.uk/news/articles/c623dnkn8pkyo?at_medium=RSS&amp;at_campaign=rss",
+            "status": "new"
+          },
+          {
+            "id": "feff3a39-f33f-4c4c-82d9-2b235bee6f70",
+            "title": "Toilet paper and secret recorders: What we know about the arrest of the Saudi OpenAI engineer",
+            "sourceId": "ui-primary",
+            "source": "BBC tecnología · actualización manual pública",
+            "url": "https://www.bbc.co.uk/news/articles/cm04054ykqqqo?at_medium=RSS&amp;at_campaign=rss",
+            "status": "new"
+          },
+          {
+            "id": "93efa19a-8bba-4b5b-a0a0-7715c0d0c806",
+            "title": "AI giant Anthropic woos potential investors ahead of stock market debut",
+            "sourceId": "ui-primary",
+            "source": "BBC tecnología · actualización manual pública",
+            "url": "https://www.bbc.co.uk/news/articles/cqzjx448vxkgo?at_medium=RSS&amp;at_campaign=rss",
+            "status": "new"
+          },
+          {
+            "id": "0de008b2-f51e-423d-974d-df880147a21a",
+            "title": "GTA 6 - all you need to know about Rockstar's blockbuster game",
+            "sourceId": "ui-primary",
+            "source": "BBC tecnología · actualización manual pública",
+            "url": "https://www.bbc.co.uk/news/articles/c9q20djz4wno?at_medium=RSS&amp;at_campaign=rss",
+            "status": "new"
+          },
+          {
+            "id": "fb08e590-eb10-42dc-bb35-43734f920090",
+            "title": "Living with a stink? Technology might help",
+            "sourceId": "ui-primary",
+            "source": "BBC tecnología · actualización manual pública",
+            "url": "https://www.bbc.co.uk/news/articles/cr6240q1w136o?at_medium=RSS&amp;at_campaign=rss",
+            "status": "new"
+          },
+          {
+            "id": "1dcca03b-4fe8-4bd6-a84e-7c30774cd6c3",
+            "title": "Porn showing choking or incest to be banned from early November, government says",
+            "sourceId": "ui-primary",
+            "source": "BBC tecnología · actualización manual pública",
+            "url": "https://www.bbc.co.uk/news/articles/cmpqgepejr2ro?at_medium=RSS&amp;at_campaign=rss",
+            "status": "new"
+          },
+          {
+            "id": "45db5353-dae8-4174-a3d6-8d46f3f73a5d",
+            "title": "Snapchat and Instagram grooming becoming 'easier'",
+            "sourceId": "ui-primary",
+            "source": "BBC tecnología · actualización manual pública",
+            "url": "https://www.bbc.co.uk/news/articles/cq33xd6j1dv5o?at_medium=RSS&amp;at_campaign=rss",
+            "status": "new"
+          },
+          {
+            "id": "d9f8c01b-9b91-45fd-b984-9f2f36f3afe6",
+            "title": "Russian man linked to deadly London hospitals hack arrested",
+            "sourceId": "ui-primary",
+            "source": "BBC tecnología · actualización manual pública",
+            "url": "https://www.bbc.co.uk/news/articles/c9vgr61kml3mo?at_medium=RSS&amp;at_campaign=rss",
+            "status": "new"
+          },
+          {
+            "id": "1c6b31b4-4a5a-44f4-99b4-6eed02a3729c",
+            "title": "Toxic algorithms wouldn't let them go - now Australia wants an off switch",
+            "sourceId": "ui-primary",
+            "source": "BBC tecnología · actualización manual pública",
+            "url": "https://www.bbc.co.uk/news/articles/cwr7y8er1n8vo?at_medium=RSS&amp;at_campaign=rss",
+            "status": "new"
+          },
+          {
+            "id": "c6d33da5-8df5-44c5-baf0-6fe7907b5c97",
+            "title": "No further action against government adviser's wife over Palestine Action post, police say",
+            "sourceId": "ui-primary",
+            "source": "BBC tecnología · actualización manual pública",
+            "url": "https://www.bbc.co.uk/news/articles/cv8ez40yz950o?at_medium=RSS&amp;at_campaign=rss",
+            "status": "new"
+          }
+        ],
+        "activity": [
+          {
+            "text": "Radar actualizado: 21 referencias nuevas, 0 actualizadas y 0 fuentes con errores.",
+            "created_at": "2026-10-18T02:28:20.541Z"
+          },
+          {
+            "text": "Radar actualizado: 0 referencias nuevas, 0 actualizadas y 1 fuentes con errores.",
+            "created_at": "2026-10-18T02:27:47.509Z"
+          },
+          {
+            "text": "Radar actualizado: 0 referencias nuevas, 0 actualizadas y 1 fuentes con errores.",
+            "created_at": "2026-10-18T02:27:43.005Z"
+          }
+        ],
+        "lastResult": {
+          "added": 0,
+          "updated": 0,
+          "errors": [
+            "NASA RSS · actualización manual pública: Fallo RSS SIMULADO, sin red"
+          ],
+          "sources": [
+            {
+              "id": "ui-primary",
+              "name": "NASA RSS · actualización manual pública",
+              "added": 0,
+              "error": "NASA RSS · actualización manual pública: Fallo RSS SIMULADO, sin red"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "action": "manual-after",
+      "wallAt": "2026-10-18T02:28:41.046Z",
+      "result": {
+        "before": {
+          "now": 1792289803003,
+          "nowISO": "2026-10-18T02:16:43.003Z",
+          "mode": "failure",
+          "selected": [
+            "scheduler-ui"
+          ],
+          "calls": [
+            {
+              "brand": "scheduler-ui",
+              "now": 1792289803003,
+              "mode": "failure"
+            }
+          ],
+          "fetches": [
+            {
+              "url": "https://www.nasa.gov/feed/",
+              "mode": "failure",
+              "now": 1792289803003
+            }
+          ],
+          "scheduler": {
+            "lastAttemptAt": 1792289803003,
+            "failures": 1,
+            "nextAttemptAt": 1792291003003
+          },
+          "sources": [
+            {
+              "id": "ui-primary",
+              "name": "BBC tecnología · actualización manual pública",
+              "type": "rss",
+              "enabled": true,
+              "url": "https://feeds.bbci.co.uk/news/technology/rss.xml",
+              "createdAt": "2026-10-18T02:27:43.000Z",
+              "updatedAt": "2026-10-18T02:28:20.537Z",
+              "lastAttemptAt": "2026-10-18T02:27:47.506Z",
+              "query": "",
+              "lastSyncedAt": "2026-10-18T02:28:20.537Z",
+              "lastResultCount": 21
+            }
+          ],
+          "references": [
+            {
+              "id": "e9e8ab15-534e-472a-9a11-e33a09f81ad0",
+              "title": "Tech Now",
+              "sourceId": "ui-primary",
+              "source": "BBC tecnología · actualización manual pública",
+              "url": "https://www.bbc.co.uk/iplayer/episode/m0032301?at_medium=RSS&amp;at_campaign=rss",
+              "status": "new"
+            },
+            {
+              "id": "f7ada562-ba2c-4a2f-b60f-04c81cddc566",
+              "title": "Tech Now",
+              "sourceId": "ui-primary",
+              "source": "BBC tecnología · actualización manual pública",
+              "url": "https://www.bbc.co.uk/iplayer/episode/m0032d9k?at_medium=RSS&amp;at_campaign=rss",
+              "status": "new"
+            },
+            {
+              "id": "d27169fb-6208-4112-8a4b-4ad991e41fd8",
+              "title": "Tech Now",
+              "sourceId": "ui-primary",
+              "source": "BBC tecnología · actualización manual pública",
+              "url": "https://www.bbc.co.uk/iplayer/episode/m0032n6v?at_medium=RSS&amp;at_campaign=rss",
+              "status": "new"
+            },
+            {
+              "id": "45e6f73b-22ae-493e-8ae7-e6a1507cf6e4",
+              "title": "Tech Now",
+              "sourceId": "ui-primary",
+              "source": "BBC tecnología · actualización manual pública",
+              "url": "https://www.bbc.co.uk/iplayer/episode/m0032yng?at_medium=RSS&amp;at_campaign=rss",
+              "status": "new"
+            },
+            {
+              "id": "68d35108-2228-4ae6-a6cd-a5190be4e29e",
+              "title": "Tech Life",
+              "sourceId": "ui-primary",
+              "source": "BBC tecnología · actualización manual pública",
+              "url": "https://www.bbc.co.uk/sounds/play/w3ct8jyg?at_medium=RSS&amp;at_campaign=rss",
+              "status": "new"
+            },
+            {
+              "id": "3b41374b-ffa0-4777-9432-8641533b745a",
+              "title": "Tech Life",
+              "sourceId": "ui-primary",
+              "source": "BBC tecnología · actualización manual pública",
+              "url": "https://www.bbc.co.uk/sounds/play/w3ct8jyh?at_medium=RSS&amp;at_campaign=rss",
+              "status": "new"
+            },
+            {
+              "id": "03cf5013-e79e-4aef-9f3a-b2e17e8e784e",
+              "title": "Tech Life",
+              "sourceId": "ui-primary",
+              "source": "BBC tecnología · actualización manual pública",
+              "url": "https://www.bbc.co.uk/sounds/play/w3ct8jyj?at_medium=RSS&amp;at_campaign=rss",
+              "status": "new"
+            },
+            {
+              "id": "1e2f4849-ee93-4e8b-a588-636dc699e819",
+              "title": "Tech Life",
+              "sourceId": "ui-primary",
+              "source": "BBC tecnología · actualización manual pública",
+              "url": "https://www.bbc.co.uk/sounds/play/w3ct8jyk?at_medium=RSS&amp;at_campaign=rss",
+              "status": "new"
+            },
+            {
+              "id": "227bd195-a1be-4374-85e3-b0af40c1e9c8",
+              "title": "Phase Eight and Hobbs owner hit by cyber-attack, as H&M probes separate hack claim",
+              "sourceId": "ui-primary",
+              "source": "BBC tecnología · actualización manual pública",
+              "url": "https://www.bbc.co.uk/news/articles/cwly38gjkejko?at_medium=RSS&amp;at_campaign=rss",
+              "status": "new"
+            },
+            {
+              "id": "c585f0d8-a90a-4162-8551-a3b3ae542d7a",
+              "title": "Bumble bought for $1.3bn in 'bet on the future of humanity'",
+              "sourceId": "ui-primary",
+              "source": "BBC tecnología · actualización manual pública",
+              "url": "https://www.bbc.co.uk/news/articles/cm9qzwjgnjxlo?at_medium=RSS&amp;at_campaign=rss",
+              "status": "new"
+            },
+            {
+              "id": "5e1b7c46-9b25-4f48-ac73-4a6c08c3ee49",
+              "title": "How long will humans be needed for translation?",
+              "sourceId": "ui-primary",
+              "source": "BBC tecnología · actualización manual pública",
+              "url": "https://www.bbc.co.uk/news/articles/c1wxdjx27ypo?at_medium=RSS&amp;at_campaign=rss",
+              "status": "new"
+            },
+            {
+              "id": "6dd21a6e-1e04-40e9-a9ab-2f101b1cf157",
+              "title": "'I applied for 200 jobs' - How 'spray and pray' AI job applications can backfire",
+              "sourceId": "ui-primary",
+              "source": "BBC tecnología · actualización manual pública",
+              "url": "https://www.bbc.co.uk/news/articles/c623dnkn8pkyo?at_medium=RSS&amp;at_campaign=rss",
+              "status": "new"
+            },
+            {
+              "id": "feff3a39-f33f-4c4c-82d9-2b235bee6f70",
+              "title": "Toilet paper and secret recorders: What we know about the arrest of the Saudi OpenAI engineer",
+              "sourceId": "ui-primary",
+              "source": "BBC tecnología · actualización manual pública",
+              "url": "https://www.bbc.co.uk/news/articles/cm04054ykqqqo?at_medium=RSS&amp;at_campaign=rss",
+              "status": "new"
+            },
+            {
+              "id": "93efa19a-8bba-4b5b-a0a0-7715c0d0c806",
+              "title": "AI giant Anthropic woos potential investors ahead of stock market debut",
+              "sourceId": "ui-primary",
+              "source": "BBC tecnología · actualización manual pública",
+              "url": "https://www.bbc.co.uk/news/articles/cqzjx448vxkgo?at_medium=RSS&amp;at_campaign=rss",
+              "status": "new"
+            },
+            {
+              "id": "0de008b2-f51e-423d-974d-df880147a21a",
+              "title": "GTA 6 - all you need to know about Rockstar's blockbuster game",
+              "sourceId": "ui-primary",
+              "source": "BBC tecnología · actualización manual pública",
+              "url": "https://www.bbc.co.uk/news/articles/c9q20djz4wno?at_medium=RSS&amp;at_campaign=rss",
+              "status": "new"
+            },
+            {
+              "id": "fb08e590-eb10-42dc-bb35-43734f920090",
+              "title": "Living with a stink? Technology might help",
+              "sourceId": "ui-primary",
+              "source": "BBC tecnología · actualización manual pública",
+              "url": "https://www.bbc.co.uk/news/articles/cr6240q1w136o?at_medium=RSS&amp;at_campaign=rss",
+              "status": "new"
+            },
+            {
+              "id": "1dcca03b-4fe8-4bd6-a84e-7c30774cd6c3",
+              "title": "Porn showing choking or incest to be banned from early November, government says",
+              "sourceId": "ui-primary",
+              "source": "BBC tecnología · actualización manual pública",
+              "url": "https://www.bbc.co.uk/news/articles/cmpqgepejr2ro?at_medium=RSS&amp;at_campaign=rss",
+              "status": "new"
+            },
+            {
+              "id": "45db5353-dae8-4174-a3d6-8d46f3f73a5d",
+              "title": "Snapchat and Instagram grooming becoming 'easier'",
+              "sourceId": "ui-primary",
+              "source": "BBC tecnología · actualización manual pública",
+              "url": "https://www.bbc.co.uk/news/articles/cq33xd6j1dv5o?at_medium=RSS&amp;at_campaign=rss",
+              "status": "new"
+            },
+            {
+              "id": "d9f8c01b-9b91-45fd-b984-9f2f36f3afe6",
+              "title": "Russian man linked to deadly London hospitals hack arrested",
+              "sourceId": "ui-primary",
+              "source": "BBC tecnología · actualización manual pública",
+              "url": "https://www.bbc.co.uk/news/articles/c9vgr61kml3mo?at_medium=RSS&amp;at_campaign=rss",
+              "status": "new"
+            },
+            {
+              "id": "1c6b31b4-4a5a-44f4-99b4-6eed02a3729c",
+              "title": "Toxic algorithms wouldn't let them go - now Australia wants an off switch",
+              "sourceId": "ui-primary",
+              "source": "BBC tecnología · actualización manual pública",
+              "url": "https://www.bbc.co.uk/news/articles/cwr7y8er1n8vo?at_medium=RSS&amp;at_campaign=rss",
+              "status": "new"
+            },
+            {
+              "id": "c6d33da5-8df5-44c5-baf0-6fe7907b5c97",
+              "title": "No further action against government adviser's wife over Palestine Action post, police say",
+              "sourceId": "ui-primary",
+              "source": "BBC tecnología · actualización manual pública",
+              "url": "https://www.bbc.co.uk/news/articles/cv8ez40yz950o?at_medium=RSS&amp;at_campaign=rss",
+              "status": "new"
+            }
+          ],
+          "activity": [
+            {
+              "text": "Radar actualizado: 21 referencias nuevas, 0 actualizadas y 0 fuentes con errores.",
+              "created_at": "2026-10-18T02:28:20.541Z"
+            },
+            {
+              "text": "Radar actualizado: 0 referencias nuevas, 0 actualizadas y 1 fuentes con errores.",
+              "created_at": "2026-10-18T02:27:47.509Z"
+            },
+            {
+              "text": "Radar actualizado: 0 referencias nuevas, 0 actualizadas y 1 fuentes con errores.",
+              "created_at": "2026-10-18T02:27:43.005Z"
+            }
+          ],
+          "lastResult": {
+            "added": 0,
+            "updated": 0,
+            "errors": [
+              "NASA RSS · actualización manual pública: Fallo RSS SIMULADO, sin red"
+            ],
+            "sources": [
+              {
+                "id": "ui-primary",
+                "name": "NASA RSS · actualización manual pública",
+                "added": 0,
+                "error": "NASA RSS · actualización manual pública: Fallo RSS SIMULADO, sin red"
+              }
+            ]
+          }
+        },
+        "after": {
+          "now": 1792291100537,
+          "nowISO": "2026-10-18T02:38:20.537Z",
+          "mode": "failure",
+          "selected": [
+            "scheduler-ui"
+          ],
+          "calls": [
+            {
+              "brand": "scheduler-ui",
+              "now": 1792289803003,
+              "mode": "failure"
+            },
+            {
+              "brand": "scheduler-ui",
+              "now": 1792291100537,
+              "mode": "failure"
+            }
+          ],
+          "fetches": [
+            {
+              "url": "https://www.nasa.gov/feed/",
+              "mode": "failure",
+              "now": 1792289803003
+            },
+            {
+              "url": "https://feeds.bbci.co.uk/news/technology/rss.xml",
+              "mode": "failure",
+              "now": 1792291100537
+            }
+          ],
+          "scheduler": {
+            "lastAttemptAt": 1792291100537,
+            "failures": 2,
+            "nextAttemptAt": 1792293500537
+          },
+          "sources": [
+            {
+              "id": "ui-primary",
+              "name": "BBC tecnología · actualización manual pública",
+              "type": "rss",
+              "enabled": true,
+              "url": "https://feeds.bbci.co.uk/news/technology/rss.xml",
+              "createdAt": "2026-10-18T02:27:43.000Z",
+              "updatedAt": "2026-10-18T02:28:41.035Z",
+              "lastAttemptAt": "2026-10-18T02:28:41.035Z",
+              "query": "",
+              "lastSyncedAt": "2026-10-18T02:28:20.537Z",
+              "lastResultCount": 21,
+              "lastError": "BBC tecnología · actualización manual pública: Fallo RSS SIMULADO, sin red"
+            }
+          ],
+          "references": [
+            {
+              "id": "e9e8ab15-534e-472a-9a11-e33a09f81ad0",
+              "title": "Tech Now",
+              "sourceId": "ui-primary",
+              "source": "BBC tecnología · actualización manual pública",
+              "url": "https://www.bbc.co.uk/iplayer/episode/m0032301?at_medium=RSS&amp;at_campaign=rss",
+              "status": "new"
+            },
+            {
+              "id": "f7ada562-ba2c-4a2f-b60f-04c81cddc566",
+              "title": "Tech Now",
+              "sourceId": "ui-primary",
+              "source": "BBC tecnología · actualización manual pública",
+              "url": "https://www.bbc.co.uk/iplayer/episode/m0032d9k?at_medium=RSS&amp;at_campaign=rss",
+              "status": "new"
+            },
+            {
+              "id": "d27169fb-6208-4112-8a4b-4ad991e41fd8",
+              "title": "Tech Now",
+              "sourceId": "ui-primary",
+              "source": "BBC tecnología · actualización manual pública",
+              "url": "https://www.bbc.co.uk/iplayer/episode/m0032n6v?at_medium=RSS&amp;at_campaign=rss",
+              "status": "new"
+            },
+            {
+              "id": "45e6f73b-22ae-493e-8ae7-e6a1507cf6e4",
+              "title": "Tech Now",
+              "sourceId": "ui-primary",
+              "source": "BBC tecnología · actualización manual pública",
+              "url": "https://www.bbc.co.uk/iplayer/episode/m0032yng?at_medium=RSS&amp;at_campaign=rss",
+              "status": "new"
+            },
+            {
+              "id": "68d35108-2228-4ae6-a6cd-a5190be4e29e",
+              "title": "Tech Life",
+              "sourceId": "ui-primary",
+              "source": "BBC tecnología · actualización manual pública",
+              "url": "https://www.bbc.co.uk/sounds/play/w3ct8jyg?at_medium=RSS&amp;at_campaign=rss",
+              "status": "new"
+            },
+            {
+              "id": "3b41374b-ffa0-4777-9432-8641533b745a",
+              "title": "Tech Life",
+              "sourceId": "ui-primary",
+              "source": "BBC tecnología · actualización manual pública",
+              "url": "https://www.bbc.co.uk/sounds/play/w3ct8jyh?at_medium=RSS&amp;at_campaign=rss",
+              "status": "new"
+            },
+            {
+              "id": "03cf5013-e79e-4aef-9f3a-b2e17e8e784e",
+              "title": "Tech Life",
+              "sourceId": "ui-primary",
+              "source": "BBC tecnología · actualización manual pública",
+              "url": "https://www.bbc.co.uk/sounds/play/w3ct8jyj?at_medium=RSS&amp;at_campaign=rss",
+              "status": "new"
+            },
+            {
+              "id": "1e2f4849-ee93-4e8b-a588-636dc699e819",
+              "title": "Tech Life",
+              "sourceId": "ui-primary",
+              "source": "BBC tecnología · actualización manual pública",
+              "url": "https://www.bbc.co.uk/sounds/play/w3ct8jyk?at_medium=RSS&amp;at_campaign=rss",
+              "status": "new"
+            },
+            {
+              "id": "227bd195-a1be-4374-85e3-b0af40c1e9c8",
+              "title": "Phase Eight and Hobbs owner hit by cyber-attack, as H&M probes separate hack claim",
+              "sourceId": "ui-primary",
+              "source": "BBC tecnología · actualización manual pública",
+              "url": "https://www.bbc.co.uk/news/articles/cwly38gjkejko?at_medium=RSS&amp;at_campaign=rss",
+              "status": "new"
+            },
+            {
+              "id": "c585f0d8-a90a-4162-8551-a3b3ae542d7a",
+              "title": "Bumble bought for $1.3bn in 'bet on the future of humanity'",
+              "sourceId": "ui-primary",
+              "source": "BBC tecnología · actualización manual pública",
+              "url": "https://www.bbc.co.uk/news/articles/cm9qzwjgnjxlo?at_medium=RSS&amp;at_campaign=rss",
+              "status": "new"
+            },
+            {
+              "id": "5e1b7c46-9b25-4f48-ac73-4a6c08c3ee49",
+              "title": "How long will humans be needed for translation?",
+              "sourceId": "ui-primary",
+              "source": "BBC tecnología · actualización manual pública",
+              "url": "https://www.bbc.co.uk/news/articles/c1wxdjx27ypo?at_medium=RSS&amp;at_campaign=rss",
+              "status": "new"
+            },
+            {
+              "id": "6dd21a6e-1e04-40e9-a9ab-2f101b1cf157",
+              "title": "'I applied for 200 jobs' - How 'spray and pray' AI job applications can backfire",
+              "sourceId": "ui-primary",
+              "source": "BBC tecnología · actualización manual pública",
+              "url": "https://www.bbc.co.uk/news/articles/c623dnkn8pkyo?at_medium=RSS&amp;at_campaign=rss",
+              "status": "new"
+            },
+            {
+              "id": "feff3a39-f33f-4c4c-82d9-2b235bee6f70",
+              "title": "Toilet paper and secret recorders: What we know about the arrest of the Saudi OpenAI engineer",
+              "sourceId": "ui-primary",
+              "source": "BBC tecnología · actualización manual pública",
+              "url": "https://www.bbc.co.uk/news/articles/cm04054ykqqqo?at_medium=RSS&amp;at_campaign=rss",
+              "status": "new"
+            },
+            {
+              "id": "93efa19a-8bba-4b5b-a0a0-7715c0d0c806",
+              "title": "AI giant Anthropic woos potential investors ahead of stock market debut",
+              "sourceId": "ui-primary",
+              "source": "BBC tecnología · actualización manual pública",
+              "url": "https://www.bbc.co.uk/news/articles/cqzjx448vxkgo?at_medium=RSS&amp;at_campaign=rss",
+              "status": "new"
+            },
+            {
+              "id": "0de008b2-f51e-423d-974d-df880147a21a",
+              "title": "GTA 6 - all you need to know about Rockstar's blockbuster game",
+              "sourceId": "ui-primary",
+              "source": "BBC tecnología · actualización manual pública",
+              "url": "https://www.bbc.co.uk/news/articles/c9q20djz4wno?at_medium=RSS&amp;at_campaign=rss",
+              "status": "new"
+            },
+            {
+              "id": "fb08e590-eb10-42dc-bb35-43734f920090",
+              "title": "Living with a stink? Technology might help",
+              "sourceId": "ui-primary",
+              "source": "BBC tecnología · actualización manual pública",
+              "url": "https://www.bbc.co.uk/news/articles/cr6240q1w136o?at_medium=RSS&amp;at_campaign=rss",
+              "status": "new"
+            },
+            {
+              "id": "1dcca03b-4fe8-4bd6-a84e-7c30774cd6c3",
+              "title": "Porn showing choking or incest to be banned from early November, government says",
+              "sourceId": "ui-primary",
+              "source": "BBC tecnología · actualización manual pública",
+              "url": "https://www.bbc.co.uk/news/articles/cmpqgepejr2ro?at_medium=RSS&amp;at_campaign=rss",
+              "status": "new"
+            },
+            {
+              "id": "45db5353-dae8-4174-a3d6-8d46f3f73a5d",
+              "title": "Snapchat and Instagram grooming becoming 'easier'",
+              "sourceId": "ui-primary",
+              "source": "BBC tecnología · actualización manual pública",
+              "url": "https://www.bbc.co.uk/news/articles/cq33xd6j1dv5o?at_medium=RSS&amp;at_campaign=rss",
+              "status": "new"
+            },
+            {
+              "id": "d9f8c01b-9b91-45fd-b984-9f2f36f3afe6",
+              "title": "Russian man linked to deadly London hospitals hack arrested",
+              "sourceId": "ui-primary",
+              "source": "BBC tecnología · actualización manual pública",
+              "url": "https://www.bbc.co.uk/news/articles/c9vgr61kml3mo?at_medium=RSS&amp;at_campaign=rss",
+              "status": "new"
+            },
+            {
+              "id": "1c6b31b4-4a5a-44f4-99b4-6eed02a3729c",
+              "title": "Toxic algorithms wouldn't let them go - now Australia wants an off switch",
+              "sourceId": "ui-primary",
+              "source": "BBC tecnología · actualización manual pública",
+              "url": "https://www.bbc.co.uk/news/articles/cwr7y8er1n8vo?at_medium=RSS&amp;at_campaign=rss",
+              "status": "new"
+            },
+            {
+              "id": "c6d33da5-8df5-44c5-baf0-6fe7907b5c97",
+              "title": "No further action against government adviser's wife over Palestine Action post, police say",
+              "sourceId": "ui-primary",
+              "source": "BBC tecnología · actualización manual pública",
+              "url": "https://www.bbc.co.uk/news/articles/cv8ez40yz950o?at_medium=RSS&amp;at_campaign=rss",
+              "status": "new"
+            }
+          ],
+          "activity": [
+            {
+              "text": "Radar actualizado: 0 referencias nuevas, 0 actualizadas y 1 fuentes con errores.",
+              "created_at": "2026-10-18T02:28:41.042Z"
+            },
+            {
+              "text": "Radar actualizado: 21 referencias nuevas, 0 actualizadas y 0 fuentes con errores.",
+              "created_at": "2026-10-18T02:28:20.541Z"
+            },
+            {
+              "text": "Radar actualizado: 0 referencias nuevas, 0 actualizadas y 1 fuentes con errores.",
+              "created_at": "2026-10-18T02:27:47.509Z"
+            },
+            {
+              "text": "Radar actualizado: 0 referencias nuevas, 0 actualizadas y 1 fuentes con errores.",
+              "created_at": "2026-10-18T02:27:43.005Z"
+            }
+          ],
+          "lastResult": {
+            "added": 0,
+            "updated": 0,
+            "errors": [
+              "BBC tecnología · actualización manual pública: Fallo RSS SIMULADO, sin red"
+            ],
+            "sources": [
+              {
+                "id": "ui-primary",
+                "name": "BBC tecnología · actualización manual pública",
+                "added": 0,
+                "error": "BBC tecnología · actualización manual pública: Fallo RSS SIMULADO, sin red"
+              }
+            ]
+          }
+        }
+      }
+    }
+  ],
+  "wallStoppedAt": "2026-10-18T02:29:53.569Z",
+  "policyObservations": [
+    {
+      "name": "Manual success and failure streak",
+      "productRequirementConfirmed": false,
+      "hypothesis": "A successful manual refresh supersedes the failed streak; first later failure should be failures=1 with 20 min delay.",
+      "actual": {
+        "previousFailures": 1,
+        "failures": 2,
+        "delayMinutes": 40
+      },
+      "experimentalHypothesisVerdict": "FAIL",
+      "productDefect": false,
+      "triage": "README:62 only promises progressive waiting, not a full streak reset. Preserved as policy observation without severity."
+    }
+  ],
+  "triageNote": "The initial full-reset hypothesis was tested before its product requirement was confirmed. Its unfulfilled hypothesis is preserved under policyObservations; it is not counted as a product defect."
+}

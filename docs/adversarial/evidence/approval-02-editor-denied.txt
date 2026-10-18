@@ -1,0 +1,6 @@
+{
+  "http": 403,
+  "body": {
+    "error": "La aprobación requiere un propietario o revisor."
+  }
+}

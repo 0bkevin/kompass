@@ -1,0 +1,185 @@
+[
+  {
+    "kind": "sources",
+    "id": "e07e3ada-cdba-4655-9186-b91de89490fc",
+    "data": {
+      "name": "Noticias globales · GDELT",
+      "type": "gdelt",
+      "query": "",
+      "enabled": true,
+      "id": "e07e3ada-cdba-4655-9186-b91de89490fc",
+      "createdAt": "2026-10-18T02:07:47.782Z",
+      "updatedAt": "2026-10-18T02:07:47.783Z"
+    }
+  },
+  {
+    "kind": "sources",
+    "id": "c679e0ae-0d2f-4d15-91be-a12577ae2e3e",
+    "data": {
+      "name": "Hacker News · tecnología",
+      "type": "hackernews",
+      "query": "",
+      "enabled": true,
+      "id": "c679e0ae-0d2f-4d15-91be-a12577ae2e3e",
+      "createdAt": "2026-10-18T02:07:47.784Z",
+      "updatedAt": "2026-10-18T02:07:47.784Z"
+    }
+  },
+  {
+    "kind": "sources",
+    "id": "eab318ae-bd7a-4f0a-9b86-98983ca64120",
+    "data": {
+      "name": "Google Trends · Estados Unidos",
+      "type": "rss",
+      "url": "https://trends.google.com/trending/rss?geo=US",
+      "enabled": true,
+      "id": "eab318ae-bd7a-4f0a-9b86-98983ca64120",
+      "createdAt": "2026-10-18T02:07:47.786Z",
+      "updatedAt": "2026-10-18T02:07:47.786Z"
+    }
+  },
+  {
+    "kind": "sources",
+    "id": "69b97335-93a5-48d0-aa7c-72d3afdeb1c4",
+    "data": {
+      "name": "Google Trends · CL",
+      "type": "rss",
+      "url": "https://trends.google.com/trending/rss?geo=CL",
+      "enabled": true,
+      "id": "69b97335-93a5-48d0-aa7c-72d3afdeb1c4",
+      "createdAt": "2026-10-18T02:07:47.787Z",
+      "updatedAt": "2026-10-18T02:07:47.787Z"
+    }
+  },
+  {
+    "kind": "sources",
+    "id": "e77a3044-fdb1-4783-9ee4-4c8e2fc041de",
+    "data": {
+      "name": "TechCrunch · novedades",
+      "type": "rss",
+      "url": "https://techcrunch.com/feed/",
+      "enabled": false,
+      "id": "e77a3044-fdb1-4783-9ee4-4c8e2fc041de",
+      "createdAt": "2026-10-18T02:07:47.789Z",
+      "updatedAt": "2026-10-18T02:07:47.789Z"
+    }
+  },
+  {
+    "kind": "references",
+    "id": "f05f7fbe-b725-49a5-8874-94095b855045",
+    "data": {
+      "source": "manual",
+      "language": "Español",
+      "market": "Sin definir",
+      "format": "post",
+      "status": "new",
+      "tags": [
+        "inventario",
+        "operaciones"
+      ],
+      "title": "Inventario: bitácora pública sintética",
+      "text": "FUENTE SINTÉTICA DE PRUEBA. Una librería anota faltantes al cierre de cada jornada. No se midió ahorro ni cambio en ventas. FRASE CANARIO NO COPIAR: El ornitorrinco violeta domina las estanterías. La bitácora tiene tres columnas: título, faltante y fecha. Es una descripción, no un estudio ni consejo estadístico.",
+      "url": "https://example.com/qa-studio-inventario",
+      "id": "f05f7fbe-b725-49a5-8874-94095b855045",
+      "createdAt": "2026-10-18T02:07:47.796Z",
+      "updatedAt": "2026-10-18T02:07:47.796Z"
+    }
+  },
+  {
+    "kind": "pieces",
+    "id": "3ac07713-9be9-478e-9dd0-a9a0747cf951",
+    "data": {
+      "title": "Explica una rutina para detectar faltantes sin reuniones.",
+      "hook": "¿Qué cambia con explica una rutina para detectar faltantes sin reuniones para Jefas de operaciones de librerías?",
+      "script": "¿Qué cambia con explica una rutina para detectar faltantes sin reuniones para Jefas de operaciones de librerías?\n\nQué significa para Jefas de operaciones de librerías y cómo probarlo sin perder el foco.\nEn Chile, comienza por una tarea concreta de Formación operativa relacionada con Reducir quiebres de inventario sin añadir reuniones.\n\nAntes de adoptar la idea, registra cómo resuelves esa tarea hoy. Elige un caso pequeño, define quién revisará el resultado y compara calidad y tiempo. Documenta las limitaciones; no extrapoles una prueba a toda la organización.\n\nDesde Laboratorio Faro · fixture sintética, nuestra propuesta es convertir la conversación en una prueba verificable. Dirección editorial: Explica una rutina para detectar faltantes sin reuniones. Haz un carrusel de 4 láminas con títulos concretos y un ejemplo hipotético de una librería. No inventes ahorro, ventas ni testimonios. No copies ninguna frase de la referencia. CTA final exacto: Descarga la plantilla de inventario..\n\n¿Qué tarea pondrías a prueba primero? Comparte tu contexto para adaptar el siguiente paso.",
+      "caption": "¿Qué cambia con explica una rutina para detectar faltantes sin reuniones para Jefas de operaciones de librerías?\n\nQué significa para Jefas de operaciones de librerías y cómo probarlo sin perder el foco.\n\nGuarda esta propuesta y compártela con tu equipo.",
+      "cta": "Comparte qué caso quieres poner a prueba.",
+      "scenes": [
+        {
+          "id": "ec465531-5e07-4cd1-b361-c15c0dd8d158",
+          "text": "¿Qué cambia con explica una rutina para detectar faltantes sin reuniones para Jefas de operaciones de librerías?",
+          "duration": 5
+        },
+        {
+          "id": "1863d584-7cfe-4a1a-9546-bfff8e8f364c",
+          "text": "Qué significa para Jefas de operaciones de librerías y cómo probarlo sin perder el foco.\nEn Chile, comienza por una tarea concreta de Formación operativa relacionada con Reducir quiebres de inventario sin añadir reuniones.",
+          "duration": 14
+        },
+        {
+          "id": "bf871bf9-91c5-4d53-93ee-7ef9a76b1fac",
+          "text": "Antes de adoptar la idea, registra cómo resuelves esa tarea hoy. Elige un caso pequeño, define quién revisará el resultado y compara calidad y tiempo. Documenta las limitaciones; no extrapoles una prueba a toda la organización.",
+          "duration": 15
+        },
+        {
+          "id": "3989f31e-e5cf-452c-ad7c-be6d07d8d448",
+          "text": "Desde Laboratorio Faro · fixture sintética, nuestra propuesta es convertir la conversación en una prueba verificable. Dirección editorial: Explica una rutina para detectar faltantes sin reuniones. Haz un carrusel de 4 láminas con títulos concretos y un ejemplo hipotético de una librería. No inventes ahorro, ventas ni testimonios. No copies ninguna frase de la referencia. CTA final exacto: Descarga la plantilla de inventario..",
+          "duration": 20
+        },
+        {
+          "id": "8149a0ed-35e0-4c5b-89b6-e40f4a7c1989",
+          "text": "¿Qué tarea pondrías a prueba primero? Comparte tu contexto para adaptar el siguiente paso.",
+          "duration": 6
+        }
+      ],
+      "generationEngine": "heuristic",
+      "segmentId": "qa-ops",
+      "format": "carousel",
+      "channel": "instagram",
+      "status": "draft",
+      "assetIds": [],
+      "comments": [],
+      "id": "3ac07713-9be9-478e-9dd0-a9a0747cf951",
+      "createdAt": "2026-10-18T02:07:57.528Z",
+      "updatedAt": "2026-10-18T02:07:57.528Z"
+    }
+  },
+  {
+    "kind": "pieces",
+    "id": "05a0e59a-0e31-4b31-b094-c00a7a1a8196",
+    "data": {
+      "title": "Inventario: bitácora pública sintética",
+      "hook": "¿Qué cambia con inventario: bitácora pública sintética para Docentes rurales de secundaria?",
+      "script": "¿Qué cambia con inventario: bitácora pública sintética para Docentes rurales de secundaria?\n\nQué significa para Docentes rurales de secundaria y cómo probarlo sin perder el foco.\nEn Chile, comienza por una tarea concreta de Formación operativa relacionada con Preparar clases sin conexión con recursos reutilizables.\n\nAntes de adoptar la idea, registra cómo resuelves esa tarea hoy. Elige un caso pequeño, define quién revisará el resultado y compara calidad y tiempo. Documenta las limitaciones; no extrapoles una prueba a toda la organización.\n\nDesde Laboratorio Faro · fixture sintética, nuestra propuesta es convertir la conversación en una prueba verificable. Referencia para consultar: https://example.com/qa-studio-inventario. Dirección editorial: Adapta sólo la idea de llevar una bitácora a docentes rurales: un reel con 3 escenas habladas para preparar una clase sin conexión. Prohibido hablar de ventas, ahorro o inventario de librerías como necesidad de docentes. No copies la frase canario ni las frases de la fuente. CTA exacto: Guarda esta ficha para tu próxima clase..\n\n¿Qué tarea pondrías a prueba primero? Comparte tu contexto para adaptar el siguiente paso.",
+      "caption": "¿Qué cambia con inventario: bitácora pública sintética para Docentes rurales de secundaria?\n\nQué significa para Docentes rurales de secundaria y cómo probarlo sin perder el foco.\n\nGuarda esta propuesta y compártela con tu equipo.",
+      "cta": "Comparte qué caso quieres poner a prueba.",
+      "scenes": [
+        {
+          "id": "858a8e40-3a45-45b8-ad26-d47ab8eabcc6",
+          "text": "¿Qué cambia con inventario: bitácora pública sintética para Docentes rurales de secundaria?",
+          "duration": 5
+        },
+        {
+          "id": "277c0cfd-b389-4cec-8690-c9b5bdf61f38",
+          "text": "Qué significa para Docentes rurales de secundaria y cómo probarlo sin perder el foco.\nEn Chile, comienza por una tarea concreta de Formación operativa relacionada con Preparar clases sin conexión con recursos reutilizables.",
+          "duration": 14
+        },
+        {
+          "id": "8870db54-8050-42b9-9cdd-f9cccf5b53c5",
+          "text": "Antes de adoptar la idea, registra cómo resuelves esa tarea hoy. Elige un caso pequeño, define quién revisará el resultado y compara calidad y tiempo. Documenta las limitaciones; no extrapoles una prueba a toda la organización.",
+          "duration": 15
+        },
+        {
+          "id": "e5ffdaa1-02e5-46dc-8f3d-ae36993b8cda",
+          "text": "Desde Laboratorio Faro · fixture sintética, nuestra propuesta es convertir la conversación en una prueba verificable. Referencia para consultar: https://example.com/qa-studio-inventario. Dirección editorial: Adapta sólo la idea de llevar una bitácora a docentes rurales: un reel con 3 escenas habladas para preparar una clase sin conexión. Prohibido hablar de ventas, ahorro o inventario de librerías como necesidad de docentes. No copies la frase canario ni las frases de la fuente. CTA exacto: Guarda esta ficha para tu próxima clase..",
+          "duration": 20
+        },
+        {
+          "id": "6827796d-cbf1-4cf9-8690-58557a7d83c8",
+          "text": "¿Qué tarea pondrías a prueba primero? Comparte tu contexto para adaptar el siguiente paso.",
+          "duration": 6
+        }
+      ],
+      "generationEngine": "heuristic",
+      "referenceId": "f05f7fbe-b725-49a5-8874-94095b855045",
+      "segmentId": "qa-teachers",
+      "format": "reel",
+      "channel": "tiktok",
+      "status": "draft",
+      "assetIds": [],
+      "comments": [],
+      "id": "05a0e59a-0e31-4b31-b094-c00a7a1a8196",
+      "createdAt": "2026-10-18T02:08:18.004Z",
+      "updatedAt": "2026-10-18T02:08:18.004Z"
+    }
+  }
+]

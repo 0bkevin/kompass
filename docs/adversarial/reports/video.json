@@ -1,0 +1,170 @@
+{
+  "feature": "Análisis de referencias y lectura audiovisual",
+  "slug": "video",
+  "url": "http://127.0.0.21:4111",
+  "status": "PARTIAL",
+  "cases": [
+    {
+      "name": "Referencia de sólo título/enlace sin contenido legible",
+      "expected": "El análisis local usa sólo el material disponible, expone incertidumbre y no afirma haber visto imágenes/audio.",
+      "actual": "UI Analizar referencia guardó heuristic, confidence=low y el título como gancho. La UI dice que no describe audio ni imágenes; hipótesis sin causalidad. API registra título/enlace, sin contenido completo y fallo de resolución de example.invalid.",
+      "verdict": "PASS",
+      "evidence": [
+        "docs/adversarial/evidence/video-local-analysis.png",
+        "docs/adversarial/evidence/video-persisted-fixtures.json"
+      ]
+    },
+    {
+      "name": "Análisis local con descripción de referencia sintética",
+      "expected": "Con texto disponible y sin API de IA debe producir un análisis local identificable, conservando procedencia.",
+      "actual": "En la referencia YouTube sintética con descripción, la acción de UI produjo análisis orientativo por reglas locales, confianza baja, adaptación al segmento Líderes sintéticos y ningún videoAnalysis. Source y métricas nativas se conservaron.",
+      "verdict": "PASS",
+      "evidence": [
+        "docs/adversarial/evidence/video-youtube-detail.png",
+        "docs/adversarial/evidence/video-persisted-fixtures.json"
+      ]
+    },
+    {
+      "name": "Recarga, repetición y corrección",
+      "expected": "El análisis persiste al recargar; actualizar no duplica. Una corrección invalida el análisis anterior y el nuevo usa el título corregido.",
+      "actual": "Tras recargas, la UI seguía mostrando el análisis guardado a 02:06:42.826Z. Actualizar análisis cambió analyzedAt a 02:10:18.508Z sin crear referencias. PATCH de preparación corrigió el título y devolvió status=new sin analysis; la acción UI Analizar referencia guardó el gancho corregido a 02:10:25.609Z. Conteo final=7.",
+      "verdict": "PASS",
+      "evidence": [
+        "docs/adversarial/evidence/video-local-corrected-analysis.png",
+        "docs/adversarial/evidence/video-persisted-fixtures.json"
+      ]
+    },
+    {
+      "name": "Seis factores editoriales consultables",
+      "expected": "Debe poder consultarse gancho, formato, tema, momento, autor/publicador y rendimiento, con observación separada de interpretación.",
+      "actual": "Oportunidades → Entender y crear → Gancho, formato, tema y momento muestra los seis factores tanto con HN como con YouTube como primera referencia. Expone título disponible, formato de metadatos, agrupación propuesta, fecha de fuente, atribución y métricas, cada uno con limitación. ReferenceDetail tiene una presentación más breve; no se considera incumplimiento global.",
+      "verdict": "PASS",
+      "evidence": [
+        "docs/adversarial/evidence/video-factors-opportunities.png",
+        "docs/adversarial/evidence/video-youtube-six-factors.png",
+        "docs/adversarial/evidence/video-youtube-native-metrics.png"
+      ]
+    },
+    {
+      "name": "Métricas nativas y separación de redes",
+      "expected": "Representar los valores de cada fuente con su procedencia, sin sumar redes ni afirmar crecimiento/causalidad por una sola observación.",
+      "actual": "UI YouTube: 1234 vistas, 56 likes, 7 comentarios, origen YouTube Data API, observación 2026-10-18T00:00:00Z. UI HN: 77 puntos y 8 comentarios, origen Hacker News API. Al agrupar dos referencias no se sumaron los valores y el factor de rendimiento identificó la referencia HN. Texto explícito: métricas de redes distintas no se suman ni se comparan como equivalentes; una observación no demuestra crecimiento.",
+      "verdict": "PASS",
+      "evidence": [
+        "docs/adversarial/evidence/video-youtube-native-metrics.png",
+        "docs/adversarial/evidence/video-factors-opportunities.png",
+        "docs/adversarial/evidence/video-persisted-fixtures.json"
+      ]
+    },
+    {
+      "name": "Gemini ausente y recuperación",
+      "expected": "No iniciar análisis audiovisual sin configuración; explicar la dependencia y permitir localizar configuración.",
+      "actual": "Referencia compatible de YouTube muestra Gemini no configurado y no ofrece Examinar video. El botón del aviso Fuentes y equipo navega a /settings, donde Gemini aparece Sin configurar. POST suplementario devuelve409 Configura Gemini... sin guardar videoAnalysis.",
+      "verdict": "PASS",
+      "evidence": [
+        "docs/adversarial/evidence/video-youtube-detail.png",
+        "docs/adversarial/evidence/video-http-observations.json"
+      ]
+    },
+    {
+      "name": "Reel sin medio accesible",
+      "expected": "Una URL de Instagram sin medio/API disponible debe conservarse como metadatos y no habilitar lectura audiovisual.",
+      "actual": "El detalle dice No hay un archivo audiovisual accesible y Sólo hay metadatos disponibles; no hay botón Examinar video. No se visitó Instagram ni contenido detrás de login.",
+      "verdict": "PASS",
+      "evidence": [
+        "docs/adversarial/evidence/video-inaccessible-gate.png"
+      ]
+    },
+    {
+      "name": "Error por indicador de conexión obsoleto — simulación local controlada",
+      "expected": "Si la UI cree que Gemini está configurado y el servidor lo rechaza, mostrar error, recuperar controles, preservar el foco y no fabricar resultado.",
+      "actual": "Se simuló únicamente GET /social/settings en la pestaña propia para devolver configured=true. El servidor real siguió sin credenciales. Clic UI Examinar video recibió409, mostró Configura Gemini..., mantuvo el foco de prueba, reactivó botones y dejó videoAnalysis ausente. Se retiró la inyección al terminar.",
+      "verdict": "PASS",
+      "evidence": [
+        "docs/adversarial/evidence/video-error-missing-gemini-local-simulation.png",
+        "docs/adversarial/evidence/video-http-observations.json"
+      ]
+    },
+    {
+      "name": "YouTube sin duración verificable — configuración ficticia local",
+      "expected": "La fuente debe validarse antes de enviar medios al proveedor y ofrecer recuperación si no puede comprobar duración.",
+      "actual": "Con credencial sintética local y YouTube deshabilitado, clic UI Examinar video devolvió422: no se puede comprobar duración; configurar conector o usar referencia descubierta con duración. No se llegó a Gemini; status siguió new y no se guardó videoAnalysis.",
+      "verdict": "PASS",
+      "evidence": [
+        "docs/adversarial/evidence/video-no-duration-local-fixture.png",
+        "docs/adversarial/evidence/video-http-observations.json",
+        "docs/adversarial/evidence/video-persisted-fixtures.json"
+      ]
+    },
+    {
+      "name": "Fuente incompatible pese a acceso declarado — fixture adversarial",
+      "expected": "No confiar sólo en un indicador de accesibilidad; rechazar URLs incompatibles antes de proveedor.",
+      "actual": "Fixture deliberadamente incoherente con mediaAccess=youtube_url y example.invalid. Con configuración ficticia local, clic UI Examinar video devolvió422 Sólo se pueden analizar URLs públicas de YouTube, videos subidos... o medios reconocidos. Controles recuperados; no resultado guardado.",
+      "verdict": "PASS",
+      "evidence": [
+        "docs/adversarial/evidence/video-unsupported-source-local-fixture.png",
+        "docs/adversarial/evidence/video-persisted-fixtures.json"
+      ]
+    },
+    {
+      "name": "Permisos de revisor",
+      "expected": "El revisor puede consultar pero no iniciar análisis local ni audiovisual; el servidor también debe bloquearlo.",
+      "actual": "Cambio temporal de membership en SQLite propia a reviewer. UI mostró aviso de rol y deshabilitó foco, Examinar video y Analizar referencia. POST suplementarios en ambas rutas devolvieron403 Necesitas permisos de edición. Se restauró owner.",
+      "verdict": "PASS",
+      "evidence": [
+        "docs/adversarial/evidence/video-reviewer-permissions.png",
+        "docs/adversarial/evidence/video-http-observations.json"
+      ]
+    },
+    {
+      "name": "Entradas vacías/inválidas — API suplementaria",
+      "expected": "Rechazar falta de referencia, foco no textual e ID inexistente sin modificar datos.",
+      "actual": "POST /analyze {}→400 Selecciona una referencia; analyze-video {focus:17}→400 El enfoque debe ser texto de hasta500 caracteres; ID inexistente→404. Conteo de referencias se mantuvo y los fallos audiovisuales quedaron sin análisis.",
+      "verdict": "PASS",
+      "evidence": [
+        "docs/adversarial/evidence/video-http-observations.json",
+        "docs/adversarial/evidence/video-persisted-fixtures.json"
+      ]
+    },
+    {
+      "name": "Lectura audiovisual real y persistencia de resultado Gemini",
+      "expected": "Un proveedor real debe observar el vídeo accesible, devolver cobertura y límites verificables y persistir un resultado audiovisual fiel al medio.",
+      "actual": "No hay Gemini real ni autorización para usar claves/pago o enviar medios a terceros. No se ejecutó una integración real ni una respuesta de éxito simulada. Los gates y errores anteriores no prueban exactitud audiovisual.",
+      "verdict": "BLOCKED",
+      "evidence": [
+        "docs/adversarial/evidence/video-persisted-fixtures.json"
+      ]
+    }
+  ],
+  "findings": [],
+  "limitations": [
+    "Todos los datos de marca, referencias y métricas son sintéticos; prueban representación y flujo, no exactitud de conectores reales.",
+    "IA audiovisual REAL ausente: BLOCKED. Sin verificación real de imágenes, audio, muestreo, tiempos, respuesta de proveedor o persistencia de un análisis exitoso.",
+    "La simulación del indicador GET y la configuración ficticia sólo ejercitan errores locales anteriores al proveedor. No equivalen a una integración exitosa.",
+    "No se probaron archivos subidos, medios de Apify ni fuentes detrás de login; no se enviaron vídeos ni publicaciones a terceros.",
+    "Los seis factores se consultan desde Oportunidades. El detalle de referencia sólo muestra un resumen y no enlaza directamente al panel de factores; se registra como diferencia de ubicación, sin fallo funcional global confirmado.",
+    "Los factores de una oportunidad agrupada describen la primera referencia; las demás conservan sus evidencias separadas.",
+    "Pruebas de permisos limitadas a owner/reviewer de la base temporal propia; no es una auditoría universal de aislamiento.",
+    "No se modificó implementación ni se ejecutaron build/format. No se leyeron informes ajenos."
+  ],
+  "artifacts": [
+    "docs/adversarial/reports/video.md",
+    "docs/adversarial/reports/video.json",
+    "docs/adversarial/evidence/video-local-analysis.png",
+    "docs/adversarial/evidence/video-local-corrected-analysis.png",
+    "docs/adversarial/evidence/video-youtube-detail.png",
+    "docs/adversarial/evidence/video-inaccessible-gate.png",
+    "docs/adversarial/evidence/video-error-missing-gemini-local-simulation.png",
+    "docs/adversarial/evidence/video-no-duration-local-fixture.png",
+    "docs/adversarial/evidence/video-unsupported-source-local-fixture.png",
+    "docs/adversarial/evidence/video-reviewer-permissions.png",
+    "docs/adversarial/evidence/video-factors-opportunities.png",
+    "docs/adversarial/evidence/video-youtube-six-factors.png",
+    "docs/adversarial/evidence/video-youtube-native-metrics.png",
+    "docs/adversarial/evidence/video-persisted-fixtures.json",
+    "docs/adversarial/evidence/video-http-observations.json",
+    "/tmp/30x-adversarial-video/session.txt",
+    "/tmp/30x-adversarial-video/radar.sqlite"
+  ]
+}
+

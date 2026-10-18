@@ -1,0 +1,342 @@
+{
+  "note": "Datos sintéticos. Observaciones de API/DOM recogidas durante acciones UI; no contienen sesiones, cookies ni contraseñas.",
+  "brandId": "2a941489-80b7-4afa-ad3e-28f6ec32d386",
+  "initialConfirmed": {
+    "name": "Nexo QA · confirmado",
+    "industry": "Educación tecnológica",
+    "description": "Descripción original confirmada por el equipo QA.",
+    "market": "México",
+    "tone": "Rigurosa y concreta",
+    "pillars": [
+      "ventas B2B",
+      "operaciones"
+    ]
+  },
+  "afterReviewedProposal": {
+    "name": "Nexo QA · revisado",
+    "industry": "Operaciones y formación",
+    "description": "Confirmado por QA: formación práctica de automatización para equipos de operaciones.",
+    "market": "Costa Rica",
+    "language": "es",
+    "tone": "Sobrio, directo y basado en evidencia",
+    "pillars": [
+      "automatización responsable",
+      "métricas de procesos"
+    ],
+    "website": ""
+  },
+  "profileBeforeNameSave": {
+    "apiMarket": "Costa Rica",
+    "formMarket": "Latinoamérica",
+    "profileName": "Nexo QA · revisado"
+  },
+  "afterNameOnlySave": {
+    "name": "Nexo QA · nombre corregido",
+    "market": "Latinoamérica",
+    "tone": "Sobrio, directo y basado en evidencia",
+    "pillars": [
+      "automatización responsable",
+      "métricas de procesos"
+    ]
+  },
+  "reviewerPermissions": {
+    "ui": {
+      "importForm": false,
+      "deleteButton": false,
+      "reviewProposalButton": false,
+      "profileFieldsetDisabled": true,
+      "saveDisabled": true
+    },
+    "api": {
+      "import": 403,
+      "delete": 403,
+      "patchProfile": 403
+    },
+    "error": "Solo el propietario puede realizar esta acción."
+  },
+  "beforeDeletion": {
+    "brand": {
+      "name": "Nexo QA · nombre corregido",
+      "industry": "Operaciones y formación",
+      "description": "Confirmado por QA: formación práctica de automatización para equipos de operaciones.",
+      "tone": "Sobrio, directo y basado en evidencia",
+      "language": "es",
+      "market": "Latinoamérica",
+      "website": "",
+      "color": "#147d65",
+      "secondaryColor": "#161b17",
+      "goals": [
+        "Educar"
+      ],
+      "pillars": [
+        "automatización responsable",
+        "métricas de procesos"
+      ],
+      "weeklyTarget": 3,
+      "audience": [
+        {
+          "id": "segment-qa",
+          "name": "Directores de operaciones",
+          "role": "Liderazgo",
+          "stage": "Evaluando",
+          "needs": "Elegir automatizaciones medibles",
+          "description": ""
+        }
+      ],
+      "id": "2a941489-80b7-4afa-ad3e-28f6ec32d386",
+      "createdAt": "2026-10-18T01:53:07.688Z",
+      "role": "owner"
+    },
+    "context": {
+      "imports": [
+        {
+          "id": "3b4842a8-3bd1-4bbe-9260-78688850ba77",
+          "inspectedAt": "2026-10-18T01:54:14.084Z",
+          "method": "heuristic",
+          "draft": {
+            "name": "",
+            "industry": "Tecnología e inteligencia artificial",
+            "description": "Recuperación QA: Nexo enseña automatización para líderes de equipos. Este texto se aporta para recuperar el contenido de una fuente que no pudo leerse. Contacto de prueba: [correo omitido]. Dirección: Calle Ficticia 123, Ciudad de Prueba. WhatsApp [contacto omitido] omitido] y teléfono [teléfono omitido].",
+            "website": "",
+            "market": "",
+            "language": "Español",
+            "tone": "Claro, cercano y práctico",
+            "pillars": [
+              "Aplicación de inteligencia artificial",
+              "Marketing y contenido"
+            ],
+            "audience": [
+              {
+                "id": "9c703261-591c-44c3-82c7-3513bc801c59",
+                "name": "Equipos de marketing",
+                "role": "Marketing y comunicación",
+                "needs": "Decidir qué contenido crear y cómo comunicar el valor de su empresa.",
+                "stage": "Por confirmar",
+                "description": "Hipótesis sugerida a partir del contenido de la empresa. Requiere validación del equipo; no procede de perfiles de consumidores."
+              }
+            ]
+          },
+          "evidence": [
+            {
+              "id": "2da81a7a-11b6-49b6-b039-630024e65f63",
+              "title": "Contenido aportado por tu equipo",
+              "excerpt": "Recuperación QA: Nexo enseña automatización para líderes de equipos. Este texto se aporta para recuperar el contenido de una fuente que no pudo leerse. Contacto de prueba: [correo omitido]. Dirección: Calle Ficticia 123, Ciudad de Prueba. WhatsApp [contacto omitido] omitido] y teléfono [teléfono omitido].",
+              "status": "provided",
+              "platform": "provided",
+              "reason": "Texto aportado por el equipo; no se ha verificado externamente."
+            }
+          ],
+          "warnings": [
+            "Las sugerencias de marca y audiencia son hipótesis basadas en el contenido aportado. Confírmalas; no describen consumidores observados."
+          ]
+        },
+        {
+          "id": "7656735c-c89c-4ce0-9ae8-73fd04a790b4",
+          "inspectedAt": "2026-10-18T01:53:18.132Z",
+          "method": "heuristic",
+          "draft": {
+            "name": "Example Domain",
+            "industry": "Educación y formación",
+            "description": "Nexo Futuro es una empresa de educación tecnológica para líderes de operaciones en Colombia. Enseñamos automatización, liderazgo e inteligencia artificial con ejemplos medibles. Nuestro tono es claro, cercano y práctico. Contacto QA: [correo omitido], teléfono [teléfono omitido]. Nuestro programa ayuda a equipos a reducir tareas repetitivas.",
+            "website": "https://example.com/",
+            "market": "",
+            "language": "Español",
+            "tone": "Claro, cercano y práctico",
+            "pillars": [
+              "Aplicación de inteligencia artificial",
+              "Formación y aprendizaje",
+              "Procesos y productividad"
+            ],
+            "audience": [
+              {
+                "id": "aaed8f3d-5ef6-4e18-b68b-ea5dc7f1566b",
+                "name": "Responsables de formación",
+                "role": "Formación y gestión educativa",
+                "needs": "Evaluar soluciones y contenidos aplicables al aprendizaje de sus equipos o estudiantes.",
+                "stage": "Por confirmar",
+                "description": "Hipótesis sugerida a partir del contenido de la empresa. Requiere validación del equipo; no procede de perfiles de consumidores."
+              },
+              {
+                "id": "99ebf8e9-1d4b-4422-a472-77ea594a68a4",
+                "name": "Responsables de operaciones",
+                "role": "Operaciones y dirección de equipos",
+                "needs": "Mejorar procesos y evaluar oportunidades de productividad.",
+                "stage": "Por confirmar",
+                "description": "Hipótesis sugerida a partir del contenido de la empresa. Requiere validación del equipo; no procede de perfiles de consumidores."
+              }
+            ]
+          },
+          "evidence": [
+            {
+              "id": "78c7c7d4-0ee1-4fbf-80d7-5cfb03851dd8",
+              "url": "https://example.com/",
+              "title": "Example Domain",
+              "excerpt": "Example Domain This domain is for use in documentation examples without needing permission. This is not a service; avoid relying on it for testing and monitoring purposes.",
+              "status": "read",
+              "platform": "website"
+            },
+            {
+              "id": "a0151850-6ca0-44af-9c57-9887103e1917",
+              "url": "https://www.linkedin.com/company/qa-company-synthetic",
+              "title": "linkedin.com",
+              "excerpt": "",
+              "status": "linked",
+              "platform": "linkedin",
+              "reason": "Enlace guardado. No se ha leído este perfil ni su audiencia; aporta contenido propio para incorporarlo al contexto."
+            },
+            {
+              "id": "d651c954-8b02-487f-96ca-0526e4f54d50",
+              "url": "https://example.com/qa-company-missing",
+              "title": "example.com",
+              "excerpt": "",
+              "status": "failed",
+              "platform": "website",
+              "reason": "El sitio respondió HTTP 404. Revisa el enlace o aporta el texto."
+            },
+            {
+              "id": "412ec9ba-3656-405a-a520-c782766e7cf8",
+              "title": "Contenido aportado por tu equipo",
+              "excerpt": "Nexo Futuro es una empresa de educación tecnológica para líderes de operaciones en Colombia. Enseñamos automatización, liderazgo e inteligencia artificial con ejemplos medibles. Nuestro tono es claro, cercano y práctico. Contacto QA: [correo omitido], teléfono [teléfono omitido]. Nuestro programa ayuda a equipos a reducir tareas repetitivas.",
+              "status": "provided",
+              "platform": "provided",
+              "reason": "Texto aportado por el equipo; no se ha verificado externamente."
+            }
+          ],
+          "warnings": [
+            "Las sugerencias de marca y audiencia son hipótesis basadas en el contenido aportado. Confírmalas; no describen consumidores observados.",
+            "Los enlaces marcados como guardados no se han usado para inferir contenido ni audiencia.",
+            "Algunas páginas no pudieron leerse. Puedes continuar con lo disponible y completar el contexto con texto propio."
+          ]
+        }
+      ]
+    }
+  },
+  "finalState": {
+    "brand": {
+      "name": "Nexo QA · nombre corregido",
+      "industry": "Operaciones y formación",
+      "description": "Confirmado por QA: formación práctica de automatización para equipos de operaciones.",
+      "tone": "Sobrio, directo y basado en evidencia",
+      "language": "es",
+      "market": "Latinoamérica",
+      "website": "",
+      "color": "#147d65",
+      "secondaryColor": "#161b17",
+      "goals": [
+        "Educar"
+      ],
+      "pillars": [
+        "automatización responsable",
+        "métricas de procesos"
+      ],
+      "weeklyTarget": 3,
+      "audience": [
+        {
+          "id": "segment-qa",
+          "name": "Directores de operaciones",
+          "role": "Liderazgo",
+          "stage": "Evaluando",
+          "needs": "Elegir automatizaciones medibles",
+          "description": ""
+        }
+      ],
+      "id": "2a941489-80b7-4afa-ad3e-28f6ec32d386",
+      "createdAt": "2026-10-18T01:53:07.688Z",
+      "role": "owner"
+    },
+    "context": {
+      "imports": [
+        {
+          "id": "c173844e-4d81-472b-ae23-3fba18eb5da4",
+          "inspectedAt": "2026-10-18T01:55:14.479Z",
+          "method": "heuristic",
+          "draft": {
+            "name": "",
+            "industry": "Educación y formación",
+            "description": "PRUEBA SINTÉTICA: Nexo ofrece formación de procesos. Contacto ficticio Persona QA; el siguiente dato es su domicilio particular, no una sede de empresa. Dirección: Calle Inventada 456, Ciudad Sintética. Correo: [correo omitido].",
+            "website": "",
+            "market": "",
+            "language": "",
+            "tone": "Claro, cercano y práctico",
+            "pillars": [
+              "Formación y aprendizaje",
+              "Procesos y productividad"
+            ],
+            "audience": [
+              {
+                "id": "e4f38fc2-6d65-4d6c-a2f7-fc241f55d431",
+                "name": "Responsables de formación",
+                "role": "Formación y gestión educativa",
+                "needs": "Evaluar soluciones y contenidos aplicables al aprendizaje de sus equipos o estudiantes.",
+                "stage": "Por confirmar",
+                "description": "Hipótesis sugerida a partir del contenido de la empresa. Requiere validación del equipo; no procede de perfiles de consumidores."
+              },
+              {
+                "id": "f2b0f05c-bdf8-40a2-9bb8-3ac356823153",
+                "name": "Responsables de operaciones",
+                "role": "Operaciones y dirección de equipos",
+                "needs": "Mejorar procesos y evaluar oportunidades de productividad.",
+                "stage": "Por confirmar",
+                "description": "Hipótesis sugerida a partir del contenido de la empresa. Requiere validación del equipo; no procede de perfiles de consumidores."
+              }
+            ]
+          },
+          "evidence": [
+            {
+              "id": "7df319b3-80a0-4346-b2d7-1bb9c78dcda2",
+              "title": "Contenido aportado por tu equipo",
+              "excerpt": "PRUEBA SINTÉTICA: Nexo ofrece formación de procesos. Contacto ficticio Persona QA; el siguiente dato es su domicilio particular, no una sede de empresa. Dirección: Calle Inventada 456, Ciudad Sintética. Correo: [correo omitido].",
+              "status": "provided",
+              "platform": "provided",
+              "reason": "Texto aportado por el equipo; no se ha verificado externamente."
+            }
+          ],
+          "warnings": [
+            "Las sugerencias de marca y audiencia son hipótesis basadas en el contenido aportado. Confírmalas; no describen consumidores observados."
+          ]
+        },
+        {
+          "id": "3b4842a8-3bd1-4bbe-9260-78688850ba77",
+          "inspectedAt": "2026-10-18T01:54:14.084Z",
+          "method": "heuristic",
+          "draft": {
+            "name": "",
+            "industry": "Tecnología e inteligencia artificial",
+            "description": "Recuperación QA: Nexo enseña automatización para líderes de equipos. Este texto se aporta para recuperar el contenido de una fuente que no pudo leerse. Contacto de prueba: [correo omitido]. Dirección: Calle Ficticia 123, Ciudad de Prueba. WhatsApp [contacto omitido] omitido] y teléfono [teléfono omitido].",
+            "website": "",
+            "market": "",
+            "language": "Español",
+            "tone": "Claro, cercano y práctico",
+            "pillars": [
+              "Aplicación de inteligencia artificial",
+              "Marketing y contenido"
+            ],
+            "audience": [
+              {
+                "id": "9c703261-591c-44c3-82c7-3513bc801c59",
+                "name": "Equipos de marketing",
+                "role": "Marketing y comunicación",
+                "needs": "Decidir qué contenido crear y cómo comunicar el valor de su empresa.",
+                "stage": "Por confirmar",
+                "description": "Hipótesis sugerida a partir del contenido de la empresa. Requiere validación del equipo; no procede de perfiles de consumidores."
+              }
+            ]
+          },
+          "evidence": [
+            {
+              "id": "2da81a7a-11b6-49b6-b039-630024e65f63",
+              "title": "Contenido aportado por tu equipo",
+              "excerpt": "Recuperación QA: Nexo enseña automatización para líderes de equipos. Este texto se aporta para recuperar el contenido de una fuente que no pudo leerse. Contacto de prueba: [correo omitido]. Dirección: Calle Ficticia 123, Ciudad de Prueba. WhatsApp [contacto omitido] omitido] y teléfono [teléfono omitido].",
+              "status": "provided",
+              "platform": "provided",
+              "reason": "Texto aportado por el equipo; no se ha verificado externamente."
+            }
+          ],
+          "warnings": [
+            "Las sugerencias de marca y audiencia son hipótesis basadas en el contenido aportado. Confírmalas; no describen consumidores observados."
+          ]
+        }
+      ]
+    }
+  }
+}

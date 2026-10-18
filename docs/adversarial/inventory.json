@@ -1,0 +1,212 @@
+[
+  {
+    "slug": "auth",
+    "feature": "Registro, inicio/cierre de sesión y recuperación de sesión",
+    "agent": "audit_auth",
+    "port": 4101,
+    "host": "127.0.0.11",
+    "url": "http://127.0.0.11:4101",
+    "dataDir": "/tmp/30x-adversarial-auth",
+    "report": "docs/adversarial/reports/auth.json"
+  },
+  {
+    "slug": "onboarding",
+    "feature": "Alta guiada de empresa desde web, enlaces y texto",
+    "agent": "audit_onboarding",
+    "port": 4102,
+    "host": "127.0.0.12",
+    "url": "http://127.0.0.12:4102",
+    "dataDir": "/tmp/30x-adversarial-onboarding",
+    "report": "docs/adversarial/reports/onboarding.json"
+  },
+  {
+    "slug": "company",
+    "feature": "Empresa y contenido: importación posterior, historial y edición de marca",
+    "agent": "audit_company",
+    "port": 4103,
+    "host": "127.0.0.13",
+    "url": "http://127.0.0.13:4103",
+    "dataDir": "/tmp/30x-adversarial-company",
+    "report": "docs/adversarial/reports/company.json"
+  },
+  {
+    "slug": "audience",
+    "feature": "Perfiles de audiencia y necesidades",
+    "agent": "audit_audience",
+    "port": 4104,
+    "host": "127.0.0.14",
+    "url": "http://127.0.0.14:4104",
+    "dataDir": "/tmp/30x-adversarial-audience",
+    "report": "docs/adversarial/reports/audience.json"
+  },
+  {
+    "slug": "signals",
+    "feature": "Señales de interés públicas y editoriales",
+    "agent": "audit_signals",
+    "port": 4105,
+    "host": "127.0.0.15",
+    "url": "http://127.0.0.15:4105",
+    "dataDir": "/tmp/30x-adversarial-signals",
+    "report": "docs/adversarial/reports/signals.json"
+  },
+  {
+    "slug": "community",
+    "feature": "Sensor comunitario interno y pregunta pública agregada",
+    "agent": "audit_community",
+    "port": 4106,
+    "host": "127.0.0.16",
+    "url": "http://127.0.0.16:4106",
+    "dataDir": "/tmp/30x-adversarial-community",
+    "report": "docs/adversarial/reports/community.json"
+  },
+  {
+    "slug": "discovery",
+    "feature": "Descubrimiento público, sincronización y errores de cobertura",
+    "agent": "audit_discovery",
+    "port": 4107,
+    "host": "127.0.0.17",
+    "url": "http://127.0.0.17:4107",
+    "dataDir": "/tmp/30x-adversarial-discovery",
+    "report": "docs/adversarial/reports/discovery.json"
+  },
+  {
+    "slug": "references",
+    "feature": "Captura, bandeja, filtros y detalle de referencias",
+    "agent": "audit_references",
+    "port": 4108,
+    "host": "127.0.0.18",
+    "url": "http://127.0.0.18:4108",
+    "dataDir": "/tmp/30x-adversarial-references",
+    "report": "docs/adversarial/reports/references.json"
+  },
+  {
+    "slug": "opportunities",
+    "feature": "Priorización de oportunidades, afinidad y crecimiento temporal",
+    "agent": "audit_opportunities",
+    "port": 4109,
+    "host": "127.0.0.19",
+    "url": "http://127.0.0.19:4109",
+    "dataDir": "/tmp/30x-adversarial-opportunities",
+    "report": "docs/adversarial/reports/opportunities.json"
+  },
+  {
+    "slug": "semantic",
+    "feature": "Análisis semántico opcional de oportunidades y citas",
+    "agent": "audit_semantic",
+    "port": 4110,
+    "host": "127.0.0.20",
+    "url": "http://127.0.0.20:4110",
+    "dataDir": "/tmp/30x-adversarial-semantic",
+    "report": "docs/adversarial/reports/semantic.json"
+  },
+  {
+    "slug": "video",
+    "feature": "Análisis de referencias y video opcional",
+    "agent": "audit_video",
+    "port": 4111,
+    "host": "127.0.0.21",
+    "url": "http://127.0.0.21:4111",
+    "dataDir": "/tmp/30x-adversarial-video",
+    "report": "docs/adversarial/reports/video.json"
+  },
+  {
+    "slug": "studio",
+    "feature": "Generación de borradores y edición del contenido",
+    "agent": "audit_studio",
+    "port": 4112,
+    "host": "127.0.0.22",
+    "url": "http://127.0.0.22:4112",
+    "dataDir": "/tmp/30x-adversarial-studio",
+    "report": "docs/adversarial/reports/studio.json"
+  },
+  {
+    "slug": "approval",
+    "feature": "Revisión, comentarios y aprobación versionada",
+    "agent": "audit_approval",
+    "port": 4113,
+    "host": "127.0.0.23",
+    "url": "http://127.0.0.23:4113",
+    "dataDir": "/tmp/30x-adversarial-approval",
+    "report": "docs/adversarial/reports/approval.json"
+  },
+  {
+    "slug": "calendar",
+    "feature": "Programación, calendario y exportaciones",
+    "agent": "audit_calendar",
+    "port": 4114,
+    "host": "127.0.0.24",
+    "url": "http://127.0.0.24:4114",
+    "dataDir": "/tmp/30x-adversarial-calendar",
+    "report": "docs/adversarial/reports/calendar.json"
+  },
+  {
+    "slug": "results",
+    "feature": "Registro/corrección de resultados y aprendizaje",
+    "agent": "audit_results",
+    "port": 4115,
+    "host": "127.0.0.25",
+    "url": "http://127.0.0.25:4115",
+    "dataDir": "/tmp/30x-adversarial-results",
+    "report": "docs/adversarial/reports/results.json"
+  },
+  {
+    "slug": "assets",
+    "feature": "Archivos, carga, descarga y uso en piezas",
+    "agent": "audit_assets",
+    "port": 4116,
+    "host": "127.0.0.26",
+    "url": "http://127.0.0.26:4116",
+    "dataDir": "/tmp/30x-adversarial-assets",
+    "report": "docs/adversarial/reports/assets.json"
+  },
+  {
+    "slug": "sources",
+    "feature": "Configuración y edición de fuentes",
+    "agent": "audit_sources",
+    "port": 4117,
+    "host": "127.0.0.27",
+    "url": "http://127.0.0.27:4117",
+    "dataDir": "/tmp/30x-adversarial-sources",
+    "report": "docs/adversarial/reports/sources.json"
+  },
+  {
+    "slug": "providers",
+    "feature": "Integraciones, credenciales, presupuestos y publicación opcional",
+    "agent": "audit_providers",
+    "port": 4118,
+    "host": "127.0.0.28",
+    "url": "http://127.0.0.28:4118",
+    "dataDir": "/tmp/30x-adversarial-providers",
+    "report": "docs/adversarial/reports/providers.json"
+  },
+  {
+    "slug": "permissions",
+    "feature": "Equipo, invitaciones, roles y aislamiento entre empresas",
+    "agent": "audit_permissions",
+    "port": 4119,
+    "host": "127.0.0.29",
+    "url": "http://127.0.0.29:4119",
+    "dataDir": "/tmp/30x-adversarial-permissions",
+    "report": "docs/adversarial/reports/permissions.json"
+  },
+  {
+    "slug": "navigation",
+    "feature": "Inicio, navegación, móvil, búsqueda y cambios sin guardar",
+    "agent": "audit_navigation",
+    "port": 4120,
+    "host": "127.0.0.30",
+    "url": "http://127.0.0.30:4120",
+    "dataDir": "/tmp/30x-adversarial-navigation",
+    "report": "docs/adversarial/reports/navigation.json"
+  },
+  {
+    "slug": "scheduler",
+    "feature": "Actualización automática, cadencia y espera progresiva",
+    "agent": "audit_scheduler",
+    "port": 4121,
+    "host": "127.0.0.31",
+    "url": "http://127.0.0.31:4121",
+    "dataDir": "/tmp/30x-adversarial-scheduler",
+    "report": "docs/adversarial/reports/scheduler.json"
+  }
+]

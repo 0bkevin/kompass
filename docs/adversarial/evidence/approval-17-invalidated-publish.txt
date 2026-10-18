@@ -1,0 +1,6 @@
+{
+  "http": 409,
+  "body": {
+    "error": "Aprueba la pieza antes de publicarla."
+  }
+}

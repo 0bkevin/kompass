@@ -1,0 +1,67 @@
+{
+  "http": 200,
+  "body": [
+    {
+      "title": "QA Approval · pieza sintética",
+      "hook": "Gancho QA v1: aprobación exacta",
+      "script": "Texto sintético v3 externo. No visto al abrir la revisión. Cifra 98765.",
+      "caption": "Caption sintético v1",
+      "cta": "Comenta tu criterio QA",
+      "format": "post",
+      "channel": "linkedin",
+      "scenes": [],
+      "assetIds": [],
+      "comments": [
+        {
+          "id": "1cc22a16-5e93-4186-bad0-0b7d75cd3bb9",
+          "author": "QA Approval editor",
+          "text": "Comentario sintético del editor: revisar cifra 12345.",
+          "createdAt": "2026-10-18T02:12:30.154Z"
+        },
+        {
+          "id": "7000a77d-2ce4-49fd-9863-fdf9f1a9b9e5",
+          "author": "QA Approval reviewer",
+          "text": "Comentario sintético del revisor: falta corregir la cifra.",
+          "createdAt": "2026-10-18T02:12:44.488Z"
+        },
+        {
+          "id": "0f2f396b-6299-4b16-b21e-fd2b6f5c8824",
+          "author": "QA Approval reviewer",
+          "text": "Cambios solicitados: Sustituir 12345 por 54321 antes de aprobar.",
+          "createdAt": "2026-10-18T02:12:47.702Z"
+        },
+        {
+          "id": "1963d99d-9cb8-4d2f-b157-777e098f6988",
+          "author": "QA Approval reviewer",
+          "text": "Aprobada.",
+          "createdAt": "2026-10-18T02:13:16.151Z"
+        }
+      ],
+      "segmentId": "qa-approval-audience",
+      "status": "approved",
+      "id": "6e62e922-1e78-40e7-a369-b694eea0365d",
+      "createdAt": "2026-10-18T02:12:18.529Z",
+      "updatedAt": "2026-10-18T02:13:16.151Z",
+      "approvalVersion": "fdRur1lXK391LFZEMdLBjIotkadkyVPg28EvNQ9dgE0"
+    }
+  ]
+}
+{
+  "canonicalContent": {
+    "title": "QA Approval · pieza sintética",
+    "hook": "Gancho QA v1: aprobación exacta",
+    "script": "Texto sintético v3 externo. No visto al abrir la revisión. Cifra 98765.",
+    "caption": "Caption sintético v1",
+    "cta": "Comenta tu criterio QA",
+    "format": "post",
+    "channel": "linkedin",
+    "segmentId": "qa-approval-audience",
+    "assignee": null,
+    "assetIds": [],
+    "scenes": [],
+    "referenceId": null,
+    "ideaId": null
+  },
+  "computedHash": "fdRur1lXK391LFZEMdLBjIotkadkyVPg28EvNQ9dgE0",
+  "apiHashMatches": true
+}

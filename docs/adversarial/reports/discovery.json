@@ -1,0 +1,213 @@
+{
+  "feature": "Descubrimiento público",
+  "slug": "discovery",
+  "url": "http://127.0.0.17:4107",
+  "status": "FAIL",
+  "cases": [
+    {
+      "name": "Radar vacío de una empresa nueva",
+      "expected": "Cero referencias reales, sin ejemplos presentados como evidencia; acción para explorar.",
+      "actual": "UI muestra 0 señales, 0 emergentes, 0 oportunidades y «Explorar mis fuentes»; estado vacío confirmado.",
+      "verdict": "PASS",
+      "evidence": [
+        "docs/adversarial/evidence/discovery-observations.json"
+      ]
+    },
+    {
+      "name": "Sincronización real RSS/HN/Google Trends desde UI",
+      "expected": "Obtener hallazgos públicos reales de las fuentes disponibles con procedencia, sin claves.",
+      "actual": "Buscar tendencias devolvió 103 altas y 5 actualizaciones: HN 77 candidatos/72 altas; BBC 21; Trends 10. API/SQLite y métrica UI contienen 103 referencias no demo.",
+      "verdict": "PASS",
+      "evidence": [
+        "docs/adversarial/evidence/discovery-partial.png",
+        "docs/adversarial/evidence/discovery-observations.json"
+      ]
+    },
+    {
+      "name": "Exactitud de título, URL y métricas frente al origen público",
+      "expected": "Los títulos y enlaces deben existir públicamente; las métricas deben corresponder a su fuente.",
+      "actual": "BBC: título AI giant Anthropic woos potential investors ahead of stock market debut coincide con H1 público sin login. HN AdFection: mismo título, URL Citizen Lab, 521 puntos y 685 comentarios en página pública y UI. Las 10 consultas/traffic Trends coinciden con RSS público.",
+      "verdict": "PASS",
+      "evidence": [
+        "docs/adversarial/evidence/discovery-public-checks.json",
+        "docs/adversarial/evidence/discovery-observations.json"
+      ]
+    },
+    {
+      "name": "Repetición y deduplicación",
+      "expected": "Repetir no crea copias del mismo corpus; conserva referencias.",
+      "actual": "Segunda búsqueda: 0 altas / 108 operaciones de actualización y 103 referencias. Los 103 IDs de la segunda búsqueda permanecen idénticos tras posteriores sincronizaciones y recarga.",
+      "verdict": "PASS",
+      "evidence": [
+        "docs/adversarial/evidence/discovery-observations.json"
+      ]
+    },
+    {
+      "name": "Error parcial HTTP 404",
+      "expected": "El RSS deliberadamente roto debe mostrar su error sin descartar los éxitos.",
+      "actual": "Banner de cobertura parcial muestra HTTP 404 y dos proveedores ausentes; las 103 referencias exitosas se conservan. lastError/lastAttemptAt por fuente coinciden con API.",
+      "verdict": "PASS",
+      "evidence": [
+        "docs/adversarial/evidence/discovery-partial.png",
+        "docs/adversarial/evidence/discovery-observations.json"
+      ]
+    },
+    {
+      "name": "Gates sociales sin proveedor",
+      "expected": "No fabricar resultados ni llamar a proveedores de pago; explicar configuración pendiente y recuperación.",
+      "actual": "YouTube y Apify/Instagram producen 0 altas con error específico que pide API key/token y remite a configuración. Se mantienen independientes de fuentes abiertas.",
+      "verdict": "PASS",
+      "evidence": [
+        "docs/adversarial/evidence/discovery-partial.png",
+        "docs/adversarial/evidence/discovery-observations.json"
+      ]
+    },
+    {
+      "name": "Filtros de fuente, periodo, búsqueda y afinidad",
+      "expected": "Cantidades y tarjetas deben respetar la selección y el estado persistido.",
+      "actual": "BBC con Solo mi contexto desactivado: 24 h=1, semana=14, historial=21. Buscar Anthropic reduce BBC/semana a 1. Alta afinidad, todas las fuentes y contexto activo muestra 6, igual al estado. El total global 103 permanece distinguible de los 45 resultados por defecto.",
+      "verdict": "PASS",
+      "evidence": [
+        "docs/adversarial/evidence/discovery-observations.json",
+        "docs/adversarial/evidence/discovery-groups.png"
+      ]
+    },
+    {
+      "name": "Grupos temáticos y vista radar",
+      "expected": "Grupos y cantidades deben derivar del corpus filtrado e indicar límites de cobertura.",
+      "actual": "BBC/historial: Tech Life=4 y Tech Now=4, cada grupo 1 fuente principal. Pulsar Tech Life abre la referencia del grupo. Vista radar muestra burbujas y leyenda de tamaño/repetición dentro del corpus; no representa todo el mercado.",
+      "verdict": "PASS",
+      "evidence": [
+        "docs/adversarial/evidence/discovery-groups.png",
+        "docs/adversarial/evidence/discovery-observations.json"
+      ]
+    },
+    {
+      "name": "Semántica de Google Trends y ausencia de falso crecimiento",
+      "expected": "Interés de búsqueda no debe convertirse en interacción social o tendencia LinkedIn; sin línea base no demostrar crecimiento.",
+      "actual": "Detalle Trends distingue 1000+ de interés aproximado, puesto 10 y no interacciones sociales; Ver original abre una URL explore específica de la consulta/US. 0 emergentes después de las búsquedas rápidas y mensaje que pide observaciones separadas. No se atribuye crecimiento a LinkedIn.",
+      "verdict": "PASS",
+      "evidence": [
+        "docs/adversarial/evidence/discovery-trends-detail.png",
+        "docs/adversarial/evidence/discovery-public-checks.json"
+      ]
+    },
+    {
+      "name": "Recuperación de fuente y deduplicación entre fuentes",
+      "expected": "Una fuente antes fallida debe limpiar lastError al funcionar y agregar evidencia sin duplicar referencias.",
+      "actual": "RSS roto→NASA tuvo el fallo discovery-1. Cambiado después a BBC accesible: 21 entradas consultadas, 0 altas, 21 actualizaciones, lastError eliminado y lastSyncedAt/lastResultCount=21. IDs y total103 retenidos; evidence guarda la segunda fuente configurada.",
+      "verdict": "PASS",
+      "evidence": [
+        "docs/adversarial/evidence/discovery-observations.json"
+      ]
+    },
+    {
+      "name": "Decisión guardada y persistencia tras sincronizar/recargar",
+      "expected": "Guardar una referencia debe persistir, conservar su ID y sobrevivir a nueva búsqueda/recarga.",
+      "actual": "AdFection id302e8e7b-a2f7-4453-bab0-28165a03e15f guardada por UI; Guardados=1 antes/después de buscar y recargar, mismo ID/status saved; corpus 103.",
+      "verdict": "PASS",
+      "evidence": [
+        "docs/adversarial/evidence/discovery-observations.json"
+      ]
+    },
+    {
+      "name": "NASA RSS público frente a clasificador de red",
+      "expected": "Consultar un RSS público accesible con DNS público; aplicar restricciones a rangos realmente privados/reservados.",
+      "actual": "GET externo a NASA=200, RSS 10 entradas, DNS 192.0.66.108. Buscar tendencias rechaza la fuente como privada/reservada y devuelve 0 altas. Reproducido dos veces desde UI/API; clasificador de app retorna false para IPv4 pública.",
+      "verdict": "FAIL",
+      "evidence": [
+        "docs/adversarial/evidence/discovery-nasa-rejected.png",
+        "docs/adversarial/evidence/discovery-public-checks.json",
+        "docs/adversarial/evidence/discovery-observations.json"
+      ]
+    },
+    {
+      "name": "Legibilidad de texto importado HN",
+      "expected": "El texto HTML público debe convertirse a texto legible, decodificando entidades ordinarias.",
+      "actual": "Tarjeta y detalle AdFection muestran literalmente https:&#x2F;&#x2F;...; página HN muestra https://... correctamente. También aparecen &#x27; en otros textos. El contenido persistido conserva la codificación.",
+      "verdict": "FAIL",
+      "evidence": [
+        "docs/adversarial/evidence/discovery-hn-entities.png",
+        "docs/adversarial/evidence/discovery-observations.json",
+        "docs/adversarial/evidence/discovery-public-checks.json"
+      ]
+    },
+    {
+      "name": "Integración real de proveedores sociales",
+      "expected": "Resultados reales de YouTube/Instagram sólo con acceso y credenciales válidas.",
+      "actual": "No hay credenciales de operador; no se configuraron ni consumieron proveedores de pago. Se verificaron únicamente los gates, no la integración real ni su calidad.",
+      "verdict": "BLOCKED",
+      "evidence": [
+        "docs/adversarial/evidence/discovery-partial.png"
+      ]
+    }
+  ],
+  "findings": [
+    {
+      "id": "discovery-1",
+      "severity": "P2",
+      "title": "El clasificador bloquea el RSS público de NASA al tratar 192.0/16 como reservado",
+      "steps": [
+        "Crear una fuente RSS habilitada con URL https://www.nasa.gov/feed/ (fixture por API en la base propia).",
+        "En /radar pulsar Buscar tendencias.",
+        "Comparar el error de NASA con GET externo HTTP 200 y resolución DNS 192.0.66.108."
+      ],
+      "expected": "La dirección 192.0.66.108 no pertenece al bloque especial 192.0.0.0/24 y el RSS público accesible debe consultarse.",
+      "actual": "UI/API: «No se permite acceder a direcciones privadas o reservadas.» NASA aporta 0 referencias aunque su RSS devuelve 10 entradas. isPublicAddress retorna false porque server/connectors.mjs:34 rechaza cualquier 192.0.x.x. Es un fallo de la aplicación, no bloqueo externo.",
+      "evidence": [
+        "docs/adversarial/evidence/discovery-nasa-rejected.png",
+        "docs/adversarial/evidence/discovery-public-checks.json",
+        "docs/adversarial/evidence/discovery-observations.json",
+        "https://www.iana.org/assignments/iana-ipv4-special-registry/"
+      ],
+      "source": [
+        "server/connectors.mjs:34",
+        "server/connectors.mjs:100",
+        "server/intelligence.mjs:656"
+      ]
+    },
+    {
+      "id": "discovery-2",
+      "severity": "P3",
+      "title": "Hacker News deja entidades HTML hexadecimales visibles en las referencias",
+      "steps": [
+        "Descubrir desde una fuente Hacker News con query technology.",
+        "Buscar AdFection y pulsar Explorar.",
+        "Comparar tarjeta/detalle con https://news.ycombinator.com/item?id=50101813."
+      ],
+      "expected": "Mostrar https://... y apóstrofes como texto legible, manteniendo el saneamiento HTML.",
+      "actual": "Texto visible y persistido contiene &#x2F; y otros textos contienen &#x27;. La limpieza sólo decodifica unas pocas entidades; el enlace Ver original funciona. La evidencia sigue disponible pero pierde legibilidad.",
+      "evidence": [
+        "docs/adversarial/evidence/discovery-hn-entities.png",
+        "docs/adversarial/evidence/discovery-public-checks.json",
+        "docs/adversarial/evidence/discovery-observations.json"
+      ],
+      "source": [
+        "server/intelligence.mjs:40",
+        "server/intelligence.mjs:617",
+        "src/features/Discovery.tsx:799",
+        "src/features/Discovery.tsx:1091"
+      ]
+    }
+  ],
+  "limitations": [
+    "Auditoría manual de build existente, sin rebuild ni cambios en aplicación, y con DATA_DIR exclusivo. No se leyeron reportes ajenos.",
+    "Cuenta, empresa, contexto, RSS roto y fuentes duplicadas son fixtures sintéticas creadas por API; los 103 contenidos y respuestas RSS/HN/Trends son reales y no demo.",
+    "No se probaron credenciales, scraping de pago, publicación, IA, acceso tras login ni integración social real.",
+    "DISCOVERY_ENABLED=false por contrato: no se evaluaron agenda periódica ni backoff del scheduler. Sí hubo reintentos manuales y recuperación de un error.",
+    "Las búsquedas se realizaron en pocos minutos: se validó ausencia de crecimiento inventado con primera observación, no crecimiento real tras ventanas separadas 10 min.",
+    "Una página BBC y una discusión HN se abrieron realmente en navegador; no se abrió cada uno de los 103 originales ni todos los relatedUrls de Trends.",
+    "GDELT, Reddit y otras regiones Trends no formaron parte de esta muestra. Los fallos de credenciales están BLOCKED; NASA es FAIL observado con causa local corroborada."
+  ],
+  "artifacts": [
+    "docs/adversarial/evidence/discovery-partial.png",
+    "docs/adversarial/evidence/discovery-nasa-rejected.png",
+    "docs/adversarial/evidence/discovery-hn-entities.png",
+    "docs/adversarial/evidence/discovery-trends-detail.png",
+    "docs/adversarial/evidence/discovery-groups.png",
+    "docs/adversarial/evidence/discovery-observations.json",
+    "docs/adversarial/evidence/discovery-public-checks.json",
+    "/tmp/30x-adversarial-discovery/radar.sqlite",
+    "docs/adversarial/evidence/discovery-lifecycle.json"
+  ]
+}

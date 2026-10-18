@@ -1,0 +1,236 @@
+{
+  "feature": "Análisis semántico opcional de oportunidades",
+  "slug": "semantic",
+  "url": "http://127.0.0.20:4110",
+  "status": "PARTIAL",
+  "cases": [
+    {
+      "name": "Sin proveedor: gate visible y ausencia de análisis inventado",
+      "expected": "Mostrar lectura local, deshabilitar Analizar con IA y ofrecer configuración; no guardar un análisis semántico.",
+      "actual": "En UI: Analizar con IA deshabilitado, texto de reglas de texto y Configurar IA. POST adicional devolvió 409 y los insights carecían de analysis.",
+      "verdict": "PASS",
+      "evidence": [
+        "docs/adversarial/evidence/semantic-provider-gate.png"
+      ]
+    },
+    {
+      "name": "Recuperación: configuración desde la oportunidad",
+      "expected": "Configurar IA debe llevar a un formulario utilizable; guardar configuración no debe presentarse como validación real del proveedor.",
+      "actual": "El botón abrió /settings. Se guardaron por UI un marcador sintético y el modelo qa-synthetic-model; integrations.ai.configured pasó a true. El transporte ya estaba sustituido por un proveedor local antes de configurar.",
+      "verdict": "PASS",
+      "evidence": [
+        "docs/adversarial/evidence/semantic-runtime.mjs",
+        "docs/adversarial/evidence/semantic-synthetic-success.png"
+      ]
+    },
+    {
+      "name": "Camino UI exitoso con proveedor SINTÉTICO: necesidad y segmento",
+      "expected": "Una respuesta estructurada válida debe aparecer en el detalle con su necesidad; los segmentIds deben pertenecer a la audiencia y alimentar la selección.",
+      "actual": "Analizar con IA mostró la necesidad Mantener continuidad de las conversaciones comerciales al cambiar el responsable y rationale. API/SQLite guardaron segmentIds=[sem-segment], perteneciente a la marca; ¿Para quién? seleccionó Equipos de educación. No demuestra calidad semántica de IA real.",
+      "verdict": "PASS",
+      "evidence": [
+        "docs/adversarial/evidence/semantic-synthetic-success.png",
+        "docs/adversarial/evidence/semantic-provider-log.jsonl"
+      ]
+    },
+    {
+      "name": "Cita literal propia y límites visibles con proveedor SINTÉTICO",
+      "expected": "Mostrar soporte presente en title/text de una referencia suministrada, con procedencia, modelo y límites explícitos.",
+      "actual": "Ver citas y límites mostró literalmente Registrar cada conversación permite retomar el contacto al cambiar de responsable., atribuida a Memoria compartida del pipeline (fixture sintética). El id corresponde a la referencia suministrada. Incluye límites de hipótesis editorial, material de demostración y respuesta sintética, más qa-synthetic-model.",
+      "verdict": "PASS",
+      "evidence": [
+        "docs/adversarial/evidence/semantic-synthetic-success.png",
+        "docs/adversarial/evidence/semantic-provider-log.jsonl"
+      ]
+    },
+    {
+      "name": "Persistencia tras recarga",
+      "expected": "Recargar debe conservar el análisis vigente y no disparar automáticamente una consulta de proveedor.",
+      "actual": "Se recargó /opportunities y se abrió Entender y crear: el análisis persistía con id 67f19052-9e29-49c2-bdde-856bb76c76e7 y selección sem-segment; el log no añadió una consulta por la lectura.",
+      "verdict": "PASS",
+      "evidence": [
+        "docs/adversarial/evidence/semantic-provider-log.jsonl"
+      ]
+    },
+    {
+      "name": "Cita inventada — acción UI y respuesta SINTÉTICA",
+      "expected": "Rechazar una cita cuyo texto no esté en la referencia y conservar el análisis válido.",
+      "actual": "Al pulsar Actualizar análisis con IA, la UI mostró: Una cita de la IA no aparece en el material suministrado. No se guardó el análisis. El id y analyzedAt siguieron siendo 67f19052-9e29-49c2-bdde-856bb76c76e7 / 2026-10-18T02:06:49.625Z.",
+      "verdict": "PASS",
+      "evidence": [
+        "docs/adversarial/evidence/semantic-provider-log.jsonl",
+        "docs/adversarial/evidence/semantic-invalid-citation.png"
+      ]
+    },
+    {
+      "name": "Segmento ajeno — acción UI y respuesta SINTÉTICA",
+      "expected": "Rechazar un segmentId fuera de audience y conservar el análisis válido.",
+      "actual": "Al pulsar Actualizar análisis con IA, la UI mostró: La IA citó un segmento que no pertenece a esta empresa. No se guardó el análisis. El id y analyzedAt siguieron siendo 67f19052-9e29-49c2-bdde-856bb76c76e7 / 2026-10-18T02:06:49.625Z.",
+      "verdict": "PASS",
+      "evidence": [
+        "docs/adversarial/evidence/semantic-provider-log.jsonl"
+      ]
+    },
+    {
+      "name": "Referencia ajena — acción UI y respuesta SINTÉTICA",
+      "expected": "Rechazar un referenceId fuera de las referencias suministradas y conservar el análisis válido.",
+      "actual": "Al pulsar Actualizar análisis con IA, la UI mostró: La IA citó una referencia ajena, excluida o repetida. No se guardó el análisis. El id y analyzedAt siguieron siendo 67f19052-9e29-49c2-bdde-856bb76c76e7 / 2026-10-18T02:06:49.625Z.",
+      "verdict": "PASS",
+      "evidence": [
+        "docs/adversarial/evidence/semantic-provider-log.jsonl"
+      ]
+    },
+    {
+      "name": "Necesidad vacía — acción UI y respuesta SINTÉTICA",
+      "expected": "Rechazar need vacío; no fabricar un texto de respaldo.",
+      "actual": "Al pulsar Actualizar análisis con IA, la UI mostró: La IA devolvió texto inválido o instrucciones ajenas al análisis. No se guardó el resultado; vuelve a intentarlo. El id y analyzedAt siguieron siendo 67f19052-9e29-49c2-bdde-856bb76c76e7 / 2026-10-18T02:06:49.625Z.",
+      "verdict": "PASS",
+      "evidence": [
+        "docs/adversarial/evidence/semantic-provider-log.jsonl"
+      ]
+    },
+    {
+      "name": "Esquema con campo inesperado — acción UI y respuesta SINTÉTICA",
+      "expected": "Rechazar una respuesta con campos fuera del esquema.",
+      "actual": "Al pulsar Actualizar análisis con IA, la UI mostró: La IA devolvió campos o tipos inesperados. No se guardó el análisis. El id y analyzedAt siguieron siendo 67f19052-9e29-49c2-bdde-856bb76c76e7 / 2026-10-18T02:06:49.625Z.",
+      "verdict": "PASS",
+      "evidence": [
+        "docs/adversarial/evidence/semantic-provider-log.jsonl"
+      ]
+    },
+    {
+      "name": "JSON malformado — acción UI y respuesta SINTÉTICA",
+      "expected": "Mostrar fallo recuperable sin guardar el resultado inválido.",
+      "actual": "Al pulsar Actualizar análisis con IA, la UI mostró: No se pudo completar el análisis con IA. Revisa la clave, el modelo y la cuota en Integraciones y vuelve a intentarlo; no se guardó ningún resultado. El id y analyzedAt siguieron siendo 67f19052-9e29-49c2-bdde-856bb76c76e7 / 2026-10-18T02:06:49.625Z.",
+      "verdict": "PASS",
+      "evidence": [
+        "docs/adversarial/evidence/semantic-provider-log.jsonl"
+      ]
+    },
+    {
+      "name": "Proveedor HTTP 429 sintético — acción UI y respuesta SINTÉTICA",
+      "expected": "Mostrar fallo recuperable de cuota/proveedor sin reemplazar el análisis válido.",
+      "actual": "Al pulsar Actualizar análisis con IA, la UI mostró: No se pudo completar el análisis con IA. Revisa la clave, el modelo y la cuota en Integraciones y vuelve a intentarlo; no se guardó ningún resultado. El id y analyzedAt siguieron siendo 67f19052-9e29-49c2-bdde-856bb76c76e7 / 2026-10-18T02:06:49.625Z.",
+      "verdict": "PASS",
+      "evidence": [
+        "docs/adversarial/evidence/semantic-provider-log.jsonl"
+      ]
+    },
+    {
+      "name": "Reintento válido y actualización sin duplicar",
+      "expected": "Después de errores debe poder reintentarse; actualizar debe reemplazar el análisis de la oportunidad, sin duplicados.",
+      "actual": "Se restauró mode=valid y Actualizar análisis con IA volvió a guardar. Se conservó el mismo id con analyzedAt nuevo. La inspección final de SQLite contó exactamente 1 registro opportunityAnalyses.",
+      "verdict": "PASS",
+      "evidence": [
+        "docs/adversarial/evidence/semantic-provider-log.jsonl"
+      ]
+    },
+    {
+      "name": "Invalidación por cambios de referencia",
+      "expected": "Una cita/análisis anterior debe dejar de ofrecerse como vigente cuando cambia el texto de su referencia.",
+      "actual": "Se cambió text por API en la BD propia y se pulsó Actualizar en la UI: desapareció la lectura contextual y analysis fue omitido por insights. Una nueva solicitud aceptada usó el texto Cada traspaso debe conservar el acuerdo siguiente y la fecha comprometida. La comprobación final repitió la invalidación y mostró de nuevo la lectura local.",
+      "verdict": "PASS",
+      "evidence": [
+        "docs/adversarial/evidence/semantic-provider-gate.png",
+        "docs/adversarial/evidence/semantic-provider-log.jsonl"
+      ]
+    },
+    {
+      "name": "Concurrencia: segundo análisis de la misma empresa",
+      "expected": "Mientras el análisis iniciado por UI está pendiente, una segunda petición debe rechazarse sin segunda consulta al proveedor.",
+      "actual": "Con retraso sintético de 6 s, se inició Actualizar análisis con IA desde UI. Una segunda petición adicional devolvió 409: Ya hay un análisis con IA en curso para esta empresa. Espera a que termine antes de iniciar otro.",
+      "verdict": "PASS",
+      "evidence": [
+        "docs/adversarial/evidence/semantic-context-changed.png",
+        "docs/adversarial/evidence/semantic-provider-log.jsonl"
+      ]
+    },
+    {
+      "name": "Audiencia cambia durante la consulta",
+      "expected": "El resultado en vuelo debe rechazarse si la audiencia cambia; no guardar una respuesta desactualizada.",
+      "actual": "Durante el análisis UI retrasado se añadió Cambio concurrente sintético a needs mediante API propia. La UI mostró El contexto, la audiencia, las referencias o la integración cambiaron durante el análisis. Actualiza y vuelve a analizar; no se guardó una respuesta desactualizada. Insights omitió analysis para el nuevo contexto.",
+      "verdict": "PASS",
+      "evidence": [
+        "docs/adversarial/evidence/semantic-context-changed.png",
+        "docs/adversarial/evidence/semantic-provider-log.jsonl"
+      ]
+    },
+    {
+      "name": "Permisos de revisor",
+      "expected": "El revisor debe poder leer un análisis vigente, pero carecer de acción para iniciar/actualizarlo.",
+      "actual": "Fixture de membership=reviewer, recarga y detalle UI: se pudo leer el análisis con sus citas, sin botones de análisis/configuración. Una petición adicional devolvió 403 Necesitas permisos de edición.",
+      "verdict": "PASS",
+      "evidence": [
+        "docs/adversarial/evidence/semantic-reviewer.png"
+      ]
+    },
+    {
+      "name": "Revocación de edición en vuelo",
+      "expected": "La autorización debe verificarse otra vez antes de guardar una consulta ya iniciada.",
+      "actual": "Se inició una consulta por UI con retraso de 6 s y se cambió el membership propio a reviewer en SQLite. La UI mostró Ya no tienes permisos de edición. No se guardó el análisis. El resultado en vuelo no reemplazó el válido.",
+      "verdict": "PASS",
+      "evidence": [
+        "docs/adversarial/evidence/semantic-permission-changed.png",
+        "docs/adversarial/evidence/semantic-provider-log.jsonl"
+      ]
+    },
+    {
+      "name": "Editor puede analizar",
+      "expected": "Un editor autorizado debe poder solicitar el análisis opcional configurado.",
+      "actual": "Con membership=editor, recarga y Actualizar análisis con IA, la UI completó el camino sintético y se guardó analyzedAt=2026-10-18T02:09:11.980Z. Se restauró owner al terminar.",
+      "verdict": "PASS",
+      "evidence": [
+        "docs/adversarial/evidence/semantic-provider-log.jsonl"
+      ]
+    },
+    {
+      "name": "Regreso al motor local",
+      "expected": "Usar motor local debe deshabilitar nuevas consultas y conservar una recuperación visible.",
+      "actual": "Se pulsó Usar motor local en settings. ai.configured pasó a false; la UI deshabilitó la acción IA y ofreció Configurar IA. Tras invalidar el texto de referencia, el panel volvió a mostrar reglas de texto sin análisis inventado.",
+      "verdict": "PASS",
+      "evidence": [
+        "docs/adversarial/evidence/semantic-provider-gate.png"
+      ]
+    },
+    {
+      "name": "Apoyo API: sesión y payload",
+      "expected": "La API debe exigir sesión y evitar aceptar campos de análisis enviados por el cliente.",
+      "actual": "Sin cookies, POST devolvió 401 Inicia sesión para continuar. Con sesión y body no vacío devolvió 400 Envía un objeto vacío para solicitar el análisis de la oportunidad actual. Son comprobaciones API complementarias, no sustituyen los casos UI.",
+      "verdict": "PASS",
+      "evidence": [
+        "Respuesta T3 preview_evaluate de 2026-10-18; valores resumidos en este caso"
+      ]
+    },
+    {
+      "name": "Exactitud e integración de IA REAL",
+      "expected": "Probar con un proveedor real autorizado que su análisis conecta correctamente la necesidad con evidencia, sin pagar ni usar credenciales no autorizadas.",
+      "actual": "No hay credenciales reales ni autorización de gasto. Todas las respuestas exitosas/adversariales posteriores al gate provinieron de un fetcher local controlado; no se probó exactitud ni disponibilidad de un modelo real.",
+      "verdict": "BLOCKED",
+      "evidence": [
+        "docs/adversarial/evidence/semantic-runtime.mjs",
+        "docs/adversarial/evidence/semantic-provider-log.jsonl"
+      ]
+    }
+  ],
+  "findings": [],
+  "limitations": [
+    "IA real, autenticación/cuota real y calidad semántica del modelo: BLOCKED. Ningún mock se considera integración real.",
+    "El proveedor sintético sustituye exclusivamente el fetcher del router de análisis en memoria. No valida DNS, TLS, HTTP remoto, el contrato real del proveedor ni sus costos. El formulario sí guardó una configuración sintética a través de la UI.",
+    "Las fixtures de marca, necesidad, referencia y cambios de rol son propias y sintéticas. Los cambios de datos/permisos se prepararon por API/SQLite; las acciones de análisis y la observación del resultado se hicieron por UI T3.",
+    "No se probó en esta revisión aislamiento entre dos empresas/cuentas, exclusión YouTube, las cotas de 8 referencias/señales, todas las mutaciones posibles del fingerprint, todos los tipos malformados ni todas las formas de inyección. No se auditó el motor general de oportunidades.",
+    "No se ejecutaron ni se usaron unit tests como sustituto de la UI. No se modificó implementación, no se recompiló y no se leyeron informes de otros agentes.",
+    "La UI que ya está abierta puede conservar el análisis previo hasta Actualizar después de una edición externa; se comprobó que insights omite el análisis obsoleto y que la UI actualizada lo retira. El mensaje de conflicto indica expresamente actualizar."
+  ],
+  "artifacts": [
+    "docs/adversarial/reports/semantic.md",
+    "docs/adversarial/reports/semantic.json",
+    "docs/adversarial/evidence/semantic-provider-gate.png",
+    "docs/adversarial/evidence/semantic-synthetic-success.png",
+    "docs/adversarial/evidence/semantic-invalid-citation.png",
+    "docs/adversarial/evidence/semantic-context-changed.png",
+    "docs/adversarial/evidence/semantic-permission-changed.png",
+    "docs/adversarial/evidence/semantic-reviewer.png",
+    "docs/adversarial/evidence/semantic-provider-log.jsonl",
+    "docs/adversarial/evidence/semantic-runtime.mjs"
+  ]
+}

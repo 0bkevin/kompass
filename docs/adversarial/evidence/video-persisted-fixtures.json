@@ -1,0 +1,194 @@
+{
+  "notice": "Datos sintéticos de auditoría; no es evidencia de integración real con proveedores.",
+  "brand": {
+    "id": "27c38d43-88ca-4d0c-8e6d-7278f488c579",
+    "name": "QA Video — datos sintéticos"
+  },
+  "references": [
+    {
+      "id": "qa-video-unsupported-source",
+      "title": "[SINTÉTICO] Fuente incompatible con acceso declarado",
+      "url": "https://example.invalid/qa-not-youtube",
+      "format": "video",
+      "status": "new",
+      "source": "manual",
+      "mediaAccess": "youtube_url",
+      "createdAt": "2026-10-18T02:09:07.353Z",
+      "updatedAt": "2026-10-18T02:09:07.353Z"
+    },
+    {
+      "id": "qa-video-no-duration",
+      "title": "[SINTÉTICO] YouTube sin duración verificable",
+      "url": "https://www.youtube.com/watch?v=QANoDur0001",
+      "format": "video",
+      "status": "new",
+      "source": "manual",
+      "createdAt": "2026-10-18T02:09:07.351Z",
+      "updatedAt": "2026-10-18T02:09:07.351Z"
+    },
+    {
+      "id": "qa-video-hn-native",
+      "title": "[SINTÉTICO] HN IA 77 puntos",
+      "text": "Texto sintético sobre IA en procesos para líderes. No se deben sumar los puntos de HN con vistas de YouTube. Texto sintético sobre IA en procesos para líderes. No se deben sumar los puntos de HN con vistas de YouTube. Texto sintético sobre IA en procesos para líderes. No se deben sumar los puntos de HN con vistas de YouTube. Texto sintético sobre IA en procesos para líderes. No se deben sumar los puntos de HN con vistas de YouTube. ",
+      "source": "Hacker News",
+      "format": "article",
+      "status": "new",
+      "url": "https://example.invalid/qa-hn",
+      "author": "autor-hn-sintético",
+      "publishedAt": "2026-10-17T16:00:00Z",
+      "topic": "HN IA sintética",
+      "trend": {
+        "score": 15,
+        "scoreReasons": [
+          "Fixture sintética: 77 puntos de Hacker News."
+        ],
+        "observedAt": "2026-10-18T00:00:00Z",
+        "metrics": {
+          "score": 77,
+          "comments": 8
+        },
+        "metricsOrigin": "Hacker News API"
+      },
+      "createdAt": "2026-10-18T02:07:07.524Z",
+      "updatedAt": "2026-10-18T02:10:31.987Z"
+    },
+    {
+      "id": "qa-video-youtube-native",
+      "title": "[SINTÉTICO] YouTube IA 1234 vistas",
+      "text": "Descripción sintética suministrada por el equipo; no contiene observaciones de imágenes ni audio. El tema es aplicar IA en procesos para líderes con revisión humana. Estos contadores son fixtures para verificar representación y no datos reales de YouTube. Descripción sintética suministrada por el equipo; no contiene observaciones de imágenes ni audio. El tema es aplicar IA en procesos para líderes con revisión humana. Estos contadores son fixtures para verificar representación y no datos reales de YouTube. ",
+      "source": "YouTube Data API",
+      "sourceId": "qa-video-youtube-source",
+      "url": "https://www.youtube.com/watch?v=QASynth00001",
+      "platform": "youtube",
+      "videoId": "QASynth00001",
+      "mediaAccess": "youtube_url",
+      "format": "video",
+      "durationSeconds": 60,
+      "publishedAt": "2026-10-16T18:15:00Z",
+      "author": "Canal QA sintético",
+      "publisher": "Canal QA sintético",
+      "topic": "IA en procesos",
+      "status": "analyzed",
+      "contentScope": "metadata_only",
+      "trend": {
+        "score": 0,
+        "scoreReasons": [
+          "Fixture sintética: 1234 vistas de YouTube; no predice rendimiento."
+        ],
+        "observedAt": "2026-10-18T00:00:00Z",
+        "metrics": {
+          "views": 1234,
+          "likes": 56,
+          "comments": 7
+        },
+        "metricsOrigin": "YouTube Data API",
+        "priorityMetric": {
+          "name": "views",
+          "value": 1234,
+          "origin": "YouTube Data API",
+          "rank": 1
+        }
+      },
+      "createdAt": "2026-10-18T02:07:07.522Z",
+      "updatedAt": "2026-10-18T02:07:24.363Z",
+      "analysis": {
+        "hook": "[SINTÉTICO] YouTube IA 1234 vistas",
+        "format": "video",
+        "hypothesis": "Hipótesis editorial: una cifra o lista concreta podría facilitar que la audiencia identifique el valor de la pieza. No hay evidencia causal ni datos suficientes para afirmar por qué tuvo éxito.",
+        "saturation": "medium",
+        "saturationReason": "3 referencias relacionadas en 5 referencias del corpus observado de esta marca. Estimación de repetición interna, no de saturación global ni de Latinoamérica.",
+        "relevance": 45,
+        "adaptation": "Para Líderes sintéticos, convertir «[SINTÉTICO] YouTube IA 1234 vistas» en un ejemplo aplicado a Educación en Latinoamérica. Usar el tono Claro, cercano y práctico de QA Video — datos sintéticos; añadir una decisión concreta, un caso local verificable y límites. Contrastar con publicaciones propias antes de aprobar.",
+        "segmentIds": [
+          "qa-leaders"
+        ],
+        "signals": [
+          "Motor local: comparación de texto y reglas editoriales, sin búsqueda global.",
+          "Material disponible: título y texto suministrado o extraído.",
+          "Fixture sintética: 1234 vistas de YouTube; no predice rendimiento.",
+          "Coincidencias con el contexto de marca: ninguna coincidencia literal; revisar relevancia manualmente.",
+          "Historial editorial comparable: 0 referencias guardadas y 0 descartadas. Afinidad textual usada como ajuste de relevancia; no es un modelo entrenado.",
+          "El motor local no observa píxeles, reproduce videos ni transcribe audio."
+        ],
+        "confidence": "low",
+        "engine": "heuristic",
+        "analyzedAt": "2026-10-18T02:07:24.363Z"
+      }
+    },
+    {
+      "source": "manual",
+      "language": "Desconocido",
+      "market": "Sin definir",
+      "format": "post",
+      "status": "new",
+      "tags": [
+        "sintético"
+      ],
+      "title": "[SINTÉTICO] Texto de IA para líderes",
+      "text": "Contenido aportado por el equipo de QA. Cómo aplicar IA en procesos con revisión humana y evaluación acotada. Este material es sintético. Contenido aportado por el equipo de QA. Cómo aplicar IA en procesos con revisión humana y evaluación acotada. Este material es sintético. Contenido aportado por el equipo de QA. Cómo aplicar IA en procesos con revisión humana y evaluación acotada. Este material es sintético.",
+      "id": "a9093cfa-db4a-457c-a424-1e922926d5fd",
+      "createdAt": "2026-10-18T02:06:23.748Z",
+      "updatedAt": "2026-10-18T02:06:23.748Z"
+    },
+    {
+      "source": "manual",
+      "language": "Desconocido",
+      "market": "Sin definir",
+      "format": "reel",
+      "status": "new",
+      "tags": [
+        "sintético"
+      ],
+      "title": "[SINTÉTICO] Reel sin medio accesible",
+      "url": "https://www.instagram.com/reel/QASynthetic/",
+      "id": "3fb94f64-354f-4e30-abac-f22939003691",
+      "createdAt": "2026-10-18T02:06:23.743Z",
+      "updatedAt": "2026-10-18T02:06:23.743Z"
+    },
+    {
+      "source": "manual",
+      "language": "Desconocido",
+      "market": "Sin definir",
+      "format": "video",
+      "status": "analyzed",
+      "tags": [
+        "sintético"
+      ],
+      "title": "[SINTÉTICO CORREGIDO] 3 pruebas de IA en procesos",
+      "url": "https://example.invalid/qa-title-only-video",
+      "id": "b47f9360-1490-48dc-8143-67b454a5d89f",
+      "createdAt": "2026-10-18T02:06:23.737Z",
+      "updatedAt": "2026-10-18T02:10:25.610Z",
+      "analysis": {
+        "hook": "[SINTÉTICO CORREGIDO] 3 pruebas de IA en procesos",
+        "format": "video",
+        "hypothesis": "Hipótesis editorial: una cifra o lista concreta podría facilitar que la audiencia identifique el valor de la pieza. No hay evidencia causal ni datos suficientes para afirmar por qué tuvo éxito.",
+        "saturation": "medium",
+        "saturationReason": "3 referencias relacionadas en 7 referencias del corpus observado de esta marca. Estimación de repetición interna, no de saturación global ni de Latinoamérica.",
+        "relevance": 45,
+        "adaptation": "Para Líderes sintéticos, convertir «[SINTÉTICO CORREGIDO] 3 pruebas de IA en procesos» en un ejemplo aplicado a Educación en Latinoamérica. Usar el tono Claro, cercano y práctico de QA Video — datos sintéticos; añadir una decisión concreta, un caso local verificable y límites. Contrastar con publicaciones propias antes de aprobar.",
+        "segmentIds": [
+          "qa-leaders"
+        ],
+        "signals": [
+          "Motor local: comparación de texto y reglas editoriales, sin búsqueda global.",
+          "Material disponible: título/enlace; contenido completo no disponible.",
+          "Coincidencias con el contexto de marca: ninguna coincidencia literal; revisar relevancia manualmente.",
+          "Historial editorial comparable: 0 referencias guardadas y 0 descartadas. Afinidad textual usada como ajuste de relevancia; no es un modelo entrenado.",
+          "El motor local no observa píxeles, reproduce videos ni transcribe audio.",
+          "No se pudo enriquecer el enlace: No se pudo resolver el dominio público. Análisis limitado al material compartido."
+        ],
+        "confidence": "low",
+        "engine": "heuristic",
+        "analyzedAt": "2026-10-18T02:10:25.609Z"
+      }
+    }
+  ],
+  "role": "owner",
+  "geminiConfigured": false,
+  "process": {
+    "port": 4111,
+    "pid": 3865055,
+    "dataDir": "/tmp/30x-adversarial-video"
+  }
+}

@@ -1,0 +1,6 @@
+{
+  "http": 409,
+  "body": {
+    "error": "Conecta Telegram para ese canal o un webhook de publicación. Puedes exportar la pieza mientras tanto."
+  }
+}

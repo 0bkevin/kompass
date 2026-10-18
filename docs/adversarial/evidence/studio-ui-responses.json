@@ -1,0 +1,130 @@
+{
+  "requests": [
+    {
+      "url": "/api/brands/c114cd2b-8aa2-4559-86cf-271d44d25248/draft",
+      "status": 200,
+      "body": {
+        "title": "Inventario: bitácora pública sintética",
+        "hook": "¿Qué cambia con inventario: bitácora pública sintética para Jefas de operaciones de librerías?",
+        "script": "¿Qué cambia con inventario: bitácora pública sintética para Jefas de operaciones de librerías?\n\nQué significa para Jefas de operaciones de librerías y cómo probarlo sin perder el foco.\nEn Chile, comienza por una tarea concreta de Formación operativa relacionada con Reducir quiebres de inventario sin añadir reuniones.\n\nAntes de adoptar la idea, registra cómo resuelves esa tarea hoy. Elige un caso pequeño, define quién revisará el resultado y compara calidad y tiempo. Documenta las limitaciones; no extrapoles una prueba a toda la organización.\n\nDesde Laboratorio Faro · fixture sintética, nuestra propuesta es convertir la conversación en una prueba verificable. Referencia para consultar: https://example.com/qa-studio-inventario. Dirección editorial: Crear un post original para Jefas de operaciones de librerías: explicar una decisión sobre «inventario», mostrar un ejemplo verificable de Formación operativa en Chile y cerrar con un paso aplicable. Usar el tono Sobrio, claro, sin promesas de ROI; contrastar los hechos y aportar un ángulo propio antes de aprobar. El formato es una sugerencia editable, no una predicción.\n\nNewsletter en español con asunto, saludo y dos secciones: Registrar y Revisar. Explica la bitácora de faltantes para librerías. Usa ejemplo hipotético y ninguna cifra ni testimonio. No copies frases de la fuente. CTA final exacto: Responde FICHA para recibir la plantilla..\n\n¿Qué tarea pondrías a prueba primero? Comparte tu contexto para adaptar el siguiente paso.",
+        "caption": "¿Qué cambia con inventario: bitácora pública sintética para Jefas de operaciones de librerías?\n\nQué significa para Jefas de operaciones de librerías y cómo probarlo sin perder el foco.\n\nGuarda esta propuesta y compártela con tu equipo.",
+        "cta": "Comparte qué caso quieres poner a prueba.",
+        "scenes": [
+          {
+            "id": "38a8f8ee-c738-4670-8a4c-2eaee295cb83",
+            "text": "¿Qué cambia con inventario: bitácora pública sintética para Jefas de operaciones de librerías?",
+            "duration": 5
+          },
+          {
+            "id": "087bb3f5-a341-4e3a-9b68-f8e0a1a5f8de",
+            "text": "Qué significa para Jefas de operaciones de librerías y cómo probarlo sin perder el foco.\nEn Chile, comienza por una tarea concreta de Formación operativa relacionada con Reducir quiebres de inventario sin añadir reuniones.",
+            "duration": 14
+          },
+          {
+            "id": "f7dc8a7d-1859-456e-8545-3cad534a8471",
+            "text": "Antes de adoptar la idea, registra cómo resuelves esa tarea hoy. Elige un caso pequeño, define quién revisará el resultado y compara calidad y tiempo. Documenta las limitaciones; no extrapoles una prueba a toda la organización.",
+            "duration": 15
+          },
+          {
+            "id": "319f81c1-f6ba-4b30-93a0-c7c557d5904d",
+            "text": "Desde Laboratorio Faro · fixture sintética, nuestra propuesta es convertir la conversación en una prueba verificable. Referencia para consultar: https://example.com/qa-studio-inventario. Dirección editorial: Crear un post original para Jefas de operaciones de librerías: explicar una decisión sobre «inventario», mostrar un ejemplo verificable de Formación operativa en Chile y cerrar con un paso aplicable. Usar el tono Sobrio, claro, sin promesas de ROI; contrastar los hechos y aportar un ángulo propio antes de aprobar. El formato es una sugerencia editable, no una predicción.\n\nNewsletter en español con asunto, saludo y dos secciones: Registrar y Revisar. Explica la bitácora de faltantes para librerías. Usa ejemplo hipotético y ninguna cifra ni testimonio. No copies frases de la fuente. CTA final exacto: Responde FICHA para recibir la plantilla..",
+            "duration": 20
+          },
+          {
+            "id": "319387fc-473d-471b-8877-b03021d62acf",
+            "text": "¿Qué tarea pondrías a prueba primero? Comparte tu contexto para adaptar el siguiente paso.",
+            "duration": 6
+          }
+        ],
+        "generationEngine": "heuristic",
+        "referenceId": "f05f7fbe-b725-49a5-8874-94095b855045",
+        "segmentId": "qa-ops",
+        "format": "newsletter",
+        "channel": "linkedin",
+        "status": "draft",
+        "assetIds": [],
+        "comments": [],
+        "id": "678a958d-085e-4792-af8c-f4a99ec43b68",
+        "createdAt": "2026-10-18T02:09:24.361Z",
+        "updatedAt": "2026-10-18T02:09:24.361Z",
+        "approvalVersion": "qXSvfQKn8rXIdm4XH552QLOUKrcC_iu99QJp9-JWv3c"
+      }
+    },
+    {
+      "url": "/api/brands/c114cd2b-8aa2-4559-86cf-271d44d25248/pieces/678a958d-085e-4792-af8c-f4a99ec43b68",
+      "status": 400,
+      "body": {
+        "error": "title: longitud inválida (máximo 2000)."
+      }
+    },
+    {
+      "url": "/api/brands/c114cd2b-8aa2-4559-86cf-271d44d25248/pieces/678a958d-085e-4792-af8c-f4a99ec43b68",
+      "status": 400,
+      "body": {
+        "error": "cta: longitud inválida (máximo 2000)."
+      }
+    },
+    {
+      "url": "/api/brands/c114cd2b-8aa2-4559-86cf-271d44d25248/pieces/678a958d-085e-4792-af8c-f4a99ec43b68",
+      "status": 200,
+      "body": {
+        "title": "QA validación corregida",
+        "hook": "¿Qué cambia con inventario: bitácora pública sintética para Jefas de operaciones de librerías?",
+        "script": "¿Qué cambia con inventario: bitácora pública sintética para Jefas de operaciones de librerías?\n\nQué significa para Jefas de operaciones de librerías y cómo probarlo sin perder el foco.\nEn Chile, comienza por una tarea concreta de Formación operativa relacionada con Reducir quiebres de inventario sin añadir reuniones.\n\nAntes de adoptar la idea, registra cómo resuelves esa tarea hoy. Elige un caso pequeño, define quién revisará el resultado y compara calidad y tiempo. Documenta las limitaciones; no extrapoles una prueba a toda la organización.\n\nDesde Laboratorio Faro · fixture sintética, nuestra propuesta es convertir la conversación en una prueba verificable. Referencia para consultar: https://example.com/qa-studio-inventario. Dirección editorial: Crear un post original para Jefas de operaciones de librerías: explicar una decisión sobre «inventario», mostrar un ejemplo verificable de Formación operativa en Chile y cerrar con un paso aplicable. Usar el tono Sobrio, claro, sin promesas de ROI; contrastar los hechos y aportar un ángulo propio antes de aprobar. El formato es una sugerencia editable, no una predicción.\n\nNewsletter en español con asunto, saludo y dos secciones: Registrar y Revisar. Explica la bitácora de faltantes para librerías. Usa ejemplo hipotético y ninguna cifra ni testimonio. No copies frases de la fuente. CTA final exacto: Responde FICHA para recibir la plantilla..\n\n¿Qué tarea pondrías a prueba primero? Comparte tu contexto para adaptar el siguiente paso.",
+        "caption": "¿Qué cambia con inventario: bitácora pública sintética para Jefas de operaciones de librerías?\n\nQué significa para Jefas de operaciones de librerías y cómo probarlo sin perder el foco.\n\nGuarda esta propuesta y compártela con tu equipo.",
+        "cta": "CTA corregido de QA.",
+        "format": "newsletter",
+        "channel": "linkedin",
+        "scenes": [
+          {
+            "id": "38a8f8ee-c738-4670-8a4c-2eaee295cb83",
+            "text": "¿Qué cambia con inventario: bitácora pública sintética para Jefas de operaciones de librerías?",
+            "duration": 5
+          },
+          {
+            "id": "087bb3f5-a341-4e3a-9b68-f8e0a1a5f8de",
+            "text": "Qué significa para Jefas de operaciones de librerías y cómo probarlo sin perder el foco.\nEn Chile, comienza por una tarea concreta de Formación operativa relacionada con Reducir quiebres de inventario sin añadir reuniones.",
+            "duration": 14
+          },
+          {
+            "id": "f7dc8a7d-1859-456e-8545-3cad534a8471",
+            "text": "Antes de adoptar la idea, registra cómo resuelves esa tarea hoy. Elige un caso pequeño, define quién revisará el resultado y compara calidad y tiempo. Documenta las limitaciones; no extrapoles una prueba a toda la organización.",
+            "duration": 15
+          },
+          {
+            "id": "319f81c1-f6ba-4b30-93a0-c7c557d5904d",
+            "text": "Desde Laboratorio Faro · fixture sintética, nuestra propuesta es convertir la conversación en una prueba verificable. Referencia para consultar: https://example.com/qa-studio-inventario. Dirección editorial: Crear un post original para Jefas de operaciones de librerías: explicar una decisión sobre «inventario», mostrar un ejemplo verificable de Formación operativa en Chile y cerrar con un paso aplicable. Usar el tono Sobrio, claro, sin promesas de ROI; contrastar los hechos y aportar un ángulo propio antes de aprobar. El formato es una sugerencia editable, no una predicción.\n\nNewsletter en español con asunto, saludo y dos secciones: Registrar y Revisar. Explica la bitácora de faltantes para librerías. Usa ejemplo hipotético y ninguna cifra ni testimonio. No copies frases de la fuente. CTA final exacto: Responde FICHA para recibir la plantilla..",
+            "duration": 20
+          },
+          {
+            "id": "319387fc-473d-471b-8877-b03021d62acf",
+            "text": "¿Qué tarea pondrías a prueba primero? Comparte tu contexto para adaptar el siguiente paso.",
+            "duration": 6
+          }
+        ],
+        "assetIds": [],
+        "comments": [],
+        "generationEngine": "heuristic",
+        "referenceId": "f05f7fbe-b725-49a5-8874-94095b855045",
+        "segmentId": "qa-ops",
+        "status": "draft",
+        "id": "678a958d-085e-4792-af8c-f4a99ec43b68",
+        "createdAt": "2026-10-18T02:09:24.361Z",
+        "updatedAt": "2026-10-18T02:09:46.094Z",
+        "approvalVersion": "9gnyMrCV0i0zmhjacVWH2G0WZt9Bm2fac3RTIfMCljk"
+      }
+    }
+  ],
+  "instructionLimit": {
+    "last": {
+      "url": "/api/brands/c114cd2b-8aa2-4559-86cf-271d44d25248/draft",
+      "status": 400,
+      "body": {
+        "error": "Las instrucciones deben ser texto de hasta 10.000 caracteres."
+      }
+    },
+    "localLength": 10001,
+    "pieceCount": 3
+  }
+}
+

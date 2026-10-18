@@ -1,0 +1,35 @@
+{
+  "notice": "Observaciones resumidas de la auditoría, datos sintéticos. Sin tokens, cookies o credenciales.",
+  "missingGemini": {
+    "status": 409,
+    "error": "Configura Gemini en Ajustes de integraciones antes de analizar videos."
+  },
+  "youtubeNoDuration": {
+    "status": 422,
+    "error": "No se puede comprobar la duración de este enlace. Configura el conector de YouTube o usa una referencia descubierta con duración disponible.",
+    "configuration": "Gemini ficticio local, YouTube deshabilitado; rechazo antes de cualquier solicitud externa."
+  },
+  "unsupportedSource": {
+    "status": 422,
+    "error": "Solo se pueden analizar URLs públicas de YouTube, videos subidos a esta marca o medios de proveedores reconocidos.",
+    "configuration": "Gemini ficticio local; rechazo antes de proveedor."
+  },
+  "reviewer": {
+    "localAnalysis": 403,
+    "videoAnalysis": 403,
+    "error": "Necesitas permisos de edición."
+  },
+  "invalid": {
+    "missingReference": 400,
+    "focusNumber": 400,
+    "unknownReference": 404
+  },
+  "persistence": {
+    "beforeRefreshAnalyzedAt": "2026-10-18T02:06:42.826Z",
+    "repeatedAnalyzedAt": "2026-10-18T02:10:18.508Z",
+    "correctedAnalyzedAt": "2026-10-18T02:10:25.609Z",
+    "finalReferenceCount": 7,
+    "finalVideoAnalysisCount": 0
+  }
+}
+

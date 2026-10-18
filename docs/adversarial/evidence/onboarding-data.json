@@ -1,0 +1,230 @@
+{
+  "capturedAt": "2026-10-18T01:55:10.976428+00:00",
+  "synthetic": true,
+  "note": "Marcas y texto aportado ficticios propios del revisor; example.com es una lectura pública real. No contiene cuentas de participantes ni credenciales.",
+  "brands": [
+    {
+      "name": "Lumbre Cooperativa QA",
+      "industry": "Comunicación cooperativa",
+      "description": "Formamos a comunicadores de cooperativas de café para explicar trazabilidad con evidencia.",
+      "tone": "Concreto, respetuoso y cercano",
+      "language": "Español",
+      "market": "Colombia",
+      "website": "",
+      "color": "#137c64",
+      "secondaryColor": "#161b17",
+      "goals": [
+        "Crear contenido útil para nuestra audiencia"
+      ],
+      "pillars": [
+        "Trazabilidad del café",
+        "Comercio justo"
+      ],
+      "weeklyTarget": 3,
+      "audience": [
+        {
+          "id": "fb95cd76-b232-4fba-b1b0-a68cdc6d6923",
+          "name": "Comunicadores de cooperativas cafeteras",
+          "role": "Comunicadores de cooperativas cafeteras",
+          "stage": "Por confirmar",
+          "needs": "Explicar la trazabilidad del café con pruebas verificables y lenguaje claro.",
+          "description": "Hipótesis sugerida a partir del contenido de la empresa. Requiere validación del equipo; no procede de perfiles de consumidores."
+        }
+      ],
+      "id": "566e0d04-5ef3-4d6a-aee0-96695543cdac",
+      "createdAt": "2026-10-18T01:53:51.948Z"
+    },
+    {
+      "name": "Lumbre Social QA",
+      "industry": "Comunicación",
+      "description": "Contenido editorial de una cooperativa; enlace social guardado sin lectura.",
+      "tone": "Claro, cercano y práctico",
+      "language": "es",
+      "market": "Latinoamérica",
+      "website": "",
+      "color": "#137c64",
+      "secondaryColor": "#161b17",
+      "goals": [
+        "Crear contenido útil para nuestra audiencia"
+      ],
+      "pillars": [
+        "Trazabilidad"
+      ],
+      "weeklyTarget": 3,
+      "audience": [
+        {
+          "id": "53920077-10c5-46ff-a045-afbe7637108e",
+          "name": "Comunicadores rurales",
+          "role": "Comunicadores rurales",
+          "stage": "Explorando",
+          "needs": "Preparar historias públicas verificables.",
+          "description": ""
+        }
+      ],
+      "id": "54160249-642d-4e74-b970-86dc6a45ee41",
+      "createdAt": "2026-10-18T01:54:19.778Z"
+    },
+    {
+      "name": "Control Web Pública QA",
+      "industry": "Documentación técnica",
+      "description": "Example Domain This domain is for use in documentation examples without needing permission. This is not a service; avoid relying on it for testing and monitoring purposes.",
+      "tone": "Claro, cercano y práctico",
+      "language": "Inglés",
+      "market": "Global",
+      "website": "https://example.com/",
+      "color": "#137c64",
+      "secondaryColor": "#161b17",
+      "goals": [
+        "Crear contenido útil para nuestra audiencia"
+      ],
+      "pillars": [
+        "Documentación"
+      ],
+      "weeklyTarget": 3,
+      "audience": [
+        {
+          "id": "cbc872f4-8e07-4c4f-a68b-ca3d1b99ec91",
+          "name": "Autores de documentación técnica",
+          "role": "Autores de documentación técnica",
+          "stage": "Explorando",
+          "needs": "Usar ejemplos públicos sin atribuirlos a una empresa real.",
+          "description": ""
+        }
+      ],
+      "id": "6ce5c335-10d9-4783-be89-723c0d69a758",
+      "createdAt": "2026-10-18T01:54:40.737Z"
+    }
+  ],
+  "contextImports": [
+    {
+      "brandId": "566e0d04-5ef3-4d6a-aee0-96695543cdac",
+      "inspection": {
+        "id": "57cf19cf-e6d4-42fd-b545-384b1e0224b5",
+        "inspectedAt": "2026-10-18T01:53:19.535Z",
+        "method": "heuristic",
+        "draft": {
+          "name": "",
+          "industry": "Educación y formación",
+          "description": "Lumbre Cooperativa: formación editorial para cooperativas de café en Colombia. Enseñamos a responsables de comunicación a explicar trazabilidad y comercio justo con guías prácticas y entrevistas. Nuestro enfoque público es concreto, respetuoso y cercano. Temas: trazabilidad del café, comercio justo y comunicación cooperativa. Audiencia declarada por el equipo: responsables de comunicación de cooperativas rurales. Necesidad: explicar el origen de cada lote sin promesas sin evidencia.",
+          "website": "",
+          "market": "",
+          "language": "Español",
+          "tone": "Claro, cercano y práctico",
+          "pillars": [
+            "Formación y aprendizaje",
+            "Marketing y contenido",
+            "Comercio y experiencia del cliente"
+          ],
+          "audience": [
+            {
+              "id": "fb95cd76-b232-4fba-b1b0-a68cdc6d6923",
+              "name": "Responsables de formación",
+              "role": "Formación y gestión educativa",
+              "needs": "Evaluar soluciones y contenidos aplicables al aprendizaje de sus equipos o estudiantes.",
+              "stage": "Por confirmar",
+              "description": "Hipótesis sugerida a partir del contenido de la empresa. Requiere validación del equipo; no procede de perfiles de consumidores."
+            },
+            {
+              "id": "240c313d-a555-49d9-a9ce-41595da6880e",
+              "name": "Equipos de marketing",
+              "role": "Marketing y comunicación",
+              "needs": "Decidir qué contenido crear y cómo comunicar el valor de su empresa.",
+              "stage": "Por confirmar",
+              "description": "Hipótesis sugerida a partir del contenido de la empresa. Requiere validación del equipo; no procede de perfiles de consumidores."
+            }
+          ]
+        },
+        "evidence": [
+          {
+            "id": "9d67b326-5da4-45ce-b669-ff2663e70d64",
+            "title": "Contenido aportado por tu equipo",
+            "excerpt": "Lumbre Cooperativa: formación editorial para cooperativas de café en Colombia. Enseñamos a responsables de comunicación a explicar trazabilidad y comercio justo con guías prácticas y entrevistas. Nuestro enfoque público es concreto, respetuoso y cercano. Temas: trazabilidad del café, comercio justo y comunicación cooperativa. Audiencia declarada por el equipo: responsables de comunicación de cooperativas rurales. Necesidad: explicar el origen de cada lote sin promesas sin evidencia.",
+            "status": "provided",
+            "platform": "provided",
+            "reason": "Texto aportado por el equipo; no se ha verificado externamente."
+          }
+        ],
+        "warnings": [
+          "Las sugerencias de marca y audiencia son hipótesis basadas en el contenido aportado. Confírmalas; no describen consumidores observados."
+        ],
+        "createdAt": "2026-10-18T01:53:51.966Z",
+        "updatedAt": "2026-10-18T01:53:51.966Z"
+      }
+    },
+    {
+      "brandId": "54160249-642d-4e74-b970-86dc6a45ee41",
+      "inspection": {
+        "id": "acfbeaa1-02e9-4967-9d33-9564952eef43",
+        "inspectedAt": "2026-10-18T01:54:10.341Z",
+        "method": "heuristic",
+        "draft": {
+          "name": "",
+          "industry": "",
+          "description": "",
+          "website": "",
+          "market": "",
+          "language": "",
+          "tone": "",
+          "pillars": [],
+          "audience": []
+        },
+        "evidence": [
+          {
+            "id": "b0c761d0-6f19-4846-85d7-b51cbabd19ea",
+            "url": "https://instagram.com/qa_lumbre_cooperativa",
+            "title": "instagram.com",
+            "excerpt": "",
+            "status": "linked",
+            "platform": "instagram",
+            "reason": "Enlace guardado. No se ha leído este perfil ni su audiencia; aporta contenido propio para incorporarlo al contexto."
+          }
+        ],
+        "warnings": [
+          "Las sugerencias de marca y audiencia son hipótesis basadas en el contenido aportado. Confírmalas; no describen consumidores observados.",
+          "Los enlaces marcados como guardados no se han usado para inferir contenido ni audiencia.",
+          "Aún no hay contenido legible para sugerir tu propuesta o audiencia. Pega una descripción de tu empresa para continuar."
+        ],
+        "createdAt": "2026-10-18T01:54:19.825Z",
+        "updatedAt": "2026-10-18T01:54:19.825Z"
+      }
+    },
+    {
+      "brandId": "6ce5c335-10d9-4783-be89-723c0d69a758",
+      "inspection": {
+        "id": "d2820eb7-2995-4ee2-9503-faee49c4a502",
+        "inspectedAt": "2026-10-18T01:54:27.033Z",
+        "method": "heuristic",
+        "draft": {
+          "name": "Example Domain",
+          "industry": "",
+          "description": "Example Domain This domain is for use in documentation examples without needing permission. This is not a service; avoid relying on it for testing and monitoring purposes.",
+          "website": "https://example.com/",
+          "market": "",
+          "language": "Inglés",
+          "tone": "Claro, cercano y práctico",
+          "pillars": [],
+          "audience": []
+        },
+        "evidence": [
+          {
+            "id": "24f19c2c-3145-43e8-b44d-1288eaec9e94",
+            "url": "https://example.com/",
+            "title": "Example Domain",
+            "excerpt": "Example Domain This domain is for use in documentation examples without needing permission. This is not a service; avoid relying on it for testing and monitoring purposes.",
+            "status": "read",
+            "platform": "website"
+          }
+        ],
+        "warnings": [
+          "Las sugerencias de marca y audiencia son hipótesis basadas en el contenido aportado. Confírmalas; no describen consumidores observados."
+        ],
+        "createdAt": "2026-10-18T01:54:40.787Z",
+        "updatedAt": "2026-10-18T01:54:40.787Z"
+      }
+    }
+  ],
+  "counts": {
+    "brands": 3,
+    "contextImports": 3
+  }
+}

@@ -1,0 +1,598 @@
+{
+  "foreign-account-and-removed-member": [
+    {
+      "method": "GET",
+      "path": "/api/brands/31f8606f-c0a4-4d79-9809-f14bcc3fb308/state",
+      "status": 404,
+      "response": {
+        "error": "No se encontró la marca."
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/api/brands/31f8606f-c0a4-4d79-9809-f14bcc3fb308/pieces",
+      "status": 404,
+      "response": {
+        "error": "No se encontró la marca."
+      }
+    },
+    {
+      "method": "PATCH",
+      "path": "/api/brands/31f8606f-c0a4-4d79-9809-f14bcc3fb308/pieces/946c1599-42e8-4d70-b3a2-043d76c94445",
+      "status": 404,
+      "response": {
+        "error": "No se encontró la marca."
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/api/brands/31f8606f-c0a4-4d79-9809-f14bcc3fb308/context",
+      "status": 404,
+      "response": {
+        "error": "No se encontró la marca."
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/api/brands/31f8606f-c0a4-4d79-9809-f14bcc3fb308/audience-signals",
+      "status": 404,
+      "response": {
+        "error": "No se encontró la marca."
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/api/brands/31f8606f-c0a4-4d79-9809-f14bcc3fb308/insights",
+      "status": 404,
+      "response": {
+        "error": "No se encontró la marca."
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/api/brands/31f8606f-c0a4-4d79-9809-f14bcc3fb308/community-polls",
+      "status": 404,
+      "response": {
+        "error": "No se encontró la marca."
+      }
+    },
+    {
+      "method": "PATCH",
+      "path": "/api/brands/31f8606f-c0a4-4d79-9809-f14bcc3fb308/community-polls/c7db7ae8-917c-46f7-8779-b952b98d252e",
+      "status": 404,
+      "response": {
+        "error": "No se encontró la marca."
+      }
+    },
+    {
+      "method": "POST",
+      "path": "/api/brands/31f8606f-c0a4-4d79-9809-f14bcc3fb308/analyze",
+      "status": 404,
+      "response": {
+        "error": "No se encontró la marca."
+      }
+    },
+    {
+      "method": "POST",
+      "path": "/api/brands/31f8606f-c0a4-4d79-9809-f14bcc3fb308/draft",
+      "status": 404,
+      "response": {
+        "error": "No se encontró la marca."
+      }
+    },
+    {
+      "method": "POST",
+      "path": "/api/brands/31f8606f-c0a4-4d79-9809-f14bcc3fb308/opportunities/fake/analyze",
+      "status": 404,
+      "response": {
+        "error": "No se encontró la marca."
+      }
+    },
+    {
+      "method": "POST",
+      "path": "/api/brands/31f8606f-c0a4-4d79-9809-f14bcc3fb308/pieces/946c1599-42e8-4d70-b3a2-043d76c94445/outcome",
+      "status": 404,
+      "response": {
+        "error": "No se encontró la marca."
+      }
+    },
+    {
+      "method": "PATCH",
+      "path": "/api/brands/208a6768-2a9f-4d00-b3db-18fc8a3784bc/pieces/946c1599-42e8-4d70-b3a2-043d76c94445",
+      "status": 404,
+      "response": {
+        "error": "Registro no encontrado."
+      }
+    },
+    {
+      "method": "POST",
+      "path": "/api/brands/208a6768-2a9f-4d00-b3db-18fc8a3784bc/pieces",
+      "status": 400,
+      "response": {
+        "error": "Registro no pertenece a esta marca."
+      }
+    },
+    {
+      "method": "POST",
+      "path": "/api/brands/208a6768-2a9f-4d00-b3db-18fc8a3784bc/pieces",
+      "status": 400,
+      "response": {
+        "error": "El responsable no pertenece al equipo."
+      }
+    }
+  ],
+  "editor": [
+    {
+      "method": "GET",
+      "path": "/api/brands/31f8606f-c0a4-4d79-9809-f14bcc3fb308/state",
+      "status": 200,
+      "response": {
+        "role": "editor",
+        "pieces": 2
+      }
+    },
+    {
+      "method": "PATCH",
+      "path": "/api/brands/31f8606f-c0a4-4d79-9809-f14bcc3fb308",
+      "status": 403,
+      "response": {
+        "error": "Solo el propietario puede realizar esta acción."
+      }
+    },
+    {
+      "method": "POST",
+      "path": "/api/brands/31f8606f-c0a4-4d79-9809-f14bcc3fb308/invitations",
+      "status": 403,
+      "response": {
+        "error": "Solo el propietario puede realizar esta acción."
+      }
+    },
+    {
+      "method": "PATCH",
+      "path": "/api/brands/31f8606f-c0a4-4d79-9809-f14bcc3fb308/members/16098c2c-02b2-48a9-9ce2-3c4caed54e2c",
+      "status": 403,
+      "response": {
+        "error": "Solo el propietario puede realizar esta acción."
+      }
+    },
+    {
+      "method": "DELETE",
+      "path": "/api/brands/31f8606f-c0a4-4d79-9809-f14bcc3fb308/members/eb8c7c32-135c-4493-aeba-8158e4a4ea8e",
+      "status": 403,
+      "response": {
+        "error": "Solo el propietario puede realizar esta acción."
+      }
+    },
+    {
+      "method": "PUT",
+      "path": "/api/brands/31f8606f-c0a4-4d79-9809-f14bcc3fb308/integrations",
+      "status": 403,
+      "response": {
+        "error": "Solo el propietario puede realizar esta acción."
+      }
+    },
+    {
+      "method": "PATCH",
+      "path": "/api/brands/31f8606f-c0a4-4d79-9809-f14bcc3fb308/pieces/946c1599-42e8-4d70-b3a2-043d76c94445",
+      "status": 200,
+      "response": {
+        "id": "946c1599-42e8-4d70-b3a2-043d76c94445",
+        "status": "review",
+        "caption": "Cambio sintético API editor",
+        "isDemo": null,
+        "role": null,
+        "userId": null
+      }
+    },
+    {
+      "method": "POST",
+      "path": "/api/brands/31f8606f-c0a4-4d79-9809-f14bcc3fb308/pieces",
+      "status": 201,
+      "response": {
+        "id": "245b4ddc-db07-4656-a98d-679f1fd181d6",
+        "status": "draft",
+        "caption": "",
+        "isDemo": null,
+        "role": null,
+        "userId": null
+      }
+    },
+    {
+      "method": "POST",
+      "path": "/api/brands/31f8606f-c0a4-4d79-9809-f14bcc3fb308/pieces/946c1599-42e8-4d70-b3a2-043d76c94445/review",
+      "status": 403,
+      "response": {
+        "error": "La aprobación requiere un propietario o revisor."
+      }
+    },
+    {
+      "method": "POST",
+      "path": "/api/brands/31f8606f-c0a4-4d79-9809-f14bcc3fb308/audience-signals",
+      "status": 400,
+      "response": {
+        "error": "Segmento debe ser texto."
+      }
+    },
+    {
+      "method": "POST",
+      "path": "/api/brands/31f8606f-c0a4-4d79-9809-f14bcc3fb308/community-polls",
+      "status": 400,
+      "response": {
+        "error": "La pregunta debe tener entre 1 y 300 caracteres."
+      }
+    },
+    {
+      "method": "POST",
+      "path": "/api/brands/31f8606f-c0a4-4d79-9809-f14bcc3fb308/context/commit",
+      "status": 403,
+      "response": {
+        "error": "Solo el propietario puede realizar esta acción."
+      }
+    },
+    {
+      "method": "POST",
+      "path": "/api/brands/31f8606f-c0a4-4d79-9809-f14bcc3fb308/pieces/946c1599-42e8-4d70-b3a2-043d76c94445/comments",
+      "status": 200,
+      "response": {
+        "id": "946c1599-42e8-4d70-b3a2-043d76c94445",
+        "status": "review",
+        "caption": "Cambio sintético API editor",
+        "isDemo": null,
+        "role": null,
+        "userId": null
+      }
+    }
+  ],
+  "reviewer": [
+    {
+      "method": "GET",
+      "path": "/api/brands/31f8606f-c0a4-4d79-9809-f14bcc3fb308/state",
+      "status": 200,
+      "response": {
+        "role": "reviewer",
+        "pieces": 3
+      }
+    },
+    {
+      "method": "PATCH",
+      "path": "/api/brands/31f8606f-c0a4-4d79-9809-f14bcc3fb308",
+      "status": 403,
+      "response": {
+        "error": "Solo el propietario puede realizar esta acción."
+      }
+    },
+    {
+      "method": "POST",
+      "path": "/api/brands/31f8606f-c0a4-4d79-9809-f14bcc3fb308/invitations",
+      "status": 403,
+      "response": {
+        "error": "Solo el propietario puede realizar esta acción."
+      }
+    },
+    {
+      "method": "PATCH",
+      "path": "/api/brands/31f8606f-c0a4-4d79-9809-f14bcc3fb308/members/16098c2c-02b2-48a9-9ce2-3c4caed54e2c",
+      "status": 403,
+      "response": {
+        "error": "Solo el propietario puede realizar esta acción."
+      }
+    },
+    {
+      "method": "DELETE",
+      "path": "/api/brands/31f8606f-c0a4-4d79-9809-f14bcc3fb308/members/eb8c7c32-135c-4493-aeba-8158e4a4ea8e",
+      "status": 403,
+      "response": {
+        "error": "Solo el propietario puede realizar esta acción."
+      }
+    },
+    {
+      "method": "PUT",
+      "path": "/api/brands/31f8606f-c0a4-4d79-9809-f14bcc3fb308/integrations",
+      "status": 403,
+      "response": {
+        "error": "Solo el propietario puede realizar esta acción."
+      }
+    },
+    {
+      "method": "PATCH",
+      "path": "/api/brands/31f8606f-c0a4-4d79-9809-f14bcc3fb308/pieces/946c1599-42e8-4d70-b3a2-043d76c94445",
+      "status": 403,
+      "response": {
+        "error": "Necesitas permisos de edición."
+      }
+    },
+    {
+      "method": "POST",
+      "path": "/api/brands/31f8606f-c0a4-4d79-9809-f14bcc3fb308/pieces",
+      "status": 403,
+      "response": {
+        "error": "Necesitas permisos de edición."
+      }
+    },
+    {
+      "method": "POST",
+      "path": "/api/brands/31f8606f-c0a4-4d79-9809-f14bcc3fb308/pieces/946c1599-42e8-4d70-b3a2-043d76c94445/review",
+      "status": 409,
+      "response": {
+        "error": "La pieza cambió desde que la revisaste. Actualiza y revisa la versión actual antes de aprobar."
+      }
+    },
+    {
+      "method": "POST",
+      "path": "/api/brands/31f8606f-c0a4-4d79-9809-f14bcc3fb308/audience-signals",
+      "status": 403,
+      "response": {
+        "error": "Necesitas permisos de edición."
+      }
+    },
+    {
+      "method": "POST",
+      "path": "/api/brands/31f8606f-c0a4-4d79-9809-f14bcc3fb308/community-polls",
+      "status": 403,
+      "response": {
+        "error": "Necesitas permisos de edición."
+      }
+    },
+    {
+      "method": "POST",
+      "path": "/api/brands/31f8606f-c0a4-4d79-9809-f14bcc3fb308/context/commit",
+      "status": 403,
+      "response": {
+        "error": "Solo el propietario puede realizar esta acción."
+      }
+    },
+    {
+      "method": "POST",
+      "path": "/api/brands/31f8606f-c0a4-4d79-9809-f14bcc3fb308/pieces/946c1599-42e8-4d70-b3a2-043d76c94445/comments",
+      "status": 200,
+      "response": {
+        "id": "946c1599-42e8-4d70-b3a2-043d76c94445",
+        "status": "review",
+        "caption": "Cambio sintético API editor",
+        "isDemo": null,
+        "role": null,
+        "userId": null
+      }
+    }
+  ],
+  "reviewer-provider-gates": [
+    {
+      "method": "POST",
+      "path": "/api/brands/31f8606f-c0a4-4d79-9809-f14bcc3fb308/opportunities/fake/analyze",
+      "status": 403,
+      "response": {
+        "error": "Necesitas permisos de edición."
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/api/brands/31f8606f-c0a4-4d79-9809-f14bcc3fb308/integrations",
+      "status": 403,
+      "response": {
+        "error": "Solo el propietario puede realizar esta acción."
+      }
+    },
+    {
+      "method": "PUT",
+      "path": "/api/brands/31f8606f-c0a4-4d79-9809-f14bcc3fb308/social/settings",
+      "status": 403,
+      "response": {
+        "error": "Solo el propietario puede realizar esta acción."
+      }
+    }
+  ],
+  "reviewer-write-gates": [
+    {
+      "method": "POST",
+      "path": "/api/brands/31f8606f-c0a4-4d79-9809-f14bcc3fb308/pieces/946c1599-42e8-4d70-b3a2-043d76c94445/outcome",
+      "status": 403,
+      "response": {
+        "error": "Necesitas permisos de edición."
+      }
+    },
+    {
+      "method": "POST",
+      "path": "/api/brands/31f8606f-c0a4-4d79-9809-f14bcc3fb308/draft",
+      "status": 403,
+      "response": {
+        "error": "Necesitas permisos de edición."
+      }
+    },
+    {
+      "method": "POST",
+      "path": "/api/brands/31f8606f-c0a4-4d79-9809-f14bcc3fb308/analyze",
+      "status": 403,
+      "response": {
+        "error": "Necesitas permisos de edición."
+      }
+    },
+    {
+      "method": "POST",
+      "path": "/api/brands/31f8606f-c0a4-4d79-9809-f14bcc3fb308/opportunities/fake/analyze",
+      "status": 403,
+      "response": {
+        "error": "Necesitas permisos de edición."
+      }
+    },
+    {
+      "method": "POST",
+      "path": "/api/brands/31f8606f-c0a4-4d79-9809-f14bcc3fb308/assets",
+      "status": 403,
+      "response": {
+        "error": "Necesitas permisos de edición."
+      }
+    },
+    {
+      "method": "DELETE",
+      "path": "/api/brands/31f8606f-c0a4-4d79-9809-f14bcc3fb308/references/c71d16ca-2c8f-45ef-b27b-5be99733fae0",
+      "status": 403,
+      "response": {
+        "error": "Necesitas permisos de edición."
+      }
+    },
+    {
+      "method": "PATCH",
+      "path": "/api/brands/31f8606f-c0a4-4d79-9809-f14bcc3fb308/community-polls/c7db7ae8-917c-46f7-8779-b952b98d252e",
+      "status": 403,
+      "response": {
+        "error": "Necesitas permisos de edición."
+      }
+    }
+  ],
+  "removed-member-files-ai": [
+    {
+      "method": "GET",
+      "path": "/api/brands/31f8606f-c0a4-4d79-9809-f14bcc3fb308/assets/a7ecc0c0-a6ec-44fc-a9fc-495563a18a7f/file",
+      "status": 404,
+      "response": {
+        "error": "No se encontró la marca."
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/api/brands/31f8606f-c0a4-4d79-9809-f14bcc3fb308/integrations",
+      "status": 404,
+      "response": {
+        "error": "No se encontró la marca."
+      }
+    },
+    {
+      "method": "POST",
+      "path": "/api/brands/31f8606f-c0a4-4d79-9809-f14bcc3fb308/opportunities/fake/analyze",
+      "status": 404,
+      "response": {
+        "error": "No se encontró la marca."
+      }
+    }
+  ],
+  "ids-and-invitation-roles": [
+    {
+      "method": "GET",
+      "path": "/api/brands/208a6768-2a9f-4d00-b3db-18fc8a3784bc/state",
+      "status": 404,
+      "response": {
+        "error": "No se encontró la marca."
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/api/brands/208a6768-2a9f-4d00-b3db-18fc8a3784bc/assets/a7ecc0c0-a6ec-44fc-a9fc-495563a18a7f/file",
+      "status": 404,
+      "response": {
+        "error": "Archivo no encontrado."
+      }
+    },
+    {
+      "method": "POST",
+      "path": "/api/brands/31f8606f-c0a4-4d79-9809-f14bcc3fb308/invitations",
+      "status": 400,
+      "response": {
+        "error": "Rol no es válido."
+      }
+    },
+    {
+      "method": "POST",
+      "path": "/api/brands/31f8606f-c0a4-4d79-9809-f14bcc3fb308/invitations",
+      "status": 400,
+      "response": {
+        "error": "Rol no es válido."
+      }
+    }
+  ],
+  "revocation": {
+    "step": "editor to reviewer with editor UI open",
+    "status": 200,
+    "response": {
+      "ok": true
+    }
+  },
+  "synthetic-db-summary": {
+    "membersA": [
+      [
+        "owner"
+      ]
+    ],
+    "recordsA": {
+      "pieces": 3,
+      "references": 1,
+      "assets": 1,
+      "contextImports": 1,
+      "audienceSignals": 1,
+      "outcomes": 1,
+      "communityPolls": 1
+    },
+    "invitations": [
+      {
+        "role": "editor",
+        "expired": false,
+        "used": true
+      },
+      {
+        "role": "reviewer",
+        "expired": true,
+        "used": false
+      },
+      {
+        "role": "reviewer",
+        "expired": false,
+        "used": true
+      }
+    ]
+  },
+  "owner-last-member-and-mass-assignment": [
+    {
+      "method": "PATCH",
+      "path": "/api/brands/31f8606f-c0a4-4d79-9809-f14bcc3fb308/members/eb8c7c32-135c-4493-aeba-8158e4a4ea8e",
+      "status": 409,
+      "response": {
+        "error": "La marca necesita al menos un propietario."
+      }
+    },
+    {
+      "method": "DELETE",
+      "path": "/api/brands/31f8606f-c0a4-4d79-9809-f14bcc3fb308/members/eb8c7c32-135c-4493-aeba-8158e4a4ea8e",
+      "status": 409,
+      "response": {
+        "error": "La marca necesita al menos un propietario."
+      }
+    },
+    {
+      "method": "PATCH",
+      "path": "/api/brands/31f8606f-c0a4-4d79-9809-f14bcc3fb308",
+      "status": 200,
+      "response": {
+        "id": "31f8606f-c0a4-4d79-9809-f14bcc3fb308",
+        "role": "owner",
+        "isDemo": null,
+        "userId": null
+      }
+    },
+    {
+      "method": "POST",
+      "path": "/api/brands",
+      "status": 201,
+      "response": {
+        "id": "ed39b57c-8f12-4386-99e0-3f04428ad5bc",
+        "role": "owner",
+        "isDemo": null,
+        "userId": null
+      }
+    }
+  ],
+  "browser-observations": {
+    "fixture": "Dos cuentas ficticias creadas por API; dos empresas principales A/B y una marca auxiliar creada para probar asignación masiva. Cuentas se iniciaron secuencialmente por UI en el mismo host. No se usó demo.",
+    "editorInvite": "Creada por UI como editor; enlace completo aceptado en UI por B; session/state y recarga conservan editor.",
+    "reviewerInvite": "Creada por UI como reviewer; enlace completo aceptado por B después de retirarlo; selector y equipo muestran Revisor.",
+    "reuse": "UI devolvió La invitación venció, ya fue utilizada o no existe al reutilizar la de editor.",
+    "expiration": "Token sintético creado por API; sólo su expires_at se adelantó a 1 en SQLite propia. UI rechazó aceptación; invitación quedó sin usar.",
+    "invalid": "Campo vacío deshabilita Aceptar; token invalido produce Pega un token o enlace de invitación válido.",
+    "copy": "Dos clics UI resolvieron con Enlace copiado. navigator.clipboard.readText fue denegado por el navegador; contenido global no leído.",
+    "editorUI": "Título cambiado por UI y confirmado por GET pieces; tras recargar mantiene Pieza sintética editada por editor UI; Aprobar y Solicitar cambios deshabilitados.",
+    "revokedUI": "Con editor abierto se cambió a reviewer por API de A; Guardar cambios mostró Necesitas permisos de edición; GET siguió devolviendo título anterior.",
+    "reviewerUI": "Tras recargar, campos de guion deshabilitados. Comentario sintético del revisor desde UI persistió. Aprobar pieza cambió status a approved y añadió Aprobada.",
+    "ownerTeamUI": "A cambió rol de B a editor con selector y retiró a B. Equipo bajó de 2 a 1; state y archivo de A pasaron a 404 para B. Propio owner sólo tiene badge, sin selector/retirar.",
+    "companySwitch": "B pasó de empresa A a empresa B con el selector: contenido de A desapareció y apareció Pieza privada sintética B; no se encontró texto privado A en DOM.",
+    "foreignUI": "B sin pertenencia a A abrió URL de pieza A; UI mostró lista B, sin contenido ni campos de A.",
+    "logout": "UI logout: session={user:null,brands:[]}; GET state=401; texto privado ausente. SQLite sesiones de B bajaron de 2 a 1, conservando sólo la sesión fixture independiente."
+  }
+}

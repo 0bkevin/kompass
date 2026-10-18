@@ -1,0 +1,340 @@
+{
+  "feature": "Inicio, navegación, responsive, búsqueda y guardias",
+  "slug": "navigation",
+  "url": "http://127.0.0.30:4120",
+  "status": "FAIL",
+  "cases": [
+    {
+      "name": "Guardia de audiencia al cerrar con Escape",
+      "expected": "Cancelar conserva el modal y valor; aceptar descarta y cierra sin crear perfil.",
+      "actual": "Confirm nativo avisa de cambios; cancelar mantiene Perfil sin guardar, aceptar cierra. Ninguna audiencia creada.",
+      "verdict": "PASS",
+      "evidence": [
+        "UI /audience; confirm Hay cambios sin guardar. ¿Cerrar y descartarlos?"
+      ]
+    },
+    {
+      "name": "Inicio sin contexto",
+      "expected": "Sin descripción, industria ni pilares: Completar contexto abre /brand y conteos a cero.",
+      "actual": "0 de 6 etapas, todos los conteos cero; el CTA abre /brand en Fuentes y contenido con importación visible.",
+      "verdict": "PASS",
+      "evidence": [
+        "UI /home → /brand"
+      ]
+    },
+    {
+      "name": "Empresa: guardias de navegación y cambio de marca",
+      "expected": "Cambiar nombre sin guardar y navegar/cambiar marca pide confirmación. Cancelar mantiene formulario y marca; aceptar abre Sur sin aplicar cambios a Norte.",
+      "actual": "Confirm nativo en ambos casos. Cancelar conserva /brand, Norte sin guardar y selector Norte. Aceptar abre empresa Sur; API confirma Sur y Norte conserva nombre.",
+      "verdict": "PASS",
+      "evidence": [
+        "UI /brand; confirm ADN de la marca"
+      ]
+    },
+    {
+      "name": "Importación: salir y recargar con cambios",
+      "expected": "URL escrita sin importar debe proteger salida y recarga; cancelar conserva; aceptar salida descarta.",
+      "actual": "Confirm al ir a Inicio y beforeunload al recargar. Cancelar ambos conserva https://navigation.example.com; aceptar salida abre /home.",
+      "verdict": "PASS",
+      "evidence": [
+        "UI /brand → /home; confirm y beforeunload nativos"
+      ]
+    },
+    {
+      "name": "Inicio: contexto completo sin audiencia",
+      "expected": "CTA Definir audiencia abre /audience, con cero perfiles.",
+      "actual": "CTA y destino correctos; 1 de 6 etapas y cero perfiles.",
+      "verdict": "PASS",
+      "evidence": [
+        "UI /home → /audience"
+      ]
+    },
+    {
+      "name": "Inicio: audiencia sin referencias",
+      "expected": "CTA Descubrir contenido abre /radar; 1 perfil y cero referencias.",
+      "actual": "CTA y destino correctos, 2 de 6 etapas con actividad y 1 perfil definido.",
+      "verdict": "PASS",
+      "evidence": [
+        "UI /home → /radar"
+      ]
+    },
+    {
+      "name": "Inicio: referencias sin piezas y con borrador",
+      "expected": "Con 2 referencias visibles y 1 descartada, cuenta 2; sin piezas ofrece Oportunidades. Con borrador abre ese id exacto en Estudio.",
+      "actual": "Inicio muestra 2 referencias y CTA Explorar oportunidades → /opportunities; tras fixture Guion ALFA Norte muestra Continuar borrador → /studio/ID correcto.",
+      "verdict": "PASS",
+      "evidence": [
+        "UI /home → /opportunities y /studio/ID",
+        "API fixtures 3 referencias (1 dismissed), 1 draft"
+      ]
+    },
+    {
+      "name": "Estudio: salida, marca y recarga con edición local",
+      "expected": "Título modificado sin guardar activa confirm en salir/cambiar marca y beforeunload. Cancelar conserva; aceptar salida descarta y API conserva título original.",
+      "actual": "Los tres bloqueos funcionan; cancelar conserva Guion Norte NO GUARDADO y marca Norte. Aceptar Todas las piezas vuelve a lista y API conserva Guion ALFA Norte.",
+      "verdict": "PASS",
+      "evidence": [
+        "UI /studio/dc9649ec-21d1-43ff-85ec-91d4983b91cb → /studio",
+        "API pieza"
+      ]
+    },
+    {
+      "name": "Inicio: revisión y aprobación",
+      "expected": "Única pieza en review: Abrir revisión abre el id exacto con Aprobar; aprobada: Planificar publicación lleva a calendario con esa pieza.",
+      "actual": "Ambos destinos correctos; Estudio muestra En revisión y Aprobar pieza. Calendario carga Guion ALFA Norte como contenido aprobado.",
+      "verdict": "PASS",
+      "evidence": [
+        "API fixtures review→approved",
+        "UI /home→/studio/ID y /calendar"
+      ]
+    },
+    {
+      "name": "Inicio: programada sin resultados",
+      "expected": "Única pieza scheduled, cero outcomes: CTA Abrir calendario y conteos 1 programada, 0 publicadas.",
+      "actual": "CTA abre /calendar, pieza del 24/10 visible. Inicio muestra 1 programadas · 0 publicadas, 5 de 6 etapas.",
+      "verdict": "PASS",
+      "evidence": [
+        "UI /home→/calendar",
+        "Fixture programación 2026-10-24T12:00:00Z"
+      ]
+    },
+    {
+      "name": "Inicio: publicada sin registro y con resultado",
+      "expected": "Publicada sin outcome: Registrar resultados abre /results con pieza elegible; tras 1 registro: contador 1 y CTA oportunidades.",
+      "actual": "Publicada sin outcome ofrece Registrar resultados y /results muestra pieza para registrar. Tras outcome manual 123/12/3, Inicio muestra 0 programadas · 1 publicadas, 1 registro manual y Explorar oportunidades.",
+      "verdict": "PASS",
+      "evidence": [
+        "Fixture SQLite explícita published sin outcome",
+        "UI /home→/results y recarga posterior",
+        "API outcome sintético"
+      ]
+    },
+    {
+      "name": "Audiencia: recarga con formulario modificado",
+      "expected": "Nueva audiencia con nombre editado sin guardar: recargar debe pedir confirmación o restaurar borrador.",
+      "actual": "Navegación a la misma URL recarga sin beforeunload, cierra el modal y pierde Audiencia PERDER AL RECARGAR; no hay registro persistido.",
+      "verdict": "FAIL",
+      "evidence": [
+        "docs/adversarial/evidence/navigation-audience-before.png",
+        "docs/adversarial/evidence/navigation-audience-after.png"
+      ]
+    },
+    {
+      "name": "Señales: salida y cambio de marca sin guardar",
+      "expected": "Tema editado sin guardar confirma salida y cambio; cancelar mantiene; aceptar cambia contexto y no mezcla el tema de Norte.",
+      "actual": "Confirm al navegar y cambiar marca; cancelar conserva Señal sin guardar Norte. Aceptar abre Sur con Equipos Sur y campo limpio.",
+      "verdict": "PASS",
+      "evidence": [
+        "UI /audience; confirm Hay cambios sin guardar; selección de marca"
+      ]
+    },
+    {
+      "name": "Settings: cerrar fuente modificada con Escape",
+      "expected": "Nombre editado sin guardar pide descartar o conserva borrador.",
+      "actual": "Escape cierra instantáneamente sin confirmación; reabrir Añadir fuente muestra campo vacío.",
+      "verdict": "FAIL",
+      "evidence": [
+        "docs/adversarial/evidence/navigation-settings-before.png",
+        "docs/adversarial/evidence/navigation-settings-after.png"
+      ]
+    },
+    {
+      "name": "Búsqueda de referencias y contenido; restauración al limpiar",
+      "expected": "En Norte hay 3 referencias totales (2 disponibles y 1 descartada), 1 pieza ALFA. ALFA filtra una; texto inexistente vacía; limpiar restaura. No debe aparecer GAMMA de Sur.",
+      "actual": "Referencias Todas: 3; ALFA: 1 Operación ALFA Norte; ZZZ: 0; limpiar restaura ALFA+BETA+Descartada. Contenido ZZZ: vacío; limpiar restaura única pieza Guion ALFA Norte. GAMMA Sur ausente.",
+      "verdict": "PASS",
+      "evidence": [
+        "UI /inbox y /studio",
+        "API fixtures"
+      ]
+    },
+    {
+      "name": "Volver y avanzar en navegación primaria",
+      "expected": "Contenido→Resultados, Atrás restaura Contenido con Norte y pieza propia; Adelante restaura Resultados 123/12/3.",
+      "actual": "history.back/forward respeta /studio y /results, Norte activa y datos correctos.",
+      "verdict": "PASS",
+      "evidence": [
+        "UI historial /studio ↔ /results"
+      ]
+    },
+    {
+      "name": "Móvil 390: Inicio, CTA, menú y teclado",
+      "expected": "Sin overflow a 390×844; CTA principal accesible y navega. Menú enfoca primer control, Shift+Tab/Tab ciclan dentro; Escape cierra y restaura foco.",
+      "actual": "Inicio doc/body width=390, ningún elemento fuera del ancho; CTA Explorar oportunidades visible (37,424,210×44) abre /opportunities. Menú enfoca Cerrar menú; Shift+Tab→Cerrar sesión; Tab→Cerrar menú; Escape cierra, aria-expanded=false y foco Abrir menú.",
+      "verdict": "PASS",
+      "evidence": [
+        "docs/adversarial/evidence/navigation-mobile-home.png",
+        "UI y medición DOM 390×844"
+      ]
+    },
+    {
+      "name": "Móvil: navegación secundaria y acceso a búsqueda",
+      "expected": "Menú→Más herramientas→Referencias abre /inbox y cierra menú. La búsqueda de la sección debe seguir disponible a 390px.",
+      "actual": "Navegación secundaria correcta, menú cerrado y ancho 390 sin overflow; búsqueda totalmente oculta (display:none, width=0), sin control alternativo. A 1440 el mismo campo vuelve a verse (235px).",
+      "verdict": "FAIL",
+      "evidence": [
+        "docs/adversarial/evidence/navigation-mobile-search.png",
+        "docs/adversarial/evidence/navigation-desktop-search.png"
+      ]
+    }
+  ],
+  "findings": [
+    {
+      "id": "navigation-1",
+      "severity": "P2",
+      "title": "Recargar Audiencia pierde el perfil en edición sin advertencia",
+      "steps": [
+        "Abrir /audience en Sintética Norte.",
+        "Nueva audiencia; escribir Audiencia PERDER AL RECARGAR en Nombre del perfil sin guardar.",
+        "Recargar la misma URL."
+      ],
+      "expected": "Advertencia para cancelar/descartar o restauración de la edición.",
+      "actual": "Recarga directa sin diálogo beforeunload; desaparece el modal y el texto. Escape sí protege el mismo formulario.",
+      "evidence": [
+        "docs/adversarial/evidence/navigation-audience-before.png",
+        "docs/adversarial/evidence/navigation-audience-after.png"
+      ],
+      "source": [
+        "src/features/Brand.tsx:437",
+        "src/features/Brand.tsx:448",
+        "src/App.tsx:201"
+      ]
+    },
+    {
+      "id": "navigation-2",
+      "severity": "P3",
+      "title": "Fuentes y equipo descarta una fuente en edición con Escape sin confirmación",
+      "steps": [
+        "Abrir /settings → Añadir fuente.",
+        "Escribir Fuente sintética sin guardar en Nombre de la fuente.",
+        "Pulsar Escape y reabrir Añadir fuente."
+      ],
+      "expected": "Pedir confirmación de descarte o conservar borrador.",
+      "actual": "Escape cierra sin diálogo; al reabrir el formulario está vacío.",
+      "evidence": [
+        "docs/adversarial/evidence/navigation-settings-before.png",
+        "docs/adversarial/evidence/navigation-settings-after.png"
+      ],
+      "source": [
+        "src/features/Settings.tsx:1287",
+        "src/features/Settings.tsx:1473"
+      ]
+    },
+    {
+      "id": "navigation-3",
+      "severity": "P2",
+      "title": "La búsqueda de Referencias desaparece en móvil sin alternativa",
+      "steps": [
+        "Abrir /inbox en Norte a 1440×900; Buscar en esta sección filtra las referencias.",
+        "Cambiar viewport a 390×844.",
+        "Intentar buscar una referencia desde la pantalla o el menú."
+      ],
+      "expected": "Control de búsqueda visible/alcanzable o alternativa móvil que permita filtrar.",
+      "actual": "El único .global-search queda display:none y no hay botón de búsqueda alternativo. No se puede buscar por texto en Referencias desde móvil.",
+      "evidence": [
+        "docs/adversarial/evidence/navigation-mobile-search.png",
+        "docs/adversarial/evidence/navigation-desktop-search.png"
+      ],
+      "source": [
+        "src/App.tsx:571",
+        "src/workspace.css:363",
+        "src/workspace.css:374"
+      ]
+    }
+  ],
+  "limitations": [
+    "Pruebas con datos sintéticos en base temporal propia; no prueban resultados reales ni proveedores.",
+    "Rol revisor, fallos de red inducidos y recuperación de errores no cubiertos en esta sesión.",
+    "Búsqueda comprobada con datos en Referencias y Contenido; no se verificó filtrado con corpus propio en Explorar fuentes o Archivos.",
+    "Móvil comprobado en Inicio, Oportunidades, Referencias y navegación; no se afirma ausencia de overflow en todas las pantallas ni dispositivos.",
+    "Guardias: Empresa navegación y cambio de marca; importación navegación y recarga; Estudio navegación/cambio de marca/recarga; señales navegación/cambio de marca; audiencia Escape/recarga; Settings Escape. No se agotó cada combinación.",
+    "El estado published sin outcome se preparó explícitamente por SQLite para comprobar el enlace de recuperación de Inicio; los demás estados y registros se prepararon por API. No se publicó nada externamente.",
+    "Las acciones que abren diálogos nativos a veces devolvieron timeout del controlador; se inspeccionó preview_status y se resolvió el diálogo con preview_dialog antes de verificar estado. El control importación/Studio sí detectó beforeunload con la misma recarga usada en audiencia.",
+    "El resumen de cobertura muestra 3 referencias totales frente a 2 disponibles en la etapa de Inicio; la tercera está descartada. Se registró como diferencia de alcance de los conteos, sin clasificar como defecto por sí sola."
+  ],
+  "artifacts": [
+    "docs/adversarial/reports/navigation.md",
+    "docs/adversarial/reports/navigation.json",
+    "docs/adversarial/evidence/navigation-audience-before.png",
+    "docs/adversarial/evidence/navigation-audience-after.png",
+    "docs/adversarial/evidence/navigation-settings-before.png",
+    "docs/adversarial/evidence/navigation-settings-after.png",
+    "docs/adversarial/evidence/navigation-mobile-home.png",
+    "docs/adversarial/evidence/navigation-mobile-search.png",
+    "docs/adversarial/evidence/navigation-desktop-search.png"
+  ],
+  "environment": {
+    "commit": "549e0bbf5b5858eb79bf069d847daee269ad344e",
+    "dataDir": "/tmp/30x-adversarial-navigation",
+    "runtimeSession": 36052,
+    "pid": 3911746,
+    "runtimeStopped": true,
+    "tabClosed": "tab_45_07e54779-9ab2-4979-8a15-674c4eff160a",
+    "viewportCSS": [
+      {
+        "width": 1440,
+        "height": 900
+      },
+      {
+        "width": 390,
+        "height": 844
+      }
+    ],
+    "date": "2026-10-18"
+  },
+  "fixtures": {
+    "account": "qa-navigation@example.com",
+    "north": {
+      "id": "cda87f8d-f1d9-4c02-8423-e9fc20f629c0",
+      "name": "Sintética Norte",
+      "audience": "seg-norte / Equipos Norte",
+      "references": {
+        "total": 3,
+        "available": 2,
+        "new": 1,
+        "saved": 1,
+        "dismissed": 1
+      },
+      "pieces": [
+        {
+          "id": "dc9649ec-21d1-43ff-85ec-91d4983b91cb",
+          "title": "Guion ALFA Norte",
+          "finalStatus": "published",
+          "testedStates": [
+            "draft",
+            "review",
+            "approved",
+            "scheduled",
+            "published"
+          ]
+        }
+      ],
+      "outcomes": {
+        "records": 1,
+        "views": 123,
+        "engagement": 12,
+        "leads": 3
+      },
+      "sources": {
+        "total": 4,
+        "active": 3
+      }
+    },
+    "south": {
+      "id": "d6159a43-e5d4-4595-91f4-5a033afe0fc6",
+      "name": "Sintética Sur",
+      "audience": "seg-sur / Equipos Sur",
+      "references": {
+        "total": 1,
+        "new": 1,
+        "title": "Educación GAMMA Sur"
+      },
+      "pieces": 0,
+      "outcomes": 0,
+      "sources": {
+        "total": 5,
+        "active": 4
+      }
+    }
+  }
+}

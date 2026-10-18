@@ -1,0 +1,94 @@
+{
+  "NASA": {
+    "url": "https://www.nasa.gov/feed/",
+    "method": "curl GET -L --max-time 20",
+    "httpStatus": 200,
+    "dns": [
+      "192.0.66.108",
+      "2a04:fa87:fffd::c000:426c"
+    ],
+    "feedTitle": "NASA",
+    "items": 10,
+    "example": {
+      "title": "APOD: 2026 October 17 – 3D 67P",
+      "url": "https://science.nasa.gov/image-article/apod-2026-october-17-3d-67p/"
+    },
+    "appClassifiedIPv4AsPublic": false,
+    "appError": "No se permite acceder a direcciones privadas o reservadas.",
+    "IANA": "https://www.iana.org/assignments/iana-ipv4-special-registry/"
+  },
+  "HN": {
+    "url": "https://hn.algolia.com/api/v1/items/50101813",
+    "method": "curl GET --max-time 20",
+    "body": {
+      "id": 50101813,
+      "title": "AdFection: Targeted ads turned into a pipeline for zero-click mercenary spyware",
+      "url": "https://citizenlab.ca/research/how-discover-tech-turned-targeted-ads-into-a-pipeline-for-spyware/",
+      "points": 521,
+      "text": "<a href=\"https:&#x2F;&#x2F;www.theguardian.com&#x2F;technology&#x2F;2026&#x2F;oct&#x2F;15&#x2F;israeli-firm-digital-ads-enabling-installation-of-zero-click-spyware-researchers-say\" rel=\"nofollow\">https:&#x2F;&#x2F;www.theguardian.com&#x2F;technology&#x2F;2026&#x2F;oct&#x2F;15&#x2F;israeli-f...</a><p><a href=\"https:&#x2F;&#x2F;www.theverge.com&#x2F;tech&#x2F;1011956&#x2F;discover-tech-zero-click-ads-spyware\" rel=\"nofollow\">https:&#x2F;&#x2F;www.theverge.com&#x2F;tech&#x2F;1011956&#x2F;discover-tech-zero-cli...</a>"
+    }
+  },
+  "Trends": {
+    "url": "https://trends.google.com/trending/rss?geo=US",
+    "httpStatus": 200,
+    "items": [
+      {
+        "title": "wake forest vs california",
+        "approx_traffic": "1000+",
+        "pubDate": "Sat, 17 Oct 2026 18:40:00 -0700"
+      },
+      {
+        "title": "new mexico vs hawaii",
+        "approx_traffic": "1000+",
+        "pubDate": "Sat, 17 Oct 2026 18:40:00 -0700"
+      },
+      {
+        "title": "junior caminero",
+        "approx_traffic": "1000+",
+        "pubDate": "Sat, 17 Oct 2026 18:40:00 -0700"
+      },
+      {
+        "title": "kevin cash",
+        "approx_traffic": "200+",
+        "pubDate": "Sat, 17 Oct 2026 18:40:00 -0700"
+      },
+      {
+        "title": "mls standings",
+        "approx_traffic": "2000+",
+        "pubDate": "Sat, 17 Oct 2026 18:30:00 -0700"
+      },
+      {
+        "title": "daniel espino",
+        "approx_traffic": "1000+",
+        "pubDate": "Sat, 17 Oct 2026 18:30:00 -0700"
+      },
+      {
+        "title": "phony hulu",
+        "approx_traffic": "200+",
+        "pubDate": "Sat, 17 Oct 2026 18:30:00 -0700"
+      },
+      {
+        "title": "tony dungy",
+        "approx_traffic": "200+",
+        "pubDate": "Sat, 17 Oct 2026 18:30:00 -0700"
+      },
+      {
+        "title": "utsa",
+        "approx_traffic": "5000+",
+        "pubDate": "Sat, 17 Oct 2026 18:20:00 -0700"
+      },
+      {
+        "title": "santos laguna vs querétaro f.c. standings",
+        "approx_traffic": "1000+",
+        "pubDate": "Sat, 17 Oct 2026 18:20:00 -0700"
+      }
+    ]
+  },
+  "BBC": {
+    "feedUrl": "https://feeds.bbci.co.uk/news/technology/rss.xml",
+    "httpStatus": 200,
+    "browserOriginalURL": "https://www.bbc.co.uk/news/articles/cqzjx448vxkgo?at_medium=RSS&at_campaign=rss",
+    "h1": "AI giant Anthropic woos potential investors ahead of stock market debut",
+    "requiresLogin": false
+  }
+}

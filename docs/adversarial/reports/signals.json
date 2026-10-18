@@ -1,0 +1,244 @@
+{
+  "feature": "Señales de audiencia públicas y editoriales",
+  "slug": "signals",
+  "url": "http://127.0.0.15:4105",
+  "status": "FAIL",
+  "cases": [
+    {
+      "name": "Vacío y cita pública obligatoria en UI",
+      "expected": "Sin tema, observación o cita pública no se debe enviar ni crear una señal.",
+      "actual": "La validación nativa detuvo el envío. Tras rellenar tema/nota, sourceUrl siguió obligatorio; GET devolvió signals:[].",
+      "verdict": "PASS",
+      "evidence": [
+        "docs/adversarial/evidence/signals-observed.json#uiValidation"
+      ]
+    },
+    {
+      "name": "Alta pública por segmento y tema",
+      "expected": "Guardar la señal con la audiencia seleccionada, la cita, el origen y tres piezas revisadas.",
+      "actual": "POST 201; id 463d84ad-3ffa-414b-8dc5-f9d013dbd0d9, segment-sales, public_content, URL exacta y sampleSize:3. La fila muestra Ventas y 3 piezas revisadas.",
+      "verdict": "PASS",
+      "evidence": [
+        "docs/adversarial/evidence/signals-observed.json#normal",
+        "docs/adversarial/evidence/signals-pii-citation-saved.png"
+      ]
+    },
+    {
+      "name": "Alta editorial sin cita ni muestra",
+      "expected": "Una hipótesis de Salud puede guardarse sin enlace y debe conservar su carácter editorial y muestra ausente.",
+      "actual": "POST 201; segment-health y sourceType:editorial, sin sourceUrl/sampleSize. La fila mostró Hipótesis del equipo y Muestra no indicada.",
+      "verdict": "PASS",
+      "evidence": [
+        "docs/adversarial/evidence/signals-observed.json#normal"
+      ]
+    },
+    {
+      "name": "Persistencia y cautela al recargar",
+      "expected": "Las dos señales y su origen deben sobrevivir la recarga; el perfil no se convierte en audiencia observada.",
+      "actual": "Tras navegar de nuevo a /audience, ambas señales seguían en GET/UI. Perfiles mostró hipótesis editoriales del equipo; señales mantuvo etiquetas pública/editorial y muestra.",
+      "verdict": "PASS",
+      "evidence": [
+        "docs/adversarial/evidence/signals-observed.json#normal",
+        "docs/adversarial/evidence/signals-individual-row.png"
+      ]
+    },
+    {
+      "name": "URL privada en UI y recuperación",
+      "expected": "Rechazar una cita 127.0.0.1, conservar el formulario y permitir corregirlo.",
+      "actual": "HTTP 400 con alerta de dominio público. El contenido quedó escrito y se pudo corregir el enlace para continuar las pruebas.",
+      "verdict": "PASS",
+      "evidence": [
+        "docs/adversarial/evidence/signals-observed.json#uiValidation",
+        "docs/adversarial/evidence/signals-http.json"
+      ]
+    },
+    {
+      "name": "Emails y teléfonos en tema/observación",
+      "expected": "El servidor debe impedir datos de contacto en el texto agregado.",
+      "actual": "El email en la observación fue bloqueado desde UI; API bloqueó email y teléfono sintéticos con 400.",
+      "verdict": "PASS",
+      "evidence": [
+        "docs/adversarial/evidence/signals-observed.json#uiValidation",
+        "docs/adversarial/evidence/signals-http.json"
+      ]
+    },
+    {
+      "name": "Forma JSON, campos y tipo de señal",
+      "expected": "Rechazar campos extra, tipos incorrectos, valores vacíos, segmento ajeno y community falsificado.",
+      "actual": "Las pruebas HTTP devolvieron 400 para participant extra, topic array, vacíos, segmento inexistente y sourceType inválido. No se aceptó fingir una señal comunitaria.",
+      "verdict": "PASS",
+      "evidence": [
+        "docs/adversarial/evidence/signals-http.json"
+      ]
+    },
+    {
+      "name": "Citas privadas, sesión y esquemas inválidos",
+      "expected": "No admitir IP privadas/loopback, intranet, credenciales, puertos distintos a 80/443, javascript ni login/sesión.",
+      "actual": "14 probes HTTP devolvieron 400, incluidos IPv4 privadas, ::1, localhost, .local, host sin punto, puerto 8080, userinfo y parámetros token/email.",
+      "verdict": "PASS",
+      "evidence": [
+        "docs/adversarial/evidence/signals-http.json"
+      ]
+    },
+    {
+      "name": "Muestra: tipo y límites de servidor",
+      "expected": "Aceptar enteros 1–10.000.000 y rechazar cero, negativos, fracciones, strings, null y exceso.",
+      "actual": "Ambos extremos dieron 201; seis muestras inválidas dieron 400. Las muestras válidas son fixtures sintéticas, no medición real.",
+      "verdict": "PASS",
+      "evidence": [
+        "docs/adversarial/evidence/signals-http.json"
+      ]
+    },
+    {
+      "name": "Borrar y cancelar borrado",
+      "expected": "Cancelar mantiene las dos señales; aceptar elimina sólo la señal editorial seleccionada.",
+      "actual": "Dismiss dejó ambas filas y registros. Accept eliminó c4fe2e18-a7f4-411b-9cc7-587d4bd5a697; la pública permaneció en GET y tras recarga posterior.",
+      "verdict": "PASS",
+      "evidence": [
+        "docs/adversarial/evidence/signals-observed.json#normal"
+      ]
+    },
+    {
+      "name": "Cambio de marca y borrado ajeno",
+      "expected": "Otra marca con el mismo ID de segmento debe aparecer vacía y no poder borrar una señal de la marca original.",
+      "actual": "En la marca b883e52c-c788-4472-9739-2b847c1779d8, GET/UI sin señales y DELETE del ID original devolvió 404; el original permaneció. Volver por selector restauró sus nueve señales.",
+      "verdict": "PASS",
+      "evidence": [
+        "docs/adversarial/evidence/signals-observed.json#brandScope"
+      ]
+    },
+    {
+      "name": "Relación y pesos en oportunidades",
+      "expected": "Añadir una señal debe afectar sólo su segmento; pública pesa más que editorial, manteniendo incertidumbre.",
+      "actual": "Referencia sintética Quásar zafiro: sin señal segmentIds:[], prioridad 16; editorial Ventas → sólo segment-sales, 19; borrar → [],16; pública Ventas → sólo segment-sales,25. Filtro Salud vacío y Ventas muestra oportunidad. Razones separan origen y siguen diciendo No demuestra consumo ni afinidad; crecimiento insufficient.",
+      "verdict": "PASS",
+      "evidence": [
+        "docs/adversarial/evidence/signals-observed.json#opportunityEditor",
+        "docs/adversarial/evidence/signals-observed.json#opportunityPublic",
+        "docs/adversarial/evidence/signals-opportunity-scope.png"
+      ]
+    },
+    {
+      "name": "Fichas individuales con nombre",
+      "expected": "Cumplir la restricción de no guardar nombres ni filas individuales de audiencia.",
+      "actual": "UI y POST aceptaron una FICHA INDIVIDUAL SINTÉTICA con nombre, cargo y necesidad individual (201), persistida y mostrada como hipótesis de Ventas.",
+      "verdict": "FAIL",
+      "evidence": [
+        "docs/adversarial/evidence/signals-individual-row.png",
+        "docs/adversarial/evidence/signals-http.json",
+        "docs/adversarial/evidence/signals-observed.json#finalState"
+      ]
+    },
+    {
+      "name": "Emails dentro de la cita",
+      "expected": "Rechazar datos personales también en sourceUrl, igual que en la nota.",
+      "actual": "UI guardó https://example.com/personas/persona.sintetica@example.com. API también aceptó email en ruta y en ?contact=. Todos se conservaron y renderizaron como enlaces de evidencia.",
+      "verdict": "FAIL",
+      "evidence": [
+        "docs/adversarial/evidence/signals-pii-citation-saved.png",
+        "docs/adversarial/evidence/signals-http.json",
+        "docs/adversarial/evidence/signals-observed.json#finalState"
+      ]
+    },
+    {
+      "name": "Límite de tema coherente entre UI/API",
+      "expected": "El campo debe orientar al límite real antes de permitir un envío aparentemente válido.",
+      "actual": "La UI tiene maxLength:200; texto de 161 caracteres pasó validity.valid y el submit llegó al servidor, que respondió 400 Tema: longitud inválida (máximo 160). El texto se conservó para corregirlo.",
+      "verdict": "FAIL",
+      "evidence": [
+        "docs/adversarial/evidence/signals-limits.png",
+        "docs/adversarial/evidence/signals-observed.json#uiValidation"
+      ]
+    }
+  ],
+  "findings": [
+    {
+      "id": "signals-1",
+      "severity": "P2",
+      "title": "Se guardan fichas individuales con nombre en el corpus de señales",
+      "steps": [
+        "Abrir /audience → Señales y validación en una marca con segmento.",
+        "Seleccionar Hipótesis del equipo y tema Ficha individual · SINTÉTICO.",
+        "Introducir FICHA INDIVIDUAL SINTÉTICA. Nombre: Ana Sintética Ejemplo. Cargo: directora comercial. Necesidad individual: preparar propuestas más rápido.",
+        "Guardar y recargar."
+      ],
+      "expected": "No persistir nombres o filas individuales: el contrato exige necesidades agregadas, sin perfiles individuales.",
+      "actual": "POST 201 (UI id be337ae7-3666-4c46-8e37-60f520df43ee; prueba HTTP id 11adc815-f895-4e85-a5c3-6d1d01185b46). La ficha se conserva en SQLite/GET y se muestra como Hipótesis del equipo de Ventas. No hubo datos de personas reales en esta auditoría.",
+      "evidence": [
+        "docs/adversarial/evidence/signals-individual-row.png",
+        "docs/adversarial/evidence/signals-http.json",
+        "docs/adversarial/evidence/signals-observed.json"
+      ],
+      "source": [
+        "server/audience-insights.mjs:842",
+        "server/audience-insights.mjs:844",
+        "docs/IMPLEMENTATION.md:18",
+        "PRODUCT.md:31"
+      ]
+    },
+    {
+      "id": "signals-2",
+      "severity": "P2",
+      "title": "La validación de datos personales se elude mediante la URL de evidencia",
+      "steps": [
+        "Crear una señal pública con nota agregada sin datos de contacto.",
+        "Usar sourceUrl https://example.com/personas/persona.sintetica@example.com y guardar por UI.",
+        "Recargar y consultar GET /api/brands/:brandId/audience-signals.",
+        "Como variante de API, enviar https://example.com/?contact=persona.sintetica@example.com."
+      ],
+      "expected": "Rechazar el email en cualquier campo de la señal, incluida la cita.",
+      "actual": "201 y persistencia completa del email en sourceUrl; la UI ofrece Consultar evidencia con ese href. El mismo email dentro de note se rechaza con 400. publicLink sólo revisa algunos nombres de parámetros y no los valores o la ruta.",
+      "evidence": [
+        "docs/adversarial/evidence/signals-pii-citation-saved.png",
+        "docs/adversarial/evidence/signals-http.json",
+        "docs/adversarial/evidence/signals-observed.json"
+      ],
+      "source": [
+        "server/audience-insights.mjs:132",
+        "server/audience-insights.mjs:136",
+        "server/audience-insights.mjs:844",
+        "server/audience-insights.mjs:852",
+        "docs/IMPLEMENTATION.md:18"
+      ]
+    },
+    {
+      "id": "signals-3",
+      "severity": "P3",
+      "title": "El formulario permite temas más largos que el límite real de guardado",
+      "steps": [
+        "Abrir el formulario de señal con nota y cita válidas.",
+        "Escribir 161 caracteres A en Tema o necesidad.",
+        "Guardar señal."
+      ],
+      "expected": "La UI debe usar el límite de 160 o explicarlo antes de enviar.",
+      "actual": "El campo maxLength:200 considera válido el tema, pero el servidor devuelve 400 por máximo 160. Se requiere una corrección manual; el texto no se pierde.",
+      "evidence": [
+        "docs/adversarial/evidence/signals-limits.png",
+        "docs/adversarial/evidence/signals-observed.json"
+      ],
+      "source": [
+        "src/features/Journey.tsx:2014",
+        "server/audience-insights.mjs:842"
+      ]
+    }
+  ],
+  "limitations": [
+    "Auditoría de la versión compilada existente, commit 549e0bbf5b5858eb79bf069d847daee269ad344e y build dist/server/server.js de 2026-10-18 01:49:38 UTC; no se recompiló ni modificó implementación.",
+    "Todas las cuentas, marcas, citas, muestras, nombres y referencia usados son sintéticos. example.com sólo documenta fixtures; no se probó exactitud de contenido externo real ni representatividad de audiencia.",
+    "Se comprobó la relación en oportunidades con una referencia sintética insertada exclusivamente en la base aislada; no prueba descubrimiento real, IA, resultados o proveedores.",
+    "No se auditó el sensor comunitario ni el editor de perfiles; tienen revisores separados. Tampoco se cubrió la matriz completa de roles/usuarios, concurrencia, límite de 2.000 señales o resolución DNS/redirecciones de fuentes.",
+    "Los fallos de fichas personales y citas con email se observaron con datos sintéticos. No se observó exposición de datos reales ni cruce entre marcas en los casos ejecutados.",
+    "La repetición cubierta consiste en corregir envíos rechazados, recargar y reemplazar una señal borrada; no se afirma deduplicación general de señales.",
+    "Proceso propio PID 3836607, sesión 42659, detenido con salida 0 al finalizar; pestaña propia cerrada. Puerto 4105 sin listener. Datos de reproducción conservados en /tmp/30x-adversarial-signals."
+  ],
+  "artifacts": [
+    "docs/adversarial/evidence/signals-individual-row.png",
+    "docs/adversarial/evidence/signals-pii-citation-saved.png",
+    "docs/adversarial/evidence/signals-limits.png",
+    "docs/adversarial/evidence/signals-opportunity-scope.png",
+    "docs/adversarial/evidence/signals-http.json",
+    "docs/adversarial/evidence/signals-observed.json",
+    "docs/adversarial/reports/signals.md",
+    "docs/adversarial/reports/signals.json"
+  ]
+}

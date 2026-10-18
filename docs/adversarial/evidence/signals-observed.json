@@ -1,0 +1,267 @@
+{
+  "synthetic": true,
+  "metadata": {
+    "date": "2026-10-18",
+    "url": "http://127.0.0.15:4105/audience",
+    "brandId": "200e0b9c-4ffb-4594-9498-8dfecd09c890",
+    "dataDir": "/tmp/30x-adversarial-signals",
+    "pid": 3836607,
+    "session": 42659,
+    "tabId": "tab_3q_07e54779-9ab2-4979-8a15-674c4eff160a"
+  },
+  "uiValidation": {
+    "empty": "Navegador: topic, note y sourceUrl valueMissing; 0 registros",
+    "publicWithoutCitation": "Navegador: sourceUrl valueMissing; GET {signals:[]}",
+    "privateLiteral": "HTTP 400 y alerta Fuente debe usar HTTP o HTTPS y un dominio público sin credenciales.",
+    "emailNote": "HTTP 400 y alerta Registra necesidades agregadas del segmento; elimina emails, teléfonos y datos de personas.",
+    "length161": {
+      "inputMaxLength": 200,
+      "inputValidity": true,
+      "status": 400,
+      "error": "Tema: longitud inválida (máximo 160).",
+      "retained": true
+    }
+  },
+  "normal": {
+    "public": {
+      "id": "463d84ad-3ffa-414b-8dc5-f9d013dbd0d9",
+      "segmentId": "segment-sales",
+      "topic": "Propuestas comerciales · SINTÉTICO",
+      "sourceType": "public_content",
+      "sourceUrl": "https://example.com/qa-signals/propuestas",
+      "sampleSize": 3
+    },
+    "editorial": {
+      "id": "c4fe2e18-a7f4-411b-9cc7-587d4bd5a697",
+      "segmentId": "segment-health",
+      "topic": "Seguridad hospitalaria · SINTÉTICO",
+      "sourceType": "editorial",
+      "sampleSize": "no indicada",
+      "persistedAfterReload": true
+    },
+    "deleteCancel": {
+      "confirmation": "¿Eliminar esta señal de audiencia?",
+      "dismiss": "Ambas señales permanecen en UI y GET"
+    },
+    "deleteAccept": {
+      "signals": {
+        "signals": [
+          {
+            "segmentId": "segment-sales",
+            "topic": "Propuestas comerciales · SINTÉTICO",
+            "note": "Fixture sintética: tres piezas describen demoras al preparar propuestas; falta contrastar la necesidad con el grupo.",
+            "sourceType": "public_content",
+            "sourceUrl": "https://example.com/qa-signals/propuestas",
+            "sampleSize": 3,
+            "id": "463d84ad-3ffa-414b-8dc5-f9d013dbd0d9",
+            "createdAt": "2026-10-18T01:56:41.496Z",
+            "updatedAt": "2026-10-18T01:56:41.496Z"
+          }
+        ]
+      }
+    }
+  },
+  "opportunityEditor": {
+    "baseline": [
+      {
+        "topic": "Quásar zafiro",
+        "segmentIds": [],
+        "relevance": 16
+      }
+    ],
+    "editorial": [
+      {
+        "topic": "Quásar zafiro",
+        "segmentIds": [
+          "segment-sales"
+        ],
+        "relevance": 19,
+        "reasons": [
+          "1 referencia disponible sobre este tema en el material de esta empresa.",
+          "Hipótesis de pertinencia para Ventas · SINTÉTICO: coincide con el contexto que el equipo declaró para el segmento; hay 0 observaciones públicas y 1 hipótesis editoriales de contraste; la evidencia pública tiene mayor peso. No demuestra consumo ni afinidad de personas.",
+          "Prioridad editorial por coincidencias de texto; no es probabilidad de éxito ni una clasificación de rendimiento.",
+          "Aprendizaje editorial pendiente: hacen falta al menos 3 publicaciones propias de este tema y 3 de otros temas del mismo segmento, canal, formato y ventana aproximada de medición. Sin esa muestra no se ajusta la prioridad por resultados."
+        ],
+        "growth": {
+          "label": "insufficient",
+          "explanation": "Faltan dos observaciones comparables: ventanas de 7 días, mismas fuentes y consultas, separadas por al menos una semana. Una sola consulta no demuestra crecimiento."
+        }
+      }
+    ]
+  },
+  "opportunityPublic": [
+    {
+      "topic": "Quásar zafiro",
+      "segmentIds": [
+        "segment-sales"
+      ],
+      "relevance": 25,
+      "reasons": [
+        "1 referencia disponible sobre este tema en el material de esta empresa.",
+        "Hipótesis de pertinencia para Ventas · SINTÉTICO: coincide con el contexto que el equipo declaró para el segmento; hay 1 observaciones públicas y 0 hipótesis editoriales de contraste; la evidencia pública tiene mayor peso. No demuestra consumo ni afinidad de personas.",
+        "Prioridad editorial por coincidencias de texto; no es probabilidad de éxito ni una clasificación de rendimiento.",
+        "Aprendizaje editorial pendiente: hacen falta al menos 3 publicaciones propias de este tema y 3 de otros temas del mismo segmento, canal, formato y ventana aproximada de medición. Sin esa muestra no se ajusta la prioridad por resultados."
+      ],
+      "growth": {
+        "label": "insufficient",
+        "explanation": "Faltan dos observaciones comparables: ventanas de 7 días, mismas fuentes y consultas, separadas por al menos una semana. Una sola consulta no demuestra crecimiento."
+      }
+    }
+  ],
+  "healthFilter": {
+    "selected": "segment-health",
+    "emptyMessage": "Ninguna oportunidad coincide con tus filtros"
+  },
+  "brandScope": {
+    "brandId": "b883e52c-c788-4472-9739-2b847c1779d8",
+    "listStatus": 200,
+    "list": {
+      "signals": []
+    },
+    "foreignDeleteStatus": 404,
+    "foreignDelete": {
+      "error": "No se encontró la nota de audiencia."
+    },
+    "originalStillPresent": true
+  },
+  "finalState": {
+    "signals": [
+      {
+        "segmentId": "segment-sales",
+        "topic": "Quásar zafiro",
+        "note": "Fixture sintética: dos piezas públicas de ejemplo documentan el tema. No representa consumo de personas.",
+        "sourceType": "public_content",
+        "sourceUrl": "https://example.com/qa-signals/quasar",
+        "sampleSize": 2,
+        "id": "1f3d978b-9af0-4ea6-b3e9-f223a0737276",
+        "createdAt": "2026-10-18T01:58:20.138Z",
+        "updatedAt": "2026-10-18T01:58:20.138Z"
+      },
+      {
+        "segmentId": "segment-sales",
+        "topic": "Ficha individual · SINTÉTICO",
+        "note": "FICHA INDIVIDUAL SINTÉTICA. Nombre: Ana Sintética Ejemplo. Cargo: directora comercial. Necesidad individual: preparar propuestas más rápido.",
+        "sourceType": "editorial",
+        "id": "be337ae7-3666-4c46-8e37-60f520df43ee",
+        "createdAt": "2026-10-18T01:57:55.590Z",
+        "updatedAt": "2026-10-18T01:57:55.590Z"
+      },
+      {
+        "segmentId": "segment-sales",
+        "topic": "Validación de servidor · SINTÉTICO",
+        "note": "Fixture sintética agregada para auditoría.",
+        "sourceType": "public_content",
+        "sourceUrl": "https://example.com/?contact=persona.sintetica@example.com",
+        "id": "1288a092-4e01-4c10-aced-a2ce6414bd90",
+        "createdAt": "2026-10-18T01:57:40.763Z",
+        "updatedAt": "2026-10-18T01:57:40.763Z"
+      },
+      {
+        "segmentId": "segment-sales",
+        "topic": "Validación de servidor · SINTÉTICO",
+        "note": "Fixture sintética agregada para auditoría.",
+        "sourceType": "public_content",
+        "sourceUrl": "https://example.com/persona.sintetica@example.com",
+        "id": "436f82ee-805c-4037-a540-1768b156e30f",
+        "createdAt": "2026-10-18T01:57:40.758Z",
+        "updatedAt": "2026-10-18T01:57:40.758Z"
+      },
+      {
+        "segmentId": "segment-sales",
+        "topic": "Validación de servidor · SINTÉTICO",
+        "note": "FICHA INDIVIDUAL SINTÉTICA. Nombre: Ana Sintética Ejemplo. Cargo: directora comercial. Necesidad individual: preparar propuestas más rápido.",
+        "sourceType": "editorial",
+        "id": "11adc815-f895-4e85-a5c3-6d1d01185b46",
+        "createdAt": "2026-10-18T01:57:40.733Z",
+        "updatedAt": "2026-10-18T01:57:40.733Z"
+      },
+      {
+        "segmentId": "segment-sales",
+        "topic": "Validación de servidor · SINTÉTICO",
+        "note": "Fixture sintética agregada para auditoría.",
+        "sourceType": "editorial",
+        "sampleSize": 10000000,
+        "id": "88b34eb1-63dd-4092-a5de-8330ea634519",
+        "createdAt": "2026-10-18T01:57:40.725Z",
+        "updatedAt": "2026-10-18T01:57:40.725Z"
+      },
+      {
+        "segmentId": "segment-sales",
+        "topic": "Validación de servidor · SINTÉTICO",
+        "note": "Fixture sintética agregada para auditoría.",
+        "sourceType": "editorial",
+        "sampleSize": 1,
+        "id": "87968ac2-6701-488c-bb81-7eff8e1aafbc",
+        "createdAt": "2026-10-18T01:57:40.719Z",
+        "updatedAt": "2026-10-18T01:57:40.719Z"
+      },
+      {
+        "segmentId": "segment-sales",
+        "topic": "Cita con identidad · SINTÉTICO",
+        "note": "Fixture sintética agregada: el grupo necesita reducir demoras; falta contrastarlo.",
+        "sourceType": "public_content",
+        "sourceUrl": "https://example.com/personas/persona.sintetica@example.com",
+        "id": "061bbc7b-da3a-4cf2-ae27-85b834c372f2",
+        "createdAt": "2026-10-18T01:57:27.074Z",
+        "updatedAt": "2026-10-18T01:57:27.074Z"
+      },
+      {
+        "segmentId": "segment-sales",
+        "topic": "Propuestas comerciales · SINTÉTICO",
+        "note": "Fixture sintética: tres piezas describen demoras al preparar propuestas; falta contrastar la necesidad con el grupo.",
+        "sourceType": "public_content",
+        "sourceUrl": "https://example.com/qa-signals/propuestas",
+        "sampleSize": 3,
+        "id": "463d84ad-3ffa-414b-8dc5-f9d013dbd0d9",
+        "createdAt": "2026-10-18T01:56:41.496Z",
+        "updatedAt": "2026-10-18T01:56:41.496Z"
+      }
+    ],
+    "opportunities": [
+      {
+        "topic": "Quásar zafiro",
+        "segmentIds": [
+          "segment-sales"
+        ],
+        "relevance": 25,
+        "reasons": [
+          "1 referencia disponible sobre este tema en el material de esta empresa.",
+          "Hipótesis de pertinencia para Ventas · SINTÉTICO: coincide con el contexto que el equipo declaró para el segmento; hay 1 observaciones públicas y 0 hipótesis editoriales de contraste; la evidencia pública tiene mayor peso. No demuestra consumo ni afinidad de personas.",
+          "Prioridad editorial por coincidencias de texto; no es probabilidad de éxito ni una clasificación de rendimiento.",
+          "Aprendizaje editorial pendiente: hacen falta al menos 3 publicaciones propias de este tema y 3 de otros temas del mismo segmento, canal, formato y ventana aproximada de medición. Sin esa muestra no se ajusta la prioridad por resultados."
+        ],
+        "growth": {
+          "label": "insufficient",
+          "explanation": "Faltan dos observaciones comparables: ventanas de 7 días, mismas fuentes y consultas, separadas por al menos una semana. Una sola consulta no demuestra crecimiento."
+        }
+      }
+    ],
+    "formLimits": {
+      "topic": 200,
+      "note": 4000,
+      "sample": "1000000"
+    },
+    "renderedAnchors": [
+      {
+        "topic": "Quásar zafiro",
+        "url": "https://example.com/qa-signals/quasar"
+      },
+      {
+        "topic": "Validación de servidor · SINTÉTICO",
+        "url": "https://example.com/?contact=persona.sintetica@example.com"
+      },
+      {
+        "topic": "Validación de servidor · SINTÉTICO",
+        "url": "https://example.com/persona.sintetica@example.com"
+      },
+      {
+        "topic": "Cita con identidad · SINTÉTICO",
+        "url": "https://example.com/personas/persona.sintetica@example.com"
+      },
+      {
+        "topic": "Propuestas comerciales · SINTÉTICO",
+        "url": "https://example.com/qa-signals/propuestas"
+      }
+    ]
+  }
+}

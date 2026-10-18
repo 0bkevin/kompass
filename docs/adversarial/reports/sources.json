@@ -1,0 +1,288 @@
+{
+  "feature": "CRUD y configuración de fuentes",
+  "slug": "sources",
+  "url": "http://127.0.0.27:4117",
+  "status": "FAIL",
+  "cases": [
+    {
+      "name": "Defaults de una marca nueva",
+      "expected": "Sólo fuentes abiertas activas por defecto y ningún proveedor pago configurado.",
+      "actual": "GDELT, HN y Trends activos; TechCrunch pausado. YouTube/Apify/Gemini configured=false.",
+      "verdict": "PASS",
+      "evidence": [
+        "docs/adversarial/evidence/sources-state-after-ui.json"
+      ]
+    },
+    {
+      "name": "Alta por UI de seis tipos",
+      "expected": "RSS, HN, GDELT, Reddit, YouTube y Apify guardan sus parámetros específicos.",
+      "actual": "RSS hnrss.org/frontpage; HN query=agent reliability; GDELT conserva comillas y sourcelang:spanish; Reddit artificial; YouTube canal canónico; Apify Instagram hashtag y limit=7. Los seis fueron añadidos usando el modal.",
+      "verdict": "PASS",
+      "evidence": [
+        "docs/adversarial/evidence/sources-state-after-ui.json"
+      ]
+    },
+    {
+      "name": "Campos requeridos",
+      "expected": "No crear una fuente vacía; YouTube sin URL ni consulta debe explicar cómo corregir.",
+      "actual": "Nombre y RSS URL son required. YouTube vacío mostró Indica una consulta o una URL para esta fuente. Formulario y nombre conservados.",
+      "verdict": "PASS",
+      "evidence": [
+        "UI: checkValidity() false para nombre/URL; modal permaneció abierto"
+      ]
+    },
+    {
+      "name": "Esquema y credenciales de URL",
+      "expected": "Rechazar ftp y credenciales embebidas sin perder lo escrito.",
+      "actual": "ftp://example.com/feed y https://qa:fake@example.com/feed fueron rechazados con URL fuente debe usar http o https sin credenciales. Nombre y URL permanecieron editables; posterior corrección funcionó.",
+      "verdict": "PASS",
+      "evidence": [
+        "UI: mensaje observado y formulario conservado"
+      ]
+    },
+    {
+      "name": "URL privada: bloqueo de consulta",
+      "expected": "No solicitar recursos privados aunque se guarde una configuración inválida.",
+      "actual": "La UI permitió guardar http://127.0.0.1/private-feed. Al descubrir, safeFetch rechazó la dirección privada o reservada. No se demostró SSRF. La validación de red es diferida.",
+      "verdict": "PASS",
+      "evidence": [
+        "docs/adversarial/evidence/sources-private-url-blocked.png",
+        "docs/adversarial/evidence/sources-state-after-ui.json"
+      ]
+    },
+    {
+      "name": "Selector de YouTube",
+      "expected": "Aceptar canal o consulta; rechazar URL de video en el campo de canal.",
+      "actual": "youtube.com/@GoogleDevelopers?feature=shared se guardó como https://www.youtube.com/@GoogleDevelopers. /watch?v=… mostró que requiere /@usuario o /channel/ID. Después se guardó consulta sola responsible artificial intelligence.",
+      "verdict": "PASS",
+      "evidence": [
+        "UI: mensaje de error de URL de canal; corrección persistida",
+        "docs/adversarial/evidence/sources-final-state.json"
+      ]
+    },
+    {
+      "name": "URL y plataforma Apify",
+      "expected": "Validar dominio/perfil/video según Instagram o TikTok y eliminar tracking.",
+      "actual": "TikTok en campo Instagram fue rechazado. Instagram /publicqa/?igsh=abc se canonizó a https://instagram.com/publicqa. Editar a TikTok /@publicqa/video/123456789?is_from_webapp=1 guardó URL canónica de TikTok.",
+      "verdict": "PASS",
+      "evidence": [
+        "docs/adversarial/evidence/sources-state-after-ui.json"
+      ]
+    },
+    {
+      "name": "Límite Apify",
+      "expected": "Aceptar enteros de 1 a 50; rechazar 0, 1.5 y 51 conservando datos.",
+      "actual": "0, 1.5 y 51 mantuvieron el modal abierto con validación nativa. Se guardaron 7 y 50. Los clones de eliminación incluyeron límite 1.",
+      "verdict": "PASS",
+      "evidence": [
+        "docs/adversarial/evidence/sources-state-after-ui.json",
+        "docs/adversarial/evidence/sources-ui-crud-six-types.json"
+      ]
+    },
+    {
+      "name": "Editar, cancelar y eliminar seis tipos",
+      "expected": "Los seis tipos permiten editar y eliminar; cancelar una segunda edición conserva la versión guardada.",
+      "actual": "Clones sintéticos de los seis tipos fueron renombrados por UI a … editada; luego nombre NO GUARDAR cancelado; nombres guardados y parámetros confirmados por API; eliminación por UI. Tras recarga no quedaron clones.",
+      "verdict": "PASS",
+      "evidence": [
+        "docs/adversarial/evidence/sources-ui-crud-six-types.json"
+      ]
+    },
+    {
+      "name": "Activar y pausar fuentes abiertas",
+      "expected": "Los toggles modifican enabled y el estado visible de RSS/HN/GDELT/Reddit.",
+      "actual": "Cada uno de los cuatro clones abiertos pasó Pausada→Activa→Pausada por UI y terminó enabled=false en API. RSS principal también fue pausado y reactivado.",
+      "verdict": "PASS",
+      "evidence": [
+        "docs/adversarial/evidence/sources-ui-crud-six-types.json"
+      ]
+    },
+    {
+      "name": "Gates de proveedores sociales",
+      "expected": "Sin credenciales, YouTube/Apify se guardan pausados y no permiten activación.",
+      "actual": "Checkbox de activación deshabilitado en modal; botones Activar QA YouTube/QA Apify deshabilitados; advertencia y Configurar proveedor visibles; enabled=false persistido. No se hicieron llamadas pagas.",
+      "verdict": "PASS",
+      "evidence": [
+        "docs/adversarial/evidence/sources-state-after-ui.json"
+      ]
+    },
+    {
+      "name": "Cancelar un alta",
+      "expected": "Cancelar el modal no crea un registro.",
+      "actual": "Nombre QA no crear y URL pública fueron escritos y cancelados. Tras recargar no existía esa fuente.",
+      "verdict": "PASS",
+      "evidence": [
+        "API GET sources: ausencia de QA no crear después de recarga"
+      ]
+    },
+    {
+      "name": "Persistencia tras recarga",
+      "expected": "Configuración guardada y eliminación sobreviven a recargar /settings.",
+      "actual": "Los seis registros originales conservaron datos/tipo/estado. NO GUARDAR, QA CANCELLED y los seis clones eliminados no aparecieron. La query vieja HN→RSS también persistió (fallo descrito aparte).",
+      "verdict": "PASS",
+      "evidence": [
+        "docs/adversarial/evidence/sources-state-after-ui.json",
+        "docs/adversarial/evidence/sources-ui-crud-six-types.json",
+        "docs/adversarial/evidence/sources-final-state.json"
+      ]
+    },
+    {
+      "name": "Cambio HN→RSS",
+      "expected": "Al cambiar a RSS, eliminar/ignorar query incompatible y resumir el feed configurado.",
+      "actual": "La fuente convertida guardó type=rss, url=https://www.nasa.gov/feed/ y query=agent reliability oculta. La fila RSS mostró agent reliability y ocultó el feed, incluso al recargar.",
+      "verdict": "FAIL",
+      "evidence": [
+        "docs/adversarial/evidence/sources-hn-to-rss-stale-summary.png",
+        "docs/adversarial/evidence/sources-state-after-ui.json"
+      ]
+    },
+    {
+      "name": "Cambio YouTube→Apify",
+      "expected": "La red mostrada en el select coincide con el valor que se guarda y permite enviar datos válidos.",
+      "actual": "Tras convertir, el select mostró Instagram y el campo URL decía TikTok; con query válida y URL vacía, Guardar falló Apify admite fuentes de Instagram o TikTok. Reseleccionar Instagram permitió guardar y conservó la query. Causa localizada: platform mantiene youtube hasta onChange de Red social.",
+      "verdict": "FAIL",
+      "evidence": [
+        "docs/adversarial/evidence/sources-youtube-to-apify-error.png"
+      ]
+    },
+    {
+      "name": "Sincronización de fuente abierta",
+      "expected": "Una fuente activa abierta se consulta y persiste resumen/fecha sin proveedor pago.",
+      "actual": "No hay sincronización individual en la UI. Se pausaron las demás como fixture y Buscar tendencias consultó únicamente QA RSS; lastResultCount=20, lastSyncedAt=2026-10-18T02:19:41.865Z y 20 referencias. La exactitud del corpus corresponde a otra auditoría.",
+      "verdict": "PASS",
+      "evidence": [
+        "docs/adversarial/evidence/sources-state-after-ui.json"
+      ]
+    },
+    {
+      "name": "Estado de fallo y conservación",
+      "expected": "Una falla explica su motivo por fuente y no descarta referencias anteriores.",
+      "actual": "Después de reemplazar RSS por loopback, radar mostró cobertura parcial y motivo de dirección privada. /settings conservó lastError/lastAttemptAt y lastSyncedAt previo; permanecieron las 20 referencias.",
+      "verdict": "PASS",
+      "evidence": [
+        "docs/adversarial/evidence/sources-private-url-blocked.png",
+        "docs/adversarial/evidence/sources-state-after-ui.json"
+      ]
+    },
+    {
+      "name": "Permisos revisor",
+      "expected": "Sólo lectura y rechazo en servidor de operaciones editoriales.",
+      "actual": "Con fixture de membership reviewer no se mostraron añadir/editar/eliminar/toggles. POST sources, PATCH source, DELETE source y POST discover devolvieron 403 Necesitas permisos de edición.",
+      "verdict": "PASS",
+      "evidence": [
+        "docs/adversarial/evidence/sources-reviewer-readonly.png",
+        "docs/adversarial/evidence/sources-permissions.json"
+      ]
+    },
+    {
+      "name": "Permisos editor",
+      "expected": "CRUD y toggles disponibles; conexiones reservadas a propietario.",
+      "actual": "Con fixture editor se creó QA Editor HN por UI, se editaron/cancelaron/eliminaron los seis clones y se togglearon abiertos. Configuración de proveedor no editable; PUT social/settings devolvió 403 Sólo el propietario puede realizar esta acción.",
+      "verdict": "PASS",
+      "evidence": [
+        "docs/adversarial/evidence/sources-ui-crud-six-types.json",
+        "docs/adversarial/evidence/sources-permissions.json"
+      ]
+    },
+    {
+      "name": "Permisos propietario",
+      "expected": "Control de fuentes y conexiones disponible sin activar proveedores por defecto.",
+      "actual": "El owner inicial añadió las seis fuentes, editó y togglé RSS; las conexiones presentaban sus controles. Al terminar se restauró owner; proveedores permanecieron sin configurar.",
+      "verdict": "PASS",
+      "evidence": [
+        "docs/adversarial/evidence/sources-state-after-ui.json",
+        "docs/adversarial/evidence/sources-permissions.json"
+      ]
+    },
+    {
+      "name": "Cooldown automático",
+      "expected": "Comprobar dinámicamente la espera progresiva tras falla de descubrimiento automático.",
+      "actual": "DISCOVERY_ENABLED=false es obligatorio en esta auditoría. No hay estado de próxima ejecución ni control de cooldown en /settings. Sólo se revisó como apoyo la implementación del scheduler; no demuestra su comportamiento.",
+      "verdict": "BLOCKED",
+      "evidence": [
+        "server/intelligence.mjs:1444-1506 (inspección estática únicamente)"
+      ]
+    }
+  ],
+  "findings": [
+    {
+      "id": "sources-1",
+      "severity": "P2",
+      "title": "Cambiar HN a RSS conserva una consulta oculta y el resumen oculta el feed real",
+      "steps": [
+        "En /settings añadir HN con query agent reliability.",
+        "Editar la fuente, elegir RSS / Atom e indicar https://www.nasa.gov/feed/.",
+        "Guardar y recargar /settings; volver a abrir el modal de RSS."
+      ],
+      "expected": "La configuración y su resumen deben reflejar sólo campos aplicables al nuevo tipo; RSS debe mostrar el feed.",
+      "actual": "El registro RSS conserva query=agent reliability, que ya no se puede editar desde el modal RSS. La fila prioriza esa query sobre la URL y presenta una configuración incorrecta al usuario. El feed sí quedó guardado; no se afirma que el fetch de RSS use esa query.",
+      "evidence": [
+        "docs/adversarial/evidence/sources-hn-to-rss-stale-summary.png",
+        "docs/adversarial/evidence/sources-state-after-ui.json"
+      ],
+      "source": [
+        "src/features/Settings.tsx:1310",
+        "src/features/Settings.tsx:260",
+        "src/features/Settings.tsx:455",
+        "server/core.mjs:702"
+      ]
+    },
+    {
+      "id": "sources-2",
+      "severity": "P2",
+      "title": "YouTube→Apify muestra Instagram pero conserva plataforma incompatible y rechaza el guardado",
+      "steps": [
+        "Añadir una fuente YouTube y guardarla pausada.",
+        "Editar y elegir Instagram / TikTok · Apify.",
+        "Vaciar la antigua URL, escribir una consulta válida y conservar la red Instagram mostrada por defecto.",
+        "Guardar; luego volver a seleccionar Instagram y guardar para comprobar recuperación."
+      ],
+      "expected": "Seleccionar Apify debe inicializar su plataforma a Instagram/TikTok y mantener select, etiqueta URL y payload coherentes.",
+      "actual": "El select muestra Instagram, la etiqueta dice URL de TikTok y Guardar rechaza Apify admite fuentes de Instagram o TikTok. Reseleccionar Instagram permite guardar con platform=instagram. Causa inferida y respaldada por código: platform permanece youtube al cambiar el tipo.",
+      "evidence": [
+        "docs/adversarial/evidence/sources-youtube-to-apify-error.png"
+      ],
+      "source": [
+        "src/features/Settings.tsx:1317",
+        "src/features/Settings.tsx:267",
+        "src/features/Settings.tsx:1376",
+        "server/core.mjs:738"
+      ]
+    }
+  ],
+  "limitations": [
+    "No credenciales reales, llamadas pagadas ni publicaciones. YouTube/Apify no se probaron como integración real.",
+    "DISCOVERY_ENABLED=false; cooldown automático sin validación dinámica.",
+    "La UI no permite sincronización individual: se aisló una sola fuente activa mediante fixture propia antes de pulsar Buscar tendencias.",
+    "Roles preparados en SQLite propia cambiando membership de la cuenta sintética; no prueban invitaciones ni aislamiento multicuenta.",
+    "RSS abierto real verificado sólo para configuración/estado; exactitud y deduplicación del descubrimiento fuera del encargo.",
+    "Datos sintéticos conservados en /tmp/30x-adversarial-sources; no se modificó producción ni se ejecutaron build/format."
+  ],
+  "artifacts": [
+    "docs/adversarial/evidence/sources-state-after-ui.json",
+    "docs/adversarial/evidence/sources-ui-crud-six-types.json",
+    "docs/adversarial/evidence/sources-permissions.json",
+    "docs/adversarial/evidence/sources-youtube-to-apify-error.png",
+    "docs/adversarial/evidence/sources-hn-to-rss-stale-summary.png",
+    "docs/adversarial/evidence/sources-private-url-blocked.png",
+    "docs/adversarial/evidence/sources-reviewer-readonly.png",
+    "docs/adversarial/evidence/sources-final-state.json"
+  ],
+  "runtime": {
+    "dataDir": "/tmp/30x-adversarial-sources",
+    "port": 4117,
+    "host": "127.0.0.27",
+    "sessionId": 18865,
+    "pid": 3897172,
+    "tabId": "tab_43_07e54779-9ab2-4979-8a15-674c4eff160a",
+    "tabClosed": true,
+    "processStopped": true,
+    "exitCode": 0
+  },
+  "counts": {
+    "PASS": 18,
+    "FAIL": 2,
+    "BLOCKED": 1
+  }
+}
+

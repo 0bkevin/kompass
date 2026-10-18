@@ -1,0 +1,319 @@
+{
+  "feature": "Integraciones, credenciales, presupuestos y publicación opcional",
+  "slug": "providers",
+  "url": "http://127.0.0.28:4118",
+  "status": "FAIL",
+  "cases": [
+    {
+      "name": "Estado inicial sin credenciales",
+      "expected": "Todos los proveedores ausentes deben indicarlo; no presentar conexión real.",
+      "actual": "UI muestra Sin configurar/Motor editorial local. GET social/settings: youtube/apify/gemini configured=false; integrations: ai/telegram/webhook=false.",
+      "verdict": "PASS",
+      "evidence": [
+        "docs/adversarial/evidence/providers-initial.png"
+      ]
+    },
+    {
+      "name": "Fuente YouTube antes de conectar",
+      "expected": "Guardar referencia de fuente pausada y explicar cómo habilitar el proveedor.",
+      "actual": "Desde Añadir fuente se crea QA YouTube sintético; aviso de credencial ausente y enabled=false en API. Activar queda deshabilitado al desconectar.",
+      "verdict": "PASS",
+      "evidence": [
+        "GET /api/brands/:A/sources → fuente youtube enabled=false"
+      ]
+    },
+    {
+      "name": "YouTube guardar, reemplazar y desconectar",
+      "expected": "Credencial sintética guardada debe activar sólo flag, vaciar el campo y persistir; quitarla debe volver a ausente.",
+      "actual": "UI guarda dos valores sintéticos secuenciales; configured=true y campo vacío tras guardar; recarga conserva estado. Desconectar devuelve configured=false. No se consultó YouTube.",
+      "verdict": "PASS",
+      "evidence": [
+        "GET social/settings → youtube.configured true y después false"
+      ]
+    },
+    {
+      "name": "Apify guardar, desconectar y recuperar",
+      "expected": "Guardar no debe iniciar un actor; desconectar debe impedir búsqueda; reconectar sólo restaura configuración.",
+      "actual": "UI guarda token sintético, presupuesto inicialmente0; desconexión hace fallar búsqueda UI con Apify no está configurado. Reconexión recupera flag sin ejecutar actor.",
+      "verdict": "PASS",
+      "evidence": [
+        "docs/adversarial/evidence/providers-missing-provider.png",
+        "SQLite provider_spend: 0 filas antes de sondas de reserva"
+      ]
+    },
+    {
+      "name": "Gemini modelo inválido y corrección",
+      "expected": "Modelo inválido debe producir error sin filtrar clave; modelo corregido debe conservar credencial vacía y permitir desconectar.",
+      "actual": "UI rechaza bad model whitespace con regla de caracteres. Corrección a modelo sintético válido devuelve configured=true/modelo actualizado; campo vacío. Desconectar vuelve false. No análisis audiovisual.",
+      "verdict": "PASS",
+      "evidence": [
+        "HTTP400: gemini.model solo admite letras, números, punto, guion y guion bajo (máximo100)."
+      ]
+    },
+    {
+      "name": "IA guardar y volver al motor local",
+      "expected": "Una credencial sintética sólo cambia configuración; usar motor local debe apagar el proveedor.",
+      "actual": "UI Guardar IA produce ai.configured=true/modelo; después Usar motor local devuelve false y no devuelve API key. No consulta de inferencia.",
+      "verdict": "PASS",
+      "evidence": [
+        "GET integrations → ai.configured=true; después false"
+      ]
+    },
+    {
+      "name": "Telegram inválido, corregir, actualizar y desconectar",
+      "expected": "Validar token/chat; no enviar mensajes al guardar; actualizar chat sin volver a mostrar token; desconectar revoca flag.",
+      "actual": "UI rechaza formato inválido; guarda formato sintético válido, actualiza chat con token vacío, desconecta y reconecta. Estado/configuración persisten al recargar. Nunca se invocó envío a Telegram.",
+      "verdict": "PASS",
+      "evidence": [
+        "docs/adversarial/evidence/providers-configured-telegram.png",
+        "HTTP400: Introduce un token de bot y un chatId de Telegram válidos."
+      ]
+    },
+    {
+      "name": "Webhook privado, corregir, actualizar y desconectar",
+      "expected": "Bloquear URL privada; admitir configuración HTTPS pública sin enviar publicación; conservar secreto al actualizar URL.",
+      "actual": "UI bloquea https://127.0.0.1/private. Corregir a endpoint sintético de example.com permite guardar y actualizar con campo de secreto vacío. Desconectar vuelve false; reconfiguración final true. Sólo validación DNS al guardar, ningún POST al destino.",
+      "verdict": "PASS",
+      "evidence": [
+        "docs/adversarial/evidence/providers-configured-webhook.png",
+        "HTTP400: No se permite acceder a direcciones privadas o reservadas."
+      ]
+    },
+    {
+      "name": "Secretos en respuestas, errores y persistencia",
+      "expected": "Claves API, bot token y secreto webhook no deben aparecer en estado ni en errores; formularios deben quedar vacíos.",
+      "actual": "GET state/social/settings/integrations devuelve flags/modelos/chat/url sin esos secretos. Tras recarga todos los campos password vacíos. Errores de Gemini/Telegram/URL no reproducen las claves. Valores de tabla secrets están en contenedores cifrados, sin cadena sintética en claro. El endpoint owner integrations entrega además su URL de inbox; no se copia a este informe.",
+      "verdict": "PASS",
+      "evidence": [
+        "GET state: unexpectedSecretFields=[]",
+        "SQLite: todos los valores examinados sin texto de las claves sintéticas"
+      ]
+    },
+    {
+      "name": "Restricción al revisor",
+      "expected": "Una cuenta con rol revisor debe ver configuración protegida y no poder cambiar credenciales.",
+      "actual": "Fixture temporal cambió sólo la membresía A de la propia cuenta a reviewer: UI deshabilita4 password inputs y explica propietario. PUT social/settings e integrations devuelve403 Solo el propietario puede realizar esta acción. Se restauró owner.",
+      "verdict": "PASS",
+      "evidence": [
+        "UI disabled=true en4 campos password; ambas APIs403"
+      ]
+    },
+    {
+      "name": "Aislamiento de configuración entre2 marcas",
+      "expected": "Conectar A no debe configurar B; sólo se comparte el gasto cuando explícitamente se usa la misma credencial.",
+      "actual": "B conserva ai/telegram/webhook/youtube/gemini=false y0 piezas. Apify se configuró explícitamente en B con la misma credencial sintética que A; las credenciales de los otros proveedores no se propagaron.",
+      "verdict": "PASS",
+      "evidence": [
+        "GET state de B: piezas=[]; ai/telegram/webhook configured=false"
+      ]
+    },
+    {
+      "name": "Presupuesto sin proveedor",
+      "expected": "Ausencia de token debe producir budget=null y una ruta de conexión sin prometer gasto.",
+      "actual": "UI explica Apify no está conectado y que guardar no inicia búsqueda. GET budget configured=false,budget=null.",
+      "verdict": "PASS",
+      "evidence": [
+        "docs/adversarial/evidence/providers-initial.png"
+      ]
+    },
+    {
+      "name": "Presupuesto pausado en UI y búsqueda",
+      "expected": "Con APIFY_DAILY_BUDGET_USD=0 debe impedir el actor antes de reservar y explicar recuperación de servidor.",
+      "actual": "Runtime propio reiniciado con0: UI Apify pausado y0/0diario; Buscar tendencias devuelve cobertura parcial con mensaje USD0 y nombres de variables a revisar. SQLite conserva0 reservas.",
+      "verdict": "PASS",
+      "evidence": [
+        "docs/adversarial/evidence/providers-budget-paused.png",
+        "docs/adversarial/evidence/providers-paused-gate.png"
+      ]
+    },
+    {
+      "name": "Reserva concurrente por credencial — sonda local",
+      "expected": "Tres procesos simultáneos con tope de2 deben admitir exactamente2 y rechazar el tercero sin exceder el ledger.",
+      "actual": "Sonda local importa el mismo módulo y base propia. Resultado2 éxitos de USD1,1 rechazo429 por2 ejecuciones pendientes; activeRuns=2, reserved=USD2. No transporte de proveedor ni datos remotos.",
+      "verdict": "PASS",
+      "evidence": [
+        "/tmp/30x-adversarial-providers/budget-probe.mjs",
+        "/tmp/30x-adversarial-providers/budget-probe.json"
+      ]
+    },
+    {
+      "name": "Fallo conserva reserva y lease — sonda local",
+      "expected": "Finalizar un intento fallido no debe devolver presupuesto ni liberar inmediatamente el slot incierto.",
+      "actual": "Tras finish de1 éxito y1 fallo, USD2 siguen reservados; activeRuns baja de2 a 1. Ledger del fallo released_at=NULL y state=failed. Sonda sin proveedor.",
+      "verdict": "PASS",
+      "evidence": [
+        "/tmp/30x-adversarial-providers/budget-probe.json"
+      ]
+    },
+    {
+      "name": "Presupuesto diario agotado: UI y gate",
+      "expected": "Agotar3USD debe impedir una cuarta reserva y la búsqueda, con causa visible.",
+      "actual": "Se crean3 reservas sintéticas sin ejecutar actor. UI3/3 y Buscar tendencias indica presupuesto diario USD3 compartido; sonda reserve devuelve402 y ledger no agrega otra fila.",
+      "verdict": "PASS",
+      "evidence": [
+        "docs/adversarial/evidence/providers-budget-shared-a.png",
+        "docs/adversarial/evidence/providers-budget-exhausted.png"
+      ]
+    },
+    {
+      "name": "Tope mensual — sonda local",
+      "expected": "Con diario9/mensual3 y3 consumidos debe bloquear por límite mensual.",
+      "actual": "createProviderBudget sobre la base propia con env inyectado rechaza402 por presupuesto mensual USD3; ninguna llamada de proveedor. No se afirma cobertura UI del mensaje mensual.",
+      "verdict": "PASS",
+      "evidence": [
+        "/tmp/30x-adversarial-providers/budget-probe.json"
+      ]
+    },
+    {
+      "name": "Misma credencial compartida entre marcas: UI",
+      "expected": "Dos marcas con el mismo token deben ver la misma reserva total, sin duplicar el presupuesto.",
+      "actual": "Sonda confirma igualdad de credencial sin imprimirla. Cambiar entre A yB y Actualizar límites muestra USD3/3 hoy yUSD3/30 mes en ambas.",
+      "verdict": "PASS",
+      "evidence": [
+        "docs/adversarial/evidence/providers-budget-shared-a.png",
+        "docs/adversarial/evidence/providers-budget-shared-b.png"
+      ]
+    },
+    {
+      "name": "Recuperación al aumentar el límite",
+      "expected": "Tras cambiar límite de3 a 4 se debe ver1 USD disponible y el módulo debe permitir una reserva adicional.",
+      "actual": "Reinicio propio con APIFY_DAILY_BUDGET_USD=4: UI3/4. La sonda local admite una cuarta reserva USD1 y queda4/4; sin ejecutar actor ni confirmar facturación.",
+      "verdict": "PASS",
+      "evidence": [
+        "docs/adversarial/evidence/providers-budget-recovery.png",
+        "/tmp/30x-adversarial-providers/recovery-probe.json"
+      ]
+    },
+    {
+      "name": "Recuperación de período — reloj controlado",
+      "expected": "Un período UTC nuevo debe limpiar contadores diarios/mensuales y leases caducados.",
+      "actual": "Mismo ledger, createProviderBudget con reloj 1 de noviembre de 2026 y sin mutar reloj servidor: reserved diario 0/mensual 0 y activeRuns 0. Límite3/30 restablecido. Es una sonda de módulo, no espera real.",
+      "verdict": "PASS",
+      "evidence": [
+        "/tmp/30x-adversarial-providers/recovery-probe.json"
+      ]
+    },
+    {
+      "name": "Gates de publicación: comprobación API auxiliar",
+      "expected": "El backend debe rechazar sin aprobación y después sin credencial sin cambiar la pieza ni enviar nada.",
+      "actual": "POST publish con borrador devuelve409 Aprueba la pieza antes de publicarla. Tras enviar/aprobar por UI, aún sin conectores devuelve409 Conecta Telegram… Puedes exportar…; status sigue approved. La UI carece de acción de publicación y se reporta aparte.",
+      "verdict": "PASS",
+      "evidence": [
+        "POST /api/brands/:A/pieces/:piece/publish →409 en ambos estados"
+      ]
+    },
+    {
+      "name": "Programación permanece local",
+      "expected": "Guardar calendario con conectores configurados debe programar sin publicar automáticamente.",
+      "actual": "UI Planificar publicación→Guardar en la grilla deja scheduled ypublicationReceipt ausente. Texto explica que calendario no publica automáticamente. No se invoca publish ni transporte.",
+      "verdict": "PASS",
+      "evidence": [
+        "docs/adversarial/evidence/providers-schedule-dialog.png",
+        "docs/adversarial/evidence/providers-scheduled-no-publish.png",
+        "docs/adversarial/evidence/providers-calendar-manual.png"
+      ]
+    },
+    {
+      "name": "Usar publicación opcional desde la interfaz",
+      "expected": "Una pieza aprobada con Telegram/webhook configurados debe ofrecer una acción explícita para usar el conector, o explicar cómo hacerlo.",
+      "actual": "Settings promete publicar texto aprobado/enviar endpoint HTTPS. Con ambas flags true y pieza Telegram approved, Studio sólo Exportar/Planificar; tras programar sólo Ver en la grilla. Calendario propone publicar desde el canal y no ofrece el conector guardado ni una alternativa explicada para usarlo. Función inaccesible en UI.",
+      "verdict": "FAIL",
+      "evidence": [
+        "docs/adversarial/evidence/providers-configured-telegram.png",
+        "docs/adversarial/evidence/providers-configured-webhook.png",
+        "docs/adversarial/evidence/providers-approved-no-publish.png",
+        "docs/adversarial/evidence/providers-scheduled-no-publish.png",
+        "docs/adversarial/evidence/providers-calendar-manual.png"
+      ]
+    },
+    {
+      "name": "YouTube real: acceso y cuota",
+      "expected": "Verificar acceso autorizado y cuota con credencial real y datos oficiales.",
+      "actual": "No se suministraron credenciales reales; no se hizo consulta a YouTube. Guardar una cadena sintética no acredita acceso.",
+      "verdict": "BLOCKED",
+      "evidence": []
+    },
+    {
+      "name": "Apify real: actores y facturación",
+      "expected": "Verificar actor real, contenido obtenido y cargos/cuotas del operador.",
+      "actual": "No hay token real ni autorización de gasto. Todas las reservas fueron sondas locales; no se ejecutó un actor ni se verificó factura.",
+      "verdict": "BLOCKED",
+      "evidence": []
+    },
+    {
+      "name": "IA/Gemini reales: aceptación de credenciales",
+      "expected": "Verificar aceptación del proveedor y cuota/costos reales.",
+      "actual": "Sólo se auditó configuración con valores sintéticos. Sin claves reales, ninguna llamada a modelos. Exactitud semántica/audiovisual fuera de este alcance.",
+      "verdict": "BLOCKED",
+      "evidence": []
+    },
+    {
+      "name": "Entrega real Telegram/webhook",
+      "expected": "Verificar recepción/entrega confirmada en los destinos autorizados.",
+      "actual": "No hay bot/destino real autorizado; no se enviaron mensajes ni publicaciones. Los flags de configuración y gates no acreditan entrega.",
+      "verdict": "BLOCKED",
+      "evidence": []
+    }
+  ],
+  "findings": [
+    {
+      "id": "providers-1",
+      "severity": "P2",
+      "title": "Los conectores de publicación se configuran, pero no se pueden usar desde la interfaz",
+      "steps": [
+        "En Fuentes y equipo, configurar Telegram con un token/chat sintéticos de formato válido; configured=true.",
+        "En Publicación guardar endpoint HTTPS sintético y secreto; webhook.configured=true. Guardar sólo valida configuración.",
+        "Crear la pieza QA publicación sintética en canal Telegram y enviarla a revisión/aprobarla por UI.",
+        "Recargar Studio: sólo aparecen Exportar y Planificar publicación. Abrir Planificar y guardar una fecha futura.",
+        "La pieza queda Programado; sólo se ofrece Ver en la grilla. En Calendario no existe envío por Telegram/webhook ni instrucciones para usar esas integraciones. No enviar al endpoint por API."
+      ],
+      "expected": "La promesa de Settings de publicar texto aprobado mediante Telegram/webhook debe ser accesible mediante una acción explícita con aprobación, separada de programar, o una explicación operable del uso de la integración.",
+      "actual": "El usuario puede guardar ambas conexiones pero la pieza approved/scheduled carece de acción Publicar. Planificar sólo cambia status/scheduledFor; el calendario remite a publicar manualmente desde canales. El endpoint de backend existe, pero ninguna alternativa UI lo expone o explica. No se validó entrega real.",
+      "evidence": [
+        "docs/adversarial/evidence/providers-configured-telegram.png",
+        "docs/adversarial/evidence/providers-configured-webhook.png",
+        "docs/adversarial/evidence/providers-approved-no-publish.png",
+        "docs/adversarial/evidence/providers-schedule-dialog.png",
+        "docs/adversarial/evidence/providers-scheduled-no-publish.png",
+        "docs/adversarial/evidence/providers-calendar-manual.png",
+        "GET state: channel=telegram,status=approved,telegram.configured=true,webhook.configured=true; después scheduled sin receipt"
+      ],
+      "source": [
+        "src/features/Settings.tsx:975",
+        "src/features/Settings.tsx:1049",
+        "src/features/Studio.tsx:952",
+        "src/features/Studio.tsx:1005",
+        "src/features/Calendar.tsx:670",
+        "server/intelligence.mjs:2077"
+      ]
+    }
+  ],
+  "limitations": [
+    "Compilación existente; no build/format, cambios de implementación, claves reales, gastos, publicación externa ni lectura de datos de otro entorno.",
+    "Las cuentas/marcas/fuentes/pieza y credenciales son sintéticas; las sondas de presupuesto invocan el módulo real contra SQLite propio sin transporte. No son pruebas de integración o factura.",
+    "Casos mensuales, concurrencia ypaso de período están comprobados en el módulo de presupuesto; UI comprobada para vacío, pausa, agotamiento diario, reserva compartida yrecuperación al subir límite.",
+    "POST publish se usó sólo para gates en estados sin aprobación/sin credencial. No se ejecutó éxito de publicación ni transporte sintético de entrega.",
+    "Aislamiento se comprobó entre2 marcas de una cuenta propia; la verificación general de autenticación/cuentas está fuera de este alcance.",
+    "No se evaluó calidad de análisis semántico/audiovisual; los otros revisores cubren esas ramas.",
+    "Datos de reproducción conservados en /tmp/30x-adversarial-providers; runtime final PID 3922002 cerrado ytab 44 cerrado al terminar. No se guardan tokens/cookies/contraseñas en este informe."
+  ],
+  "artifacts": [
+    "docs/adversarial/evidence/providers-initial.png",
+    "docs/adversarial/evidence/providers-budget-paused.png",
+    "docs/adversarial/evidence/providers-paused-gate.png",
+    "docs/adversarial/evidence/providers-missing-provider.png",
+    "docs/adversarial/evidence/providers-budget-shared-a.png",
+    "docs/adversarial/evidence/providers-budget-shared-b.png",
+    "docs/adversarial/evidence/providers-budget-exhausted.png",
+    "docs/adversarial/evidence/providers-budget-recovery.png",
+    "docs/adversarial/evidence/providers-configured-telegram.png",
+    "docs/adversarial/evidence/providers-configured-webhook.png",
+    "docs/adversarial/evidence/providers-approved-no-publish.png",
+    "docs/adversarial/evidence/providers-schedule-dialog.png",
+    "docs/adversarial/evidence/providers-scheduled-no-publish.png",
+    "docs/adversarial/evidence/providers-calendar-manual.png",
+    "/tmp/30x-adversarial-providers/budget-probe.mjs",
+    "/tmp/30x-adversarial-providers/budget-probe.json",
+    "/tmp/30x-adversarial-providers/recovery-probe.json"
+  ]
+}

@@ -1,0 +1,158 @@
+{
+  "capturedAt": "2026-10-18T02:04:45Z",
+  "fixture": "Datos sintéticos capturados mediante UI; empresa sintética preparada por API.",
+  "url": "http://127.0.0.18:4108",
+  "brand": {
+    "id": "b9d6618e-3919-4e72-9259-89a3021361e3",
+    "name": "QA Referencias sintética"
+  },
+  "references": [
+    {
+      "source": "Equipo",
+      "language": "en",
+      "market": "Referencia del equipo",
+      "format": "document",
+      "status": "new",
+      "tags": [],
+      "title": "qa-references-attachment.txt",
+      "text": "",
+      "assetId": "1e3e0e32-61c8-43b7-ad1a-55ba3d0ccb10",
+      "id": "e5fc29f7-9b6a-496b-81d9-5029750bdf6a",
+      "createdAt": "2026-10-18T02:04:17.168Z",
+      "updatedAt": "2026-10-18T02:04:17.168Z"
+    },
+    {
+      "source": "Equipo",
+      "language": "en",
+      "market": "Referencia del equipo",
+      "format": "link",
+      "status": "new",
+      "tags": [],
+      "title": "QA Enlace YouTube sintético sin proveedor",
+      "text": "",
+      "url": "https://www.youtube.com/watch?v=QAref123abc",
+      "id": "d602ede3-ebb8-4c71-8e04-555cf81ae95c",
+      "createdAt": "2026-10-18T02:04:03.295Z",
+      "updatedAt": "2026-10-18T02:04:03.295Z"
+    },
+    {
+      "source": "Equipo",
+      "language": "en",
+      "market": "Referencia del equipo",
+      "format": "link",
+      "status": "new",
+      "tags": [],
+      "title": "QA HTML <b id=\"qa-html-title\">literal</b>",
+      "text": "<strong id=\"qa-html-context\">Contenido sintético literal & sin ejecutar</strong>\n<a href=\"javascript:void(0)\">enlace inerte en texto</a>",
+      "id": "6ea54fae-c1d6-4a90-9a1d-f34b42a8281d",
+      "createdAt": "2026-10-18T02:03:23.335Z",
+      "updatedAt": "2026-10-18T02:03:23.335Z"
+    },
+    {
+      "source": "Equipo",
+      "language": "en",
+      "market": "Referencia del equipo",
+      "format": "link",
+      "status": "new",
+      "tags": [],
+      "title": "QA URL privada loopback",
+      "text": "",
+      "url": "http://127.0.0.1:9/qa-private-reference",
+      "id": "ecd72dbe-632c-4943-a5be-fc0ad84684dd",
+      "createdAt": "2026-10-18T02:03:14.738Z",
+      "updatedAt": "2026-10-18T02:03:14.738Z"
+    },
+    {
+      "source": "Equipo",
+      "language": "en",
+      "market": "Referencia del equipo",
+      "format": "link",
+      "status": "saved",
+      "tags": [],
+      "title": "QA Reintento de bandeja",
+      "text": "Referencia sintética para simular una respuesta de estado fallida tras guardarse.",
+      "id": "0e2d5096-f52b-4922-b4bf-5f0c44ad8b21",
+      "createdAt": "2026-10-18T02:03:00.761Z",
+      "updatedAt": "2026-10-18T02:03:46.025Z"
+    },
+    {
+      "source": "Equipo",
+      "language": "en",
+      "market": "Referencia del equipo",
+      "format": "link",
+      "status": "new",
+      "tags": [],
+      "title": "QA Captura IA — líderes & equipos",
+      "text": "Tema: IA práctica\nNotas sintéticas: revisar una fuente pública; no es contenido importado.\nFecha declarada: 2026-10-15; vistas: 1234 (declaración manual, no comprobada).",
+      "url": "https://www.linkedin.com/posts/qa-references_ia-sintetica-123",
+      "id": "b6b74028-1a9b-4cad-9b1e-ac875044314c",
+      "createdAt": "2026-10-18T02:02:26.536Z",
+      "updatedAt": "2026-10-18T02:02:26.536Z"
+    },
+    {
+      "source": "Equipo",
+      "language": "es",
+      "market": "Referencia del equipo",
+      "format": "link",
+      "status": "new",
+      "tags": [],
+      "title": "QA Captura IA — líderes & equipos",
+      "text": "Tema: IA práctica\nNotas sintéticas: revisar una fuente pública; no es contenido importado.\nFecha declarada: 2026-10-15; vistas: 1234 (declaración manual, no comprobada).",
+      "url": "https://www.linkedin.com/posts/qa-references_ia-sintetica-123",
+      "id": "661dc990-99e3-4fb7-985d-9884d93e1f3e",
+      "createdAt": "2026-10-18T02:01:38.602Z",
+      "updatedAt": "2026-10-18T02:02:20.444Z"
+    }
+  ],
+  "assets": [
+    {
+      "id": "1e3e0e32-61c8-43b7-ad1a-55ba3d0ccb10",
+      "name": "qa-references-attachment.txt",
+      "type": "document",
+      "mimeType": "text/plain",
+      "size": 55,
+      "url": "/api/brands/b9d6618e-3919-4e72-9259-89a3021361e3/assets/1e3e0e32-61c8-43b7-ad1a-55ba3d0ccb10/file",
+      "origin": "upload",
+      "createdAt": "2026-10-18T02:04:17.125Z",
+      "updatedAt": "2026-10-18T02:04:17.125Z"
+    }
+  ],
+  "rows": [
+    "qa-references-attachment.txtEquipo · Ahora",
+    "QA Enlace YouTube sintético sin proveedorEquipo · Ahora",
+    "QA HTML <b id=\"qa-html-title\">literal</b>Equipo · Hace 1 min",
+    "QA URL privada loopbackEquipo · Hace 1 min",
+    "QA Reintento de bandejaEquipo · Hace 1 min",
+    "QA Captura IA — líderes & equiposEquipo · Hace 2 min",
+    "QA Captura IA — líderes & equiposEquipo · Hace 2 min"
+  ],
+  "checks": {
+    "duplicateUrlCount": 2,
+    "cancelledPresent": false,
+    "unsafeUrlPresent": false,
+    "retryReferenceCount": 1,
+    "htmlDom": {
+      "injectedNodes": 0,
+      "unsafeLinks": 0
+    },
+    "attachmentDetail": {
+      "links": [],
+      "mediaElements": [],
+      "buttons": [
+        "Cerrar",
+        "Analizar referencia",
+        "Crear guion"
+      ]
+    },
+    "attachmentFileResponse": {
+      "status": 200,
+      "mime": "text/plain; charset=utf-8",
+      "text": "Documento sintético QA referencias\nTema: IA práctica\n"
+    },
+    "failedRefreshSimulation": {
+      "stateFailures": 1,
+      "referenceCountBeforeRetry": 1,
+      "referenceCountAfterRetry": 1
+    }
+  }
+}

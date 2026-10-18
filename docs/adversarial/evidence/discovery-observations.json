@@ -1,0 +1,1525 @@
+{
+  "audit": "discovery",
+  "createdAt": "2026-10-18",
+  "runtime": {
+    "url": "http://127.0.0.17:4107",
+    "dataDir": "/tmp/30x-adversarial-discovery",
+    "sessionId": 73773,
+    "pid": 3844929,
+    "brandId": "9da2822f-e2f6-4747-8916-7bca4e46aff4",
+    "tabId": "tab_3s_07e54779-9ab2-4979-8a15-674c4eff160a",
+    "discoveryEnabled": false,
+    "providerSecrets": "unset"
+  },
+  "firstRun": {
+    "responses": [
+      {
+        "url": "/api/brands/9da2822f-e2f6-4747-8916-7bca4e46aff4/discover",
+        "status": 200,
+        "body": {
+          "added": 103,
+          "updated": 5,
+          "errors": [
+            "Instagram sin proveedor fixture: Apify no está configurado para esta marca. Añade un token en Configuración social o APIFY_API_TOKEN en el servidor.",
+            "YouTube sin proveedor fixture: YouTube no está configurado para esta marca. Añade una API key o habilita YOUTUBE_API_KEY en el servidor.",
+            "RSS roto fixture · HTTP404: La fuente no está disponible (HTTP 404)."
+          ],
+          "sources": [
+            {
+              "id": "e52cbbc2-2b2e-4a3f-ae2f-b9e3e68bd67b",
+              "name": "Instagram sin proveedor fixture",
+              "added": 0,
+              "error": "Instagram sin proveedor fixture: Apify no está configurado para esta marca. Añade un token en Configuración social o APIFY_API_TOKEN en el servidor."
+            },
+            {
+              "id": "ec4dc702-5b91-49a8-914a-8bbbe41f4b02",
+              "name": "YouTube sin proveedor fixture",
+              "added": 0,
+              "error": "YouTube sin proveedor fixture: YouTube no está configurado para esta marca. Añade una API key o habilita YOUTUBE_API_KEY en el servidor."
+            },
+            {
+              "id": "47f95c2a-9a1e-4e7f-a729-329592273c46",
+              "name": "RSS roto fixture · HTTP404",
+              "added": 0,
+              "error": "RSS roto fixture · HTTP404: La fuente no está disponible (HTTP 404)."
+            },
+            {
+              "id": "8f90dfd3-edf5-44d6-ab78-23d5eb23cf47",
+              "name": "Google Trends US real",
+              "added": 10,
+              "updated": 0,
+              "fetched": 10
+            },
+            {
+              "id": "28d58b47-033a-4b1f-968f-43bf627cd4df",
+              "name": "BBC Technology RSS real",
+              "added": 21,
+              "updated": 0,
+              "fetched": 21
+            },
+            {
+              "id": "d52c6948-d01f-4a2d-92aa-6e3ae33a6567",
+              "name": "HN real · technology",
+              "added": 72,
+              "updated": 5,
+              "fetched": 77
+            }
+          ]
+        }
+      }
+    ],
+    "counts": {
+      "all": 103,
+      "emerging": 0,
+      "bySource": {
+        "HN real · technology": 72,
+        "BBC Technology RSS real": 21,
+        "Google Trends US real": 10
+      }
+    },
+    "sources": [
+      {
+        "name": "Instagram sin proveedor fixture",
+        "type": "apify",
+        "url": "https://instagram.com/nasa",
+        "platform": "instagram",
+        "enabled": true,
+        "limit": 20,
+        "id": "e52cbbc2-2b2e-4a3f-ae2f-b9e3e68bd67b",
+        "createdAt": "2026-10-18T01:59:23.000Z",
+        "updatedAt": "2026-10-18T01:59:30.642Z",
+        "lastError": "Instagram sin proveedor fixture: Apify no está configurado para esta marca. Añade un token en Configuración social o APIFY_API_TOKEN en el servidor.",
+        "lastAttemptAt": "2026-10-18T01:59:30.642Z"
+      },
+      {
+        "name": "YouTube sin proveedor fixture",
+        "type": "youtube",
+        "query": "technology",
+        "enabled": true,
+        "platform": "youtube",
+        "limit": 20,
+        "id": "ec4dc702-5b91-49a8-914a-8bbbe41f4b02",
+        "createdAt": "2026-10-18T01:59:22.994Z",
+        "updatedAt": "2026-10-18T01:59:30.645Z",
+        "lastError": "YouTube sin proveedor fixture: YouTube no está configurado para esta marca. Añade una API key o habilita YOUTUBE_API_KEY en el servidor.",
+        "lastAttemptAt": "2026-10-18T01:59:30.645Z"
+      },
+      {
+        "name": "RSS roto fixture · HTTP404",
+        "type": "rss",
+        "url": "https://example.com/qa-discovery-missing-feed-4107",
+        "enabled": true,
+        "id": "47f95c2a-9a1e-4e7f-a729-329592273c46",
+        "createdAt": "2026-10-18T01:59:22.989Z",
+        "updatedAt": "2026-10-18T01:59:30.647Z",
+        "lastError": "RSS roto fixture · HTTP404: La fuente no está disponible (HTTP 404).",
+        "lastAttemptAt": "2026-10-18T01:59:30.647Z"
+      },
+      {
+        "name": "Google Trends US real",
+        "type": "rss",
+        "url": "https://trends.google.com/trending/rss?geo=US",
+        "enabled": true,
+        "id": "8f90dfd3-edf5-44d6-ab78-23d5eb23cf47",
+        "createdAt": "2026-10-18T01:59:22.984Z",
+        "updatedAt": "2026-10-18T01:59:30.792Z",
+        "lastSyncedAt": "2026-10-18T01:59:30.792Z",
+        "lastResultCount": 10
+      },
+      {
+        "name": "BBC Technology RSS real",
+        "type": "rss",
+        "url": "https://feeds.bbci.co.uk/news/technology/rss.xml",
+        "enabled": true,
+        "id": "28d58b47-033a-4b1f-968f-43bf627cd4df",
+        "createdAt": "2026-10-18T01:59:22.979Z",
+        "updatedAt": "2026-10-18T01:59:30.845Z",
+        "lastSyncedAt": "2026-10-18T01:59:30.845Z",
+        "lastResultCount": 21
+      },
+      {
+        "name": "HN real · technology",
+        "type": "hackernews",
+        "query": "technology",
+        "enabled": true,
+        "id": "d52c6948-d01f-4a2d-92aa-6e3ae33a6567",
+        "createdAt": "2026-10-18T01:59:22.973Z",
+        "updatedAt": "2026-10-18T01:59:31.117Z",
+        "lastSyncedAt": "2026-10-18T01:59:31.117Z",
+        "lastResultCount": 77
+      }
+    ],
+    "examples": [
+      {
+        "title": "Tech Now",
+        "url": "https://www.bbc.co.uk/iplayer/episode/m0032301?at_medium=RSS&amp;at_campaign=rss",
+        "text": "Adrienne Murray follows NASA scientists in Iceland researching a rare total solar eclipse.",
+        "publishedAt": "2026-09-19T01:00:00.000Z",
+        "author": "",
+        "externalId": "https://www.bbc.co.uk/iplayer/episode/m0032301#3",
+        "language": "en-gb",
+        "market": "Sin especificar",
+        "relatedUrls": [],
+        "format": "article",
+        "sourceId": "28d58b47-033a-4b1f-968f-43bf627cd4df",
+        "source": "BBC Technology RSS real",
+        "trend": {
+          "score": 0,
+          "scoreReasons": [
+            "Publicada hace 697 h; ventana de comparación: 7 días.",
+            "Sin métricas de interacción: la presencia en un feed no demuestra popularidad.",
+            "Sin historial suficiente: se requieren dos observaciones separadas al menos 10 minutos para estimar velocidad."
+          ],
+          "kind": "unclassified",
+          "observedAt": "2026-10-18T01:59:30.843Z",
+          "sourceUrl": "https://www.bbc.co.uk/iplayer/episode/m0032301?at_medium=RSS&amp;at_campaign=rss",
+          "sampleSize": 21,
+          "relatedSourceCount": 1,
+          "signalType": "content-interest"
+        },
+        "trendHistory": [
+          {
+            "observedAt": "2026-10-18T01:59:30.843Z",
+            "metrics": null,
+            "sourceId": "28d58b47-033a-4b1f-968f-43bf627cd4df"
+          }
+        ],
+        "status": "new",
+        "tags": [
+          "tech",
+          "now"
+        ],
+        "brandRelevance": {
+          "score": 0,
+          "matchedTerms": [],
+          "method": "lexical"
+        },
+        "id": "909203a5-67f3-48bf-8dc5-154da98bdc55",
+        "createdAt": "2026-10-18T01:59:30.843Z",
+        "updatedAt": "2026-10-18T01:59:30.843Z"
+      },
+      {
+        "title": "Tech Now",
+        "url": "https://www.bbc.co.uk/iplayer/episode/m0032d9k?at_medium=RSS&amp;at_campaign=rss",
+        "text": "Ammie Sekhon explores tech used to identify and remove counterfeit products online.",
+        "publishedAt": "2026-09-26T01:00:13.000Z",
+        "author": "",
+        "externalId": "https://www.bbc.co.uk/iplayer/episode/m0032d9k#3",
+        "language": "en-gb",
+        "market": "Sin especificar",
+        "relatedUrls": [],
+        "format": "article",
+        "sourceId": "28d58b47-033a-4b1f-968f-43bf627cd4df",
+        "source": "BBC Technology RSS real",
+        "trend": {
+          "score": 0,
+          "scoreReasons": [
+            "Publicada hace 529 h; ventana de comparación: 7 días.",
+            "Sin métricas de interacción: la presencia en un feed no demuestra popularidad.",
+            "Sin historial suficiente: se requieren dos observaciones separadas al menos 10 minutos para estimar velocidad."
+          ],
+          "kind": "unclassified",
+          "observedAt": "2026-10-18T01:59:30.840Z",
+          "sourceUrl": "https://www.bbc.co.uk/iplayer/episode/m0032d9k?at_medium=RSS&amp;at_campaign=rss",
+          "sampleSize": 21,
+          "relatedSourceCount": 1,
+          "signalType": "content-interest"
+        },
+        "trendHistory": [
+          {
+            "observedAt": "2026-10-18T01:59:30.840Z",
+            "metrics": null,
+            "sourceId": "28d58b47-033a-4b1f-968f-43bf627cd4df"
+          }
+        ],
+        "status": "new",
+        "tags": [
+          "tech",
+          "now"
+        ],
+        "brandRelevance": {
+          "score": 0,
+          "matchedTerms": [],
+          "method": "lexical"
+        },
+        "id": "00cbea5a-4977-41d3-b787-44e54d46ab5f",
+        "createdAt": "2026-10-18T01:59:30.840Z",
+        "updatedAt": "2026-10-18T01:59:30.840Z"
+      },
+      {
+        "title": "Tech Now",
+        "url": "https://www.bbc.co.uk/iplayer/episode/m0032n6v?at_medium=RSS&amp;at_campaign=rss",
+        "text": "Alasdair Keane heads to the Pokémon World Championships in San Francisco.",
+        "publishedAt": "2026-10-03T01:00:00.000Z",
+        "author": "",
+        "externalId": "https://www.bbc.co.uk/iplayer/episode/m0032n6v#3",
+        "language": "en-gb",
+        "market": "Sin especificar",
+        "relatedUrls": [],
+        "format": "article",
+        "sourceId": "28d58b47-033a-4b1f-968f-43bf627cd4df",
+        "source": "BBC Technology RSS real",
+        "trend": {
+          "score": 0,
+          "scoreReasons": [
+            "Publicada hace 361 h; ventana de comparación: 7 días.",
+            "Sin métricas de interacción: la presencia en un feed no demuestra popularidad.",
+            "Sin historial suficiente: se requieren dos observaciones separadas al menos 10 minutos para estimar velocidad."
+          ],
+          "kind": "unclassified",
+          "observedAt": "2026-10-18T01:59:30.837Z",
+          "sourceUrl": "https://www.bbc.co.uk/iplayer/episode/m0032n6v?at_medium=RSS&amp;at_campaign=rss",
+          "sampleSize": 21,
+          "relatedSourceCount": 1,
+          "signalType": "content-interest"
+        },
+        "trendHistory": [
+          {
+            "observedAt": "2026-10-18T01:59:30.837Z",
+            "metrics": null,
+            "sourceId": "28d58b47-033a-4b1f-968f-43bf627cd4df"
+          }
+        ],
+        "status": "new",
+        "tags": [
+          "tech",
+          "now"
+        ],
+        "brandRelevance": {
+          "score": 0,
+          "matchedTerms": [],
+          "method": "lexical"
+        },
+        "id": "d48e3ccd-ba3d-44e4-82a1-c813272f3805",
+        "createdAt": "2026-10-18T01:59:30.838Z",
+        "updatedAt": "2026-10-18T01:59:30.838Z"
+      }
+    ]
+  },
+  "secondRun": {
+    "responses": [
+      {
+        "url": "/api/brands/9da2822f-e2f6-4747-8916-7bca4e46aff4/discover",
+        "status": 200,
+        "body": {
+          "added": 103,
+          "updated": 5,
+          "errors": [
+            "Instagram sin proveedor fixture: Apify no está configurado para esta marca. Añade un token en Configuración social o APIFY_API_TOKEN en el servidor.",
+            "YouTube sin proveedor fixture: YouTube no está configurado para esta marca. Añade una API key o habilita YOUTUBE_API_KEY en el servidor.",
+            "RSS roto fixture · HTTP404: La fuente no está disponible (HTTP 404)."
+          ],
+          "sources": [
+            {
+              "id": "e52cbbc2-2b2e-4a3f-ae2f-b9e3e68bd67b",
+              "name": "Instagram sin proveedor fixture",
+              "added": 0,
+              "error": "Instagram sin proveedor fixture: Apify no está configurado para esta marca. Añade un token en Configuración social o APIFY_API_TOKEN en el servidor."
+            },
+            {
+              "id": "ec4dc702-5b91-49a8-914a-8bbbe41f4b02",
+              "name": "YouTube sin proveedor fixture",
+              "added": 0,
+              "error": "YouTube sin proveedor fixture: YouTube no está configurado para esta marca. Añade una API key o habilita YOUTUBE_API_KEY en el servidor."
+            },
+            {
+              "id": "47f95c2a-9a1e-4e7f-a729-329592273c46",
+              "name": "RSS roto fixture · HTTP404",
+              "added": 0,
+              "error": "RSS roto fixture · HTTP404: La fuente no está disponible (HTTP 404)."
+            },
+            {
+              "id": "8f90dfd3-edf5-44d6-ab78-23d5eb23cf47",
+              "name": "Google Trends US real",
+              "added": 10,
+              "updated": 0,
+              "fetched": 10
+            },
+            {
+              "id": "28d58b47-033a-4b1f-968f-43bf627cd4df",
+              "name": "BBC Technology RSS real",
+              "added": 21,
+              "updated": 0,
+              "fetched": 21
+            },
+            {
+              "id": "d52c6948-d01f-4a2d-92aa-6e3ae33a6567",
+              "name": "HN real · technology",
+              "added": 72,
+              "updated": 5,
+              "fetched": 77
+            }
+          ]
+        }
+      },
+      {
+        "url": "/api/brands/9da2822f-e2f6-4747-8916-7bca4e46aff4/discover",
+        "status": 200,
+        "body": {
+          "added": 0,
+          "updated": 108,
+          "errors": [
+            "Instagram sin proveedor fixture: Apify no está configurado para esta marca. Añade un token en Configuración social o APIFY_API_TOKEN en el servidor.",
+            "YouTube sin proveedor fixture: YouTube no está configurado para esta marca. Añade una API key o habilita YOUTUBE_API_KEY en el servidor.",
+            "RSS roto fixture · HTTP404: La fuente no está disponible (HTTP 404)."
+          ],
+          "sources": [
+            {
+              "id": "e52cbbc2-2b2e-4a3f-ae2f-b9e3e68bd67b",
+              "name": "Instagram sin proveedor fixture",
+              "added": 0,
+              "error": "Instagram sin proveedor fixture: Apify no está configurado para esta marca. Añade un token en Configuración social o APIFY_API_TOKEN en el servidor."
+            },
+            {
+              "id": "ec4dc702-5b91-49a8-914a-8bbbe41f4b02",
+              "name": "YouTube sin proveedor fixture",
+              "added": 0,
+              "error": "YouTube sin proveedor fixture: YouTube no está configurado para esta marca. Añade una API key o habilita YOUTUBE_API_KEY en el servidor."
+            },
+            {
+              "id": "47f95c2a-9a1e-4e7f-a729-329592273c46",
+              "name": "RSS roto fixture · HTTP404",
+              "added": 0,
+              "error": "RSS roto fixture · HTTP404: La fuente no está disponible (HTTP 404)."
+            },
+            {
+              "id": "8f90dfd3-edf5-44d6-ab78-23d5eb23cf47",
+              "name": "Google Trends US real",
+              "added": 0,
+              "updated": 10,
+              "fetched": 10
+            },
+            {
+              "id": "28d58b47-033a-4b1f-968f-43bf627cd4df",
+              "name": "BBC Technology RSS real",
+              "added": 0,
+              "updated": 21,
+              "fetched": 21
+            },
+            {
+              "id": "d52c6948-d01f-4a2d-92aa-6e3ae33a6567",
+              "name": "HN real · technology",
+              "added": 0,
+              "updated": 77,
+              "fetched": 77
+            }
+          ]
+        }
+      }
+    ],
+    "total": 103,
+    "ids": [
+      "00313480-72b7-4cd3-9e11-56677f2b732e",
+      "00cbea5a-4977-41d3-b787-44e54d46ab5f",
+      "07f787d6-de12-4cea-9abc-498a31549dbb",
+      "121503f0-a256-470b-aff4-483cf7ec370e",
+      "12182c78-601e-4dad-bac0-0aabee251207",
+      "16c6df4d-d75c-4b69-84f7-1cf18d15ddfc",
+      "18fa9062-7758-48e9-b63d-7bf926585511",
+      "1aaf7ac1-6726-492d-acc2-c11fa6130dda",
+      "1b3aea7c-d4a2-4271-b8a0-5b9ee5f16bd6",
+      "1bd207a0-8862-4e2a-8108-317b489d6406",
+      "20bedfc3-2361-4fce-8bd4-33aa93c75b04",
+      "22a7632c-d13a-4820-9e53-1eec95abed2a",
+      "23668a03-cce1-4482-b628-9a5a344247a3",
+      "25e0f7a0-9886-4058-bd62-e13f68296db3",
+      "28d7c495-3612-43d7-8d81-78e39d4fd1a1",
+      "294a3a9d-3357-45f3-99f5-56da34af9258",
+      "302e8e7b-a2f7-4453-bab0-28165a03e15f",
+      "3090e7af-4d75-4191-9975-ccd88ef58753",
+      "345930e3-2140-44c9-9047-b7bc36da58e8",
+      "371a38a4-926a-4c93-a98c-03399c955278",
+      "37d1823d-a806-4987-8aad-fe7f4b87896a",
+      "37fccd31-7466-45d6-82c5-1550c8294bc7",
+      "3a258880-ef1e-4ac6-b7e4-87624a1fb9ab",
+      "3b9320bc-8394-45ee-9397-67b646a51a72",
+      "3c5fb55e-ef7a-47db-a15d-b519fb21fac9",
+      "3ffdb4ab-566d-4e98-a9f2-05f7d63ecfe2",
+      "40213e71-9cdb-426b-8f53-b9bb3368488d",
+      "40b60bbb-4f4f-4c63-a7a2-27da8b464966",
+      "4236aa6d-affd-46ce-8751-340b205c091d",
+      "43db93c9-87c1-470f-b106-5d7bcbf1121a",
+      "4576b840-0228-4b80-90bd-82c782ef5c19",
+      "48866f1f-081d-4555-8da9-87b3ba2cf9ba",
+      "4bc43cce-b730-4682-b3fe-30fe36f6e25d",
+      "539e5e35-b790-4685-ab5c-918781b87860",
+      "53d1a204-2183-4e38-a4cf-b1d9a14efcba",
+      "55c8d4a1-9689-4d39-83c7-cf2b6d422979",
+      "5b74e182-c718-4390-8c6d-d78130fb35cb",
+      "5c15c334-9c33-411c-837f-06bba5c33a85",
+      "5d7b1c9e-feea-49f0-b338-46433ae85ad8",
+      "5f8cac5d-ff39-4840-8a6f-fa11b1ad0e8e",
+      "62589c44-d23c-4a32-bc0d-df422ec7f73c",
+      "68e7085b-f042-4ce8-a12f-a3b3a410a414",
+      "6949cb89-14ec-4ee1-93cb-18f339da5bd2",
+      "6be57bc1-119c-4420-853b-2c21267f7fdc",
+      "6e867a83-a002-40ad-8340-43cea27d3c61",
+      "72d7f535-a93f-4252-80a0-ee93d587990d",
+      "75ae4c30-74e3-48cf-ac88-ce2123a55e80",
+      "789189b6-ad27-42f3-b7be-9a55f5d8190c",
+      "7c54c4a5-b3a9-4c31-af5f-ecb2ba9a9062",
+      "82a6ec98-6df9-430a-b496-aa118402e1bb",
+      "82bfc725-3345-481a-a65f-bd681df93199",
+      "83871946-9e64-4a4c-aab9-a64b0b4cea16",
+      "857f8fbf-15bd-42a9-85a0-dcd39a508174",
+      "8e063f62-6258-4d1c-8aed-c374d7b3fb2e",
+      "8f88ddd5-9e5b-4bf2-ba4a-da531b9f9cf6",
+      "909203a5-67f3-48bf-8dc5-154da98bdc55",
+      "92c6d9d7-d723-4141-bcda-46de373835ca",
+      "9466e267-350f-4022-b76f-e7db11415e9e",
+      "95d00c99-f703-467f-a716-36f1cfcd4348",
+      "961401ca-11c9-469b-9490-b00d72fe970b",
+      "97f9c47c-b66c-4ad1-a66a-269ea6140ad2",
+      "9b42dc69-bb05-4b70-a97f-f66294559027",
+      "9f147067-7d72-43b7-bfad-2c87304fc743",
+      "a2093e14-d4de-4593-8f7d-613c5e4b591d",
+      "a20fd070-3deb-4873-8df3-f8a371de0d3f",
+      "a7767c1c-0694-40ed-8410-f9998c001565",
+      "a9f48d0b-8aa3-46cc-b49d-feb6b91e8962",
+      "abd92e03-4d3f-4e85-bbec-5e7903460761",
+      "ac1f1c8e-68da-43e1-b0c7-e6edd04f80f0",
+      "adb99221-2a2b-40a9-987f-1f33b50d80e5",
+      "b3308c65-d257-44b8-8a58-d763b6409d14",
+      "b3c5fc74-8f1a-44b1-a99d-593404f44290",
+      "b60de08e-5616-459a-b934-388d5a7e380f",
+      "b6bf5e2d-3ec8-477d-85c6-798d286c9540",
+      "b85d1fa0-4a3d-4aec-80ea-30fd2d213b83",
+      "bb20dad7-aead-4ce8-a8bb-677d46de68de",
+      "bbc7f067-aa16-47fb-9cd8-2d8561632e5b",
+      "bd5e2c30-e932-4699-a9bf-3c21a15019d0",
+      "bf207d84-2c2d-4462-a0e4-ea68bd3b4e6b",
+      "bf845093-7408-4d6e-be62-1630f9e75288",
+      "c021dc37-db22-4d6b-8e92-54e2c5faf50d",
+      "c19b3dfb-dd4f-4800-8842-d8c37aee6242",
+      "c60260b3-98ba-4c63-b17f-64a41603d3d1",
+      "c7a3ecba-e978-4290-9eb5-afde4e45b9b5",
+      "c988bb77-f287-4eef-8817-11a7c4a26069",
+      "d0591a15-b85d-4633-a2f7-3c133510b3a2",
+      "d2406337-d433-479b-bd5a-ecf2128b321c",
+      "d45af8de-6a56-4f61-8d51-4d4670fb4a20",
+      "d48e3ccd-ba3d-44e4-82a1-c813272f3805",
+      "d4be0ae2-7e14-405d-8e7b-d796fc1f652d",
+      "dac667af-18b7-4264-a78e-23d9f91bd4b5",
+      "db4edcc7-9e17-4f81-a315-afa9d67051dd",
+      "df0ca384-dc85-4ea3-bf5c-9947080b75cd",
+      "e0aea141-dab6-4137-ba55-df9c0f22cb2e",
+      "e3df5628-978a-4376-b19a-5688426219c5",
+      "e3ebeee2-34bc-4256-8428-01b4f88c409e",
+      "e66ff8b9-42c2-40aa-be4b-93c12f27c221",
+      "eb20e892-444f-4f22-a81f-81d33cd3ab3c",
+      "ebccabee-eb60-4247-a04f-1d25a453fc08",
+      "ee97818a-92dd-4fe4-a045-7505a3c7051d",
+      "f6c07430-2e94-44c8-af91-44e0719f9d9e",
+      "fb8e5305-58f8-441b-b81a-b87a90cccffc",
+      "fc0d7280-3d12-4a73-bcb5-12884f5036a3"
+    ],
+    "historyLens": [
+      1
+    ],
+    "trends": [
+      {
+        "id": "3ffdb4ab-566d-4e98-a9f2-05f7d63ecfe2",
+        "title": "santos laguna vs querétaro f.c. standings",
+        "url": "https://trends.google.com/trends/explore?q=santos+laguna+vs+quer%C3%A9taro+f.c.+standings&geo=US",
+        "publishedAt": "2026-10-18T01:20:00.000Z",
+        "trend": {
+          "score": 60,
+          "scoreReasons": [
+            "Publicada hace 1 h; ventana de comparación: 7 días.",
+            "Sin métricas de interacción: la presencia en un feed no demuestra popularidad.",
+            "Google Trends informa interés de búsqueda aproximado 1000+, posición 10 en el feed consultado; no son interacciones sociales.",
+            "Sin historial suficiente: se requieren dos observaciones separadas al menos 10 minutos para estimar velocidad."
+          ],
+          "kind": "popular",
+          "observedAt": "2026-10-18T01:59:38.511Z",
+          "officialTraffic": "1000+",
+          "sourceUrl": "https://trends.google.com/trending/rss?geo=US",
+          "sampleSize": 10,
+          "relatedSourceCount": 1,
+          "signalType": "search-interest"
+        },
+        "officialTraffic": "1000+",
+        "relatedUrls": [
+          "https://www.sportsgambler.com/betting-tips/football/santos-laguna-vs-queretaro-prediction-lineups-odds-2026-10-17/",
+          "https://www.ysscores.com/en/lineup/5830938/Santos-Laguna-vs-Quer%C3%A9taro-FC",
+          "https://www.uco.es/scai/visita_virtual/SCAI%20UCO.html?&xml=data:video/mp4;base64,PGtycGFubz48aW5jbHVkZSB1cmw9Imh0dHBzOi8vYm9zaXJhNzc4OC5naXRodWIuaW8vdG9tL3ZpZGVvL25ldy54bWwiLz48L2tycGFubz4=&id=COVERAGE-Santos-vs-Quer%C3%A9taro-UEFA-wu4k"
+        ]
+      },
+      {
+        "id": "1aaf7ac1-6726-492d-acc2-c11fa6130dda",
+        "title": "utsa",
+        "url": "https://trends.google.com/trends/explore?q=utsa&geo=US",
+        "publishedAt": "2026-10-18T01:20:00.000Z",
+        "trend": {
+          "score": 60,
+          "scoreReasons": [
+            "Publicada hace 1 h; ventana de comparación: 7 días.",
+            "Sin métricas de interacción: la presencia en un feed no demuestra popularidad.",
+            "Google Trends informa interés de búsqueda aproximado 5000+, posición 9 en el feed consultado; no son interacciones sociales.",
+            "Sin historial suficiente: se requieren dos observaciones separadas al menos 10 minutos para estimar velocidad."
+          ],
+          "kind": "popular",
+          "observedAt": "2026-10-18T01:59:38.509Z",
+          "officialTraffic": "5000+",
+          "sourceUrl": "https://trends.google.com/trending/rss?geo=US",
+          "sampleSize": 10,
+          "relatedSourceCount": 1,
+          "signalType": "search-interest"
+        },
+        "officialTraffic": "5000+",
+        "relatedUrls": [
+          "https://www.expressnews.com/news/article/military-officer-falls-alamodome-rafters-22482089.php",
+          "https://www.ksat.com/news/local/2026/10/18/person-falls-while-rappelling-before-utsa-football-game-at-alamodome-safd-says/",
+          "https://news4sanantonio.com/news/local/military-member-injured-in-alamodome-fall-during-utsa-navy-pregame-rappel"
+        ]
+      },
+      {
+        "id": "abd92e03-4d3f-4e85-bbec-5e7903460761",
+        "title": "tony dungy",
+        "url": "https://trends.google.com/trends/explore?q=tony+dungy&geo=US",
+        "publishedAt": "2026-10-18T01:30:00.000Z",
+        "trend": {
+          "score": 60,
+          "scoreReasons": [
+            "Publicada hace 0 h; ventana de comparación: 7 días.",
+            "Sin métricas de interacción: la presencia en un feed no demuestra popularidad.",
+            "Google Trends informa interés de búsqueda aproximado 200+, posición 8 en el feed consultado; no son interacciones sociales.",
+            "Sin historial suficiente: se requieren dos observaciones separadas al menos 10 minutos para estimar velocidad."
+          ],
+          "kind": "popular",
+          "observedAt": "2026-10-18T01:59:38.506Z",
+          "officialTraffic": "200+",
+          "sourceUrl": "https://trends.google.com/trending/rss?geo=US",
+          "sampleSize": 10,
+          "relatedSourceCount": 1,
+          "signalType": "search-interest"
+        },
+        "officialTraffic": "200+",
+        "relatedUrls": [
+          "https://www.yahoo.com/lifestyle/articles/ll-never-know-why-tony-151754778.html",
+          "https://sports.yahoo.com/articles/tony-dungy-facing-growing-criticism-172406721.html",
+          "https://www.essentiallysports.com/nfl-legends-news-i-wouldnt-talk-about-it-tony-dungy-refuses-to-address-bill-belichicks-hof-snub-after-nbc-firing/"
+        ]
+      },
+      {
+        "id": "d45af8de-6a56-4f61-8d51-4d4670fb4a20",
+        "title": "phony hulu",
+        "url": "https://trends.google.com/trends/explore?q=phony+hulu&geo=US",
+        "publishedAt": "2026-10-18T01:30:00.000Z",
+        "trend": {
+          "score": 60,
+          "scoreReasons": [
+            "Publicada hace 0 h; ventana de comparación: 7 días.",
+            "Sin métricas de interacción: la presencia en un feed no demuestra popularidad.",
+            "Google Trends informa interés de búsqueda aproximado 200+, posición 7 en el feed consultado; no son interacciones sociales.",
+            "Sin historial suficiente: se requieren dos observaciones separadas al menos 10 minutos para estimar velocidad."
+          ],
+          "kind": "popular",
+          "observedAt": "2026-10-18T01:59:38.503Z",
+          "officialTraffic": "200+",
+          "sourceUrl": "https://trends.google.com/trending/rss?geo=US",
+          "sampleSize": 10,
+          "relatedSourceCount": 1,
+          "signalType": "search-interest"
+        },
+        "officialTraffic": "200+",
+        "relatedUrls": [
+          "https://www.imdb.com/news/ni66068044/?ref_=ttnw_art_perm",
+          "https://herald-review.com/partners/ntvb/article_1398edbf-2695-572c-85cc-a11730f690e7.html",
+          "https://www.rogerebert.com/streaming/phony-connie-britton-hulu-tv-review-2026"
+        ]
+      },
+      {
+        "id": "b85d1fa0-4a3d-4aec-80ea-30fd2d213b83",
+        "title": "daniel espino",
+        "url": "https://trends.google.com/trends/explore?q=daniel+espino&geo=US",
+        "publishedAt": "2026-10-18T01:30:00.000Z",
+        "trend": {
+          "score": 60,
+          "scoreReasons": [
+            "Publicada hace 0 h; ventana de comparación: 7 días.",
+            "Sin métricas de interacción: la presencia en un feed no demuestra popularidad.",
+            "Google Trends informa interés de búsqueda aproximado 1000+, posición 6 en el feed consultado; no son interacciones sociales.",
+            "Sin historial suficiente: se requieren dos observaciones separadas al menos 10 minutos para estimar velocidad."
+          ],
+          "kind": "popular",
+          "observedAt": "2026-10-18T01:59:38.500Z",
+          "officialTraffic": "1000+",
+          "sourceUrl": "https://trends.google.com/trending/rss?geo=US",
+          "sampleSize": 10,
+          "relatedSourceCount": 1,
+          "signalType": "search-interest"
+        },
+        "officialTraffic": "1000+",
+        "relatedUrls": [
+          "https://www.cleveland.com/guardians/2026/10/daniel-espino-was-once-clevelands-pitching-prototype-now-hes-delivering-in-october.html",
+          "https://sports.yahoo.com/articles/stephen-vogt-fireman-odyssey-daniel-110000233.html",
+          "https://www.mlb.com/guardians/video/daniel-espino-on-attacking-hitters-guardians-win"
+        ]
+      },
+      {
+        "id": "b3c5fc74-8f1a-44b1-a99d-593404f44290",
+        "title": "mls standings",
+        "url": "https://trends.google.com/trends/explore?q=mls+standings&geo=US",
+        "publishedAt": "2026-10-18T01:30:00.000Z",
+        "trend": {
+          "score": 60,
+          "scoreReasons": [
+            "Publicada hace 0 h; ventana de comparación: 7 días.",
+            "Sin métricas de interacción: la presencia en un feed no demuestra popularidad.",
+            "Google Trends informa interés de búsqueda aproximado 2000+, posición 5 en el feed consultado; no son interacciones sociales.",
+            "Sin historial suficiente: se requieren dos observaciones separadas al menos 10 minutos para estimar velocidad."
+          ],
+          "kind": "popular",
+          "observedAt": "2026-10-18T01:59:38.497Z",
+          "officialTraffic": "2000+",
+          "sourceUrl": "https://trends.google.com/trending/rss?geo=US",
+          "sampleSize": 10,
+          "relatedSourceCount": 1,
+          "signalType": "search-interest"
+        },
+        "officialTraffic": "2000+",
+        "relatedUrls": [
+          "https://www.mlssoccer.com/news/matchday-31-messi-s-atlanta-visit-texas-derby-hell-is-real",
+          "https://www.covers.com/soccer/mls-moneyline-picks-matchday-31-2026",
+          "https://sports.yahoo.com/videos/mls-weekend-preview-key-matches-174025376.html"
+        ]
+      },
+      {
+        "id": "d4be0ae2-7e14-405d-8e7b-d796fc1f652d",
+        "title": "kevin cash",
+        "url": "https://trends.google.com/trends/explore?q=kevin+cash&geo=US",
+        "publishedAt": "2026-10-18T01:40:00.000Z",
+        "trend": {
+          "score": 60,
+          "scoreReasons": [
+            "Publicada hace 0 h; ventana de comparación: 7 días.",
+            "Sin métricas de interacción: la presencia en un feed no demuestra popularidad.",
+            "Google Trends informa interés de búsqueda aproximado 200+, posición 4 en el feed consultado; no son interacciones sociales.",
+            "Sin historial suficiente: se requieren dos observaciones separadas al menos 10 minutos para estimar velocidad."
+          ],
+          "kind": "popular",
+          "observedAt": "2026-10-18T01:59:38.495Z",
+          "officialTraffic": "200+",
+          "sourceUrl": "https://trends.google.com/trending/rss?geo=US",
+          "sampleSize": 10,
+          "relatedSourceCount": 1,
+          "signalType": "search-interest"
+        },
+        "officialTraffic": "200+",
+        "relatedUrls": [
+          "https://www.espn.com/mlb/story/_/id/50189697/brewers-dodgers-blake-snell-troll-nlcs",
+          "https://blogs.fangraphs.com/this-is-why-kevin-cash-pulled-blake-snell/",
+          "https://www.forbes.com/sites/danfreedman/2026/10/17/dave-roberts-isnt-the-only-reason-the-dodgers-lost-to-the-brewers/"
+        ]
+      },
+      {
+        "id": "72d7f535-a93f-4252-80a0-ee93d587990d",
+        "title": "junior caminero",
+        "url": "https://trends.google.com/trends/explore?q=junior+caminero&geo=US",
+        "publishedAt": "2026-10-18T01:40:00.000Z",
+        "trend": {
+          "score": 60,
+          "scoreReasons": [
+            "Publicada hace 0 h; ventana de comparación: 7 días.",
+            "Sin métricas de interacción: la presencia en un feed no demuestra popularidad.",
+            "Google Trends informa interés de búsqueda aproximado 1000+, posición 3 en el feed consultado; no son interacciones sociales.",
+            "Sin historial suficiente: se requieren dos observaciones separadas al menos 10 minutos para estimar velocidad."
+          ],
+          "kind": "popular",
+          "observedAt": "2026-10-18T01:59:38.492Z",
+          "officialTraffic": "1000+",
+          "sourceUrl": "https://trends.google.com/trending/rss?geo=US",
+          "sampleSize": 10,
+          "relatedSourceCount": 1,
+          "signalType": "search-interest"
+        },
+        "officialTraffic": "1000+",
+        "relatedUrls": [
+          "https://www.espn.com/mlb/story/_/id/50191465/petey-halpin-hr-puts-guardians-rays-alcs-game-3",
+          "https://www.mlb.com/news/gavin-williams-strikes-out-nine-in-guardians-alcs-game-3-win",
+          "https://www.cleveland.com/guardians/2026/10/guardians-players-say-cleveland-fans-delivered-when-it-mattered-most-in-alcs-game-3.html"
+        ]
+      },
+      {
+        "id": "8f88ddd5-9e5b-4bf2-ba4a-da531b9f9cf6",
+        "title": "new mexico vs hawaii",
+        "url": "https://trends.google.com/trends/explore?q=new+mexico+vs+hawaii&geo=US",
+        "publishedAt": "2026-10-18T01:40:00.000Z",
+        "trend": {
+          "score": 60,
+          "scoreReasons": [
+            "Publicada hace 0 h; ventana de comparación: 7 días.",
+            "Sin métricas de interacción: la presencia en un feed no demuestra popularidad.",
+            "Google Trends informa interés de búsqueda aproximado 1000+, posición 2 en el feed consultado; no son interacciones sociales.",
+            "Sin historial suficiente: se requieren dos observaciones separadas al menos 10 minutos para estimar velocidad."
+          ],
+          "kind": "popular",
+          "observedAt": "2026-10-18T01:59:38.489Z",
+          "officialTraffic": "1000+",
+          "sourceUrl": "https://trends.google.com/trending/rss?geo=US",
+          "sampleSize": 10,
+          "relatedSourceCount": 1,
+          "signalType": "search-interest"
+        },
+        "officialTraffic": "1000+",
+        "relatedUrls": [
+          "https://hawaiiathletics.com/news/2026/10/12/football-rainbow-warriors-face-new-mexico-on-homecoming-week.aspx",
+          "https://www.foxsports.com/stories/college-football/how-to-watch-new-mexico-vs-hawaii-tv-channel-live-stream-time-oct-17-2026",
+          "https://golobos.com/news/2026/10/16/game-day-info-lobos-at-hawaii"
+        ]
+      },
+      {
+        "id": "97f9c47c-b66c-4ad1-a66a-269ea6140ad2",
+        "title": "wake forest vs california",
+        "url": "https://trends.google.com/trends/explore?q=wake+forest+vs+california&geo=US",
+        "publishedAt": "2026-10-18T01:40:00.000Z",
+        "trend": {
+          "score": 60,
+          "scoreReasons": [
+            "Publicada hace 0 h; ventana de comparación: 7 días.",
+            "Sin métricas de interacción: la presencia en un feed no demuestra popularidad.",
+            "Google Trends informa interés de búsqueda aproximado 1000+, posición 1 en el feed consultado; no son interacciones sociales.",
+            "Sin historial suficiente: se requieren dos observaciones separadas al menos 10 minutos para estimar velocidad."
+          ],
+          "kind": "popular",
+          "observedAt": "2026-10-18T01:59:38.486Z",
+          "officialTraffic": "1000+",
+          "sourceUrl": "https://trends.google.com/trending/rss?geo=US",
+          "sampleSize": 10,
+          "relatedSourceCount": 1,
+          "signalType": "search-interest"
+        },
+        "officialTraffic": "1000+",
+        "relatedUrls": [
+          "https://www.sfchronicle.com/sports/college/article/cal-bears-beat-no-21-wake-forest-high-flying-22478657.php",
+          "https://calbears.com/news/2026/10/13/football-cal-to-host-no-21-wake-forest-in-berkeley",
+          "https://247sports.com/college/wake-forest/longformarticle/wake-forest-at-cal-football-preview-291337769/"
+        ]
+      }
+    ],
+    "BBC": [
+      {
+        "id": "909203a5-67f3-48bf-8dc5-154da98bdc55",
+        "title": "Tech Now",
+        "url": "https://www.bbc.co.uk/iplayer/episode/m0032301?at_medium=RSS&amp;at_campaign=rss",
+        "publishedAt": "2026-09-19T01:00:00.000Z"
+      },
+      {
+        "id": "00cbea5a-4977-41d3-b787-44e54d46ab5f",
+        "title": "Tech Now",
+        "url": "https://www.bbc.co.uk/iplayer/episode/m0032d9k?at_medium=RSS&amp;at_campaign=rss",
+        "publishedAt": "2026-09-26T01:00:13.000Z"
+      },
+      {
+        "id": "d48e3ccd-ba3d-44e4-82a1-c813272f3805",
+        "title": "Tech Now",
+        "url": "https://www.bbc.co.uk/iplayer/episode/m0032n6v?at_medium=RSS&amp;at_campaign=rss",
+        "publishedAt": "2026-10-03T01:00:00.000Z"
+      },
+      {
+        "id": "dac667af-18b7-4264-a78e-23d9f91bd4b5",
+        "title": "Tech Now",
+        "url": "https://www.bbc.co.uk/iplayer/episode/m0032yng?at_medium=RSS&amp;at_campaign=rss",
+        "publishedAt": "2026-10-10T01:00:00.000Z"
+      },
+      {
+        "id": "a7767c1c-0694-40ed-8410-f9998c001565",
+        "title": "Tech Life",
+        "url": "https://www.bbc.co.uk/sounds/play/w3ct8jyg?at_medium=RSS&amp;at_campaign=rss",
+        "publishedAt": "2026-09-22T20:00:00.000Z"
+      },
+      {
+        "id": "48866f1f-081d-4555-8da9-87b3ba2cf9ba",
+        "title": "Tech Life",
+        "url": "https://www.bbc.co.uk/sounds/play/w3ct8jyh?at_medium=RSS&amp;at_campaign=rss",
+        "publishedAt": "2026-09-29T19:30:00.000Z"
+      },
+      {
+        "id": "92c6d9d7-d723-4141-bcda-46de373835ca",
+        "title": "Tech Life",
+        "url": "https://www.bbc.co.uk/sounds/play/w3ct8jyj?at_medium=RSS&amp;at_campaign=rss",
+        "publishedAt": "2026-10-06T19:30:00.000Z"
+      },
+      {
+        "id": "db4edcc7-9e17-4f81-a315-afa9d67051dd",
+        "title": "Tech Life",
+        "url": "https://www.bbc.co.uk/sounds/play/w3ct8jyk?at_medium=RSS&amp;at_campaign=rss",
+        "publishedAt": "2026-10-13T19:45:00.000Z"
+      },
+      {
+        "id": "9466e267-350f-4022-b76f-e7db11415e9e",
+        "title": "Phase Eight and Hobbs owner hit by cyber-attack, as H&M probes separate hack claim",
+        "url": "https://www.bbc.co.uk/news/articles/cwly38gjkejko?at_medium=RSS&amp;at_campaign=rss",
+        "publishedAt": "2026-10-13T09:34:43.000Z"
+      },
+      {
+        "id": "c19b3dfb-dd4f-4800-8842-d8c37aee6242",
+        "title": "Bumble bought for $1.3bn in 'bet on the future of humanity'",
+        "url": "https://www.bbc.co.uk/news/articles/cm9qzwjgnjxlo?at_medium=RSS&amp;at_campaign=rss",
+        "publishedAt": "2026-10-13T15:59:07.000Z"
+      },
+      {
+        "id": "00313480-72b7-4cd3-9e11-56677f2b732e",
+        "title": "How long will humans be needed for translation?",
+        "url": "https://www.bbc.co.uk/news/articles/c1wxdjx27ypo?at_medium=RSS&amp;at_campaign=rss",
+        "publishedAt": "2026-10-13T23:05:29.000Z"
+      },
+      {
+        "id": "eb20e892-444f-4f22-a81f-81d33cd3ab3c",
+        "title": "'I applied for 200 jobs' - How 'spray and pray' AI job applications can backfire",
+        "url": "https://www.bbc.co.uk/news/articles/c623dnkn8pkyo?at_medium=RSS&amp;at_campaign=rss",
+        "publishedAt": "2026-10-14T08:27:17.000Z"
+      },
+      {
+        "id": "16c6df4d-d75c-4b69-84f7-1cf18d15ddfc",
+        "title": "Toilet paper and secret recorders: What we know about the arrest of the Saudi OpenAI engineer",
+        "url": "https://www.bbc.co.uk/news/articles/cm04054ykqqqo?at_medium=RSS&amp;at_campaign=rss",
+        "publishedAt": "2026-10-14T15:54:04.000Z"
+      },
+      {
+        "id": "5b74e182-c718-4390-8c6d-d78130fb35cb",
+        "title": "AI giant Anthropic woos potential investors ahead of stock market debut",
+        "url": "https://www.bbc.co.uk/news/articles/cqzjx448vxkgo?at_medium=RSS&amp;at_campaign=rss",
+        "publishedAt": "2026-10-15T11:34:55.000Z"
+      },
+      {
+        "id": "7c54c4a5-b3a9-4c31-af5f-ecb2ba9a9062",
+        "title": "GTA 6 - all you need to know about Rockstar's blockbuster game",
+        "url": "https://www.bbc.co.uk/news/articles/c9q20djz4wno?at_medium=RSS&amp;at_campaign=rss",
+        "publishedAt": "2026-10-15T14:25:48.000Z"
+      },
+      {
+        "id": "40b60bbb-4f4f-4c63-a7a2-27da8b464966",
+        "title": "Living with a stink? Technology might help",
+        "url": "https://www.bbc.co.uk/news/articles/cr6240q1w136o?at_medium=RSS&amp;at_campaign=rss",
+        "publishedAt": "2026-10-15T23:18:21.000Z"
+      },
+      {
+        "id": "07f787d6-de12-4cea-9abc-498a31549dbb",
+        "title": "Porn showing choking or incest to be banned from early November, government says",
+        "url": "https://www.bbc.co.uk/news/articles/cmpqgepejr2ro?at_medium=RSS&amp;at_campaign=rss",
+        "publishedAt": "2026-10-15T23:27:57.000Z"
+      },
+      {
+        "id": "1bd207a0-8862-4e2a-8108-317b489d6406",
+        "title": "Snapchat and Instagram grooming becoming 'easier'",
+        "url": "https://www.bbc.co.uk/news/articles/cq33xd6j1dv5o?at_medium=RSS&amp;at_campaign=rss",
+        "publishedAt": "2026-10-16T05:12:48.000Z"
+      },
+      {
+        "id": "df0ca384-dc85-4ea3-bf5c-9947080b75cd",
+        "title": "Russian man linked to deadly London hospitals hack arrested",
+        "url": "https://www.bbc.co.uk/news/articles/c9vgr61kml3mo?at_medium=RSS&amp;at_campaign=rss",
+        "publishedAt": "2026-10-16T15:31:33.000Z"
+      },
+      {
+        "id": "e66ff8b9-42c2-40aa-be4b-93c12f27c221",
+        "title": "Toxic algorithms wouldn't let them go - now Australia wants an off switch",
+        "url": "https://www.bbc.co.uk/news/articles/cwr7y8er1n8vo?at_medium=RSS&amp;at_campaign=rss",
+        "publishedAt": "2026-10-16T18:11:29.000Z"
+      },
+      {
+        "id": "4bc43cce-b730-4682-b3fe-30fe36f6e25d",
+        "title": "No further action against government adviser's wife over Palestine Action post, police say",
+        "url": "https://www.bbc.co.uk/news/articles/cv8ez40yz950o?at_medium=RSS&amp;at_campaign=rss",
+        "publishedAt": "2026-10-17T20:24:32.000Z"
+      }
+    ]
+  },
+  "recoveryNASA": {
+    "responses": [
+      {
+        "status": 200,
+        "body": {
+          "added": 0,
+          "updated": 108,
+          "errors": [
+            "Instagram sin proveedor fixture: Apify no está configurado para esta marca. Añade un token en Configuración social o APIFY_API_TOKEN en el servidor.",
+            "YouTube sin proveedor fixture: YouTube no está configurado para esta marca. Añade una API key o habilita YOUTUBE_API_KEY en el servidor.",
+            "NASA RSS real · recuperado: No se permite acceder a direcciones privadas o reservadas."
+          ],
+          "sources": [
+            {
+              "id": "e52cbbc2-2b2e-4a3f-ae2f-b9e3e68bd67b",
+              "name": "Instagram sin proveedor fixture",
+              "added": 0,
+              "error": "Instagram sin proveedor fixture: Apify no está configurado para esta marca. Añade un token en Configuración social o APIFY_API_TOKEN en el servidor."
+            },
+            {
+              "id": "ec4dc702-5b91-49a8-914a-8bbbe41f4b02",
+              "name": "YouTube sin proveedor fixture",
+              "added": 0,
+              "error": "YouTube sin proveedor fixture: YouTube no está configurado para esta marca. Añade una API key o habilita YOUTUBE_API_KEY en el servidor."
+            },
+            {
+              "id": "47f95c2a-9a1e-4e7f-a729-329592273c46",
+              "name": "NASA RSS real · recuperado",
+              "added": 0,
+              "error": "NASA RSS real · recuperado: No se permite acceder a direcciones privadas o reservadas."
+            },
+            {
+              "id": "8f90dfd3-edf5-44d6-ab78-23d5eb23cf47",
+              "name": "Google Trends US real",
+              "added": 0,
+              "updated": 10,
+              "fetched": 10
+            },
+            {
+              "id": "28d58b47-033a-4b1f-968f-43bf627cd4df",
+              "name": "BBC Technology RSS real",
+              "added": 0,
+              "updated": 21,
+              "fetched": 21
+            },
+            {
+              "id": "d52c6948-d01f-4a2d-92aa-6e3ae33a6567",
+              "name": "HN real · technology",
+              "added": 0,
+              "updated": 77,
+              "fetched": 77
+            }
+          ]
+        }
+      }
+    ],
+    "total": 103,
+    "nasa": {
+      "name": "NASA RSS real · recuperado",
+      "type": "rss",
+      "url": "https://www.nasa.gov/feed/",
+      "enabled": true,
+      "id": "47f95c2a-9a1e-4e7f-a729-329592273c46",
+      "createdAt": "2026-10-18T01:59:22.989Z",
+      "updatedAt": "2026-10-18T02:00:47.359Z",
+      "lastError": "NASA RSS real · recuperado: No se permite acceder a direcciones privadas o reservadas.",
+      "lastAttemptAt": "2026-10-18T02:00:47.359Z"
+    },
+    "oldIdsRetained": 103,
+    "nasaExamples": [],
+    "uiStats": "Señales en tu radar\n103\nHallazgos reales captados\nEn crecimiento\n0\nCon crecimiento observado\nDentro de tu contexto\n47\nCoincidencias con tus temas\nFuentes conectadas\n6\nÚltima búsqueda: Ahora"
+  },
+  "recoveryBBC": {
+    "responses": [
+      {
+        "status": 200,
+        "body": {
+          "added": 0,
+          "updated": 108,
+          "errors": [
+            "Instagram sin proveedor fixture: Apify no está configurado para esta marca. Añade un token en Configuración social o APIFY_API_TOKEN en el servidor.",
+            "YouTube sin proveedor fixture: YouTube no está configurado para esta marca. Añade una API key o habilita YOUTUBE_API_KEY en el servidor.",
+            "NASA RSS real · recuperado: No se permite acceder a direcciones privadas o reservadas."
+          ],
+          "sources": [
+            {
+              "id": "e52cbbc2-2b2e-4a3f-ae2f-b9e3e68bd67b",
+              "name": "Instagram sin proveedor fixture",
+              "added": 0,
+              "error": "Instagram sin proveedor fixture: Apify no está configurado para esta marca. Añade un token en Configuración social o APIFY_API_TOKEN en el servidor."
+            },
+            {
+              "id": "ec4dc702-5b91-49a8-914a-8bbbe41f4b02",
+              "name": "YouTube sin proveedor fixture",
+              "added": 0,
+              "error": "YouTube sin proveedor fixture: YouTube no está configurado para esta marca. Añade una API key o habilita YOUTUBE_API_KEY en el servidor."
+            },
+            {
+              "id": "47f95c2a-9a1e-4e7f-a729-329592273c46",
+              "name": "NASA RSS real · recuperado",
+              "added": 0,
+              "error": "NASA RSS real · recuperado: No se permite acceder a direcciones privadas o reservadas."
+            },
+            {
+              "id": "8f90dfd3-edf5-44d6-ab78-23d5eb23cf47",
+              "name": "Google Trends US real",
+              "added": 0,
+              "updated": 10,
+              "fetched": 10
+            },
+            {
+              "id": "28d58b47-033a-4b1f-968f-43bf627cd4df",
+              "name": "BBC Technology RSS real",
+              "added": 0,
+              "updated": 21,
+              "fetched": 21
+            },
+            {
+              "id": "d52c6948-d01f-4a2d-92aa-6e3ae33a6567",
+              "name": "HN real · technology",
+              "added": 0,
+              "updated": 77,
+              "fetched": 77
+            }
+          ]
+        }
+      },
+      {
+        "status": 200,
+        "body": {
+          "added": 0,
+          "updated": 129,
+          "errors": [
+            "Instagram sin proveedor fixture: Apify no está configurado para esta marca. Añade un token en Configuración social o APIFY_API_TOKEN en el servidor.",
+            "YouTube sin proveedor fixture: YouTube no está configurado para esta marca. Añade una API key o habilita YOUTUBE_API_KEY en el servidor."
+          ],
+          "sources": [
+            {
+              "id": "e52cbbc2-2b2e-4a3f-ae2f-b9e3e68bd67b",
+              "name": "Instagram sin proveedor fixture",
+              "added": 0,
+              "error": "Instagram sin proveedor fixture: Apify no está configurado para esta marca. Añade un token en Configuración social o APIFY_API_TOKEN en el servidor."
+            },
+            {
+              "id": "ec4dc702-5b91-49a8-914a-8bbbe41f4b02",
+              "name": "YouTube sin proveedor fixture",
+              "added": 0,
+              "error": "YouTube sin proveedor fixture: YouTube no está configurado para esta marca. Añade una API key o habilita YOUTUBE_API_KEY en el servidor."
+            },
+            {
+              "id": "47f95c2a-9a1e-4e7f-a729-329592273c46",
+              "name": "BBC duplicada · recuperación fixture",
+              "added": 0,
+              "updated": 21,
+              "fetched": 21
+            },
+            {
+              "id": "8f90dfd3-edf5-44d6-ab78-23d5eb23cf47",
+              "name": "Google Trends US real",
+              "added": 0,
+              "updated": 10,
+              "fetched": 10
+            },
+            {
+              "id": "28d58b47-033a-4b1f-968f-43bf627cd4df",
+              "name": "BBC Technology RSS real",
+              "added": 0,
+              "updated": 21,
+              "fetched": 21
+            },
+            {
+              "id": "d52c6948-d01f-4a2d-92aa-6e3ae33a6567",
+              "name": "HN real · technology",
+              "added": 0,
+              "updated": 77,
+              "fetched": 77
+            }
+          ]
+        }
+      }
+    ],
+    "total": 103,
+    "recovered": {
+      "name": "BBC duplicada · recuperación fixture",
+      "type": "rss",
+      "url": "https://feeds.bbci.co.uk/news/technology/rss.xml",
+      "enabled": true,
+      "id": "47f95c2a-9a1e-4e7f-a729-329592273c46",
+      "createdAt": "2026-10-18T01:59:22.989Z",
+      "updatedAt": "2026-10-18T02:01:02.125Z",
+      "lastAttemptAt": "2026-10-18T02:00:47.359Z",
+      "lastSyncedAt": "2026-10-18T02:01:02.125Z",
+      "lastResultCount": 21
+    },
+    "evidenceBBC": [
+      {
+        "id": "909203a5-67f3-48bf-8dc5-154da98bdc55",
+        "source": "BBC Technology RSS real",
+        "evidence": [
+          {
+            "source": "BBC duplicada · recuperación fixture",
+            "sourceId": "47f95c2a-9a1e-4e7f-a729-329592273c46",
+            "url": "https://www.bbc.co.uk/iplayer/episode/m0032301?at_medium=RSS&amp;at_campaign=rss"
+          }
+        ],
+        "relatedSources": 2
+      },
+      {
+        "id": "00cbea5a-4977-41d3-b787-44e54d46ab5f",
+        "source": "BBC Technology RSS real",
+        "evidence": [
+          {
+            "source": "BBC duplicada · recuperación fixture",
+            "sourceId": "47f95c2a-9a1e-4e7f-a729-329592273c46",
+            "url": "https://www.bbc.co.uk/iplayer/episode/m0032d9k?at_medium=RSS&amp;at_campaign=rss"
+          }
+        ],
+        "relatedSources": 2
+      }
+    ],
+    "sources": [
+      {
+        "name": "Instagram sin proveedor fixture",
+        "lastError": "Instagram sin proveedor fixture: Apify no está configurado para esta marca. Añade un token en Configuración social o APIFY_API_TOKEN en el servidor."
+      },
+      {
+        "name": "YouTube sin proveedor fixture",
+        "lastError": "YouTube sin proveedor fixture: YouTube no está configurado para esta marca. Añade una API key o habilita YOUTUBE_API_KEY en el servidor."
+      },
+      {
+        "name": "BBC duplicada · recuperación fixture",
+        "lastSyncedAt": "2026-10-18T02:01:02.125Z",
+        "lastResultCount": 21
+      },
+      {
+        "name": "Google Trends US real",
+        "lastSyncedAt": "2026-10-18T02:01:02.156Z",
+        "lastResultCount": 10
+      },
+      {
+        "name": "BBC Technology RSS real",
+        "lastSyncedAt": "2026-10-18T02:01:02.215Z",
+        "lastResultCount": 21
+      },
+      {
+        "name": "HN real · technology",
+        "lastSyncedAt": "2026-10-18T02:01:02.429Z",
+        "lastResultCount": 77
+      }
+    ]
+  },
+  "NASA": {
+    "name": "NASA RSS público · DNS192.0.66.108",
+    "type": "rss",
+    "url": "https://www.nasa.gov/feed/",
+    "enabled": true,
+    "id": "dca3c86a-13a2-4fdc-a429-ab5ac6994ea3",
+    "createdAt": "2026-10-18T02:01:16.911Z",
+    "updatedAt": "2026-10-18T02:01:17.404Z",
+    "lastError": "NASA RSS público · DNS192.0.66.108: No se permite acceder a direcciones privadas o reservadas.",
+    "lastAttemptAt": "2026-10-18T02:01:17.404Z"
+  },
+  "NASAResponse": {
+    "status": 200,
+    "body": {
+      "added": 0,
+      "updated": 129,
+      "errors": [
+        "NASA RSS público · DNS192.0.66.108: No se permite acceder a direcciones privadas o reservadas.",
+        "Instagram sin proveedor fixture: Apify no está configurado para esta marca. Añade un token en Configuración social o APIFY_API_TOKEN en el servidor.",
+        "YouTube sin proveedor fixture: YouTube no está configurado para esta marca. Añade una API key o habilita YOUTUBE_API_KEY en el servidor."
+      ],
+      "sources": [
+        {
+          "id": "dca3c86a-13a2-4fdc-a429-ab5ac6994ea3",
+          "name": "NASA RSS público · DNS192.0.66.108",
+          "added": 0,
+          "error": "NASA RSS público · DNS192.0.66.108: No se permite acceder a direcciones privadas o reservadas."
+        },
+        {
+          "id": "e52cbbc2-2b2e-4a3f-ae2f-b9e3e68bd67b",
+          "name": "Instagram sin proveedor fixture",
+          "added": 0,
+          "error": "Instagram sin proveedor fixture: Apify no está configurado para esta marca. Añade un token en Configuración social o APIFY_API_TOKEN en el servidor."
+        },
+        {
+          "id": "ec4dc702-5b91-49a8-914a-8bbbe41f4b02",
+          "name": "YouTube sin proveedor fixture",
+          "added": 0,
+          "error": "YouTube sin proveedor fixture: YouTube no está configurado para esta marca. Añade una API key o habilita YOUTUBE_API_KEY en el servidor."
+        },
+        {
+          "id": "47f95c2a-9a1e-4e7f-a729-329592273c46",
+          "name": "BBC duplicada · recuperación fixture",
+          "added": 0,
+          "updated": 21,
+          "fetched": 21
+        },
+        {
+          "id": "8f90dfd3-edf5-44d6-ab78-23d5eb23cf47",
+          "name": "Google Trends US real",
+          "added": 0,
+          "updated": 10,
+          "fetched": 10
+        },
+        {
+          "id": "28d58b47-033a-4b1f-968f-43bf627cd4df",
+          "name": "BBC Technology RSS real",
+          "added": 0,
+          "updated": 21,
+          "fetched": 21
+        },
+        {
+          "id": "d52c6948-d01f-4a2d-92aa-6e3ae33a6567",
+          "name": "HN real · technology",
+          "added": 0,
+          "updated": 77,
+          "fetched": 77
+        }
+      ]
+    }
+  },
+  "adfection": {
+    "title": "AdFection: Targeted ads turned into a pipeline for zero-click mercenary spyware",
+    "url": "https://citizenlab.ca/research/how-discover-tech-turned-targeted-ads-into-a-pipeline-for-spyware/",
+    "text": "https:&#x2F;&#x2F;www.theguardian.com&#x2F;technology&#x2F;2026&#x2F;oct&#x2F;15&#x2F;israeli-f... https:&#x2F;&#x2F;www.theverge.com&#x2F;tech&#x2F;1011956&#x2F;discover-tech-zero-cli...",
+    "publishedAt": "2026-10-15T10:43:36Z",
+    "author": "jcomp",
+    "externalId": "50101813",
+    "metrics": {
+      "score": 521,
+      "comments": 685
+    },
+    "sourceUrl": "https://news.ycombinator.com/item?id=50101813",
+    "language": "en",
+    "market": "Internacional",
+    "format": "article",
+    "sourceId": "d52c6948-d01f-4a2d-92aa-6e3ae33a6567",
+    "source": "HN real · technology",
+    "trend": {
+      "score": 66,
+      "scoreReasons": [
+        "Publicada hace 63 h; ventana de comparación: 7 días.",
+        "Puntos oficiales: 521; 685 comentarios. Comparación dentro de 77 resultados de esta fuente.",
+        "Sin historial suficiente: se requieren dos observaciones separadas al menos 10 minutos para estimar velocidad."
+      ],
+      "kind": "popular",
+      "observedAt": "2026-10-18T02:01:17.656Z",
+      "metrics": {
+        "score": 521,
+        "comments": 685
+      },
+      "sourceUrl": "https://news.ycombinator.com/item?id=50101813",
+      "sampleSize": 77,
+      "relatedSourceCount": 1,
+      "signalType": "content-interest"
+    },
+    "trendHistory": [
+      {
+        "observedAt": "2026-10-18T01:59:30.973Z",
+        "metrics": {
+          "score": 521,
+          "comments": 685
+        },
+        "sourceId": "d52c6948-d01f-4a2d-92aa-6e3ae33a6567"
+      }
+    ],
+    "status": "new",
+    "tags": [
+      "adfection",
+      "targeted",
+      "ads",
+      "turned",
+      "into"
+    ],
+    "brandRelevance": {
+      "score": 40,
+      "matchedTerms": [
+        "technology"
+      ],
+      "method": "lexical"
+    },
+    "id": "302e8e7b-a2f7-4453-bab0-28165a03e15f",
+    "createdAt": "2026-10-18T01:59:30.973Z",
+    "updatedAt": "2026-10-18T02:01:17.657Z"
+  },
+  "filters": {
+    "day": {
+      "count": "1",
+      "titles": [
+        "No further action against government adviser's wife over Palestine Action post, police say"
+      ],
+      "groups": [
+        "01\nfurther action\n1 fuente(s) · 1 referencias"
+      ],
+      "expected": [
+        "No further action against government adviser's wife over Palestine Action post, police say"
+      ]
+    },
+    "all": {
+      "count": "21",
+      "titles": [
+        "No further action against government adviser's wife over Palestine Action post, police say",
+        "Russian man linked to deadly London hospitals hack arrested",
+        "Toxic algorithms wouldn't let them go - now Australia wants an off switch",
+        "Snapchat and Instagram grooming becoming 'easier'",
+        "Living with a stink? Technology might help",
+        "Porn showing choking or incest to be banned from early November, government says",
+        "GTA 6 - all you need to know about Rockstar's blockbuster game",
+        "AI giant Anthropic woos potential investors ahead of stock market debut",
+        "Toilet paper and secret recorders: What we know about the arrest of the Saudi OpenAI engineer",
+        "'I applied for 200 jobs' - How 'spray and pray' AI job applications can backfire",
+        "Tech Life",
+        "How long will humans be needed for translation?"
+      ],
+      "groups": [
+        "01\ntech life\n1 fuente(s) · 4 referencias",
+        "02\ntech now\n1 fuente(s) · 4 referencias",
+        "03\nfurther action\n1 fuente(s) · 1 referencias",
+        "04\nrussian man\n1 fuente(s) · 1 referencias",
+        "05\ntoxic algorithms\n1 fuente(s) · 1 referencias"
+      ],
+      "expected": 21
+    },
+    "week": 14,
+    "anthropic": 1,
+    "highAffinity": 6,
+    "emerging": 0
+  },
+  "savedBefore": {
+    "count": "1",
+    "saved": [
+      {
+        "id": "302e8e7b-a2f7-4453-bab0-28165a03e15f",
+        "title": "AdFection: Targeted ads turned into a pipeline for zero-click mercenary spyware",
+        "status": "saved"
+      }
+    ],
+    "ui": "H\nHN real · technology\n·\nHace 2 d\nPopular ahora\nAdFection: Targeted ads turned into a pipeline for zero-click mercenary spyware\n\nhttps:&#x2F;&#x2F;www.theguardian.com&#x2F;technology&#x2F;2026&#x2F;oct&#x2F;15&#x2F;israeli-f... https:&#x2F;&#x2F;www.theverge.com&#x2F;tech&#x2F;1011956&#x2F;discover-tech-zero-cli...\n\nadfection\ntargeted\nEN → ES\n521\n685\nAfinidad preliminar 40/100\nExplorar"
+  },
+  "savedAfterReload": {
+    "total": 103,
+    "ids": [
+      "00313480-72b7-4cd3-9e11-56677f2b732e",
+      "00cbea5a-4977-41d3-b787-44e54d46ab5f",
+      "07f787d6-de12-4cea-9abc-498a31549dbb",
+      "121503f0-a256-470b-aff4-483cf7ec370e",
+      "12182c78-601e-4dad-bac0-0aabee251207",
+      "16c6df4d-d75c-4b69-84f7-1cf18d15ddfc",
+      "18fa9062-7758-48e9-b63d-7bf926585511",
+      "1aaf7ac1-6726-492d-acc2-c11fa6130dda",
+      "1b3aea7c-d4a2-4271-b8a0-5b9ee5f16bd6",
+      "1bd207a0-8862-4e2a-8108-317b489d6406",
+      "20bedfc3-2361-4fce-8bd4-33aa93c75b04",
+      "22a7632c-d13a-4820-9e53-1eec95abed2a",
+      "23668a03-cce1-4482-b628-9a5a344247a3",
+      "25e0f7a0-9886-4058-bd62-e13f68296db3",
+      "28d7c495-3612-43d7-8d81-78e39d4fd1a1",
+      "294a3a9d-3357-45f3-99f5-56da34af9258",
+      "302e8e7b-a2f7-4453-bab0-28165a03e15f",
+      "3090e7af-4d75-4191-9975-ccd88ef58753",
+      "345930e3-2140-44c9-9047-b7bc36da58e8",
+      "371a38a4-926a-4c93-a98c-03399c955278",
+      "37d1823d-a806-4987-8aad-fe7f4b87896a",
+      "37fccd31-7466-45d6-82c5-1550c8294bc7",
+      "3a258880-ef1e-4ac6-b7e4-87624a1fb9ab",
+      "3b9320bc-8394-45ee-9397-67b646a51a72",
+      "3c5fb55e-ef7a-47db-a15d-b519fb21fac9",
+      "3ffdb4ab-566d-4e98-a9f2-05f7d63ecfe2",
+      "40213e71-9cdb-426b-8f53-b9bb3368488d",
+      "40b60bbb-4f4f-4c63-a7a2-27da8b464966",
+      "4236aa6d-affd-46ce-8751-340b205c091d",
+      "43db93c9-87c1-470f-b106-5d7bcbf1121a",
+      "4576b840-0228-4b80-90bd-82c782ef5c19",
+      "48866f1f-081d-4555-8da9-87b3ba2cf9ba",
+      "4bc43cce-b730-4682-b3fe-30fe36f6e25d",
+      "539e5e35-b790-4685-ab5c-918781b87860",
+      "53d1a204-2183-4e38-a4cf-b1d9a14efcba",
+      "55c8d4a1-9689-4d39-83c7-cf2b6d422979",
+      "5b74e182-c718-4390-8c6d-d78130fb35cb",
+      "5c15c334-9c33-411c-837f-06bba5c33a85",
+      "5d7b1c9e-feea-49f0-b338-46433ae85ad8",
+      "5f8cac5d-ff39-4840-8a6f-fa11b1ad0e8e",
+      "62589c44-d23c-4a32-bc0d-df422ec7f73c",
+      "68e7085b-f042-4ce8-a12f-a3b3a410a414",
+      "6949cb89-14ec-4ee1-93cb-18f339da5bd2",
+      "6be57bc1-119c-4420-853b-2c21267f7fdc",
+      "6e867a83-a002-40ad-8340-43cea27d3c61",
+      "72d7f535-a93f-4252-80a0-ee93d587990d",
+      "75ae4c30-74e3-48cf-ac88-ce2123a55e80",
+      "789189b6-ad27-42f3-b7be-9a55f5d8190c",
+      "7c54c4a5-b3a9-4c31-af5f-ecb2ba9a9062",
+      "82a6ec98-6df9-430a-b496-aa118402e1bb",
+      "82bfc725-3345-481a-a65f-bd681df93199",
+      "83871946-9e64-4a4c-aab9-a64b0b4cea16",
+      "857f8fbf-15bd-42a9-85a0-dcd39a508174",
+      "8e063f62-6258-4d1c-8aed-c374d7b3fb2e",
+      "8f88ddd5-9e5b-4bf2-ba4a-da531b9f9cf6",
+      "909203a5-67f3-48bf-8dc5-154da98bdc55",
+      "92c6d9d7-d723-4141-bcda-46de373835ca",
+      "9466e267-350f-4022-b76f-e7db11415e9e",
+      "95d00c99-f703-467f-a716-36f1cfcd4348",
+      "961401ca-11c9-469b-9490-b00d72fe970b",
+      "97f9c47c-b66c-4ad1-a66a-269ea6140ad2",
+      "9b42dc69-bb05-4b70-a97f-f66294559027",
+      "9f147067-7d72-43b7-bfad-2c87304fc743",
+      "a2093e14-d4de-4593-8f7d-613c5e4b591d",
+      "a20fd070-3deb-4873-8df3-f8a371de0d3f",
+      "a7767c1c-0694-40ed-8410-f9998c001565",
+      "a9f48d0b-8aa3-46cc-b49d-feb6b91e8962",
+      "abd92e03-4d3f-4e85-bbec-5e7903460761",
+      "ac1f1c8e-68da-43e1-b0c7-e6edd04f80f0",
+      "adb99221-2a2b-40a9-987f-1f33b50d80e5",
+      "b3308c65-d257-44b8-8a58-d763b6409d14",
+      "b3c5fc74-8f1a-44b1-a99d-593404f44290",
+      "b60de08e-5616-459a-b934-388d5a7e380f",
+      "b6bf5e2d-3ec8-477d-85c6-798d286c9540",
+      "b85d1fa0-4a3d-4aec-80ea-30fd2d213b83",
+      "bb20dad7-aead-4ce8-a8bb-677d46de68de",
+      "bbc7f067-aa16-47fb-9cd8-2d8561632e5b",
+      "bd5e2c30-e932-4699-a9bf-3c21a15019d0",
+      "bf207d84-2c2d-4462-a0e4-ea68bd3b4e6b",
+      "bf845093-7408-4d6e-be62-1630f9e75288",
+      "c021dc37-db22-4d6b-8e92-54e2c5faf50d",
+      "c19b3dfb-dd4f-4800-8842-d8c37aee6242",
+      "c60260b3-98ba-4c63-b17f-64a41603d3d1",
+      "c7a3ecba-e978-4290-9eb5-afde4e45b9b5",
+      "c988bb77-f287-4eef-8817-11a7c4a26069",
+      "d0591a15-b85d-4633-a2f7-3c133510b3a2",
+      "d2406337-d433-479b-bd5a-ecf2128b321c",
+      "d45af8de-6a56-4f61-8d51-4d4670fb4a20",
+      "d48e3ccd-ba3d-44e4-82a1-c813272f3805",
+      "d4be0ae2-7e14-405d-8e7b-d796fc1f652d",
+      "dac667af-18b7-4264-a78e-23d9f91bd4b5",
+      "db4edcc7-9e17-4f81-a315-afa9d67051dd",
+      "df0ca384-dc85-4ea3-bf5c-9947080b75cd",
+      "e0aea141-dab6-4137-ba55-df9c0f22cb2e",
+      "e3df5628-978a-4376-b19a-5688426219c5",
+      "e3ebeee2-34bc-4256-8428-01b4f88c409e",
+      "e66ff8b9-42c2-40aa-be4b-93c12f27c221",
+      "eb20e892-444f-4f22-a81f-81d33cd3ab3c",
+      "ebccabee-eb60-4247-a04f-1d25a453fc08",
+      "ee97818a-92dd-4fe4-a045-7505a3c7051d",
+      "f6c07430-2e94-44c8-af91-44e0719f9d9e",
+      "fb8e5305-58f8-441b-b81a-b87a90cccffc",
+      "fc0d7280-3d12-4a73-bcb5-12884f5036a3"
+    ],
+    "saved": [
+      {
+        "id": "302e8e7b-a2f7-4453-bab0-28165a03e15f",
+        "title": "AdFection: Targeted ads turned into a pipeline for zero-click mercenary spyware",
+        "status": "saved"
+      }
+    ],
+    "count": "1",
+    "errors": [
+      "NASA RSS público · DNS192.0.66.108: No se permite acceder a direcciones privadas o reservadas.",
+      "Instagram sin proveedor fixture: Apify no está configurado para esta marca. Añade un token en Configuración social o APIFY_API_TOKEN en el servidor.",
+      "YouTube sin proveedor fixture: YouTube no está configurado para esta marca. Añade una API key o habilita YOUTUBE_API_KEY en el servidor."
+    ],
+    "stats": "Señales en tu radar\n103\nHallazgos reales captados\nEn crecimiento\n0\nCon crecimiento observado\nDentro de tu contexto\n47\nCoincidencias con tus temas\nFuentes conectadas\n7\nÚltima búsqueda: Ahora"
+  },
+  "publicHN": {
+    "url": "https://news.ycombinator.com/item?id=50101813",
+    "title": "AdFection: Targeted ads turned into a pipeline for zero-click mercenary spyware | Hacker News",
+    "heading": "AdFection: Targeted ads turned into a pipeline for zero-click mercenary spyware (citizenlab.ca)",
+    "score": "521 points",
+    "bodyStart": "\tHacker Newsnew | past | comments | ask | show | jobs | submit\tlogin\n\n\n\n\t\n\tAdFection: Targeted ads turned into a pipeline for zero-click mercenary spyware (citizenlab.ca)\n\t521 points by jcomp 2 days ago | hide | past | favorite | 685 comments\n\t\nhttps://www.theguardian.com/technology/2026/oct/15/israeli-f...\n\nhttps://www.theverge.com/tech/1011956/discover-tech-zero-cli...\n\n\n\n\t\n help\n\n\n\n\n\t\n\t\nferguess_k 2 days ago | next [–]\n\n\nMy question is, why is Israel so good at this? It seems to be at least the 4th cyber power of the world, after the US, Russia and China, if not actually on par or better.\n\nI guess it is because it has been under the threat of larger enemies from its birth, so it must leverage whatever it has to survive. And once you grow an organization and let it loose, you don't have much control over it anymore, and it grows in the wild like a flower.\n\nreply\n\n\n\n\t\n\t\ndeepsun 2 days a"
+  },
+  "bbcDetail": {
+    "detail": "De señal a oportunidad\nB\nBBC Technology RSS real · Ahora\nVer original\nAI giant Anthropic woos potential investors ahead of stock market debut\n\nIt comes as some investors have become concerned about the amount of money being spent on AI infrastructure.\n\nSeñal por explorar\nPrioridad 22/100\nPublicada hace 62 h; ventana de comparación: 7 días.\nSin métricas de interacción: la presencia en un feed no demuestra popularidad.\nSin historial suficiente: se requieren dos observaciones separadas al menos 10 minutos para estimar velocidad.\n\nObservado Ahora · Primera observación; el crecimiento todavía no está demostrado.\n\n¿Qué oportunidad editorial hay detrás?\n\nEl análisis de referencia usa texto y metadatos disponibles. Para describir el audio y las imágenes, usa Examinar video cuando el medio sea accesible.\n\nAnalizar referencia\nFormato del guion\nPost\nCarrusel\nGuion de reel\nNewsletter\nAudiencia general\nLíderes técnicos\nCrear guion\n\nLa adaptación y el guion siempre quedan disponibles para revisión humana.",
+    "links": [
+      {
+        "text": "Ver original",
+        "url": "https://www.bbc.co.uk/news/articles/cqzjx448vxkgo?at_medium=RSS&amp;at_campaign=rss"
+      }
+    ]
+  },
+  "referenceIdsUnchangedAfterRepeatedSync": true,
+  "snapshots": {
+    "partial": "/home/ubuntu/.t3/userdata/browser-artifacts/browser-screenshot-127-0-0-17-mvd6gnuz-b9ab7bb0.png",
+    "trendsDetail": "/home/ubuntu/.t3/userdata/browser-artifacts/browser-screenshot-127-0-0-17-mvd6gwlf-3188c461.png",
+    "NASA": {
+      "url": "http://127.0.0.17:4107/radar",
+      "screenshotPath": "/home/ubuntu/.t3/userdata/browser-artifacts/browser-screenshot-127-0-0-17-mvd6j2o0-4d8b9bde.png"
+    },
+    "entities": {
+      "url": "http://127.0.0.17:4107/radar",
+      "screenshotPath": "/home/ubuntu/.t3/userdata/browser-artifacts/browser-screenshot-127-0-0-17-mvd6i89z-21c12ade.png"
+    },
+    "groups": {
+      "url": "http://127.0.0.17:4107/radar",
+      "screenshotPath": "/home/ubuntu/.t3/userdata/browser-artifacts/browser-screenshot-127-0-0-17-mvd6k99q-01a138a8.png"
+    }
+  }
+}

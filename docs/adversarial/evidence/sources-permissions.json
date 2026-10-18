@@ -1,0 +1,48 @@
+{
+  "synthetic": true,
+  "method": "Fixture de membership en SQLite propia; misma cuenta, recarga entre roles",
+  "reviewer": {
+    "uiSourceMutationControls": 0,
+    "requests": [
+      {
+        "method": "POST",
+        "path": "sources",
+        "status": 403
+      },
+      {
+        "method": "PATCH",
+        "path": "sources/:id",
+        "status": 403
+      },
+      {
+        "method": "DELETE",
+        "path": "sources/:id",
+        "status": 403
+      },
+      {
+        "method": "POST",
+        "path": "discover",
+        "status": 403
+      }
+    ],
+    "error": "Necesitas permisos de edición."
+  },
+  "editor": {
+    "createdByUI": "QA Editor HN",
+    "sourceCrudSixTypes": true,
+    "socialSettingsPut": {
+      "status": 403,
+      "error": "Solo el propietario puede realizar esta acción."
+    }
+  },
+  "owner": {
+    "initial": true,
+    "restoredAtEnd": true
+  },
+  "socialProviders": {
+    "youtube": false,
+    "apify": false,
+    "gemini": false
+  }
+}
+

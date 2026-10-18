@@ -1,0 +1,620 @@
+{
+  "synthetic": true,
+  "brandId": "200e0b9c-4ffb-4594-9498-8dfecd09c890",
+  "date": "2026-10-18",
+  "cases": [
+    {
+      "name": "vacío",
+      "expected": 400,
+      "status": 400,
+      "payload": {},
+      "response": {
+        "error": "Segmento debe ser texto."
+      },
+      "verdict": "PASS"
+    },
+    {
+      "name": "tema vacío",
+      "expected": 400,
+      "status": 400,
+      "payload": {
+        "segmentId": "segment-sales",
+        "topic": "  ",
+        "note": "Fixture sintética agregada para auditoría.",
+        "sourceType": "editorial"
+      },
+      "response": {
+        "error": "Tema: longitud inválida (máximo 160)."
+      },
+      "verdict": "PASS"
+    },
+    {
+      "name": "nota vacía",
+      "expected": 400,
+      "status": 400,
+      "payload": {
+        "segmentId": "segment-sales",
+        "topic": "Validación de servidor · SINTÉTICO",
+        "note": "",
+        "sourceType": "editorial"
+      },
+      "response": {
+        "error": "Observación: longitud inválida (máximo 3000)."
+      },
+      "verdict": "PASS"
+    },
+    {
+      "name": "segmento ajeno",
+      "expected": 400,
+      "status": 400,
+      "payload": {
+        "segmentId": "segment-foreign",
+        "topic": "Validación de servidor · SINTÉTICO",
+        "note": "Fixture sintética agregada para auditoría.",
+        "sourceType": "editorial"
+      },
+      "response": {
+        "error": "El segmento no pertenece a esta empresa."
+      },
+      "verdict": "PASS"
+    },
+    {
+      "name": "tipo falsificado",
+      "expected": 400,
+      "status": 400,
+      "payload": {
+        "segmentId": "segment-sales",
+        "topic": "Validación de servidor · SINTÉTICO",
+        "note": "Fixture sintética agregada para auditoría.",
+        "sourceType": "community"
+      },
+      "response": {
+        "error": "Indica si es contenido público o una nota editorial."
+      },
+      "verdict": "PASS"
+    },
+    {
+      "name": "tipo ausente",
+      "expected": 400,
+      "status": 400,
+      "payload": {
+        "segmentId": "segment-sales",
+        "topic": "Validación de servidor · SINTÉTICO",
+        "note": "Fixture sintética agregada para auditoría.",
+        "sourceType": null
+      },
+      "response": {
+        "error": "Indica si es contenido público o una nota editorial."
+      },
+      "verdict": "PASS"
+    },
+    {
+      "name": "campo individual extra",
+      "expected": 400,
+      "status": 400,
+      "payload": {
+        "segmentId": "segment-sales",
+        "topic": "Validación de servidor · SINTÉTICO",
+        "note": "Fixture sintética agregada para auditoría.",
+        "sourceType": "editorial",
+        "participant": {
+          "name": "Ana Sintética"
+        }
+      },
+      "response": {
+        "error": "La solicitud contiene campos no admitidos."
+      },
+      "verdict": "PASS"
+    },
+    {
+      "name": "objeto incorrecto",
+      "expected": 400,
+      "status": 400,
+      "payload": {
+        "segmentId": "segment-sales",
+        "topic": [
+          "tema"
+        ],
+        "note": "Fixture sintética agregada para auditoría.",
+        "sourceType": "editorial"
+      },
+      "response": {
+        "error": "Tema debe ser texto."
+      },
+      "verdict": "PASS"
+    },
+    {
+      "name": "nota demasiado larga",
+      "expected": 400,
+      "status": 400,
+      "payload": {
+        "segmentId": "segment-sales",
+        "topic": "Validación de servidor · SINTÉTICO",
+        "note": "[3001 caracteres A]",
+        "sourceType": "editorial"
+      },
+      "response": {
+        "error": "Observación: longitud inválida (máximo 3000)."
+      },
+      "verdict": "PASS"
+    },
+    {
+      "name": "público sin cita",
+      "expected": 400,
+      "status": 400,
+      "payload": {
+        "segmentId": "segment-sales",
+        "topic": "Validación de servidor · SINTÉTICO",
+        "note": "Fixture sintética agregada para auditoría.",
+        "sourceType": "public_content"
+      },
+      "response": {
+        "error": "Una observación pública necesita el enlace de su fuente."
+      },
+      "verdict": "PASS"
+    },
+    {
+      "name": "muestra 0",
+      "expected": 400,
+      "status": 400,
+      "payload": {
+        "segmentId": "segment-sales",
+        "topic": "Validación de servidor · SINTÉTICO",
+        "note": "Fixture sintética agregada para auditoría.",
+        "sourceType": "editorial",
+        "sampleSize": 0
+      },
+      "response": {
+        "error": "El tamaño de muestra debe ser un entero entre 1 y 10.000.000."
+      },
+      "verdict": "PASS"
+    },
+    {
+      "name": "muestra -1",
+      "expected": 400,
+      "status": 400,
+      "payload": {
+        "segmentId": "segment-sales",
+        "topic": "Validación de servidor · SINTÉTICO",
+        "note": "Fixture sintética agregada para auditoría.",
+        "sourceType": "editorial",
+        "sampleSize": -1
+      },
+      "response": {
+        "error": "El tamaño de muestra debe ser un entero entre 1 y 10.000.000."
+      },
+      "verdict": "PASS"
+    },
+    {
+      "name": "muestra 1.5",
+      "expected": 400,
+      "status": 400,
+      "payload": {
+        "segmentId": "segment-sales",
+        "topic": "Validación de servidor · SINTÉTICO",
+        "note": "Fixture sintética agregada para auditoría.",
+        "sourceType": "editorial",
+        "sampleSize": 1.5
+      },
+      "response": {
+        "error": "El tamaño de muestra debe ser un entero entre 1 y 10.000.000."
+      },
+      "verdict": "PASS"
+    },
+    {
+      "name": "muestra \"3\"",
+      "expected": 400,
+      "status": 400,
+      "payload": {
+        "segmentId": "segment-sales",
+        "topic": "Validación de servidor · SINTÉTICO",
+        "note": "Fixture sintética agregada para auditoría.",
+        "sourceType": "editorial",
+        "sampleSize": "3"
+      },
+      "response": {
+        "error": "El tamaño de muestra debe ser un entero entre 1 y 10.000.000."
+      },
+      "verdict": "PASS"
+    },
+    {
+      "name": "muestra null",
+      "expected": 400,
+      "status": 400,
+      "payload": {
+        "segmentId": "segment-sales",
+        "topic": "Validación de servidor · SINTÉTICO",
+        "note": "Fixture sintética agregada para auditoría.",
+        "sourceType": "editorial",
+        "sampleSize": null
+      },
+      "response": {
+        "error": "El tamaño de muestra debe ser un entero entre 1 y 10.000.000."
+      },
+      "verdict": "PASS"
+    },
+    {
+      "name": "muestra 10000001",
+      "expected": 400,
+      "status": 400,
+      "payload": {
+        "segmentId": "segment-sales",
+        "topic": "Validación de servidor · SINTÉTICO",
+        "note": "Fixture sintética agregada para auditoría.",
+        "sourceType": "editorial",
+        "sampleSize": 10000001
+      },
+      "response": {
+        "error": "El tamaño de muestra debe ser un entero entre 1 y 10.000.000."
+      },
+      "verdict": "PASS"
+    },
+    {
+      "name": "muestra mínima",
+      "expected": 201,
+      "status": 201,
+      "payload": {
+        "segmentId": "segment-sales",
+        "topic": "Validación de servidor · SINTÉTICO",
+        "note": "Fixture sintética agregada para auditoría.",
+        "sourceType": "editorial",
+        "sampleSize": 1
+      },
+      "response": {
+        "segmentId": "segment-sales",
+        "topic": "Validación de servidor · SINTÉTICO",
+        "note": "Fixture sintética agregada para auditoría.",
+        "sourceType": "editorial",
+        "sampleSize": 1,
+        "id": "87968ac2-6701-488c-bb81-7eff8e1aafbc",
+        "createdAt": "2026-10-18T01:57:40.719Z",
+        "updatedAt": "2026-10-18T01:57:40.719Z"
+      },
+      "verdict": "PASS"
+    },
+    {
+      "name": "muestra máxima",
+      "expected": 201,
+      "status": 201,
+      "payload": {
+        "segmentId": "segment-sales",
+        "topic": "Validación de servidor · SINTÉTICO",
+        "note": "Fixture sintética agregada para auditoría.",
+        "sourceType": "editorial",
+        "sampleSize": 10000000
+      },
+      "response": {
+        "segmentId": "segment-sales",
+        "topic": "Validación de servidor · SINTÉTICO",
+        "note": "Fixture sintética agregada para auditoría.",
+        "sourceType": "editorial",
+        "sampleSize": 10000000,
+        "id": "88b34eb1-63dd-4092-a5de-8330ea634519",
+        "createdAt": "2026-10-18T01:57:40.725Z",
+        "updatedAt": "2026-10-18T01:57:40.725Z"
+      },
+      "verdict": "PASS"
+    },
+    {
+      "name": "email en nota",
+      "expected": 400,
+      "status": 400,
+      "payload": {
+        "segmentId": "segment-sales",
+        "topic": "Validación de servidor · SINTÉTICO",
+        "note": "Fixture sintética: persona.sintetica@example.com",
+        "sourceType": "editorial"
+      },
+      "response": {
+        "error": "Registra necesidades agregadas del segmento; elimina emails, teléfonos y datos de personas."
+      },
+      "verdict": "PASS"
+    },
+    {
+      "name": "teléfono en nota",
+      "expected": 400,
+      "status": 400,
+      "payload": {
+        "segmentId": "segment-sales",
+        "topic": "Validación de servidor · SINTÉTICO",
+        "note": "Fixture sintética: +57 300 123 4567",
+        "sourceType": "editorial"
+      },
+      "response": {
+        "error": "Registra necesidades agregadas del segmento; elimina emails, teléfonos y datos de personas."
+      },
+      "verdict": "PASS"
+    },
+    {
+      "name": "fila individual con nombre",
+      "expected": 400,
+      "status": 201,
+      "payload": {
+        "segmentId": "segment-sales",
+        "topic": "Validación de servidor · SINTÉTICO",
+        "note": "FICHA INDIVIDUAL SINTÉTICA. Nombre: Ana Sintética Ejemplo. Cargo: directora comercial. Necesidad individual: preparar propuestas más rápido.",
+        "sourceType": "editorial"
+      },
+      "response": {
+        "segmentId": "segment-sales",
+        "topic": "Validación de servidor · SINTÉTICO",
+        "note": "FICHA INDIVIDUAL SINTÉTICA. Nombre: Ana Sintética Ejemplo. Cargo: directora comercial. Necesidad individual: preparar propuestas más rápido.",
+        "sourceType": "editorial",
+        "id": "11adc815-f895-4e85-a5c3-6d1d01185b46",
+        "createdAt": "2026-10-18T01:57:40.733Z",
+        "updatedAt": "2026-10-18T01:57:40.733Z"
+      },
+      "verdict": "FAIL"
+    },
+    {
+      "name": "URL http://127.0.0.1/private",
+      "expected": 400,
+      "status": 400,
+      "payload": {
+        "segmentId": "segment-sales",
+        "topic": "Validación de servidor · SINTÉTICO",
+        "note": "Fixture sintética agregada para auditoría.",
+        "sourceType": "public_content",
+        "sourceUrl": "http://127.0.0.1/private"
+      },
+      "response": {
+        "error": "Fuente debe usar HTTP o HTTPS y un dominio público sin credenciales."
+      },
+      "verdict": "PASS"
+    },
+    {
+      "name": "URL http://10.0.0.1/",
+      "expected": 400,
+      "status": 400,
+      "payload": {
+        "segmentId": "segment-sales",
+        "topic": "Validación de servidor · SINTÉTICO",
+        "note": "Fixture sintética agregada para auditoría.",
+        "sourceType": "public_content",
+        "sourceUrl": "http://10.0.0.1/"
+      },
+      "response": {
+        "error": "Fuente debe usar HTTP o HTTPS y un dominio público sin credenciales."
+      },
+      "verdict": "PASS"
+    },
+    {
+      "name": "URL http://192.168.1.1/",
+      "expected": 400,
+      "status": 400,
+      "payload": {
+        "segmentId": "segment-sales",
+        "topic": "Validación de servidor · SINTÉTICO",
+        "note": "Fixture sintética agregada para auditoría.",
+        "sourceType": "public_content",
+        "sourceUrl": "http://192.168.1.1/"
+      },
+      "response": {
+        "error": "Fuente debe usar HTTP o HTTPS y un dominio público sin credenciales."
+      },
+      "verdict": "PASS"
+    },
+    {
+      "name": "URL http://169.254.169.254/",
+      "expected": 400,
+      "status": 400,
+      "payload": {
+        "segmentId": "segment-sales",
+        "topic": "Validación de servidor · SINTÉTICO",
+        "note": "Fixture sintética agregada para auditoría.",
+        "sourceType": "public_content",
+        "sourceUrl": "http://169.254.169.254/"
+      },
+      "response": {
+        "error": "Fuente debe usar HTTP o HTTPS y un dominio público sin credenciales."
+      },
+      "verdict": "PASS"
+    },
+    {
+      "name": "URL http://[::1]/",
+      "expected": 400,
+      "status": 400,
+      "payload": {
+        "segmentId": "segment-sales",
+        "topic": "Validación de servidor · SINTÉTICO",
+        "note": "Fixture sintética agregada para auditoría.",
+        "sourceType": "public_content",
+        "sourceUrl": "http://[::1]/"
+      },
+      "response": {
+        "error": "Fuente debe usar HTTP o HTTPS y un dominio público sin credenciales."
+      },
+      "verdict": "PASS"
+    },
+    {
+      "name": "URL http://localhost/",
+      "expected": 400,
+      "status": 400,
+      "payload": {
+        "segmentId": "segment-sales",
+        "topic": "Validación de servidor · SINTÉTICO",
+        "note": "Fixture sintética agregada para auditoría.",
+        "sourceType": "public_content",
+        "sourceUrl": "http://localhost/"
+      },
+      "response": {
+        "error": "Fuente debe usar HTTP o HTTPS y un dominio público sin credenciales."
+      },
+      "verdict": "PASS"
+    },
+    {
+      "name": "URL https://x.local/",
+      "expected": 400,
+      "status": 400,
+      "payload": {
+        "segmentId": "segment-sales",
+        "topic": "Validación de servidor · SINTÉTICO",
+        "note": "Fixture sintética agregada para auditoría.",
+        "sourceType": "public_content",
+        "sourceUrl": "https://x.local/"
+      },
+      "response": {
+        "error": "Fuente debe usar HTTP o HTTPS y un dominio público sin credenciales."
+      },
+      "verdict": "PASS"
+    },
+    {
+      "name": "URL https://intranet/",
+      "expected": 400,
+      "status": 400,
+      "payload": {
+        "segmentId": "segment-sales",
+        "topic": "Validación de servidor · SINTÉTICO",
+        "note": "Fixture sintética agregada para auditoría.",
+        "sourceType": "public_content",
+        "sourceUrl": "https://intranet/"
+      },
+      "response": {
+        "error": "Fuente debe usar HTTP o HTTPS y un dominio público sin credenciales."
+      },
+      "verdict": "PASS"
+    },
+    {
+      "name": "URL http://example.com:8080/",
+      "expected": 400,
+      "status": 400,
+      "payload": {
+        "segmentId": "segment-sales",
+        "topic": "Validación de servidor · SINTÉTICO",
+        "note": "Fixture sintética agregada para auditoría.",
+        "sourceType": "public_content",
+        "sourceUrl": "http://example.com:8080/"
+      },
+      "response": {
+        "error": "Fuente debe usar HTTP o HTTPS y un dominio público sin credenciales."
+      },
+      "verdict": "PASS"
+    },
+    {
+      "name": "URL con credenciales ficticias",
+      "expected": 400,
+      "status": 400,
+      "payload": {
+        "segmentId": "segment-sales",
+        "topic": "Validación de servidor · SINTÉTICO",
+        "note": "Fixture sintética agregada para auditoría.",
+        "sourceType": "public_content",
+        "sourceUrl": "https://[userinfo ficticio redactado]@example.com/"
+      },
+      "response": {
+        "error": "Fuente debe usar HTTP o HTTPS y un dominio público sin credenciales."
+      },
+      "verdict": "PASS"
+    },
+    {
+      "name": "URL javascript:alert(1)",
+      "expected": 400,
+      "status": 400,
+      "payload": {
+        "segmentId": "segment-sales",
+        "topic": "Validación de servidor · SINTÉTICO",
+        "note": "Fixture sintética agregada para auditoría.",
+        "sourceType": "public_content",
+        "sourceUrl": "javascript:alert(1)"
+      },
+      "response": {
+        "error": "Fuente debe usar HTTP o HTTPS y un dominio público sin credenciales."
+      },
+      "verdict": "PASS"
+    },
+    {
+      "name": "URL https://example.com/login",
+      "expected": 400,
+      "status": 400,
+      "payload": {
+        "segmentId": "segment-sales",
+        "topic": "Validación de servidor · SINTÉTICO",
+        "note": "Fixture sintética agregada para auditoría.",
+        "sourceType": "public_content",
+        "sourceUrl": "https://example.com/login"
+      },
+      "response": {
+        "error": "Fuente no puede depender de una sesión ni incluir datos personales."
+      },
+      "verdict": "PASS"
+    },
+    {
+      "name": "URL con parámetro token",
+      "expected": 400,
+      "status": 400,
+      "payload": {
+        "segmentId": "segment-sales",
+        "topic": "Validación de servidor · SINTÉTICO",
+        "note": "Fixture sintética agregada para auditoría.",
+        "sourceType": "public_content",
+        "sourceUrl": "https://example.com/?token=[valor ficticio redactado]"
+      },
+      "response": {
+        "error": "Fuente no puede depender de una sesión ni incluir datos personales."
+      },
+      "verdict": "PASS"
+    },
+    {
+      "name": "URL https://example.com/?email=persona.sintetica@example.com",
+      "expected": 400,
+      "status": 400,
+      "payload": {
+        "segmentId": "segment-sales",
+        "topic": "Validación de servidor · SINTÉTICO",
+        "note": "Fixture sintética agregada para auditoría.",
+        "sourceType": "public_content",
+        "sourceUrl": "https://example.com/?email=persona.sintetica@example.com"
+      },
+      "response": {
+        "error": "Fuente no puede depender de una sesión ni incluir datos personales."
+      },
+      "verdict": "PASS"
+    },
+    {
+      "name": "email en ruta URL",
+      "expected": 400,
+      "status": 201,
+      "payload": {
+        "segmentId": "segment-sales",
+        "topic": "Validación de servidor · SINTÉTICO",
+        "note": "Fixture sintética agregada para auditoría.",
+        "sourceType": "public_content",
+        "sourceUrl": "https://example.com/persona.sintetica@example.com"
+      },
+      "response": {
+        "segmentId": "segment-sales",
+        "topic": "Validación de servidor · SINTÉTICO",
+        "note": "Fixture sintética agregada para auditoría.",
+        "sourceType": "public_content",
+        "sourceUrl": "https://example.com/persona.sintetica@example.com",
+        "id": "436f82ee-805c-4037-a540-1768b156e30f",
+        "createdAt": "2026-10-18T01:57:40.758Z",
+        "updatedAt": "2026-10-18T01:57:40.758Z"
+      },
+      "verdict": "FAIL"
+    },
+    {
+      "name": "email en query no reconocida",
+      "expected": 400,
+      "status": 201,
+      "payload": {
+        "segmentId": "segment-sales",
+        "topic": "Validación de servidor · SINTÉTICO",
+        "note": "Fixture sintética agregada para auditoría.",
+        "sourceType": "public_content",
+        "sourceUrl": "https://example.com/?contact=persona.sintetica@example.com"
+      },
+      "response": {
+        "segmentId": "segment-sales",
+        "topic": "Validación de servidor · SINTÉTICO",
+        "note": "Fixture sintética agregada para auditoría.",
+        "sourceType": "public_content",
+        "sourceUrl": "https://example.com/?contact=persona.sintetica@example.com",
+        "id": "1288a092-4e01-4c10-aced-a2ce6414bd90",
+        "createdAt": "2026-10-18T01:57:40.763Z",
+        "updatedAt": "2026-10-18T01:57:40.763Z"
+      },
+      "verdict": "FAIL"
+    }
+  ]
+}

@@ -1,0 +1,459 @@
+{
+  "metadata": {
+    "url": "http://127.0.0.16:4106",
+    "date": "2026-10-18",
+    "dataDir": "/tmp/30x-adversarial-community",
+    "serverPid": 3837845,
+    "execSession": 43973,
+    "syntheticAccount": "qa-community@example.com",
+    "syntheticBrand": "5043f9f5-d291-4023-8480-01cc80f0ff47",
+    "syntheticPoll": "2941ab1f-6338-49eb-855e-1172c8d5ebc1",
+    "uiSubmittedResponses": [
+      1,
+      4,
+      5
+    ],
+    "apiPreparedResponses": "2 y3 de Ventas;1–4 y5 de Formación;6 de Ventas. No son personas distintas verificadas."
+  },
+  "expected": {
+    "creation": "Pregunta vacía, menos de dos temas, temas duplicados o datos de contacto deben rechazarse sin crear encuestas. Dos opciones válidas crean exactamente una encuesta con grupos sintéticos correctos.",
+    "public": "El enlace debe funcionar sin sesión y permitir elegir exactamente un grupo/tema; el submit vacío debe estar desactivado y la primera respuesta incrementar sólo su celda, sin resultados ni señales antes de cinco por grupo.",
+    "threshold": "Por grupo: a 1 y 4 respuestas no hay resultados ni señales; al llegar Ventas a5 se exponen sólo sus filas 3/5 y2/5; Formación con4 sigue oculta aunque total global sea9.",
+    "refresh": "Con el gestor abierto, una nueva respuesta debe hacerse visible o haber actualización explícita accesible. Recargar debe recuperar conteos persistidos y la nueva señal de Formación al llegar5.",
+    "pause": "Pausar por UI persiste active=false, conserva resultados y bloquea nuevas respuestas con409 sin cambiar10. Reabrir por UI restablece formulario sin perder conteos.",
+    "delete": "Eliminar con cancelación conserva encuesta y señales. Confirmar debe borrar1 encuesta y sus3 señales, hacer desaparecer ambas UI tras recarga y responder404 en enlace y POST público."
+  },
+  "observations": {
+    "afterOne": {
+      "companyName": "QA Sensor Sintético",
+      "poll": {
+        "id": "2941ab1f-6338-49eb-855e-1172c8d5ebc1",
+        "question": "¿Qué necesita tu equipo sintético?",
+        "options": [
+          {
+            "id": "cd76e1e3-f695-46fd-8094-e712844a11a2",
+            "label": "Automatizar ventas"
+          },
+          {
+            "id": "f75f9cd9-6014-402a-b522-0c14f94d77dc",
+            "label": "Formar al equipo"
+          }
+        ],
+        "groups": [
+          {
+            "id": "synthetic-sales",
+            "name": "Ventas sintéticas"
+          },
+          {
+            "id": "synthetic-learning",
+            "name": "Formación sintética"
+          }
+        ],
+        "active": true,
+        "totalResponses": 1,
+        "results": [],
+        "publicPath": "/community/[redactado]",
+        "createdAt": "2026-10-18T01:57:27.326Z"
+      },
+      "notice": "Respuestas voluntarias y no verificadas. No son personas únicas ni una muestra representativa de la audiencia."
+    },
+    "uiOne": "QA Sensor Sintético\nGracias por compartir tu interés.\n\nTu respuesta se agregó al conteo de tu grupo. No creamos un perfil sobre ti.\n\nAún no hay un grupo con 5 respuestas. Las señales se incorporarán automáticamente al reunir esa muestra.\n\nLas respuestas son voluntarias y no verificadas. No representan personas únicas ni a toda tu audiencia. Los resultados por grupo aparecen a partir de 5 respuestas.\n\nSólo guardamos conteos por grupo y tema. No envíes datos personales.\n\nUna pregunta de QA Sensor Sintético · 30X Radar",
+    "afterFour": {
+      "companyName": "QA Sensor Sintético",
+      "poll": {
+        "id": "2941ab1f-6338-49eb-855e-1172c8d5ebc1",
+        "question": "¿Qué necesita tu equipo sintético?",
+        "options": [
+          {
+            "id": "cd76e1e3-f695-46fd-8094-e712844a11a2",
+            "label": "Automatizar ventas"
+          },
+          {
+            "id": "f75f9cd9-6014-402a-b522-0c14f94d77dc",
+            "label": "Formar al equipo"
+          }
+        ],
+        "groups": [
+          {
+            "id": "synthetic-sales",
+            "name": "Ventas sintéticas"
+          },
+          {
+            "id": "synthetic-learning",
+            "name": "Formación sintética"
+          }
+        ],
+        "active": true,
+        "totalResponses": 4,
+        "results": [],
+        "publicPath": "/community/[redactado]",
+        "createdAt": "2026-10-18T01:57:27.326Z"
+      },
+      "notice": "Respuestas voluntarias y no verificadas. No son personas únicas ni una muestra representativa de la audiencia."
+    },
+    "uiFour": "QA Sensor Sintético\nGracias por compartir tu interés.\n\nTu respuesta se agregó al conteo de tu grupo. No creamos un perfil sobre ti.\n\nAún no hay un grupo con 5 respuestas. Las señales se incorporarán automáticamente al reunir esa muestra.\n\nLas respuestas son voluntarias y no verificadas. No representan personas únicas ni a toda tu audiencia. Los resultados por grupo aparecen a partir de 5 respuestas.\n\nSólo guardamos conteos por grupo y tema. No envíes datos personales.\n\nUna pregunta de QA Sensor Sintético · 30X Radar",
+    "bothGroupsAtFour": [
+      {
+        "status": 200,
+        "body": {
+          "ok": true,
+          "totalResponses": 5,
+          "results": [],
+          "notice": "Respuestas voluntarias y no verificadas. No son personas únicas ni una muestra representativa de la audiencia."
+        }
+      },
+      {
+        "status": 200,
+        "body": {
+          "ok": true,
+          "totalResponses": 6,
+          "results": [],
+          "notice": "Respuestas voluntarias y no verificadas. No son personas únicas ni una muestra representativa de la audiencia."
+        }
+      },
+      {
+        "status": 200,
+        "body": {
+          "ok": true,
+          "totalResponses": 7,
+          "results": [],
+          "notice": "Respuestas voluntarias y no verificadas. No son personas únicas ni una muestra representativa de la audiencia."
+        }
+      },
+      {
+        "status": 200,
+        "body": {
+          "ok": true,
+          "totalResponses": 8,
+          "results": [],
+          "notice": "Respuestas voluntarias y no verificadas. No son personas únicas ni una muestra representativa de la audiencia."
+        }
+      }
+    ],
+    "afterSalesFive": {
+      "companyName": "QA Sensor Sintético",
+      "poll": {
+        "id": "2941ab1f-6338-49eb-855e-1172c8d5ebc1",
+        "question": "¿Qué necesita tu equipo sintético?",
+        "options": [
+          {
+            "id": "cd76e1e3-f695-46fd-8094-e712844a11a2",
+            "label": "Automatizar ventas"
+          },
+          {
+            "id": "f75f9cd9-6014-402a-b522-0c14f94d77dc",
+            "label": "Formar al equipo"
+          }
+        ],
+        "groups": [
+          {
+            "id": "synthetic-sales",
+            "name": "Ventas sintéticas"
+          },
+          {
+            "id": "synthetic-learning",
+            "name": "Formación sintética"
+          }
+        ],
+        "active": true,
+        "totalResponses": 9,
+        "results": [
+          {
+            "segmentId": "synthetic-sales",
+            "topic": "Automatizar ventas",
+            "count": 3,
+            "sampleSize": 5
+          },
+          {
+            "segmentId": "synthetic-sales",
+            "topic": "Formar al equipo",
+            "count": 2,
+            "sampleSize": 5
+          }
+        ],
+        "publicPath": "/community/[redactado]",
+        "createdAt": "2026-10-18T01:57:27.326Z"
+      },
+      "notice": "Respuestas voluntarias y no verificadas. No son personas únicas ni una muestra representativa de la audiencia."
+    },
+    "sqlSalesFive": {
+      "polls": [
+        {
+          "question": "¿Qué necesita tu equipo sintético?",
+          "options": [
+            {
+              "id": "cd76e1e3-f695-46fd-8094-e712844a11a2",
+              "label": "Automatizar ventas"
+            },
+            {
+              "id": "f75f9cd9-6014-402a-b522-0c14f94d77dc",
+              "label": "Formar al equipo"
+            }
+          ],
+          "groups": [
+            {
+              "id": "synthetic-sales",
+              "name": "Ventas sintéticas"
+            },
+            {
+              "id": "synthetic-learning",
+              "name": "Formación sintética"
+            }
+          ],
+          "active": true,
+          "counts": [
+            {
+              "segmentId": "synthetic-sales",
+              "optionId": "cd76e1e3-f695-46fd-8094-e712844a11a2",
+              "count": 3
+            },
+            {
+              "segmentId": "synthetic-sales",
+              "optionId": "f75f9cd9-6014-402a-b522-0c14f94d77dc",
+              "count": 2
+            },
+            {
+              "segmentId": "synthetic-learning",
+              "optionId": "f75f9cd9-6014-402a-b522-0c14f94d77dc",
+              "count": 4
+            }
+          ],
+          "id": "2941ab1f-6338-49eb-855e-1172c8d5ebc1",
+          "createdAt": "2026-10-18T01:57:27.326Z",
+          "updatedAt": "2026-10-18T01:58:17.870Z"
+        }
+      ],
+      "signals": [
+        {
+          "id": "community_cf5b5a64cb9b53bb4aaa293f6dce63d9",
+          "segmentId": "synthetic-sales",
+          "topic": "Automatizar ventas",
+          "note": "3 respuestas de 5 en «Ventas sintéticas» seleccionaron este tema. Muestra voluntaria no verificada; no son personas únicas. Esta muestra no representa a toda la audiencia. Pregunta: ¿Qué necesita tu equipo sintético?",
+          "sampleSize": 5,
+          "sourceType": "community",
+          "sourceUrl": "/community/[redactado]",
+          "communityPollId": "2941ab1f-6338-49eb-855e-1172c8d5ebc1",
+          "aggregate": true,
+          "createdAt": "2026-10-18T01:58:17.870Z",
+          "updatedAt": "2026-10-18T01:58:17.870Z"
+        },
+        {
+          "id": "community_8bebd4cea1e0d56fb5bafb25797d6171",
+          "segmentId": "synthetic-sales",
+          "topic": "Formar al equipo",
+          "note": "2 respuestas de 5 en «Ventas sintéticas» seleccionaron este tema. Muestra voluntaria no verificada; no son personas únicas. Esta muestra no representa a toda la audiencia. Pregunta: ¿Qué necesita tu equipo sintético?",
+          "sampleSize": 5,
+          "sourceType": "community",
+          "sourceUrl": "/community/[redactado]",
+          "communityPollId": "2941ab1f-6338-49eb-855e-1172c8d5ebc1",
+          "aggregate": true,
+          "createdAt": "2026-10-18T01:58:17.870Z",
+          "updatedAt": "2026-10-18T01:58:17.870Z"
+        }
+      ]
+    },
+    "uiSalesFive": "QA Sensor Sintético\nGracias por compartir tu interés.\n\nTu respuesta se agregó al conteo de tu grupo. No creamos un perfil sobre ti.\n\nIntereses expresados · muestra voluntaria\nGrupo\tTema\tRespuestas\nVentas sintéticas\tAutomatizar ventas\t3 de 5\nVentas sintéticas\tFormar al equipo\t2 de 5\n\nLas respuestas son voluntarias y no verificadas. No representan personas únicas ni a toda tu audiencia. Los resultados por grupo aparecen a partir de 5 respuestas.\n\nSólo guardamos conteos por grupo y tema. No envíes datos personales.\n\nUna pregunta de QA Sensor Sintético · 30X Radar",
+    "afterLearningFive": {
+      "status": 200,
+      "body": {
+        "ok": true,
+        "totalResponses": 10,
+        "results": [
+          {
+            "segmentId": "synthetic-sales",
+            "topic": "Automatizar ventas",
+            "count": 3,
+            "sampleSize": 5
+          },
+          {
+            "segmentId": "synthetic-sales",
+            "topic": "Formar al equipo",
+            "count": 2,
+            "sampleSize": 5
+          },
+          {
+            "segmentId": "synthetic-learning",
+            "topic": "Automatizar ventas",
+            "count": 0,
+            "sampleSize": 5
+          },
+          {
+            "segmentId": "synthetic-learning",
+            "topic": "Formar al equipo",
+            "count": 5,
+            "sampleSize": 5
+          }
+        ],
+        "notice": "Respuestas voluntarias y no verificadas. No son personas únicas ni una muestra representativa de la audiencia."
+      }
+    },
+    "staleUI": "Saltar al contenido\n30X\nRADAR\nQ\nCambiar de marca\nQA Sensor Sintético\nEspacio de trabajo\nCrear otra marca\nInicio\nAudiencia\nOportunidades\nContenido\nCalendario\nResultados\nEmpresa y contenido\nMás herramientas\nFuentes y equipo\nQ\nQA Sensor Sintético\nAdministrador\nQA Sensor Sintético\n/\nAudiencia\nAgregar referencia\nEntiende la necesidad antes de elegir el tema.\n\nDefine grupos, recoge señales y distingue lo observado de lo que aún necesitas comprobar.\n\nVer oportunidades\nPerfiles y necesidades\nSeñales y validación\n2\nEstos perfiles son hipótesis editoriales del equipo. La actividad de una página, un sector o una inscripción no demuestra quién consume tu contenido. Contrasta las necesidades con señales públicas y resultados.\nNueva audiencia\nVentas sintéticas\n\nAutomatizar ventas\n\n0 piezas dirigidas\nEditar perfil →\nFormación sintética\n\nFormar al equipo\n\n0 piezas dirigidas\nEditar perfil →\n¿Ya tienes una necesidad que contrastar?\nRegistrar una señal\nEscucha a tu comunidad\n\nContrasta lo que supones con lo que tu audiencia dice necesitar. Comparte una pregunta pública, sin pedir nombres ni correos.\n\nCrear pregunta\n¿Qué necesita tu equipo sintético?\nAbierta\nAbrir pregunta\nCopiar enlace\n9 respuestas\nIntereses expresados · muestra voluntaria\nGrupo\tTema\tRespuestas\nVentas sintéticas\tAutomatizar ventas\t3 de 5\nVentas sintéticas\tFormar al equipo\t2 de 5\nPausar\nEliminar\n\nLas respuestas son voluntarias y no verificadas. No representan personas únicas ni a toda tu audiencia. Los resultados por grupo aparecen a partir de 5 respuestas.\n\n30X Radar · Hecho para encontrar tu próximo ángulo.\nLas señales tienen contexto. Las decisiones son tuyas.",
+    "reloadedUI": "Saltar al contenido\n30X\nRADAR\nQ\nCambiar de marca\nQA Sensor Sintético\nEspacio de trabajo\nCrear otra marca\nInicio\nAudiencia\nOportunidades\nContenido\nCalendario\nResultados\nEmpresa y contenido\nMás herramientas\nFuentes y equipo\nQ\nQA Sensor Sintético\nAdministrador\nQA Sensor Sintético\n/\nAudiencia\nAgregar referencia\nEntiende la necesidad antes de elegir el tema.\n\nDefine grupos, recoge señales y distingue lo observado de lo que aún necesitas comprobar.\n\nVer oportunidades\nPerfiles y necesidades\nSeñales y validación\n3\nEstos perfiles son hipótesis editoriales del equipo. La actividad de una página, un sector o una inscripción no demuestra quién consume tu contenido. Contrasta las necesidades con señales públicas y resultados.\nNueva audiencia\nVentas sintéticas\n\nAutomatizar ventas\n\n0 piezas dirigidas\nEditar perfil →\nFormación sintética\n\nFormar al equipo\n\n0 piezas dirigidas\nEditar perfil →\n¿Ya tienes una necesidad que contrastar?\nRegistrar una señal\nEscucha a tu comunidad\n\nContrasta lo que supones con lo que tu audiencia dice necesitar. Comparte una pregunta pública, sin pedir nombres ni correos.\n\nCrear pregunta\n¿Qué necesita tu equipo sintético?\nAbierta\nAbrir pregunta\nCopiar enlace\n10 respuestas\nIntereses expresados · muestra voluntaria\nGrupo\tTema\tRespuestas\nVentas sintéticas\tAutomatizar ventas\t3 de 5\nVentas sintéticas\tFormar al equipo\t2 de 5\nFormación sintética\tAutomatizar ventas\t0 de 5\nFormación sintética\tFormar al equipo\t5 de 5\nPausar\nEliminar\n\nLas respuestas son voluntarias y no verificadas. No representan personas únicas ni a toda tu audiencia. Los resultados por grupo aparecen a partir de 5 respuestas.\n\n30X Radar · Hecho para encontrar tu próximo ángulo.\nLas señales tienen contexto. Las decisiones son tuyas.",
+    "signalsUI": "Entiende la necesidad antes de elegir el tema.\n\nDefine grupos, recoge señales y distingue lo observado de lo que aún necesitas comprobar.\n\nVer oportunidades\nPerfiles y necesidades\nSeñales y validación\n3\nRegistra una señal, con contexto\n\nGuarda observaciones sobre contenido y necesidades del grupo. Evita nombres, correos y datos de personas.\n\nAudiencia\nVentas sintéticas\nFormación sintética\nOrigen\nContenido público\nHipótesis del equipo\nTema o necesidad\nQué observaste y qué queda por comprobar\nEnlace público de la evidencia\nPiezas revisadas (opcional)\nUn enlace documenta la señal; no prueba representatividad.\nGuardar señal\nQué respalda tus decisiones\nActualizar\nComunidad · muestra voluntaria\nFormación sintética\nFormar al equipo\n\n5 respuestas de 5 en «Formación sintética» seleccionaron este tema. Muestra voluntaria no verificada; no son personas únicas. Esta muestra no representa a toda la audiencia. Pregunta: ¿Qué necesita tu equipo sintético?\n\n18 oct · 5 respuestas agregadas\nComunidad · muestra voluntaria\nVentas sintéticas\nFormar al equipo\n\n2 respuestas de 5 en «Ventas sintéticas» seleccionaron este tema. Muestra voluntaria no verificada; no son personas únicas. Esta muestra no representa a toda la audiencia. Pregunta: ¿Qué necesita tu equipo sintético?\n\n18 oct · 5 respuestas agregadas\nComunidad · muestra voluntaria\nVentas sintéticas\nAutomatizar ventas\n\n3 respuestas de 5 en «Ventas sintéticas» seleccionaron este tema. Muestra voluntaria no verificada; no son personas únicas. Esta muestra no representa a toda la audiencia. Pregunta: ¿Qué necesita tu equipo sintético?\n\n18 oct · 5 respuestas agregadas\nEscucha a tu comunidad\n\nContrasta lo que supones con lo que tu audiencia dice necesitar. Comparte una pregunta pública, sin pedir nombres ni correos.\n\nCrear pregunta\n¿Qué necesita tu equipo sintético?\nAbierta\nAbrir pregunta\nCopiar enlace\n10 respuestas\nIntereses expresados · muestra voluntaria\nGrupo\tTema\tRespuestas\nVentas sintéticas\tAutomatizar ventas\t3 de 5\nVentas sintéticas\tFormar al equipo\t2 de 5\nFormación sintética\tAutomatizar ventas\t0 de 5\nFormación sintética\tFormar al equipo\t5 de 5\nPausar\nEliminar\n\nLas respuestas son voluntarias y no verificadas. No representan personas únicas ni a toda tu audiencia. Los resultados por grupo aparecen a partir de 5 respuestas.",
+    "afterSalesSix": {
+      "httpStatus": 200,
+      "totalResponses": 11,
+      "results": [
+        {
+          "segmentId": "synthetic-sales",
+          "topic": "Automatizar ventas",
+          "count": 3,
+          "sampleSize": 6
+        },
+        {
+          "segmentId": "synthetic-sales",
+          "topic": "Formar al equipo",
+          "count": 3,
+          "sampleSize": 6
+        },
+        {
+          "segmentId": "synthetic-learning",
+          "topic": "Automatizar ventas",
+          "count": 0,
+          "sampleSize": 5
+        },
+        {
+          "segmentId": "synthetic-learning",
+          "topic": "Formar al equipo",
+          "count": 5,
+          "sampleSize": 5
+        }
+      ]
+    },
+    "refreshMismatchUI": {
+      "main": "Entiende la necesidad antes de elegir el tema.\n\nDefine grupos, recoge señales y distingue lo observado de lo que aún necesitas comprobar.\n\nVer oportunidades\nPerfiles y necesidades\nSeñales y validación\n3\nRegistra una señal, con contexto\n\nGuarda observaciones sobre contenido y necesidades del grupo. Evita nombres, correos y datos de personas.\n\nAudiencia\nVentas sintéticas\nFormación sintética\nOrigen\nContenido público\nHipótesis del equipo\nTema o necesidad\nQué observaste y qué queda por comprobar\nEnlace público de la evidencia\nPiezas revisadas (opcional)\nUn enlace documenta la señal; no prueba representatividad.\nGuardar señal\nQué respalda tus decisiones\nActualizar\nComunidad · muestra voluntaria\nFormación sintética\nFormar al equipo\n\n5 respuestas de 5 en «Formación sintética» seleccionaron este tema. Muestra voluntaria no verificada; no son personas únicas. Esta muestra no representa a toda la audiencia. Pregunta: ¿Qué necesita tu equipo sintético?\n\n18 oct · 5 respuestas agregadas\nComunidad · muestra voluntaria\nVentas sintéticas\nFormar al equipo\n\n3 respuestas de 6 en «Ventas sintéticas» seleccionaron este tema. Muestra voluntaria no verificada; no son personas únicas. Esta muestra no representa a toda la audiencia. Pregunta: ¿Qué necesita tu equipo sintético?\n\n18 oct · 6 respuestas agregadas\nComunidad · muestra voluntaria\nVentas sintéticas\nAutomatizar ventas\n\n3 respuestas de 6 en «Ventas sintéticas» seleccionaron este tema. Muestra voluntaria no verificada; no son personas únicas. Esta muestra no representa a toda la audiencia. Pregunta: ¿Qué necesita tu equipo sintético?\n\n18 oct · 6 respuestas agregadas\nEscucha a tu comunidad\n\nContrasta lo que supones con lo que tu audiencia dice necesitar. Comparte una pregunta pública, sin pedir nombres ni correos.\n\nCrear pregunta\n¿Qué necesita tu equipo sintético?\nAbierta\nAbrir pregunta\nCopiar enlace\n10 respuestas\nIntereses expresados · muestra voluntaria\nGrupo\tTema\tRespuestas\nVentas sintéticas\tAutomatizar ventas\t3 de 5\nVentas sintéticas\tFormar al equipo\t2 de 5\nFormación sintética\tAutomatizar ventas\t0 de 5\nFormación sintética\tFormar al equipo\t5 de 5\nPausar\nEliminar\n\nLas respuestas son voluntarias y no verificadas. No representan personas únicas ni a toda tu audiencia. Los resultados por grupo aparecen a partir de 5 respuestas."
+    },
+    "invalidResponses": [
+      {
+        "input": {
+          "segmentId": "other-group",
+          "optionId": "cd76e1e3-f695-46fd-8094-e712844a11a2"
+        },
+        "status": 400,
+        "body": {
+          "error": "La opción o el grupo no pertenecen a esta pregunta."
+        }
+      },
+      {
+        "input": {
+          "segmentId": "synthetic-sales",
+          "optionId": "other-option"
+        },
+        "status": 400,
+        "body": {
+          "error": "La opción o el grupo no pertenecen a esta pregunta."
+        }
+      },
+      {
+        "input": {
+          "segmentId": "synthetic-sales",
+          "optionId": "cd76e1e3-f695-46fd-8094-e712844a11a2",
+          "email": "synthetic-person@example.invalid"
+        },
+        "status": 400,
+        "body": {
+          "error": "Solo se admiten los campos indicados. No envíes datos personales."
+        }
+      },
+      {
+        "input": {
+          "segmentId": "synthetic-sales"
+        },
+        "status": 400,
+        "body": {
+          "error": "La opción debe tener entre 1 y 100 caracteres."
+        }
+      },
+      {
+        "input": null,
+        "status": 400,
+        "body": {
+          "error": "El JSON enviado no es válido."
+        }
+      }
+    ],
+    "pausedAPI": {
+      "status": 409,
+      "body": {
+        "error": "Esta pregunta está cerrada y ya no admite respuestas."
+      },
+      "active": false,
+      "total": 10
+    },
+    "pausedPublic": "QA Sensor Sintético\n¿Qué necesita tu equipo sintético?\n\nAyuda a QA Sensor Sintético a crear contenido que te resulte útil. No necesitas registrarte.\n\nEsta pregunta está pausada. Puedes consultar los resultados agregados disponibles.\n\nIntereses expresados · muestra voluntaria\nGrupo\tTema\tRespuestas\nVentas sintéticas\tAutomatizar ventas\t3 de 5\nVentas sintéticas\tFormar al equipo\t2 de 5\nFormación sintética\tAutomatizar ventas\t0 de 5\nFormación sintética\tFormar al equipo\t5 de 5\n\nLas respuestas son voluntarias y no verificadas. No representan personas únicas ni a toda tu audiencia. Los resultados por grupo aparecen a partir de 5 respuestas.\n\nSólo guardamos conteos por grupo y tema. No envíes datos personales.\n\nUna pregunta de QA Sensor Sintético · 30X Radar",
+    "deletedUI": "Entiende la necesidad antes de elegir el tema.\n\nDefine grupos, recoge señales y distingue lo observado de lo que aún necesitas comprobar.\n\nVer oportunidades\nPerfiles y necesidades\nSeñales y validación\nRegistra una señal, con contexto\n\nGuarda observaciones sobre contenido y necesidades del grupo. Evita nombres, correos y datos de personas.\n\nAudiencia\nVentas sintéticas\nFormación sintética\nOrigen\nContenido público\nHipótesis del equipo\nTema o necesidad\nQué observaste y qué queda por comprobar\nEnlace público de la evidencia\nPiezas revisadas (opcional)\nUn enlace documenta la señal; no prueba representatividad.\nGuardar señal\nQué respalda tus decisiones\nActualizar\nTodavía no hay señales registradas\n\nGuarda un contenido público relevante con su enlace o una hipótesis del equipo. Describe qué sugiere y qué falta por comprobar.\n\nEscucha a tu comunidad\n\nContrasta lo que supones con lo que tu audiencia dice necesitar. Comparte una pregunta pública, sin pedir nombres ni correos.\n\nCrear pregunta\n\n¿Qué tema te ayudaría más esta semana?\n\nLas respuestas públicas se convertirán en señales para priorizar oportunidades por grupo.\n\nLas respuestas son voluntarias y no verificadas. No representan personas únicas ni a toda tu audiencia. Los resultados por grupo aparecen a partir de 5 respuestas.",
+    "deletedPublic": "Tu comunidad\nNo pudimos abrir esta pregunta.\n\nNo se encontró esta pregunta.\n\nReintentar\nUna pregunta de tu comunidad · 30X Radar",
+    "deletedSQL": {
+      "polls": {
+        "count": 0
+      },
+      "signals": {
+        "count": 0
+      },
+      "participantTextInRecords": {
+        "count": 0
+      }
+    },
+    "deletedAPI": [
+      {
+        "path": "/api/community/[redactado]",
+        "method": "GET",
+        "status": 404,
+        "body": {
+          "error": "No se encontró esta pregunta."
+        }
+      },
+      {
+        "path": "/api/community/[redactado]/responses",
+        "method": "POST",
+        "status": 404,
+        "body": {
+          "error": "No se encontró esta pregunta."
+        }
+      },
+      {
+        "path": "/api/brands/5043f9f5-d291-4023-8480-01cc80f0ff47/community-polls",
+        "method": "GET",
+        "status": 401,
+        "body": {
+          "error": "Inicia sesión para continuar."
+        }
+      },
+      {
+        "path": "/api/brands/5043f9f5-d291-4023-8480-01cc80f0ff47/community-polls/2941ab1f-6338-49eb-855e-1172c8d5ebc1",
+        "method": "PATCH",
+        "status": 401,
+        "body": {
+          "error": "Inicia sesión para continuar."
+        }
+      },
+      {
+        "path": "/api/brands/5043f9f5-d291-4023-8480-01cc80f0ff47/community-polls/2941ab1f-6338-49eb-855e-1172c8d5ebc1",
+        "method": "DELETE",
+        "status": 401,
+        "body": {
+          "error": "Inicia sesión para continuar."
+        }
+      }
+    ]
+  },
+  "privacy": {
+    "observedTables": [
+      "users",
+      "sessions",
+      "brands",
+      "members",
+      "records",
+      "activity",
+      "secrets",
+      "invitations"
+    ],
+    "observedRecordKindsBeforeDeletion": {
+      "audienceSignals": 3,
+      "communityPolls": 1,
+      "sources": 4
+    },
+    "participantTextInRecords": 0,
+    "note": "Se inspeccionaron sólo datos sintéticos propios. El operador tiene su cuenta de autenticación; los registros del sensor guardan únicamente contadores por segmento/opción y metadatos de encuesta."
+  }
+}

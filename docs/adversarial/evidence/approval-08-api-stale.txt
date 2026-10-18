@@ -1,0 +1,6 @@
+{
+  "http": 409,
+  "body": {
+    "error": "La pieza cambió desde que la revisaste. Actualiza y revisa la versión actual antes de aprobar."
+  }
+}

@@ -1,0 +1,534 @@
+{
+  "reviewedAt": "2026-10-18T02:32:26.241Z",
+  "agents": 21,
+  "cases": 343,
+  "verdicts": {
+    "PASS": 300,
+    "FAIL": 28,
+    "BLOCKED": 15
+  },
+  "reportFindings": 26,
+  "distinctIssues": 25,
+  "issues": [
+    {
+      "id": "company-1",
+      "severity": "P2",
+      "title": "Guardar un cambio de nombre reemplaza silenciosamente un mercado permitido por la propuesta",
+      "members": [
+        "company-1"
+      ]
+    },
+    {
+      "id": "company-2",
+      "severity": "P2",
+      "title": "La redacción conserva direcciones de contacto etiquetadas dentro del párrafo",
+      "members": [
+        "company-2"
+      ]
+    },
+    {
+      "id": "audience-1",
+      "severity": "P2",
+      "title": "Se guardan perfiles con rol y necesidades vacíos al introducir espacios",
+      "members": [
+        "audience-1"
+      ]
+    },
+    {
+      "id": "signals-1",
+      "severity": "P2",
+      "title": "Se guardan fichas individuales con nombre en el corpus de señales",
+      "members": [
+        "signals-1"
+      ]
+    },
+    {
+      "id": "signals-2",
+      "severity": "P2",
+      "title": "La validación de datos personales se elude mediante la URL de evidencia",
+      "members": [
+        "signals-2"
+      ]
+    },
+    {
+      "id": "community-1",
+      "severity": "P2",
+      "title": "El sensor mantiene conteos antiguos aunque Actualizar renueve sus señales",
+      "members": [
+        "community-1"
+      ]
+    },
+    {
+      "id": "discovery-1",
+      "severity": "P2",
+      "title": "El clasificador bloquea el RSS público de NASA al tratar 192.0/16 como reservado",
+      "members": [
+        "discovery-1"
+      ]
+    },
+    {
+      "id": "duplicate-reference",
+      "severity": "P2",
+      "title": "La captura manual duplica publicaciones y aumenta la evidencia contada",
+      "members": [
+        "references-1",
+        "opportunities-2"
+      ]
+    },
+    {
+      "id": "references-2",
+      "severity": "P2",
+      "title": "La captura manual admite fuentes de loopback fuera del límite de contenido público",
+      "members": [
+        "references-2"
+      ]
+    },
+    {
+      "id": "references-3",
+      "severity": "P2",
+      "title": "El detalle de una referencia documental no permite consultar su adjunto",
+      "members": [
+        "references-3"
+      ]
+    },
+    {
+      "id": "opportunities-1",
+      "severity": "P2",
+      "title": "Descensos y muestras estables reciben la etiqueta verde «Crecimiento observado»",
+      "members": [
+        "opportunities-1"
+      ]
+    },
+    {
+      "id": "studio-1",
+      "severity": "P2",
+      "title": "La estructura local pega la dirección editorial en el guion e ignora el formato y CTA pedidos",
+      "members": [
+        "studio-1"
+      ]
+    },
+    {
+      "id": "calendar-1",
+      "severity": "P2",
+      "title": "Una fecha residual mantiene un borrador sin aprobación en la grilla y el CSV",
+      "members": [
+        "calendar-1"
+      ]
+    },
+    {
+      "id": "results-1",
+      "severity": "P2",
+      "title": "Las notas de resultados permiten guardar fichas identificables de contactos",
+      "members": [
+        "results-1"
+      ]
+    },
+    {
+      "id": "assets-1",
+      "severity": "P2",
+      "title": "Los nombres UTF-8 se corrompen al subir y dejan de encontrarse por su nombre original",
+      "members": [
+        "assets-1"
+      ]
+    },
+    {
+      "id": "assets-2",
+      "severity": "P2",
+      "title": "Un TXT válido de 11 MiB falla pese al límite anunciado de 25 MB",
+      "members": [
+        "assets-2"
+      ]
+    },
+    {
+      "id": "sources-1",
+      "severity": "P2",
+      "title": "Cambiar HN a RSS conserva una consulta oculta y el resumen oculta el feed real",
+      "members": [
+        "sources-1"
+      ]
+    },
+    {
+      "id": "sources-2",
+      "severity": "P2",
+      "title": "YouTube→Apify muestra Instagram pero conserva plataforma incompatible y rechaza el guardado",
+      "members": [
+        "sources-2"
+      ]
+    },
+    {
+      "id": "providers-1",
+      "severity": "P2",
+      "title": "Los conectores de publicación se configuran, pero no se pueden usar desde la interfaz",
+      "members": [
+        "providers-1"
+      ]
+    },
+    {
+      "id": "navigation-1",
+      "severity": "P2",
+      "title": "Recargar Audiencia pierde el perfil en edición sin advertencia",
+      "members": [
+        "navigation-1"
+      ]
+    },
+    {
+      "id": "navigation-3",
+      "severity": "P2",
+      "title": "La búsqueda de Referencias desaparece en móvil sin alternativa",
+      "members": [
+        "navigation-3"
+      ]
+    },
+    {
+      "id": "signals-3",
+      "severity": "P3",
+      "title": "El formulario permite temas más largos que el límite real de guardado",
+      "members": [
+        "signals-3"
+      ]
+    },
+    {
+      "id": "discovery-2",
+      "severity": "P3",
+      "title": "Hacker News deja entidades HTML hexadecimales visibles en las referencias",
+      "members": [
+        "discovery-2"
+      ]
+    },
+    {
+      "id": "results-2",
+      "severity": "P3",
+      "title": "API y UI discrepan sobre fracciones y bloquean una corrección de notas",
+      "members": [
+        "results-2"
+      ]
+    },
+    {
+      "id": "navigation-2",
+      "severity": "P3",
+      "title": "Fuentes y equipo descarta una fuente en edición con Escape sin confirmación",
+      "members": [
+        "navigation-2"
+      ]
+    }
+  ],
+  "features": [
+    {
+      "slug": "auth",
+      "feature": "Autenticación",
+      "agent": "audit_auth",
+      "status": "PASS",
+      "cases": 14,
+      "verdicts": {
+        "PASS": 14
+      },
+      "findings": [],
+      "report": "reports/auth.md"
+    },
+    {
+      "slug": "onboarding",
+      "feature": "Alta guiada de empresa",
+      "agent": "audit_onboarding",
+      "status": "PASS",
+      "cases": 8,
+      "verdicts": {
+        "PASS": 8
+      },
+      "findings": [],
+      "report": "reports/onboarding.md"
+    },
+    {
+      "slug": "company",
+      "feature": "Empresa y contenido después del alta",
+      "agent": "audit_company",
+      "status": "FAIL",
+      "cases": 13,
+      "verdicts": {
+        "PASS": 10,
+        "FAIL": 2,
+        "BLOCKED": 1
+      },
+      "findings": [
+        "company-1",
+        "company-2"
+      ],
+      "report": "reports/company.md"
+    },
+    {
+      "slug": "audience",
+      "feature": "Perfiles de audiencia y necesidades",
+      "agent": "audit_audience",
+      "status": "FAIL",
+      "cases": 12,
+      "verdicts": {
+        "PASS": 11,
+        "FAIL": 1
+      },
+      "findings": [
+        "audience-1"
+      ],
+      "report": "reports/audience.md"
+    },
+    {
+      "slug": "signals",
+      "feature": "Señales de audiencia públicas y editoriales",
+      "agent": "audit_signals",
+      "status": "FAIL",
+      "cases": 15,
+      "verdicts": {
+        "PASS": 12,
+        "FAIL": 3
+      },
+      "findings": [
+        "signals-1",
+        "signals-2",
+        "signals-3"
+      ],
+      "report": "reports/signals.md"
+    },
+    {
+      "slug": "community",
+      "feature": "Sensor comunitario: gestión y pregunta pública",
+      "agent": "audit_community",
+      "status": "FAIL",
+      "cases": 13,
+      "verdicts": {
+        "PASS": 12,
+        "FAIL": 1
+      },
+      "findings": [
+        "community-1"
+      ],
+      "report": "reports/community.md"
+    },
+    {
+      "slug": "discovery",
+      "feature": "Descubrimiento público",
+      "agent": "audit_discovery",
+      "status": "FAIL",
+      "cases": 14,
+      "verdicts": {
+        "PASS": 11,
+        "FAIL": 2,
+        "BLOCKED": 1
+      },
+      "findings": [
+        "discovery-1",
+        "discovery-2"
+      ],
+      "report": "reports/discovery.md"
+    },
+    {
+      "slug": "references",
+      "feature": "Captura y organización de referencias",
+      "agent": "audit_references",
+      "status": "FAIL",
+      "cases": 18,
+      "verdicts": {
+        "PASS": 15,
+        "FAIL": 3
+      },
+      "findings": [
+        "references-1",
+        "references-2",
+        "references-3"
+      ],
+      "report": "reports/references.md"
+    },
+    {
+      "slug": "opportunities",
+      "feature": "Oportunidades: prioridad, afinidad y crecimiento",
+      "agent": "audit_opportunities",
+      "status": "FAIL",
+      "cases": 18,
+      "verdicts": {
+        "PASS": 16,
+        "FAIL": 2
+      },
+      "findings": [
+        "opportunities-1",
+        "opportunities-2"
+      ],
+      "report": "reports/opportunities.md"
+    },
+    {
+      "slug": "semantic",
+      "feature": "Análisis semántico opcional de oportunidades",
+      "agent": "audit_semantic",
+      "status": "PARTIAL",
+      "cases": 22,
+      "verdicts": {
+        "PASS": 21,
+        "BLOCKED": 1
+      },
+      "findings": [],
+      "report": "reports/semantic.md"
+    },
+    {
+      "slug": "video",
+      "feature": "Análisis de referencias y lectura audiovisual",
+      "agent": "audit_video",
+      "status": "PARTIAL",
+      "cases": 13,
+      "verdicts": {
+        "PASS": 12,
+        "BLOCKED": 1
+      },
+      "findings": [],
+      "report": "reports/video.md"
+    },
+    {
+      "slug": "studio",
+      "feature": "Generación y edición de borradores",
+      "agent": "audit_studio",
+      "status": "FAIL",
+      "cases": 14,
+      "verdicts": {
+        "PASS": 9,
+        "FAIL": 3,
+        "BLOCKED": 2
+      },
+      "findings": [
+        "studio-1"
+      ],
+      "report": "reports/studio.md"
+    },
+    {
+      "slug": "approval",
+      "feature": "Revisión, comentarios y aprobación versionada",
+      "agent": "audit_approval",
+      "status": "PARTIAL",
+      "cases": 17,
+      "verdicts": {
+        "PASS": 16,
+        "BLOCKED": 1
+      },
+      "findings": [],
+      "report": "reports/approval.md"
+    },
+    {
+      "slug": "calendar",
+      "feature": "Programación, calendario y exportación",
+      "agent": "audit_calendar",
+      "status": "FAIL",
+      "cases": 12,
+      "verdicts": {
+        "PASS": 10,
+        "FAIL": 1,
+        "BLOCKED": 1
+      },
+      "findings": [
+        "calendar-1"
+      ],
+      "report": "reports/calendar.md"
+    },
+    {
+      "slug": "results",
+      "feature": "Resultados y aprendizaje",
+      "agent": "audit_results",
+      "status": "FAIL",
+      "cases": 17,
+      "verdicts": {
+        "PASS": 15,
+        "FAIL": 2
+      },
+      "findings": [
+        "results-1",
+        "results-2"
+      ],
+      "report": "reports/results.md"
+    },
+    {
+      "slug": "assets",
+      "feature": "Archivos",
+      "agent": "audit_assets",
+      "status": "FAIL",
+      "cases": 20,
+      "verdicts": {
+        "PASS": 18,
+        "FAIL": 2
+      },
+      "findings": [
+        "assets-1",
+        "assets-2"
+      ],
+      "report": "reports/assets.md"
+    },
+    {
+      "slug": "sources",
+      "feature": "CRUD y configuración de fuentes",
+      "agent": "audit_sources",
+      "status": "FAIL",
+      "cases": 21,
+      "verdicts": {
+        "PASS": 18,
+        "FAIL": 2,
+        "BLOCKED": 1
+      },
+      "findings": [
+        "sources-1",
+        "sources-2"
+      ],
+      "report": "reports/sources.md"
+    },
+    {
+      "slug": "providers",
+      "feature": "Integraciones, credenciales, presupuestos y publicación opcional",
+      "agent": "audit_providers",
+      "status": "FAIL",
+      "cases": 27,
+      "verdicts": {
+        "PASS": 22,
+        "FAIL": 1,
+        "BLOCKED": 4
+      },
+      "findings": [
+        "providers-1"
+      ],
+      "report": "reports/providers.md"
+    },
+    {
+      "slug": "permissions",
+      "feature": "Equipo, roles e aislamiento",
+      "agent": "audit_permissions",
+      "status": "PARTIAL",
+      "cases": 21,
+      "verdicts": {
+        "PASS": 20,
+        "BLOCKED": 1
+      },
+      "findings": [],
+      "report": "reports/permissions.md"
+    },
+    {
+      "slug": "navigation",
+      "feature": "Inicio, navegación, responsive, búsqueda y guardias",
+      "agent": "audit_navigation",
+      "status": "FAIL",
+      "cases": 18,
+      "verdicts": {
+        "PASS": 15,
+        "FAIL": 3
+      },
+      "findings": [
+        "navigation-1",
+        "navigation-2",
+        "navigation-3"
+      ],
+      "report": "reports/navigation.md"
+    },
+    {
+      "slug": "scheduler",
+      "feature": "Actualización automática, cadencia y backoff",
+      "agent": "audit_scheduler",
+      "status": "PARTIAL",
+      "cases": 16,
+      "verdicts": {
+        "PASS": 15,
+        "BLOCKED": 1
+      },
+      "findings": [],
+      "report": "reports/scheduler.md"
+    }
+  ]
+}

@@ -1,0 +1,294 @@
+{
+  "feature": "Captura y organización de referencias",
+  "slug": "references",
+  "url": "http://127.0.0.18:4108",
+  "status": "FAIL",
+  "cases": [
+    {
+      "name": "Formulario vacío",
+      "expected": "Sin enlace, texto ni archivo, mostrar validación y no crear.",
+      "actual": "La UI mostró «Agrega un enlace, un texto o un archivo.»; permaneció abierta. El primer guardado válido produjo exactamente un registro.",
+      "verdict": "PASS",
+      "evidence": [
+        "docs/adversarial/evidence/references-api-state.json"
+      ]
+    },
+    {
+      "name": "URL mal formada",
+      "expected": "Rechazar «no es url» y permitir corregirla.",
+      "actual": "El campo type=url quedó inválido con «Please enter a URL.». Se corrigió y el flujo continuó.",
+      "verdict": "PASS",
+      "evidence": [
+        "docs/adversarial/evidence/references-api-state.json"
+      ]
+    },
+    {
+      "name": "Esquemas inseguros y credenciales",
+      "expected": "Rechazar javascript: y URLs con credenciales sin ejecutarlas.",
+      "actual": "javascript:void(0) y https://qa:qa@example.com/reference recibieron HTTP 400; no hay ninguna en el estado final. La UI mostró «URL debe usar http o https sin credenciales.»",
+      "verdict": "PASS",
+      "evidence": [
+        "docs/adversarial/evidence/references-api-state.json"
+      ]
+    },
+    {
+      "name": "Captura normal exacta",
+      "expected": "Conservar URL, título, contexto, idioma seleccionado y fuente manual.",
+      "actual": "El registro 661dc990-99e3-4fb7-985d-9884d93e1f3e conserva exactamente URL LinkedIn, título con raya/acentos/& y texto con saltos de línea; language=es, source=Equipo, format=link, tags=[].",
+      "verdict": "PASS",
+      "evidence": [
+        "docs/adversarial/evidence/references-api-state.json",
+        "docs/adversarial/evidence/references-normal.png"
+      ]
+    },
+    {
+      "name": "Tema, notas, fecha y métricas declaradas",
+      "expected": "Guardar el contexto aportado sin inventar datos observados.",
+      "actual": "El formulario no ofrece tema/fecha/métricas estructuradas. El tema IA práctica, notas, fecha 2026-10-15 y vistas 1234 se conservaron únicamente en text; no hay métricas ni publishedAt inventados.",
+      "verdict": "PASS",
+      "evidence": [
+        "docs/adversarial/evidence/references-api-state.json"
+      ]
+    },
+    {
+      "name": "Cancelar captura",
+      "expected": "Cancelar no debe persistir una referencia.",
+      "actual": "Se escribió «QA Cancelada — no persistir» y contexto; Cancelar cerró el modal y mantuvo dos registros. cancelledPresent=false al final.",
+      "verdict": "PASS",
+      "evidence": [
+        "docs/adversarial/evidence/references-api-state.json"
+      ]
+    },
+    {
+      "name": "Buscar por contexto y vacío",
+      "expected": "Encontrar el texto IA práctica y devolver cero para un término inexistente.",
+      "actual": "«IA práctica» devolvió la referencia; «no-existe-qa» dejó 0 filas y el contador 0. Vaciar la búsqueda restauró la fila.",
+      "verdict": "PASS",
+      "evidence": [
+        "docs/adversarial/evidence/references-api-state.json"
+      ]
+    },
+    {
+      "name": "Descartar, filtrar y restaurar",
+      "expected": "PATCH de estado exacto, filtro Descartadas correcto y persistencia al recargar.",
+      "actual": "La referencia normal pasó a dismissed; Descartadas mostró esa fila. Tras recargar seguía Descartada; Restaurar la devolvió a new sin cambiar sus datos.",
+      "verdict": "PASS",
+      "evidence": [
+        "docs/adversarial/evidence/references-api-state.json"
+      ]
+    },
+    {
+      "name": "Guardar y filtrar",
+      "expected": "Guardar en el radar y mostrar sólo esa referencia en Guardadas después de navegar/recargar.",
+      "actual": "El botón de marcador en /radar puso QA Reintento de bandeja en saved. /inbox y Guardadas mostraron exactamente esa fila y la etiqueta Guardada.",
+      "verdict": "PASS",
+      "evidence": [
+        "docs/adversarial/evidence/references-api-state.json",
+        "docs/adversarial/evidence/references-saved.png"
+      ]
+    },
+    {
+      "name": "Repetir la misma URL manual",
+      "expected": "Aplicar deduplicación por URL, o avisar y permitir revisar la ya existente.",
+      "actual": "Guardar de nuevo la misma URL, título y contexto creó dos IDs diferentes, sin aviso. Ambas filas sobrevivieron a la recarga.",
+      "verdict": "FAIL",
+      "evidence": [
+        "docs/adversarial/evidence/references-api-state.json",
+        "docs/adversarial/evidence/references-duplicate.png"
+      ]
+    },
+    {
+      "name": "Recuperación de fallo al actualizar la bandeja",
+      "expected": "Si el POST se guardó y falla GET /state, el reintento no debe duplicar.",
+      "actual": "Se simuló una única caída de GET /state en el navegador propio tras el POST real. La UI congeló campos y ofreció Recargar bandeja; count=1 antes y después del reintento; el modal cerró.",
+      "verdict": "PASS",
+      "evidence": [
+        "docs/adversarial/evidence/references-api-state.json",
+        "docs/adversarial/evidence/references-retry.png"
+      ]
+    },
+    {
+      "name": "URL de loopback",
+      "expected": "El flujo limitado a fuentes públicas debe rechazar una URL de loopback.",
+      "actual": "http://127.0.0.1:9/qa-private-reference fue guardada con HTTP 201 y se ofrece como «Ver original». No se siguió el enlace ni se probó una petición de servidor.",
+      "verdict": "FAIL",
+      "evidence": [
+        "docs/adversarial/evidence/references-api-state.json",
+        "docs/adversarial/evidence/references-private-url.png"
+      ]
+    },
+    {
+      "name": "HTML literal",
+      "expected": "Conservar HTML como texto sin convertirlo en DOM o enlaces ejecutables.",
+      "actual": "Título y contexto con <b>, <strong> y <a href=\"javascript:void(0)\"> se muestran literales. injectedNodes=0 y unsafeLinks=0. No se incluyeron scripts ni manejadores ejecutables.",
+      "verdict": "PASS",
+      "evidence": [
+        "docs/adversarial/evidence/references-api-state.json",
+        "docs/adversarial/evidence/references-html-literal.png"
+      ]
+    },
+    {
+      "name": "Enlaces sociales sin proveedor",
+      "expected": "Conservar procedencia y distinguir enlace guardado de extracción o métricas reales.",
+      "actual": "LinkedIn y YouTube se guardaron como source=Equipo y format=link, sin plataforma/métricas inventadas. La URL de YouTube se reconoció en el detalle y avisó que Gemini no está configurado; no se lanzó análisis.",
+      "verdict": "PASS",
+      "evidence": [
+        "docs/adversarial/evidence/references-api-state.json"
+      ]
+    },
+    {
+      "name": "Fuente original de enlace",
+      "expected": "Ofrecer el href original exacto con apertura externa segura.",
+      "actual": "La referencia LinkedIn mostró Ver original con el href exacto, target=_blank y rel=noreferrer. No se visitó la URL sintética.",
+      "verdict": "PASS",
+      "evidence": [
+        "docs/adversarial/evidence/references-api-state.json",
+        "docs/adversarial/evidence/references-normal.png"
+      ]
+    },
+    {
+      "name": "Adjunto y formato persistidos",
+      "expected": "Subir un documento sólo, conservar nombre/contenido y asociarlo a la referencia.",
+      "actual": "Se adjuntó qa-references-attachment.txt (55 bytes), sin URL/texto/título. La UI usó el nombre como título; reference.format=document y asset.type=document, mimeType=text/plain, assetId coincide. GET del archivo devolvió 200 y el texto sintético exacto.",
+      "verdict": "PASS",
+      "evidence": [
+        "docs/adversarial/evidence/references-api-state.json"
+      ]
+    },
+    {
+      "name": "Consultar original del documento desde el detalle",
+      "expected": "La referencia adjunta debe permitir abrir/descargar el documento de origen.",
+      "actual": "El modal sólo muestra el título y las acciones Analizar referencia/Crear guion. No tiene enlaces, previsualización ni control para abrir el adjunto, aunque la API conserva y entrega el archivo.",
+      "verdict": "FAIL",
+      "evidence": [
+        "docs/adversarial/evidence/references-api-state.json",
+        "docs/adversarial/evidence/references-attachment-detail.png"
+      ]
+    },
+    {
+      "name": "Recarga final de datos",
+      "expected": "Los datos exactos y estados deben sobrevivir a una recarga completa de /inbox.",
+      "actual": "La recarga final mostró 7 filas; GET /state coincidió con títulos, URLs, texto, idioma, saved y assetId. Duplicados y URL privada también persisten.",
+      "verdict": "PASS",
+      "evidence": [
+        "docs/adversarial/evidence/references-api-state.json"
+      ]
+    }
+  ],
+  "findings": [
+    {
+      "id": "references-1",
+      "severity": "P2",
+      "title": "La captura manual duplica una URL ya guardada sin advertencia",
+      "steps": [
+        "En /inbox, Agregar referencia: URL https://www.linkedin.com/posts/qa-references_ia-sintetica-123, título QA Captura IA — líderes & equipos y contexto de IA práctica.",
+        "Guardar y volver a abrir Agregar referencia.",
+        "Volver a guardar la misma URL, título y contexto.",
+        "Recargar /inbox y consultar GET /api/brands/b9d6618e-3919-4e72-9259-89a3021361e3/references."
+      ],
+      "expected": "Conservar una referencia por URL o advertir del duplicado antes de crear otra, conforme a la deduplicación del recorrido de importación/enlaces.",
+      "actual": "Dos registros: 661dc990-99e3-4fb7-985d-9884d93e1f3e y b6b74028-1a9b-4cad-9b1e-ac875044314c. La UI muestra dos filas idénticas; cada una tiene estado independiente. La segunda usa el idioma predeterminado en y la primera es; no se alega identidad byte a byte de todo el registro.",
+      "evidence": [
+        "docs/adversarial/evidence/references-api-state.json",
+        "docs/adversarial/evidence/references-duplicate.png"
+      ],
+      "source": [
+        "docs/TRANSCRIPT-TO-PRODUCT.md:7",
+        "src/features/Discovery.tsx:1688",
+        "server/core.mjs:1084"
+      ]
+    },
+    {
+      "id": "references-2",
+      "severity": "P2",
+      "title": "La captura manual admite fuentes de loopback fuera del límite de contenido público",
+      "steps": [
+        "Abrir Agregar referencia.",
+        "Ingresar http://127.0.0.1:9/qa-private-reference y título QA URL privada loopback.",
+        "Guardar, abrir el detalle y recargar."
+      ],
+      "expected": "Rechazar hosts locales/privados como fuente original en el flujo de referencias públicas y conservar los campos para corregir.",
+      "actual": "POST 201 y registro ecd72dbe-632c-4943-a5be-fc0ad84684dd; el detalle ofrece Ver original apuntando a loopback. Es una validación del corpus/origen insuficiente. No se observó ni se afirma SSRF, lectura privada ni navegación al destino.",
+      "evidence": [
+        "docs/adversarial/evidence/references-api-state.json",
+        "docs/adversarial/evidence/references-private-url.png"
+      ],
+      "source": [
+        "PRODUCT.md:31",
+        "docs/TRANSCRIPT-TO-PRODUCT.md:24",
+        "server/core.mjs:139",
+        "server/core.mjs:407",
+        "src/features/Discovery.tsx:1083"
+      ]
+    },
+    {
+      "id": "references-3",
+      "severity": "P2",
+      "title": "El detalle de una referencia documental no permite consultar su adjunto",
+      "steps": [
+        "En Agregar referencia, adjuntar /tmp/qa-references-attachment.txt (texto sintético), sin enlace ni texto.",
+        "Guardar y abrir la referencia qa-references-attachment.txt desde /inbox.",
+        "Buscar una acción para ver/descargar el documento y recargar el detalle.",
+        "Comparar su assetId con GET /state y consultar la URL del asset."
+      ],
+      "expected": "Acceso al archivo original o previsualización desde el detalle de la referencia, conservando su procedencia y contenido para revisión.",
+      "actual": "La referencia e5fc29f7-9b6a-496b-81d9-5029750bdf6a apunta al asset 1e3e0e32-61c8-43b7-ad1a-55ba3d0ccb10; el archivo existe y su GET devuelve 200 y contenido correcto. El modal carece de enlaces y medios, y sólo ofrece Cerrar/Analizar referencia/Crear guion. No es pérdida física del archivo, sino falta de acceso contextual desde la referencia.",
+      "evidence": [
+        "docs/adversarial/evidence/references-api-state.json",
+        "docs/adversarial/evidence/references-attachment-detail.png"
+      ],
+      "source": [
+        "docs/TRANSCRIPT-TO-PRODUCT.md:11",
+        "src/features/Discovery.tsx:1091",
+        "src/features/Discovery.tsx:1092"
+      ]
+    }
+  ],
+  "limitations": [
+    "Auditoría del build existente: sin build, format, cambios de implementación ni lectura de otros informes.",
+    "Todas las referencias y el archivo son sintéticos. La cuenta ficticia fue creada desde UI; la empresa/audiencia sintéticas se prepararon por API.",
+    "Se probaron los campos y controles ofrecidos por UI. No hay campos estructurados para tema, fecha de publicación o métricas en el modal.",
+    "La revisión de análisis/IA y video corresponde a otra auditoría. No se enviaron solicitudes a proveedores ni se validó contenido real de plataformas.",
+    "La prueba de recuperación simula una caída de GET /state mediante window.fetch en la pestaña propia; el POST y la persistencia fueron reales en la base aislada. Se restauró fetch antes de continuar.",
+    "La prueba de HTML utilizó etiquetas inertes y javascript:void(0) como texto; no scripts, manejadores ni enlaces ejecutados.",
+    "Se verificó archivo .txt; otros tipos/tamaños, carga concurrente, móviles, roles y otras cuentas no están cubiertos.",
+    "La fuente original de las URLs sintéticas se verificó por href y atributos; no se navegó al contenido externo o privado."
+  ],
+  "artifacts": [
+    "docs/adversarial/evidence/references-api-state.json",
+    "docs/adversarial/evidence/references-normal.png",
+    "docs/adversarial/evidence/references-duplicate.png",
+    "docs/adversarial/evidence/references-retry.png",
+    "docs/adversarial/evidence/references-private-url.png",
+    "docs/adversarial/evidence/references-html-literal.png",
+    "docs/adversarial/evidence/references-saved.png",
+    "docs/adversarial/evidence/references-attachment-detail.png"
+  ],
+  "environment": {
+    "date": "2026-10-18",
+    "dataDir": "/tmp/30x-adversarial-references",
+    "port": 4108,
+    "host": "127.0.0.18",
+    "sessionId": 50498,
+    "pid": 3850194,
+    "tabId": "tab_3t_07e54779-9ab2-4979-8a15-674c4eff160a",
+    "account": "qa-references@example.com",
+    "brandId": "b9d6618e-3919-4e72-9259-89a3021361e3",
+    "discoveryEnabled": false,
+    "providerCredentials": "OPENAI_API_KEY, GEMINI_API_KEY, YOUTUBE_API_KEY y APIFY_API_TOKEN retiradas del entorno",
+    "cleanup": {
+      "tabClosed": true,
+      "processExited": true,
+      "port4108Free": true,
+      "dataDirPreserved": true
+    }
+  },
+  "counts": {
+    "PASS": 15,
+    "FAIL": 3,
+    "BLOCKED": 0,
+    "P1": 0,
+    "P2": 3,
+    "P3": 0
+  }
+}

@@ -1,0 +1,183 @@
+{
+  "feature": "Perfiles de audiencia y necesidades",
+  "slug": "audience",
+  "url": "http://127.0.0.14:4104",
+  "status": "FAIL",
+  "cases": [
+    {
+      "name": "Vacío",
+      "expected": "Guardar vacío no crea audiencia y señala campos obligatorios",
+      "actual": "{\n  \"invalid\": [\n    {\n      \"name\": \"name\",\n      \"value\": \"\",\n      \"required\": true,\n      \"valid\": false,\n      \"message\": \"Please fill out this field.\"\n    },\n    {\n      \"name\": \"role\",\n      \"value\": \"\",\n      \"required\": true,\n      \"valid\": false,\n      \"message\": \"Please fill out this field.\"\n    },\n    {\n      \"name\": \"needs\",\n      \"value\": \"\",\n      \"required\": true,\n      \"valid\": false,\n      \"message\": \"Please fill out this field.\"\n    }\n  ],\n  \"audience\": []\n}",
+      "verdict": "PASS",
+      "evidence": []
+    },
+    {
+      "name": "Crear perfil y procedencia declarada",
+      "expected": "Una audiencia conserva nombre, rol, etapa y necesidad exactos; presentación como hipótesis editorial sin consumidores observados",
+      "actual": "Guardado por UI; API: id 06fe6beb-fdef-4854-ba33-f397ff898ee5, nombre Ventas IA — prueba sintética, rol Directora comercial, etapa Implementando, necesidades Automatizar seguimiento de ventas con IA sin perder el criterio humano. UI muestra valores y aviso «Estos perfiles son hipótesis editoriales del equipo… una inscripción no demuestra quién consume tu contenido».",
+      "verdict": "PASS",
+      "evidence": [
+        "docs/adversarial/evidence/audience-created.png"
+      ]
+    },
+    {
+      "name": "Dos audiencias y edición independiente",
+      "expected": "Segunda audiencia no sobrescribe primera; su edición conserva ambos IDs y cambia sólo EdTech",
+      "actual": "{\n  \"audience\": [\n    {\n      \"id\": \"06fe6beb-fdef-4854-ba33-f397ff898ee5\",\n      \"name\": \"Ventas IA — prueba sintética\",\n      \"role\": \"Directora comercial\",\n      \"stage\": \"Implementando\",\n      \"needs\": \"Automatizar seguimiento de ventas con IA sin perder el criterio humano.\",\n      \"description\": \"\"\n    },\n    {\n      \"id\": \"eca9f7d6-041b-4fe2-9260-8db9b87621d8\",\n      \"name\": \"EdTech validación — prueba sintética\",\n      \"role\": \"Directora de formación\",\n      \"stage\": \"Escalando\",\n      \"needs\": \"Medir aprendizaje y retroalimentación con IA en cursos EdTech.\",\n      \"description\": \"\"\n    }\n  ]\n}",
+      "verdict": "PASS",
+      "evidence": [
+        "docs/adversarial/evidence/audience-two-profiles.png"
+      ]
+    },
+    {
+      "name": "Persistencia al recargar",
+      "expected": "Recarga conserva ambos IDs, nombres, roles, etapas y necesidades",
+      "actual": "Tras navegación completa a /audience y GET state, se mantienen ambos IDs y valores editados: Ventas/Directora comercial/Implementando y EdTech validación/Directora de formación/Escalando, con sus necesidades completas. No reaparece nombre/rol/etapa anteriores de EdTech.",
+      "verdict": "PASS",
+      "evidence": [
+        "docs/adversarial/evidence/audience-two-profiles.png"
+      ]
+    },
+    {
+      "name": "Cancelar edición sucia",
+      "expected": "Rechazar descarte conserva texto; aceptar cierra sin guardar cambios",
+      "actual": "{\n  \"dismissed\": {\n    \"dialogPresent\": true,\n    \"needs\": \"Cambio que debe cancelarse\"\n  },\n  \"accepted\": {\n    \"dialogPresent\": false,\n    \"audience\": [\n      {\n        \"id\": \"06fe6beb-fdef-4854-ba33-f397ff898ee5\",\n        \"name\": \"Ventas IA — prueba sintética\",\n        \"role\": \"Directora comercial\",\n        \"stage\": \"Implementando\",\n        \"needs\": \"Automatizar seguimiento de ventas con IA sin perder el criterio humano.\",\n        \"description\": \"\"\n      },\n      {\n        \"id\": \"eca9f7d6-041b-4fe2-9260-8db9b87621d8\",\n        \"name\": \"EdTech validación — prueba sintética\",\n        \"role\": \"Directora de formación\",\n        \"stage\": \"Escalando\",\n        \"needs\": \"Medir aprendizaje y retroalimentación con IA en cursos EdTech.\",\n        \"description\": \"\"\n      }\n    ]\n  }\n}",
+      "verdict": "PASS",
+      "evidence": [
+        "confirm nativo: Hay cambios sin guardar. ¿Cerrar y descartarlos?"
+      ]
+    },
+    {
+      "name": "Rol/necesidades con sólo espacios",
+      "expected": "Campos obligatorios recortados vacíos se rechazan y no se guarda perfil",
+      "actual": "{\n  \"firstReproduction\": {\n    \"audience\": [\n      {\n        \"id\": \"06fe6beb-fdef-4854-ba33-f397ff898ee5\",\n        \"name\": \"Ventas IA — prueba sintética\",\n        \"role\": \"Directora comercial\",\n        \"stage\": \"Implementando\",\n        \"needs\": \"Automatizar seguimiento de ventas con IA sin perder el criterio humano.\",\n        \"description\": \"\"\n      },\n      {\n        \"id\": \"eca9f7d6-041b-4fe2-9260-8db9b87621d8\",\n        \"name\": \"EdTech validación — prueba sintética\",\n        \"role\": \"Directora de formación\",\n        \"stage\": \"Escalando\",\n        \"needs\": \"Medir aprendizaje y retroalimentación con IA en cursos EdTech.\",\n        \"description\": \"\"\n      },\n      {\n        \"id\": \"724b6082-8f5f-442c-8a50-9f429ccaf66b\",\n        \"name\": \"Blancos — prueba sintética\",\n        \"role\": \"\",\n        \"stage\": \"Explorando\",\n        \"needs\": \"\",\n        \"description\": \"\"\n      }\n    ]\n  },\n  \"secondAfterReload\": {\n    \"dialogPresent\": false,\n    \"audience\": [\n      {\n        \"id\": \"06fe6beb-fdef-4854-ba33-f397ff898ee5\",\n        \"name\": \"Ventas IA — prueba sintética\",\n        \"role\": \"Directora comercial\",\n        \"stage\": \"Implementando\",\n        \"needs\": \"Automatizar seguimiento de ventas con IA sin perder el criterio humano.\",\n        \"description\": \"\"\n      },\n      {\n        \"id\": \"eca9f7d6-041b-4fe2-9260-8db9b87621d8\",\n        \"name\": \"EdTech validación — prueba sintética\",\n        \"role\": \"Directora de formación\",\n        \"stage\": \"Escalando\",\n        \"needs\": \"Medir aprendizaje y retroalimentación con IA en cursos EdTech.\",\n        \"description\": \"\"\n      },\n      {\n        \"id\": \"8e128450-3d77-4a32-8e7a-b6c8037c8249\",\n        \"name\": \"Blancos — reproducción sintética\",\n        \"role\": \"\",\n        \"stage\": \"Explorando\",\n        \"needs\": \"\",\n        \"description\": \"\"\n      }\n    ]\n  },\n  \"network\": [\n    {\n      \"url\": \"http://127.0.0.14:4104/api/brands/0a10f572-0221-4ec1-8256-ebe625201875\",\n      \"method\": \"PATCH\",\n      \"status\": 200,\n      \"failed\": false,\n      \"timestamp\": \"2026-10-18T01:57:39.075Z\"\n    }\n  ]\n}",
+      "verdict": "FAIL",
+      "evidence": [
+        "docs/adversarial/evidence/audience-whitespace.png"
+      ]
+    },
+    {
+      "name": "Eliminar perfil sin uso",
+      "expected": "Eliminar Blancos borra sólo ese perfil y se mantiene tras recarga",
+      "actual": "Tras click Eliminar y recarga quedan exclusivamente 06fe6beb-fdef-4854-ba33-f397ff898ee5 y eca9f7d6-041b-4fe2-9260-8db9b87621d8 con todos sus valores previos. Borrado inmediato sin confirmación adicional.",
+      "verdict": "PASS",
+      "evidence": [
+        "GET state después de recargar: audience.length=2"
+      ]
+    },
+    {
+      "name": "Límites de longitud y corrección",
+      "expected": "151/301/3001 rechazados con feedback y sin escritura; 150/300/3000 aceptados íntegros",
+      "actual": "{\n  \"rejected\": [\n    {\n      \"field\": \"name\",\n      \"length\": 151,\n      \"alert\": \"Nombre segmento: longitud inválida (máximo 150).\"\n    },\n    {\n      \"field\": \"role\",\n      \"length\": 301,\n      \"alert\": \"Rol: longitud inválida (máximo 300).\"\n    },\n    {\n      \"field\": \"needs\",\n      \"length\": 3001,\n      \"alert\": \"Necesidades: longitud inválida (máximo 3000).\"\n    }\n  ],\n  \"corrected\": {\n    \"count\": 3,\n    \"profiles\": [\n      {\n        \"id\": \"06fe6beb-fdef-4854-ba33-f397ff898ee5\",\n        \"nameLength\": 28,\n        \"roleLength\": 19,\n        \"needsLength\": 71\n      },\n      {\n        \"id\": \"eca9f7d6-041b-4fe2-9260-8db9b87621d8\",\n        \"nameLength\": 36,\n        \"roleLength\": 22,\n        \"needsLength\": 62\n      },\n      {\n        \"id\": \"cd09ebfc-8094-4644-81d1-385a9c341199\",\n        \"nameLength\": 150,\n        \"roleLength\": 300,\n        \"needsLength\": 3000\n      }\n    ]\n  }\n}",
+      "verdict": "PASS",
+      "evidence": [
+        "docs/adversarial/evidence/audience-limits.png"
+      ]
+    },
+    {
+      "name": "Usar segmento correcto en creación posterior",
+      "expected": "Seleccionar EdTech al crear guion produce segmentId de EdTech y usa sus necesidades; conteo de piezas aumenta sólo allí",
+      "actual": "{\n  \"pieces\": [\n    {\n      \"id\": \"d524f10d-8c3d-41de-b718-bcd3bd18ef01\",\n      \"title\": \"Diseñar una rúbrica para medir aprendizaje y retroalimentación con IA en cursos EdTech.\",\n      \"segmentId\": \"eca9f7d6-041b-4fe2-9260-8db9b87621d8\",\n      \"format\": \"post\",\n      \"channel\": \"linkedin\",\n      \"script\": \"¿Qué cambia con diseñar una rúbrica para medir aprendizaje y retroalimentación con ia en cursos edtech para EdTech validación — prueba sintética?\\n\\nQué significa para EdTech validación — prueba sintética y cómo probarlo sin perder el foco.\\nEn Latinoamérica, comienza por una tarea concreta de Formación en IA para empresas relacionada con Medir aprendizaje y retroalimentación con IA en cursos EdTech..\\n\\nAntes de adoptar la idea, registra cómo resuelves esa tarea hoy. Elige un caso pequeño, define quién revisará el resultado y compara calidad y tiempo. Documenta las limitaciones; no extrapoles una prueba a toda la organización.\\n\\nDesde Empresa sintética QA audiencia, nuestra propuesta es convertir la conversación en una prueba verificable. Dirección editorial: Diseñar una rúbrica para medir aprendizaje y retroalimentación con IA en cursos EdTech. Fixture sintética..\\n\\n¿Qué tarea pondrías a prueba primero? Comparte tu contexto para adaptar el siguiente paso.\",\n      \"hook\": \"¿Qué cambia con diseñar una rúbrica para medir aprendizaje y retroalimentación con ia en cursos edtech para EdTech validación — prueba sintética?\"\n    }\n  ],\n  \"audience\": [\n    {\n      \"id\": \"06fe6beb-fdef-4854-ba33-f397ff898ee5\",\n      \"name\": \"Ventas IA — prueba sintética\",\n      \"role\": \"Directora comercial\",\n      \"stage\": \"Implementando\",\n      \"needs\": \"Automatizar seguimiento de ventas con IA sin perder el criterio humano.\",\n      \"description\": \"\"\n    },\n    {\n      \"id\": \"eca9f7d6-041b-4fe2-9260-8db9b87621d8\",\n      \"name\": \"EdTech validación — prueba sintética\",\n      \"role\": \"Directora de formación\",\n      \"stage\": \"Escalando\",\n      \"needs\": \"Medir aprendizaje y retroalimentación con IA en cursos EdTech.\",\n      \"description\": \"\"\n    }\n  ]\n}",
+      "verdict": "PASS",
+      "evidence": [
+        "docs/adversarial/evidence/audience-correct-segment-draft.png",
+        "UI perfil Ventas=0 piezas dirigidas; EdTech=1 piezas dirigidas"
+      ]
+    },
+    {
+      "name": "Borrado de audiencia en uso",
+      "expected": "Bloqueo409 sin perder audiencia ni pieza",
+      "actual": "{\n  \"alert\": \"No puedes eliminar la audiencia: 1 pieza todavía tienen vínculos. Reasigna esas piezas e ideas a otra audiencia antes de eliminarla.\",\n  \"audience\": [\n    {\n      \"id\": \"06fe6beb-fdef-4854-ba33-f397ff898ee5\",\n      \"name\": \"Ventas IA — prueba sintética\",\n      \"role\": \"Directora comercial\",\n      \"stage\": \"Implementando\",\n      \"needs\": \"Automatizar seguimiento de ventas con IA sin perder el criterio humano.\",\n      \"description\": \"\"\n    },\n    {\n      \"id\": \"eca9f7d6-041b-4fe2-9260-8db9b87621d8\",\n      \"name\": \"EdTech validación — prueba sintética\",\n      \"role\": \"Directora de formación\",\n      \"stage\": \"Escalando\",\n      \"needs\": \"Medir aprendizaje y retroalimentación con IA en cursos EdTech.\",\n      \"description\": \"\"\n    }\n  ]\n}",
+      "verdict": "PASS",
+      "evidence": [
+        "docs/adversarial/evidence/audience-delete-in-use.png"
+      ]
+    },
+    {
+      "name": "Límite30 segmentos",
+      "expected": "Intentar perfil31 rechaza y mantiene originales1–30",
+      "actual": "{\n  \"alert\": \"La marca admite hasta 30 segmentos.\",\n  \"count\": 30,\n  \"first\": {\n    \"id\": \"fixture-limit-0\",\n    \"name\": \"Grupo sintético 1\",\n    \"role\": \"Rol 1\",\n    \"stage\": \"Explorando\",\n    \"needs\": \"Necesidad sintética 1\",\n    \"description\": \"\"\n  },\n  \"last\": {\n    \"id\": \"fixture-limit-29\",\n    \"name\": \"Grupo sintético 30\",\n    \"role\": \"Rol 30\",\n    \"stage\": \"Explorando\",\n    \"needs\": \"Necesidad sintética 30\",\n    \"description\": \"\"\n  },\n  \"all30OriginalValuesExact\": true\n}",
+      "verdict": "PASS",
+      "evidence": [
+        "Fixture API sólo creó estado inicial30; UI intentó31; GET state count30 IDs fixture-limit-0…29"
+      ]
+    },
+    {
+      "name": "Restricción reviewer",
+      "expected": "Revisor puede consultar; crear/editar desactivados, no puede borrar; PATCH directo403 conserva datos",
+      "actual": "{\n  \"role\": \"reviewer\",\n  \"controls\": [\n    {\n      \"label\": \"Nueva audiencia\",\n      \"disabled\": true\n    },\n    {\n      \"label\": \"Editar perfil →\",\n      \"disabled\": true\n    },\n    {\n      \"label\": \"Editar perfil →\",\n      \"disabled\": true\n    }\n  ],\n  \"attemptStatus\": 403,\n  \"error\": {\n    \"error\": \"Solo el propietario puede realizar esta acción.\"\n  },\n  \"unchanged\": true,\n  \"audience\": [\n    {\n      \"id\": \"06fe6beb-fdef-4854-ba33-f397ff898ee5\",\n      \"name\": \"Ventas IA — prueba sintética\",\n      \"role\": \"Directora comercial\",\n      \"stage\": \"Implementando\",\n      \"needs\": \"Automatizar seguimiento de ventas con IA sin perder el criterio humano.\",\n      \"description\": \"\"\n    },\n    {\n      \"id\": \"eca9f7d6-041b-4fe2-9260-8db9b87621d8\",\n      \"name\": \"EdTech validación — prueba sintética\",\n      \"role\": \"Directora de formación\",\n      \"stage\": \"Escalando\",\n      \"needs\": \"Medir aprendizaje y retroalimentación con IA en cursos EdTech.\",\n      \"description\": \"\"\n    }\n  ]\n}",
+      "verdict": "PASS",
+      "evidence": [
+        "docs/adversarial/evidence/audience-reviewer.png"
+      ]
+    }
+  ],
+  "findings": [
+    {
+      "id": "audience-1",
+      "severity": "P2",
+      "title": "Se guardan perfiles con rol y necesidades vacíos al introducir espacios",
+      "steps": [
+        "Abrir /audience y Nueva audiencia.",
+        "Escribir nombre Blancos — prueba sintética; rol tres espacios; necesidades tres espacios.",
+        "Guardar perfil y recargar."
+      ],
+      "expected": "Rechazar los dos campos obligatorios vacíos tras eliminar espacios.",
+      "actual": "PATCH 200 crea perfil con role:'' y needs:''; tras recarga la tarjeta persiste sin rol ni necesidad. Se reprodujo dos veces. Registro conservado: 8e128450-3d77-4a32-8e7a-b6c8037c8249, Blancos — reproducción sintética.",
+      "evidence": [
+        "docs/adversarial/evidence/audience-whitespace.png",
+        "GET state: audience id 8e128450-3d77-4a32-8e7a-b6c8037c8249, role='', needs=''",
+        "PATCH 200, 2026-10-18T01:57:39.075Z"
+      ],
+      "source": [
+        "src/features/Brand.tsx:575",
+        "src/features/Brand.tsx:606",
+        "src/features/Brand.tsx:630",
+        "server/core.mjs:100",
+        "server/core.mjs:307",
+        "server/core.mjs:309"
+      ]
+    }
+  ],
+  "limitations": [
+    "Datos y cuentas ficticias; no se validó una audiencia real ni exactitud de hipótesis con consumidores.",
+    "La acción auditada se probó por UI T3. API sólo preparó cuenta/empresa/invitación y fixture inicial30, leyó resultados, o comprobó defensa403 del revisor.",
+    "El guion posterior se produjo con estructura local sin credenciales; no es una prueba de integración IA real.",
+    "No se auditaron señales, preguntas comunitarias, importación inicial del inspector ni ediciones concurrentes desde varios clientes.",
+    "Borrado de perfil sin uso actúa inmediatamente; no se exige confirmación adicional en los requisitos y no se reporta como defecto."
+  ],
+  "artifacts": [
+    "docs/adversarial/reports/audience.md",
+    "docs/adversarial/reports/audience.json",
+    "docs/adversarial/evidence/audience-final-state.json",
+    "docs/adversarial/evidence/audience-created.png",
+    "docs/adversarial/evidence/audience-two-profiles.png",
+    "docs/adversarial/evidence/audience-whitespace.png",
+    "docs/adversarial/evidence/audience-limits.png",
+    "docs/adversarial/evidence/audience-correct-segment-draft.png",
+    "docs/adversarial/evidence/audience-delete-in-use.png",
+    "docs/adversarial/evidence/audience-reviewer.png"
+  ],
+  "runtime": {
+    "dataDir": "/tmp/30x-adversarial-audience",
+    "sessionId": 22978,
+    "pid": 3833238,
+    "tabId": "tab_3p_07e54779-9ab2-4979-8a15-674c4eff160a",
+    "port": 4104,
+    "host": "127.0.0.14",
+    "existingBuild": true,
+    "discoveryEnabled": false,
+    "processStopped": true,
+    "ownTabClosed": true,
+    "retainedData": true
+  },
+  "summary": {
+    "PASS": 11,
+    "FAIL": 1,
+    "BLOCKED": 0,
+    "P1": 0,
+    "P2": 1,
+    "P3": 0
+  },
+  "date": "2026-10-18"
+}

@@ -1,0 +1,4 @@
+﻿"Fecha","Hora","Zona horaria","Título","Canal","Formato","Estado","Audiencia","Responsable","Guion","Caption","Llamado a la acción"
+"2026-10-21","09:10","UTC","QA LinkedIn miércoles","LinkedIn","Post","Programado","Líderes, ""IA""","","Línea uno, con ""comillas"".
+Línea dos; auditoría sintética.","'=SUM(1,2)","'@Acción sintética"
+"2026-10-22","16:20","UTC","QA Instagram corregido sin aprobación","Instagram","Post","Borrador","Equipos editoriales","","Revisión sintética pendiente; no debe contarse como programada.","'=SUM(1,2)","'@Acción sintética"

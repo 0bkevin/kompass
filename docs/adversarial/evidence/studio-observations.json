@@ -1,0 +1,36 @@
+{
+  "date": "2026-10-18",
+  "url": "http://127.0.0.22:4112",
+  "dataDir": "/tmp/30x-adversarial-studio",
+  "sessionId": 71929,
+  "pid": 3869535,
+  "tabId": "tab_3x_07e54779-9ab2-4979-8a15-674c4eff160a",
+  "account": "qa-studio@example.com",
+  "brandId": "c114cd2b-8aa2-4559-86cf-271d44d25248",
+  "fixtureDescription": "Marca y referencia propias sintéticas creadas por API tras alta UI. Sin claves, .env, build ni cambios de implementación.",
+  "conflict": {
+    "expected": "Rechazar guardado obsoleto y conservar ambas versiones.",
+    "observedStatus": 409,
+    "localTitle": "CAMBIO LOCAL SIN GUARDAR",
+    "serverTitle": "VERSIÓN SERVIDOR · editor B sintético",
+    "saveDisabled": true,
+    "discardCancelledPreservedLocal": true,
+    "discardAcceptedLoadedServer": true
+  },
+  "leaveGuard": {
+    "message": "Hay cambios sin guardar. ¿Salir y descartar tus cambios locales?",
+    "dismissed": true,
+    "preservedLocalTitle": "CAMBIO LOCAL SIN GUARDAR"
+  },
+  "resource": {
+    "name": "qa-ficha-studio.txt",
+    "assetId": "8110f612-3543-4191-b6b8-689587679890",
+    "checkedAfterReload": true
+  },
+  "notes": [
+    "Respuestas UI de creación y validación capturadas con observador temporal de fetch, sin reemplazar respuestas; acciones disparadas por herramientas T3 preview_click/type/select.",
+    "Datos originales de las dos primeras generaciones guardados antes de editar; estado final separado.",
+    "Ningún token, cookie o contraseña se copió a artefactos."
+  ]
+}
+

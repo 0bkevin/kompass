@@ -1,0 +1,776 @@
+{
+  "synthetic": true,
+  "brandId": "ec0a2d58-5668-44d0-84a4-71b1fb9c851e",
+  "base": "http://127.0.0.25:4115",
+  "apiValidation": {
+    "cases": [
+      {
+        "name": "negativo",
+        "status": 400,
+        "response": {
+          "error": "Las métricas deben ser números finitos entre 0 y 1000000000000."
+        }
+      },
+      {
+        "name": "NaN cadena",
+        "status": 400,
+        "response": {
+          "error": "Las métricas deben ser números finitos entre 0 y 1000000000000."
+        }
+      },
+      {
+        "name": "NaN serializado null",
+        "status": 400,
+        "response": {
+          "error": "Las métricas deben ser números finitos entre 0 y 1000000000000."
+        }
+      },
+      {
+        "name": "sobre limite",
+        "status": 400,
+        "response": {
+          "error": "Las métricas deben ser números finitos entre 0 y 1000000000000."
+        }
+      },
+      {
+        "name": "fecha futura",
+        "status": 400,
+        "response": {
+          "error": "Indica una publicación real con fecha pasada o actual."
+        }
+      },
+      {
+        "name": "fecha invalida",
+        "status": 400,
+        "response": {
+          "error": "La fecha de publicación no es válida."
+        }
+      },
+      {
+        "name": "URL privada",
+        "status": 400,
+        "response": {
+          "error": "Enlace de publicación debe usar HTTP o HTTPS y un dominio público sin credenciales."
+        }
+      },
+      {
+        "name": "URL personales",
+        "status": 400,
+        "response": {
+          "error": "Enlace de publicación no puede depender de una sesión ni incluir datos personales."
+        }
+      },
+      {
+        "name": "URL credenciales",
+        "status": 400,
+        "response": {
+          "error": "Enlace de publicación debe usar HTTP o HTTPS y un dominio público sin credenciales."
+        }
+      },
+      {
+        "name": "fracciones",
+        "status": 200,
+        "response": {
+          "id": "8c3093d1-267d-486b-90c3-915c38a3cf1f",
+          "pieceId": "qa-approved",
+          "channel": "linkedin",
+          "segmentId": "ventas",
+          "title": "SINTÉTICA A exacta aprobada",
+          "publishedUrl": "https://example.com/publicaciones/qa-results-a-corregida",
+          "publishedAt": "2026-10-17T12:00:00.000Z",
+          "metrics": {
+            "views": 1.5,
+            "engagement": 0.25,
+            "leads": 0.5
+          },
+          "notes": "SINTÉTICO corregido. Medición a 1 día.",
+          "origin": "manual",
+          "createdAt": "2026-10-18T02:17:24.119Z",
+          "updatedAt": "2026-10-18T02:18:09.073Z"
+        }
+      },
+      {
+        "name": "limite inclusivo",
+        "status": 200,
+        "response": {
+          "id": "8c3093d1-267d-486b-90c3-915c38a3cf1f",
+          "pieceId": "qa-approved",
+          "channel": "linkedin",
+          "segmentId": "ventas",
+          "title": "SINTÉTICA A exacta aprobada",
+          "publishedUrl": "https://example.com/publicaciones/qa-results-a-corregida",
+          "publishedAt": "2026-10-17T12:00:00.000Z",
+          "metrics": {
+            "views": 1000000000000,
+            "engagement": 1000000000000,
+            "leads": 1000000000000
+          },
+          "notes": "SINTÉTICO corregido. Medición a 1 día.",
+          "origin": "manual",
+          "createdAt": "2026-10-18T02:17:24.119Z",
+          "updatedAt": "2026-10-18T02:18:09.078Z"
+        }
+      },
+      {
+        "name": "infinito 1e400",
+        "status": 400,
+        "response": {
+          "error": "Las métricas deben ser números finitos entre 0 y 1000000000000."
+        }
+      },
+      {
+        "name": "sin aprobacion",
+        "status": 409,
+        "response": {
+          "error": "La pieza necesita estar aprobada antes de registrar su publicación."
+        }
+      }
+    ],
+    "finalPieces": [
+      {
+        "id": "qa-draft",
+        "status": "draft"
+      },
+      {
+        "id": "qa-published",
+        "status": "published",
+        "metrics": {
+          "views": 300,
+          "engagement": 30,
+          "leads": 3
+        },
+        "publicationOrigin": "manual_record"
+      },
+      {
+        "id": "qa-scheduled",
+        "status": "published",
+        "metrics": {
+          "views": 0,
+          "engagement": 0,
+          "leads": 0
+        },
+        "publicationOrigin": "manual_record"
+      },
+      {
+        "id": "qa-approved",
+        "status": "published",
+        "metrics": {
+          "views": 1500,
+          "engagement": 100,
+          "leads": 10
+        },
+        "publicationOrigin": "manual_record"
+      }
+    ],
+    "outcomes": [
+      {
+        "pieceId": "qa-published",
+        "channel": "instagram",
+        "segmentId": "ventas",
+        "title": "SINTÉTICA C publicada",
+        "publishedAt": "2026-10-10T12:00:00.000Z",
+        "metrics": {
+          "views": 300,
+          "engagement": 30,
+          "leads": 3
+        },
+        "notes": "",
+        "origin": "manual",
+        "id": "e2695ba8-42d1-424c-8cee-20d79a276aa1",
+        "createdAt": "2026-10-18T02:17:54.007Z",
+        "updatedAt": "2026-10-18T02:17:54.007Z"
+      },
+      {
+        "pieceId": "qa-scheduled",
+        "channel": "instagram",
+        "segmentId": "formacion",
+        "title": "SINTÉTICA B programada cero",
+        "publishedAt": "2026-10-17T12:00:00.000Z",
+        "metrics": {
+          "views": 0,
+          "engagement": 0,
+          "leads": 0
+        },
+        "notes": "",
+        "origin": "manual",
+        "id": "6e3e87d9-433b-4274-b15f-bb311b1e9af1",
+        "createdAt": "2026-10-18T02:17:53.675Z",
+        "updatedAt": "2026-10-18T02:17:53.675Z"
+      },
+      {
+        "id": "8c3093d1-267d-486b-90c3-915c38a3cf1f",
+        "pieceId": "qa-approved",
+        "channel": "linkedin",
+        "segmentId": "ventas",
+        "title": "SINTÉTICA A exacta aprobada",
+        "publishedUrl": "https://example.com/publicaciones/qa-results-a-corregida",
+        "publishedAt": "2026-10-17T12:00:00.000Z",
+        "metrics": {
+          "views": 1500,
+          "engagement": 100,
+          "leads": 10
+        },
+        "notes": "SINTÉTICO corregido. Medición a 1 día.",
+        "origin": "manual",
+        "createdAt": "2026-10-18T02:17:24.119Z",
+        "updatedAt": "2026-10-18T02:18:09.086Z"
+      }
+    ]
+  },
+  "learningBefore": [
+    {
+      "topic": "automatización ventas",
+      "priority": 34,
+      "reasons": [
+        "1 referencia disponible sobre este tema en el material de esta empresa.",
+        "Hipótesis de pertinencia para Ventas QA: coincide con la necesidad declarada «automatización ventas» (automatizacion, ventas, concept_sales, concept_automation). No demuestra consumo ni afinidad de personas.",
+        "Prioridad editorial por coincidencias de texto; no es probabilidad de éxito ni una clasificación de rendimiento.",
+        "Aprendizaje editorial pendiente: hacen falta al menos 3 publicaciones propias de este tema y 3 de otros temas del mismo segmento, canal, formato y ventana aproximada de medición. Sin esa muestra no se ajusta la prioridad por resultados."
+      ]
+    },
+    {
+      "topic": "aprendizaje liderazgo",
+      "priority": 32,
+      "reasons": [
+        "1 referencia disponible sobre este tema en el material de esta empresa.",
+        "Hipótesis de pertinencia para Formación QA: coincide con la necesidad declarada «aprendizaje liderazgo» (aprendizaje, liderazgo, concept_learning, concept_leadership). No demuestra consumo ni afinidad de personas.",
+        "Prioridad editorial por coincidencias de texto; no es probabilidad de éxito ni una clasificación de rendimiento.",
+        "Ajuste editorial por resultados propios: 0 puntos de prioridad. En 3 publicaciones de este tema y 3 de otros temas del mismo segmento en instagram, formato reel y medición de 7–14 días, la mediana de interacciones/vistas aportadas manualmente es 30.0% frente a 0.0%. La referencia es cero; no se calcula mejora ni se ajusta la prioridad. Las ventanas se aproximan con la fecha de registro; no hay atribución causal ni comparación entre redes."
+      ]
+    },
+    {
+      "topic": "procesos internos",
+      "priority": 10,
+      "reasons": [
+        "1 referencia disponible sobre este tema en el material de esta empresa.",
+        "No hay coincidencias suficientes con necesidades de un segmento. Revisa la pertinencia antes de producir.",
+        "Prioridad editorial por coincidencias de texto; no es probabilidad de éxito ni una clasificación de rendimiento.",
+        "Aprendizaje editorial pendiente: hacen falta al menos 3 publicaciones propias de este tema y 3 de otros temas del mismo segmento, canal, formato y ventana aproximada de medición. Sin esa muestra no se ajusta la prioridad por resultados."
+      ]
+    }
+  ],
+  "learningAfter": {
+    "opportunities": [
+      {
+        "topic": "automatización ventas",
+        "priority": 42,
+        "reasons": [
+          "1 referencia disponible sobre este tema en el material de esta empresa.",
+          "Hipótesis de pertinencia para Ventas QA: coincide con la necesidad declarada «automatización ventas» (automatizacion, ventas, concept_sales, concept_automation). No demuestra consumo ni afinidad de personas.",
+          "Prioridad editorial por coincidencias de texto; no es probabilidad de éxito ni una clasificación de rendimiento.",
+          "Ajuste editorial por resultados propios: +8 puntos de prioridad. En 3 publicaciones de este tema y 3 de otros temas del mismo segmento en linkedin, formato post y medición de 7–14 días, la mediana de interacciones/vistas aportadas manualmente es 30.0% frente a 10.0%. El ajuste usa una diferencia descriptiva superior al 15% y está acotado a 8 puntos. Las ventanas se aproximan con la fecha de registro; no hay atribución causal ni comparación entre redes."
+        ]
+      },
+      {
+        "topic": "aprendizaje liderazgo",
+        "priority": 32,
+        "reasons": [
+          "1 referencia disponible sobre este tema en el material de esta empresa.",
+          "Hipótesis de pertinencia para Formación QA: coincide con la necesidad declarada «aprendizaje liderazgo» (aprendizaje, liderazgo, concept_learning, concept_leadership). No demuestra consumo ni afinidad de personas.",
+          "Prioridad editorial por coincidencias de texto; no es probabilidad de éxito ni una clasificación de rendimiento.",
+          "Ajuste editorial por resultados propios: 0 puntos de prioridad. En 3 publicaciones de este tema y 3 de otros temas del mismo segmento en instagram, formato reel y medición de 7–14 días, la mediana de interacciones/vistas aportadas manualmente es 30.0% frente a 0.0%. La referencia es cero; no se calcula mejora ni se ajusta la prioridad. Las ventanas se aproximan con la fecha de registro; no hay atribución causal ni comparación entre redes."
+        ]
+      },
+      {
+        "topic": "procesos internos",
+        "priority": 10,
+        "reasons": [
+          "1 referencia disponible sobre este tema en el material de esta empresa.",
+          "No hay coincidencias suficientes con necesidades de un segmento. Revisa la pertinencia antes de producir.",
+          "Prioridad editorial por coincidencias de texto; no es probabilidad de éxito ni una clasificación de rendimiento.",
+          "Aprendizaje editorial pendiente: hacen falta al menos 3 publicaciones propias de este tema y 3 de otros temas del mismo segmento, canal, formato y ventana aproximada de medición. Sin esa muestra no se ajusta la prioridad por resultados."
+        ]
+      }
+    ],
+    "outcomes": [
+      {
+        "createdAt": "2026-10-18T02:18:38.951Z",
+        "updatedAt": "2026-10-18T02:18:38.951Z",
+        "id": "out-t3",
+        "pieceId": "t3",
+        "title": "SINTÉTICA t3",
+        "segmentId": "ventas",
+        "channel": "linkedin",
+        "publishedAt": "2026-10-10T12:00:00Z",
+        "metrics": {
+          "views": 3000,
+          "engagement": 1200,
+          "leads": 40
+        },
+        "origin": "manual",
+        "notes": "MÉTRICAS SINTÉTICAS de auditoría, no rendimiento real."
+      },
+      {
+        "createdAt": "2026-10-18T02:18:38.951Z",
+        "updatedAt": "2026-10-18T02:18:38.951Z",
+        "id": "out-zero-base-3",
+        "pieceId": "zero-base-3",
+        "title": "SINTÉTICA zero-base-3",
+        "segmentId": "formacion",
+        "channel": "instagram",
+        "publishedAt": "2026-10-10T12:00:00Z",
+        "metrics": {
+          "views": 1000,
+          "engagement": 0,
+          "leads": 0
+        },
+        "origin": "manual",
+        "notes": "MÉTRICAS SINTÉTICAS de auditoría, no rendimiento real."
+      },
+      {
+        "createdAt": "2026-10-18T02:18:38.951Z",
+        "updatedAt": "2026-10-18T02:18:38.951Z",
+        "id": "out-zero-topic-3",
+        "pieceId": "zero-topic-3",
+        "title": "SINTÉTICA zero-topic-3",
+        "segmentId": "formacion",
+        "channel": "instagram",
+        "publishedAt": "2026-10-10T12:00:00Z",
+        "metrics": {
+          "views": 1000,
+          "engagement": 400,
+          "leads": 3
+        },
+        "origin": "manual",
+        "notes": "MÉTRICAS SINTÉTICAS de auditoría, no rendimiento real."
+      },
+      {
+        "createdAt": "2026-10-18T02:18:38.951Z",
+        "updatedAt": "2026-10-18T02:18:38.951Z",
+        "id": "out-zero-base-2",
+        "pieceId": "zero-base-2",
+        "title": "SINTÉTICA zero-base-2",
+        "segmentId": "formacion",
+        "channel": "instagram",
+        "publishedAt": "2026-10-10T12:00:00Z",
+        "metrics": {
+          "views": 1000,
+          "engagement": 0,
+          "leads": 0
+        },
+        "origin": "manual",
+        "notes": "MÉTRICAS SINTÉTICAS de auditoría, no rendimiento real."
+      },
+      {
+        "createdAt": "2026-10-18T02:18:38.951Z",
+        "updatedAt": "2026-10-18T02:18:38.951Z",
+        "id": "out-zero-topic-2",
+        "pieceId": "zero-topic-2",
+        "title": "SINTÉTICA zero-topic-2",
+        "segmentId": "formacion",
+        "channel": "instagram",
+        "publishedAt": "2026-10-10T12:00:00Z",
+        "metrics": {
+          "views": 1000,
+          "engagement": 300,
+          "leads": 2
+        },
+        "origin": "manual",
+        "notes": "MÉTRICAS SINTÉTICAS de auditoría, no rendimiento real."
+      },
+      {
+        "createdAt": "2026-10-18T02:18:38.951Z",
+        "updatedAt": "2026-10-18T02:18:38.951Z",
+        "id": "out-zero-base-1",
+        "pieceId": "zero-base-1",
+        "title": "SINTÉTICA zero-base-1",
+        "segmentId": "formacion",
+        "channel": "instagram",
+        "publishedAt": "2026-10-10T12:00:00Z",
+        "metrics": {
+          "views": 1000,
+          "engagement": 0,
+          "leads": 0
+        },
+        "origin": "manual",
+        "notes": "MÉTRICAS SINTÉTICAS de auditoría, no rendimiento real."
+      },
+      {
+        "createdAt": "2026-10-18T02:18:38.951Z",
+        "updatedAt": "2026-10-18T02:18:38.951Z",
+        "id": "out-zero-topic-1",
+        "pieceId": "zero-topic-1",
+        "title": "SINTÉTICA zero-topic-1",
+        "segmentId": "formacion",
+        "channel": "instagram",
+        "publishedAt": "2026-10-10T12:00:00Z",
+        "metrics": {
+          "views": 1000,
+          "engagement": 200,
+          "leads": 1
+        },
+        "origin": "manual",
+        "notes": "MÉTRICAS SINTÉTICAS de auditoría, no rendimiento real."
+      },
+      {
+        "createdAt": "2026-10-18T02:18:38.951Z",
+        "updatedAt": "2026-10-18T02:18:38.951Z",
+        "id": "out-decoy-window",
+        "pieceId": "decoy-window",
+        "title": "SINTÉTICA decoy-window",
+        "segmentId": "ventas",
+        "channel": "linkedin",
+        "publishedAt": "2026-08-01T12:00:00Z",
+        "metrics": {
+          "views": 400,
+          "engagement": 360,
+          "leads": 4
+        },
+        "origin": "manual",
+        "notes": "MÉTRICAS SINTÉTICAS de auditoría, no rendimiento real."
+      },
+      {
+        "createdAt": "2026-10-18T02:18:38.951Z",
+        "updatedAt": "2026-10-18T02:18:38.951Z",
+        "id": "out-decoy-format",
+        "pieceId": "decoy-format",
+        "title": "SINTÉTICA decoy-format",
+        "segmentId": "ventas",
+        "channel": "linkedin",
+        "publishedAt": "2026-10-10T12:00:00Z",
+        "metrics": {
+          "views": 300,
+          "engagement": 270,
+          "leads": 3
+        },
+        "origin": "manual",
+        "notes": "MÉTRICAS SINTÉTICAS de auditoría, no rendimiento real."
+      },
+      {
+        "createdAt": "2026-10-18T02:18:38.951Z",
+        "updatedAt": "2026-10-18T02:18:38.951Z",
+        "id": "out-decoy-channel",
+        "pieceId": "decoy-channel",
+        "title": "SINTÉTICA decoy-channel",
+        "segmentId": "ventas",
+        "channel": "instagram",
+        "publishedAt": "2026-10-10T12:00:00Z",
+        "metrics": {
+          "views": 200,
+          "engagement": 180,
+          "leads": 2
+        },
+        "origin": "manual",
+        "notes": "MÉTRICAS SINTÉTICAS de auditoría, no rendimiento real."
+      },
+      {
+        "createdAt": "2026-10-18T02:18:38.951Z",
+        "updatedAt": "2026-10-18T02:18:38.951Z",
+        "id": "out-decoy-segment",
+        "pieceId": "decoy-segment",
+        "title": "SINTÉTICA decoy-segment",
+        "segmentId": "formacion",
+        "channel": "linkedin",
+        "publishedAt": "2026-10-10T12:00:00Z",
+        "metrics": {
+          "views": 100,
+          "engagement": 90,
+          "leads": 1
+        },
+        "origin": "manual",
+        "notes": "MÉTRICAS SINTÉTICAS de auditoría, no rendimiento real."
+      },
+      {
+        "createdAt": "2026-10-18T02:18:38.951Z",
+        "updatedAt": "2026-10-18T02:18:38.951Z",
+        "id": "out-b3",
+        "pieceId": "b3",
+        "title": "SINTÉTICA b3",
+        "segmentId": "ventas",
+        "channel": "linkedin",
+        "publishedAt": "2026-10-10T12:00:00Z",
+        "metrics": {
+          "views": 3000,
+          "engagement": 300,
+          "leads": 7
+        },
+        "origin": "manual",
+        "notes": "MÉTRICAS SINTÉTICAS de auditoría, no rendimiento real."
+      },
+      {
+        "createdAt": "2026-10-18T02:18:38.951Z",
+        "updatedAt": "2026-10-18T02:18:38.951Z",
+        "id": "out-b2",
+        "pieceId": "b2",
+        "title": "SINTÉTICA b2",
+        "segmentId": "ventas",
+        "channel": "linkedin",
+        "publishedAt": "2026-10-10T12:00:00Z",
+        "metrics": {
+          "views": 2000,
+          "engagement": 200,
+          "leads": 6
+        },
+        "origin": "manual",
+        "notes": "MÉTRICAS SINTÉTICAS de auditoría, no rendimiento real."
+      },
+      {
+        "createdAt": "2026-10-18T02:18:38.951Z",
+        "updatedAt": "2026-10-18T02:18:38.951Z",
+        "id": "out-b1",
+        "pieceId": "b1",
+        "title": "SINTÉTICA b1",
+        "segmentId": "ventas",
+        "channel": "linkedin",
+        "publishedAt": "2026-10-10T12:00:00Z",
+        "metrics": {
+          "views": 1000,
+          "engagement": 100,
+          "leads": 5
+        },
+        "origin": "manual",
+        "notes": "MÉTRICAS SINTÉTICAS de auditoría, no rendimiento real."
+      },
+      {
+        "createdAt": "2026-10-18T02:18:38.951Z",
+        "updatedAt": "2026-10-18T02:18:38.951Z",
+        "id": "out-t2",
+        "pieceId": "t2",
+        "title": "SINTÉTICA t2",
+        "segmentId": "ventas",
+        "channel": "linkedin",
+        "publishedAt": "2026-10-10T12:00:00Z",
+        "metrics": {
+          "views": 2000,
+          "engagement": 600,
+          "leads": 30
+        },
+        "origin": "manual",
+        "notes": "MÉTRICAS SINTÉTICAS de auditoría, no rendimiento real."
+      },
+      {
+        "createdAt": "2026-10-18T02:18:38.951Z",
+        "updatedAt": "2026-10-18T02:18:38.951Z",
+        "id": "out-t1",
+        "pieceId": "t1",
+        "title": "SINTÉTICA t1",
+        "segmentId": "ventas",
+        "channel": "linkedin",
+        "publishedAt": "2026-10-10T12:00:00Z",
+        "metrics": {
+          "views": 1000,
+          "engagement": 200,
+          "leads": 20
+        },
+        "origin": "manual",
+        "notes": "MÉTRICAS SINTÉTICAS de auditoría, no rendimiento real."
+      },
+      {
+        "pieceId": "qa-published",
+        "channel": "instagram",
+        "segmentId": "ventas",
+        "title": "SINTÉTICA C publicada",
+        "publishedAt": "2026-10-10T12:00:00.000Z",
+        "metrics": {
+          "views": 300,
+          "engagement": 30,
+          "leads": 3
+        },
+        "notes": "",
+        "origin": "manual",
+        "id": "e2695ba8-42d1-424c-8cee-20d79a276aa1",
+        "createdAt": "2026-10-18T02:17:54.007Z",
+        "updatedAt": "2026-10-18T02:17:54.007Z"
+      },
+      {
+        "pieceId": "qa-scheduled",
+        "channel": "instagram",
+        "segmentId": "formacion",
+        "title": "SINTÉTICA B programada cero",
+        "publishedAt": "2026-10-17T12:00:00.000Z",
+        "metrics": {
+          "views": 0,
+          "engagement": 0,
+          "leads": 0
+        },
+        "notes": "",
+        "origin": "manual",
+        "id": "6e3e87d9-433b-4274-b15f-bb311b1e9af1",
+        "createdAt": "2026-10-18T02:17:53.675Z",
+        "updatedAt": "2026-10-18T02:17:53.675Z"
+      },
+      {
+        "id": "8c3093d1-267d-486b-90c3-915c38a3cf1f",
+        "pieceId": "qa-approved",
+        "channel": "linkedin",
+        "segmentId": "ventas",
+        "title": "SINTÉTICA A exacta aprobada",
+        "publishedUrl": "https://example.com/publicaciones/qa-results-a-corregida",
+        "publishedAt": "2026-10-17T12:00:00.000Z",
+        "metrics": {
+          "views": 1500,
+          "engagement": 100,
+          "leads": 10
+        },
+        "notes": "SINTÉTICO corregido. Medición a 1 día.",
+        "origin": "manual",
+        "createdAt": "2026-10-18T02:17:24.119Z",
+        "updatedAt": "2026-10-18T02:18:09.086Z"
+      }
+    ]
+  },
+  "exactTable": {
+    "table": [
+      [
+        "Audiencia",
+        "Canal",
+        "Piezas",
+        "Visualizaciones",
+        "Interacciones",
+        "Contactos"
+      ],
+      [
+        "Ventas QA",
+        "LinkedIn",
+        "9",
+        "14.200",
+        "3330",
+        "125"
+      ],
+      [
+        "Formación QA",
+        "Instagram",
+        "7",
+        "6000",
+        "900",
+        "6"
+      ],
+      [
+        "Ventas QA",
+        "Instagram",
+        "2",
+        "500",
+        "210",
+        "5"
+      ],
+      [
+        "Formación QA",
+        "LinkedIn",
+        "1",
+        "100",
+        "90",
+        "1"
+      ]
+    ],
+    "summary": "Interacciones = cantidad de acciones registradas por el equipo, no una tasa. Compara piezas y periodos equivalentes."
+  },
+  "fractionApi": {
+    "status": 200,
+    "outcome": {
+      "id": "e2695ba8-42d1-424c-8cee-20d79a276aa1",
+      "pieceId": "qa-published",
+      "channel": "instagram",
+      "segmentId": "ventas",
+      "title": "SINTÉTICA C publicada",
+      "publishedAt": "2026-10-10T12:00:00.000Z",
+      "metrics": {
+        "views": 300.5,
+        "engagement": 30.25,
+        "leads": 3.5
+      },
+      "notes": "Fracciones sintéticas API para verificar corrección UI.",
+      "origin": "manual",
+      "createdAt": "2026-10-18T02:17:54.007Z",
+      "updatedAt": "2026-10-18T02:19:24.791Z"
+    }
+  },
+  "fractionUi": {
+    "validity": [
+      {
+        "name": "views",
+        "value": "300.5",
+        "valid": false,
+        "message": "Please enter a valid value. The two nearest valid values are 300 and 301."
+      },
+      {
+        "name": "engagement",
+        "value": "30.25",
+        "valid": false,
+        "message": "Please enter a valid value. The two nearest valid values are 30 and 31."
+      },
+      {
+        "name": "leads",
+        "value": "3.5",
+        "valid": false,
+        "message": "Please enter a valid value. The two nearest valid values are 3 and 4."
+      }
+    ],
+    "persisted": {
+      "id": "e2695ba8-42d1-424c-8cee-20d79a276aa1",
+      "pieceId": "qa-published",
+      "channel": "instagram",
+      "segmentId": "ventas",
+      "title": "SINTÉTICA C publicada",
+      "publishedAt": "2026-10-10T12:00:00.000Z",
+      "metrics": {
+        "views": 300.5,
+        "engagement": 30.25,
+        "leads": 3.5
+      },
+      "notes": "Fracciones sintéticas API para verificar corrección UI.",
+      "origin": "manual",
+      "createdAt": "2026-10-18T02:17:54.007Z",
+      "updatedAt": "2026-10-18T02:19:24.791Z"
+    }
+  },
+  "reviewer": {
+    "status": 403,
+    "response": {
+      "error": "Necesitas permisos de edición."
+    },
+    "form": false
+  },
+  "privacyNote": {
+    "method": "UI: seleccionar qa-approved, escribir en notas, Actualizar registro, recargar",
+    "status": 200,
+    "note": "SINTÉTICO. Contacto individual: Persona QA, persona-qa@example.com, teléfono +52 55 1234 5678; pidió formación.",
+    "persisted": true,
+    "renderedAfterReload": true,
+    "realPersonalData": false
+  },
+  "runtime": {
+    "pid": 3895781,
+    "sessionId": 18456,
+    "dataDir": "/tmp/30x-adversarial-results",
+    "port": 4115,
+    "host": "127.0.0.25",
+    "build": "existente, no recompilado",
+    "closed": true,
+    "tabClosed": true,
+    "portListenerAfterClose": false
+  },
+  "independentKnownTotals": [
+    {
+      "segment": "ventas",
+      "channel": "linkedin",
+      "pieces": 9,
+      "views": 14200,
+      "engagement": 3330,
+      "leads": 125
+    },
+    {
+      "segment": "formacion",
+      "channel": "instagram",
+      "pieces": 7,
+      "views": 6000,
+      "engagement": 900,
+      "leads": 6
+    },
+    {
+      "segment": "ventas",
+      "channel": "instagram",
+      "pieces": 2,
+      "views": 500,
+      "engagement": 210,
+      "leads": 5
+    },
+    {
+      "segment": "formacion",
+      "channel": "linkedin",
+      "pieces": 1,
+      "views": 100,
+      "engagement": 90,
+      "leads": 1
+    }
+  ]
+}
