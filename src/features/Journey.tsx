@@ -338,6 +338,9 @@ export function Home() {
     Boolean(brand.description && brand.pillars.length);
   const hasAudience = brand.audience.length > 0;
   const outcomes = insights.data?.learning.outcomes || [];
+  const relevantOpportunities = (insights.data?.opportunities || []).filter(
+    (item) => item.segmentIds.length || item.analysis?.segmentIds.length,
+  );
   const reviewer = brand.role === "reviewer";
   type Next = {
     title: string;
@@ -449,13 +452,13 @@ export function Home() {
       },
       {
         title: "Creación y revisión",
-        detail: `${drafts.length} borradores · ${review.length} en revisión`,
+        detail: `${drafts.length} ${drafts.length === 1 ? "borrador" : "borradores"} · ${review.length} en revisión`,
         view: "studio",
         done: approved.length + scheduled.length + published.length > 0,
       },
       {
         title: "Calendario",
-        detail: `${scheduled.length} programadas · ${published.length} envíos registrados`,
+        detail: `${scheduled.length} ${scheduled.length === 1 ? "programada" : "programadas"} · ${published.length} ${published.length === 1 ? "envío registrado" : "envíos registrados"}`,
         view: "calendar",
         done: scheduled.length + published.length > 0,
       },
@@ -468,10 +471,9 @@ export function Home() {
     ];
   return (
     <div className="page journey-page">
-      <JourneyHeader title={`El contenido de ${brand.name}, con dirección.`}>
-        Del contexto de tu empresa a una publicación que puedas evaluar.
+      <JourneyHeader title="Tu próximo contenido.">
+        Continúa donde lo dejaste o encuentra una nueva oportunidad.
       </JourneyHeader>
-      <WorkspacePreparation enabled={!reviewer && hasContext && hasAudience} />
       <section className="journey-next" aria-labelledby="next-action-heading">
         <div>
           <h2 id="next-action-heading">{next.title}</h2>
@@ -484,13 +486,8 @@ export function Home() {
             <ArrowRight size={17} />
           </Button>
         </div>
-        <div className="journey-next-aside">
-          <Target size={25} />
-          <span>Tu siguiente paso</span>
-          <strong>{brand.name}</strong>
-          <small>{brand.market || "Mercado por definir"}</small>
-        </div>
       </section>
+      <WorkspacePreparation enabled={!reviewer && hasContext && hasAudience} />
       <section className="journey-section" aria-labelledby="workflow-heading">
         <div className="section-heading">
           <h2 id="workflow-heading">Un flujo, de principio a fin</h2>
@@ -575,30 +572,24 @@ export function Home() {
           )}
           {insights.loading && !insights.data ? (
             <Skeleton />
-          ) : insights.data?.opportunities.length ? (
+          ) : relevantOpportunities.length ? (
             <div className="journey-shortlist">
-              {insights.data.opportunities
-                .filter(
-                  (item) =>
-                    item.segmentIds.length || item.analysis?.segmentIds.length,
-                )
-                .slice(0, 3)
-                .map((opportunity) => (
-                  <button
-                    key={opportunity.id}
-                    onClick={() => navigate("opportunities")}
-                  >
-                    <strong>{opportunity.title}</strong>
-                    <span>{opportunity.adaptation}</span>
-                    <small>
-                      {growthStates[opportunity.growth.label].label}
-                      <ArrowRight size={15} />
-                    </small>
-                  </button>
-                ))}
+              {relevantOpportunities.slice(0, 3).map((opportunity) => (
+                <button
+                  key={opportunity.id}
+                  onClick={() => navigate("opportunities")}
+                >
+                  <strong>{opportunity.title}</strong>
+                  <span>{opportunity.adaptation}</span>
+                  <small>
+                    {growthStates[opportunity.growth.label].label}
+                    <ArrowRight size={15} />
+                  </small>
+                </button>
+              ))}
               <ProviderCredits
                 reference={{
-                  evidence: insights.data.opportunities
+                  evidence: relevantOpportunities
                     .slice(0, 3)
                     .flatMap((opportunity) => opportunity.evidence),
                 }}
@@ -637,6 +628,7 @@ export function Opportunities() {
     setSegment("");
     setQuery("");
     setExpanded("");
+    setIncludeUnmatched(false);
   }, [state.brand.id]);
   const terms = query.trim().toLocaleLowerCase();
   const opportunities = (insights.data?.opportunities || []).filter(
@@ -655,7 +647,7 @@ export function Opportunities() {
   return (
     <div className="page journey-page">
       <JourneyHeader
-        title="Oportunidades que tienen sentido para tu audiencia."
+        title="Elige tu próximo tema."
         action={
           <Button onClick={() => navigate("radar")}>
             <Search size={16} />
@@ -663,47 +655,57 @@ export function Opportunities() {
           </Button>
         }
       >
-        Entiende la señal, comprueba la evidencia y decide qué convertir en
-        contenido propio.
+        Revisa una propuesta para tu audiencia y conviértela en un borrador.
       </JourneyHeader>
       {state.brand.role === "reviewer" && <ReviewerNotice />}
-      <div className="journey-filters">
-        <Field label="Audiencia">
-          <select
-            value={segment}
-            onChange={(event) => setSegment(event.target.value)}
-          >
-            <option value="">Todas las audiencias</option>
-            {state.brand.audience.map((audience) => (
-              <option key={audience.id} value={audience.id}>
-                {audience.name}
-              </option>
-            ))}
-          </select>
-        </Field>
-        <Field label="Buscar oportunidad">
-          <div className="journey-search">
-            <Search size={17} />
-            <input
-              value={query}
-              onChange={(event) => setQuery(event.target.value)}
-              placeholder="Tema, necesidad o enfoque"
-            />
-          </div>
-        </Field>
-        <Button busy={insights.loading} onClick={insights.reload}>
-          <RefreshCw size={15} />
-          Actualizar
-        </Button>
-      </div>
-      <label className="journey-unmatched">
-        <input
-          type="checkbox"
-          checked={includeUnmatched}
-          onChange={(event) => setIncludeUnmatched(event.target.checked)}
-        />
-        Incluir señales sin relación identificada con mi audiencia
-      </label>
+      <details className="journey-opportunity-filters">
+        <summary>
+          <ChevronDown size={16} aria-hidden="true" />
+          Filtrar por audiencia o tema
+          <span>
+            {segment || query.trim() || includeUnmatched
+              ? "Filtros activos"
+              : "Opcional"}
+          </span>
+        </summary>
+        <div className="journey-filters">
+          <Field label="Audiencia">
+            <select
+              value={segment}
+              onChange={(event) => setSegment(event.target.value)}
+            >
+              <option value="">Todas las audiencias</option>
+              {state.brand.audience.map((audience) => (
+                <option key={audience.id} value={audience.id}>
+                  {audience.name}
+                </option>
+              ))}
+            </select>
+          </Field>
+          <Field label="Buscar oportunidad">
+            <div className="journey-search">
+              <Search size={17} />
+              <input
+                value={query}
+                onChange={(event) => setQuery(event.target.value)}
+                placeholder="Tema, necesidad o enfoque"
+              />
+            </div>
+          </Field>
+          <Button busy={insights.loading} onClick={insights.reload}>
+            <RefreshCw size={15} />
+            Actualizar
+          </Button>
+        </div>
+        <label className="journey-unmatched">
+          <input
+            type="checkbox"
+            checked={includeUnmatched}
+            onChange={(event) => setIncludeUnmatched(event.target.checked)}
+          />
+          Mostrar también temas sin coincidencia con mi audiencia
+        </label>
+      </details>
       {insights.error && (
         <LoadError message={insights.error} retry={insights.reload} />
       )}
@@ -744,7 +746,7 @@ export function Opportunities() {
           }
         >
           {insights.data.opportunities.length
-            ? "Prueba otro tema o elige todas las audiencias. Si usaste la búsqueda superior, límpiala también."
+            ? "Quita algún filtro o amplía la exploración para ver temas que aún no tienen coincidencia con tu audiencia."
             : "Incorpora contenido público o referencias del equipo. Verás qué encaja, qué evidencia existe y qué sigue siendo una hipótesis."}
         </EmptyState>
       ) : (
@@ -926,9 +928,146 @@ function OpportunityRow({
         className="journey-opportunity-details"
         hidden={!expanded}
       >
-        <details className="journey-semantic" open={!!analysis}>
+        {canCreate ? (
+          created ? (
+            <div className="journey-created" role="status">
+              <CheckCircle2 size={21} />
+              <div>
+                <strong>Tu borrador está guardado</strong>
+                <p>{created.title}</p>
+              </div>
+              <Button
+                variant="primary"
+                onClick={() => navigate("studio", created.id)}
+              >
+                Abrir borrador
+                <ArrowRight size={16} />
+              </Button>
+            </div>
+          ) : state.brand.audience.length ? (
+            <form
+              className="journey-draft-form"
+              onSubmit={(event) => void create(event)}
+            >
+              <h3>Prepara tu borrador</h3>
+              <p>
+                Ya elegimos una audiencia y un formato inicial. Puedes
+                cambiarlos; el borrador se abrirá para que lo revises.
+              </p>
+              <fieldset disabled={busy}>
+                <div className="journey-draft-fields">
+                  <Field label="¿Para quién?">
+                    <select
+                      value={segmentId}
+                      onChange={(event) => setSegmentId(event.target.value)}
+                      required
+                    >
+                      <option value="" disabled>
+                        Selecciona una audiencia
+                      </option>
+                      {state.brand.audience.map((audience) => (
+                        <option key={audience.id} value={audience.id}>
+                          {audience.name}
+                        </option>
+                      ))}
+                    </select>
+                  </Field>
+                  <Field label="Formato">
+                    <select
+                      value={format}
+                      onChange={(event) =>
+                        setFormat(event.target.value as Piece["format"])
+                      }
+                    >
+                      {Object.entries(formatNames)
+                        .filter(([key]) =>
+                          [
+                            "post",
+                            "carousel",
+                            "reel",
+                            "video",
+                            "newsletter",
+                          ].includes(key),
+                        )
+                        .map(([key, label]) => (
+                          <option key={key} value={key}>
+                            {label}
+                          </option>
+                        ))}
+                    </select>
+                  </Field>
+                  <Field label="Canal">
+                    <select
+                      value={channel}
+                      onChange={(event) =>
+                        setChannel(
+                          event.target.value as Opportunity["suggestedChannel"],
+                        )
+                      }
+                    >
+                      {["linkedin", "instagram", "tiktok", "youtube"].map(
+                        (key) => (
+                          <option key={key} value={key}>
+                            {channelNames[key]}
+                          </option>
+                        ),
+                      )}
+                    </select>
+                  </Field>
+                </div>
+                <details className="journey-draft-options">
+                  <summary>
+                    <ChevronDown size={16} aria-hidden="true" />
+                    Añadir indicaciones (opcional)
+                  </summary>
+                  <Field label="Indicaciones para el borrador">
+                    <textarea
+                      rows={2}
+                      maxLength={3000}
+                      value={instructions}
+                      onChange={(event) => setInstructions(event.target.value)}
+                      placeholder="Un caso de uso, una pregunta frecuente o un enfoque que quieres evitar"
+                    />
+                  </Field>
+                </details>
+              </fieldset>
+              <div className="journey-form-actions">
+                <span>
+                  {state.integrations.ai.ready
+                    ? "Usará la IA conectada a este espacio."
+                    : "Se creará una estructura inicial sin IA conectada."}
+                </span>
+                <Button
+                  type="submit"
+                  variant="primary"
+                  busy={busy}
+                  disabled={!opportunity.referenceIds.length || !segmentId}
+                >
+                  Crear borrador
+                  <ArrowRight size={16} />
+                </Button>
+              </div>
+            </form>
+          ) : (
+            <Notice>
+              Define una audiencia antes de crear contenido.
+              <Button onClick={() => navigate("audience")}>
+                Definir audiencia
+                <ArrowRight size={15} />
+              </Button>
+            </Notice>
+          )
+        ) : null}
+        {error && (
+          <p className="form-error" role="alert">
+            {error}
+          </p>
+        )}
+        <details className="journey-semantic">
           <summary>
-            Análisis contextual con IA <span>Opcional</span>
+            <ChevronDown size={16} aria-hidden="true" />
+            Por qué puede servirle a tu audiencia
+            <span>{analysis ? "Ver análisis con IA" : "Analizar con IA"}</span>
           </summary>
           <div>
             <div className="section-heading">
@@ -1000,207 +1139,85 @@ function OpportunityRow({
             )}
           </div>
         </details>
-        <div className="journey-evidence-layout">
-          <div>
-            <h3>Por qué podría encajar</h3>
-            <ul>
-              {opportunity.reasons.map((reason, index) => (
-                <li key={index}>{reason}</li>
-              ))}
-            </ul>
-            <h3>Qué sabemos del crecimiento</h3>
-            <p>{opportunity.growth.explanation}</p>
-            <h3>Hipótesis editorial</h3>
-            <p>{opportunity.hypothesis}</p>
-            {opportunity.factors && (
-              <details className="journey-factor-disclosure">
-                <summary>Gancho, formato, tema y momento</summary>
-                <dl>
-                  {opportunity.factors.map((factor) => (
-                    <div key={factor.factor}>
-                      <dt>{factor.label}</dt>
-                      <dd>
-                        <p>{factor.observation}</p>
-                        <small>{factor.limitation}</small>
-                      </dd>
-                    </div>
-                  ))}
-                </dl>
-              </details>
-            )}
-            <p className="journey-muted">
-              Confianza en la interpretación:{" "}
-              {confidenceNames[opportunity.confidence].toLocaleLowerCase()}. No
-              demuestra qué causó el desempeño.
-            </p>
-          </div>
-          <div>
-            <h3>Evidencia para comprobar</h3>
-            {opportunity.evidence.length ? (
-              <details className="journey-source-disclosure">
-                <summary>
-                  Consultar {opportunity.evidence.length} referencias
-                </summary>
-                <ul className="journey-evidence-list">
-                  {opportunity.evidence.map((evidence, index) => (
-                    <li key={`${evidence.referenceId}:${index}`}>
-                      <strong>{evidence.title}</strong>
-                      <small>
-                        {evidence.source}
-                        {evidence.observedAt
-                          ? ` · ${readableDate(evidence.observedAt, true)}`
-                          : ""}
-                      </small>
-                      <p>{evidence.detail}</p>
-                      <ProviderCredits reference={evidence} />
-                      {safeExternalUrl(evidence.url) && (
-                        <a
-                          href={safeExternalUrl(evidence.url)}
-                          target="_blank"
-                          rel="noreferrer"
-                        >
-                          Consultar original
-                          <ExternalLink size={13} />
-                        </a>
-                      )}
-                    </li>
-                  ))}
-                </ul>
-              </details>
-            ) : (
-              <p>No hay referencias comprobables para esta oportunidad.</p>
-            )}
-          </div>
-        </div>
-        {canCreate ? (
-          created ? (
-            <div className="journey-created" role="status">
-              <CheckCircle2 size={21} />
-              <div>
-                <strong>Tu borrador está guardado</strong>
-                <p>{created.title}</p>
-              </div>
-              <Button
-                variant="primary"
-                onClick={() => navigate("studio", created.id)}
-              >
-                Abrir borrador
-                <ArrowRight size={16} />
-              </Button>
-            </div>
-          ) : state.brand.audience.length ? (
-            <form
-              className="journey-draft-form"
-              onSubmit={(event) => void create(event)}
-            >
-              <h3>Dale un enfoque propio</h3>
-              <p>
-                Se creará un borrador editable a partir de la referencia y tu
-                contexto. Revísalo antes de enviarlo a aprobación.
+        <details className="journey-rationale">
+          <summary>
+            <ChevronDown size={16} aria-hidden="true" />
+            Revisar evidencia y crecimiento
+            <span>{opportunity.evidence.length} referencias</span>
+          </summary>
+          <div className="journey-evidence-layout">
+            <div>
+              <h3>Por qué podría encajar</h3>
+              <ul>
+                {opportunity.reasons.map((reason, index) => (
+                  <li key={index}>{reason}</li>
+                ))}
+              </ul>
+              <h3>Qué sabemos del crecimiento</h3>
+              <p>{opportunity.growth.explanation}</p>
+              <h3>Hipótesis editorial</h3>
+              <p>{opportunity.hypothesis}</p>
+              {opportunity.factors && (
+                <details className="journey-factor-disclosure">
+                  <summary>Gancho, formato, tema y momento</summary>
+                  <dl>
+                    {opportunity.factors.map((factor) => (
+                      <div key={factor.factor}>
+                        <dt>{factor.label}</dt>
+                        <dd>
+                          <p>{factor.observation}</p>
+                          <small>{factor.limitation}</small>
+                        </dd>
+                      </div>
+                    ))}
+                  </dl>
+                </details>
+              )}
+              <p className="journey-muted">
+                Confianza en la interpretación:{" "}
+                {confidenceNames[opportunity.confidence].toLocaleLowerCase()}.
+                No demuestra qué causó el desempeño.
               </p>
-              <fieldset disabled={busy}>
-                <div className="journey-draft-fields">
-                  <Field label="¿Para quién?">
-                    <select
-                      value={segmentId}
-                      onChange={(event) => setSegmentId(event.target.value)}
-                      required
-                    >
-                      <option value="" disabled>
-                        Selecciona una audiencia
-                      </option>
-                      {state.brand.audience.map((audience) => (
-                        <option key={audience.id} value={audience.id}>
-                          {audience.name}
-                        </option>
-                      ))}
-                    </select>
-                  </Field>
-                  <Field label="Formato">
-                    <select
-                      value={format}
-                      onChange={(event) =>
-                        setFormat(event.target.value as Piece["format"])
-                      }
-                    >
-                      {Object.entries(formatNames)
-                        .filter(([key]) =>
-                          [
-                            "post",
-                            "carousel",
-                            "reel",
-                            "video",
-                            "newsletter",
-                          ].includes(key),
-                        )
-                        .map(([key, label]) => (
-                          <option key={key} value={key}>
-                            {label}
-                          </option>
-                        ))}
-                    </select>
-                  </Field>
-                  <Field label="Canal">
-                    <select
-                      value={channel}
-                      onChange={(event) =>
-                        setChannel(
-                          event.target.value as Opportunity["suggestedChannel"],
-                        )
-                      }
-                    >
-                      {["linkedin", "instagram", "tiktok", "youtube"].map(
-                        (key) => (
-                          <option key={key} value={key}>
-                            {channelNames[key]}
-                          </option>
-                        ),
-                      )}
-                    </select>
-                  </Field>
-                </div>
-                <Field label="Algo que deba tener en cuenta (opcional)">
-                  <textarea
-                    rows={2}
-                    maxLength={3000}
-                    value={instructions}
-                    onChange={(event) => setInstructions(event.target.value)}
-                    placeholder="Un caso de uso, una pregunta frecuente o un enfoque que quieres evitar"
-                  />
-                </Field>
-              </fieldset>
-              <div className="journey-form-actions">
-                <span>
-                  {state.integrations.ai.ready
-                    ? "Usará la IA conectada a este espacio."
-                    : "Se creará una estructura inicial sin IA conectada."}
-                </span>
-                <Button
-                  type="submit"
-                  variant="primary"
-                  busy={busy}
-                  disabled={!opportunity.referenceIds.length || !segmentId}
-                >
-                  Crear borrador
-                  <ArrowRight size={16} />
-                </Button>
-              </div>
-            </form>
-          ) : (
-            <Notice>
-              Define una audiencia antes de crear contenido.
-              <Button onClick={() => navigate("audience")}>
-                Definir audiencia
-                <ArrowRight size={15} />
-              </Button>
-            </Notice>
-          )
-        ) : null}
-        {error && (
-          <p className="form-error" role="alert">
-            {error}
-          </p>
-        )}
+            </div>
+            <div>
+              <h3>Evidencia para comprobar</h3>
+              {opportunity.evidence.length ? (
+                <details className="journey-source-disclosure">
+                  <summary>
+                    Consultar {opportunity.evidence.length} referencias
+                  </summary>
+                  <ul className="journey-evidence-list">
+                    {opportunity.evidence.map((evidence, index) => (
+                      <li key={`${evidence.referenceId}:${index}`}>
+                        <strong>{evidence.title}</strong>
+                        <small>
+                          {evidence.source}
+                          {evidence.observedAt
+                            ? ` · ${readableDate(evidence.observedAt, true)}`
+                            : ""}
+                        </small>
+                        <p>{evidence.detail}</p>
+                        <ProviderCredits reference={evidence} />
+                        {safeExternalUrl(evidence.url) && (
+                          <a
+                            href={safeExternalUrl(evidence.url)}
+                            target="_blank"
+                            rel="noreferrer"
+                          >
+                            Consultar original
+                            <ExternalLink size={13} />
+                          </a>
+                        )}
+                      </li>
+                    ))}
+                  </ul>
+                </details>
+              ) : (
+                <p>No hay referencias comprobables para esta oportunidad.</p>
+              )}
+            </div>
+          </div>
+        </details>
       </div>
     </article>
   );
