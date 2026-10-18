@@ -14,6 +14,7 @@ import { createCompanyContextRouter } from "./company-context.mjs";
 import { createAudienceInsightsRouter } from "./audience-insights.mjs";
 import { createCommunityRouter } from "./community.mjs";
 import { createOpportunityAnalysisRouter } from "./opportunity-analysis.mjs";
+import { createGoogleAuthRouter } from "./google-auth.mjs";
 
 const projectRoot = path.resolve(
   path.dirname(fileURLToPath(import.meta.url)),
@@ -23,6 +24,7 @@ export function createApp({
   webHandler,
   staticDirectory,
   apiOnly = process.env.RADAR_API_ONLY === "1",
+  googleAuth,
 } = {}) {
   const app = express();
   app.disable("x-powered-by");
@@ -40,6 +42,7 @@ export function createApp({
     res.set("Cache-Control", "no-store");
     next();
   });
+  app.use("/api", createGoogleAuthRouter(googleAuth));
   app.use("/api", createCoreRouter());
   app.use("/api", createIntelligenceRouter());
   app.use("/api", createSocialRouter());

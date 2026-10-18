@@ -39,7 +39,7 @@ export function createUser({ name, email, passwordHash }) {
   ).run(user.id, user.name, user.email, user.password_hash, user.created_at);
   return user;
 }
-export function issueSession(req, res, userId) {
+export function issueSession(req, res, userId, { secure } = {}) {
   const token = randomBytes(32).toString("base64url");
   db.prepare(
     "INSERT INTO sessions(token_hash,user_id,expires_at) VALUES(?,?,?)",
@@ -47,7 +47,7 @@ export function issueSession(req, res, userId) {
   res.cookie(COOKIE, token, {
     httpOnly: true,
     sameSite: "lax",
-    secure: req.secure || process.env.COOKIE_SECURE === "true",
+    secure: secure ?? (req.secure || process.env.COOKIE_SECURE === "true"),
     maxAge: SESSION_DURATION,
     path: "/",
   });

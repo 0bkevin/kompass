@@ -35,6 +35,8 @@ export function initDb() {
   db.exec(`PRAGMA foreign_keys=ON; PRAGMA journal_mode=WAL; PRAGMA busy_timeout=5000;
     CREATE TABLE IF NOT EXISTS users (id TEXT PRIMARY KEY, name TEXT NOT NULL, email TEXT UNIQUE NOT NULL, password_hash TEXT NOT NULL, created_at TEXT NOT NULL);
     CREATE TABLE IF NOT EXISTS sessions (token_hash TEXT PRIMARY KEY, user_id TEXT NOT NULL REFERENCES users(id) ON DELETE CASCADE, expires_at INTEGER NOT NULL);
+    CREATE TABLE IF NOT EXISTS auth_identities (provider TEXT NOT NULL CHECK(provider='google'), subject TEXT NOT NULL, user_id TEXT NOT NULL REFERENCES users(id) ON DELETE CASCADE, created_at TEXT NOT NULL, PRIMARY KEY(provider,subject), UNIQUE(provider,user_id));
+    CREATE TABLE IF NOT EXISTS google_auth_transactions (state_hash TEXT PRIMARY KEY, browser_hash TEXT NOT NULL, nonce TEXT NOT NULL, code_verifier TEXT NOT NULL, return_to TEXT NOT NULL, expires_at INTEGER NOT NULL, link_user_id TEXT REFERENCES users(id) ON DELETE CASCADE, link_session_hash TEXT);
     CREATE TABLE IF NOT EXISTS brands (id TEXT PRIMARY KEY, data TEXT NOT NULL);
     CREATE TABLE IF NOT EXISTS members (brand_id TEXT NOT NULL REFERENCES brands(id) ON DELETE CASCADE, user_id TEXT NOT NULL REFERENCES users(id) ON DELETE CASCADE, role TEXT NOT NULL CHECK(role IN ('owner','editor','reviewer')), PRIMARY KEY(brand_id,user_id));
     CREATE TABLE IF NOT EXISTS records (brand_id TEXT NOT NULL REFERENCES brands(id) ON DELETE CASCADE, kind TEXT NOT NULL, id TEXT NOT NULL, data TEXT NOT NULL, PRIMARY KEY(brand_id,kind,id));
@@ -43,6 +45,9 @@ export function initDb() {
     CREATE TABLE IF NOT EXISTS invitations (token_hash TEXT PRIMARY KEY, brand_id TEXT NOT NULL REFERENCES brands(id) ON DELETE CASCADE, role TEXT NOT NULL, expires_at INTEGER NOT NULL, created_by TEXT NOT NULL REFERENCES users(id), used_at INTEGER);
     CREATE INDEX IF NOT EXISTS records_kind ON records(brand_id,kind);
     CREATE INDEX IF NOT EXISTS sessions_expiry ON sessions(expires_at);`);
+  db.exec(
+    "CREATE INDEX IF NOT EXISTS google_auth_transactions_expiry ON google_auth_transactions(expires_at)",
+  );
   // Retired connector: discard credentials and intake cursors, preserve work/history.
   db.exec("DELETE FROM secrets WHERE key IN ('telegram', 'telegramUpdates')");
   const keyPath = path.join(DATA_DIR, ".encryption-key");
