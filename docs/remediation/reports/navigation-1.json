@@ -1,0 +1,108 @@
+{
+  "issueId": "navigation-1",
+  "agent": "fix_navigation_1",
+  "status": "fixed",
+  "rootCause": "AudiencePage sólo mantenía un booleano local para closeEditing. No registraba registerUnsavedChangesGuard; App no detectaba sus cambios al recargar, navegar ni cambiar de empresa. Ese booleano tampoco reconocía revertir el formulario a su estado inicial.",
+  "changes": [
+    "Registro de guardia en el mecanismo existente de Workspace/App, con cleanup automático del efecto al desmontar.",
+    "Baseline capturado del formulario montado y comparación de FormData actual; abrir sin cambios o revertir exactamente no advierte.",
+    "Una decisión de descarte para navegación, cambio de empresa, Escape, fondo, cerrar y el botón Cancelar. Rechazar no altera inputs ni errores.",
+    "Lock de guardado síncrono mediante ref: no permite descartes ni submits duplicados mientras hay una petición pendiente. Guardar correctamente o confirmar descarte limpia la guardia.",
+    "Se conservan la validación de blancos/límites de audience-1 y los cambios de mercados/idiomas de company-1; BrandFields no se modifica."
+  ],
+  "files": [
+    "src/features/Brand.tsx",
+    "docs/remediation/reports/navigation-1.md",
+    "docs/remediation/reports/navigation-1.json"
+  ],
+  "verification": [
+    {
+      "command": "T3 preview: Nueva audiencia; escribir Audiencia PERDER AL RECARGAR; preview_navigate misma URL /audience; preview_status; rechazar beforeunload; comprobar FormData",
+      "before": "Sin diálogo; modal=false, input=null, lost=true. Capturas before-form/before-reloaded.",
+      "after": "Diálogo nativo type=beforeunload; rechazar conserva el nombre y el modal. Repetido con sólo el nombre en el código final.",
+      "kind": "browser"
+    },
+    {
+      "command": "T3 preview: nombre y necesidades; rol con tres espacios; Guardar perfil; rechazar recarga, Escape, fondo, cerrar, Cancelar, Inicio y cambio Norte→Sur",
+      "before": "La recarga perdía el formulario; la guardia global no conocía esa edición.",
+      "after": "Todos los intentos consultados generan beforeunload/confirm nativo. Rechazar mantiene nombre, rol con espacios, necesidades, error obligatorio y aria-invalid=true; ruta /audience y marca Norte permanecen.",
+      "kind": "browser"
+    },
+    {
+      "command": "T3 preview: corregir rol; Guardar perfil; GET /api/brands/{north,south}/state; recargar",
+      "before": "La edición perdida requería volver a introducir datos.",
+      "after": "Se guarda un perfil en Norte; Sur conserva sólo su perfil. Modal cerrado y recarga posterior sin advertencia.",
+      "kind": "browser"
+    },
+    {
+      "command": "T3 preview: abrir nuevo sin editar→Escape; editar/revertir nombre→Cancelar; abrir existente sin editar→recargar; editar/revertir necesidades→Cancelar",
+      "before": "El booleano de dirty seguía activo aunque se revirtiera el cambio.",
+      "after": "Los cuatro cierres/recargas terminan sin diálogo; el baseline real coincide con los valores revertidos.",
+      "kind": "browser"
+    },
+    {
+      "command": "T3 preview_evaluate: retener sólo PATCH de Norte en Promise; dos form.requestSubmit() síncronos; intentar Escape/fondo/cerrar/Inicio/cambio de marca y recargar; rechazar beforeunload; liberar PATCH real",
+      "before": "La exclusión de submits dependía de busy de React y la edición no estaba registrada para navegación.",
+      "after": "patches=1, pending=1; modal=true, aria-busy=true, fieldset.disabled=true, ruta y marca originales. Sin confirm de descarte durante guardado; recarga presenta beforeunload. Al liberar, guarda una vez y cierra.",
+      "kind": "browser"
+    },
+    {
+      "command": "T3 preview: simular 503 sólo en PATCH de Sur; Guardar; Cancelar y rechazar; restaurar fetch; reintentar Guardar; GET ambas marcas",
+      "before": "Control de recuperación requerido para verificar que no se pierde la edición al rechazar la salida.",
+      "after": "Necesidades y mensaje Fallo temporal sintético de guardado. permanecen; busy vuelve a false. Reintento real guarda en Sur sin modificar Norte. Simulación retirada.",
+      "kind": "browser"
+    },
+    {
+      "command": "T3 preview: aceptar descarte en Cancelar, en cambio Norte→Sur y en navegación a Inicio; navegar/recargar después",
+      "before": "No había guardia global para proteger las salidas.",
+      "after": "Descarte confirmado cierra; no guarda la edición; Sur muestra su perfil. Navegar y recargar tras desmontar AudiencePage no presenta advertencia residual.",
+      "kind": "browser"
+    },
+    {
+      "command": "node --test tests/remediation-audience-1.test.mjs tests/audience-insights.test.mjs",
+      "before": "No corresponde: pruebas cercanas usadas para detectar regresiones.",
+      "after": "20 tests PASS, 0 FAIL.",
+      "kind": "test"
+    },
+    {
+      "command": "typescript.transpileModule(src/features/Brand.tsx, reportDiagnostics:true)",
+      "before": "No corresponde.",
+      "after": "Brand.tsx: TSX transpile diagnostics PASS; sin build ni emisión.",
+      "kind": "test"
+    }
+  ],
+  "artifacts": [
+    "docs/remediation/evidence/navigation-1-before-form.png",
+    "docs/remediation/evidence/navigation-1-before-reloaded.png",
+    "docs/remediation/evidence/navigation-1-after-reload-cancelled.png",
+    "docs/remediation/evidence/navigation-1-after-error-preserved.png"
+  ],
+  "limitations": [
+    "Comprobación interactiva en T3/Chromium a 1280×800; no prueba cierre físico de pestaña ni otros navegadores.",
+    "No se añadió test Node que compare JSX o constantes: la seam del fallo es el montaje real de AudiencePage y beforeunload de TanStack/App; se comprobó con navegación real y diálogos nativos, antes y después.",
+    "No se ejecutó build ni format global; compilación integrada y typecheck completo corresponden al coordinador.",
+    "Retención PATCH y respuesta 503 fueron simulaciones explícitas locales del navegador; las escrituras finales y lecturas de aislamiento sí usaron el API y SQLite temporal reales.",
+    "El navegador permite confirmar beforeunload durante un guardado; la aplicación bloquea descartes internos y advierte al recargar, sin intentar impedir la decisión nativa del navegador."
+  ],
+  "environment": {
+    "url": "http://127.0.1.30:5520",
+    "apiPort": 4520,
+    "webPort": 5520,
+    "dataDir": "/tmp/30x-remediation-navigation-1",
+    "date": "2026-10-18",
+    "tabId": "tab_4k_07e54779-9ab2-4979-8a15-674c4eff160a",
+    "runtimeSession": 64716,
+    "viewportCSS": {
+      "width": 1280,
+      "height": 800
+    },
+    "runtimeStopped": true,
+    "tabClosed": true
+  },
+  "fixtures": {
+    "account": "qa-navigation-remediation@example.com",
+    "north": "ca3e120a-5cb8-4a9c-9d61-5ce1507492ff",
+    "south": "ac640987-b921-4e26-84ea-9091550bfc86",
+    "synthetic": true
+  }
+}
