@@ -1,0 +1,186 @@
+{
+  "checkedAt": "2026-10-18",
+  "company": "30X — Discovery QA",
+  "context": "Actual public 30X executive education/IA/sales offering; proposed audience groups only",
+  "environment": {
+    "isolatedPort": 5502,
+    "ownerOrigin": "http://127.0.0.52:5502",
+    "anonymousOrigin": "http://127.0.0.152:5502",
+    "aiRequests": 0,
+    "periodicDiscovery": false,
+    "externalDistribution": false,
+    "realRespondents": 0
+  },
+  "poll": {
+    "question": "[QA—respuestas simuladas] ¿Qué decisión de IA necesitas preparar en tu equipo?",
+    "options": [
+      "Priorizar un piloto de inteligencia artificial",
+      "Automatizar el seguimiento comercial"
+    ],
+    "groups": [
+      "Directivos y líderes de equipos en Latinoamérica",
+      "Founders y equipos comerciales"
+    ],
+    "initialTotal": 0,
+    "sameOriginShareLink": true,
+    "copyLinkNotification": "Enlace copiado.",
+    "duplicateOptionRejected": true,
+    "fields": ["group select", "topic radio", "topic radio"],
+    "submitDisabledBeforeBothChoices": true,
+    "anonymousSession": {
+      "user": null,
+      "brands": []
+    }
+  },
+  "stages": [
+    {
+      "total": 4,
+      "groupCounts": [4, 0],
+      "publicRows": 0,
+      "derivedSignals": 0
+    },
+    {
+      "total": 8,
+      "groupCounts": [4, 4],
+      "publicRows": 0,
+      "derivedSignals": 0
+    },
+    {
+      "total": 9,
+      "groupCounts": [5, 4],
+      "publicRows": 2,
+      "derivedSignals": 2
+    },
+    {
+      "total": 10,
+      "groupCounts": [5, 5],
+      "publicRows": 4,
+      "derivedSignals": 4
+    }
+  ],
+  "results": [
+    {
+      "group": "Directivos y líderes de equipos en Latinoamérica",
+      "topic": "Priorizar un piloto de inteligencia artificial",
+      "count": 4,
+      "sampleSize": 5,
+      "simulated": true
+    },
+    {
+      "group": "Directivos y líderes de equipos en Latinoamérica",
+      "topic": "Automatizar el seguimiento comercial",
+      "count": 1,
+      "sampleSize": 5,
+      "simulated": true
+    },
+    {
+      "group": "Founders y equipos comerciales",
+      "topic": "Priorizar un piloto de inteligencia artificial",
+      "count": 1,
+      "sampleSize": 5,
+      "simulated": true
+    },
+    {
+      "group": "Founders y equipos comerciales",
+      "topic": "Automatizar el seguimiento comercial",
+      "count": 4,
+      "sampleSize": 5,
+      "simulated": true
+    }
+  ],
+  "publicPayloadRejections": {
+    "invalidPayloads": [
+      {
+        "status": 400,
+        "error": "Solo se admiten los campos indicados. No envíes datos personales."
+      },
+      {
+        "status": 400,
+        "error": "La opción o el grupo no pertenecen a esta pregunta."
+      },
+      {
+        "status": 400,
+        "error": "El grupo debe tener entre 1 y 100 caracteres."
+      }
+    ],
+    "totalAfter": 10
+  },
+  "creationBounds": {
+    "beforeCount": 1,
+    "afterCount": 1,
+    "invalid": [
+      {
+        "status": 400,
+        "error": "Añade entre 2 y 6 opciones de respuesta."
+      },
+      {
+        "status": 400,
+        "error": "Añade entre 2 y 6 opciones de respuesta."
+      },
+      {
+        "status": 400,
+        "error": "La pregunta debe tener entre 1 y 300 caracteres."
+      },
+      {
+        "status": 400,
+        "error": "El grupo no pertenece a esta empresa."
+      }
+    ]
+  },
+  "lifecycle": {
+    "staleOpenFormAfterPause": {
+      "status": 409,
+      "message": "Esta pregunta está cerrada y ya no admite respuestas.",
+      "totalUnchanged": 10
+    },
+    "freshPausedPage": {
+      "forms": 0,
+      "resultRows": 4,
+      "total": 10
+    },
+    "reopenedPage": {
+      "forms": 1,
+      "total": 10
+    },
+    "deleteCancelled": {
+      "polls": 1,
+      "derivedSignals": 4
+    },
+    "deleteConfirmed": {
+      "polls": 0,
+      "derivedSignals": 0,
+      "previousNonCommunitySignals": 2
+    },
+    "deletedPublicPage": {
+      "status": 404,
+      "forms": 0,
+      "friendlyError": true,
+      "retryWorks": true
+    }
+  },
+  "responsive": {
+    "publicViewport": {
+      "width": 390,
+      "height": 844,
+      "documentWidth": 390
+    },
+    "desktopOwner": {
+      "width": 1280,
+      "height": 800
+    },
+    "physicalDevice": false
+  },
+  "diagnostics": {
+    "expectedResponses": [
+      "400 invalid creation and public payloads",
+      "409 stale response after pause",
+      "404 deleted public question"
+    ],
+    "deploymentIncident": "A concurrent shared dist rebuild caused missing old SSR-referenced asset hashes. Restarting the isolated production host aligned the manifest; subsequent load succeeded. No community source change was needed."
+  },
+  "tests": {
+    "command": "node --test --test-timeout=20000 tests/community.test.mjs tests/interactive-audience.test.mjs",
+    "pass": 12,
+    "fail": 0
+  }
+}

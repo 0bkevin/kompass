@@ -1,0 +1,20 @@
+✔ teams create public questions with random tokens and declared group snapshots (76.388055ms)
+✔ creation enforces membership, editing roles, audience and content bounds (119.442114ms)
+✔ counts stay aggregate and group results remain hidden below five voluntary responses (79.503726ms)
+✔ anonymous payloads accept only known option and group identifiers (53.556893ms)
+✔ pause and reopen protect closed polls and preserve aggregated counts (67.505926ms)
+✔ concurrent submissions increment counters without overwriting responses (77.870993ms)
+✔ deletion removes derived signals without touching another workspace or editorial evidence (66.474871ms)
+✔ removed memberships and deleted groups cannot create new data (42.401785ms)
+✔ anonymous rate limits recover after expiry without persisting participant identifiers (442.176136ms)
+✔ community audience evidence links back to its generated public question (3.268921ms)
+✔ audience evidence retains absolute HTTP and HTTPS citations (0.321816ms)
+✔ audience evidence rejects executable URLs and unapproved internal paths (0.552544ms)
+ℹ tests 12
+ℹ suites 0
+ℹ pass 12
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1490.63452

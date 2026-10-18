@@ -1,0 +1,68 @@
+{
+  "question": "[QA—respuestas simuladas] ¿Qué decisión de IA necesitas preparar en tu equipo?",
+  "active": true,
+  "total": 10,
+  "groups": [
+    {
+      "name": "Directivos y líderes de equipos en Latinoamérica",
+      "total": 5
+    },
+    {
+      "name": "Founders y equipos comerciales",
+      "total": 5
+    }
+  ],
+  "cells": [
+    {
+      "keys": ["count", "optionId", "segmentId"],
+      "count": 4
+    },
+    {
+      "keys": ["count", "optionId", "segmentId"],
+      "count": 1
+    },
+    {
+      "keys": ["count", "optionId", "segmentId"],
+      "count": 4
+    },
+    {
+      "keys": ["count", "optionId", "segmentId"],
+      "count": 1
+    }
+  ],
+  "onlyAggregateCells": true,
+  "persistentParticipantFieldsFound": false,
+  "communitySignalCount": 4,
+  "otherSignalCount": 2,
+  "derivedSignalsRetainOrigin": true,
+  "recordKinds": [
+    {
+      "kind": "audienceSignals",
+      "n": 6
+    },
+    {
+      "kind": "communityPolls",
+      "n": 1
+    },
+    {
+      "kind": "contextImports",
+      "n": 1
+    },
+    {
+      "kind": "opportunityAnalyses",
+      "n": 1
+    },
+    {
+      "kind": "references",
+      "n": 81
+    },
+    {
+      "kind": "sources",
+      "n": 3
+    },
+    {
+      "kind": "topicSnapshots",
+      "n": 1
+    }
+  ]
+}
