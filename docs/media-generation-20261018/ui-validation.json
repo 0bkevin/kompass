@@ -1,0 +1,173 @@
+{
+  "version": "2026-10-18",
+  "kind": "interactive-native-browser-ui",
+  "baseUrl": "http://localhost:3026",
+  "viewports": [
+    {
+      "width": 1280,
+      "height": 800
+    },
+    {
+      "width": 390,
+      "height": 844
+    }
+  ],
+  "horizontalOverflowObserved": false,
+  "studio": {
+    "videoReuseExplained": true,
+    "visualPromptHidden": true,
+    "ratioBefore": "16:9",
+    "ratioAfter": "16:9",
+    "formatPreserved": true,
+    "viewport": 1280,
+    "document": 1280,
+    "overflow": 0,
+    "assets": [
+      {
+        "tag": "IMG",
+        "width": 599.984375,
+        "height": 337.671875,
+        "naturalWidth": 1672,
+        "naturalHeight": 941
+      },
+      {
+        "tag": "VIDEO",
+        "width": 225,
+        "height": 400,
+        "videoWidth": 720,
+        "videoHeight": 1280,
+        "duration": 12.916667,
+        "readyState": 4
+      },
+      {
+        "tag": "IMG",
+        "width": 599.984375,
+        "height": 337.671875,
+        "naturalWidth": 1672,
+        "naturalHeight": 941
+      }
+    ]
+  },
+  "settings": {
+    "connected": true,
+    "readOnlyScope": true,
+    "noSyntheticMarker": true,
+    "viewport": 1280,
+    "document": 1280
+  },
+  "discovery": {
+    "firstQuery": "30X AI for Executives",
+    "firstResultCount": 0,
+    "secondQuery": "Andrés Bilbao 30X",
+    "secondResultCount": 7,
+    "provider": "YouTube Data API",
+    "observedAt": "2026-10-18T12:56:39.809Z",
+    "firstVideoId": "vfoEzKfxK1I",
+    "firstRawCounters": {
+      "views": 5368,
+      "likes": 80,
+      "comments": 10
+    },
+    "rangeDays": 7,
+    "aiEditorialProcessing": false
+  },
+  "resultLinkForm": {
+    "testedWhenYouTubePieceApproved": true,
+    "fields": ["pieceId", "publishedUrl"],
+    "numericFields": [],
+    "keyboardFocus": "pieceId",
+    "serverMutationsByThisReview": []
+  },
+  "unsavedGuard": {
+    "testedNativeLocalTitleChange": true,
+    "generationDisabled": true,
+    "localTitleRestored": true,
+    "saveSent": false
+  },
+  "syntheticErrorBranch": {
+    "label": "[QA simulada]",
+    "overriddenResponse": "GET /social/connections in this browser tab only",
+    "providerCallsReplaced": false,
+    "serverDataChanged": false,
+    "settings": {
+      "attentionBadge": true,
+      "alert": [
+        "La actualización automática no se completó. [QA simulada] No se pudo actualizar YouTube. Conserva las cifras anteriores y vuelve a intentarlo."
+      ],
+      "lastGoodDateVisible": true,
+      "viewport": 1280,
+      "document": 1280
+    },
+    "results": {
+      "alert": [
+        "La actualización automática no se completó. [QA simulada] No se pudo actualizar YouTube. Conserva las cifras anteriores y vuelve a intentarlo."
+      ],
+      "lastGoodDateVisible": true,
+      "viewport": 1280,
+      "document": 1280
+    },
+    "fetchRestored": true,
+    "hardNavigationAfterRestore": true
+  },
+  "historicalDiagnostic": {
+    "status": 404,
+    "path": "/discovery",
+    "cause": "QA navigation used a nonexistent route before correcting to /radar",
+    "time": "2026-10-18T12:55:24.874Z",
+    "currentFeatureFailure": false
+  },
+  "limitations": [
+    "No recruited external users",
+    "No third-party publication performed",
+    "No additional image or video generation initiated by the UI review",
+    "YouTube channel connection does not establish ownership of 30X"
+  ],
+  "designDetector": {
+    "passes": 1,
+    "hardErrors": 0,
+    "advisories": 7,
+    "explanation": "Existing documented 12/16px supporting/input text; pre-existing Settings color outside changed lines"
+  },
+  "screenshots": [
+    {
+      "path": "ui-evidence/settings-desktop.png",
+      "simulated": false
+    },
+    {
+      "path": "ui-evidence/settings-mobile.png",
+      "simulated": false
+    },
+    {
+      "path": "ui-evidence/discovery-desktop.png",
+      "simulated": false
+    },
+    {
+      "path": "ui-evidence/discovery-mobile.png",
+      "simulated": false
+    },
+    {
+      "path": "ui-evidence/studio-desktop.png",
+      "simulated": false
+    },
+    {
+      "path": "ui-evidence/studio-mobile.png",
+      "simulated": false
+    },
+    {
+      "path": "ui-evidence/results-desktop.png",
+      "simulated": false
+    },
+    {
+      "path": "ui-evidence/results-mobile.png",
+      "simulated": false
+    },
+    {
+      "path": "ui-evidence/settings-error-simulated.png",
+      "simulated": true
+    },
+    {
+      "path": "ui-evidence/results-error-simulated.png",
+      "simulated": true
+    }
+  ]
+}
