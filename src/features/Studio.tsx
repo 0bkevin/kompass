@@ -400,6 +400,10 @@ function PieceEditor({ piece }: { piece: Piece }) {
     [tab, setTab] = useState("script");
   const dirty = isPieceEditorDirty(draft, baseline);
   const previewCta = draft.cta.trim();
+  const previewHook = draft.hook.trim();
+  const scriptOpening = draft.script
+    .trimStart()
+    .replace(/^(?:lámina|lamina|escena)\s+1\s*[:.)-]\s*/iu, "");
   const missingAudience =
     !!draft.segmentId &&
     !state.brand.audience.some((segment) => segment.id === draft.segmentId);
@@ -1053,7 +1057,9 @@ function PieceEditor({ piece }: { piece: Piece }) {
               <MoreHorizontal size={18} />
             </div>
             <div className="post-copy">
-              <strong>{draft.hook}</strong>
+              {previewHook && !scriptOpening.startsWith(previewHook) && (
+                <strong>{draft.hook}</strong>
+              )}
               <p>{draft.script}</p>
               {previewCta && !draft.script.includes(previewCta) && (
                 <p>{draft.cta}</p>
