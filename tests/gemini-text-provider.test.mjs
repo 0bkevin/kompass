@@ -244,7 +244,13 @@ test("a draft traverses the real Gemini adapter, validates and persists its nest
       "Elige una tarea, registra el proceso y valida el resultado con tu equipo.",
     caption: "Una propuesta práctica para el equipo.",
     cta: "Elige una tarea para revisar.",
-    scenes: [{ text: "Empieza con una tarea concreta.", duration: 5 }],
+    scenes: [
+      { text: "Empieza con una tarea concreta.", duration: 5 },
+      { text: "Anota el punto de partida.", duration: 5 },
+      { text: "Prueba una alternativa.", duration: 5 },
+      { text: "Revisa el resultado con tu equipo.", duration: 5 },
+      { text: "Elige una tarea para revisar.", duration: 5 },
+    ],
   };
   let calls = 0;
   const draft = await createDraft(
@@ -278,7 +284,9 @@ test("a draft traverses the real Gemini adapter, validates and persists its nest
   );
   assert.equal(
     database.getRecord(brand.id, "pieces", draft.id).script,
-    generated.script,
+    generated.scenes
+      .map((scene, index) => `Escena ${index + 1}: ${scene.text}`)
+      .join("\n\n"),
   );
   assert.equal(database.getSecret(brand.id, "ai"), null);
 });

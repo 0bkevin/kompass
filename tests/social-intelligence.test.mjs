@@ -12,14 +12,8 @@ delete process.env.GEMINI_API_KEY;
 delete process.env.APIFY_API_TOKEN;
 delete process.env.YOUTUBE_API_KEY;
 
-const {
-  db,
-  saveBrand,
-  saveRecord,
-  getRecord,
-  listRecords,
-  setSecret,
-} = await import("../server/db.mjs");
+const { db, saveBrand, saveRecord, getRecord, listRecords, setSecret } =
+  await import("../server/db.mjs");
 const {
   computeTrend,
   createDraft,
@@ -367,7 +361,10 @@ test("a reviewed synthetic AI provider receives own editorial context with stora
     script: "Guion breve",
     caption: "Texto original",
     cta: "Cuéntanos",
-    scenes: [{ text: "Escena propia", duration: 5 }],
+    scenes: Array.from({ length: 5 }, (_, index) => ({
+      text: `Escena propia ${index + 1}`,
+      duration: 5,
+    })),
   };
   await createDraft(
     brand,
