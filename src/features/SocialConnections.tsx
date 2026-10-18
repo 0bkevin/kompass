@@ -38,6 +38,7 @@ type SyncResult = {
   skipped: number;
   errors: { pieceId: string; error: string }[];
   observedAt: string;
+  cached?: boolean;
 };
 type PublicCounts = {
   views: number | null;
@@ -158,6 +159,10 @@ export default function SocialConnections() {
         "No se conectó el canal porque se canceló la autorización. Puedes volver a intentarlo cuando quieras.",
       connection_failed:
         "No pudimos completar la conexión del canal. Vuelve a intentarlo y revisa que Google conceda acceso de lectura a YouTube.",
+      no_channel:
+        "Esta cuenta de Google no tiene un canal de YouTube disponible. Esto no cambia el acceso público de la plataforma.",
+      missing_scope:
+        "Google no concedió permiso de lectura de YouTube. Vuelve a conectar y acepta ese permiso para consultar el canal.",
     };
     return messages[search.get("socialError") || ""] || "";
   });
@@ -835,8 +840,13 @@ function AutomaticMetricsPanel() {
       {syncResult && (
         <div className="social-sync-result" role="status">
           <p>
-            {syncResult.synced} publicaciones actualizadas ·{" "}
-            {syncResult.skipped} sin actualizar.
+            {syncResult.cached
+              ? `Cifras al día. Última consulta: ${dateTime(syncResult.observedAt)}.`
+              : !syncResult.synced &&
+                  !syncResult.skipped &&
+                  !syncResult.errors.length
+                ? "No hay videos vinculados listos para consultar. Vincula una pieza aprobada para recuperar sus cifras."
+                : `${syncResult.synced} publicaciones actualizadas · ${syncResult.skipped} sin actualizar.`}
           </p>
           {syncResult.errors.map((item) => (
             <p className="form-error" key={item.pieceId}>
