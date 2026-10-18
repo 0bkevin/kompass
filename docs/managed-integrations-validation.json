@@ -1,0 +1,39 @@
+{
+  "checkedAt": "2026-10-18T10:33:02.429Z",
+  "scope": "Real reads from documented public sources only. No AI or paid/social connector requests.",
+  "results": [
+    {
+      "source": "Hacker News",
+      "status": "ok",
+      "references": 40,
+      "elapsedMs": 327
+    },
+    {
+      "source": "GDELT",
+      "status": "unavailable",
+      "error": "GDELT no está disponible (HTTP 429).",
+      "elapsedMs": 11268
+    },
+    {
+      "source": "Google Trends",
+      "status": "ok",
+      "references": 10,
+      "elapsedMs": 266
+    }
+  ],
+  "interactiveWorkflow": {
+    "environment": "QA preview on port 5450",
+    "company": "Synthetic company created through the company and audience forms",
+    "providerCredentialsEntered": false,
+    "automaticDiscoveryReferencesStored": 47,
+    "partialFailureVisible": true,
+    "ownedReferenceAddedThroughUI": true,
+    "homeCountAndCoverageAfterSave": 48,
+    "manualReloadNeeded": false,
+    "checkedViewportWidths": [
+      390,
+      1440
+    ],
+    "horizontalOverflow": false
+  }
+}

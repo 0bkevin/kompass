@@ -30,7 +30,7 @@ Spanish web application for content teams, initially grounded in Latin America. 
 
 The challenge requires public content, no individual audience profiles, no access behind third-party logins and no bypass of platform terms. Company website extraction and linked/imported content are different states. A public URL is not proof of successful extraction. Learner enrollment is not proof of following a creator, consuming content or membership of a representative audience.
 
-Keep observations separate from editorial hypotheses. No invented metrics, global coverage, causal explanations or success predictions. Connected providers require real credentials; absent providers expose a recovery path. Results can be registered manually and are labeled as such. Scheduling is not automatic publication.
+Keep observations separate from editorial hypotheses. No invented metrics, global coverage, causal explanations or success predictions. Connected providers require real credentials; the deployment operator configures shared AI once, workspaces inherit it, and readiness requires both configuration and current access permission. User-facing company setup never requires provider keys. Absent providers expose the local editorial workflow and accurate status. Results can be registered manually and are labeled as such. Scheduling is not automatic publication.
 
 ## Brand Commitments
 

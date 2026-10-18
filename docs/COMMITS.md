@@ -531,3 +531,19 @@ Esta serie posterior reemplaza la activación por credenciales por controles de 
     Migrar las regresiones de publicación a webhooks y comprobar retirada por HTTP, control de origen, limpieza de arranque y bloqueo de salida. Suite completa: **427 aprobadas**, cero fallos; build y TypeScript correctos. Ajustes y creación de contenido revisados en navegador; vistas previas actualizadas.
 
 67. `docs(product): align workflow and validation with Telegram removal` — actualizar alcance vigente, matriz de funciones, evidencia de validación e índice de cambios.
+
+## Servicios gestionados y arranque sin configurar proveedores
+
+68. `6964357` — feat(platform): inherit managed AI and prepare first discovery automatically
+
+    Unificar la configuración compartida de IA, separar disponibilidad de credenciales guardadas y proteger la clave de plataforma frente a cambios de destino o modelo por empresa. Preparar fuentes permitidas y compartir el primer descubrimiento entre entradas concurrentes. Añadir chequeo de despliegue y diez regresiones iniciales.
+
+69. `a1f86db` — feat(ux): let teams start without provider setup
+
+    Mostrar servicios incluidos, dejar ajustes avanzados en desplegables e iniciar el descubrimiento al completar contexto y audiencia. Exponer carga, fallos parciales y reintento. Actualizar las oportunidades derivadas cuando cambian los datos del espacio.
+
+70. `e1d871c` — fix(integrations): recover platform defaults and clear stale preparation failures
+
+    Permitir volver a la IA de plataforma desde una configuración desactivada, sin pedir otra clave. Sustituir el estado fallido inicial después de una búsqueda manual o periódica correcta. Dos regresiones adicionales: suite completa con **439 aprobadas**, build y TypeScript correctos.
+
+71. `docs(operations): record managed-service readiness and live source verification` — documentar configuración central, chequeo sin secretos, comprobación real de fuentes, recorrido de empresa sin credenciales y límites de activación pendientes.

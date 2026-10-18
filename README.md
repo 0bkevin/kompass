@@ -22,7 +22,24 @@ npm run build
 npm start
 ```
 
-En producción `npm start` sirve interfaz y API desde `PORT`. Requiere un proceso Node persistente y almacenamiento duradero; configura HTTPS y proxy en el host. Esta entrega no despliega un SaaS público ni configura proveedores del operador.
+En producción `npm start` sirve interfaz y API desde `PORT`. Requiere un proceso Node persistente y almacenamiento duradero; configura HTTPS y proxy en el host. La configuración de proveedores corresponde al operador del despliegue; las empresas heredan los servicios de plataforma sin introducir claves. Esta entrega no despliega un SaaS público.
+
+## Servicios incluidos y configuración de plataforma
+
+Cada empresa nueva recibe fuentes públicas permitidas (Hacker News, GDELT y Google Trends, con país adicional cuando el mercado coincide). Al completar contexto y audiencia, Inicio ejecuta la primera búsqueda automáticamente. Las entradas concurrentes comparten el trabajo; volver a Inicio no repite una consulta completada o fallida. El usuario puede reintentar de forma explícita desde el aviso o actualizar el radar. Los ejemplos no disparan consultas automáticas.
+
+El operador configura la IA una sola vez con `OPENAI_API_KEY`, `OPENAI_MODEL`, `OPENAI_BASE_URL` y una revisión vigente del proveedor en `SOURCE_ACCESS_POLICY_FILE`. Las claves permanecen en servidor. La configuración de una empresa no puede cambiar el destino o modelo de la credencial compartida. Una empresa puede usar su propia credencial o volver al servicio de plataforma; esto no modifica las demás empresas.
+
+```bash
+npm run integrations:check
+npm run integrations:check -- --require-ai
+```
+
+El chequeo inspecciona configuración sin transmitir datos, revelar claves ni ejecutar consultas de pago. `--require-ai` sale con código 1 si falta credencial o revisión. Su resultado no verifica conectividad, cuota ni calidad del proveedor: hace falta una solicitud real para eso. Sin IA disponible, el flujo editorial local continúa y se identifica como tal.
+
+La interfaz muestra los servicios disponibles y mantiene las personalizaciones de IA y conectores adicionales fuera del recorrido inicial. Revisar, planificar y exportar no requieren una conexión. La entrega opcional por webhook requiere el destino autorizado de cada empresa; programar no publica automáticamente.
+
+**Estado comprobado en este entorno:** no hay credencial de IA de plataforma ni revisión de operador configuradas. Los adaptadores sociales y de video restringidos permanecen bloqueados. No están activadas todas las integraciones. En lecturas públicas reales, Hacker News y Google Trends respondieron; GDELT devolvió HTTP 429. Ver [evidencia de las fuentes](docs/managed-integrations-validation.json).
 
 ## Recorrido completo
 

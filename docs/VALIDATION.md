@@ -6,9 +6,19 @@ Fecha: 18 de octubre de 2026. Entorno local con Node.js 24, SQLite temporal y cr
 
 La revisión posterior de fuentes y permisos está en [compliance/README.md](compliance/README.md). Apify Instagram/TikTok, Reddit, YouTube editorial y Gemini video están bloqueados por el servidor. Webs/feeds adicionales, IA y webhooks requieren revisión por origen, ruta y finalidad. Las pruebas de éxito de proveedores de la entrega anterior no acreditan permisos ni describen conectores actualmente activables.
 
-`node --test --test-timeout=20000 tests/*.test.mjs`: **427 aprobadas**, cero fallos, cancelaciones u omitidas. `npm run build` incluye TypeScript y pasa. Las regresiones cubren credenciales, fuentes heredadas, suplantación del origen, redirecciones, revocación, robots, cuota HN, datos restringidos en pantalla, salida hacia IA y publicación con atribución. No se hicieron llamadas de pago ni scraping social para comprobarlo.
+`node --test --test-timeout=20000 tests/*.test.mjs`: **439 aprobadas**, cero fallos, cancelaciones u omitidas. `npm run build` incluye TypeScript y pasa. Las regresiones cubren credenciales, fuentes heredadas, suplantación del origen, redirecciones, revocación, robots, cuota HN, datos restringidos en pantalla, salida hacia IA y publicación con atribución. No se hicieron llamadas de pago ni scraping social para comprobarlo.
 
 Los inventarios de las dos bases de vista previa encontraron **cero referencias de proveedores restringidos y cero referencias YouTube pendientes de revisión de conservación**. Son inspecciones de solo lectura, sin borrar información; ver [evidencia](compliance/evidence/).
+
+## Servicios de plataforma y primer uso
+
+La suite vigente completa pasa con **439 pruebas**, cero fallos u omisiones, y el build de producción incluye TypeScript. Doce regresiones nuevas cubren herencia de IA entre empresas, no exposición/copia de la clave compartida, bloqueo de cambios de destino/modelo de esa clave, vuelta al servicio de plataforma, revocación con borrador local disponible, concurrencia y memoria del primer descubrimiento, fallos parciales, ejemplos/fuentes desactivadas y permisos HTTP. También comprueban que una empresa con IA desactivada puede volver al servicio de plataforma y que una búsqueda manual correcta sustituye un fallo inicial guardado.
+
+Las fuentes predeterminadas nuevas no incluyen feeds pendientes de autorización. Inicio prepara las primeras referencias al tener contexto y audiencia, sin pedir credenciales. El resumen de oportunidades vuelve a consultar sus datos cuando cambia el estado del espacio. Ajustes separa disponibilidad, credencial guardada y personalización opcional; las tarjetas de proveedores restringidos quedan en una sección desplegable.
+
+Comprobación real de fuentes sin IA ni conectores de pago: **Hacker News: 40 resultados; Google Trends: 10; GDELT: HTTP 429**. Ver [respuesta resumida](managed-integrations-validation.json). En QA se creó una empresa sintética mediante el formulario completo, sin credenciales de proveedor; la primera búsqueda guardó **47 referencias** y presentó el fallo parcial. Al guardar después una referencia propia por el formulario, tanto las etapas como la cobertura de Inicio pasaron de 47 a 48 sin recargar la página. Ajustes e Inicio se revisaron a 390 y 1440 px sin desbordamiento; las claves y conexiones adicionales no aparecen como un requisito inicial. Las cifras de configuración no se presentan como una verificación de conectividad o cuota.
+
+`npm run integrations:check` identifica el flujo local disponible. `npm run integrations:check -- --require-ai` sale con código 1 en el entorno actual: no se proporcionaron la credencial global ni una revisión del operador. Los adaptadores sociales y de video siguen bloqueados, y no se afirma que todas las integraciones estén activas. La vista principal (3026) tiene activada la actualización periódica; QA (5450) conserva el refresco periódico desactivado para pruebas controladas.
 
 ## Retirada de Telegram
 
