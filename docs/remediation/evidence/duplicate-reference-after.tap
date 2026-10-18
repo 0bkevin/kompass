@@ -1,0 +1,71 @@
+TAP version 13
+# Subtest: repeated manual HTTP capture keeps one reference and one independent opportunity evidence
+ok 1 - repeated manual HTTP capture keeps one reference and one independent opportunity evidence
+  ---
+  duration_ms: 129.213233
+  type: 'test'
+  ...
+# {"firstId":"34682e3a-d16c-426d-aa0f-b6251b3dea9e","repeatedId":"34682e3a-d16c-426d-aa0f-b6251b3dea9e","referenceCount":1,"evidenceCount":1}
+# Subtest: section fragments and known tracking do not create new publications or overwrite saved provenance
+ok 2 - section fragments and known tracking do not create new publications or overwrite saved provenance
+  ---
+  duration_ms: 10.369662
+  type: 'test'
+  ...
+# Subtest: distinct publication parameters, origins, paths and fragment routes remain distinct
+ok 3 - distinct publication parameters, origins, paths and fragment routes remain distinct
+  ---
+  duration_ms: 93.71366
+  type: 'test'
+  ...
+# Subtest: concurrent HTTP retries create one publication and one activity
+ok 4 - concurrent HTTP retries create one publication and one activity
+  ---
+  duration_ms: 39.186014
+  type: 'test'
+  ...
+# Subtest: legacy copies across topics count once while linked records and provenance remain untouched
+ok 5 - legacy copies across topics count once while linked records and provenance remain untouched
+  ---
+  duration_ms: 21.934649
+  type: 'test'
+  ...
+# Subtest: attachments without URL remain distinct, while retries of the same asset reuse its reference
+ok 6 - attachments without URL remain distinct, while retries of the same asset reuse its reference
+  ---
+  duration_ms: 29.963592
+  type: 'test'
+  ...
+# Subtest: brands and real/demo scopes never share a captured reference
+ok 7 - brands and real/demo scopes never share a captured reference
+  ---
+  duration_ms: 19.815402
+  type: 'test'
+  ...
+# Subtest: snapshots of persisted copies count canonical publications once across source and topic groups
+ok 8 - snapshots of persisted copies count canonical publications once across source and topic groups
+  ---
+  duration_ms: 29.759564
+  type: 'test'
+  ...
+# Subtest: legacy snapshots with unverified duplicate counts are preserved but excluded from new comparisons
+ok 9 - legacy snapshots with unverified duplicate counts are preserved but excluded from new comparisons
+  ---
+  duration_ms: 12.531314
+  type: 'test'
+  ...
+# Subtest: pieces linked to a legacy copy retain their topic context for historical learning
+ok 10 - pieces linked to a legacy copy retain their topic context for historical learning
+  ---
+  duration_ms: 28.609589
+  type: 'test'
+  ...
+1..10
+# tests 10
+# suites 0
+# pass 10
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 525.660128

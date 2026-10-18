@@ -1,0 +1,21 @@
+# duplicate-reference · references-1 y opportunities-2
+
+Corregido; pendiente de la comprobación integrada del coordinador. La captura repetida devuelve la referencia existente con HTTP 200. La reproducción original pasó de **2 filas y 2 evidencias a 1 fila y 1 evidencia**, con el mismo ID en ambas respuestas.
+
+La causa era doble: el POST manual insertaba sin comprobar identidad y las oportunidades contaban filas antes de agrupar por tema. Los snapshots sólo eliminaban URLs literalmente iguales.
+
+`server/reference-identity.mjs` comparte una identidad conservadora: elimina fragmentos de sección y tracking conocido, conserva rutas de fragmento y parámetros de publicación/negocio (`v`, `id`, `ref`, `source`, etc.). No unifica esquemas, subdominios, barras finales ni destinos por similitud del título. Sin URL, reconoce un mismo adjunto o la identidad explícita del proveedor; dos adjuntos distintos y dos textos sin identidad verificable siguen separados.
+
+El POST comprueba e inserta bajo una transacción `BEGIN IMMEDIATE`. Reutilizar una publicación no modifica su idioma, estado, análisis, origen, URL ni actividad. La comprobación precede al límite de filas. Las marcas y el material de demostración permanecen aislados.
+
+Las oportunidades, cobertura y pasos del recorrido cuentan publicaciones únicas antes de asignar temas. Para copias persistidas se elige un representante estable, sin borrar registros ni cambiar piezas, ideas o procedencia. La resolución del contexto de piezas históricas sigue disponiendo de todos los IDs originales, incluidas las copias. Los snapshots nuevos usan la misma identidad. Su scope está versionado: los snapshots anteriores se conservan, pero sus cuentas, que podrían estar infladas, no se usan como línea base de las nuevas observaciones. Se necesitan dos ventanas comparables con la nueva regla para volver a describir crecimiento.
+
+Verificación:
+
+- `node --test --test-reporter=tap tests/remediation-duplicate-reference.test.mjs`: rojo original con 2 filas/2 evidencias; suite ampliada, 7 fallos y 2 pases antes; **10/10 PASS después**. Incluye 16 POST concurrentes (una creación, 15 reutilizaciones, una actividad), copias históricas en temas/fuentes distintos, conservación exacta de piezas/ideas/procedencia, adjuntos distintos, marcas/demo aislados, URLs de negocio distintas y exclusión de snapshots antiguos del historial comparable. La décima prueba detectó y corrigió durante la revisión una regresión de la implementación parcial: el aprendizaje perdía el tema de piezas enlazadas a una copia; ahora conserva el ajuste histórico esperado de +8 sin duplicar evidencia.
+- `node --test --test-reporter=tap tests/audience-insights.test.mjs tests/core.test.mjs tests/capture-retry.test.mjs tests/opportunity-analysis.test.mjs tests/intelligence.test.mjs tests/remediation-opportunities-1.test.mjs`: primera pasada **74/74 PASS**; última pasada del checkout compartido **72/74 PASS**. Dos contratos ya coordinados: `intelligence.test.mjs` esperaba que la dirección literal apareciera en el guion (studio-1 la lleva al brief), y `opportunity-analysis.test.mjs` pretendía dos evidencias distintas pero su segunda fixture conserva la misma URL y fecha que la primera. El coordinador asignará una URL distinta a esa fixture y mantendrá sus aserciones. No se cambiaron tests ajenos desde este agente.
+- `node --check` de los tres módulos afectados y del test: sin errores de sintaxis.
+
+Evidencia: [rojo original](../evidence/duplicate-reference-before.tap), [rojo ampliado](../evidence/duplicate-reference-extended-before.tap), [regresión del vínculo durante implementación](../evidence/duplicate-reference-linked-copy-before.tap), [verde final](../evidence/duplicate-reference-after.tap), [tests cercanos](../evidence/duplicate-reference-nearby.tap). [Informe estructurado](duplicate-reference.json).
+
+Todos los datos son sintéticos. Los tests usan HTTP real en `127.0.1.18:4508` y SQLite temporal bajo `/tmp/30x-remediation-duplicate-reference`; cierran servidor/base y eliminan su subdirectorio. No se abrió navegador, no hubo llamadas a proveedores, no se comprobó una segunda instancia de API ni se siguieron redirecciones/alias externos. No se cambió UI, validación DNS, build, dependencias ni datos principales. La validación de fuentes privadas corresponde a references-2.

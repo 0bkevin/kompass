@@ -1,0 +1,62 @@
+{
+  "issueId": "duplicate-reference",
+  "members": ["references-1", "opportunities-2"],
+  "agent": "fix_duplicate_reference",
+  "status": "fixed",
+  "integrationStatus": "pending_coordinator_verification",
+  "rootCause": "El POST manual insertaba siempre. Las oportunidades contaban filas antes de agrupar por tema; los snapshots sólo deduplicaban la URL literal. Una publicación podía representar varias evidencias independientes.",
+  "changes": [
+    "Identidad de publicación compartida y conservadora: elimina secciones y tracking conocido, preserva parámetros de negocio y fragment routes; URL original intacta.",
+    "POST de referencias transaccional e idempotente por identidad dentro de la marca: 201 nueva, 200 existente; no modifica estado, procedencia, análisis, idioma ni actividad al reutilizar.",
+    "Deduplicación global antes de agrupar oportunidades, cobertura y pasos del recorrido, con representante estable de copias históricas y conservación de todos los registros y vínculos; el lookup histórico de piezas conserva el corpus completo por ID.",
+    "Snapshots nuevos cuentan publicaciones únicas y versionan el scope; los anteriores se conservan pero no se comparan con el nuevo criterio.",
+    "Adjuntos distintos sin URL y textos sin identidad verificable no se fusionan; marcas y demo/real permanecen separados."
+  ],
+  "files": [
+    "server/reference-identity.mjs",
+    "server/core.mjs",
+    "server/audience-insights.mjs",
+    "tests/remediation-duplicate-reference.test.mjs"
+  ],
+  "verification": [
+    {
+      "command": "node --test --test-reporter=tap tests/remediation-duplicate-reference.test.mjs",
+      "before": "Reproducción HTTP original: dos IDs distintos, referenceCount=2, evidenceCount=2, fallo esperado 2 !== 1. Suite ampliada: 7 fallos y 2 pases.",
+      "after": "10/10 PASS. Reproducción original: mismo ID, referenceCount=1, evidenceCount=1. Incluye 16 solicitudes concurrentes, copias persistidas, snapshots, conservación de vínculos y contexto histórico de piezas, adjuntos, marcas y parámetros reales. La décima prueba detectó una regresión de la implementación parcial (51 en vez de 59 puntos al perder el tema de una pieza enlazada a una copia); corregida antes de la entrega.",
+      "kind": "http"
+    },
+    {
+      "command": "node --test --test-reporter=tap tests/audience-insights.test.mjs tests/core.test.mjs tests/capture-retry.test.mjs tests/opportunity-analysis.test.mjs tests/intelligence.test.mjs tests/remediation-opportunities-1.test.mjs",
+      "before": "No ejecutado como línea base; el fallo concreto está capturado en los artefactos rojos propios.",
+      "after": "Primera pasada 74/74 PASS. Última pasada compartida: 72/74 PASS; intelligence.test.mjs conserva la expectativa antigua de dirección literal en guion (cambio studio-1); opportunity-analysis.test.mjs pretende dos evidencias independientes pero clona la misma URL y createdAt, por lo que sólo cuenta un representante. Ambos contratos coordinados con root; sin modificar tests ajenos.",
+      "kind": "test"
+    },
+    {
+      "command": "node --check server/reference-identity.mjs; node --check server/core.mjs; node --check server/audience-insights.mjs; node --check tests/remediation-duplicate-reference.test.mjs",
+      "before": "No aplicable al módulo y test nuevos.",
+      "after": "Sin errores de sintaxis.",
+      "kind": "test"
+    }
+  ],
+  "artifacts": [
+    "docs/remediation/evidence/duplicate-reference-before.tap",
+    "docs/remediation/evidence/duplicate-reference-extended-before.tap",
+    "docs/remediation/evidence/duplicate-reference-linked-copy-before.tap",
+    "docs/remediation/evidence/duplicate-reference-after.tap",
+    "docs/remediation/evidence/duplicate-reference-nearby.tap"
+  ],
+  "limitations": [
+    "Fixtures sintéticas y SQLite temporal; sin proveedores reales, redirecciones/alias externos ni comprobación visual de UI.",
+    "Concurrencia comprobada mediante 16 HTTP simultáneos contra una instancia; no se ejecutó una segunda instancia API.",
+    "Los snapshots anteriores no tienen identidades suficientes para corregir cuentas retrospectivamente; se preservan y se requiere historial nuevo comparable.",
+    "Último run cercano con dos incompatibilidades de contratos coordinadas: dirección literal en guion y fixture de fingerprint que duplica URL; el coordinador integra esos ajustes.",
+    "Validación DNS/fuentes privadas fuera de este grupo; corresponde a references-2."
+  ],
+  "resources": {
+    "host": "127.0.1.18",
+    "apiPort": 4508,
+    "webPort": 5508,
+    "dataRoot": "/tmp/30x-remediation-duplicate-reference",
+    "cleanup": "Cada ejecución cierra su servidor HTTP y SQLite y elimina su subdirectorio temporal; no se abrieron pestañas ni servidor web."
+  }
+}

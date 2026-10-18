@@ -1,0 +1,487 @@
+TAP version 13
+# Subtest: cold-start opportunities cite actual records and treat audience fit as an editorial hypothesis
+ok 1 - cold-start opportunities cite actual records and treat audience fit as an editorial hypothesis
+  ---
+  duration_ms: 150.801289
+  type: 'test'
+  ...
+# Subtest: insights and audience signals enforce authentication, workspace isolation and editor permissions
+ok 2 - insights and audience signals enforce authentication, workspace isolation and editor permissions
+  ---
+  duration_ms: 90.189545
+  type: 'test'
+  ...
+# Subtest: public observations need a citation and reject private links, person fields, contact data and invalid samples
+ok 3 - public observations need a citation and reject private links, person fields, contact data and invalid samples
+  ---
+  duration_ms: 54.95467
+  type: 'test'
+  ...
+# Subtest: public evidence affects priority more than an editorial hypothesis without claiming audience observation
+ok 4 - public evidence affects priority more than an editorial hypothesis without claiming audience observation
+  ---
+  duration_ms: 8.127782
+  type: 'test'
+  ...
+# Subtest: community aggregates require five voluntary responses and cannot be forged by the manual endpoint
+ok 5 - community aggregates require five voluntary responses and cannot be forged by the manual endpoint
+  ---
+  duration_ms: 22.590427
+  type: 'test'
+  ...
+# Subtest: topic growth requires week-separated comparable observations, not repeated cold-start refreshes
+ok 6 - topic growth requires week-separated comparable observations, not repeated cold-start refreshes
+  ---
+  duration_ms: 36.082972
+  type: 'test'
+  ...
+# Subtest: YouTube and demo records never synthesize performance growth or real audience claims
+ok 7 - YouTube and demo records never synthesize performance growth or real audience claims
+  ---
+  duration_ms: 22.363485
+  type: 'test'
+  ...
+# Subtest: editors record and correct a real publication while preserving approved editorial content
+ok 8 - editors record and correct a real publication while preserving approved editorial content
+  ---
+  duration_ms: 24.906261
+  type: 'test'
+  ...
+# Subtest: results cannot bypass review, publication locks or workspace isolation
+ok 9 - results cannot bypass review, publication locks or workspace isolation
+  ---
+  duration_ms: 38.033405
+  type: 'test'
+  ...
+# Subtest: result validation rejects invalid metrics, private URLs and future publication times
+ok 10 - result validation rejects invalid metrics, private URLs and future publication times
+  ---
+  duration_ms: 34.726986
+  type: 'test'
+  ...
+# Subtest: publication and result writes roll back together if persistence fails
+ok 11 - publication and result writes roll back together if persistence fails
+  ---
+  duration_ms: 9.631709
+  type: 'test'
+  ...
+# Subtest: recorded outcomes adjust priority only with comparable own content and remain separate from growth
+ok 12 - recorded outcomes adjust priority only with comparable own content and remain separate from growth
+  ---
+  duration_ms: 48.878696
+  type: 'test'
+  ...
+# Subtest: Spanish audience needs find relevant English public content without assuming observed viewers
+ok 13 - Spanish audience needs find relevant English public content without assuming observed viewers
+  ---
+  duration_ms: 5.551545
+  type: 'test'
+  ...
+# Subtest: reuses an uploaded capture asset when reference creation is retried
+ok 14 - reuses an uploaded capture asset when reference creation is retried
+  ---
+  duration_ms: 1.302546
+  type: 'test'
+  ...
+# Subtest: registration, session, password validation, login and logout persist safely
+ok 15 - registration, session, password validation, login and logout persist safely
+  ---
+  duration_ms: 461.855495
+  type: 'test'
+  ...
+# Subtest: brands start empty and users cannot read or mutate other brands
+ok 16 - brands start empty and users cannot read or mutate other brands
+  ---
+  duration_ms: 71.136621
+  type: 'test'
+  ...
+# Subtest: deleting an audience used by approved or published content preserves its links and version
+ok 17 - deleting an audience used by approved or published content preserves its links and version
+  ---
+  duration_ms: 74.824435
+  type: 'test'
+  ...
+# Subtest: deleting an audience used only by an idea is rejected
+ok 18 - deleting an audience used only by an idea is rejected
+  ---
+  duration_ms: 26.269208
+  type: 'test'
+  ...
+# Subtest: capture → analysis → draft → review → approval → schedule with no fabricated publication
+ok 19 - capture → analysis → draft → review → approval → schedule with no fabricated publication
+  ---
+  duration_ms: 60.593667
+  type: 'test'
+  ...
+# Subtest: private uploads validate formats, hide storage paths and enforce brand isolation
+ok 20 - private uploads validate formats, hide storage paths and enforce brand isolation
+  ---
+  duration_ms: 37.463213
+  type: 'test'
+  ...
+# Subtest: invitation acceptance is single-use; reviewer can review/comment but cannot edit
+ok 21 - invitation acceptance is single-use; reviewer can review/comment but cannot edit
+  ---
+  duration_ms: 83.319881
+  type: 'test'
+  ...
+# Subtest: approval is bound to the displayed content version across review interleavings
+ok 22 - approval is bound to the displayed content version across review interleavings
+  ---
+  duration_ms: 90.276355
+  type: 'test'
+  ...
+# Subtest: unchanged oversized legacy piece text can be saved with an unrelated edit
+ok 23 - unchanged oversized legacy piece text can be saved with an unrelated edit
+  ---
+  duration_ms: 18.480438
+  type: 'test'
+  ...
+# Subtest: optional edit preconditions reject stale HTTP writes without breaking older clients
+ok 24 - optional edit preconditions reject stale HTTP writes without breaking older clients
+  ---
+  duration_ms: 25.135738
+  type: 'test'
+  ...
+# Subtest: editor may produce content but cannot configure integrations or approve their work
+ok 25 - editor may produce content but cannot configure integrations or approve their work
+  ---
+  duration_ms: 59.755693
+  type: 'test'
+  ...
+# Subtest: changing a source URL removes old metrics and snapshot history rather than reusing evidence
+ok 26 - changing a source URL removes old metrics and snapshot history rather than reusing evidence
+  ---
+  duration_ms: 6.016506
+  type: 'test'
+  ...
+# Subtest: demo data is explicitly labeled; secret values are encrypted and absent from state
+ok 27 - demo data is explicitly labeled; secret values are encrypted and absent from state
+  ---
+  duration_ms: 84.827736
+  type: 'test'
+  ...
+# Subtest: invalid requests and foreign Origin mutations fail with safe JSON errors
+ok 28 - invalid requests and foreign Origin mutations fail with safe JSON errors
+  ---
+  duration_ms: 11.904789
+  type: 'test'
+  ...
+# Subtest: canonical dedup removes tracking but preserves content query and unrelated topics
+ok 29 - canonical dedup removes tracking but preserves content query and unrelated topics
+  ---
+  duration_ms: 3.086496
+  type: 'test'
+  ...
+# Subtest: RSS and Atom preserve real titles, dates, source URLs and Google approximate traffic
+ok 30 - RSS and Atom preserve real titles, dates, source URLs and Google approximate traffic
+  ---
+  duration_ms: 5.538514
+  type: 'test'
+  ...
+# Subtest: Google Trends identifies queries and countries rather than the shared feed link
+ok 31 - Google Trends identifies queries and countries rather than the shared feed link
+  ---
+  duration_ms: 197.625605
+  type: 'test'
+  ...
+# Subtest: legacy Google feed identities are repaired without losing editorial decisions or linked pieces
+ok 32 - legacy Google feed identities are repaired without losing editorial decisions or linked pieces
+  ---
+  duration_ms: 38.933843
+  type: 'test'
+  ...
+# Subtest: first snapshot never claims growth; separate observations support actual velocity only
+ok 33 - first snapshot never claims growth; separate observations support actual velocity only
+  ---
+  duration_ms: 0.482758
+  type: 'test'
+  ...
+# Subtest: GDELT discovery uses detection date without claiming popularity or publication date
+ok 34 - GDELT discovery uses detection date without claiming popularity or publication date
+  ---
+  duration_ms: 6.041132
+  type: 'test'
+  ...
+# Subtest: discovery persists source failures, does not duplicate URLs, and refreshes official metrics
+ok 35 - discovery persists source failures, does not duplicate URLs, and refreshes official metrics
+  ---
+  duration_ms: 35.056424
+  type: 'test'
+  ...
+# Subtest: topic-specific sources use brand context and RSS query filters unrelated content
+ok 36 - topic-specific sources use brand context and RSS query filters unrelated content
+  ---
+  duration_ms: 2.927797
+  type: 'test'
+  ...
+# Subtest: preliminary brand relevance matches Spanish sectors to English terms without AI
+ok 37 - preliminary brand relevance matches Spanish sectors to English terms without AI
+  ---
+  duration_ms: 12.994993
+  type: 'test'
+  ...
+# Subtest: discovery recalculates lexical relevance without modifying editorial status or analysis
+ok 38 - discovery recalculates lexical relevance without modifying editorial status or analysis
+  ---
+  duration_ms: 8.71095
+  type: 'test'
+  ...
+# Subtest: continuous discovery obeys cadence and persists exponential backoff without overlapping runs
+ok 39 - continuous discovery obeys cadence and persists exponential backoff without overlapping runs
+  ---
+  duration_ms: 8.421073
+  type: 'test'
+  ...
+# Subtest: continuous discovery never duplicates an active manual refresh
+ok 40 - continuous discovery never duplicates an active manual refresh
+  ---
+  duration_ms: 10.545598
+  type: 'test'
+  ...
+# Subtest: the same article across sources keeps platform metrics separate and adds evidence
+ok 41 - the same article across sources keeps platform metrics separate and adds evidence
+  ---
+  duration_ms: 32.405454
+  type: 'test'
+  ...
+# Subtest: real discovery never merges into a similarly named demo reference
+ok 42 - real discovery never merges into a similarly named demo reference
+  ---
+  duration_ms: 20.149977
+  type: 'test'
+  ...
+# Subtest: saturation is unknown for small samples and qualified as observed brand corpus
+ok 43 - saturation is unknown for small samples and qualified as observed brand corpus
+  ---
+  duration_ms: 3.750147
+  type: 'test'
+  ...
+# Subtest: URL fetch blocks private, mapped, reserved and DNS-rebinding destinations
+ok 44 - URL fetch blocks private, mapped, reserved and DNS-rebinding destinations
+  ---
+  duration_ms: 6.863323
+  type: 'test'
+  ...
+# Subtest: AI provider failures are explicit and secret never appears in errors
+ok 45 - AI provider failures are explicit and secret never appears in errors
+  ---
+  duration_ms: 6.420805
+  type: 'test'
+  ...
+# Subtest: local analysis and drafts persist useful editable output without API keys
+not ok 46 - local analysis and drafts persist useful editable output without API keys
+  ---
+  duration_ms: 19.013162
+  type: 'test'
+  location: '/home/ubuntu/.t3/projects/30x-trackt-2/tests/intelligence.test.mjs:727:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    The expression evaluated to a falsy value:
+    
+      assert.ok(piece.script.includes("Enfoque de pequeñas empresas"))
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  actual: false
+  operator: '=='
+  stack: |-
+    TestContext.<anonymous> (file:///home/ubuntu/.t3/projects/30x-trackt-2/tests/intelligence.test.mjs:749:10)
+    async Test.run (node:internal/test_runner/test:1404:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:969:7)
+  ...
+# Subtest: analysis protects simultaneous reference edits and preserves dismissal decisions
+ok 47 - analysis protects simultaneous reference edits and preserves dismissal decisions
+  ---
+  duration_ms: 12.28974
+  type: 'test'
+  ...
+# Subtest: publishing requires approval and real connector; webhook delivery is idempotent
+ok 48 - publishing requires approval and real connector; webhook delivery is idempotent
+  ---
+  duration_ms: 20.574076
+  type: 'test'
+  ...
+# Subtest: uncertain network delivery cannot silently duplicate a publication
+ok 49 - uncertain network delivery cannot silently duplicate a publication
+  ---
+  duration_ms: 12.961202
+  type: 'test'
+  ...
+# Subtest: semantic analysis requires configured AI and an explicit editor action
+ok 50 - semantic analysis requires configured AI and an explicit editor action
+  ---
+  duration_ms: 207.375644
+  type: 'test'
+  ...
+# Subtest: the provider receives a strict schema and business evidence as data, without metrics or secrets
+ok 51 - the provider receives a strict schema and business evidence as data, without metrics or secrets
+  ---
+  duration_ms: 26.551623
+  type: 'test'
+  ...
+# Subtest: reanalysis upserts by opportunity and never crosses workspace boundaries
+ok 52 - reanalysis upserts by opportunity and never crosses workspace boundaries
+  ---
+  duration_ms: 52.663015
+  type: 'test'
+  ...
+# Subtest: invalid output types, foreign IDs and invented citations are rejected without saving
+ok 53 - invalid output types, foreign IDs and invented citations are rejected without saving
+  ---
+  duration_ms: 76.943972
+  type: 'test'
+  ...
+# Subtest: control phrases, unsafe text, secret echoes and oversize fields never enter saved analyses
+ok 54 - control phrases, unsafe text, secret echoes and oversize fields never enter saved analyses
+  ---
+  duration_ms: 51.266878
+  type: 'test'
+  ...
+# Subtest: context, needs, references and audience signals are revalidated after the provider wait
+ok 55 - context, needs, references and audience signals are revalidated after the provider wait
+  ---
+  duration_ms: 107.736223
+  type: 'test'
+  ...
+# Subtest: removed membership, downgraded role and revoked session cannot save a pending result
+ok 56 - removed membership, downgraded role and revoked session cannot save a pending result
+  ---
+  duration_ms: 76.491149
+  type: 'test'
+  ...
+# Subtest: only one analysis per brand runs at a time while another workspace can proceed
+ok 57 - only one analysis per brand runs at a time while another workspace can proceed
+  ---
+  duration_ms: 40.281466
+  type: 'test'
+  ...
+# Subtest: YouTube-only opportunities are excluded and mixed opportunities cannot cite YouTube API evidence
+ok 58 - YouTube-only opportunities are excluded and mixed opportunities cannot cite YouTube API evidence
+  ---
+  duration_ms: 33.485935
+  type: 'test'
+  ...
+# Subtest: fingerprints are deterministic and react to evidence changes while ignoring provider metrics and timestamps
+not ok 59 - fingerprints are deterministic and react to evidence changes while ignoring provider metrics and timestamps
+  ---
+  duration_ms: 19.052882
+  type: 'test'
+  location: '/home/ubuntu/.t3/projects/30x-trackt-2/tests/opportunity-analysis.test.mjs:535:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected "actual" to be strictly unequal to:
+    
+    '18a08cc0471d1e86f92eeb82c8a52060170e25f77f5b4d05126e0405a323dac8'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: '18a08cc0471d1e86f92eeb82c8a52060170e25f77f5b4d05126e0405a323dac8'
+  actual: '18a08cc0471d1e86f92eeb82c8a52060170e25f77f5b4d05126e0405a323dac8'
+  operator: 'notStrictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///home/ubuntu/.t3/projects/30x-trackt-2/tests/opportunity-analysis.test.mjs:579:10)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1397:25)
+    process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    async Test.processPendingSubtests (node:internal/test_runner/test:969:7)
+  ...
+# Subtest: provider failures redact transport secrets and release the brand lock for retry
+ok 60 - provider failures redact transport secrets and release the brand lock for retry
+  ---
+  duration_ms: 20.343789
+  type: 'test'
+  ...
+# Subtest: insights expose the saved semantic analysis only while its evidence fingerprint remains current
+ok 61 - insights expose the saved semantic analysis only while its evidence fingerprint remains current
+  ---
+  duration_ms: 20.211851
+  type: 'test'
+  ...
+# Subtest: cold start does not claim observed growth
+ok 62 - cold start does not claim observed growth
+  ---
+  duration_ms: 179.370086
+  type: 'test'
+  ...
+# Subtest: one observation does not claim observed growth
+ok 63 - one observation does not claim observed growth
+  ---
+  duration_ms: 11.46141
+  type: 'test'
+  ...
+# Subtest: comparable windows 0 → 0 report their actual direction
+ok 64 - comparable windows 0 → 0 report their actual direction
+  ---
+  duration_ms: 10.849627
+  type: 'test'
+  ...
+# Subtest: comparable windows 1 → 1 report their actual direction
+ok 65 - comparable windows 1 → 1 report their actual direction
+  ---
+  duration_ms: 17.238414
+  type: 'test'
+  ...
+# Subtest: comparable windows 3 → 1 report their actual direction
+ok 66 - comparable windows 3 → 1 report their actual direction
+  ---
+  duration_ms: 16.83124
+  type: 'test'
+  ...
+# Subtest: comparable windows 3 → 0 report their actual direction
+ok 67 - comparable windows 3 → 0 report their actual direction
+  ---
+  duration_ms: 25.217553
+  type: 'test'
+  ...
+# Subtest: comparable windows 1 → 4 report their actual direction
+ok 68 - comparable windows 1 → 4 report their actual direction
+  ---
+  duration_ms: 24.027417
+  type: 'test'
+  ...
+# Subtest: comparable windows 0 → 2 report their actual direction
+ok 69 - comparable windows 0 → 2 report their actual direction
+  ---
+  duration_ms: 17.098112
+  type: 'test'
+  ...
+# Subtest: different source queries cannot establish a direction
+ok 70 - different source queries cannot establish a direction
+  ---
+  duration_ms: 21.168082
+  type: 'test'
+  ...
+# Subtest: different configured sources cannot establish a direction
+ok 71 - different configured sources cannot establish a direction
+  ---
+  duration_ms: 31.284864
+  type: 'test'
+  ...
+# Subtest: unequal or stale observation windows cannot establish a direction
+ok 72 - unequal or stale observation windows cannot establish a direction
+  ---
+  duration_ms: 28.860878
+  type: 'test'
+  ...
+# Subtest: native YouTube metrics remain native even with comparable RSS history
+ok 73 - native YouTube metrics remain native even with comparable RSS history
+  ---
+  duration_ms: 26.972118
+  type: 'test'
+  ...
+# Subtest: demonstration evidence cannot become an observed direction
+ok 74 - demonstration evidence cannot become an observed direction
+  ---
+  duration_ms: 26.585124
+  type: 'test'
+  ...
+1..74
+# tests 74
+# suites 0
+# pass 72
+# fail 2
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 1272.834013
