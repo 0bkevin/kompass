@@ -1,0 +1,201 @@
+{
+  "checkedAt": "2026-10-18T11:57:44.004Z",
+  "method": "native-collaborative-browser-real-public-services",
+  "host": {
+    "port": 5502,
+    "dataDirectory": "/tmp/radar-real30x-discovery",
+    "isolated": true,
+    "scheduledDiscovery": false,
+    "googleCredentials": false,
+    "provider": "real inherited Gemini public-test configuration",
+    "networkMocks": false
+  },
+  "company": {
+    "name": "30X — Discovery QA",
+    "website": "https://30x.com/",
+    "profiles": [
+      {
+        "name": "Directivos y líderes de equipos en Latinoamérica",
+        "role": "Directivos y líderes de equipos en Latinoamérica",
+        "stage": "Por confirmar",
+        "needs": "Priorizar aplicaciones de inteligencia artificial en procesos de negocio, decidir qué automatizar y evaluar un piloto con métricas antes de escalar. Hipótesis editorial de prueba basada en la oferta pública de 30X, sin datos observados de consumidores."
+      },
+      {
+        "name": "Founders y equipos comerciales",
+        "role": "Priorizar procesos comerciales y dirigir ventas",
+        "stage": "Aprendiendo",
+        "needs": "Hipótesis editorial de prueba: aprender prácticas de ventas y organizar seguimiento comercial. La oferta Sales Machine de 30X orienta esta propuesta; no demuestra preferencias de consumidores reales."
+      }
+    ]
+  },
+  "inputs": {
+    "website": "https://30x.com/",
+    "instagram": "https://www.instagram.com/crece30x/",
+    "paraphrase": "Original summary of verified public 30X facts; not copied website body, private strategy, consumer data or invented case"
+  },
+  "contextImports": [
+    {
+      "method": "heuristic",
+      "evidence": [
+        {
+          "url": "https://30x.com/",
+          "title": "30x.com",
+          "status": "linked",
+          "reason": "Enlace conservado sin leer: el operador debe revisar los términos y el permiso de esta web para esta finalidad. Puedes aportar contenido propio."
+        },
+        {
+          "url": "https://www.instagram.com/crece30x/",
+          "title": "instagram.com",
+          "status": "linked",
+          "reason": "Enlace guardado. No se ha leído este perfil ni su audiencia; aporta contenido propio para incorporarlo al contexto."
+        },
+        {
+          "title": "Contenido aportado por tu equipo",
+          "status": "provided",
+          "reason": "Texto aportado por el equipo; no se ha verificado externamente."
+        }
+      ],
+      "warnings": [
+        "Las sugerencias de marca y audiencia son hipótesis basadas en el contenido aportado. Confírmalas; no describen consumidores observados.",
+        "Los enlaces marcados como guardados no se han usado para inferir contenido ni audiencia."
+      ]
+    }
+  ],
+  "discovery": {
+    "providerBatches": 1,
+    "sources": [
+      {
+        "name": "Noticias globales · GDELT",
+        "type": "gdelt",
+        "lastResultCount": 40,
+        "lastSyncedAt": "2026-10-18T11:53:19.224Z",
+        "lastError": null
+      },
+      {
+        "name": "Hacker News · tecnología",
+        "type": "hackernews",
+        "lastResultCount": 40,
+        "lastSyncedAt": "2026-10-18T11:53:19.044Z",
+        "lastError": null
+      },
+      {
+        "name": "Google Trends · Estados Unidos",
+        "type": "rss",
+        "lastResultCount": 10,
+        "lastSyncedAt": "2026-10-18T11:53:18.894Z",
+        "lastError": null
+      }
+    ],
+    "distinctStoredReferences": 81,
+    "metadataOnly": 81,
+    "savedReferences": [
+      {
+        "title": "World Bank says small AI could transform developing countries | AI ( artificial intelligence )",
+        "url": "https://www.theguardian.com/technology/2026/oct/18/world-bank-artificial-intelligence-developing-economies"
+      }
+    ],
+    "timestampsIdenticalAfterReload": true,
+    "observedGrowthCount": 0,
+    "defaultContextMatches": 41,
+    "searchWorldBankCount": 2,
+    "defaultOpportunityCount": 1,
+    "allOpportunityCount": 40
+  },
+  "signals": [
+    {
+      "sourceType": "public_content",
+      "topic": "Oferta pública de IA estratégica para directivos",
+      "note": "El catálogo público de 30X incluye AI for Executives y describe formación de IA para equipos y directivos. Esto respalda el contexto de la oferta, sin medir demanda ni preferencias de consumidores. Sigue por validar qué decisiones y procesos necesitan resolver los lectores.",
+      "sourceUrl": "https://30x.com/programas",
+      "sampleSize": 1
+    },
+    {
+      "sourceType": "editorial",
+      "topic": "Ventas y seguimiento comercial con IA",
+      "note": "Hipótesis de prueba del equipo: un checklist para decidir dónde apoyar el seguimiento comercial con IA podría ser útil a founders y equipos de ventas. No procede de métricas, entrevistas ni alumnos observados; debe contrastarse con respuestas voluntarias y resultados."
+    }
+  ],
+  "ai": {
+    "requests": 2,
+    "model": "gemini-3.5-flash-lite",
+    "semantic": {
+      "need": "Priorizar aplicaciones de inteligencia artificial en procesos de negocio y evaluar su impacto con métricas antes de escalar.",
+      "rationale": "El segmento de directivos y líderes de equipos necesita enfocar la inteligencia artificial en procesos concretos. La referencia del Banco Mundial sobre el potencial de la inteligencia artificial para transformar economías apoya la relevancia de evaluar estas tecnologías a escala operativa, aunque se trata de metadatos generales sin casos corporativos específicos.",
+      "hookHypothesis": "Cómo identificar el proceso clave de tu negocio para aplicar inteligencia artificial sin arriesgar recursos en pruebas masivas.",
+      "adaptation": "Como propuesta hipotética a probar, los directivos podrían diseñar una matriz de priorización interna de procesos en su primer mes para seleccionar un único caso de uso piloto con IA.",
+      "selectedKnownSegment": true,
+      "citations": [
+        {
+          "support": "World Bank says small AI could transform developing countries",
+          "title": "World Bank says small AI could transform developing countries",
+          "url": "https://www.aol.co.uk/articles/world-bank-says-small-ai-100056000.html",
+          "literal": true
+        }
+      ],
+      "limitations": [
+        "Las referencias suministradas son de ámbito general y no documentan casos de estudio específicos de empresas latinoamericanas.",
+        "No existen datos observados de consumo ni métricas de alumnos para validar las preferencias reales del segmento.",
+        "Razonamiento semántico de IA: la pertinencia y el gancho son hipótesis editoriales, no consumidores observados ni explicaciones causales del rendimiento.",
+        "Algunas referencias sólo aportan título y metadatos; su contenido completo no fue observado.",
+        "Se utilizó una muestra acotada de referencias y señales para esta consulta; las demás no fueron analizadas."
+      ]
+    },
+    "referenceAnalysis": {
+      "title": "World Bank says small AI could transform developing countries | AI ( artificial intelligence )",
+      "url": "https://www.theguardian.com/technology/2026/oct/18/world-bank-artificial-intelligence-developing-economies",
+      "hook": "La adopción de inteligencia artificial compacta abre nuevas vías para transformar los procesos en organizaciones de Latinoamérica.",
+      "format": "article",
+      "hypothesis": "Esta estructura podría resultar útil para conectar un tema de impacto global con la gestión interna de los equipos directivos, facilitando la identificación de áreas de oportunidad sin asumir resultados garantizados.",
+      "saturation": "high",
+      "saturationReason": "6 referencias relacionadas en 81 referencias del corpus observado de esta marca. Estimación de repetición interna, no de saturación global ni de Latinoamérica.",
+      "relevance": 55,
+      "adaptation": "Para directivos y líderes de equipo en Latinoamérica, adaptar este enfoque a la educación ejecutiva implica proponer una revisión interna de procesos mediante un caso hipotético por investigar, manteniendo la claridad y el tono práctico característicos de 30X.",
+      "segmentIds": ["65ca8bc2-8605-461b-8197-21f32ccc9658"],
+      "signals": [
+        "Motor local: comparación de texto y reglas editoriales, sin búsqueda global.",
+        "Material disponible: título/enlace; contenido completo no disponible.",
+        "La fuente no incluye una fecha de publicación verificable.",
+        "GDELT registró esta cobertura el 2026-10-18T10:30:00.000Z; la frescura usa esa detección, que no confirma cuándo fue publicada.",
+        "Sin métricas de interacción: la presencia en un feed no demuestra popularidad.",
+        "Sin historial suficiente: se requieren dos observaciones separadas al menos 10 minutos para estimar velocidad.",
+        "Tema relacionado observado en 2 fuentes configuradas; similitud de palabras, pendiente de criterio editorial.",
+        "Coincidencias con el contexto de marca: artificial.",
+        "Historial editorial comparable: 0 referencias guardadas y 0 descartadas. Afinidad textual usada como ajuste de relevancia; no es un modelo entrenado.",
+        "No se pudo enriquecer el enlace: Enlace conservado sin leer: el operador debe revisar los términos y el permiso de esta web para esta finalidad. Puedes aportar contenido propio. Análisis limitado al material compartido."
+      ],
+      "confidence": "low",
+      "engine": "ai",
+      "analyzedAt": "2026-10-18T11:55:02.963Z"
+    },
+    "semanticAnalysisInvalidatedAfterSavingReference": true
+  },
+  "responsive": {
+    "desktop": {
+      "width": 1280,
+      "height": 800
+    },
+    "mobile": {
+      "width": 390,
+      "height": 844,
+      "documentWidth": 390,
+      "referenceModalWidth": 370
+    },
+    "synthesizedTouch": false,
+    "physicalDevice": false
+  },
+  "diagnostics": {
+    "finalConsoleEntries": 0,
+    "finalFailedBrowserRequests": 0,
+    "browserTransportIncident": "One waitFor disconnected after the real request had succeeded; recovered using preview_status/evaluate without another AI request."
+  },
+  "scopeLimits": [
+    "30X website and Instagram links were retained without an automated content read.",
+    "No Instagram post bodies, engagement metrics, followers or audience profiles were imported.",
+    "Public marketing supports proposed audience context, not actual consumer composition or preference.",
+    "One live observation batch cannot prove early growth, global saturation or ten growing LinkedIn topics.",
+    "GDELT succeeded on this finite run; this does not guarantee future availability.",
+    "Google Trends default source explicitly covers the US; HN and GDELT are not Latin American social-audience samples.",
+    "Broad lexical AI topic grouping still requires editorial judgement.",
+    "No human pilot participants, community votes, external messages or publication were created."
+  ]
+}
