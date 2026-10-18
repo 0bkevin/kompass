@@ -287,9 +287,11 @@ export default function MediaProduction({
         </Button>
       </div>
       {loading && !status ? (
-        <p role="status" className="muted">
-          Consultando la creación de archivos…
-        </p>
+        <div className="media-loading" role="status">
+          <span>Consultando la creación de archivos…</span>
+          <div aria-hidden="true" />
+          <div aria-hidden="true" />
+        </div>
       ) : (
         status && (
           <>
