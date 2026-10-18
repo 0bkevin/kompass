@@ -3,7 +3,7 @@ import { createFileRoute, redirect } from "@tanstack/react-router";
 export const Route = createFileRoute("/_workspace/")({
   beforeLoad: () => {
     throw redirect({
-      to: "/radar",
+      to: "/home",
       search: (previous) => previous,
       replace: true,
     });

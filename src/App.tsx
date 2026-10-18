@@ -27,13 +27,16 @@ import {
   Compass,
   ArrowRight,
   Radio,
+  House,
+  Lightbulb,
+  BarChart3,
 } from "lucide-react";
 import { api, json } from "./lib/api";
 import type { Brand, BrandState, Session, View } from "./lib/types";
 import { WorkspaceProvider } from "./lib/workspace";
 import { Button, Modal, Field } from "./components/ui";
 import { CaptureModal } from "./features/Discovery";
-import { NewBrandForm } from "./features/Brand";
+import { CompanySetup } from "./features/CompanySetup";
 import { workspaceLocation } from "./lib/legacy-navigation.mjs";
 
 const views: {
@@ -42,38 +45,31 @@ const views: {
   icon: typeof RadarIcon;
   group: string;
 }[] = [
+  { id: "home", label: "Inicio", icon: House, group: "Trabajo" },
+  { id: "audience", label: "Audiencia", icon: Users, group: "Trabajo" },
+  {
+    id: "opportunities",
+    label: "Oportunidades",
+    icon: Lightbulb,
+    group: "Trabajo",
+  },
+  { id: "studio", label: "Contenido", icon: Clapperboard, group: "Trabajo" },
+  { id: "calendar", label: "Calendario", icon: CalendarDays, group: "Trabajo" },
+  { id: "results", label: "Resultados", icon: BarChart3, group: "Trabajo" },
+  {
+    id: "brand",
+    label: "Empresa y contenido",
+    icon: Palette,
+    group: "Empresa",
+  },
   {
     id: "radar",
-    label: "Radar de tendencias",
+    label: "Explorar fuentes",
     icon: RadarIcon,
-    group: "DESCUBRE",
+    group: "Herramientas",
   },
-  {
-    id: "inbox",
-    label: "Bandeja de referencias",
-    icon: Inbox,
-    group: "DESCUBRE",
-  },
-  {
-    id: "studio",
-    label: "Estudio de contenido",
-    icon: Clapperboard,
-    group: "ORGANIZA Y CREA",
-  },
-  {
-    id: "calendar",
-    label: "Grilla editorial",
-    icon: CalendarDays,
-    group: "ORGANIZA Y CREA",
-  },
-  {
-    id: "assets",
-    label: "Biblioteca",
-    icon: FolderOpen,
-    group: "ORGANIZA Y CREA",
-  },
-  { id: "audience", label: "Audiencias", icon: Users, group: "TU CONTEXTO" },
-  { id: "brand", label: "ADN de marca", icon: Palette, group: "TU CONTEXTO" },
+  { id: "inbox", label: "Referencias", icon: Inbox, group: "Herramientas" },
+  { id: "assets", label: "Archivos", icon: FolderOpen, group: "Herramientas" },
 ];
 type WorkspaceSearch = Record<string, unknown>;
 const preserveWorkspaceSearch = (previous: WorkspaceSearch) => previous;
@@ -99,6 +95,12 @@ export default function App() {
         });
 
       switch (targetView) {
+        case "home":
+          return router.navigate({ to: "/home", ...options });
+        case "opportunities":
+          return router.navigate({ to: "/opportunities", ...options });
+        case "results":
+          return router.navigate({ to: "/results", ...options });
         case "radar":
           return router.navigate({ to: "/radar", ...options });
         case "inbox":
@@ -130,33 +132,75 @@ export default function App() {
   const [toast, setToast] = useState<{ message: string; type: string } | null>(
     null,
   );
+  const menuTrigger = useRef<HTMLButtonElement>(null);
+  const searchInput = useRef<HTMLInputElement>(null);
+  const sidebarRef = useRef<HTMLElement>(null);
+  useEffect(() => {
+    if (!mobile) return;
+    const sidebar = sidebarRef.current;
+    const controls = () =>
+      Array.from(
+        sidebar?.querySelectorAll<HTMLElement>(
+          "button:not(:disabled),a[href],select,summary",
+        ) || [],
+      ).filter((element) => element.getClientRects().length > 0);
+    controls()[0]?.focus();
+    const key = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        setMobile(false);
+        event.preventDefault();
+      }
+      if (event.key === "Tab") {
+        const items = controls();
+        const first = items[0];
+        const last = items.at(-1);
+        if (event.shiftKey && document.activeElement === first) {
+          last?.focus();
+          event.preventDefault();
+        } else if (!event.shiftKey && document.activeElement === last) {
+          first?.focus();
+          event.preventDefault();
+        }
+      }
+    };
+    document.addEventListener("keydown", key);
+    return () => {
+      document.removeEventListener("keydown", key);
+      menuTrigger.current?.focus();
+    };
+  }, [mobile]);
   const activeRef = useRef(activeId);
   activeRef.current = activeId;
   const refreshRequestRef = useRef(0);
   const mountedRef = useRef(true);
-  const leaveGuardRef = useRef<{
-    isDirty: () => boolean;
-    confirmLeave: () => boolean;
-  } | null>(null);
+  const leaveGuardsRef = useRef(
+    new Set<{
+      isDirty: () => boolean;
+      confirmLeave: () => boolean;
+    }>(),
+  );
   const registerUnsavedChangesGuard = useCallback(
     (guard: { isDirty: () => boolean; confirmLeave: () => boolean }) => {
-      leaveGuardRef.current = guard;
+      leaveGuardsRef.current.add(guard);
       return () => {
-        if (leaveGuardRef.current === guard) leaveGuardRef.current = null;
+        leaveGuardsRef.current.delete(guard);
       };
     },
     [],
   );
   const confirmUnsavedChanges = useCallback(() => {
-    const guard = leaveGuardRef.current;
-    return !guard || !guard.isDirty() || guard.confirmLeave();
+    return [...leaveGuardsRef.current].every(
+      (guard) => !guard.isDirty() || guard.confirmLeave(),
+    );
   }, []);
   useBlocker({
     shouldBlockFn: () => {
-      const guard = leaveGuardRef.current;
-      return !!guard?.isDirty() && !guard.confirmLeave();
+      return [...leaveGuardsRef.current].some(
+        (guard) => guard.isDirty() && !guard.confirmLeave(),
+      );
     },
-    enableBeforeUnload: () => !!leaveGuardRef.current?.isDirty(),
+    enableBeforeUnload: () =>
+      [...leaveGuardsRef.current].some((guard) => guard.isDirty()),
   });
   const selectBrand = useCallback((id: string) => {
     activeRef.current = id;
@@ -309,7 +353,8 @@ export default function App() {
     );
     selectBrand(brand.id);
     setNewBrand(false);
-    notify("Tu espacio de marca está listo.");
+    navigate("home");
+    notify("Tu empresa está lista. Empecemos con tu primera oportunidad.");
   };
   if (!session)
     return (
@@ -344,17 +389,7 @@ export default function App() {
           30X <span>RADAR</span>
         </div>
         <div className="onboarding-panel">
-          <p className="eyebrow">TU MARCA ES EL PUNTO DE PARTIDA</p>
-          <h1>
-            Hagamos que el radar
-            <br />
-            hable tu idioma.
-          </h1>
-          <p className="muted">
-            Dinos para quién creas. Encontraremos conversaciones que tengan
-            sentido para tu marca.
-          </p>
-          <NewBrandForm onCreated={brandCreated} />
+          <CompanySetup onCreated={brandCreated} />
         </div>
         <button className="text-button" onClick={() => void logout()}>
           Cerrar sesión
@@ -374,17 +409,34 @@ export default function App() {
         search,
       }}
     >
-      <Outlet />
+      <Outlet key={state.brand.id} />
       {capture && <CaptureModal onClose={() => setCapture(false)} />}
     </WorkspaceProvider.Provider>
   ) : null;
   return (
     <div className="app-shell">
+      <a className="skip-link" href="#workspace-main">
+        Saltar al contenido
+      </a>
       {mobile && (
         <div className="sidebar-overlay" onClick={() => setMobile(false)} />
       )}
-      <aside className={`sidebar ${mobile ? "open" : ""}`}>
-        <Link className="wordmark" to="/radar" search={(previous) => previous}>
+      <aside
+        ref={sidebarRef}
+        id="workspace-navigation"
+        className={`sidebar ${mobile ? "open" : ""}`}
+        role={mobile ? "dialog" : undefined}
+        aria-modal={mobile || undefined}
+        aria-label="Menú de la empresa"
+      >
+        <button
+          className="icon-button sidebar-close"
+          aria-label="Cerrar menú"
+          onClick={() => setMobile(false)}
+        >
+          <X size={20} />
+        </button>
+        <Link className="wordmark" to="/home" search={(previous) => previous}>
           <span className="wordmark-icon">
             <Radio size={23} />
           </span>
@@ -421,44 +473,61 @@ export default function App() {
         >
           <Plus size={13} /> Crear otra marca
         </button>
-        <nav>
-          {views.map((item, index) => (
-            <div key={item.id}>
-              {index === 0 || views[index - 1].group !== item.group ? (
-                <p className="nav-group">{item.group}</p>
-              ) : null}
-              <button
-                className={`nav-item ${view === item.id ? "active" : ""}`}
-                onClick={() => navigate(item.id)}
-              >
-                <item.icon size={18} />
-                <span>{item.label}</span>
-                {item.id === "inbox" &&
-                state?.references.filter((r) => r.status === "new").length ? (
-                  <span className="nav-count">
-                    {state.references.filter((r) => r.status === "new").length}
-                  </span>
-                ) : null}
-              </button>
-            </div>
-          ))}
+        <nav aria-label="Navegación principal">
+          {views
+            .filter((item) => item.group !== "Herramientas")
+            .map((item) => (
+              <div key={item.id}>
+                <button
+                  className={`nav-item ${view === item.id ? "active" : ""}`}
+                  aria-current={view === item.id ? "page" : undefined}
+                  onClick={() => navigate(item.id)}
+                >
+                  <item.icon size={18} />
+                  <span>{item.label}</span>
+                  {item.id === "inbox" &&
+                  state?.references.filter((r) => r.status === "new").length ? (
+                    <span className="nav-count">
+                      {
+                        state.references.filter((r) => r.status === "new")
+                          .length
+                      }
+                    </span>
+                  ) : null}
+                </button>
+              </div>
+            ))}
+          <details
+            className="extra-navigation"
+            open={views.some(
+              (item) => item.id === view && item.group === "Herramientas",
+            )}
+          >
+            <summary>
+              Más herramientas <ChevronDown size={14} />
+            </summary>
+            {views
+              .filter((item) => item.group === "Herramientas")
+              .map((item) => (
+                <button
+                  key={item.id}
+                  className={`nav-item ${view === item.id ? "active" : ""}`}
+                  aria-current={view === item.id ? "page" : undefined}
+                  onClick={() => navigate(item.id)}
+                >
+                  <item.icon size={18} />
+                  <span>{item.label}</span>
+                </button>
+              ))}
+          </details>
         </nav>
         <div className="sidebar-bottom">
-          <div className="signal-note">
-            <span className="signal-dot" />
-            <div>
-              Menos ruido.
-              <br />
-              <strong>Más ideas que importan.</strong>
-            </div>
-            <Compass size={24} />
-          </div>
           <button
             className={`nav-item ${view === "settings" ? "active" : ""}`}
             onClick={() => navigate("settings")}
           >
             <Settings size={18} />
-            Configuración
+            Fuentes y equipo
           </button>
           <div className="user-profile">
             <span className="user-avatar">{session.user.name.slice(0, 1)}</span>
@@ -487,26 +556,50 @@ export default function App() {
         <header className="topbar">
           <button
             className="icon-button mobile-menu"
+            ref={menuTrigger}
             aria-label="Abrir menú"
+            aria-expanded={mobile}
+            aria-controls="workspace-navigation"
             onClick={() => setMobile(true)}
           >
             <Menu size={21} />
           </button>
           <div className="breadcrumb">
-            <span>Workspace</span>
-            <span>/</span>
-            <strong>{current?.label || "Configuración"}</strong>
+            <span>{state?.brand.name || "Mi empresa"}</span>
+            <span aria-hidden="true">/</span>
+            <strong>{current?.label || "Fuentes y equipo"}</strong>
           </div>
-          <label className="global-search">
-            <Search size={16} />
-            <input
-              aria-label="Buscar en esta sección"
-              placeholder="Busca una idea, un tema…"
-              value={search}
-              onChange={(e) => setSearch(e.target.value)}
-            />
-            <kbd>⌕</kbd>
-          </label>
+          {["radar", "inbox", "studio", "assets"].includes(view) && (
+            <label className="global-search">
+              <Search size={16} />
+              <input
+                ref={searchInput}
+                aria-label="Buscar en esta sección"
+                placeholder="Busca una idea, un tema…"
+                value={search}
+                onChange={(e) => setSearch(e.target.value)}
+                onKeyDown={(event) => {
+                  if (event.key === "Escape" && search) {
+                    setSearch("");
+                    event.preventDefault();
+                  }
+                }}
+              />
+              {search && (
+                <button
+                  type="button"
+                  className="icon-button"
+                  aria-label="Borrar búsqueda"
+                  onClick={() => {
+                    setSearch("");
+                    searchInput.current?.focus();
+                  }}
+                >
+                  <X size={16} />
+                </button>
+              )}
+            </label>
+          )}
           <Button
             aria-label="Agregar referencia"
             variant="primary"
@@ -517,7 +610,7 @@ export default function App() {
             <span>Agregar referencia</span>
           </Button>
         </header>
-        <main className="main-content">
+        <main className="main-content" id="workspace-main" tabIndex={-1}>
           {error ? (
             <div className="error-panel">
               <AlertCircle />
@@ -532,8 +625,11 @@ export default function App() {
               </Button>
             </div>
           ) : !state ? (
-            <div className="page-loading">
-              <span className="loading-dot" /> Preparando tu radar…
+            <div className="workspace-skeleton" role="status">
+              <span className="sr-only">Preparando tu espacio…</span>
+              <div />
+              <div />
+              <div />
             </div>
           ) : (
             content
@@ -546,10 +642,11 @@ export default function App() {
       </div>
       {newBrand && (
         <Modal
-          title="Un nuevo espacio, una nueva perspectiva"
+          title="Añadir una empresa"
+          wide
           onClose={() => setNewBrand(false)}
         >
-          <NewBrandForm onCreated={brandCreated} />
+          <CompanySetup onCreated={brandCreated} />
         </Modal>
       )}
       {toast && (
@@ -611,20 +708,16 @@ function Auth({ onSuccess }: { onSuccess: (value: Session) => void }) {
           30X <span>RADAR</span>
         </div>
         <div className="auth-intro">
-          <p className="eyebrow">
-            <span className="signal-dot" /> LA INSPIRACIÓN TAMBIÉN TIENE UN
-            SISTEMA
-          </p>
           <h1>
-            Encuentra la señal.
+            Tu audiencia cambia.
             <br />
-            Crea el próximo
+            Tu contenido
             <br />
-            <em>gran contenido.</em>
+            <em>también puede.</em>
           </h1>
           <p>
-            Descubre lo que está creciendo en otros mercados y conviértelo en
-            ideas que conectan con tu audiencia.
+            Conecta el contexto de tu empresa con señales públicas, crea
+            contenido con criterio y aprende de cada publicación.
           </p>
           <div className="auth-radar">
             <div className="auth-orbit o1" />
@@ -650,17 +743,14 @@ function Auth({ onSuccess }: { onSuccess: (value: Session) => void }) {
       </div>
       <div className="auth-form-wrap">
         <div className="auth-form">
-          <div className="auth-tag">
-            <Radio size={16} /> TU NUEVO PUNTO DE PARTIDA
-          </div>
           <h2>
             {signup
-              ? "Las buenas ideas empiezan aquí."
+              ? "Dale contexto a tu contenido."
               : "Qué bueno tenerte de vuelta."}
           </h2>
           <p className="muted">
             {signup
-              ? "Crea tu cuenta y configura el radar para tu marca."
+              ? "Crea tu cuenta. Después, empieza por tu web o una publicación."
               : "Tu próxima oportunidad de contenido te espera."}
           </p>
           <form onSubmit={submit}>

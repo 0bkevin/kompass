@@ -15,10 +15,14 @@ import { Route as WorkspaceAssetsRouteImport } from './routes/_workspace/assets'
 import { Route as WorkspaceAudienceRouteImport } from './routes/_workspace/audience'
 import { Route as WorkspaceBrandRouteImport } from './routes/_workspace/brand'
 import { Route as WorkspaceCalendarRouteImport } from './routes/_workspace/calendar'
+import { Route as WorkspaceHomeRouteImport } from './routes/_workspace/home'
 import { Route as WorkspaceInboxRouteImport } from './routes/_workspace/inbox'
+import { Route as WorkspaceOpportunitiesRouteImport } from './routes/_workspace/opportunities'
 import { Route as WorkspaceRadarRouteImport } from './routes/_workspace/radar'
+import { Route as WorkspaceResultsRouteImport } from './routes/_workspace/results'
 import { Route as WorkspaceSettingsRouteImport } from './routes/_workspace/settings'
 import { Route as WorkspaceStudioRouteImport } from './routes/_workspace/studio'
+import { Route as CommunityTokenRouteImport } from './routes/community.$token'
 import { Route as WorkspaceStudioPieceIdRouteImport } from './routes/_workspace/studio/$pieceId'
 
 const WorkspaceRoute = WorkspaceRouteImport.update({
@@ -50,14 +54,29 @@ const WorkspaceCalendarRoute = WorkspaceCalendarRouteImport.update({
   path: '/calendar',
   getParentRoute: () => WorkspaceRoute,
 } as any)
+const WorkspaceHomeRoute = WorkspaceHomeRouteImport.update({
+  id: '/home',
+  path: '/home',
+  getParentRoute: () => WorkspaceRoute,
+} as any)
 const WorkspaceInboxRoute = WorkspaceInboxRouteImport.update({
   id: '/inbox',
   path: '/inbox',
   getParentRoute: () => WorkspaceRoute,
 } as any)
+const WorkspaceOpportunitiesRoute = WorkspaceOpportunitiesRouteImport.update({
+  id: '/opportunities',
+  path: '/opportunities',
+  getParentRoute: () => WorkspaceRoute,
+} as any)
 const WorkspaceRadarRoute = WorkspaceRadarRouteImport.update({
   id: '/radar',
   path: '/radar',
+  getParentRoute: () => WorkspaceRoute,
+} as any)
+const WorkspaceResultsRoute = WorkspaceResultsRouteImport.update({
+  id: '/results',
+  path: '/results',
   getParentRoute: () => WorkspaceRoute,
 } as any)
 const WorkspaceSettingsRoute = WorkspaceSettingsRouteImport.update({
@@ -69,6 +88,11 @@ const WorkspaceStudioRoute = WorkspaceStudioRouteImport.update({
   id: '/studio',
   path: '/studio',
   getParentRoute: () => WorkspaceRoute,
+} as any)
+const CommunityTokenRoute = CommunityTokenRouteImport.update({
+  id: '/community/$token',
+  path: '/community/$token',
+  getParentRoute: () => rootRouteImport,
 } as any)
 const WorkspaceStudioPieceIdRoute = WorkspaceStudioPieceIdRouteImport.update({
   id: '/$pieceId',
@@ -82,10 +106,14 @@ export interface FileRoutesByFullPath {
   '/audience': typeof WorkspaceAudienceRoute
   '/brand': typeof WorkspaceBrandRoute
   '/calendar': typeof WorkspaceCalendarRoute
+  '/home': typeof WorkspaceHomeRoute
   '/inbox': typeof WorkspaceInboxRoute
+  '/opportunities': typeof WorkspaceOpportunitiesRoute
   '/radar': typeof WorkspaceRadarRoute
+  '/results': typeof WorkspaceResultsRoute
   '/settings': typeof WorkspaceSettingsRoute
   '/studio': typeof WorkspaceStudioRouteWithChildren
+  '/community/$token': typeof CommunityTokenRoute
   '/studio/$pieceId': typeof WorkspaceStudioPieceIdRoute
 }
 export interface FileRoutesByTo {
@@ -93,10 +121,14 @@ export interface FileRoutesByTo {
   '/audience': typeof WorkspaceAudienceRoute
   '/brand': typeof WorkspaceBrandRoute
   '/calendar': typeof WorkspaceCalendarRoute
+  '/home': typeof WorkspaceHomeRoute
   '/inbox': typeof WorkspaceInboxRoute
+  '/opportunities': typeof WorkspaceOpportunitiesRoute
   '/radar': typeof WorkspaceRadarRoute
+  '/results': typeof WorkspaceResultsRoute
   '/settings': typeof WorkspaceSettingsRoute
   '/studio': typeof WorkspaceStudioRouteWithChildren
+  '/community/$token': typeof CommunityTokenRoute
   '/': typeof WorkspaceIndexRoute
   '/studio/$pieceId': typeof WorkspaceStudioPieceIdRoute
 }
@@ -107,10 +139,14 @@ export interface FileRoutesById {
   '/_workspace/audience': typeof WorkspaceAudienceRoute
   '/_workspace/brand': typeof WorkspaceBrandRoute
   '/_workspace/calendar': typeof WorkspaceCalendarRoute
+  '/_workspace/home': typeof WorkspaceHomeRoute
   '/_workspace/inbox': typeof WorkspaceInboxRoute
+  '/_workspace/opportunities': typeof WorkspaceOpportunitiesRoute
   '/_workspace/radar': typeof WorkspaceRadarRoute
+  '/_workspace/results': typeof WorkspaceResultsRoute
   '/_workspace/settings': typeof WorkspaceSettingsRoute
   '/_workspace/studio': typeof WorkspaceStudioRouteWithChildren
+  '/community/$token': typeof CommunityTokenRoute
   '/_workspace/': typeof WorkspaceIndexRoute
   '/_workspace/studio/$pieceId': typeof WorkspaceStudioPieceIdRoute
 }
@@ -122,10 +158,14 @@ export interface FileRouteTypes {
     | '/audience'
     | '/brand'
     | '/calendar'
+    | '/home'
     | '/inbox'
+    | '/opportunities'
     | '/radar'
+    | '/results'
     | '/settings'
     | '/studio'
+    | '/community/$token'
     | '/studio/$pieceId'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -133,10 +173,14 @@ export interface FileRouteTypes {
     | '/audience'
     | '/brand'
     | '/calendar'
+    | '/home'
     | '/inbox'
+    | '/opportunities'
     | '/radar'
+    | '/results'
     | '/settings'
     | '/studio'
+    | '/community/$token'
     | '/'
     | '/studio/$pieceId'
   id:
@@ -146,16 +190,21 @@ export interface FileRouteTypes {
     | '/_workspace/audience'
     | '/_workspace/brand'
     | '/_workspace/calendar'
+    | '/_workspace/home'
     | '/_workspace/inbox'
+    | '/_workspace/opportunities'
     | '/_workspace/radar'
+    | '/_workspace/results'
     | '/_workspace/settings'
     | '/_workspace/studio'
+    | '/community/$token'
     | '/_workspace/'
     | '/_workspace/studio/$pieceId'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   WorkspaceRoute: typeof WorkspaceRouteWithChildren
+  CommunityTokenRoute: typeof CommunityTokenRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -202,6 +251,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof WorkspaceCalendarRouteImport
       parentRoute: typeof WorkspaceRoute
     }
+    '/_workspace/home': {
+      id: '/_workspace/home'
+      path: '/home'
+      fullPath: '/home'
+      preLoaderRoute: typeof WorkspaceHomeRouteImport
+      parentRoute: typeof WorkspaceRoute
+    }
     '/_workspace/inbox': {
       id: '/_workspace/inbox'
       path: '/inbox'
@@ -209,11 +265,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof WorkspaceInboxRouteImport
       parentRoute: typeof WorkspaceRoute
     }
+    '/_workspace/opportunities': {
+      id: '/_workspace/opportunities'
+      path: '/opportunities'
+      fullPath: '/opportunities'
+      preLoaderRoute: typeof WorkspaceOpportunitiesRouteImport
+      parentRoute: typeof WorkspaceRoute
+    }
     '/_workspace/radar': {
       id: '/_workspace/radar'
       path: '/radar'
       fullPath: '/radar'
       preLoaderRoute: typeof WorkspaceRadarRouteImport
+      parentRoute: typeof WorkspaceRoute
+    }
+    '/_workspace/results': {
+      id: '/_workspace/results'
+      path: '/results'
+      fullPath: '/results'
+      preLoaderRoute: typeof WorkspaceResultsRouteImport
       parentRoute: typeof WorkspaceRoute
     }
     '/_workspace/settings': {
@@ -229,6 +299,13 @@ declare module '@tanstack/react-router' {
       fullPath: '/studio'
       preLoaderRoute: typeof WorkspaceStudioRouteImport
       parentRoute: typeof WorkspaceRoute
+    }
+    '/community/$token': {
+      id: '/community/$token'
+      path: '/community/$token'
+      fullPath: '/community/$token'
+      preLoaderRoute: typeof CommunityTokenRouteImport
+      parentRoute: typeof rootRouteImport
     }
     '/_workspace/studio/$pieceId': {
       id: '/_workspace/studio/$pieceId'
@@ -257,8 +334,11 @@ interface WorkspaceRouteChildren {
   WorkspaceAudienceRoute: typeof WorkspaceAudienceRoute
   WorkspaceBrandRoute: typeof WorkspaceBrandRoute
   WorkspaceCalendarRoute: typeof WorkspaceCalendarRoute
+  WorkspaceHomeRoute: typeof WorkspaceHomeRoute
   WorkspaceInboxRoute: typeof WorkspaceInboxRoute
+  WorkspaceOpportunitiesRoute: typeof WorkspaceOpportunitiesRoute
   WorkspaceRadarRoute: typeof WorkspaceRadarRoute
+  WorkspaceResultsRoute: typeof WorkspaceResultsRoute
   WorkspaceSettingsRoute: typeof WorkspaceSettingsRoute
   WorkspaceStudioRoute: typeof WorkspaceStudioRouteWithChildren
   WorkspaceIndexRoute: typeof WorkspaceIndexRoute
@@ -269,8 +349,11 @@ const WorkspaceRouteChildren: WorkspaceRouteChildren = {
   WorkspaceAudienceRoute: WorkspaceAudienceRoute,
   WorkspaceBrandRoute: WorkspaceBrandRoute,
   WorkspaceCalendarRoute: WorkspaceCalendarRoute,
+  WorkspaceHomeRoute: WorkspaceHomeRoute,
   WorkspaceInboxRoute: WorkspaceInboxRoute,
+  WorkspaceOpportunitiesRoute: WorkspaceOpportunitiesRoute,
   WorkspaceRadarRoute: WorkspaceRadarRoute,
+  WorkspaceResultsRoute: WorkspaceResultsRoute,
   WorkspaceSettingsRoute: WorkspaceSettingsRoute,
   WorkspaceStudioRoute: WorkspaceStudioRouteWithChildren,
   WorkspaceIndexRoute: WorkspaceIndexRoute,
@@ -282,6 +365,7 @@ const WorkspaceRouteWithChildren = WorkspaceRoute._addFileChildren(
 
 const rootRouteChildren: RootRouteChildren = {
   WorkspaceRoute: WorkspaceRouteWithChildren,
+  CommunityTokenRoute: CommunityTokenRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

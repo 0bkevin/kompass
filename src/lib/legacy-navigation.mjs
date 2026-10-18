@@ -1,4 +1,7 @@
 const legacyViewPaths = Object.freeze({
+  home: "/home",
+  opportunities: "/opportunities",
+  results: "/results",
   radar: "/radar",
   inbox: "/inbox",
   studio: "/studio",

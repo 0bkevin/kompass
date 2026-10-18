@@ -6,6 +6,7 @@ import {
   Scripts,
 } from "@tanstack/react-router";
 import "../styles.css";
+import "../workspace.css";
 
 export const Route = createRootRoute({
   validateSearch: (
@@ -52,7 +53,6 @@ function RootDocument() {
 function NotFoundPage() {
   return (
     <main className="not-found-page">
-      <p className="eyebrow">SEÑAL FUERA DEL RADAR</p>
       <h1>No encontramos esta página.</h1>
       <p className="muted">
         Revisa la dirección o vuelve a una sección de 30X Radar.

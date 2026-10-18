@@ -1,4 +1,7 @@
 export type View =
+  | "home"
+  | "opportunities"
+  | "results"
   | "radar"
   | "inbox"
   | "studio"
