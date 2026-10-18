@@ -15,6 +15,12 @@ import { createAudienceInsightsRouter } from "./audience-insights.mjs";
 import { createCommunityRouter } from "./community.mjs";
 import { createOpportunityAnalysisRouter } from "./opportunity-analysis.mjs";
 import { createGoogleAuthRouter } from "./google-auth.mjs";
+import { createMediaRouter } from "./media-router.mjs";
+import { recoverMediaJobs, stopMediaJobs } from "./media-generation.mjs";
+import {
+  createSocialSyncRouter,
+  startSocialSyncScheduler,
+} from "./social-sync.mjs";
 
 const projectRoot = path.resolve(
   path.dirname(fileURLToPath(import.meta.url)),
@@ -25,6 +31,7 @@ export function createApp({
   staticDirectory,
   apiOnly = process.env.RADAR_API_ONLY === "1",
   googleAuth,
+  mediaGeneration,
 } = {}) {
   const app = express();
   app.disable("x-powered-by");
@@ -43,6 +50,8 @@ export function createApp({
     next();
   });
   app.use("/api", createGoogleAuthRouter(googleAuth));
+  app.use("/api", createMediaRouter(mediaGeneration));
+  app.use("/api", createSocialSyncRouter());
   app.use("/api", createCoreRouter());
   app.use("/api", createIntelligenceRouter());
   app.use("/api", createSocialRouter());
@@ -128,11 +137,18 @@ if (
   const port = Number(process.env.PORT || 3001);
   const server = createApp().listen(port, process.env.HOST || "0.0.0.0");
   const discovery = startDiscoveryScheduler();
+  const socialSync = startSocialSyncScheduler();
+  void Promise.resolve()
+    .then(() => recoverMediaJobs())
+    .catch(() => {
+      console.error("No se pudo recuperar la cola de creación multimedia.");
+    });
   server.once("listening", () =>
     console.log(`30X Radar API escuchando en http://localhost:${port}`),
   );
   server.once("error", (error) => {
     discovery.stop();
+    socialSync.stop();
     console.error(
       `No se pudo abrir el puerto ${port} (${error.code || "error"}). Configura PORT y RADAR_API_PORT con un puerto disponible.`,
     );
@@ -141,6 +157,9 @@ if (
   for (const signal of ["SIGINT", "SIGTERM"])
     process.on(signal, () => {
       discovery.stop();
-      server.close(() => process.exit(0));
+      socialSync.stop();
+      void stopMediaJobs().finally(() => {
+        server.close(() => process.exit(0));
+      });
     });
 }

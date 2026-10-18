@@ -47,6 +47,7 @@ import { ProviderCredits } from "../components/ProviderCredits";
 import { AudiencePage, BrandPage } from "./Brand";
 import "./journey.css";
 import { WorkspacePreparation } from "./WorkspacePreparation";
+import { AutomaticMetrics } from "./SocialConnections";
 
 const channelNames: Record<string, string> = {
   linkedin: "LinkedIn",
@@ -2271,11 +2272,12 @@ export function Results() {
         Compara lo que ocurrió con cada grupo de audiencia y usa esa evidencia
         en tu próxima decisión.
       </JourneyHeader>
+      <AutomaticMetrics />
       <Notice>
-        Las métricas se registran manualmente. Programar en el calendario no
-        publica en redes. Si usaste un webhook, comprueba la publicación final
-        en tu servicio. Guarda aquí el enlace y los datos después de confirmar
-        la publicación.
+        Las cifras automáticas de YouTube se muestran arriba con su fuente y
+        fecha de consulta. Abajo puedes registrar resultados manuales de otros
+        canales. Programar en el calendario no publica en redes: confirma la
+        publicación y guarda su enlace para consultar sus cifras.
       </Notice>
       {state.brand.role === "reviewer" ? (
         <ReviewerNotice />

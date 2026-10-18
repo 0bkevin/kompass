@@ -5,6 +5,8 @@ import { fileURLToPath, pathToFileURL } from "node:url";
 import { createApp } from "./index.mjs";
 import { startDiscoveryScheduler } from "./intelligence.mjs";
 import { createStartMiddleware } from "./start-adapter.mjs";
+import { recoverMediaJobs, stopMediaJobs } from "./media-generation.mjs";
+import { startSocialSyncScheduler } from "./social-sync.mjs";
 
 const projectRoot = path.resolve(
   path.dirname(fileURLToPath(import.meta.url)),
@@ -66,6 +68,12 @@ export async function startProductionServer({
     server.listen(port, host, resolve);
   });
   const discovery = startDiscoveryScheduler();
+  const socialSync = startSocialSyncScheduler();
+  void Promise.resolve()
+    .then(() => recoverMediaJobs())
+    .catch(() => {
+      console.error("No se pudo recuperar la cola de creación multimedia.");
+    });
   console.log(`30X Radar escuchando en http://localhost:${port}`);
 
   let shuttingDown = false;
@@ -74,11 +82,14 @@ export async function startProductionServer({
       if (shuttingDown) return;
       shuttingDown = true;
       discovery.stop();
-      server.close(() => process.exit(0));
+      socialSync.stop();
+      void stopMediaJobs().finally(() => {
+        server.close(() => process.exit(0));
+      });
     });
   }
 
-  return { server, discovery };
+  return { server, discovery, socialSync };
 }
 
 if (

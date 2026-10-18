@@ -30,6 +30,7 @@ const kinds = new Set([
   "topicSnapshots",
   "communityPolls",
   "opportunityAnalyses",
+  "mediaJobs",
 ]);
 export function initDb() {
   db.exec(`PRAGMA foreign_keys=ON; PRAGMA journal_mode=WAL; PRAGMA busy_timeout=5000;

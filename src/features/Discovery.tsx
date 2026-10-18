@@ -27,6 +27,7 @@ import {
 } from "lucide-react";
 import { useWorkspace } from "../lib/workspace";
 import { ProviderCredits } from "../components/ProviderCredits";
+import { SocialDiscovery } from "./SocialConnections";
 import { api, json, uploadAsset } from "../lib/api";
 import { getOrUploadCaptureAsset } from "../lib/capture-retry.mjs";
 import { createThenRefresh } from "../lib/workflow-recovery.mjs";
@@ -378,6 +379,7 @@ export default function Radar() {
           <Badge tone="amber">DEMO</Badge>
         </div>
       )}
+      <SocialDiscovery />
       <div className="stats-grid">
         <Metric
           icon={<Radio />}
