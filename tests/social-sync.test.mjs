@@ -574,7 +574,7 @@ test("OAuth rejects cancelled consent, missing scope and accounts without channe
         `; ${started.transactionCookie}`,
       )
     ).headers.get("location"),
-    /connection_failed/,
+    /missing_scope/,
   );
   assert.equal(storage.getSecret(f.brand.id, "official:youtube"), null);
   started = await oauthStart(f);
@@ -597,8 +597,56 @@ test("OAuth rejects cancelled consent, missing scope and accounts without channe
         `; ${started.transactionCookie}`,
       )
     ).headers.get("location"),
-    /connection_failed/,
+    /no_channel/,
   );
+  assert.equal(storage.getSecret(f.brand.id, "official:youtube"), null);
+  assert.equal(
+    social.socialConnections(f.brand.id, { env }).providers[0].ready,
+    true,
+    "a missing channel must not disable the working public API connector",
+  );
+});
+
+test("channel OAuth safely diagnoses an explicit zero-result response and keeps malformed responses generic", async () => {
+  const f = fixture();
+  for (const [channelResponse, expected] of [
+    [{ pageInfo: { totalResults: 0 } }, "no_channel"],
+    [{}, "connection_failed"],
+    [{ items: {} }, "connection_failed"],
+    [{ items: [{ id: "malformed-channel" }] }, "connection_failed"],
+  ]) {
+    const started = await oauthStart(f);
+    const callback = `/social/youtube/callback?state=${started.redirect.searchParams.get("state")}&code=private-synthetic-authorization-code`;
+    handler = (url) =>
+      url.href === "https://oauth2.googleapis.com/token"
+        ? json({
+            access_token: "private-synthetic-access-token",
+            refresh_token: "private-synthetic-refresh-token",
+            expires_in: 3600,
+            scope: "https://www.googleapis.com/auth/youtube.readonly",
+          })
+        : json(channelResponse);
+    const response = await request(
+      f,
+      callback,
+      "GET",
+      undefined,
+      `; ${started.transactionCookie}`,
+    );
+    assert.equal(
+      response.headers.get("location"),
+      `/settings?socialError=${expected}`,
+    );
+    assert.doesNotMatch(
+      response.headers.get("location"),
+      /private-synthetic|malformed-channel/,
+    );
+    assert.equal(storage.getSecret(f.brand.id, "official:youtube"), null);
+    assert.equal(
+      social.socialConnections(f.brand.id, { env }).providers[0].connection,
+      undefined,
+    );
+  }
 });
 
 test("network failures and quota limits do not leak credentials or fabricate empty live results", async () => {

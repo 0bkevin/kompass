@@ -988,18 +988,36 @@ export function createSocialSyncRouter({
       if (
         typeof token.access_token !== "string" ||
         !Number.isFinite(token.expires_in) ||
-        token.expires_in <= 0 ||
+        token.expires_in <= 0
+      )
+        fail(400, "Google no autorizó la lectura de YouTube.");
+      if (
         !String(token.scope || "")
           .split(/\s+/)
           .includes(SCOPE)
       )
-        fail(400, "Google no autorizó la lectura de YouTube.");
+        throw Object.assign(new Error("YouTube read permission missing"), {
+          socialError: "missing_scope",
+        });
       const channels = await api(
         transaction.brand_id,
         "channels",
-        { part: "snippet", mine: true, fields: "items(id,snippet/title)" },
+        {
+          part: "snippet",
+          mine: true,
+          fields: "items(id,snippet/title),pageInfo/totalResults",
+        },
         { env, fetchImpl, now: clock(), token: token.access_token },
       );
+      if (
+        (Array.isArray(channels.items) && channels.items.length === 0) ||
+        (channels.items === undefined && channels.pageInfo?.totalResults === 0)
+      )
+        throw Object.assign(new Error("No authorized YouTube channel"), {
+          socialError: "no_channel",
+        });
+      if (!Array.isArray(channels.items))
+        fail(502, "YouTube no devolvió una lista de canales válida.");
       const channel = channels.items?.[0];
       if (!channel || !/^UC[\w-]{22}$/.test(channel.id))
         fail(
@@ -1038,8 +1056,13 @@ export function createSocialSyncRouter({
         scope: SCOPE,
       });
       return res.redirect(303, "/settings?socialConnected=youtube");
-    } catch {
-      return res.redirect(303, "/settings?socialError=connection_failed");
+    } catch (error) {
+      // Only these locally assigned enums reach the browser. Never serialize
+      // provider diagnostics, authorization codes, tokens or account details.
+      const code = ["no_channel", "missing_scope"].includes(error.socialError)
+        ? error.socialError
+        : "connection_failed";
+      return res.redirect(303, `/settings?socialError=${code}`);
     }
   });
   router.use("/brands/:brandId/social", requireAuth, requireBrand);
