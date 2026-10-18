@@ -18,6 +18,8 @@ let origin;
 let db;
 let saveRecord;
 let getRecord;
+let setSecret;
+let getSecret;
 let owner;
 let editor;
 let brand;
@@ -74,7 +76,7 @@ async function createBrand(cookie) {
 
 before(async () => {
   const dbModule = await import("../server/db.mjs");
-  ({ db, saveRecord, getRecord } = dbModule);
+  ({ db, saveRecord, getRecord, setSecret, getSecret } = dbModule);
   const { createApp } = await import("../server/index.mjs");
   server = createApp().listen(0, "127.0.0.1");
   await new Promise((resolve) => server.once("listening", resolve));
@@ -95,11 +97,16 @@ after(async () => {
   fs.rmSync(dataDir, { recursive: true, force: true });
 });
 
-test("social settings reveal credential presence and model, never secret values", async () => {
+test("social settings disclose restrictions and legacy credential presence without allowing activation", async () => {
   const route = `/brands/${brand.id}/social/settings`;
   const initial = await request(route, { cookie: owner.cookie });
   assert.equal(initial.status, 200, JSON.stringify(initial.data));
-  assert.deepEqual(initial.data, {
+  const { policies, ...initialSettings } = initial.data;
+  for (const key of ["youtube", "apify", "gemini"]) {
+    assert.equal(policies[key].allowed, false);
+    assert.ok(policies[key].reason);
+  }
+  assert.deepEqual(initialSettings, {
     youtube: { configured: false },
     apify: { configured: false },
     gemini: { configured: false },
@@ -117,12 +124,25 @@ test("social settings reveal credential presence and model, never secret values"
       },
     },
   });
-  assert.equal(saved.status, 200, JSON.stringify(saved.data));
+  assert.equal(saved.status, 403, JSON.stringify(saved.data));
+  assert.equal(getSecret(brand.id, "youtube"), null);
+  assert.equal(getSecret(brand.id, "apify"), null);
+  assert.equal(getSecret(brand.id, "gemini"), null);
+  // Simulate pre-policy records: their presence is visible, never approval.
+  setSecret(brand.id, "youtube", { apiKey: "youtube-secret-test" });
+  setSecret(brand.id, "apify", { apiToken: "apify-secret-test" });
+  setSecret(brand.id, "gemini", {
+    apiKey: "gemini-secret-test",
+    model: "gemini-test-model",
+  });
   assert.equal(JSON.stringify(saved.data).includes("secret-test"), false);
 
   const configured = await request(route, { cookie: owner.cookie });
   assert.equal(configured.status, 200);
-  assert.deepEqual(configured.data, {
+  const { policies: configuredPolicies, ...configuredSettings } =
+    configured.data;
+  assert.equal(configuredPolicies.youtube.allowed, false);
+  assert.deepEqual(configuredSettings, {
     youtube: { configured: true },
     apify: { configured: true },
     gemini: { configured: true, model: "gemini-test-model" },
@@ -147,7 +167,19 @@ test("only the owner can update brand social credentials", async () => {
   );
 });
 
-test("disconnect overrides an environment key and saving a new key reconnects", async () => {
+test("a mixed disconnect and forbidden activation does not partially change credentials", async () => {
+  const before = getSecret(brand.id, "apify");
+  const result = await request(`/brands/${brand.id}/social/settings`, {
+    method: "PUT",
+    cookie: owner.cookie,
+    body: { apify: null, youtube: { apiKey: "cannot-reactivate" } },
+  });
+  assert.equal(result.status, 403);
+  assert.deepEqual(getSecret(brand.id, "apify"), before);
+  assert.equal(getSecret(brand.id, "youtube").apiKey, "youtube-secret-test");
+});
+
+test("disconnect overrides an environment key and blocked providers cannot reconnect", async () => {
   const previous = process.env.YOUTUBE_API_KEY;
   const route = `/brands/${brand.id}/social/settings`;
   try {
@@ -171,10 +203,11 @@ test("disconnect overrides an environment key and saving a new key reconnects", 
       cookie: owner.cookie,
       body: { youtube: { apiKey: "youtube-reconnected-secret" } },
     });
-    assert.equal(reconnected.status, 200, JSON.stringify(reconnected.data));
+    assert.equal(reconnected.status, 403, JSON.stringify(reconnected.data));
+    assert.deepEqual(getSecret(brand.id, "youtube"), { disabled: true });
     const configured = await request(route, { cookie: owner.cookie });
     assert.equal(configured.status, 200);
-    assert.equal(configured.data.youtube.configured, true);
+    assert.equal(configured.data.youtube.configured, false);
     assert.equal(
       JSON.stringify(configured.data).includes("youtube-reconnected-secret"),
       false,
@@ -221,11 +254,11 @@ test("social sources start paused and Apify rejects platforms without an adapter
       name: "Feed convertido a YouTube",
       type: "rss",
       url: "https://example.test/feed.xml",
-      enabled: true,
+      enabled: false,
     },
   });
   assert.equal(rss.status, 201, JSON.stringify(rss.data));
-  assert.equal(rss.data.enabled, true);
+  assert.equal(rss.data.enabled, false);
   const converted = await request(`${route}/${rss.data.id}`, {
     method: "PATCH",
     cookie: owner.cookie,
@@ -252,6 +285,44 @@ test("social sources start paused and Apify rejects platforms without an adapter
       },
     });
     assert.equal(unsupported.status, 400, JSON.stringify(unsupported.data));
+  }
+});
+
+test("blocked social sources reject explicit activation and legacy enabled sources read back paused", async () => {
+  for (const [type, platform] of [
+    ["youtube", "youtube"],
+    ["apify", "instagram"],
+    ["apify", "tiktok"],
+  ]) {
+    const body = {
+      name: "Must remain unavailable",
+      type,
+      platform,
+      query: "public company",
+      enabled: true,
+    };
+    const denied = await request(`/brands/${brand.id}/sources`, {
+      method: "POST",
+      cookie: owner.cookie,
+      body,
+    });
+    assert.equal(denied.status, 403, JSON.stringify(denied.data));
+    const legacy = saveRecord(brand.id, "sources", body);
+    const enable = await request(`/brands/${brand.id}/sources/${legacy.id}`, {
+      method: "PATCH",
+      cookie: owner.cookie,
+      body: { enabled: true },
+    });
+    assert.equal(enable.status, 403);
+    const state = await request(`/brands/${brand.id}/state`, {
+      cookie: owner.cookie,
+    });
+    assert.equal(state.status, 200, JSON.stringify(state.data));
+    const displayed = state.data.sources.find(
+      (source) => source.id === legacy.id,
+    );
+    assert.equal(displayed.enabled, false);
+    assert.equal(displayed.accessPolicy.allowed, false);
   }
 });
 

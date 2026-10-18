@@ -224,8 +224,8 @@ test("SQLite reservations stay atomic across simultaneous worker connections", a
   );
 });
 
-test("Apify reserves before every POST even with a fake transport and shares limits between companies", async () => {
-  const token = `integration-shared-${randomUUID()}`;
+test("blocked Apify collection makes no provider reservation or request even across companies", async () => {
+  const token = `integration-blocked-${randomUUID()}`;
   const brands = [
     storage.saveBrand({ name: "Empresa uno", pillars: ["education"] }),
     storage.saveBrand({ name: "Empresa dos", pillars: ["education"] }),
@@ -233,43 +233,38 @@ test("Apify reserves before every POST even with a fake transport and shares lim
   for (const brand of brands)
     storage.setSecret(brand.id, "apify", { apiToken: token });
   let calls = 0;
-  const source = {
-    id: "explicitly-enabled",
-    type: "apify",
-    platform: "tiktok",
-    query: "education",
-    limit: 1,
-    enabled: true,
-  };
-  const options = {
-    fetcher: async () => {
-      calls++;
-      assert.equal(
-        getApifyBudgetStatus(token).dailyReservedUsd,
-        calls,
-        "reservation exists before network begins",
+  const before = getApifyBudgetStatus(token);
+  for (const brand of brands) {
+    for (const enabled of [true, false]) {
+      await assert.rejects(
+        social.fetchSocialSource(
+          brand,
+          {
+            id: "blocked",
+            type: "apify",
+            platform: "tiktok",
+            query: "education",
+            limit: 1,
+            enabled,
+          },
+          {
+            fetcher: async () => {
+              calls++;
+              throw new Error("must not reach provider");
+            },
+          },
+        ),
+        (error) => error.status === 403,
       );
-      return new Response("[]", {
-        headers: { "content-type": "application/json" },
-      });
-    },
-  };
-  for (let index = 0; index < 3; index++)
-    await social.fetchSocialSource(brands[index % 2], source, options);
-  await assert.rejects(
-    social.fetchSocialSource(brands[1], source, options),
-    /presupuesto diario/,
-  );
-  assert.equal(calls, 3);
-  assert.equal(getApifyBudgetStatus(token).monthlyReservedUsd, 3);
-  await assert.rejects(
-    social.fetchSocialSource(brands[0], { ...source, enabled: false }, options),
-    /fuente Apify está pausada/,
-  );
-  assert.equal(calls, 3);
+    }
+  }
+  assert.equal(calls, 0);
+  const after = getApifyBudgetStatus(token);
+  assert.equal(after.dailyReservedUsd, before.dailyReservedUsd);
+  assert.equal(after.monthlyReservedUsd, before.monthlyReservedUsd);
 });
 
-test("budget pause propagates through discovery as a visible source error without any provider request", async () => {
+test("collection policy propagates through discovery as a visible source error before budget evaluation", async () => {
   const previous = process.env.APIFY_DAILY_BUDGET_USD;
   process.env.APIFY_DAILY_BUDGET_USD = "0";
   try {
@@ -295,10 +290,13 @@ test("budget pause propagates through discovery as a visible source error withou
     });
     assert.equal(requests, 0);
     assert.equal(result.errors.length, 1);
-    assert.match(result.errors[0], /presupuesto.*USD0/);
+    assert.match(
+      result.errors[0],
+      /YouTube|Apify|Instagram|TikTok|autoriz|términos|bloquead|revisión|política/i,
+    );
     assert.match(
       storage.getRecord(brand.id, "sources", source.id).lastError,
-      /presupuesto.*USD0/,
+      /YouTube|Apify|Instagram|TikTok|autoriz|términos|bloquead|revisión|política/i,
     );
   } finally {
     if (previous === undefined) delete process.env.APIFY_DAILY_BUDGET_USD;

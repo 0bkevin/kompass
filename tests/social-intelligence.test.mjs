@@ -3,6 +3,7 @@ import assert from "node:assert/strict";
 import fs from "node:fs";
 import os from "node:os";
 import path from "node:path";
+import { installPermissionFixture } from "./permission-fixture.mjs";
 
 const dataDir = fs.mkdtempSync(path.join(os.tmpdir(), "radar-social-intel-"));
 process.env.DATA_DIR = dataDir;
@@ -17,7 +18,6 @@ const {
   saveRecord,
   getRecord,
   listRecords,
-  deleteRecord,
   setSecret,
 } = await import("../server/db.mjs");
 const {
@@ -126,335 +126,199 @@ const validVideoAnalysis = (overrides = {}) => ({
   ...overrides,
 });
 
-test("fetchSource dispatches social providers and sync preserves provider provenance without filling absent metrics", async () => {
-  const brand = makeBrand();
-  const source = makeSource(brand);
-  let dispatched;
-  const fetched = await fetchSource(brand, source, {
-    now: Date.parse("2026-10-17T12:00:00.000Z"),
-    socialFetcher: async (...args) => {
-      dispatched = args;
-      return [
-        socialItem({
-          metrics: undefined,
-          mediaUrl: undefined,
-          mediaProvider: undefined,
-        }),
-      ];
-    },
-  });
-  assert.equal(dispatched[1].id, source.id);
-  assert.equal(dispatched[2].now, Date.parse("2026-10-17T12:00:00.000Z"));
-  assert.equal(fetched[0].platform, "tiktok");
-  const youtubeSource = makeSource(brand, {
-    type: "youtube",
-    platform: "youtube",
-  });
-  const youtube = await fetchSource(brand, youtubeSource, {
-    socialFetcher: async (_brand, receivedSource) => {
-      assert.equal(receivedSource.id, youtubeSource.id);
-      return [{ platform: "youtube", videoId: "yt-1" }];
-    },
-  });
-  assert.equal(youtube[0].platform, "youtube");
-  deleteRecord(brand.id, "sources", youtubeSource.id);
-
-  const result = await syncSources(brand, {
-    now: Date.parse("2026-10-17T12:00:00.000Z"),
-    socialFetcher: async () => [
-      socialItem({
-        metrics: undefined,
-        mediaUrl: undefined,
-        mediaProvider: undefined,
-      }),
-    ],
-  });
-  assert.equal(result.added, 1);
-  const [reference] = listRecords(brand.id, "references");
-  assert.equal(reference.sourceId, source.id);
-  assert.equal(reference.platform, "tiktok");
-  assert.equal(reference.videoId, "123456789");
-  assert.equal(reference.metrics, undefined);
-  assert.equal(reference.trend.metrics, undefined);
-  assert.ok(reference.trend.score >= 0 && reference.trend.score <= 35);
-  assert.equal(reference.trend.kind, "unclassified");
-});
-
-test("YouTube priority is query-local and history compares only the same video", () => {
-  const now = Date.parse("2026-10-17T12:00:00.000Z");
-  const item = {
-    platform: "youtube",
-    url: "https://www.youtube.com/watch?v=video-a",
-    videoId: "video-a",
-    externalId: "video-a",
-    title: "Video A",
-    metrics: { views: 900, likes: 30 },
-    metricsOrigin: "YouTube Data API",
-    officialRank: 2,
-    publishedAt: "2026-10-16T12:00:00.000Z",
-  };
-  const sample = [
-    item,
-    {
-      platform: "youtube",
-      videoId: "video-b",
-      metrics: { views: 1200 },
-    },
-    { platform: "tiktok", metrics: { views: 9000000 } },
-  ];
-  const first = computeTrend(item, null, sample, [], now).trend;
-  assert.equal(first.score, 0);
-  assert.equal(first.kind, "unclassified");
-  assert.deepEqual(first.priorityMetric, {
-    name: "views",
-    value: 900,
-    rank: 2,
-    origin: "YouTube Data API",
-  });
-  assert.equal(first.metrics.comments, undefined);
-  assert.equal(first.relatedSourceCount, 1);
-  assert.match(first.scoreReasons.join(" "), /esta consulta de YouTube/);
-  assert.match(first.scoreReasons.join(" "), /no representa el ranking global/);
-
-  const previousAt = new Date(now - 3600000).toISOString();
-  const existing = {
-    trendHistory: [
-      {
-        observedAt: previousAt,
-        platform: "youtube",
-        url: "youtube.com/watch?v=video-b",
-        videoId: "video-b",
-        metrics: { views: 900000 },
-      },
-      {
-        observedAt: previousAt,
-        platform: "youtube",
-        url: "youtube.com/watch?v=video-a",
-        videoId: "video-a",
-        metrics: { views: 10 },
-      },
-    ],
-  };
-  const refreshed = computeTrend(
-    { ...item, metrics: { views: 15 } },
-    existing,
-    sample,
-    [],
-    now,
-  ).trend;
-  assert.equal(refreshed.velocity, 5);
-  assert.equal(refreshed.previousObservedAt, previousAt);
-});
-
-test("Apify metrics remain provider-reported and small view changes do not label a general trend", () => {
-  const now = Date.parse("2026-10-17T12:00:00.000Z");
-  const item = {
-    platform: "instagram",
-    url: "https://www.instagram.com/reel/abc123/",
-    videoId: "abc123",
-    externalId: "abc123",
-    metrics: { views: 105 },
-    metricsOrigin: "Apify",
-  };
-  const existing = {
-    trendHistory: [
-      {
-        observedAt: new Date(now - 3600000).toISOString(),
-        platform: "instagram",
-        url: "instagram.com/reel/abc123",
-        videoId: "abc123",
-        metrics: { views: 100 },
-      },
-    ],
-  };
-  const result = computeTrend(item, existing, [item], [], now).trend;
-  assert.equal(result.kind, "unclassified");
-  assert.equal(result.metricsOrigin, "Apify");
-  assert.equal(result.metricScope, "provider_reported");
-  assert.equal(result.velocity, 5);
-  assert.match(result.scoreReasons.join(" "), /no son métricas oficiales/);
-  assert.match(
-    result.scoreReasons.join(" "),
-    /no demuestra una tendencia general/,
-  );
-
-  const withoutMetrics = computeTrend(
-    { ...item, metrics: undefined },
-    null,
-    [{ ...item, metrics: undefined }],
-    [],
-    now,
-  ).trend;
-  assert.equal(withoutMetrics.metrics, undefined);
-  assert.doesNotMatch(withoutMetrics.scoreReasons.join(" "), /0 vistas/);
-});
-
-test("social source changes, pauses, and deletion during fetch are skipped without telemetry or references", async (t) => {
-  const cases = [
-    [
-      "pause",
-      (brand, source) =>
-        saveRecord(brand.id, "sources", { ...source, enabled: false }),
-    ],
-    [
-      "query change",
-      (brand, source) =>
-        saveRecord(brand.id, "sources", { ...source, query: "new query" }),
-    ],
-    [
-      "URL change",
-      (brand, source) =>
-        saveRecord(brand.id, "sources", {
-          ...source,
-          url: "https://www.tiktok.com/@new-creator",
-        }),
-    ],
-    [
-      "type change",
-      (brand, source) =>
-        saveRecord(brand.id, "sources", { ...source, type: "youtube" }),
-    ],
-    ["delete", (brand, source) => deleteRecord(brand.id, "sources", source.id)],
-  ];
-  for (const [label, mutate] of cases) {
-    await t.test(label, async () => {
-      const brand = makeBrand();
-      const source = makeSource(brand);
-      let begin;
-      let release;
-      const started = new Promise((resolve) => (begin = resolve));
-      const waiting = new Promise((resolve) => (release = resolve));
-      const sync = syncSources(brand, {
+test("social collection fails before injected transports for every restricted provider", async () => {
+  for (const [type, platform] of [
+    ["youtube", "youtube"],
+    ["apify", "instagram"],
+    ["apify", "tiktok"],
+  ]) {
+    const brand = makeBrand();
+    const source = makeSource(brand, { type, platform });
+    let calls = 0;
+    await assert.rejects(
+      fetchSource(brand, source, {
         socialFetcher: async () => {
-          begin();
-          await waiting;
+          calls++;
           return [socialItem()];
         },
-      });
-      await started;
-      mutate(brand, getRecord(brand.id, "sources", source.id));
-      release();
-      const result = await sync;
-      assert.equal(result.sources[0].skipped, true);
-      assert.deepEqual(listRecords(brand.id, "references"), []);
-      const current = getRecord(brand.id, "sources", source.id);
-      if (label === "delete") assert.equal(current, null);
-      else {
-        assert.equal(current.enabled, label !== "pause");
-        assert.equal(current.lastSyncedAt, undefined);
-        assert.equal(current.lastAttemptAt, undefined);
-      }
-    });
+      }),
+      (error) => error.status === 403,
+    );
+    assert.equal(calls, 0);
+    assert.deepEqual(listRecords(brand.id, "references"), []);
   }
 });
 
-test("same social video refresh keeps valid analysis but changed media or identity invalidates it", async () => {
+for (const [type, platform] of [
+  ["youtube", "youtube"],
+  ["apify", "instagram"],
+  ["apify", "tiktok"],
+]) {
+  test(`${platform} sync reports permission restriction and cannot mutate previously captured references`, async () => {
+    const brand = makeBrand();
+    const source = makeSource(brand, { type, platform });
+    const reference = saveRecord(
+      brand.id,
+      "references",
+      socialItem({
+        platform,
+        sourceId: source.id,
+        metricsOrigin: type === "youtube" ? "YouTube Data API" : "Apify",
+        videoAnalysis: validVideoAnalysis(),
+      }),
+    );
+    let calls = 0;
+    const before = getRecord(brand.id, "references", reference.id);
+    const result = await syncSources(brand, {
+      socialFetcher: async () => {
+        calls++;
+        return [
+          socialItem({
+            videoId: "replacement",
+            mediaUrl: "https://cdn.example.test/replacement.mp4",
+            metrics: { views: 9999 },
+          }),
+        ];
+      },
+    });
+    assert.equal(calls, 0);
+    assert.equal(result.added, 0);
+    assert.equal(result.updated, 0);
+    assert.equal(result.errors.length, 1);
+    assert.ok(getRecord(brand.id, "sources", source.id).lastError);
+    assert.deepEqual(getRecord(brand.id, "references", reference.id), before);
+    assert.equal(listRecords(brand.id, "references").length, 1);
+  });
+}
+
+test("paused restricted sources neither call transports nor generate successful collection telemetry", async () => {
   const brand = makeBrand();
   const source = makeSource(brand);
-  let item = socialItem();
-  const sync = () => syncSources(brand, { socialFetcher: async () => [item] });
-  await sync();
-  let reference = listRecords(brand.id, "references")[0];
-  reference = saveRecord(brand.id, "references", {
-    ...reference,
-    videoAnalysis: validVideoAnalysis(),
-    contentScope: "video_audio",
+  saveRecord(brand.id, "sources", { ...source, enabled: false });
+  let calls = 0;
+  const result = await syncSources(brand, {
+    socialFetcher: async () => {
+      calls++;
+      return [socialItem()];
+    },
   });
-
-  item = socialItem();
-  await sync();
-  reference = getRecord(brand.id, "references", reference.id);
-  assert.equal(reference.videoAnalysis.status, "completed");
-  assert.equal(reference.contentScope, "video_audio");
-
-  reference = saveRecord(brand.id, "references", {
-    ...reference,
-    videoAnalysis: validVideoAnalysis(),
-    contentScope: "video_audio",
-  });
-  item = socialItem({
-    mediaUrl: "https://media.example.test/other/123.mp4?token=rotated",
-  });
-  await sync();
-  reference = getRecord(brand.id, "references", reference.id);
-  assert.equal(reference.videoAnalysis, undefined);
-  assert.equal(reference.contentScope, "metadata_only");
-  assert.match(reference.mediaUrl, /other\/123\.mp4/);
-
-  reference = saveRecord(brand.id, "references", {
-    ...reference,
-    videoAnalysis: validVideoAnalysis(),
-    contentScope: "video_audio",
-  });
-  item = socialItem({ videoId: "other-id", externalId: "other-id" });
-  await sync();
-  reference = getRecord(brand.id, "references", reference.id);
-  assert.equal(reference.videoId, "other-id");
-  assert.equal(reference.videoAnalysis, undefined);
+  assert.equal(calls, 0);
+  assert.equal(result.added, 0);
+  assert.equal(
+    getRecord(brand.id, "sources", source.id).lastSyncedAt,
+    undefined,
+  );
 });
 
-test("cross-source promotion cannot replace the identity or media behind saved video analysis", async () => {
-  const brand = makeBrand();
-  const firstSource = makeSource(brand);
-  const firstItem = socialItem({ metrics: undefined });
-  await syncSources(brand, { socialFetcher: async () => [firstItem] });
-  let reference = listRecords(brand.id, "references")[0];
-  reference = saveRecord(brand.id, "references", {
-    ...reference,
-    videoAnalysis: validVideoAnalysis(),
-    contentScope: "video_audio",
+for (const item of [
+  socialItem(),
+  socialItem({ platform: "instagram", sourceId: "legacy-social-source" }),
+  socialItem({
+    platform: "youtube",
+    metricsOrigin: "YouTube Data API",
+    mediaProvider: undefined,
+  }),
+]) {
+  test(`derived trend computation rejects old ${item.platform} provider data`, () => {
+    const before = JSON.stringify(item);
+    assert.throws(
+      () => computeTrend(item, null, [item], [], Date.now()),
+      (error) => error.status === 403,
+    );
+    assert.equal(JSON.stringify(item), before);
   });
-  const secondSource = makeSource(brand, {
-    type: "apify",
-    platform: "instagram",
-  });
-  const secondItem = socialItem({
-    platform: "instagram",
-    url: firstItem.url,
-    externalId: "different-video",
-    videoId: "different-video",
-    mediaUrl: "https://media.example.test/videos/replacement.mp4",
-    metrics: { views: 9999 },
-  });
-  await syncSources(brand, {
-    socialFetcher: async (_brand, currentSource) =>
-      currentSource.id === secondSource.id ? [secondItem] : [],
-  });
-  const stored = getRecord(brand.id, "references", reference.id);
-  assert.equal(stored.sourceId, firstSource.id);
-  assert.equal(stored.videoId, firstItem.videoId);
-  assert.equal(stored.mediaUrl, firstItem.mediaUrl);
-  assert.equal(stored.metrics, undefined);
-  assert.equal(stored.videoAnalysis.summary, validVideoAnalysis().summary);
-  assert.equal(stored.evidence.at(-1).sourceId, secondSource.id);
+}
+
+test("permitted public news trend computation still distinguishes observation windows", () => {
+  const now = Date.parse("2026-10-17T12:00:00.000Z");
+  const item = {
+    title: "A sample news item",
+    source: "Hacker News",
+    url: "https://news.ycombinator.com/item?id=123",
+    publishedAt: new Date(now - 3600000).toISOString(),
+    metrics: { score: 50 },
+    metricsOrigin: "Hacker News API",
+  };
+  const first = computeTrend(item, null, [item], [], now);
+  assert.equal(first.trend.velocity, undefined);
+  assert.equal(first.trendHistory.length, 1);
+  const later = computeTrend(
+    { ...item, metrics: { score: 65 } },
+    first,
+    [item],
+    [],
+    now + 3600000,
+  );
+  assert.equal(later.trend.velocity, 15);
+  assert.equal(later.trend.velocityUnit, "points/hour");
+  assert.equal(later.trendHistory.length, 2);
 });
 
-test("different social videos with similar captions do not fuzzy merge", async () => {
-  const brand = makeBrand();
-  makeSource(brand);
-  const base = socialItem();
-  await syncSources(brand, { socialFetcher: async () => [base] });
-  await syncSources(brand, {
-    socialFetcher: async () => [
+for (const platform of ["youtube", "tiktok", "instagram"]) {
+  test(`${platform} legacy content cannot enter analysis or AI drafting`, async () => {
+    const brand = makeBrand();
+    const reference = saveRecord(
+      brand.id,
+      "references",
       socialItem({
-        url: "https://www.tiktok.com/@another/video/987654321",
-        sourceUrl: "https://www.tiktok.com/@another/video/987654321",
-        externalId: "987654321",
-        videoId: "987654321",
+        platform,
+        metricsOrigin: platform === "youtube" ? "YouTube Data API" : "Apify",
+        videoAnalysis: validVideoAnalysis(),
+        sourceId: "legacy-source",
       }),
-    ],
+    );
+    setSecret(brand.id, "ai", {
+      apiKey: "test-key",
+      model: "test-model",
+      baseUrl: "https://example.test/v1",
+    });
+    let requests = 0;
+    const options = {
+      fetcher: async () => {
+        requests++;
+        throw new Error("must not contact AI");
+      },
+    };
+    const before = getRecord(brand.id, "references", reference.id);
+    await assert.rejects(
+      analyzeReference(brand, reference, options),
+      (error) => error.status === 403,
+    );
+    await assert.rejects(
+      createDraft(
+        brand,
+        { referenceId: reference.id, format: "reel", channel: "instagram" },
+        options,
+      ),
+      (error) => error.status === 403,
+    );
+    assert.equal(requests, 0);
+    assert.deepEqual(getRecord(brand.id, "references", reference.id), before);
+    assert.deepEqual(listRecords(brand.id, "pieces"), []);
   });
-  assert.equal(listRecords(brand.id, "references").length, 2);
+}
+
+test("an idea cannot launder a restricted reference into a draft", async () => {
+  const brand = makeBrand();
+  const reference = saveRecord(brand.id, "references", socialItem());
+  const idea = saveRecord(brand.id, "ideas", {
+    title: "An idea",
+    angle: "An angle",
+    referenceIds: [reference.id],
+  });
+  await assert.rejects(
+    createDraft(brand, { ideaId: idea.id, channel: "instagram" }),
+    (error) => error.status === 403,
+  );
+  assert.deepEqual(listRecords(brand.id, "pieces"), []);
 });
 
-test("draft fallback uses validated audiovisual observations without copying on-screen text", async () => {
+test("own editorial draft keeps instructions separate from publishable copy", async () => {
   const brand = makeBrand();
   const reference = saveRecord(brand.id, "references", {
     title: "Revisión semanal de campañas",
-    text: "Descripción disponible para la referencia. ".repeat(8),
-    url: "https://www.youtube.com/watch?v=weekly-review",
-    platform: "youtube",
-    videoId: "weekly-review",
+    text: "Un ejemplo original del equipo de la empresa. ".repeat(8),
+    source: "Equipo",
     format: "video",
     videoAnalysis: validVideoAnalysis(),
   });
@@ -468,21 +332,26 @@ test("draft fallback uses validated audiovisual observations without copying on-
     piece.editorialBrief.angle,
     "Crear un ejemplo propio de revisión semanal para un equipo pequeño.",
   );
-  assert.doesNotMatch(piece.script, /Crear un ejemplo propio de revisión semanal/);
-  assert.doesNotMatch(piece.script, /video_audio|Apuntes observacionales/);
-  assert.doesNotMatch(piece.script, /no copies frases ni deduzcas causalidad/);
-  assert.doesNotMatch(piece.script, /Texto que no debe copiarse/);
+  assert.doesNotMatch(
+    piece.script,
+    /Crear un ejemplo propio de revisión semanal|video_audio|Apuntes observacionales/,
+  );
+  assert.doesNotMatch(
+    piece.script,
+    /no copies frases ni deduzcas causalidad|Texto que no debe copiarse/,
+  );
 });
 
-test("AI draft receives the complete validated audiovisual context as reference data", async () => {
+test("a reviewed synthetic AI provider receives own editorial context with storage disabled", async () => {
+  installPermissionFixture(dataDir, [
+    { origin: "https://example.test", pathPrefix: "/v1", purposes: ["ai"] },
+  ]);
   const brand = makeBrand();
   const analysis = validVideoAnalysis();
   const reference = saveRecord(brand.id, "references", {
-    title: "Referencia de video",
-    text: "Contexto editorial suficiente.",
-    url: "https://www.youtube.com/watch?v=weekly-review",
-    platform: "youtube",
-    videoId: "weekly-review",
+    title: "Video propio",
+    text: "Contexto editorial propio suficiente.",
+    source: "Equipo",
     format: "video",
     videoAnalysis: analysis,
   });
@@ -508,9 +377,7 @@ test("AI draft receives the complete validated audiovisual context as reference 
         request = JSON.parse(options.body);
         return new Response(
           JSON.stringify({ output_text: JSON.stringify(output) }),
-          {
-            headers: { "content-type": "application/json" },
-          },
+          { headers: { "content-type": "application/json" } },
         );
       },
     },
@@ -520,26 +387,4 @@ test("AI draft receives the complete validated audiovisual context as reference 
   assert.equal(request.store, false);
   assert.match(request.instructions, /no infieras causalidad ni rendimiento/);
   assert.match(request.instructions, /ni copies la referencia ni sus frases/);
-});
-
-test("analysis API response redacts provider media URL while retaining the private value in storage", async () => {
-  const brand = makeBrand();
-  const reference = saveRecord(brand.id, "references", {
-    title: "Referencia social con contexto suficiente",
-    text: "Texto compartido suficiente para evitar una lectura de URL. ".repeat(
-      7,
-    ),
-    url: "https://www.tiktok.com/@creator/video/123456789",
-    source: "TikTok mock",
-    platform: "tiktok",
-    videoId: "123456789",
-    mediaProvider: "apify",
-    mediaUrl: "https://media.example.test/private/clip.mp4?token=secret",
-  });
-  const response = await analyzeReference(brand, reference);
-  assert.equal(response.mediaUrl, undefined);
-  assert.match(
-    getRecord(brand.id, "references", reference.id).mediaUrl,
-    /token=secret/,
-  );
 });
