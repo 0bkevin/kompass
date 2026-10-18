@@ -17,6 +17,7 @@ import { Badge, Button, EmptyState, IconButton, Modal } from "../components/ui";
 import type { Asset } from "../lib/types";
 import { dateLabel } from "../lib/format";
 const icons = { image: Image, video: Video, audio: Music, document: FileText };
+const MAX_ASSET_FILE_BYTES = 25 * 1024 * 1024;
 export default function Assets() {
   const { state, refresh, notify, search } = useWorkspace();
   const [filter, setFilter] = useState("all"),
@@ -38,8 +39,10 @@ export default function Assets() {
       const results = await uploadFilesIndividually(
         Array.from(files),
         async (file) => {
-          if (file.size > 25 * 1024 * 1024)
-            throw new Error(`${file.name} supera el límite de 25 MB.`);
+          if (file.size > MAX_ASSET_FILE_BYTES)
+            throw new Error(
+              "El archivo supera el máximo de 25 MiB. Selecciona uno más pequeño.",
+            );
           await uploadAsset(state.brand.id, file);
         },
       );
@@ -101,16 +104,19 @@ export default function Assets() {
     <div className="page">
       <div className="page-heading">
         <div>
-          <p className="eyebrow">LOS RECURSOS DE TU MARCA</p>
           <h1>Todo lo que necesitas para crear.</h1>
           <p>
             Imágenes, videos, documentos y referencias, con acceso para tu
             equipo.
           </p>
+          <p id="asset-upload-help">
+            Hasta 25 MiB por archivo. TXT, Markdown y CSV en UTF-8.
+          </p>
         </div>
         <Button
           variant="primary"
           busy={busy}
+          aria-describedby="asset-upload-help"
           disabled={state.brand.role === "reviewer" || refreshPending}
           onClick={() => input.current?.click()}
         >
@@ -122,7 +128,7 @@ export default function Assets() {
           type="file"
           multiple
           hidden
-          accept="image/*,video/*,audio/*,.pdf,.txt,.md"
+          accept="image/*,video/*,audio/*,.pdf,.txt,.md,.csv"
           onChange={(e) => void upload(e.target.files)}
         />
       </div>
@@ -195,7 +201,7 @@ export default function Assets() {
                 <div className="asset-info">
                   <strong>{asset.name}</strong>
                   <small>
-                    {(asset.size / 1024 / 1024).toFixed(2)} MB ·{" "}
+                    {(asset.size / 1024 / 1024).toFixed(2)} MiB ·{" "}
                     {dateLabel(asset.createdAt)}
                   </small>
                   <div className="row">
@@ -263,14 +269,13 @@ export default function Assets() {
           }
         >
           Sube material de marca o referencias. Puedes asociarlos a tus piezas
-          desde el estudio. Hasta 25 MB por archivo.
+          desde el estudio. Hasta 25 MiB por archivo; texto en UTF-8.
         </EmptyState>
       )}
       <div className="callout">
         <Video size={20} />
         <p>
-          La biblioteca admite videos como material de referencia. El editor y
-          la generación de video están previstos en el backlog.
+          Guarda videos y archivos de tu marca para consultarlos y asociarlos a una pieza desde el estudio.
         </p>
       </div>
       {selected && (
