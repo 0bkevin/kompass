@@ -946,6 +946,14 @@ function OpportunityRow({
               <>
                 <strong>{analysis.need}</strong>
                 <p>{analysis.rationale}</p>
+                <h3>Hipótesis de gancho con IA</h3>
+                <p>{analysis.hookHypothesis}</p>
+                <p className="journey-muted">
+                  Es una propuesta editorial para validar, no una explicación
+                  del rendimiento de las referencias.
+                </p>
+                <h3>Adaptación propuesta con IA</h3>
+                <p>{analysis.adaptation}</p>
                 <details>
                   <summary>Ver citas y límites del análisis</summary>
                   <ul>

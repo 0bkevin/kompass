@@ -1,0 +1,36 @@
+[
+  {
+    "at": "2026-10-18T11:05:11.447Z",
+    "requestId": "bec22f98-3503-4d7a-bd98-ad0bd4c6740d",
+    "provider": "codex-cli",
+    "schema": "opportunity_audience_reasoning",
+    "status": "started",
+    "inputSha256": "4a51db82fac16fffcc022c155deab24d988ae1bca651f3d1e1b88c2ecdc53c64"
+  },
+  {
+    "at": "2026-10-18T11:05:24.230Z",
+    "requestId": "bec22f98-3503-4d7a-bd98-ad0bd4c6740d",
+    "provider": "codex-cli",
+    "schema": "opportunity_audience_reasoning",
+    "status": "completed",
+    "elapsedMs": 12783,
+    "outputSha256": "2b980049afc60cf25ecdc00e9806cbc6dc021aadc4e3b24e968e23ae3609c9cd"
+  },
+  {
+    "at": "2026-10-18T11:05:56.911Z",
+    "requestId": "c1bca02f-fb15-4484-99fc-122118fe4574",
+    "provider": "codex-cli",
+    "schema": "content_draft",
+    "status": "started",
+    "inputSha256": "c748813273a2e508bdd6419ba79ef51f14c1895492e599f8d3f8493c54808f40"
+  },
+  {
+    "at": "2026-10-18T11:06:06.447Z",
+    "requestId": "c1bca02f-fb15-4484-99fc-122118fe4574",
+    "provider": "codex-cli",
+    "schema": "content_draft",
+    "status": "completed",
+    "elapsedMs": 9536,
+    "outputSha256": "de82f19379d9fa303691702bd103cc567ed0fa7a99fb6a2caf5652e2dacf5003"
+  }
+]

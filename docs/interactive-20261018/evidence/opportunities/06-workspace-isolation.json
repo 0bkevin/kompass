@@ -1,0 +1,49 @@
+{
+  "outcomes": [
+    {
+      "scenario": "foreign state",
+      "status": 404,
+      "body": {
+        "error": "No se encontró la marca."
+      }
+    },
+    {
+      "scenario": "foreign insights",
+      "status": 404,
+      "body": {
+        "error": "No se encontró la marca."
+      }
+    },
+    {
+      "scenario": "foreign opportunity analysis",
+      "status": 404,
+      "body": {
+        "error": "No se encontró la marca."
+      }
+    },
+    {
+      "scenario": "foreign reference patch",
+      "status": 404,
+      "body": {
+        "error": "Registro no encontrado."
+      }
+    },
+    {
+      "scenario": "unknown opportunity",
+      "status": 404,
+      "body": {
+        "error": "La oportunidad ya no está disponible en esta empresa. Actualiza las oportunidades."
+      }
+    },
+    {
+      "scenario": "foreign ID in analysis body",
+      "status": 400,
+      "body": {
+        "error": "Envía un objeto vacío para solicitar el análisis de la oportunidad actual."
+      }
+    }
+  ],
+  "workspaceOptions": [
+    "30X QA · oportunidades"
+  ]
+}

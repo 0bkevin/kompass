@@ -1,0 +1,25 @@
+{
+  "path": "/studio/d3c1245d-a016-4242-8ed7-fe656bf26e18",
+  "piece": {
+    "title": "¿Quién aprueba el próximo contacto comercial?",
+    "hook": "Antes de continuar una conversación con un resumen de IA, define quién debe revisarlo.",
+    "script": "¿Quién aprueba el próximo contacto comercial?\n\nSi tu equipo usa IA para resumir conversaciones de ventas, establece una regla: el resumen necesita revisión humana antes de usarse para retomar el contacto.\n\nPara llevarlo a la práctica, plantea este ejercicio hipotético en una EdTech latinoamericana: revisar un traspaso comercial entre responsables. No es un caso real ni presenta resultados comprobados.\n\nElige un traspaso autorizado y contrasta tres elementos: la conversación original, el resumen generado por IA y el siguiente paso registrado.\n\nLa persona que revisa debe comprobar si el resumen conserva los acuerdos, si omite condiciones relevantes y si el próximo contacto está respaldado por la conversación.\n\nDocumenta la evidencia consultada, quién aprueba continuar y la fecha acordada de revisión. Si falta información, deja pendiente la aprobación hasta comprobarla.\n\nPor verificar en el ejercicio: que los acuerdos y el siguiente paso registrado coincidan con la conversación original.\n\nComparte qué tarea necesitas resolver y qué te falta comprobar.",
+    "caption": "Un ejercicio para revisar traspasos comerciales con IA: contrastar la fuente, asignar un responsable y acordar una fecha de revisión antes de continuar el contacto.",
+    "cta": "Comparte qué tarea necesitas resolver y qué te falta comprobar.",
+    "scenes": [],
+    "generationEngine": "ai",
+    "referenceId": "7045ff0c-fc56-43e5-a63f-68b8abd4fe97",
+    "providerAttributions": [],
+    "segmentId": "edtech-ceos",
+    "format": "post",
+    "channel": "linkedin",
+    "status": "draft",
+    "assetIds": [],
+    "comments": [],
+    "id": "d3c1245d-a016-4242-8ed7-fe656bf26e18",
+    "createdAt": "2026-10-18T11:06:06.448Z",
+    "updatedAt": "2026-10-18T11:06:06.448Z",
+    "approvalVersion": "hkBlr6EcksYwp6kOdo0MuR7RuBKwrAZf_Tm89y6oBaI"
+  },
+  "horizontalOverflow": false
+}

@@ -1,0 +1,52 @@
+{
+  "analysis": {
+    "id": "570cc176-5371-4cd9-b7eb-8da3153443f5",
+    "opportunityId": "opportunity-f41e56ce3262b3cd6c829b3c",
+    "engine": "ai",
+    "model": "codex-cli-qa",
+    "analyzedAt": "2026-10-18T11:05:24.232Z",
+    "fingerprint": "ea67f62613df6f2b4a33642b3cdd1dbbf94400af06fd98eef5b77cdc149d5dd2",
+    "need": "Organizar el seguimiento comercial de CEOs de EdTech mediante registros compartidos y sugerencias de IA revisadas por una persona responsable.",
+    "rationale": "El segmento edtech-ceos declara esa necesidad. Los dos textos propios sintéticos vinculan el seguimiento con conservar conversaciones, acordar próximos pasos y asignar revisión humana. Esto permite plantear una pieza de formación práctica para líderes de Latinoamérica. La conexión es una hipótesis editorial: no hay observaciones públicas ni señales community aportadas.",
+    "hookHypothesis": "Un título centrado en quién valida el próximo contacto podría conectar con la necesidad declarada de mantener el seguimiento bajo supervisión humana. Es una hipótesis sobre el enfoque editorial, pendiente de validación.",
+    "adaptation": "Post original para LinkedIn: «¿Quién aprueba el próximo contacto comercial?». Proponer una decisión práctica: exigir revisión humana antes de usar un resumen de IA para continuar una conversación. Caso a verificar en una EdTech latinoamericana: un traspaso comercial entre responsables, contrastando la conversación original con el resumen y el siguiente paso registrado. Paso aplicable: revisar un traspaso autorizado y documentar evidencia, responsable y fecha acordada de revisión. Presentarlo como ejercicio, sin atribuir resultados a una empresa real.",
+    "segmentIds": [
+      "edtech-ceos"
+    ],
+    "citations": [
+      {
+        "referenceId": "7045ff0c-fc56-43e5-a63f-68b8abd4fe97",
+        "support": "el siguiente paso necesita una fecha de revisión acordada."
+      },
+      {
+        "referenceId": "6498834a-5af8-42d8-a099-d012dcae7ee0",
+        "support": "Una IA puede sugerir un resumen que un humano revisa antes de enviarlo."
+      }
+    ],
+    "limitations": [
+      "Las referencias son textos propios sintéticos; no documentan un caso real del sector ni resultados verificables. El caso propuesto requiere evidencia antes de presentarse como experiencia comprobada.",
+      "No se aportaron observaciones públicas, señales community ni datos de espectadores; no puede inferirse consumo, representatividad o rendimiento.",
+      "La necesidad de HealthTech sobre documentación y datos de pacientes no está respaldada por estas referencias comerciales.",
+      "Razonamiento semántico de IA: la pertinencia y el gancho son hipótesis editoriales, no consumidores observados ni explicaciones causales del rendimiento."
+    ],
+    "createdAt": "2026-10-18T10:48:56.230Z",
+    "updatedAt": "2026-10-18T11:05:24.233Z"
+  },
+  "exactHook": true,
+  "exactAdaptation": true,
+  "citationsExact": [
+    {
+      "id": "7045ff0c-fc56-43e5-a63f-68b8abd4fe97",
+      "exact": true
+    },
+    {
+      "id": "6498834a-5af8-42d8-a099-d012dcae7ee0",
+      "exact": true
+    }
+  ],
+  "visibleError": null,
+  "growth": {
+    "label": "insufficient",
+    "explanation": "Faltan dos observaciones comparables: ventanas de 7 días, mismas fuentes y consultas, separadas por al menos una semana. Una sola consulta no demuestra crecimiento."
+  }
+}

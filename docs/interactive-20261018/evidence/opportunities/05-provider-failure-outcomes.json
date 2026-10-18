@@ -1,0 +1,26 @@
+[
+  {
+    "mode": "reject",
+    "error": "No se pudo completar el análisis con IA. Revisa la clave, el modelo y la cuota en Integraciones y vuelve a intentarlo; no se guardó ningún resultado.",
+    "analysisId": "570cc176-5371-4cd9-b7eb-8da3153443f5",
+    "analyzedAt": "2026-10-18T10:48:56.230Z",
+    "oldHookStillVisible": true,
+    "buttonReady": true
+  },
+  {
+    "mode": "invalid",
+    "error": "No se pudo completar el análisis con IA. Revisa la clave, el modelo y la cuota en Integraciones y vuelve a intentarlo; no se guardó ningún resultado.",
+    "analysisId": "570cc176-5371-4cd9-b7eb-8da3153443f5",
+    "analyzedAt": "2026-10-18T10:48:56.230Z",
+    "oldHookStillVisible": true,
+    "buttonReady": true
+  },
+  {
+    "mode": "empty",
+    "error": "La IA devolvió campos o tipos inesperados. No se guardó el análisis.",
+    "analysisId": "570cc176-5371-4cd9-b7eb-8da3153443f5",
+    "analyzedAt": "2026-10-18T10:48:56.230Z",
+    "oldHookStillVisible": true,
+    "buttonReady": true
+  }
+]

@@ -1,0 +1,120 @@
+{
+  "reviewedAt": "2026-10-18T11:07:00Z",
+  "host": "http://127.0.2.64:5464",
+  "viewports": [
+    {
+      "width": 1440,
+      "height": 900,
+      "horizontalOverflow": false
+    },
+    {
+      "width": 390,
+      "height": 844,
+      "horizontalOverflow": false
+    }
+  ],
+  "filters": {
+    "allCount": 1,
+    "edtechCount": 1,
+    "healthtechCount": 0,
+    "healthtechEmptyMessage": true,
+    "broadenCount": 1,
+    "broadenClearsSegment": true,
+    "broadenIncludesUnmatched": true,
+    "unmatchedSearchCount": 0,
+    "uppercaseVentasCount": 1
+  },
+  "originalRendering": {
+    "analysisId": "570cc176-5371-4cd9-b7eb-8da3153443f5",
+    "hookExact": true,
+    "adaptationExact": true
+  },
+  "evidenceChange": {
+    "patchStatus": 200,
+    "referenceId": "7045ff0c-fc56-43e5-a63f-68b8abd4fe97",
+    "opportunityId": "opportunity-f41e56ce3262b3cd6c829b3c",
+    "analysisPresent": false,
+    "afterRefresh": {
+      "oldAnalysisTextVisible": false,
+      "analyzeVisible": true
+    },
+    "originalFingerprint": "63132d9450f953965e336667575d6a14ead5a3b1e0e2c92f0270606fa9a178af",
+    "recoveredFingerprint": "ea67f62613df6f2b4a33642b3cdd1dbbf94400af06fd98eef5b77cdc149d5dd2"
+  },
+  "failureModes": [
+    {
+      "mode": "reject",
+      "error": "No se pudo completar el análisis con IA. Revisa la clave, el modelo y la cuota en Integraciones y vuelve a intentarlo; no se guardó ningún resultado.",
+      "analysisId": "570cc176-5371-4cd9-b7eb-8da3153443f5",
+      "analyzedAt": "2026-10-18T10:48:56.230Z",
+      "oldHookStillVisible": true,
+      "buttonReady": true
+    },
+    {
+      "mode": "invalid",
+      "error": "No se pudo completar el análisis con IA. Revisa la clave, el modelo y la cuota en Integraciones y vuelve a intentarlo; no se guardó ningún resultado.",
+      "analysisId": "570cc176-5371-4cd9-b7eb-8da3153443f5",
+      "analyzedAt": "2026-10-18T10:48:56.230Z",
+      "oldHookStillVisible": true,
+      "buttonReady": true
+    },
+    {
+      "mode": "empty",
+      "error": "La IA devolvió campos o tipos inesperados. No se guardó el análisis.",
+      "analysisId": "570cc176-5371-4cd9-b7eb-8da3153443f5",
+      "analyzedAt": "2026-10-18T10:48:56.230Z",
+      "oldHookStillVisible": true,
+      "buttonReady": true
+    }
+  ],
+  "persistence": {
+    "analysisId": "570cc176-5371-4cd9-b7eb-8da3153443f5",
+    "analyzedAt": "2026-10-18T11:05:24.232Z",
+    "exactHook": true,
+    "exactAdaptation": true,
+    "allSelects": [
+      {
+        "id": "",
+        "value": "7b8c1d4d-da68-422b-90b0-d9d3d3894921"
+      },
+      {
+        "id": "",
+        "value": ""
+      },
+      {
+        "id": "",
+        "value": "edtech-ceos"
+      },
+      {
+        "id": "",
+        "value": "post"
+      },
+      {
+        "id": "",
+        "value": "linkedin"
+      }
+    ]
+  },
+  "final": {
+    "analysisStillCurrent": true,
+    "analysisId": "570cc176-5371-4cd9-b7eb-8da3153443f5",
+    "analyzedAt": "2026-10-18T11:05:24.232Z",
+    "exactHook": true,
+    "exactAdaptation": true,
+    "growth": {
+      "label": "insufficient",
+      "explanation": "Faltan dos observaciones comparables: ventanas de 7 días, mismas fuentes y consultas, separadas por al menos una semana. Una sola consulta no demuestra crecimiento."
+    },
+    "viewport": {
+      "width": 1440,
+      "height": 900
+    },
+    "horizontalOverflow": false
+  },
+  "transport": {
+    "generatedContent": "real authenticated Codex CLI schema-bound output",
+    "network": "reserved test HTTPS/DNS intercepted in isolated QA host",
+    "productionProviderValidated": false
+  },
+  "newCodexCalls": 2
+}

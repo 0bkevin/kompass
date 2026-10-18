@@ -1,0 +1,69 @@
+{
+  "scenario": "original Codex reasoning",
+  "analysis": {
+    "opportunityId": "opportunity-f41e56ce3262b3cd6c829b3c",
+    "engine": "ai",
+    "model": "codex-cli-qa",
+    "analyzedAt": "2026-10-18T10:48:56.230Z",
+    "fingerprint": "63132d9450f953965e336667575d6a14ead5a3b1e0e2c92f0270606fa9a178af",
+    "need": "Organizar el seguimiento comercial de los CEOs de EdTech mediante registros compartidos y sugerencias de IA revisadas por una persona responsable.",
+    "rationale": "El segmento edtech-ceos declara esa necesidad. Los dos textos propios sintéticos aportados conectan el registro de conversaciones y próximos pasos con la revisión humana y la conservación de evidencia. Esto encaja con una empresa de formación práctica en IA para líderes latinoamericanos. La selección es una hipótesis editorial: no hay observaciones públicas ni señales community que la corroboren. El segmento de HealthTech plantea documentación y protección de datos de pacientes, aspectos que estas referencias no desarrollan.",
+    "hookHypothesis": "Una apertura sobre qué información necesita quien hereda una oportunidad comercial podría hacer concreta la necesidad de memoria compartida y supervisión humana. Es una hipótesis basada en los textos disponibles, sin evidencia de rendimiento.",
+    "adaptation": "Crear un post original para LinkedIn: «¿Qué debería recibir quien toma el próximo contacto comercial?». Decisión práctica: establecer qué campos debe completar y aprobar el responsable antes de transferir una oportunidad. Para incorporar un caso verificable del sector, documentar un traspaso comercial real de una EdTech latinoamericana, con autorización y datos anonimizados; ese caso aún no está disponible. Paso aplicable: probar una ficha con conversación de origen, resumen sugerido por IA, próximo paso, responsable y aprobación humana, y contrastarla con el registro original antes de usarla.",
+    "segmentIds": [
+      "edtech-ceos"
+    ],
+    "citations": [
+      {
+        "referenceId": "7045ff0c-fc56-43e5-a63f-68b8abd4fe97",
+        "support": "Definir quién revisa la sugerencia y qué evidencia debe conservar"
+      },
+      {
+        "referenceId": "6498834a-5af8-42d8-a099-d012dcae7ee0",
+        "support": "Una IA puede sugerir un resumen que un humano revisa antes de enviarlo."
+      }
+    ],
+    "limitations": [
+      "Las dos referencias son contenido propio sintético aportado; no documentan implementaciones reales ni resultados comerciales.",
+      "No se dispone de un caso verificable de una EdTech latinoamericana; debe obtenerse antes de presentar la pieza como un caso real.",
+      "No hay observaciones públicas, señales community ni datos de espectadores para validar la hipótesis editorial.",
+      "Razonamiento semántico de IA: la pertinencia y el gancho son hipótesis editoriales, no consumidores observados ni explicaciones causales del rendimiento."
+    ],
+    "id": "570cc176-5371-4cd9-b7eb-8da3153443f5",
+    "createdAt": "2026-10-18T10:48:56.230Z",
+    "updatedAt": "2026-10-18T10:48:56.230Z"
+  },
+  "citationsExact": [
+    {
+      "referenceId": "7045ff0c-fc56-43e5-a63f-68b8abd4fe97",
+      "exact": true
+    },
+    {
+      "referenceId": "6498834a-5af8-42d8-a099-d012dcae7ee0",
+      "exact": true
+    }
+  ],
+  "notRendered": {
+    "adaptation": true,
+    "hookHypothesis": true
+  },
+  "growth": {
+    "label": "insufficient",
+    "explanation": "Faltan dos observaciones comparables: ventanas de 7 días, mismas fuentes y consultas, separadas por al menos una semana. Una sola consulta no demuestra crecimiento."
+  },
+  "selectedSegments": [
+    "edtech-ceos"
+  ],
+  "referenceTitles": [
+    {
+      "id": "7045ff0c-fc56-43e5-a63f-68b8abd4fe97",
+      "title": "IA para ventas: una decisión antes de automatizar el pipeline",
+      "text": "Contenido propio sintético. Definir quién revisa la sugerencia y qué evidencia debe conservar evita convertir una recomendación automática en una decisión sin responsable."
+    },
+    {
+      "id": "6498834a-5af8-42d8-a099-d012dcae7ee0",
+      "title": "IA para ventas: el seguimiento necesita memoria compartida",
+      "text": "Contenido propio sintético. Registrar cada conversación y el siguiente paso permite retomar el contacto al cambiar de responsable. Una IA puede sugerir un resumen que un humano revisa antes de enviarlo."
+    }
+  ]
+}
