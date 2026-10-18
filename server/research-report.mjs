@@ -7,6 +7,7 @@ import { buildInsights } from "./audience-insights.mjs";
 import { selectResearchCorpus } from "./research-corpus.mjs";
 import { buildDiscoveryCoverage } from "./discovery-coverage.mjs";
 import { buildTrendEvidence } from "./trend-evidence.mjs";
+import { buildTrendRetrospective } from "./trend-retrospective.mjs";
 import { buildFormatEvidence } from "./format-evidence.mjs";
 import { socialConnections } from "./social-sync.mjs";
 import { listCurrentEditorialEvidence } from "./editorial-evidence.mjs";
@@ -110,6 +111,7 @@ export function buildResearchReport(
     ),
   }));
   const insights = buildInsights(brand, {
+    audienceOnly: true,
     references: corpus.references,
     sources,
     pieces,
@@ -148,6 +150,11 @@ export function buildResearchReport(
     sources: policySources,
     pieces: pieces.filter(publicText),
     outcomes,
+    now,
+  });
+  const retrospective = buildTrendRetrospective(brand, {
+    sources: trendSources,
+    snapshots,
     now,
   });
   const validation = summarizeOpportunityFeedback(brand, {
@@ -255,6 +262,7 @@ export function buildResearchReport(
     },
     trends: [
       finding("Historial comparable", trends.summary),
+      ...retrospective.findings,
       ...trends.topics
         .slice(0, 10)
         .map((topic) => finding(topic.topic, topic.explanation)),
@@ -271,6 +279,7 @@ export function buildResearchReport(
         "Resultados propios comparables",
         formats.manualPerformance.reason,
       ),
+      ...formats.findings,
       ...formats.recommendations
         .slice(0, 5)
         .map((recommendation) =>
@@ -293,6 +302,7 @@ export function buildResearchReport(
     evidence: {
       coverage,
       trends,
+      retrospective,
       formats,
       validation,
       ...(pilotReport ? { pilot: pilotReport } : {}),

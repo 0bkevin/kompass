@@ -144,7 +144,7 @@ after(async () => {
 });
 const route = () => `/brands/${brand.id}/research-report`;
 
-test("priority filters audience matches before the limit without narrowing corpus coverage", () => {
+test("priority finds audience matches beyond forty candidates without narrowing corpus coverage", () => {
   const now = Date.now();
   const company = {
     ...brand,
@@ -159,7 +159,7 @@ test("priority filters audience matches before the limit without narrowing corpu
     ],
   };
   const references = [
-    ...Array.from({ length: 12 }, (_, index) => ({
+    ...Array.from({ length: 44 }, (_, index) => ({
       id: `unrelated-${index}`,
       title: `Torneo ${index}`,
       topic: `Torneo ${index}`,
@@ -181,16 +181,18 @@ test("priority filters audience matches before the limit without narrowing corpu
   }));
   const options = { references, sources: [source], now };
   const insights = buildInsights(company, options);
-  assert.equal(insights.opportunities.length, 14);
+  assert.equal(insights.opportunities.length, 40);
   assert.ok(
     insights.opportunities
       .slice(0, 10)
       .every((item) => !item.segmentIds.length),
     "unrelated proposals rank above matches, exercising filtering before the cap",
   );
-  const matched = insights.opportunities.filter((item) =>
-    item.segmentIds.includes("directivos-qa"),
-  );
+  assert.ok(insights.opportunities.every((item) => !item.segmentIds.length));
+  const matched = buildInsights(company, {
+    ...options,
+    audienceOnly: true,
+  }).opportunities.filter((item) => item.segmentIds.includes("directivos-qa"));
   assert.equal(matched.length, 2);
   const report = buildResearchReport(company, options);
   assert.deepEqual(
@@ -207,10 +209,13 @@ test("priority filters audience matches before the limit without narrowing corpu
     assert.deepEqual(opportunity.growth, matched[index].growth);
     assert.deepEqual(opportunity.factors, matched[index].factors);
   }
-  assert.equal(report.scope.counts.selected, 14);
-  assert.equal(report.scope.counts.publicationDated, 14);
-  assert.equal(report.coverage.references, 14);
-  assert.equal(report.evidence.coverage.summary.counts.uniqueReferences, 14);
+  assert.equal(report.scope.counts.selected, 46);
+  assert.equal(report.scope.counts.publicationDated, 46);
+  assert.equal(report.coverage.references, 46);
+  assert.equal(report.evidence.coverage.summary.counts.uniqueReferences, 46);
+  assert.equal(report.evidence.retrospective.status, "insufficient");
+  assert.ok(report.trends.some((item) => /tres ventanas/.test(item.detail)));
+  assert.deepEqual(report.evidence.formats.manualPerformance.comparisons, []);
 
   for (const audience of [[], [{ id: "new-audience", needs: "Astronomía" }]]) {
     const empty = buildResearchReport({ ...company, audience }, options);
