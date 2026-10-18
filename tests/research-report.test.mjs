@@ -256,3 +256,63 @@ test("actual pilot measurements appear for editors and stay hidden from reviewer
   assert.equal(readOnly.status, 200);
   assert.equal(readOnly.body.evidence.pilot, undefined);
 });
+
+test("explicit measurement dates reach comparable format evidence through the real outcome route", async () => {
+  const publishedAt = new Date(Date.now() - 2 * 86400000).toISOString();
+  const measuredAt = new Date(Date.parse(publishedAt) + 86400000).toISOString();
+  let first;
+  for (let index = 0; index < 3; index++) {
+    const piece = storage.saveRecord(brand.id, "pieces", {
+      title: `Una decisión de IA ${index}`,
+      script: "Una pregunta y un ejemplo propio.",
+      status: "approved",
+      segmentId: "leaders",
+      channel: "linkedin",
+      format: "post",
+      assetIds: [],
+      scenes: [],
+    });
+    first ||= piece;
+    const result = await request(
+      `/brands/${brand.id}/pieces/${piece.id}/outcome`,
+      {
+        method: "POST",
+        body: {
+          publishedAt,
+          measuredAt,
+          publishedUrl: `https://www.linkedin.com/posts/company-piece-${index}`,
+          metrics: { views: 100, engagement: 10, leads: 0 },
+        },
+      },
+    );
+    assert.equal(result.status, 200);
+    assert.equal(result.body.measuredAt, measuredAt);
+  }
+  const result = await request(route());
+  assert.equal(
+    result.body.evidence.formats.manualPerformance.status,
+    "comparable",
+  );
+  assert.equal(
+    result.body.evidence.formats.manualPerformance.groups[0].sampleSize,
+    3,
+  );
+  const invalid = await request(
+    `/brands/${brand.id}/pieces/${first.id}/outcome`,
+    {
+      method: "POST",
+      body: {
+        publishedAt,
+        measuredAt: new Date(Date.parse(publishedAt) - 1000).toISOString(),
+        metrics: { views: 2 },
+      },
+    },
+  );
+  assert.equal(invalid.status, 400);
+  assert.equal(
+    storage
+      .listRecords(brand.id, "outcomes")
+      .find((item) => item.pieceId === first.id).measuredAt,
+    measuredAt,
+  );
+});

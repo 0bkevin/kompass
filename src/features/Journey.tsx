@@ -2435,6 +2435,7 @@ function OutcomeForm({
     if (lock.current) return;
     const input = new FormData(event.currentTarget);
     const date = String(input.get("publishedAt") || "");
+    const measurement = String(input.get("measuredAt") || "");
     if (!date || Number.isNaN(new Date(date).getTime())) {
       setError("Indica la fecha de publicación.");
       return;
@@ -2450,6 +2451,9 @@ function OutcomeForm({
           body: json({
             publishedUrl: String(input.get("publishedUrl") || "").trim(),
             publishedAt: new Date(date).toISOString(),
+            ...(measurement
+              ? { measuredAt: new Date(measurement).toISOString() }
+              : {}),
             metrics: {
               views: Number(input.get("views")),
               engagement: Number(input.get("engagement")),
@@ -2514,6 +2518,16 @@ function OutcomeForm({
             max={localDateTime()}
           />
         </div>
+        <Field
+          label="Fecha y hora de medición (opcional)"
+          name="measuredAt"
+          type="datetime-local"
+          step={1}
+          defaultValue={
+            outcome?.measuredAt ? localDateTime(outcome.measuredAt) : ""
+          }
+          max={localDateTime()}
+        />
         <div className="journey-metric-fields">
           <Field
             label="Visualizaciones"

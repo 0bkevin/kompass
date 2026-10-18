@@ -50,6 +50,7 @@ export interface Outcome {
   channel?: Piece["channel"];
   publishedUrl?: string;
   publishedAt: string;
+  measuredAt?: string;
   metrics: { views: number; engagement: number; leads: number };
   notes?: string;
   origin: "manual";
@@ -98,11 +99,7 @@ export interface Opportunity {
   }[];
   growth: {
     label:
-      | "observed"
-      | "early_signal"
-      | "stable"
-      | "declining"
-      | "insufficient";
+      "observed" | "early_signal" | "stable" | "declining" | "insufficient";
     explanation: string;
   };
   hypothesis: string;
