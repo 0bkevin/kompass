@@ -1,0 +1,96 @@
+{
+  "checkedAt": "2026-10-18T12:22:21.985Z",
+  "brand": {
+    "id": "dba02ac3-20fb-49b1-94e1-a3fc31b06971",
+    "name": "30x",
+    "website": "https://30x.com/",
+    "industry": "Educación y formación",
+    "market": "Latinoamérica",
+    "tone": "Claro, cercano y práctico",
+    "pillars": [
+      "Aplicación de inteligencia artificial",
+      "Ventas y crecimiento comercial",
+      "Formación y aprendizaje"
+    ],
+    "audience": [
+      {
+        "id": "90065ec8-2074-41f4-ae68-351278cc54f0",
+        "name": "Directivos y equipos de Latinoamérica que evalúan IA",
+        "role": "Priorizar decisiones de adopción de IA",
+        "stage": "Explorando",
+        "needs": "Priorizar un caso de uso de inteligencia artificial y definir criterios de revisión humana. Hipótesis editorial declarada para esta prueba QA; no representa consumo observado de alumnos o seguidores.",
+        "description": "Hipótesis sugerida a partir del contenido de la empresa. Requiere validación del equipo; no procede de perfiles de consumidores."
+      }
+    ]
+  },
+  "imports": [
+    {
+      "method": "heuristic",
+      "evidence": [
+        {
+          "url": "https://30x.com/",
+          "title": "30x.com",
+          "status": "linked",
+          "reason": "Enlace conservado sin leer: el operador debe revisar los términos y el permiso de esta web para esta finalidad. Puedes aportar contenido propio."
+        },
+        {
+          "url": "https://www.instagram.com/crece30x/",
+          "title": "instagram.com",
+          "status": "linked",
+          "reason": "Enlace guardado. No se ha leído este perfil ni su audiencia; aporta contenido propio para incorporarlo al contexto."
+        },
+        {
+          "title": "Contenido aportado por tu equipo",
+          "status": "provided",
+          "reason": "Texto aportado por el equipo; no se ha verificado externamente."
+        }
+      ],
+      "warnings": [
+        "Las sugerencias de marca y audiencia son hipótesis basadas en el contenido aportado. Confírmalas; no describen consumidores observados.",
+        "Los enlaces marcados como guardados no se han usado para inferir contenido ni audiencia."
+      ]
+    }
+  ],
+  "requests": [
+    {
+      "path": "/api/context/inspect",
+      "status": 200,
+      "elapsedMs": 19
+    },
+    {
+      "path": "/api/context/inspect",
+      "status": 200,
+      "elapsedMs": 14
+    },
+    {
+      "path": "/api/brands",
+      "status": 201,
+      "elapsedMs": 27
+    },
+    {
+      "path": "/api/brands/dba02ac3-20fb-49b1-94e1-a3fc31b06971/context/commit",
+      "status": 201,
+      "elapsedMs": 9
+    }
+  ],
+  "desktop": {
+    "width": 1280,
+    "documentWidth": 1280,
+    "descriptionStayedVisible": true,
+    "unreadLinkRemainsOnFirstStep": true,
+    "identicalRetryDisabled": true,
+    "descriptionFocused": true
+  },
+  "mobile": {
+    "width": 390,
+    "documentWidth": 390,
+    "companyReviewDefaultDisclosureClosed": true,
+    "completedEntry": true
+  },
+  "limits": {
+    "automatedAgentTest": true,
+    "recruitedHumans": false,
+    "noAiRequests": true,
+    "publicContextOnly": true
+  }
+}
