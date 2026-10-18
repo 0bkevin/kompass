@@ -10,6 +10,10 @@ import {
   startDiscoveryScheduler,
 } from "./intelligence.mjs";
 import { checkOrigin } from "./auth.mjs";
+import { createCompanyContextRouter } from "./company-context.mjs";
+import { createAudienceInsightsRouter } from "./audience-insights.mjs";
+import { createCommunityRouter } from "./community.mjs";
+import { createOpportunityAnalysisRouter } from "./opportunity-analysis.mjs";
 
 const projectRoot = path.resolve(
   path.dirname(fileURLToPath(import.meta.url)),
@@ -40,6 +44,10 @@ export function createApp({
   app.use("/api", createIntelligenceRouter());
   app.use("/api", createSocialRouter());
   app.use("/api", createVideoAnalysisRouter());
+  app.use("/api", createCompanyContextRouter());
+  app.use("/api", createAudienceInsightsRouter());
+  app.use("/api", createCommunityRouter());
+  app.use("/api", createOpportunityAnalysisRouter());
   app.use("/api", (_req, res) =>
     res.status(404).json({ error: "La ruta de API no existe." }),
   );
@@ -115,10 +123,18 @@ if (
   path.resolve(process.argv[1]) === fileURLToPath(import.meta.url)
 ) {
   const port = Number(process.env.PORT || 3001);
-  const server = createApp().listen(port, process.env.HOST || "0.0.0.0", () =>
+  const server = createApp().listen(port, process.env.HOST || "0.0.0.0");
+  const discovery = startDiscoveryScheduler();
+  server.once("listening", () =>
     console.log(`30X Radar API escuchando en http://localhost:${port}`),
   );
-  const discovery = startDiscoveryScheduler();
+  server.once("error", (error) => {
+    discovery.stop();
+    console.error(
+      `No se pudo abrir el puerto ${port} (${error.code || "error"}). Configura PORT y RADAR_API_PORT con un puerto disponible.`,
+    );
+    process.exitCode = 1;
+  });
   for (const signal of ["SIGINT", "SIGTERM"])
     process.on(signal, () => {
       discovery.stop();
