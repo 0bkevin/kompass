@@ -147,3 +147,31 @@ test("daily refreshes do not multiply one topic signal and inputs stay unchanged
   assert.equal(result.counts.evaluated, 1);
   assert.equal(JSON.stringify(history), input);
 });
+
+test("many same-day refreshes use bounded daily observations and exclude old trials", () => {
+  const refreshes = Array.from({ length: 2000 }, (_, index) =>
+    snapshot(NOW - WEEK - DAY + index * 1000, 5),
+  );
+  const old = [
+    snapshot(NOW - 120 * DAY, 3),
+    snapshot(NOW - 113 * DAY, 6),
+    snapshot(NOW - 106 * DAY, 9),
+  ];
+  const result = run([...old, ...refreshes, ...series()]);
+  assert.equal(result.limits.observationDays, 4);
+  assert.equal(result.limits.selectedSnapshots, 4);
+  assert.equal(result.counts.evaluated, 1);
+  assert.ok(
+    result.evaluations.every(
+      (item) =>
+        Date.parse(item.signal.observedAt) >=
+        Date.parse(result.limits.signalWindowStart),
+    ),
+  );
+  assert.match(result.limitations.join(" "), /No representa todo el historial/);
+  const conflict = [
+    ...series(),
+    { ...series()[1], counts: { ventas: 10, otro: 10 }, sampleSize: 20 },
+  ];
+  assert.equal(run(conflict).counts.evaluated, 0);
+});
