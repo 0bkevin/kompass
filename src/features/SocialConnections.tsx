@@ -31,7 +31,12 @@ type ConnectionProvider = {
 };
 type Connections = {
   providers: ConnectionProvider[];
-  automaticSync: { enabled: boolean; intervalMinutes: number };
+  automaticSync: {
+    enabled: boolean;
+    intervalMinutes: number;
+    lastSyncedAt?: string;
+    lastError?: string;
+  };
 };
 type SyncResult = {
   synced: number;
@@ -275,12 +280,22 @@ export default function SocialConnections() {
               <div className="social-provider-copy">
                 <div className="social-provider-title">
                   <strong>{provider.name}</strong>
-                  <Badge tone={provider.ready ? "green" : "neutral"}>
-                    {provider.connection
-                      ? "Cuenta conectada"
-                      : provider.ready
-                        ? "Consulta pública disponible"
-                        : "Aún no disponible"}
+                  <Badge
+                    tone={
+                      provider.id === "youtube" && data.automaticSync.lastError
+                        ? "amber"
+                        : provider.ready
+                          ? "green"
+                          : "neutral"
+                    }
+                  >
+                    {provider.id === "youtube" && data.automaticSync.lastError
+                      ? "Revisar sincronización"
+                      : provider.connection
+                        ? "Cuenta conectada"
+                        : provider.ready
+                          ? "Consulta pública disponible"
+                          : "Aún no disponible"}
                   </Badge>
                 </div>
                 {provider.connection ? (
@@ -351,6 +366,7 @@ export default function SocialConnections() {
           gestiona por separado.
         </p>
       )}
+      <SyncHealth sync={data?.automaticSync} />
       {!owner && (
         <p className="small muted">
           El propietario de la empresa puede conectar o desconectar cuentas.
@@ -363,6 +379,22 @@ export default function SocialConnections() {
       )}
       {message && <p role="status">{message}</p>}
     </section>
+  );
+}
+
+function SyncHealth({ sync }: { sync?: Connections["automaticSync"] }) {
+  if (!sync?.lastError) return null;
+  return (
+    <div className="social-sync-result">
+      <p className="form-error" role="alert">
+        La actualización automática no se completó. {sync.lastError}
+      </p>
+      <p className="small muted">
+        {sync.lastSyncedAt
+          ? `Última actualización completada: ${dateTime(sync.lastSyncedAt)}. Los datos guardados conservan su fecha de consulta.`
+          : "Todavía no hay una actualización completada en este espacio."}
+      </p>
+    </div>
   );
 }
 
@@ -565,7 +597,12 @@ export function AutomaticMetrics() {
 
 function AutomaticMetricsPanel() {
   const { state, navigate } = useWorkspace();
-  const { base, data: connections, error: connectionError } = useConnections();
+  const {
+    base,
+    data: connections,
+    error: connectionError,
+    load: loadConnections,
+  } = useConnections();
   const [data, setData] = useState<MetricsResult | null>(null);
   const [loading, setLoading] = useState(true);
   const [busy, setBusy] = useState(false);
@@ -618,7 +655,7 @@ function AutomaticMetricsPanel() {
         body: json({}),
       });
       setSyncResult(result);
-      await load();
+      await Promise.all([load(), loadConnections()]);
     } catch (cause) {
       setError(
         failure(
@@ -816,6 +853,7 @@ function AutomaticMetricsPanel() {
           ? `La consulta se repite cada ${connections.automaticSync.intervalMinutes} minutos.`
           : "La sincronización automática aún no está activa."}
       </p>
+      <SyncHealth sync={connections?.automaticSync} />
       {state.brand.isDemo && (
         <p className="small muted">
           Los videos reales se vinculan en una empresa propia. Este espacio
@@ -841,7 +879,9 @@ function AutomaticMetricsPanel() {
         <div className="social-sync-result" role="status">
           <p>
             {syncResult.cached
-              ? `Cifras al día. Última consulta: ${dateTime(syncResult.observedAt)}.`
+              ? connections?.automaticSync.lastError
+                ? `Se mantienen las últimas cifras guardadas: ${dateTime(syncResult.observedAt)}.`
+                : `Cifras al día. Última consulta: ${dateTime(syncResult.observedAt)}.`
               : !syncResult.synced &&
                   !syncResult.skipped &&
                   !syncResult.errors.length
