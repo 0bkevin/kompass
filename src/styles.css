@@ -1,4 +1,17 @@
-@import url("https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap");
+@font-face {
+  font-family: "DM Sans";
+  src: url("/fonts/dm-sans/dm-sans-variable.ttf") format("truetype");
+  font-style: normal;
+  font-weight: 100 1000;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Manrope";
+  src: url("/fonts/manrope/manrope-variable.ttf") format("truetype");
+  font-style: normal;
+  font-weight: 200 800;
+  font-display: swap;
+}
 :root {
   font-family: "DM Sans", sans-serif;
   color: #172c2b;
