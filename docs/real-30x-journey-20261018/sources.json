@@ -1,0 +1,62 @@
+{
+  "verifiedAt": "2026-10-18",
+  "companyName": "30X",
+  "website": "https://30x.com/",
+  "instagram": "https://www.instagram.com/crece30x/",
+  "inputKind": "original-public-fact-paraphrase-with-provenance",
+  "companyText": "30X ofrece formación ejecutiva en Latinoamérica para fundadores y líderes empresariales. Sus áreas incluyen ventas, crecimiento e implementación estratégica de inteligencia artificial para equipos y directivos. En su catálogo público aparecen Sales Machine y AI for Executives. Estas descripciones orientan hipótesis de audiencia; no son observaciones de alumnos, seguidores ni consumidores reales.",
+  "facts": [
+    {
+      "claim": "Formación ejecutiva para fundadores y líderes de Latinoamérica.",
+      "url": "https://30x.com/",
+      "basis": "visible-public-homepage-positioning"
+    },
+    {
+      "claim": "Áreas de ventas, growth e IA estratégica para equipos y directivos.",
+      "url": "https://30x.com/",
+      "basis": "visible-public-programme-categories"
+    },
+    {
+      "claim": "Sales Machine y AI for Executives figuran en el catálogo.",
+      "url": "https://30x.com/programas",
+      "basis": "visible-public-programme-names"
+    },
+    {
+      "claim": "El pie de página público enlaza la cuenta @crece30x.",
+      "url": "https://30x.com/",
+      "linkedUrl": "https://www.instagram.com/crece30x/",
+      "basis": "visible-footer-anchor"
+    }
+  ],
+  "observedAccess": {
+    "websitePublicPageReadableDuringSourceReview": true,
+    "websiteAutomatedAppReadGrantCreated": false,
+    "websiteCopiedBodySubmittedToAi": false,
+    "instagramBrowserOutcome": "redirected-to-login",
+    "instagramLoggedIn": false,
+    "instagramPostsCollected": 0,
+    "instagramMetricsCollected": 0,
+    "personalRecordsCollected": 0
+  },
+  "robotsReview": {
+    "url": "https://30x.com/robots.txt",
+    "httpStatus": 200,
+    "publicHomepageAllowed": true,
+    "copyrightOrCommercialReuseGrant": false
+  },
+  "termsReview": {
+    "websiteTermsUrl": "https://30x.com/legal/terminos-y-condiciones",
+    "websiteTermsVersion": "1.9",
+    "websiteTermsDate": "2026-08-01",
+    "websiteSections": ["6.2", "7.1"],
+    "privacyUrl": "https://30x.com/legal/politica-de-privacidad",
+    "instagramCurrentTermsRetrieved": false,
+    "instagramTermsRetrievalOutcome": "HTTP429; Meta collection terms redirected to blocked login",
+    "legalDetermination": false
+  },
+  "sourceQualityNotes": [
+    "Homepage JSON-LD sameAs lists a different Instagram handle; prefer the visible footer link, corroborated by official 30X crosslinks.",
+    "Homepage canonical tag names framer.30x.com; selected user-facing business URL remains 30x.com.",
+    "Do not infer actual audience composition, EdTech or HealthTech segments, follower overlap or course enrolment from company marketing."
+  ]
+}
