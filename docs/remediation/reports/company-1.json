@@ -1,0 +1,86 @@
+{
+  "issueId": "company-1",
+  "agent": "fix_company_1",
+  "status": "fixed",
+  "integration": "Pendiente de comprobación integrada del coordinador.",
+  "rootCause": "BrandFields renderizaba market y language con selects cerrados. Un valor válido fuera de sus opciones no se representaba en el DOM; el navegador elegía la primera opción, y brandPatchInput la detectaba como cambio al guardar sólo el nombre. Costa Rica se reemplazaba por Latinoamérica.",
+  "changes": [
+    "Mercado pasa a texto editable con datalist de sugerencias y límite de 150 caracteres coherente con la API. El valor actual se representa aunque no esté sugerido y se preserva también el valor vacío permitido por API.",
+    "Idioma pasa a texto editable con sugerencias de nombres comprensibles Español/Inglés/Portugués; brandInput convierte esos nombres a es/en/pt. Los idiomas personalizados mantienen su texto y el PATCH sólo incluye cambios reales.",
+    "Los identificadores de datalist y ayudas son únicos por formulario mediante useId. Etiquetas, ayudas, foco nativo y estructura responsive existentes se conservan; no se modifica el contrato backend ni la lista de países permitidos."
+  ],
+  "files": [
+    "src/features/Brand.tsx"
+  ],
+  "verification": [
+    {
+      "command": "T3 preview_*: importar texto sintético → Revisar propuesta → Costa Rica → Aplicar → recargar → Perfil → cambiar sólo nombre → Guardar contexto → recargar → GET /api/session y comparar todos los campos",
+      "before": "FAIL: API market=Costa Rica antes; formulario mostraba Latinoamérica; PATCH contenía name+market y persistía Latinoamérica. changedKeys=[name,market].",
+      "after": "PASS: campo y API conservan Costa Rica tras recarga completa; PATCH contiene sólo name. changedKeys=[name]. Sector, descripción, tono, idioma, web, colores, objetivos, pilares, meta semanal y audiencia idénticos.",
+      "kind": "browser"
+    },
+    {
+      "command": "Fixture API local con market='África francófona y Québec (QA sintético)' y language='Français (Canada)' → recargar → UI editar sólo nombre → guardar → recargar → GET /api/session",
+      "before": "El fallo del select cerrado confirmado con Costa Rica también dejaba sin opción estos valores; este caso adicional se ejecutó después del arreglo.",
+      "after": "PASS: mercado e idioma personalizados aparecen íntegros y se conservan; PATCH sólo name y todos los demás campos exactos.",
+      "kind": "browser"
+    },
+    {
+      "command": "T3 perfil: editar market='Centroamérica · Panamá y Costa Rica' y language='日本語' → Guardar contexto → recargar → GET /api/session",
+      "before": "El perfil sólo permitía opciones cerradas.",
+      "after": "PASS: ambos valores libres se guardan y reaparecen exactos; sólo language y market cambian y el resto de datos permanece idéntico.",
+      "kind": "browser"
+    },
+    {
+      "command": "T3 perfil: escribir Inglés → guardar → recargar → GET /api/session y leer campo idioma",
+      "before": "La lista original sólo representaba códigos es/en/pt.",
+      "after": "PASS: PATCH language=en; API language=en; UI muestra Inglés tras recarga y guardar vuelve a deshabilitarse sin diferencias residuales.",
+      "kind": "browser"
+    },
+    {
+      "command": "T3 foco por Tab mercado→idioma y revisión desktop 1280x800 / viewport móvil 390x844",
+      "before": "No se usó el resultado visual anterior como prueba de persistencia.",
+      "after": "PASS: Tab alcanza idioma con contorno sólido de 3px; scrollWidth coincide con viewport en ambos tamaños; ayudas legibles y sin solapamiento. Capturas finales guardadas.",
+      "kind": "browser"
+    },
+    {
+      "command": "node --test tests/company-context.test.mjs tests/core.test.mjs",
+      "before": "No se usaron estos tests API como señal roja del defecto visual.",
+      "after": "PASS: 26 tests, 26 aprobados, 0 fallos.",
+      "kind": "test"
+    },
+    {
+      "command": "Prettier check del prefijo de src/features/Brand.tsx hasta brandPatchInput, que contiene los hunks asignados",
+      "before": "El primer check detectó un salto de línea en el nuevo find; se corrigió sólo ese fragmento.",
+      "after": "PASS: assignedHunkPrettierCheck=true. El check de archivo entero sigue señalando un ternario en el hunk ajeno de Audiencia; comunicado al coordinador sin tocarlo.",
+      "kind": "test"
+    }
+  ],
+  "artifacts": [
+    "docs/remediation/evidence/company-1-api-observations.json",
+    "docs/remediation/evidence/company-1-before-mismatch.png",
+    "docs/remediation/evidence/company-1-before-saved.png",
+    "docs/remediation/evidence/company-1-after-costa-rica.png",
+    "docs/remediation/evidence/company-1-after-custom-api.png",
+    "docs/remediation/evidence/company-1-final-desktop.png",
+    "docs/remediation/evidence/company-1-final-mobile.png"
+  ],
+  "limitations": [
+    "Comprobaciones de UI en desarrollo propio contra APIs y SQLite persistentes aisladas; no se ejecutó build global. El coordinador debe comprobar la integración final.",
+    "Sin test unitario nuevo: el defecto depende de cómo un control nativo representa un valor externo y del envío del formulario real. Una prueba de constante/JSX o de la API sin navegador no ejercitaría la causa. La regresión roja/verde se verificó con el recorrido completo T3.",
+    "Viewport móvil emulado en el navegador de T3; no dispositivo físico ni Safari móvil. El alta de nuevas marcas y otros módulos quedan fuera de esta comprobación acotada posterior al alta.",
+    "Datos exclusivamente sintéticos. Inspección heuristic con texto aportado; no se solicitaron proveedores reales ni lectura externa de fuentes, y las claves se retiraron del proceso."
+  ],
+  "run": {
+    "date": "2026-10-18",
+    "timeWindowUtc": "05:14–05:19",
+    "url": "http://127.0.1.11:5501/brand",
+    "apiPort": 4501,
+    "webPort": 5501,
+    "dataDir": "/tmp/30x-remediation-company-1",
+    "processSessionId": 19372,
+    "tabId": "tab_4f_07e54779-9ab2-4979-8a15-674c4eff160a",
+    "cleanup": "Pestaña propia cerrada y sesión 19372 terminada; ss confirma puertos 4501 y 5501 sin listeners. Base sintética conservada.",
+    "cleanupNote": "Al terminar con SIGTERM, Node --watch emitió una aserción interna en FSWatcher.close. Sucedió durante el cierre deliberado, después de las pruebas; los procesos y puertos propios quedaron cerrados."
+  }
+}

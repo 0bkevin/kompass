@@ -1,0 +1,563 @@
+{
+  "issueId": "company-1",
+  "data": "Datos sintéticos; cuenta y marca iniciales preparadas mediante API local, importación/propuesta/perfil ejercidos por UI T3.",
+  "run": {
+    "date": "2026-10-18",
+    "host": "127.0.1.11",
+    "apiPort": 4501,
+    "webPort": 5501,
+    "dataDir": "/tmp/30x-remediation-company-1",
+    "tabId": "tab_4f_07e54779-9ab2-4979-8a15-674c4eff160a",
+    "brandId": "9eedd4b5-c277-4a09-8fe2-f974a5e2e96b"
+  },
+  "red": {
+    "case": "Original: importar → Costa Rica → editar solo nombre → guardar",
+    "expectedMarket": "Costa Rica",
+    "actualMarket": "Latinoamérica",
+    "pass": false,
+    "changedKeys": [
+      "name",
+      "market"
+    ],
+    "before": {
+      "name": "Nexo QA · revisado",
+      "industry": "Educación y formación",
+      "description": "PRUEBA SINTÉTICA COMPANY-1. Nexo es una empresa de formación en operaciones que ayuda a equipos de servicios a mejorar procesos. Comparte guías de automatización responsable y métricas de procesos para aprender sin promesas de resultados.",
+      "tone": "Claro, cercano y práctico",
+      "language": "es",
+      "market": "Costa Rica",
+      "website": "",
+      "color": "#147d65",
+      "secondaryColor": "#161b17",
+      "goals": [
+        "Educar",
+        "Ayudar a equipos"
+      ],
+      "pillars": [
+        "Aplicación de inteligencia artificial",
+        "Formación y aprendizaje",
+        "Procesos y productividad"
+      ],
+      "weeklyTarget": 3,
+      "audience": [
+        {
+          "id": "segment-company-1",
+          "name": "Equipos de operaciones (sintético)",
+          "role": "Responsables de procesos",
+          "stage": "Explorando",
+          "needs": "Entender mejoras de procesos sin datos personales",
+          "description": ""
+        }
+      ],
+      "id": "9eedd4b5-c277-4a09-8fe2-f974a5e2e96b",
+      "createdAt": "2026-10-18T05:14:42.168Z",
+      "role": "owner"
+    },
+    "after": {
+      "name": "Nexo QA · nombre corregido",
+      "industry": "Educación y formación",
+      "description": "PRUEBA SINTÉTICA COMPANY-1. Nexo es una empresa de formación en operaciones que ayuda a equipos de servicios a mejorar procesos. Comparte guías de automatización responsable y métricas de procesos para aprender sin promesas de resultados.",
+      "tone": "Claro, cercano y práctico",
+      "language": "es",
+      "market": "Latinoamérica",
+      "website": "",
+      "color": "#147d65",
+      "secondaryColor": "#161b17",
+      "goals": [
+        "Educar",
+        "Ayudar a equipos"
+      ],
+      "pillars": [
+        "Aplicación de inteligencia artificial",
+        "Formación y aprendizaje",
+        "Procesos y productividad"
+      ],
+      "weeklyTarget": 3,
+      "audience": [
+        {
+          "id": "segment-company-1",
+          "name": "Equipos de operaciones (sintético)",
+          "role": "Responsables de procesos",
+          "stage": "Explorando",
+          "needs": "Entender mejoras de procesos sin datos personales",
+          "description": ""
+        }
+      ],
+      "id": "9eedd4b5-c277-4a09-8fe2-f974a5e2e96b",
+      "createdAt": "2026-10-18T05:14:42.168Z",
+      "role": "owner"
+    },
+    "patches": [
+      {
+        "kind": "PATCH",
+        "path": "/api/brands/9eedd4b5-c277-4a09-8fe2-f974a5e2e96b",
+        "body": {
+          "name": "Nexo QA · revisado",
+          "industry": "Educación y formación",
+          "description": "PRUEBA SINTÉTICA COMPANY-1. Nexo es una empresa de formación en operaciones que ayuda a equipos de servicios a mejorar procesos. Comparte guías de automatización responsable y métricas de procesos para aprender sin promesas de resultados.",
+          "website": "",
+          "market": "Costa Rica",
+          "language": "es",
+          "tone": "Claro, cercano y práctico",
+          "pillars": [
+            "Aplicación de inteligencia artificial",
+            "Formación y aprendizaje",
+            "Procesos y productividad"
+          ]
+        },
+        "status": 200,
+        "response": {
+          "name": "Nexo QA · revisado",
+          "industry": "Educación y formación",
+          "description": "PRUEBA SINTÉTICA COMPANY-1. Nexo es una empresa de formación en operaciones que ayuda a equipos de servicios a mejorar procesos. Comparte guías de automatización responsable y métricas de procesos para aprender sin promesas de resultados.",
+          "tone": "Claro, cercano y práctico",
+          "language": "es",
+          "market": "Costa Rica",
+          "website": "",
+          "color": "#147d65",
+          "secondaryColor": "#161b17",
+          "goals": [
+            "Educar",
+            "Ayudar a equipos"
+          ],
+          "pillars": [
+            "Aplicación de inteligencia artificial",
+            "Formación y aprendizaje",
+            "Procesos y productividad"
+          ],
+          "weeklyTarget": 3,
+          "audience": [
+            {
+              "id": "segment-company-1",
+              "name": "Equipos de operaciones (sintético)",
+              "role": "Responsables de procesos",
+              "stage": "Explorando",
+              "needs": "Entender mejoras de procesos sin datos personales",
+              "description": ""
+            }
+          ],
+          "id": "9eedd4b5-c277-4a09-8fe2-f974a5e2e96b",
+          "createdAt": "2026-10-18T05:14:42.168Z",
+          "role": "owner"
+        }
+      },
+      {
+        "kind": "PATCH",
+        "path": "/api/brands/9eedd4b5-c277-4a09-8fe2-f974a5e2e96b",
+        "body": {
+          "name": "Nexo QA · nombre corregido",
+          "market": "Latinoamérica"
+        },
+        "status": 200,
+        "response": {
+          "name": "Nexo QA · nombre corregido",
+          "industry": "Educación y formación",
+          "description": "PRUEBA SINTÉTICA COMPANY-1. Nexo es una empresa de formación en operaciones que ayuda a equipos de servicios a mejorar procesos. Comparte guías de automatización responsable y métricas de procesos para aprender sin promesas de resultados.",
+          "tone": "Claro, cercano y práctico",
+          "language": "es",
+          "market": "Latinoamérica",
+          "website": "",
+          "color": "#147d65",
+          "secondaryColor": "#161b17",
+          "goals": [
+            "Educar",
+            "Ayudar a equipos"
+          ],
+          "pillars": [
+            "Aplicación de inteligencia artificial",
+            "Formación y aprendizaje",
+            "Procesos y productividad"
+          ],
+          "weeklyTarget": 3,
+          "audience": [
+            {
+              "id": "segment-company-1",
+              "name": "Equipos de operaciones (sintético)",
+              "role": "Responsables de procesos",
+              "stage": "Explorando",
+              "needs": "Entender mejoras de procesos sin datos personales",
+              "description": ""
+            }
+          ],
+          "id": "9eedd4b5-c277-4a09-8fe2-f974a5e2e96b",
+          "createdAt": "2026-10-18T05:14:42.168Z",
+          "role": "owner"
+        }
+      }
+    ]
+  },
+  "green": {
+    "case": "Original: importar → Costa Rica → editar solo nombre → guardar",
+    "expectedMarket": "Costa Rica",
+    "actualMarket": "Costa Rica",
+    "pass": true,
+    "changedKeys": [
+      "name"
+    ],
+    "before": {
+      "name": "Nexo QA · revisado",
+      "industry": "Educación y formación",
+      "description": "PRUEBA SINTÉTICA COMPANY-1. Nexo es una empresa de formación en operaciones que ayuda a equipos de servicios a mejorar procesos. Comparte guías de automatización responsable y métricas de procesos para aprender sin promesas de resultados.",
+      "tone": "Claro, cercano y práctico",
+      "language": "es",
+      "market": "Costa Rica",
+      "website": "",
+      "color": "#147d65",
+      "secondaryColor": "#161b17",
+      "goals": [
+        "Educar",
+        "Ayudar a equipos"
+      ],
+      "pillars": [
+        "Aplicación de inteligencia artificial",
+        "Formación y aprendizaje",
+        "Procesos y productividad"
+      ],
+      "weeklyTarget": 3,
+      "audience": [
+        {
+          "id": "segment-company-1",
+          "name": "Equipos de operaciones (sintético)",
+          "role": "Responsables de procesos",
+          "stage": "Explorando",
+          "needs": "Entender mejoras de procesos sin datos personales",
+          "description": ""
+        }
+      ],
+      "id": "9eedd4b5-c277-4a09-8fe2-f974a5e2e96b",
+      "createdAt": "2026-10-18T05:14:42.168Z",
+      "role": "owner"
+    },
+    "after": {
+      "name": "Nexo QA · nombre corregido",
+      "industry": "Educación y formación",
+      "description": "PRUEBA SINTÉTICA COMPANY-1. Nexo es una empresa de formación en operaciones que ayuda a equipos de servicios a mejorar procesos. Comparte guías de automatización responsable y métricas de procesos para aprender sin promesas de resultados.",
+      "tone": "Claro, cercano y práctico",
+      "language": "es",
+      "market": "Costa Rica",
+      "website": "",
+      "color": "#147d65",
+      "secondaryColor": "#161b17",
+      "goals": [
+        "Educar",
+        "Ayudar a equipos"
+      ],
+      "pillars": [
+        "Aplicación de inteligencia artificial",
+        "Formación y aprendizaje",
+        "Procesos y productividad"
+      ],
+      "weeklyTarget": 3,
+      "audience": [
+        {
+          "id": "segment-company-1",
+          "name": "Equipos de operaciones (sintético)",
+          "role": "Responsables de procesos",
+          "stage": "Explorando",
+          "needs": "Entender mejoras de procesos sin datos personales",
+          "description": ""
+        }
+      ],
+      "id": "9eedd4b5-c277-4a09-8fe2-f974a5e2e96b",
+      "createdAt": "2026-10-18T05:14:42.168Z",
+      "role": "owner"
+    },
+    "patches": [
+      {
+        "path": "/api/brands/9eedd4b5-c277-4a09-8fe2-f974a5e2e96b",
+        "body": {
+          "name": "Nexo QA · nombre corregido"
+        },
+        "status": 200
+      }
+    ],
+    "profileMarket": "Costa Rica",
+    "profileLanguage": "Español"
+  },
+  "customApiRoundtrip": {
+    "case": "API custom market/language → name-only edit → save → full reload",
+    "before": {
+      "name": "Nexo QA · nombre corregido",
+      "industry": "Educación y formación",
+      "description": "PRUEBA SINTÉTICA COMPANY-1. Nexo es una empresa de formación en operaciones que ayuda a equipos de servicios a mejorar procesos. Comparte guías de automatización responsable y métricas de procesos para aprender sin promesas de resultados.",
+      "tone": "Claro, cercano y práctico",
+      "language": "Français (Canada)",
+      "market": "África francófona y Québec (QA sintético)",
+      "website": "",
+      "color": "#147d65",
+      "secondaryColor": "#161b17",
+      "goals": [
+        "Educar",
+        "Ayudar a equipos"
+      ],
+      "pillars": [
+        "Aplicación de inteligencia artificial",
+        "Formación y aprendizaje",
+        "Procesos y productividad"
+      ],
+      "weeklyTarget": 3,
+      "audience": [
+        {
+          "id": "segment-company-1",
+          "name": "Equipos de operaciones (sintético)",
+          "role": "Responsables de procesos",
+          "stage": "Explorando",
+          "needs": "Entender mejoras de procesos sin datos personales",
+          "description": ""
+        }
+      ],
+      "id": "9eedd4b5-c277-4a09-8fe2-f974a5e2e96b",
+      "createdAt": "2026-10-18T05:14:42.168Z",
+      "role": "owner"
+    },
+    "after": {
+      "name": "Nexo QA · personnalisé",
+      "industry": "Educación y formación",
+      "description": "PRUEBA SINTÉTICA COMPANY-1. Nexo es una empresa de formación en operaciones que ayuda a equipos de servicios a mejorar procesos. Comparte guías de automatización responsable y métricas de procesos para aprender sin promesas de resultados.",
+      "tone": "Claro, cercano y práctico",
+      "language": "Français (Canada)",
+      "market": "África francófona y Québec (QA sintético)",
+      "website": "",
+      "color": "#147d65",
+      "secondaryColor": "#161b17",
+      "goals": [
+        "Educar",
+        "Ayudar a equipos"
+      ],
+      "pillars": [
+        "Aplicación de inteligencia artificial",
+        "Formación y aprendizaje",
+        "Procesos y productividad"
+      ],
+      "weeklyTarget": 3,
+      "audience": [
+        {
+          "id": "segment-company-1",
+          "name": "Equipos de operaciones (sintético)",
+          "role": "Responsables de procesos",
+          "stage": "Explorando",
+          "needs": "Entender mejoras de procesos sin datos personales",
+          "description": ""
+        }
+      ],
+      "id": "9eedd4b5-c277-4a09-8fe2-f974a5e2e96b",
+      "createdAt": "2026-10-18T05:14:42.168Z",
+      "role": "owner"
+    },
+    "changedKeys": [
+      "name"
+    ],
+    "profile": {
+      "market": "África francófona y Québec (QA sintético)",
+      "language": "Français (Canada)"
+    },
+    "patches": [
+      {
+        "path": "/api/brands/9eedd4b5-c277-4a09-8fe2-f974a5e2e96b",
+        "body": {
+          "name": "Nexo QA · personnalisé"
+        },
+        "status": 200
+      }
+    ],
+    "pass": true
+  },
+  "customUiEdit": {
+    "case": "Edit custom market and Japanese language directly in profile → save → reload",
+    "before": {
+      "name": "Nexo QA · personnalisé",
+      "industry": "Educación y formación",
+      "description": "PRUEBA SINTÉTICA COMPANY-1. Nexo es una empresa de formación en operaciones que ayuda a equipos de servicios a mejorar procesos. Comparte guías de automatización responsable y métricas de procesos para aprender sin promesas de resultados.",
+      "tone": "Claro, cercano y práctico",
+      "language": "Français (Canada)",
+      "market": "África francófona y Québec (QA sintético)",
+      "website": "",
+      "color": "#147d65",
+      "secondaryColor": "#161b17",
+      "goals": [
+        "Educar",
+        "Ayudar a equipos"
+      ],
+      "pillars": [
+        "Aplicación de inteligencia artificial",
+        "Formación y aprendizaje",
+        "Procesos y productividad"
+      ],
+      "weeklyTarget": 3,
+      "audience": [
+        {
+          "id": "segment-company-1",
+          "name": "Equipos de operaciones (sintético)",
+          "role": "Responsables de procesos",
+          "stage": "Explorando",
+          "needs": "Entender mejoras de procesos sin datos personales",
+          "description": ""
+        }
+      ],
+      "id": "9eedd4b5-c277-4a09-8fe2-f974a5e2e96b",
+      "createdAt": "2026-10-18T05:14:42.168Z",
+      "role": "owner"
+    },
+    "after": {
+      "name": "Nexo QA · personnalisé",
+      "industry": "Educación y formación",
+      "description": "PRUEBA SINTÉTICA COMPANY-1. Nexo es una empresa de formación en operaciones que ayuda a equipos de servicios a mejorar procesos. Comparte guías de automatización responsable y métricas de procesos para aprender sin promesas de resultados.",
+      "tone": "Claro, cercano y práctico",
+      "language": "日本語",
+      "market": "Centroamérica · Panamá y Costa Rica",
+      "website": "",
+      "color": "#147d65",
+      "secondaryColor": "#161b17",
+      "goals": [
+        "Educar",
+        "Ayudar a equipos"
+      ],
+      "pillars": [
+        "Aplicación de inteligencia artificial",
+        "Formación y aprendizaje",
+        "Procesos y productividad"
+      ],
+      "weeklyTarget": 3,
+      "audience": [
+        {
+          "id": "segment-company-1",
+          "name": "Equipos de operaciones (sintético)",
+          "role": "Responsables de procesos",
+          "stage": "Explorando",
+          "needs": "Entender mejoras de procesos sin datos personales",
+          "description": ""
+        }
+      ],
+      "id": "9eedd4b5-c277-4a09-8fe2-f974a5e2e96b",
+      "createdAt": "2026-10-18T05:14:42.168Z",
+      "role": "owner"
+    },
+    "changedKeys": [
+      "language",
+      "market"
+    ],
+    "profile": {
+      "market": "Centroamérica · Panamá y Costa Rica",
+      "language": "日本語"
+    },
+    "patch": {
+      "body": {
+        "market": "Centroamérica · Panamá y Costa Rica",
+        "language": "日本語"
+      },
+      "status": 200
+    },
+    "pass": true
+  },
+  "canonicalLanguage": {
+    "case": "Choose Inglés label → canonical en → reload displays Inglés",
+    "before": {
+      "name": "Nexo QA · personnalisé",
+      "industry": "Educación y formación",
+      "description": "PRUEBA SINTÉTICA COMPANY-1. Nexo es una empresa de formación en operaciones que ayuda a equipos de servicios a mejorar procesos. Comparte guías de automatización responsable y métricas de procesos para aprender sin promesas de resultados.",
+      "tone": "Claro, cercano y práctico",
+      "language": "日本語",
+      "market": "Centroamérica · Panamá y Costa Rica",
+      "website": "",
+      "color": "#147d65",
+      "secondaryColor": "#161b17",
+      "goals": [
+        "Educar",
+        "Ayudar a equipos"
+      ],
+      "pillars": [
+        "Aplicación de inteligencia artificial",
+        "Formación y aprendizaje",
+        "Procesos y productividad"
+      ],
+      "weeklyTarget": 3,
+      "audience": [
+        {
+          "id": "segment-company-1",
+          "name": "Equipos de operaciones (sintético)",
+          "role": "Responsables de procesos",
+          "stage": "Explorando",
+          "needs": "Entender mejoras de procesos sin datos personales",
+          "description": ""
+        }
+      ],
+      "id": "9eedd4b5-c277-4a09-8fe2-f974a5e2e96b",
+      "createdAt": "2026-10-18T05:14:42.168Z",
+      "role": "owner"
+    },
+    "after": {
+      "name": "Nexo QA · personnalisé",
+      "industry": "Educación y formación",
+      "description": "PRUEBA SINTÉTICA COMPANY-1. Nexo es una empresa de formación en operaciones que ayuda a equipos de servicios a mejorar procesos. Comparte guías de automatización responsable y métricas de procesos para aprender sin promesas de resultados.",
+      "tone": "Claro, cercano y práctico",
+      "language": "en",
+      "market": "Centroamérica · Panamá y Costa Rica",
+      "website": "",
+      "color": "#147d65",
+      "secondaryColor": "#161b17",
+      "goals": [
+        "Educar",
+        "Ayudar a equipos"
+      ],
+      "pillars": [
+        "Aplicación de inteligencia artificial",
+        "Formación y aprendizaje",
+        "Procesos y productividad"
+      ],
+      "weeklyTarget": 3,
+      "audience": [
+        {
+          "id": "segment-company-1",
+          "name": "Equipos de operaciones (sintético)",
+          "role": "Responsables de procesos",
+          "stage": "Explorando",
+          "needs": "Entender mejoras de procesos sin datos personales",
+          "description": ""
+        }
+      ],
+      "id": "9eedd4b5-c277-4a09-8fe2-f974a5e2e96b",
+      "createdAt": "2026-10-18T05:14:42.168Z",
+      "role": "owner"
+    },
+    "changedKeys": [
+      "language"
+    ],
+    "profileLanguage": "Inglés",
+    "patch": {
+      "body": {
+        "language": "en"
+      },
+      "status": 200
+    },
+    "saveDisabled": true,
+    "pass": true
+  },
+  "interaction": {
+    "keyboard": {
+      "from": "market",
+      "key": "Tab",
+      "focusName": "language",
+      "outlineStyle": "solid",
+      "outlineWidth": "3px",
+      "outlineColor": "rgb(38, 124, 96)"
+    },
+    "desktop": {
+      "viewport": {
+        "width": 1280,
+        "height": 800
+      },
+      "scrollWidth": 1280
+    },
+    "mobile": {
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "scrollWidth": 390,
+      "fieldWidth": 312,
+      "fieldLeft": 39,
+      "fieldRight": 351,
+      "engine": "Navegador T3 de escritorio con viewport iPhone 12 Pro; no dispositivo físico."
+    }
+  }
+}
