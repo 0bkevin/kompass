@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useId, useRef, useState } from "react";
 import {
   ArrowRight,
   Check,
@@ -14,7 +14,14 @@ import { useWorkspace } from "../lib/workspace";
 import type { Brand, Segment } from "../lib/types";
 import { Badge, Button, EmptyState, Field, Modal } from "../components/ui";
 
+const contentLanguages = [
+  { value: "es", label: "Español" },
+  { value: "en", label: "Inglés" },
+  { value: "pt", label: "Portugués" },
+];
+
 function BrandFields({ brand }: { brand?: Brand }) {
+  const fieldId = useId();
   return (
     <>
       <div className="form-grid">
@@ -47,7 +54,14 @@ function BrandFields({ brand }: { brand?: Brand }) {
       </Field>
       <div className="form-grid">
         <Field label="Mercado principal">
-          <select name="market" defaultValue={brand?.market || "Latinoamérica"}>
+          <input
+            name="market"
+            defaultValue={brand?.market ?? "Latinoamérica"}
+            list={`${fieldId}-markets`}
+            maxLength={150}
+            aria-describedby={`${fieldId}-market-hint`}
+          />
+          <datalist id={`${fieldId}-markets`}>
             {[
               "Latinoamérica",
               "México",
@@ -60,19 +74,35 @@ function BrandFields({ brand }: { brand?: Brand }) {
               "Estados Unidos",
               "Global",
             ].map((m) => (
-              <option key={m}>{m}</option>
+              <option key={m} value={m} />
             ))}
-          </select>
+          </datalist>
+          <small className="small muted" id={`${fieldId}-market-hint`}>
+            Escribe un país, una región o el mercado de tu empresa.
+          </small>
         </Field>
         <Field label="Idioma del contenido">
-          <select
+          <input
             name="language"
-            defaultValue={languageOption(brand?.language)}
-          >
-            <option value="es">Español</option>
-            <option value="en">Inglés</option>
-            <option value="pt">Portugués</option>
-          </select>
+            defaultValue={
+              contentLanguages.find(
+                (option) => option.value === brand?.language,
+              )?.label ||
+              brand?.language ||
+              "Español"
+            }
+            list={`${fieldId}-languages`}
+            maxLength={100}
+            aria-describedby={`${fieldId}-language-hint`}
+          />
+          <datalist id={`${fieldId}-languages`}>
+            {contentLanguages.map((option) => (
+              <option key={option.value} value={option.label} />
+            ))}
+          </datalist>
+          <small className="small muted" id={`${fieldId}-language-hint`}>
+            Elige una sugerencia o escribe otro idioma.
+          </small>
         </Field>
       </div>
       <Field
@@ -130,12 +160,11 @@ function BrandFields({ brand }: { brand?: Brand }) {
 }
 
 function languageOption(language?: string) {
-  const options: Record<string, string> = {
-    Español: "es",
-    Inglés: "en",
-    Portugués: "pt",
-  };
-  return options[language || ""] || language || "es";
+  return (
+    contentLanguages.find((option) => option.label === language)?.value ||
+    language ||
+    "es"
+  );
 }
 
 type BrandInput = Pick<
@@ -160,7 +189,7 @@ function brandInput(form: HTMLFormElement): BrandInput {
     industry: String(d.get("industry") || ""),
     description: String(d.get("description") || ""),
     market: String(d.get("market") || ""),
-    language: String(d.get("language") || ""),
+    language: languageOption(String(d.get("language") || "")),
     tone: String(d.get("tone") || ""),
     color: String(d.get("color") || ""),
     website: String(d.get("website") || ""),
@@ -297,7 +326,10 @@ export function BrandPage() {
     isDirty: () => dirtyRef.current,
     confirmLeave: () => {
       if (busyRef.current) {
-        notifyRef.current("Espera a que termine el guardado antes de salir.", "error");
+        notifyRef.current(
+          "Espera a que termine el guardado antes de salir.",
+          "error",
+        );
         return false;
       }
       return window.confirm(
@@ -320,7 +352,6 @@ export function BrandPage() {
     <div className="page">
       <div className="page-heading">
         <div>
-          <p className="eyebrow">ANTES DEL CONTENIDO, TU CRITERIO</p>
           <h1>El ADN de tu marca.</h1>
           <p>
             El contexto que convierte tendencias genéricas en oportunidades
@@ -402,7 +433,6 @@ export function BrandPage() {
             className="brand-preview"
             style={{ background: brand.color || "#147d65" }}
           >
-            <span className="eyebrow">ASÍ TE VE EL RADAR</span>
             <div className="brand-monogram">{brand.name.slice(0, 1)}</div>
             <h2>{brand.name}</h2>
             <p>
@@ -434,27 +464,64 @@ export function BrandPage() {
 }
 
 export function AudiencePage() {
-  const { state, refresh, notify } = useWorkspace();
+  const { state, refresh, notify, registerUnsavedChangesGuard } = useWorkspace();
   const [editing, setEditing] = useState<Segment | null | undefined>(undefined),
     [busy, setBusy] = useState(false),
     [error, setError] = useState("");
-  const audienceDirtyRef = useRef(false);
+  const [invalidField, setInvalidField] = useState<string | null>(null);
+  const audienceFormRef = useRef<HTMLFormElement | null>(null);
+  const audienceBaselineRef = useRef("");
+  const audienceBusyRef = useRef(false);
+  const setAudienceForm = useCallback((form: HTMLFormElement | null) => {
+    audienceFormRef.current = form;
+    audienceBaselineRef.current = form
+      ? JSON.stringify([...new FormData(form).entries()])
+      : "";
+  }, []);
+  const audienceGuardRef = useRef({
+    isDirty: () => {
+      const form = audienceFormRef.current;
+      return (
+        !!form &&
+        (audienceBusyRef.current ||
+          JSON.stringify([...new FormData(form).entries()]) !==
+            audienceBaselineRef.current)
+      );
+    },
+    confirmLeave: () => {
+      if (audienceBusyRef.current) return false;
+      const form = audienceFormRef.current;
+      if (
+        form &&
+        JSON.stringify([...new FormData(form).entries()]) !==
+          audienceBaselineRef.current &&
+        !window.confirm("Hay cambios sin guardar. ¿Salir y descartar este perfil?")
+      )
+        return false;
+      audienceFormRef.current = null;
+      audienceBaselineRef.current = "";
+      setEditing(undefined);
+      return true;
+    },
+  });
+  useEffect(
+    () => registerUnsavedChangesGuard(audienceGuardRef.current),
+    [registerUnsavedChangesGuard],
+  );
   function startEditing(segment: Segment | null) {
-    audienceDirtyRef.current = false;
+    if (audienceBusyRef.current) return;
+    if (audienceFormRef.current && !audienceGuardRef.current.confirmLeave())
+      return;
     setError("");
+    setInvalidField(null);
     setEditing(segment);
   }
   function closeEditing() {
-    if (busy) return;
-    if (
-      audienceDirtyRef.current &&
-      !window.confirm("Hay cambios sin guardar. ¿Cerrar y descartarlos?")
-    )
-      return;
-    audienceDirtyRef.current = false;
-    setEditing(undefined);
+    audienceGuardRef.current.confirmLeave();
   }
   async function save(audience: Segment[]) {
+    if (audienceBusyRef.current) return;
+    audienceBusyRef.current = true;
     setBusy(true);
     setError("");
     try {
@@ -462,10 +529,12 @@ export function AudiencePage() {
         method: "PATCH",
         body: json({ audience }),
       });
-      audienceDirtyRef.current = false;
+      audienceFormRef.current = null;
+      audienceBaselineRef.current = "";
       setEditing(undefined);
     } catch (e) {
       setError((e as Error).message);
+      audienceBusyRef.current = false;
       setBusy(false);
       return;
     }
@@ -478,6 +547,7 @@ export function AudiencePage() {
         "error",
       );
     } finally {
+      audienceBusyRef.current = false;
       setBusy(false);
     }
   }
@@ -485,7 +555,6 @@ export function AudiencePage() {
     <div className="page">
       <div className="page-heading">
         <div>
-          <p className="eyebrow">LA MISMA TENDENCIA, DIFERENTES NECESIDADES</p>
           <h1>¿A quién quieres llegar?</h1>
           <p>
             Perfiles editoriales que dan dirección a tus referencias, enfoques y
@@ -561,22 +630,44 @@ export function AudiencePage() {
           onClose={closeEditing}
         >
           <form
+            ref={setAudienceForm}
             className="stack"
+            aria-busy={busy}
             onChangeCapture={() => {
-              audienceDirtyRef.current = true;
               setError("");
+              setInvalidField(null);
             }}
             onSubmit={(e) => {
               e.preventDefault();
-              if (busy) return;
-              const f = new FormData(e.currentTarget),
+              if (audienceBusyRef.current) return;
+              const form = e.currentTarget,
+                f = new FormData(form),
                 segment = {
+                  ...editing,
                   id: editing?.id || crypto.randomUUID(),
-                  name: String(f.get("name")),
-                  role: String(f.get("role")),
-                  stage: String(f.get("stage")),
-                  needs: String(f.get("needs")),
+                  name: String(f.get("name") ?? "").trim(),
+                  role: String(f.get("role") ?? "").trim(),
+                  stage: String(f.get("stage") ?? "").trim(),
+                  needs: String(f.get("needs") ?? "").trim(),
                 };
+              for (const [field, label, max] of [
+                ["name", "Nombre del perfil", 150],
+                ["role", "Rol o responsabilidad", 300],
+                ["needs", "Necesidades e intereses", 3000],
+              ] as const) {
+                if (!segment[field] || segment[field].length > max) {
+                  setError(
+                    !segment[field]
+                      ? `«${label}» es obligatorio. Escribe texto, no solo espacios.`
+                      : `«${label}» admite hasta ${max} caracteres. Acorta el texto para guardar.`,
+                  );
+                  setInvalidField(field);
+                  const input = form.elements.namedItem(field);
+                  if (input instanceof HTMLElement) input.focus();
+                  return;
+                }
+              }
+              setInvalidField(null);
               void save(
                 editing
                   ? state.brand.audience.map((s) =>
@@ -596,6 +687,10 @@ export function AudiencePage() {
                 name="name"
                 defaultValue={editing?.name}
                 placeholder="Ej. Líder de operaciones"
+                aria-invalid={invalidField === "name" || undefined}
+                aria-describedby={
+                  invalidField === "name" ? "audience-profile-error" : undefined
+                }
                 required
               />
               <Field
@@ -603,6 +698,10 @@ export function AudiencePage() {
                 name="role"
                 defaultValue={editing?.role}
                 placeholder="¿Qué decisiones toma?"
+                aria-invalid={invalidField === "role" || undefined}
+                aria-describedby={
+                  invalidField === "role" ? "audience-profile-error" : undefined
+                }
                 required
               />
               <Field label="Momento o etapa">
@@ -627,11 +726,15 @@ export function AudiencePage() {
                   defaultValue={editing?.needs}
                   placeholder="¿Qué le ayudaría a avanzar?"
                   rows={4}
+                  aria-invalid={invalidField === "needs" || undefined}
+                  aria-describedby={
+                    invalidField === "needs" ? "audience-profile-error" : undefined
+                  }
                   required
                 />
               </Field>
               {error && (
-                <p className="form-error" role="alert">
+                <p id="audience-profile-error" className="form-error" role="alert">
                   {error}
                 </p>
               )}
@@ -652,6 +755,9 @@ export function AudiencePage() {
                   Eliminar
                 </Button>
               )}
+              <Button type="button" onClick={closeEditing} disabled={busy}>
+                Cancelar
+              </Button>
               <Button variant="primary" type="submit" busy={busy}>
                 Guardar perfil
               </Button>
