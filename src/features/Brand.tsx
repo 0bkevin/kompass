@@ -1,14 +1,5 @@
 import { useCallback, useEffect, useId, useRef, useState } from "react";
-import {
-  ArrowRight,
-  Check,
-  Palette,
-  Plus,
-  Save,
-  Target,
-  Trash2,
-  Users,
-} from "lucide-react";
+import { ArrowRight, Palette, Plus, Save, Trash2, Users } from "lucide-react";
 import { api, json } from "../lib/api";
 import { useWorkspace } from "../lib/workspace";
 import type { Brand, Segment } from "../lib/types";
@@ -26,13 +17,12 @@ function BrandFields({ brand }: { brand?: Brand }) {
   return (
     <div className="brand-field-groups">
       <section className="brand-field-group" aria-label="Empresa y mercado">
-        <h3>Tu empresa</h3>
+        <h3>Empresa</h3>
         <div className="form-grid">
           <Field
             label="Nombre de la marca"
             name="name"
             defaultValue={brand?.name}
-            placeholder="Tu marca o empresa"
             required
             maxLength={100}
           />
@@ -45,11 +35,11 @@ function BrandFields({ brand }: { brand?: Brand }) {
             maxLength={150}
           />
         </div>
-        <Field label="¿Qué hace tu marca y qué la diferencia?">
+        <Field label="Descripción">
           <textarea
             name="description"
             defaultValue={brand?.description}
-            placeholder="Qué ofreces, a quién ayudas y qué necesitas explicar."
+            placeholder="Actividad, oferta y audiencia"
             required
             rows={3}
             maxLength={4000}
@@ -62,7 +52,6 @@ function BrandFields({ brand }: { brand?: Brand }) {
               defaultValue={brand?.market ?? "Latinoamérica"}
               list={`${fieldId}-markets`}
               maxLength={150}
-              aria-describedby={`${fieldId}-market-hint`}
             />
             <datalist id={`${fieldId}-markets`}>
               {[
@@ -80,9 +69,6 @@ function BrandFields({ brand }: { brand?: Brand }) {
                 <option key={m} value={m} />
               ))}
             </datalist>
-            <small className="small muted" id={`${fieldId}-market-hint`}>
-              Escribe un país, una región o el mercado de tu empresa.
-            </small>
           </Field>
           <Field label="Idioma del contenido">
             <input
@@ -96,32 +82,24 @@ function BrandFields({ brand }: { brand?: Brand }) {
               }
               list={`${fieldId}-languages`}
               maxLength={100}
-              aria-describedby={`${fieldId}-language-hint`}
             />
             <datalist id={`${fieldId}-languages`}>
               {contentLanguages.map((option) => (
                 <option key={option.value} value={option.label} />
               ))}
             </datalist>
-            <small className="small muted" id={`${fieldId}-language-hint`}>
-              Elige una sugerencia o escribe otro idioma.
-            </small>
           </Field>
         </div>
       </section>
       <section className="brand-field-group" aria-label="Dirección editorial">
-        <h3>Tu dirección editorial</h3>
+        <h3>Dirección editorial</h3>
         <Field
-          label="Temas a explorar · separados por comas"
+          label="Temas · separados por comas"
           name="pillars"
           defaultValue={brand?.pillars.join(", ")}
           placeholder="artificial intelligence, leadership, automation"
           required
         />
-        <p className="field-hint">
-          Incluye palabras en inglés para descubrir conversaciones en otros
-          mercados. Podrás afinar cada fuente.
-        </p>
         <div className="form-grid">
           <Field
             label="Voz y tono"
@@ -294,16 +272,16 @@ export function NewBrandForm({ onCreated }: { onCreated: (b: Brand) => void }) {
       <div className="form-section">
         <h3>
           <Users size={17} />
-          ¿Para quién creas?
+          Audiencia
         </h3>
         <Field
-          label="Tu primera audiencia"
+          label="Audiencia"
           name="audienceName"
           placeholder="Ej. Directivos de empresas medianas"
           required
         />
         <Field
-          label="¿Qué necesita esa audiencia?"
+          label="Necesidad"
           name="audienceNeeds"
           placeholder="Ej. Entender cómo aplicar IA en su negocio"
           required
@@ -315,7 +293,7 @@ export function NewBrandForm({ onCreated }: { onCreated: (b: Brand) => void }) {
         </p>
       )}
       <Button variant="primary" type="submit" busy={busy}>
-        Crear espacio de marca
+        Crear empresa
         <ArrowRight size={17} />
       </Button>
     </form>
@@ -363,19 +341,6 @@ export function BrandPage() {
   }, [brand]);
   return (
     <div className="page brand-page">
-      <div className="page-heading">
-        <div>
-          <h1>El contexto de tu marca.</h1>
-          <p>
-            Define tus temas, objetivos y voz para evaluar qué contenido encaja
-            con tu empresa.
-          </p>
-        </div>
-        <Badge tone="green">
-          <Check size={13} />
-          Contexto activo
-        </Badge>
-      </div>
       <div className="brand-layout">
         <section className="card form-card">
           <div className="section-heading">
@@ -410,9 +375,7 @@ export function BrandPage() {
                 setDirty(false);
                 try {
                   await refresh();
-                  notify(
-                    "Contexto actualizado. Tus próximos análisis usarán estos criterios.",
-                  );
+                  notify("Contexto guardado.");
                 } catch (refreshError) {
                   notify(
                     `El contexto se guardó, pero no se pudo actualizar el espacio: ${(refreshError as Error).message}`,
@@ -461,15 +424,6 @@ export function BrandPage() {
                 <span key={p}>{p}</span>
               ))}
             </div>
-          </div>
-          <div className="insight-card">
-            <Target size={22} />
-            <h3>Qué hace relevante una referencia</h3>
-            <p className="muted">
-              Cada análisis compara la referencia con tus temas, audiencia y
-              objetivos. Si cambias el contexto, actualiza el análisis de las
-              referencias que quieras volver a evaluar.
-            </p>
           </div>
         </aside>
       </div>
@@ -571,13 +525,6 @@ export function AudiencePage() {
   return (
     <div className="page audience-page">
       <div className="page-heading">
-        <div>
-          <h1>¿A quién quieres llegar?</h1>
-          <p>
-            Define qué necesita cada grupo para elegir temas y escribir guiones
-            que respondan a esa necesidad.
-          </p>
-        </div>
         <Button
           variant="primary"
           disabled={state.brand.role !== "owner"}
@@ -624,31 +571,20 @@ export function AudiencePage() {
       ) : (
         <EmptyState
           icon={<Users />}
-          title="Define a quién debe ayudar tu contenido"
+          title="No hay audiencias"
           action={
             <Button
               onClick={() => startEditing(null)}
               disabled={state.brand.role !== "owner"}
             >
-              Crear mi primera audiencia
+              Nueva audiencia
             </Button>
           }
-        >
-          Describe qué decisiones toma ese grupo y qué necesita resolver.
-          Usaremos ese contexto para evaluar referencias y proponer enfoques.
-        </EmptyState>
+        />
       )}
-      <div className="callout audience-note">
-        <Users size={20} />
-        <p>
-          Estos perfiles representan grupos de audiencia. Puedes actualizarlos
-          cuando cambien sus necesidades; no rastrean personas ni datos
-          individuales.
-        </p>
-      </div>
       {editing !== undefined && (
         <Modal
-          title={editing ? "Afinar audiencia" : "Una nueva audiencia"}
+          title={editing ? "Editar audiencia" : "Nueva audiencia"}
           onClose={closeEditing}
         >
           <form
@@ -680,8 +616,8 @@ export function AudiencePage() {
                 if (!segment[field] || segment[field].length > max) {
                   setError(
                     !segment[field]
-                      ? `«${label}» es obligatorio. Escribe texto, no solo espacios.`
-                      : `«${label}» admite hasta ${max} caracteres. Acorta el texto para guardar.`,
+                      ? `«${label}» es obligatorio.`
+                      : `«${label}» admite hasta ${max} caracteres.`,
                   );
                   setInvalidField(field);
                   const input = form.elements.namedItem(field);

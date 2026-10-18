@@ -82,12 +82,6 @@
   margin-bottom: 0;
   align-items: flex-start;
 }
-.journey-heading p {
-  margin-top: 10px;
-  color: var(--journey-muted);
-  font-size: 14px;
-  line-height: 1.7;
-}
 .journey-heading > .button {
   margin-top: 7px;
   flex-shrink: 0;
@@ -117,12 +111,6 @@
   font-weight: 500;
   line-height: 1.35;
   letter-spacing: -0.025em;
-}
-.journey-next p {
-  margin-top: 11px;
-  color: var(--muted);
-  font-size: 14px;
-  line-height: 1.75;
 }
 .journey-next .button {
   margin-top: 24px;
@@ -273,24 +261,13 @@
   padding: 18px 0;
   border-bottom: 1px solid var(--journey-line);
 }
-.journey-shortlist strong,
-.journey-shortlist span {
+.journey-shortlist strong {
   display: block;
 }
 .journey-shortlist strong {
   font-size: 14px;
   font-weight: 500;
   line-height: 1.5;
-}
-.journey-shortlist span {
-  color: var(--journey-muted);
-  margin-top: 6px;
-  font-size: 13px;
-  line-height: 1.6;
-  display: -webkit-box;
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
 }
 .journey-shortlist small {
   display: flex;
@@ -318,10 +295,6 @@
 }
 .journey-quiet-empty h3 {
   font-size: 16px;
-}
-.journey-quiet-empty p {
-  font-size: 14px;
-  color: var(--journey-muted);
 }
 .journey-quiet-empty .button {
   margin-top: 7px;
@@ -393,9 +366,6 @@
   padding: 14px 0 5px;
   border-top: 1px solid var(--journey-line);
   max-width: 75ch;
-}
-.journey-coverage p + p {
-  margin-top: 8px;
 }
 .journey-coverage strong {
   display: block;
@@ -571,11 +541,7 @@
 }
 .journey-draft-form > h3 {
   font-size: 17px;
-}
-.journey-draft-form > p {
-  font-size: 13px;
-  color: var(--journey-muted);
-  margin: 7px 0 20px;
+  margin-bottom: 20px;
 }
 .journey-draft-fields {
   display: grid;
@@ -670,12 +636,7 @@
 .journey-import-form > h2,
 .journey-signal-form > h2 {
   font-size: 20px;
-}
-.journey-import-form > p,
-.journey-signal-form > p {
-  margin: 8px 0 23px;
-  font-size: 14px;
-  color: var(--journey-muted);
+  margin-bottom: 23px;
 }
 .journey-extra-inputs > summary {
   cursor: pointer;
@@ -812,20 +773,9 @@
 .journey-embedded-profile .page-heading {
   margin: 0;
 }
-.journey-embedded-profile .page-heading > div,
-.journey-embedded-profile .page-heading > .badge,
-.journey-embedded-profile .brand-preview .eyebrow {
-  display: none;
-}
-.journey-embedded-profile .page-heading:has(> .badge) {
-  display: none;
-}
 .journey-embedded-profile .page-heading:has(> .button) {
   justify-content: flex-end;
   margin: 18px 0;
-}
-.journey-embedded-profile .audience-note {
-  display: none;
 }
 .journey-embedded-profile .brand-layout {
   gap: 28px;
@@ -902,11 +852,6 @@
 }
 .journey-metric-fields .field {
   margin: 0;
-}
-.journey-table-caption {
-  font-size: 13px;
-  color: var(--journey-muted);
-  margin-bottom: 20px;
 }
 .journey-table-scroll {
   width: 100%;
@@ -1086,9 +1031,6 @@
   .journey-heading h1 {
     font-size: 34px;
   }
-  .journey-heading p {
-    font-size: 14px;
-  }
   .journey-next {
     padding: 25px;
     grid-template-columns: minmax(0, 1fr);
@@ -1168,9 +1110,6 @@
   }
   .journey-next h2 {
     font-size: 21px;
-  }
-  .journey-next p {
-    font-size: 14px;
   }
   .journey-steps {
     grid-template-columns: minmax(0, 1fr);
@@ -1530,15 +1469,8 @@
   margin: 0;
 }
 .brand-field-group .field,
-.brand-field-group .form-grid,
-.brand-field-group .field-hint {
+.brand-field-group .form-grid {
   margin: 0;
-}
-.brand-field-group .field-hint {
-  margin-top: -12px;
-  font-size: 12px;
-  line-height: 1.65;
-  color: var(--muted);
 }
 .brand-page .brand-layout > aside {
   display: grid;
@@ -1612,29 +1544,6 @@
   font-size: 11px;
   line-height: 1.6;
   overflow-wrap: anywhere;
-}
-.brand-page .brand-layout .insight-card {
-  padding: 0 4px;
-  border: 0;
-  background: transparent;
-  color: var(--muted);
-}
-.brand-page .insight-card > svg {
-  width: 18px;
-  height: 18px;
-  color: var(--accent);
-}
-.brand-page .brand-layout .insight-card h3 {
-  margin: 12px 0 8px;
-  font-family: var(--font-sans);
-  font-size: 14px;
-  font-weight: 500;
-  color: var(--text);
-}
-.brand-page .brand-layout .insight-card p {
-  color: var(--muted);
-  font-size: 13px;
-  line-height: 1.75;
 }
 .audience-profile-list {
   border-top: 1px solid var(--border);
@@ -1719,17 +1628,6 @@
   color: var(--muted);
   opacity: 0.6;
   cursor: not-allowed;
-}
-.audience-page > .audience-note {
-  margin-top: 0;
-  background: var(--surface);
-  color: var(--muted);
-  border-radius: 12px;
-  border: 1px solid var(--border);
-}
-.audience-note p {
-  font-size: 13px;
-  line-height: 1.7;
 }
 .journey-automatic-results:empty {
   display: none;

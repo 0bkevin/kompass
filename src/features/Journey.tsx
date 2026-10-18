@@ -202,18 +202,15 @@ function useFormGuard(dirty: boolean, busy: boolean) {
 
 function JourneyHeader({
   title,
-  children,
   action,
 }: {
   title: string;
-  children: ReactNode;
   action?: ReactNode;
 }) {
   return (
     <div className="page-heading journey-heading">
       <div>
         <h1>{title}</h1>
-        <p>{children}</p>
       </div>
       {action}
     </div>
@@ -262,13 +259,7 @@ function Notice({
 }
 
 function ReviewerNotice() {
-  return (
-    <Notice>
-      Tu acceso de revisor permite consultar la información y aprobar piezas en
-      el estudio. Un editor o administrador puede incorporar fuentes, señales y
-      resultados.
-    </Notice>
-  );
+  return <Notice>Acceso de revisor: lectura y aprobación de piezas.</Notice>;
 }
 
 function CoverNote({
@@ -289,19 +280,7 @@ function CoverNote({
         <ChevronDown size={15} />
       </summary>
       <div>
-        <p>
-          Las oportunidades priorizan coincidencias con el contexto y las
-          necesidades declaradas. La prioridad editorial no predice resultados.
-        </p>
-        {!insights.coverage.hasHistory && (
-          <p>
-            Aún falta historial comparable para afirmar que un tema está
-            creciendo.
-          </p>
-        )}
-        {insights.coverage.notes.map((note, index) => (
-          <p key={index}>{note}</p>
-        ))}
+        {!insights.coverage.hasHistory && <p>Sin historial comparable.</p>}
         {insights.coverage.errors.length > 0 && (
           <>
             <strong>Fuentes que necesitan atención</strong>
@@ -344,7 +323,6 @@ export function Home() {
   const reviewer = brand.role === "reviewer";
   type Next = {
     title: string;
-    body: string;
     action: string;
     view: View;
     pieceId?: string;
@@ -352,79 +330,68 @@ export function Home() {
   const next: Next = reviewer
     ? review[0]
       ? {
-          title: "Hay contenido listo para tu revisión",
-          body: "Comprueba el enfoque, deja comentarios y aprueba la versión que está lista para salir.",
+          title: "Pendiente de revisión",
           action: "Revisar contenido",
           view: "studio",
           pieceId: review[0].id,
         }
       : {
-          title: "Conoce el criterio detrás del contenido",
-          body: "Explora las oportunidades y su evidencia. El equipo enviará sus piezas al estudio para que puedas revisarlas.",
+          title: "Sin piezas por revisar",
           action: "Ver oportunidades",
           view: "opportunities",
         }
     : !hasContext
       ? {
-          title: "Empieza por lo que tu empresa ya cuenta",
-          body: "Añade tu web, enlaces públicos o contenido propio para definir los temas y la voz de tu empresa. Revisa la propuesta antes de aplicarla.",
+          title: "Contexto incompleto",
           action: "Completar contexto",
           view: "brand",
         }
       : !hasAudience
         ? {
-            title: "Define a quién debe ayudar tu contenido",
-            body: "Elige un grupo y la necesidad que quieres resolver. Lo contrastaremos con señales públicas y observaciones del equipo.",
+            title: "Sin audiencia",
             action: "Definir audiencia",
             view: "audience",
           }
         : !references.length
           ? {
-              title: "Encuentra las primeras señales",
-              body: "Busca referencias relacionadas con la necesidad que elegiste o añade una que tu equipo haya encontrado.",
+              title: "Sin referencias",
               action: "Descubrir contenido",
               view: "radar",
             }
           : drafts[0]
             ? {
-                title: "Tu siguiente pieza ya está en marcha",
-                body: `Continúa «${drafts[0].title}», ajusta el guion y envíalo a revisión.`,
+                title: drafts[0].title,
                 action: "Continuar borrador",
                 view: "studio",
                 pieceId: drafts[0].id,
               }
             : review[0]
               ? {
-                  title: "Cierra la revisión antes de planificar",
-                  body: "Comprueba que el guion responde a la necesidad elegida y resuelve los comentarios antes de aprobarlo.",
+                  title: "Pendiente de aprobación",
                   action: "Abrir revisión",
                   view: "studio",
                   pieceId: review[0].id,
                 }
               : approved[0]
                 ? {
-                    title: "Dale una fecha al contenido aprobado",
-                    body: "Asigna una fecha y prepara los archivos. El equipo debe publicar desde su canal; el calendario organiza ese trabajo.",
+                    title: "Pieza aprobada sin fecha",
                     action: "Planificar publicación",
                     view: "calendar",
                   }
                 : scheduled.length && !outcomes.length
                   ? {
-                      title: "Consulta tu próxima publicación",
-                      body: "El calendario tiene contenido programado. Cuando lo publiques, registra su enlace y resultados para comparar lo que ocurrió.",
+                      title: "Piezas programadas",
                       action: "Abrir calendario",
                       view: "calendar",
                     }
                   : published.length && !outcomes.length
                     ? {
-                        title: "Completa el ciclo con resultados",
-                        body: "Confirma la publicación en su canal y registra sus métricas. Compara piezas por audiencia para decidir qué tema o enfoque volver a probar.",
+                        title: "Sin resultados registrados",
                         action: "Registrar resultados",
                         view: "results",
                       }
                     : {
-                        title: "Elige qué vale la pena contar ahora",
-                        body: "Revisa oportunidades que conectan referencias públicas con las necesidades de tu audiencia y convierte una en contenido propio.",
+                        title: "Oportunidades disponibles",
                         action: "Explorar oportunidades",
                         view: "opportunities",
                       };
@@ -432,9 +399,7 @@ export function Home() {
     [
       {
         title: "Contexto",
-        detail: hasContext
-          ? "Dirección editorial definida"
-          : "Revisa los temas de tu empresa",
+        detail: hasContext ? "Completo" : "Incompleto",
         view: "brand",
         done: hasContext,
       },
@@ -471,13 +436,10 @@ export function Home() {
     ];
   return (
     <div className="page journey-page">
-      <JourneyHeader title="Tu próximo contenido.">
-        Revisa qué necesita tu audiencia y decide qué pieza trabajar ahora.
-      </JourneyHeader>
+      <JourneyHeader title="Inicio" />
       <section className="journey-next" aria-labelledby="next-action-heading">
         <div className="journey-next-action">
           <h2 id="next-action-heading">{next.title}</h2>
-          <p>{next.body}</p>
           <Button
             variant="primary"
             onClick={() => navigate(next.view, next.pieceId)}
@@ -491,30 +453,23 @@ export function Home() {
           aria-label="Criterios de tu contenido"
         >
           <div>
-            <dt>Para quién</dt>
-            <dd>{brand.audience[0]?.name || "Define tu primera audiencia"}</dd>
+            <dt>Audiencia</dt>
+            <dd>{brand.audience[0]?.name || "Sin definir"}</dd>
           </div>
           <div>
-            <dt>Sobre qué</dt>
-            <dd>
-              {brand.pillars.slice(0, 3).join(" · ") ||
-                "Completa los temas de tu empresa"}
-            </dd>
+            <dt>Temas</dt>
+            <dd>{brand.pillars.slice(0, 3).join(" · ") || "Sin definir"}</dd>
           </div>
           <div>
-            <dt>Con qué evidencia</dt>
-            <dd>
-              {references.length
-                ? `${number(references.length)} ${references.length === 1 ? "referencia" : "referencias"} para contrastar`
-                : "Incorpora tu primera referencia"}
-            </dd>
+            <dt>Referencias</dt>
+            <dd>{references.length ? number(references.length) : "0"}</dd>
           </div>
         </dl>
       </section>
       <WorkspacePreparation enabled={!reviewer && hasContext && hasAudience} />
       <section className="journey-section" aria-labelledby="workflow-heading">
         <div className="section-heading">
-          <h2 id="workflow-heading">De la necesidad al resultado</h2>
+          <h2 id="workflow-heading">Estado del contenido</h2>
           <span className="journey-muted">
             {steps.filter((step) => step.done).length} de {steps.length} etapas
             con actividad
@@ -553,7 +508,7 @@ export function Home() {
       <div className="journey-home-columns">
         <section className="journey-section" aria-labelledby="desk-heading">
           <div className="section-heading">
-            <h2 id="desk-heading">En la mesa del equipo</h2>
+            <h2 id="desk-heading">Piezas</h2>
             <Button variant="ghost" onClick={() => navigate("studio")}>
               Abrir estudio
               <ArrowUpRight size={15} />
@@ -587,13 +542,9 @@ export function Home() {
           ) : (
             <div className="journey-quiet-empty">
               <FileText size={25} />
-              <h3>Elige una oportunidad para tu primera pieza</h3>
-              <p>
-                Revisa a quién puede ayudar y qué referencias la respaldan.
-                Después crea un borrador para editar y revisar.
-              </p>
+              <h3>No hay piezas</h3>
               <Button onClick={() => navigate("opportunities")}>
-                Buscar una oportunidad
+                Ver oportunidades
                 <ArrowRight size={15} />
               </Button>
             </div>
@@ -604,7 +555,7 @@ export function Home() {
           aria-labelledby="priorities-heading"
         >
           <div className="section-heading">
-            <h2 id="priorities-heading">Oportunidades para revisar</h2>
+            <h2 id="priorities-heading">Oportunidades</h2>
           </div>
           {insights.error && (
             <LoadError message={insights.error} retry={insights.reload} />
@@ -619,7 +570,6 @@ export function Home() {
                   onClick={() => navigate("opportunities")}
                 >
                   <strong>{opportunity.title}</strong>
-                  <span>{opportunity.adaptation}</span>
                   <small>
                     {growthStates[opportunity.growth.label].label}
                     <ArrowRight size={15} />
@@ -637,11 +587,7 @@ export function Home() {
           ) : !insights.error ? (
             <div className="journey-quiet-empty">
               <Search size={25} />
-              <h3>Añade referencias para elegir un tema</h3>
-              <p>
-                Busca contenido relacionado con tus temas y las necesidades de
-                tu audiencia. Así podrás evaluar qué merece una pieza propia.
-              </p>
+              <h3>No hay oportunidades</h3>
               <Button onClick={() => navigate("radar")}>
                 Explorar referencias
               </Button>
@@ -686,27 +632,22 @@ export function Opportunities() {
   return (
     <div className="page journey-page">
       <JourneyHeader
-        title="Elige tu próximo tema."
+        title="Oportunidades"
         action={
           <Button onClick={() => navigate("radar")}>
             <Search size={16} />
             Descubrir referencias
           </Button>
         }
-      >
-        Revisa qué necesidad atiende cada propuesta y las referencias que la
-        respaldan. Elige una para crear tu borrador.
-      </JourneyHeader>
+      />
       {state.brand.role === "reviewer" && <ReviewerNotice />}
       <details className="journey-opportunity-filters">
         <summary>
           <ChevronDown size={16} aria-hidden="true" />
-          Filtrar por audiencia o tema
-          <span>
-            {segment || query.trim() || includeUnmatched
-              ? "Filtros activos"
-              : "Opcional"}
-          </span>
+          Filtros
+          {(segment || query.trim() || includeUnmatched) && (
+            <span>Activos</span>
+          )}
         </summary>
         <div className="journey-filters">
           <Field label="Audiencia">
@@ -756,8 +697,8 @@ export function Opportunities() {
           icon={<Target />}
           title={
             insights.data.opportunities.length
-              ? "Ninguna oportunidad coincide con tus filtros"
-              : "Primero necesitamos referencias y contexto"
+              ? "Sin coincidencias"
+              : "No hay oportunidades"
           }
           action={
             insights.data.opportunities.length ? (
@@ -768,7 +709,7 @@ export function Opportunities() {
                   setIncludeUnmatched(true);
                 }}
               >
-                Ampliar exploración
+                Quitar filtros
               </Button>
             ) : (
               <Button
@@ -784,11 +725,7 @@ export function Opportunities() {
               </Button>
             )
           }
-        >
-          {insights.data.opportunities.length
-            ? "Quita algún filtro o amplía la exploración para ver temas que aún no tienen coincidencia con tu audiencia."
-            : "Incorpora contenido público o referencias del equipo. Verás qué encaja, qué evidencia existe y qué sigue siendo una hipótesis."}
-        </EmptyState>
+        />
       ) : (
         <div className="journey-opportunity-list">
           {opportunities.map((opportunity) => (
@@ -912,9 +849,7 @@ function OpportunityRow({
       if (active.current !== brandId) return;
       setBusy(false);
       releaseGuard();
-      notify(
-        "Borrador guardado. Revisa el guion y ajusta el enfoque en el estudio.",
-      );
+      notify("Borrador guardado.");
       navigate("studio", piece.id);
     } catch (createError) {
       if (active.current === brandId) setError(errorMessage(createError));
@@ -960,11 +895,10 @@ function OpportunityRow({
           <span>
             <FileText size={14} aria-hidden="true" />
             {opportunity.evidence.length}{" "}
-            {opportunity.evidence.length === 1 ? "referencia" : "referencias"}{" "}
-            para comprobar
+            {opportunity.evidence.length === 1 ? "referencia" : "referencias"}
           </span>
           <span>
-            Confianza en la interpretación:{" "}
+            Confianza del análisis:{" "}
             {confidenceNames[opportunity.confidence].toLocaleLowerCase()}
           </span>
         </div>
@@ -974,7 +908,7 @@ function OpportunityRow({
         aria-expanded={expanded}
         aria-controls={detailId}
       >
-        {expanded ? "Cerrar detalle" : "Entender y crear"}
+        {expanded ? "Cerrar detalle" : "Ver detalle"}
         <ChevronDown size={16} className={expanded ? "journey-rotated" : ""} />
       </Button>
       <div
@@ -987,7 +921,7 @@ function OpportunityRow({
             <div className="journey-created" role="status">
               <CheckCircle2 size={21} />
               <div>
-                <strong>Tu borrador está guardado</strong>
+                <strong>Borrador guardado</strong>
                 <p>{created.title}</p>
               </div>
               <Button
@@ -1003,14 +937,10 @@ function OpportunityRow({
               className="journey-draft-form"
               onSubmit={(event) => void create(event)}
             >
-              <h3>Prepara tu borrador</h3>
-              <p>
-                Comprueba la audiencia, el formato y el canal propuestos.
-                Después podrás editar el guion en el estudio.
-              </p>
+              <h3>Nuevo borrador</h3>
               <fieldset disabled={busy}>
                 <div className="journey-draft-fields">
-                  <Field label="¿Para quién?">
+                  <Field label="Audiencia">
                     <select
                       value={segmentId}
                       onChange={(event) => setSegmentId(event.target.value)}
@@ -1072,7 +1002,7 @@ function OpportunityRow({
                 <details className="journey-draft-options">
                   <summary>
                     <ChevronDown size={16} aria-hidden="true" />
-                    Añadir indicaciones (opcional)
+                    Indicaciones (opcional)
                   </summary>
                   <Field label="Indicaciones para el borrador">
                     <textarea
@@ -1080,7 +1010,7 @@ function OpportunityRow({
                       maxLength={3000}
                       value={instructions}
                       onChange={(event) => setInstructions(event.target.value)}
-                      placeholder="Un caso de uso, una pregunta frecuente o un enfoque que quieres evitar"
+                      placeholder="Caso de uso o enfoque"
                     />
                   </Field>
                 </details>
@@ -1088,8 +1018,8 @@ function OpportunityRow({
               <div className="journey-form-actions">
                 <span>
                   {state.integrations.ai.ready
-                    ? "Usará la IA conectada a este espacio."
-                    : "Se creará una estructura inicial sin IA conectada."}
+                    ? "Con IA"
+                    : "Sin IA: estructura inicial"}
                 </span>
                 <Button
                   type="submit"
@@ -1104,7 +1034,7 @@ function OpportunityRow({
             </form>
           ) : (
             <Notice>
-              Define una audiencia antes de crear contenido.
+              Se requiere una audiencia.
               <Button onClick={() => navigate("audience")}>
                 Definir audiencia
                 <ArrowRight size={15} />
@@ -1120,15 +1050,15 @@ function OpportunityRow({
         <details className="journey-semantic">
           <summary>
             <ChevronDown size={16} aria-hidden="true" />
-            Por qué puede servirle a tu audiencia
+            Análisis de audiencia
             <span>{analysis ? "Ver análisis con IA" : "Analizar con IA"}</span>
           </summary>
           <div>
             <div className="section-heading">
               <h3>
                 {analysis
-                  ? "Relación con tu audiencia según la IA"
-                  : "Comprueba la relación con tu audiencia"}
+                  ? "Relación con la audiencia · IA"
+                  : "Relación con la audiencia"}
               </h3>
               {canCreate && (
                 <Button
@@ -1144,16 +1074,12 @@ function OpportunityRow({
               <>
                 <strong>{analysis.need}</strong>
                 <p>{analysis.rationale}</p>
-                <h3>Hipótesis de gancho con IA</h3>
+                <h3>Hipótesis de gancho · IA</h3>
                 <p>{analysis.hookHypothesis}</p>
-                <p className="journey-muted">
-                  Es una propuesta editorial para validar, no una explicación
-                  del rendimiento de las referencias.
-                </p>
-                <h3>Cómo abordar el tema para tu audiencia</h3>
+                <h3>Enfoque propuesto</h3>
                 <p>{analysis.adaptation}</p>
                 <details>
-                  <summary>Ver citas y límites del análisis</summary>
+                  <summary>Citas y límites</summary>
                   <ul>
                     {analysis.citations.map((citation) => (
                       <li key={citation.referenceId}>
@@ -1182,8 +1108,8 @@ function OpportunityRow({
             ) : (
               <p>
                 {state.integrations.ai.ready
-                  ? "La IA puede contrastar las necesidades declaradas con el texto de las referencias. Esta consulta usa el proveedor configurado y puede tener costo."
-                  : "La lectura inicial usa reglas de texto. La IA contextual estará disponible cuando la plataforma complete su conexión; puedes seguir creando y revisando contenido."}
+                  ? "Consulta al proveedor de IA conectado; puede tener costo."
+                  : "IA no conectada. Análisis inicial por coincidencias de texto."}
               </p>
             )}
             {analysisError && (
@@ -1196,18 +1122,18 @@ function OpportunityRow({
         <details className="journey-rationale">
           <summary>
             <ChevronDown size={16} aria-hidden="true" />
-            Revisar evidencia y crecimiento
+            Evidencia y crecimiento
             <span>{opportunity.evidence.length} referencias</span>
           </summary>
           <div className="journey-evidence-layout">
             <div>
-              <h3>Por qué podría encajar</h3>
+              <h3>Coincidencias</h3>
               <ul>
                 {opportunity.reasons.map((reason, index) => (
                   <li key={index}>{reason}</li>
                 ))}
               </ul>
-              <h3>Qué sabemos del crecimiento</h3>
+              <h3>Crecimiento</h3>
               <p>{opportunity.growth.explanation}</p>
               <h3>Hipótesis editorial</h3>
               <p>{opportunity.hypothesis}</p>
@@ -1227,14 +1153,9 @@ function OpportunityRow({
                   </dl>
                 </details>
               )}
-              <p className="journey-muted">
-                Confianza en la interpretación:{" "}
-                {confidenceNames[opportunity.confidence].toLocaleLowerCase()}.
-                No demuestra qué causó el desempeño.
-              </p>
             </div>
             <div>
-              <h3>Evidencia para comprobar</h3>
+              <h3>Referencias</h3>
               {opportunity.evidence.length ? (
                 <details className="journey-source-disclosure">
                   <summary>
@@ -1285,17 +1206,14 @@ export function CompanyContext() {
   return (
     <div className="page journey-page">
       <JourneyHeader
-        title="El contexto de tu empresa."
+        title="Empresa"
         action={
           <Button onClick={() => navigate("audience")}>
-            Continuar a audiencia
+            Audiencia
             <ArrowRight size={16} />
           </Button>
         }
-      >
-        Reúne tu web y contenido propio para definir tus temas y tu voz. Revisa
-        la propuesta antes de incorporarla.
-      </JourneyHeader>
+      />
       <div
         className="journey-tabs"
         role="tablist"
@@ -1332,14 +1250,11 @@ export function CompanyContext() {
         {state.brand.role === "owner" ? (
           <ContextImportForm key={state.brand.id} onSaved={imports.reload} />
         ) : (
-          <Notice>
-            Un administrador puede importar contenido y actualizar el contexto.
-            Puedes consultar las fuentes y el perfil de la empresa.
-          </Notice>
+          <Notice>Solo un administrador puede modificar el contexto.</Notice>
         )}
         <section className="journey-section" aria-labelledby="imports-heading">
           <div className="section-heading">
-            <h2 id="imports-heading">Lo que ya incorporaste</h2>
+            <h2 id="imports-heading">Importaciones</h2>
             <Button
               variant="ghost"
               busy={imports.loading}
@@ -1367,12 +1282,7 @@ export function CompanyContext() {
           ) : !imports.error ? (
             <div className="journey-quiet-empty">
               <Globe2 size={26} />
-              <h3>El contexto aún no tiene fuentes importadas</h3>
-              <p>
-                Empieza por tu sitio web o pega un texto de tu empresa. Un
-                enlace a una red social quedará identificado como enlace cuando
-                su contenido no sea accesible.
-              </p>
+              <h3>No hay importaciones</h3>
             </div>
           ) : null}
         </section>
@@ -1428,9 +1338,7 @@ function ContextImportForm({ onSaved }: { onSaved: () => void }) {
       setDirty(false);
       form.reset();
       onSaved();
-      notify(
-        "Importación guardada. Revisa lo que pudo leerse antes de aplicar la propuesta.",
-      );
+      notify("Importación guardada.");
     } catch (importError) {
       if (active.current === brandId) setError(errorMessage(importError));
     } finally {
@@ -1440,11 +1348,7 @@ function ContextImportForm({ onSaved }: { onSaved: () => void }) {
   }
   return (
     <section className="journey-import-form">
-      <h2>Trae lo que ya tienes</h2>
-      <p>
-        Añade una fuente para preparar una propuesta de contexto. Revisa qué
-        pudimos leer y corrige los temas, la descripción y la voz de tu empresa.
-      </p>
+      <h2>Importar contexto</h2>
       <form
         onSubmit={(event) => void submit(event)}
         onChangeCapture={() => {
@@ -1481,7 +1385,7 @@ function ContextImportForm({ onSaved }: { onSaved: () => void }) {
                 name="text"
                 rows={5}
                 maxLength={30000}
-                placeholder="Pega una presentación, una descripción de producto o contenido que ya hayas publicado. Evita datos personales."
+                placeholder="Presentación, descripción de producto o publicación propia"
               />
             </Field>
           </details>
@@ -1492,10 +1396,9 @@ function ContextImportForm({ onSaved }: { onSaved: () => void }) {
           </p>
         )}
         <div className="journey-form-actions">
-          <span>Solo contenido público o proporcionado por tu equipo.</span>
           <Button variant="primary" type="submit" busy={busy}>
             <Globe2 size={16} />
-            Importar y preparar contexto
+            Importar
           </Button>
         </div>
       </form>
@@ -1513,7 +1416,7 @@ function ContextImportForm({ onSaved }: { onSaved: () => void }) {
             {result.evidence.filter((item) => item.status === "linked").length}{" "}
             solo enlazadas ·{" "}
             {result.evidence.filter((item) => item.status === "failed").length}{" "}
-            sin lectura. Revisa el detalle abajo.
+            sin lectura.
           </span>
         </div>
       )}
@@ -1568,8 +1471,8 @@ function InspectionRecord({
           <p>
             {readableDate(inspection.inspectedAt, true)} ·{" "}
             {inspection.method === "ai"
-              ? "Propuesta asistida por IA"
-              : "Propuesta a partir del texto disponible"}
+              ? "Propuesta con IA"
+              : "Propuesta por coincidencias de texto"}
           </p>
         </div>
         {canEdit && (
@@ -1616,11 +1519,6 @@ function InspectionRecord({
                 <ExternalLink size={13} />
               </a>
             )}
-            {evidence.status === "failed" && canEdit && (
-              <small>
-                Puedes pegar el texto de esta fuente en una nueva importación.
-              </small>
-            )}
           </div>
         ))}
       </div>
@@ -1652,7 +1550,7 @@ function InspectionRecord({
           }}
           aria-expanded={review}
         >
-          {review ? "Cerrar propuesta" : "Revisar propuesta de contexto"}
+          {review ? "Cerrar propuesta" : "Revisar propuesta"}
           <ChevronDown size={15} />
         </Button>
       )}
@@ -1722,10 +1620,7 @@ function ContextProposal({
       setDirty(false);
       try {
         await refresh();
-        if (active.current === brand.id)
-          notify(
-            "Contexto aplicado. Las próximas recomendaciones usarán estos criterios.",
-          );
+        if (active.current === brand.id) notify("Contexto guardado.");
       } catch (refreshError) {
         if (active.current === brand.id)
           setError(
@@ -1749,11 +1644,9 @@ function ContextProposal({
         setApplied(false);
       }}
     >
-      <h3>Revisa antes de aplicar</h3>
+      <h3>Propuesta de contexto</h3>
       <p>
-        Estos campos reemplazarán el contexto actual de{" "}
-        <strong>{brand.name}</strong>. Corrige lo que no represente a la
-        empresa; los perfiles de audiencia se revisan por separado.
+        Reemplazará el contexto de <strong>{brand.name}</strong>.
       </p>
       <fieldset disabled={busy} className="stack">
         <div className="form-grid">
@@ -1837,12 +1730,10 @@ function ContextProposal({
       </fieldset>
       {draft.audience.length > 0 && (
         <Notice>
-          <strong>Hipótesis de audiencia para revisar:</strong>{" "}
+          <strong>Audiencia propuesta · sin aplicar:</strong>{" "}
           {draft.audience
             .map((audience) => `${audience.name}: ${audience.needs}`)
             .join(" · ")}
-          . Puedes definir estos perfiles en Audiencia; no se han agregado
-          automáticamente.
         </Notice>
       )}
       {applied && (
@@ -1857,7 +1748,6 @@ function ContextProposal({
         </p>
       )}
       <div className="journey-form-actions">
-        <span>La propuesta solo se aplica con tu confirmación.</span>
         <Button
           variant="primary"
           type="submit"
@@ -1865,7 +1755,7 @@ function ContextProposal({
           disabled={applied && !dirty}
         >
           <Check size={16} />
-          Aplicar al contexto de empresa
+          Aplicar contexto
         </Button>
       </div>
     </form>
@@ -1883,17 +1773,14 @@ export function AudienceIntelligence({
   return (
     <div className="page journey-page">
       <JourneyHeader
-        title="Entiende la necesidad antes de elegir el tema."
+        title="Audiencia"
         action={
           <Button onClick={() => navigate("opportunities")}>
             Ver oportunidades
             <ArrowRight size={16} />
           </Button>
         }
-      >
-        Define grupos, recoge señales y distingue lo observado de lo que aún
-        necesitas comprobar.
-      </JourneyHeader>
+      />
       <div
         className="journey-tabs"
         role="tablist"
@@ -1908,7 +1795,7 @@ export function AudienceIntelligence({
           aria-controls="audience-profiles-panel"
           onClick={() => setTab("profiles")}
         >
-          Perfiles y necesidades
+          Perfiles del equipo
         </button>
         <button
           id="audience-signals-tab"
@@ -1918,7 +1805,7 @@ export function AudienceIntelligence({
           aria-controls="audience-signals-panel"
           onClick={() => setTab("signals")}
         >
-          Señales y validación
+          Señales
           {resource.data?.signals.length ? (
             <span>{resource.data.signals.length}</span>
           ) : null}
@@ -1930,17 +1817,10 @@ export function AudienceIntelligence({
         aria-labelledby="audience-profiles-tab"
         hidden={tab !== "profiles"}
       >
-        <Notice>
-          Estos perfiles son <strong>hipótesis editoriales del equipo</strong>.
-          La actividad de una página, un sector o una inscripción no demuestra
-          quién consume tu contenido. Contrasta las necesidades con señales
-          públicas y resultados.
-        </Notice>
         <div className="journey-embedded-profile">
           <AudiencePage key={state.brand.id} />
         </div>
         <div className="journey-form-actions">
-          <span>¿Ya tienes una necesidad que contrastar?</span>
           <Button onClick={() => setTab("signals")}>
             Registrar una señal
             <ArrowRight size={16} />
@@ -1960,21 +1840,18 @@ export function AudienceIntelligence({
         ) : (
           <EmptyState
             icon={<Users />}
-            title="Define primero un grupo de audiencia"
+            title="Se requiere una audiencia"
             action={
               <Button onClick={() => setTab("profiles")}>
                 Crear un perfil
                 <ArrowRight size={15} />
               </Button>
             }
-          >
-            Cada señal debe ayudar a comprobar una necesidad concreta de un
-            grupo. Los perfiles se definen sin datos de personas.
-          </EmptyState>
+          />
         )}
         <section className="journey-section">
           <div className="section-heading">
-            <h2>Qué respalda tus decisiones</h2>
+            <h2>Señales registradas</h2>
             <Button
               variant="ghost"
               busy={resource.loading}
@@ -2002,12 +1879,7 @@ export function AudienceIntelligence({
           ) : !resource.error ? (
             <div className="journey-quiet-empty">
               <Target size={25} />
-              <h3>Todavía no hay señales registradas</h3>
-              <p>
-                Guarda un contenido público relevante con su enlace o una
-                hipótesis del equipo. Describe qué sugiere y qué falta por
-                comprobar.
-              </p>
+              <h3>No hay señales</h3>
             </div>
           ) : null}
         </section>
@@ -2055,7 +1927,7 @@ function AudienceSignalForm({ onSaved }: { onSaved: () => void }) {
       setSourceType("public_content");
       setDirty(false);
       onSaved();
-      notify("Señal guardada con su origen y contexto.");
+      notify("Señal guardada.");
     } catch (saveError) {
       if (active.current === brandId) setError(errorMessage(saveError));
     } finally {
@@ -2065,11 +1937,7 @@ function AudienceSignalForm({ onSaved }: { onSaved: () => void }) {
   }
   return (
     <section className="journey-signal-form">
-      <h2>¿Qué indica que existe esta necesidad?</h2>
-      <p>
-        Describe qué observaste, a qué grupo puede servirle y qué falta por
-        comprobar. Evita nombres, correos y datos de personas.
-      </p>
+      <h2>Nueva señal</h2>
       <form
         className="stack"
         onSubmit={(event) => void submit(event)}
@@ -2123,13 +1991,7 @@ function AudienceSignalForm({ onSaved }: { onSaved: () => void }) {
                 : "Qué creemos y cómo podríamos comprobarlo"
             }
           >
-            <textarea
-              name="note"
-              rows={3}
-              required
-              maxLength={4000}
-              placeholder="Describe la señal sin asumir que representa a toda tu audiencia."
-            />
+            <textarea name="note" rows={3} required maxLength={4000} />
           </Field>
           <div className="form-grid">
             <Field
@@ -2161,11 +2023,6 @@ function AudienceSignalForm({ onSaved }: { onSaved: () => void }) {
           </p>
         )}
         <div className="journey-form-actions">
-          <span>
-            {sourceType === "public_content"
-              ? "Un enlace documenta la señal; no prueba representatividad."
-              : "Quedará etiquetada como hipótesis, pendiente de validar."}
-          </span>
           <Button variant="primary" type="submit" busy={busy}>
             <Plus size={16} />
             Guardar señal
@@ -2314,41 +2171,31 @@ export function Results() {
   return (
     <div className="page journey-page">
       <JourneyHeader
-        title="Usa los resultados para decidir qué sigue."
+        title="Resultados"
         action={
           <Button onClick={() => navigate("calendar")}>
             <CalendarDays size={16} />
             Abrir calendario
           </Button>
         }
-      >
-        Compara los resultados de las piezas dirigidas a cada audiencia.
-        Registra qué preguntas surgieron y qué tema o enfoque quieres volver a
-        probar.
-      </JourneyHeader>
+      />
       <section
         className="journey-automatic-results"
         aria-label="Cifras oficiales de YouTube"
       >
         <AutomaticMetrics />
       </section>
-      <Notice>
-        Las cifras automáticas de YouTube conservan su fuente y fecha de
-        consulta. Los registros manuales de abajo recogen lo que aporta tu
-        equipo. El calendario organiza la publicación; confirma el envío en su
-        canal y guarda el enlace para consultar sus cifras.
-      </Notice>
       {state.brand.role === "reviewer" ? (
         <ReviewerNotice />
       ) : (
         <section className="journey-results-form">
           <div className="section-heading">
-            <h2>Registrar o corregir una publicación</h2>
+            <h2>Registrar resultados</h2>
             <Badge>Registro manual</Badge>
           </div>
           {eligible.length ? (
             <>
-              <Field label="Pieza para registrar resultados">
+              <Field label="Pieza">
                 <select
                   value={selected}
                   disabled={insights.loading && !insights.data}
@@ -2378,21 +2225,12 @@ export function Results() {
                     insights.reload();
                   }}
                 />
-              ) : (
-                <p className="journey-muted">
-                  Una pieza debe pasar por aprobación antes de registrar su
-                  publicación.
-                </p>
-              )}
+              ) : null}
             </>
           ) : (
             <div className="journey-quiet-empty">
               <ClipboardCheck size={25} />
-              <h3>Primero aprueba una pieza en el estudio</h3>
-              <p>
-                Cuando esté aprobada o programada, podrás registrar su
-                publicación y sus métricas aquí.
-              </p>
+              <h3>No hay piezas aprobadas</h3>
               <Button onClick={() => navigate("studio")}>
                 Abrir estudio
                 <ArrowRight size={15} />
@@ -2422,27 +2260,12 @@ export function Results() {
             </div>
             {outcomes.length ? (
               <>
-                <p className="journey-table-caption">
-                  {insights.data?.learning.summary ||
-                    "Resultados registrados por el equipo."}{" "}
-                  Las diferencias pueden depender del canal, la distribución y
-                  el momento. No demuestran causalidad ni predicen éxito.
-                </p>
                 <SegmentResults outcomes={outcomes} />
-                <p className="journey-muted">
-                  Interacciones = cantidad de acciones registradas por el
-                  equipo, no una tasa. Compara piezas y periodos equivalentes.
-                </p>
               </>
             ) : (
               <div className="journey-quiet-empty">
                 <Target size={25} />
-                <h3>Los resultados empiezan con una publicación real</h3>
-                <p>
-                  Aún no hay métricas registradas. Al guardar la primera pieza
-                  verás su audiencia, visualizaciones, interacciones y
-                  contactos.
-                </p>
+                <h3>No hay resultados manuales</h3>
               </div>
             )}
           </section>
@@ -2566,7 +2389,7 @@ function SegmentResults({ outcomes }: { outcomes: Outcome[] }) {
             <th scope="col">Canal</th>
             <th scope="col">Piezas</th>
             <th scope="col">Visualizaciones</th>
-            <th scope="col">Interacciones</th>
+            <th scope="col">Interacciones (total)</th>
             <th scope="col">Contactos</th>
           </tr>
         </thead>
@@ -2639,7 +2462,7 @@ function OutcomeForm({
       if (active.current !== brandId) return;
       setDirty(false);
       onSaved(record);
-      notify("Publicación y métricas guardadas como registro manual.");
+      notify("Registro manual guardado.");
       try {
         await refresh();
       } catch (refreshError) {
@@ -2704,7 +2527,7 @@ function OutcomeForm({
             placeholder="0"
           />
           <Field
-            label="Interacciones"
+            label="Interacciones (total)"
             name="engagement"
             type="number"
             required
@@ -2726,19 +2549,14 @@ function OutcomeForm({
             placeholder="0"
           />
         </div>
-        <Field label="Periodo de medición y aprendizajes (opcional)">
+        <Field label="Periodo y notas (opcional)">
           <textarea
             name="notes"
             rows={3}
             maxLength={4000}
             defaultValue={outcome?.notes}
-            aria-describedby="outcome-notes-privacy"
-            placeholder="Ej. Métricas a los 7 días. Qué preguntas generó y qué probarías en la próxima pieza."
+            placeholder="Ej. Métricas a los 7 días"
           />
-          <small id="outcome-notes-privacy" className="field-hint">
-            Registra aprendizajes del grupo, sin nombres, emails, teléfonos ni
-            fichas de personas.
-          </small>
         </Field>
       </fieldset>
       {error && (
@@ -2748,8 +2566,7 @@ function OutcomeForm({
       )}
       <div className="journey-form-actions">
         <span>
-          Al guardar confirmarás que la pieza se publicó. No se enviará nada a
-          redes.
+          Confirma una publicación manual. No envía contenido a redes.
         </span>
         <Button variant="primary" type="submit" busy={busy}>
           <Check size={16} />
