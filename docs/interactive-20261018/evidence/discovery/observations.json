@@ -1,0 +1,1053 @@
+{
+  "testedAt": "2026-10-18",
+  "baseCommit": "383933d",
+  "server": "http://127.0.2.63:5463",
+  "brandId": "a6c2be63-41a0-47c8-bcd4-a301456c3161",
+  "beforeRefresh": {
+    "count": 49,
+    "references": [
+      {
+        "id": "7327410e-c7a6-4a53-b516-7d3361aaea92",
+        "title": "Cita QA sin lectura verificada",
+        "url": "https://example.com/30x-synthetic-missing-article-20261018",
+        "status": "new"
+      },
+      {
+        "id": "24e644bb-93cb-4e93-ad29-e5d9ff250529",
+        "title": "30X original QA: piloto de IA verificable",
+        "status": "dismissed"
+      },
+      {
+        "id": "0383bbe9-3dd1-413f-ad1b-75870fb497d0",
+        "title": "Anthropic's Claude submits false tip on a Philadelphia unsolved homicide case",
+        "url": "https://apnews.com/article/artificial-intelligence-anthropic-claude-0acc6ac46d4d80db805e8d55468a6fe1",
+        "sourceId": "7efd8e16-df11-469d-be52-984156ce7686",
+        "externalId": "50047538",
+        "status": "new"
+      },
+      {
+        "id": "59cec125-46f8-4475-a576-e4fd6b4db5a7",
+        "title": "OpenAI fires 3 safety researchers in dispute over AI risks",
+        "url": "https://apnews.com/article/openai-chatgpt-ai-artificial-intelligence-safety-789d4f5293fba45a22fcb62ebfbc2a41",
+        "sourceId": "7efd8e16-df11-469d-be52-984156ce7686",
+        "externalId": "50047557",
+        "status": "new"
+      },
+      {
+        "id": "6c693e54-9ba3-43c1-abd8-7c98b86d12c4",
+        "title": "Website uses AI to generate northern Indigenous news 'correspondents'",
+        "url": "https://www.cbc.ca/news/canada/north/artificial-intelligence-indigenous-journalists-9.7345554",
+        "sourceId": "7efd8e16-df11-469d-be52-984156ce7686",
+        "externalId": "50050673",
+        "status": "new"
+      },
+      {
+        "id": "cb245f6c-0068-409b-a892-652ec6d2f160",
+        "title": "Silicon Valley is falling in line with Trump, SpaceXAI and AIForce to be renamed",
+        "url": "https://www.theverge.com/ai-artificial-intelligence/1009406/silicon-valley-is-falling-in-line-with-trumps-attempt-to-rename-ai",
+        "sourceId": "7efd8e16-df11-469d-be52-984156ce7686",
+        "externalId": "50054370",
+        "status": "new"
+      },
+      {
+        "id": "200f276e-d2a2-48f6-93d3-a9171446975e",
+        "title": "Dev used AI agents to rebuild Modern Warfare 2's source code; 83% matches",
+        "url": "https://www.tomshardware.com/tech-industry/artificial-intelligence/dev-used-ai-agents-and-more-than-500-billion-tokens-to-rebuild-call-of-duty-modern-warfare-2s-source-code-83-percent-of-the-2009-shooters-functions-now-match-the-original-byte-for-byte",
+        "sourceId": "7efd8e16-df11-469d-be52-984156ce7686",
+        "externalId": "50056688",
+        "status": "new"
+      },
+      {
+        "id": "c1e227b2-8d98-431b-a65e-b0f77694a937",
+        "title": "Designate the Google client for use by artificial intelligence (AI) agents",
+        "url": "https://support.google.com/cloud/answer/15549257?hl=en",
+        "sourceId": "7efd8e16-df11-469d-be52-984156ce7686",
+        "externalId": "50061359",
+        "status": "new"
+      },
+      {
+        "id": "139c08f6-e4ca-46ff-801a-8837af5dc167",
+        "title": "Nvidia accused of trying to cut a deal with Anna's Archive",
+        "url": "https://www.tomshardware.com/tech-industry/artificial-intelligence/nvidia-accused-of-trying-to-cut-a-deal-with-annas-archive-for-high-speed-access-to-the-massive-pirated-book-haul-allegedly-chased-stolen-data-to-fuel-its-llms",
+        "sourceId": "7efd8e16-df11-469d-be52-984156ce7686",
+        "externalId": "50062098",
+        "status": "new"
+      },
+      {
+        "id": "f298a74f-dbab-4f96-8e4e-6bce79c78418",
+        "title": "Artificial Intelligence in the Firm: Bottlenecks in Software Production [pdf]",
+        "url": "https://fion.ac/jellyfish.pdf",
+        "sourceId": "7efd8e16-df11-469d-be52-984156ce7686",
+        "externalId": "50051334",
+        "status": "new"
+      },
+      {
+        "id": "fab6d633-c1ce-4209-9c4f-e8aa93e099b5",
+        "title": "Intel Accelerates Open Infrastructure for the Agentic AI Era",
+        "url": "https://www.intel.com/content/www/us/en/newsroom/news/artificial-intelligence/intel-accelerates-open-infrastructure-agentic-ai-era.html",
+        "sourceId": "7efd8e16-df11-469d-be52-984156ce7686",
+        "externalId": "50066786",
+        "status": "new"
+      },
+      {
+        "id": "8e4f3001-d86e-4dd2-b2d9-6f6de825c261",
+        "title": "Building Pro-Worker Artificial Intelligence",
+        "url": "https://www.nber.org/papers/w34854",
+        "sourceId": "7efd8e16-df11-469d-be52-984156ce7686",
+        "externalId": "50067838",
+        "status": "new"
+      },
+      {
+        "id": "5d3b190f-c627-4fed-bd04-4f4a36ac00a5",
+        "title": "Character.ai has initiated voluntary Chapter 11 bankruptcy",
+        "url": "https://blog.character.ai/an-update-on-character-ai/",
+        "sourceId": "7efd8e16-df11-469d-be52-984156ce7686",
+        "externalId": "50068036",
+        "status": "new"
+      },
+      {
+        "id": "9fbfc06a-c29a-4869-8c81-77654df81c71",
+        "title": "Character.ai Files for Bankruptcy",
+        "url": "https://www.theverge.com/ai-artificial-intelligence/1009802/character-ai-files-for-bankruptcy-disney",
+        "sourceId": "7efd8e16-df11-469d-be52-984156ce7686",
+        "externalId": "50069942",
+        "status": "new"
+      },
+      {
+        "id": "6c6a2aeb-639c-4f91-ab63-1641e26cd787",
+        "title": "Wikipedians Believed AI Would Come and Go. They Were Wrong",
+        "url": "https://www.wired.com/story/book-excerpt-the-last-best-place-on-the-internet-wikipedia-artificial-intelligence/",
+        "sourceId": "7efd8e16-df11-469d-be52-984156ce7686",
+        "externalId": "50070038",
+        "status": "new"
+      },
+      {
+        "id": "b65bfa21-6e34-4880-bb1c-6a6d9d95d7ce",
+        "title": "AI causes uproar in mathematics after OpenAI shares 722 manuscripts and proofs",
+        "url": "https://www.tomshardware.com/tech-industry/artificial-intelligence/ai-causes-uproar-in-mathematics-as-experts-warn-against-sharing-research-with-llms-after-openai-shares-722-manuscripts-and-proofs-professor-argues-that-the-field-must-focus-on-building-community-over-raw-solutions",
+        "sourceId": "7efd8e16-df11-469d-be52-984156ce7686",
+        "externalId": "50073951",
+        "status": "new"
+      },
+      {
+        "id": "18055bc3-b96f-48fd-a6d4-460e18b368d6",
+        "title": "The Tao of Tao",
+        "url": "https://newsroom.ucla.edu/magazine/terence-tao-math-artificial-intelligence-alpha-research",
+        "sourceId": "7efd8e16-df11-469d-be52-984156ce7686",
+        "externalId": "50077321",
+        "status": "new"
+      },
+      {
+        "id": "75fc7042-4d4a-4d6c-944b-12743502d0d5",
+        "title": "OpenAI employee arrested for allegedly planting a bug in a conference room",
+        "url": "https://www.theverge.com/ai-artificial-intelligence/1010642/openai-employee-arrested-recording-device",
+        "sourceId": "7efd8e16-df11-469d-be52-984156ce7686",
+        "externalId": "50080703",
+        "status": "new"
+      },
+      {
+        "id": "edfae0f4-fd5d-44c4-94c5-b6e8198c6116",
+        "title": "Simple math can predict when AI is about to go rogue, physicists say",
+        "url": "https://www.livescience.com/technology/artificial-intelligence/simple-math-can-predict-when-ai-is-about-to-go-rogue-physicists-say",
+        "sourceId": "7efd8e16-df11-469d-be52-984156ce7686",
+        "externalId": "50090754",
+        "status": "new"
+      },
+      {
+        "id": "6a1a0f25-bb01-42dd-9b4f-0d4b08f3ba38",
+        "title": "An A.I. Manifesto to End All A.I. Manifestoes",
+        "url": "https://www.nytimes.com/2026/10/14/opinion/artificial-intelligence-ai-manifesto.html",
+        "sourceId": "7efd8e16-df11-469d-be52-984156ce7686",
+        "externalId": "50093326",
+        "status": "new"
+      },
+      {
+        "id": "7b7f2b3b-9fdf-45c5-81f1-cba87d38e809",
+        "title": "Gartner: 80% of Neocloud Providers Will Cease Independent Operations by 2030",
+        "url": "https://www.gartner.com/en/newsroom/press-releases/2026-10-14-gartner-says-over-us-dollars-three-and-a-half-trillion-of-artificial-intelligence-infrastructure-spending-could-be-exposed-to-impairment-by-the-end-of-2030",
+        "sourceId": "7efd8e16-df11-469d-be52-984156ce7686",
+        "externalId": "50093555",
+        "status": "new"
+      },
+      {
+        "id": "0ad15eff-49e6-4a3e-9886-6d96b62ee153",
+        "title": "A fifty-year broadcaster wired his home for artificial intelligence",
+        "url": "https://pages.laporte.cloud/my-setup/",
+        "sourceId": "7efd8e16-df11-469d-be52-984156ce7686",
+        "externalId": "50099641",
+        "status": "new"
+      },
+      {
+        "id": "aace602b-0f7f-4e9d-8072-52018476f0c5",
+        "title": "What My Son Is Learning from Artificial Intelligence",
+        "url": "https://greatergood.berkeley.edu/article/item/what_my_son_is_learning_from_artificial_intelligence",
+        "sourceId": "7efd8e16-df11-469d-be52-984156ce7686",
+        "externalId": "50099934",
+        "status": "new"
+      },
+      {
+        "id": "9f6f7d53-7b55-4da8-b5b7-3d20c03cd55e",
+        "title": "Eight states sue OpenAI, saying ChatGPT isn't safe for kids",
+        "url": "https://www.theverge.com/ai-artificial-intelligence/1011500/openai-state-lawsuits-chatgpt-safety",
+        "sourceId": "7efd8e16-df11-469d-be52-984156ce7686",
+        "externalId": "50095545",
+        "status": "new"
+      },
+      {
+        "id": "1ea6ed4c-7be8-4fd7-91ef-d6a7432e7df0",
+        "title": "Oracle Startup Growth Engine",
+        "url": "https://www.oracle.com/pl/artificial-intelligence/startup-growth-engine/",
+        "sourceId": "7efd8e16-df11-469d-be52-984156ce7686",
+        "externalId": "50108412",
+        "status": "new"
+      },
+      {
+        "id": "0d431eb8-3c29-4f65-8c72-1e6f62f201ce",
+        "title": "ChatGPT can peek at your Chrome tabs now",
+        "url": "https://www.theverge.com/ai-artificial-intelligence/1012510/openai-chatgpt-google-chrome-tabs",
+        "sourceId": "7efd8e16-df11-469d-be52-984156ce7686",
+        "externalId": "50111454",
+        "status": "new"
+      },
+      {
+        "id": "9cc03093-51f7-4716-997f-3d021856a437",
+        "title": "Subversion of clinical judgment by conversational artificial intelligence",
+        "url": "https://www.medrxiv.org/content/10.64898/2026.10.05.26364541v1",
+        "sourceId": "7efd8e16-df11-469d-be52-984156ce7686",
+        "externalId": "50112114",
+        "status": "new"
+      },
+      {
+        "id": "c1ea30a1-e2c7-4110-aab3-76faa4d90965",
+        "title": "Fractal Recursion, Bounded Infinity, and Adapted Systems",
+        "url": "https://medium.com/towards-artificial-intelligence/fractal-recursion-bounded-infinity-and-adapted-systems-b11046c9e1e1",
+        "sourceId": "7efd8e16-df11-469d-be52-984156ce7686",
+        "externalId": "50113186",
+        "status": "new"
+      },
+      {
+        "id": "e9ec4bdd-d9fc-46b2-8761-415bfb7fd116",
+        "title": "Artificial Intelligence, Economics, Sustainability, and Irreversibility",
+        "url": "https://www.alexahn.com/2026/10/artificial-intelligence-economics.html",
+        "sourceId": "7efd8e16-df11-469d-be52-984156ce7686",
+        "externalId": "50113712",
+        "status": "new"
+      },
+      {
+        "id": "0e1add9c-2a78-451a-b00e-efaf0b106613",
+        "title": "Mini brain organoids 'reading' Braille marks step towards biohybrid computing",
+        "url": "https://www.frontiersin.org/news/2026/10/16/mini-brain-organoids-reading-braille-biohybrid-computing-frontiers-artificial-intelligence",
+        "sourceId": "7efd8e16-df11-469d-be52-984156ce7686",
+        "externalId": "50115710",
+        "status": "new"
+      },
+      {
+        "id": "a32c0bf3-37ca-4743-9448-892834415565",
+        "title": "Artificial intelligence is capitalism's final destination",
+        "url": "https://www.equator.org/articles/arundhati-roy-artificial-intelligence",
+        "sourceId": "7efd8e16-df11-469d-be52-984156ce7686",
+        "externalId": "50117382",
+        "status": "new"
+      },
+      {
+        "id": "3ae22b9f-5a1a-458b-ac12-79dd1c8d7e74",
+        "title": "We must stop talking about artificial general intelligence",
+        "url": "https://www.nature.com/articles/d41586-026-02566-6",
+        "sourceId": "7efd8e16-df11-469d-be52-984156ce7686",
+        "externalId": "50119509",
+        "status": "new"
+      },
+      {
+        "id": "309f3015-bcda-4d21-a996-a6a63eb75501",
+        "title": "Tort Law at the Frontier of Artificial Intelligence",
+        "url": "https://papers.ssrn.com/sol3/papers.cfm?abstract_id=6979919",
+        "sourceId": "7efd8e16-df11-469d-be52-984156ce7686",
+        "externalId": "50127957",
+        "status": "new"
+      },
+      {
+        "id": "c650d30c-9887-43a7-8ae2-b6c9644d9197",
+        "title": "Sterile Knowledge: Artificial Intelligence, and the Genealogy of Understanding",
+        "url": "https://medium.com/@smoking2man/sterile-knowledge-artificial-intelligence-models-and-the-genealogy-of-understanding-51d8e1355a04",
+        "sourceId": "7efd8e16-df11-469d-be52-984156ce7686",
+        "externalId": "50128314",
+        "status": "new"
+      },
+      {
+        "id": "19335156-54d5-459a-aab9-7caf20cade96",
+        "title": "Hallucination as Model Defense: On the Nature of Artificial Intelligence Errors",
+        "url": "https://medium.com/@smoking2man/hallucination-as-model-defense-on-the-nature-of-artificial-intelligence-errors-1186260be3be",
+        "sourceId": "7efd8e16-df11-469d-be52-984156ce7686",
+        "externalId": "50128966",
+        "status": "new"
+      },
+      {
+        "id": "7921424a-18ee-4fcc-aafe-ef2eff9b7f68",
+        "title": "AI lab offers free plumbing and HVAC repairs to train AI robots",
+        "url": "https://www.tomshardware.com/tech-industry/artificial-intelligence/ai-lab-offers-free-plumbing-and-hvac-repairs-across-three-cities-to-train-ai-robots-wearable-sensors-record-video-of-repair-work-for-robotics-training-free-services-also-include-electrical-work-air-duct-cleaning-and-carpet-cleaning",
+        "sourceId": "7efd8e16-df11-469d-be52-984156ce7686",
+        "externalId": "50132550",
+        "status": "saved",
+        "analysis": {
+          "hook": "AI lab offers free plumbing and HVAC repairs to train AI robots",
+          "format": "article",
+          "hypothesis": "Hipótesis editorial: un tema específico desde la primera frase podría facilitar que la audiencia identifique el valor de la pieza. No hay evidencia causal ni datos suficientes para afirmar por qué tuvo éxito.",
+          "saturation": "low",
+          "saturationReason": "0 referencias relacionadas en 47 referencias del corpus observado de esta marca. Estimación de repetición interna, no de saturación global ni de Latinoamérica.",
+          "relevance": 35,
+          "adaptation": "Para la audiencia que defina la marca, convertir «AI lab offers free plumbing and HVAC repairs to train AI robots» en un ejemplo aplicado a Educación y formación en Latinoamérica. Usar el tono Claro, cercano y práctico de 30X Discovery QA; añadir una decisión concreta, un caso local verificable y límites. Contrastar con publicaciones propias antes de aprobar.",
+          "segmentIds": [],
+          "signals": [
+            "Motor local: comparación de texto y reglas editoriales, sin búsqueda global.",
+            "Material disponible: título/enlace; contenido completo no disponible.",
+            "Publicada hace 18 h; ventana de comparación: 7 días.",
+            "Puntos oficiales: 20; 11 comentarios. Comparación dentro de 40 resultados de esta fuente.",
+            "Sin historial suficiente: se requieren dos observaciones separadas al menos 10 minutos para estimar velocidad.",
+            "Coincidencias con el contexto de marca: ninguna coincidencia literal; revisar relevancia manualmente.",
+            "Historial editorial comparable: 0 referencias guardadas y 0 descartadas. Afinidad textual usada como ajuste de relevancia; no es un modelo entrenado.",
+            "No se pudo enriquecer el enlace: Enlace conservado sin leer: el operador debe revisar los términos y el permiso de esta web para esta finalidad. Puedes aportar contenido propio. Análisis limitado al material compartido."
+          ],
+          "confidence": "low",
+          "engine": "heuristic",
+          "analyzedAt": "2026-10-18T10:44:14.913Z"
+        }
+      },
+      {
+        "id": "9ecab264-f34f-411a-a3a7-50f875c944b1",
+        "title": "Why the Creators of AI Do Not Understand Their Own Creations",
+        "url": "https://news.ycombinator.com/item?id=50132747",
+        "sourceId": "7efd8e16-df11-469d-be52-984156ce7686",
+        "externalId": "50132747",
+        "status": "new"
+      },
+      {
+        "id": "e01c8b78-0323-43f3-9a5c-bc3ddaa2927f",
+        "title": "AI coding interfaces make approval easy and understanding hard",
+        "url": "https://www.aymannadeem.com/artificial/intelligence,/developer/tools/2026/10/10/ai-coding-interfaces-make-approval-easy-and-understanding-hard.html",
+        "sourceId": "7efd8e16-df11-469d-be52-984156ce7686",
+        "externalId": "50135617",
+        "status": "new"
+      },
+      {
+        "id": "f15e3c15-b981-4806-b0a5-b3dd16ee11a0",
+        "title": "Websites are closing their doors to AI agents",
+        "url": "https://www.theverge.com/ai-artificial-intelligence/1013195/ai-agents-blocked-web",
+        "sourceId": "7efd8e16-df11-469d-be52-984156ce7686",
+        "externalId": "50132119",
+        "status": "new"
+      },
+      {
+        "id": "0ba2fe5a-5c90-4d43-99db-9b57e698ebee",
+        "title": "calcio",
+        "url": "https://trends.google.com/trends/explore?q=calcio&geo=US",
+        "sourceId": "31c40db1-b05c-435d-9d81-d266b321c165",
+        "externalId": "google-trends:US:calcio",
+        "status": "new"
+      },
+      {
+        "id": "f32af83f-a447-4652-bbaa-dd8686e08ed4",
+        "title": "real sociedad - barcelona",
+        "url": "https://trends.google.com/trends/explore?q=real+sociedad+-+barcelona&geo=US",
+        "sourceId": "31c40db1-b05c-435d-9d81-d266b321c165",
+        "externalId": "google-trends:US:real%20sociedad%20-%20barcelona",
+        "status": "new"
+      },
+      {
+        "id": "aee93f9c-41e4-452b-b9be-91ba91844a6e",
+        "title": "tsa precheck",
+        "url": "https://trends.google.com/trends/explore?q=tsa+precheck&geo=US",
+        "sourceId": "31c40db1-b05c-435d-9d81-d266b321c165",
+        "externalId": "google-trends:US:tsa%20precheck",
+        "status": "new"
+      },
+      {
+        "id": "da49df3b-a71c-4d9f-9145-c1d2b26092c2",
+        "title": "did the guardians win last night",
+        "url": "https://trends.google.com/trends/explore?q=did+the+guardians+win+last+night&geo=US",
+        "sourceId": "31c40db1-b05c-435d-9d81-d266b321c165",
+        "externalId": "google-trends:US:did%20the%20guardians%20win%20last%20night",
+        "status": "new"
+      },
+      {
+        "id": "b5e670ef-d74e-440f-ba99-b2dbb9055d6f",
+        "title": "columbus marathon 2026",
+        "url": "https://trends.google.com/trends/explore?q=columbus+marathon+2026&geo=US",
+        "sourceId": "31c40db1-b05c-435d-9d81-d266b321c165",
+        "externalId": "google-trends:US:columbus%20marathon%202026",
+        "status": "new"
+      },
+      {
+        "id": "b013d5b2-d700-4ffe-af1e-ddb7d60bfa0f",
+        "title": "peggy flanagan",
+        "url": "https://trends.google.com/trends/explore?q=peggy+flanagan&geo=US",
+        "sourceId": "31c40db1-b05c-435d-9d81-d266b321c165",
+        "externalId": "google-trends:US:peggy%20flanagan",
+        "status": "new"
+      },
+      {
+        "id": "b8f2f071-884f-4c4f-a887-6ae35d38f40b",
+        "title": "smh",
+        "url": "https://trends.google.com/trends/explore?q=smh&geo=US",
+        "sourceId": "31c40db1-b05c-435d-9d81-d266b321c165",
+        "externalId": "google-trends:US:smh",
+        "status": "new"
+      },
+      {
+        "id": "0330d536-20fd-46f7-982c-3d2253962517",
+        "title": "gus ormo",
+        "url": "https://trends.google.com/trends/explore?q=gus+ormo&geo=US",
+        "sourceId": "31c40db1-b05c-435d-9d81-d266b321c165",
+        "externalId": "google-trends:US:gus%20ormo",
+        "status": "new"
+      },
+      {
+        "id": "8b861d00-4b0c-4ff3-84e8-45ed8600b191",
+        "title": "jacob elordi",
+        "url": "https://trends.google.com/trends/explore?q=jacob+elordi&geo=US",
+        "sourceId": "31c40db1-b05c-435d-9d81-d266b321c165",
+        "externalId": "google-trends:US:jacob%20elordi",
+        "status": "new"
+      },
+      {
+        "id": "87c407e4-51dd-4cf3-a5ce-deb15736c179",
+        "title": "october 18",
+        "url": "https://trends.google.com/trends/explore?q=october+18&geo=US",
+        "sourceId": "31c40db1-b05c-435d-9d81-d266b321c165",
+        "externalId": "google-trends:US:october%2018",
+        "status": "new"
+      }
+    ],
+    "sources": [
+      {
+        "name": "Video IA QA restringido",
+        "type": "youtube",
+        "query": "inteligencia artificial EdTech",
+        "platform": "youtube",
+        "enabled": false,
+        "limit": 20,
+        "id": "e3abb9b1-728c-4dc8-ba64-96992eebbdf1",
+        "createdAt": "2026-10-18T10:43:15.407Z",
+        "updatedAt": "2026-10-18T10:43:15.407Z",
+        "accessPolicy": {
+          "allowed": false,
+          "reason": "YouTube está bloqueado para este análisis editorial hasta completar la revisión de uso de datos, métricas derivadas, conservación y atribución. Una API key no habilita ese uso.",
+          "termsUrl": "https://developers.google.com/youtube/terms/developer-policies",
+          "reviewedAt": "2026-10-18"
+        }
+      },
+      {
+        "name": "Google Trends · Estados Unidos",
+        "type": "rss",
+        "url": "https://trends.google.com/trending/rss?geo=US",
+        "enabled": true,
+        "id": "31c40db1-b05c-435d-9d81-d266b321c165",
+        "createdAt": "2026-10-18T10:42:49.126Z",
+        "updatedAt": "2026-10-18T10:42:58.637Z",
+        "lastSyncedAt": "2026-10-18T10:42:58.637Z",
+        "lastResultCount": 10,
+        "accessPolicy": {
+          "allowed": true,
+          "reason": "Exportación RSS oficial de Google Trends; se mantiene la atribución.",
+          "termsUrl": "https://support.google.com/trends/answer/3076011",
+          "reviewedAt": "2026-10-18"
+        }
+      },
+      {
+        "name": "Hacker News · tecnología",
+        "type": "hackernews",
+        "query": "",
+        "enabled": true,
+        "id": "7efd8e16-df11-469d-be52-984156ce7686",
+        "createdAt": "2026-10-18T10:42:49.124Z",
+        "updatedAt": "2026-10-18T10:42:58.741Z",
+        "lastSyncedAt": "2026-10-18T10:42:58.741Z",
+        "lastResultCount": 40,
+        "accessPolicy": {
+          "allowed": true,
+          "reason": "API pública prevista para consultas automatizadas; conserva la atribución y respeta sus límites.",
+          "reviewedAt": "2026-10-18",
+          "termsUrl": "https://hn.algolia.com/api"
+        }
+      },
+      {
+        "name": "Noticias globales · GDELT",
+        "type": "gdelt",
+        "query": "",
+        "enabled": false,
+        "id": "651c4c73-3407-49ea-90cc-dac8b15ba63d",
+        "createdAt": "2026-10-18T10:42:49.122Z",
+        "updatedAt": "2026-10-18T10:47:03.368Z",
+        "lastError": "Noticias globales · GDELT: GDELT no está disponible (HTTP 429).",
+        "lastAttemptAt": "2026-10-18T10:42:58.743Z",
+        "accessPolicy": {
+          "allowed": true,
+          "reason": "API pública prevista para consultas automatizadas; conserva la atribución y respeta sus límites.",
+          "reviewedAt": "2026-10-18",
+          "termsUrl": "https://www.gdeltproject.org/about.html"
+        }
+      }
+    ],
+    "radarActivities": [
+      {
+        "id": "29c7bd71-3bbb-4040-baf3-55513f74fec1",
+        "text": "Radar actualizado: 47 referencias nuevas, 3 actualizadas y 1 fuentes con errores.",
+        "createdAt": "2026-10-18T10:42:58.757Z"
+      }
+    ]
+  },
+  "afterRefresh": {
+    "count": 50,
+    "references": [
+      {
+        "id": "23a14a1a-3ea4-47c9-b209-99c09f6d3585",
+        "title": "ashley st clair",
+        "url": "https://trends.google.com/trends/explore?q=ashley+st+clair&geo=US",
+        "sourceId": "31c40db1-b05c-435d-9d81-d266b321c165",
+        "externalId": "google-trends:US:ashley%20st%20clair",
+        "status": "new"
+      },
+      {
+        "id": "7327410e-c7a6-4a53-b516-7d3361aaea92",
+        "title": "Cita QA sin lectura verificada",
+        "url": "https://example.com/30x-synthetic-missing-article-20261018",
+        "status": "new"
+      },
+      {
+        "id": "24e644bb-93cb-4e93-ad29-e5d9ff250529",
+        "title": "30X original QA: piloto de IA verificable",
+        "status": "dismissed"
+      },
+      {
+        "id": "0383bbe9-3dd1-413f-ad1b-75870fb497d0",
+        "title": "Anthropic's Claude submits false tip on a Philadelphia unsolved homicide case",
+        "url": "https://apnews.com/article/artificial-intelligence-anthropic-claude-0acc6ac46d4d80db805e8d55468a6fe1",
+        "sourceId": "7efd8e16-df11-469d-be52-984156ce7686",
+        "externalId": "50047538",
+        "status": "new"
+      },
+      {
+        "id": "59cec125-46f8-4475-a576-e4fd6b4db5a7",
+        "title": "OpenAI fires 3 safety researchers in dispute over AI risks",
+        "url": "https://apnews.com/article/openai-chatgpt-ai-artificial-intelligence-safety-789d4f5293fba45a22fcb62ebfbc2a41",
+        "sourceId": "7efd8e16-df11-469d-be52-984156ce7686",
+        "externalId": "50047557",
+        "status": "new"
+      },
+      {
+        "id": "6c693e54-9ba3-43c1-abd8-7c98b86d12c4",
+        "title": "Website uses AI to generate northern Indigenous news 'correspondents'",
+        "url": "https://www.cbc.ca/news/canada/north/artificial-intelligence-indigenous-journalists-9.7345554",
+        "sourceId": "7efd8e16-df11-469d-be52-984156ce7686",
+        "externalId": "50050673",
+        "status": "new"
+      },
+      {
+        "id": "cb245f6c-0068-409b-a892-652ec6d2f160",
+        "title": "Silicon Valley is falling in line with Trump, SpaceXAI and AIForce to be renamed",
+        "url": "https://www.theverge.com/ai-artificial-intelligence/1009406/silicon-valley-is-falling-in-line-with-trumps-attempt-to-rename-ai",
+        "sourceId": "7efd8e16-df11-469d-be52-984156ce7686",
+        "externalId": "50054370",
+        "status": "new"
+      },
+      {
+        "id": "200f276e-d2a2-48f6-93d3-a9171446975e",
+        "title": "Dev used AI agents to rebuild Modern Warfare 2's source code; 83% matches",
+        "url": "https://www.tomshardware.com/tech-industry/artificial-intelligence/dev-used-ai-agents-and-more-than-500-billion-tokens-to-rebuild-call-of-duty-modern-warfare-2s-source-code-83-percent-of-the-2009-shooters-functions-now-match-the-original-byte-for-byte",
+        "sourceId": "7efd8e16-df11-469d-be52-984156ce7686",
+        "externalId": "50056688",
+        "status": "new"
+      },
+      {
+        "id": "c1e227b2-8d98-431b-a65e-b0f77694a937",
+        "title": "Designate the Google client for use by artificial intelligence (AI) agents",
+        "url": "https://support.google.com/cloud/answer/15549257?hl=en",
+        "sourceId": "7efd8e16-df11-469d-be52-984156ce7686",
+        "externalId": "50061359",
+        "status": "new"
+      },
+      {
+        "id": "139c08f6-e4ca-46ff-801a-8837af5dc167",
+        "title": "Nvidia accused of trying to cut a deal with Anna's Archive",
+        "url": "https://www.tomshardware.com/tech-industry/artificial-intelligence/nvidia-accused-of-trying-to-cut-a-deal-with-annas-archive-for-high-speed-access-to-the-massive-pirated-book-haul-allegedly-chased-stolen-data-to-fuel-its-llms",
+        "sourceId": "7efd8e16-df11-469d-be52-984156ce7686",
+        "externalId": "50062098",
+        "status": "new"
+      },
+      {
+        "id": "f298a74f-dbab-4f96-8e4e-6bce79c78418",
+        "title": "Artificial Intelligence in the Firm: Bottlenecks in Software Production [pdf]",
+        "url": "https://fion.ac/jellyfish.pdf",
+        "sourceId": "7efd8e16-df11-469d-be52-984156ce7686",
+        "externalId": "50051334",
+        "status": "new"
+      },
+      {
+        "id": "fab6d633-c1ce-4209-9c4f-e8aa93e099b5",
+        "title": "Intel Accelerates Open Infrastructure for the Agentic AI Era",
+        "url": "https://www.intel.com/content/www/us/en/newsroom/news/artificial-intelligence/intel-accelerates-open-infrastructure-agentic-ai-era.html",
+        "sourceId": "7efd8e16-df11-469d-be52-984156ce7686",
+        "externalId": "50066786",
+        "status": "new"
+      },
+      {
+        "id": "8e4f3001-d86e-4dd2-b2d9-6f6de825c261",
+        "title": "Building Pro-Worker Artificial Intelligence",
+        "url": "https://www.nber.org/papers/w34854",
+        "sourceId": "7efd8e16-df11-469d-be52-984156ce7686",
+        "externalId": "50067838",
+        "status": "new"
+      },
+      {
+        "id": "5d3b190f-c627-4fed-bd04-4f4a36ac00a5",
+        "title": "Character.ai has initiated voluntary Chapter 11 bankruptcy",
+        "url": "https://blog.character.ai/an-update-on-character-ai/",
+        "sourceId": "7efd8e16-df11-469d-be52-984156ce7686",
+        "externalId": "50068036",
+        "status": "new"
+      },
+      {
+        "id": "9fbfc06a-c29a-4869-8c81-77654df81c71",
+        "title": "Character.ai Files for Bankruptcy",
+        "url": "https://www.theverge.com/ai-artificial-intelligence/1009802/character-ai-files-for-bankruptcy-disney",
+        "sourceId": "7efd8e16-df11-469d-be52-984156ce7686",
+        "externalId": "50069942",
+        "status": "new"
+      },
+      {
+        "id": "6c6a2aeb-639c-4f91-ab63-1641e26cd787",
+        "title": "Wikipedians Believed AI Would Come and Go. They Were Wrong",
+        "url": "https://www.wired.com/story/book-excerpt-the-last-best-place-on-the-internet-wikipedia-artificial-intelligence/",
+        "sourceId": "7efd8e16-df11-469d-be52-984156ce7686",
+        "externalId": "50070038",
+        "status": "new"
+      },
+      {
+        "id": "b65bfa21-6e34-4880-bb1c-6a6d9d95d7ce",
+        "title": "AI causes uproar in mathematics after OpenAI shares 722 manuscripts and proofs",
+        "url": "https://www.tomshardware.com/tech-industry/artificial-intelligence/ai-causes-uproar-in-mathematics-as-experts-warn-against-sharing-research-with-llms-after-openai-shares-722-manuscripts-and-proofs-professor-argues-that-the-field-must-focus-on-building-community-over-raw-solutions",
+        "sourceId": "7efd8e16-df11-469d-be52-984156ce7686",
+        "externalId": "50073951",
+        "status": "new"
+      },
+      {
+        "id": "18055bc3-b96f-48fd-a6d4-460e18b368d6",
+        "title": "The Tao of Tao",
+        "url": "https://newsroom.ucla.edu/magazine/terence-tao-math-artificial-intelligence-alpha-research",
+        "sourceId": "7efd8e16-df11-469d-be52-984156ce7686",
+        "externalId": "50077321",
+        "status": "new"
+      },
+      {
+        "id": "75fc7042-4d4a-4d6c-944b-12743502d0d5",
+        "title": "OpenAI employee arrested for allegedly planting a bug in a conference room",
+        "url": "https://www.theverge.com/ai-artificial-intelligence/1010642/openai-employee-arrested-recording-device",
+        "sourceId": "7efd8e16-df11-469d-be52-984156ce7686",
+        "externalId": "50080703",
+        "status": "new"
+      },
+      {
+        "id": "edfae0f4-fd5d-44c4-94c5-b6e8198c6116",
+        "title": "Simple math can predict when AI is about to go rogue, physicists say",
+        "url": "https://www.livescience.com/technology/artificial-intelligence/simple-math-can-predict-when-ai-is-about-to-go-rogue-physicists-say",
+        "sourceId": "7efd8e16-df11-469d-be52-984156ce7686",
+        "externalId": "50090754",
+        "status": "new"
+      },
+      {
+        "id": "6a1a0f25-bb01-42dd-9b4f-0d4b08f3ba38",
+        "title": "An A.I. Manifesto to End All A.I. Manifestoes",
+        "url": "https://www.nytimes.com/2026/10/14/opinion/artificial-intelligence-ai-manifesto.html",
+        "sourceId": "7efd8e16-df11-469d-be52-984156ce7686",
+        "externalId": "50093326",
+        "status": "new"
+      },
+      {
+        "id": "7b7f2b3b-9fdf-45c5-81f1-cba87d38e809",
+        "title": "Gartner: 80% of Neocloud Providers Will Cease Independent Operations by 2030",
+        "url": "https://www.gartner.com/en/newsroom/press-releases/2026-10-14-gartner-says-over-us-dollars-three-and-a-half-trillion-of-artificial-intelligence-infrastructure-spending-could-be-exposed-to-impairment-by-the-end-of-2030",
+        "sourceId": "7efd8e16-df11-469d-be52-984156ce7686",
+        "externalId": "50093555",
+        "status": "new"
+      },
+      {
+        "id": "0ad15eff-49e6-4a3e-9886-6d96b62ee153",
+        "title": "A fifty-year broadcaster wired his home for artificial intelligence",
+        "url": "https://pages.laporte.cloud/my-setup/",
+        "sourceId": "7efd8e16-df11-469d-be52-984156ce7686",
+        "externalId": "50099641",
+        "status": "new"
+      },
+      {
+        "id": "aace602b-0f7f-4e9d-8072-52018476f0c5",
+        "title": "What My Son Is Learning from Artificial Intelligence",
+        "url": "https://greatergood.berkeley.edu/article/item/what_my_son_is_learning_from_artificial_intelligence",
+        "sourceId": "7efd8e16-df11-469d-be52-984156ce7686",
+        "externalId": "50099934",
+        "status": "new"
+      },
+      {
+        "id": "9f6f7d53-7b55-4da8-b5b7-3d20c03cd55e",
+        "title": "Eight states sue OpenAI, saying ChatGPT isn't safe for kids",
+        "url": "https://www.theverge.com/ai-artificial-intelligence/1011500/openai-state-lawsuits-chatgpt-safety",
+        "sourceId": "7efd8e16-df11-469d-be52-984156ce7686",
+        "externalId": "50095545",
+        "status": "new"
+      },
+      {
+        "id": "1ea6ed4c-7be8-4fd7-91ef-d6a7432e7df0",
+        "title": "Oracle Startup Growth Engine",
+        "url": "https://www.oracle.com/pl/artificial-intelligence/startup-growth-engine/",
+        "sourceId": "7efd8e16-df11-469d-be52-984156ce7686",
+        "externalId": "50108412",
+        "status": "new"
+      },
+      {
+        "id": "0d431eb8-3c29-4f65-8c72-1e6f62f201ce",
+        "title": "ChatGPT can peek at your Chrome tabs now",
+        "url": "https://www.theverge.com/ai-artificial-intelligence/1012510/openai-chatgpt-google-chrome-tabs",
+        "sourceId": "7efd8e16-df11-469d-be52-984156ce7686",
+        "externalId": "50111454",
+        "status": "new"
+      },
+      {
+        "id": "9cc03093-51f7-4716-997f-3d021856a437",
+        "title": "Subversion of clinical judgment by conversational artificial intelligence",
+        "url": "https://www.medrxiv.org/content/10.64898/2026.10.05.26364541v1",
+        "sourceId": "7efd8e16-df11-469d-be52-984156ce7686",
+        "externalId": "50112114",
+        "status": "new"
+      },
+      {
+        "id": "c1ea30a1-e2c7-4110-aab3-76faa4d90965",
+        "title": "Fractal Recursion, Bounded Infinity, and Adapted Systems",
+        "url": "https://medium.com/towards-artificial-intelligence/fractal-recursion-bounded-infinity-and-adapted-systems-b11046c9e1e1",
+        "sourceId": "7efd8e16-df11-469d-be52-984156ce7686",
+        "externalId": "50113186",
+        "status": "new"
+      },
+      {
+        "id": "e9ec4bdd-d9fc-46b2-8761-415bfb7fd116",
+        "title": "Artificial Intelligence, Economics, Sustainability, and Irreversibility",
+        "url": "https://www.alexahn.com/2026/10/artificial-intelligence-economics.html",
+        "sourceId": "7efd8e16-df11-469d-be52-984156ce7686",
+        "externalId": "50113712",
+        "status": "new"
+      },
+      {
+        "id": "0e1add9c-2a78-451a-b00e-efaf0b106613",
+        "title": "Mini brain organoids 'reading' Braille marks step towards biohybrid computing",
+        "url": "https://www.frontiersin.org/news/2026/10/16/mini-brain-organoids-reading-braille-biohybrid-computing-frontiers-artificial-intelligence",
+        "sourceId": "7efd8e16-df11-469d-be52-984156ce7686",
+        "externalId": "50115710",
+        "status": "new"
+      },
+      {
+        "id": "a32c0bf3-37ca-4743-9448-892834415565",
+        "title": "Artificial intelligence is capitalism's final destination",
+        "url": "https://www.equator.org/articles/arundhati-roy-artificial-intelligence",
+        "sourceId": "7efd8e16-df11-469d-be52-984156ce7686",
+        "externalId": "50117382",
+        "status": "new"
+      },
+      {
+        "id": "3ae22b9f-5a1a-458b-ac12-79dd1c8d7e74",
+        "title": "We must stop talking about artificial general intelligence",
+        "url": "https://www.nature.com/articles/d41586-026-02566-6",
+        "sourceId": "7efd8e16-df11-469d-be52-984156ce7686",
+        "externalId": "50119509",
+        "status": "new"
+      },
+      {
+        "id": "309f3015-bcda-4d21-a996-a6a63eb75501",
+        "title": "Tort Law at the Frontier of Artificial Intelligence",
+        "url": "https://papers.ssrn.com/sol3/papers.cfm?abstract_id=6979919",
+        "sourceId": "7efd8e16-df11-469d-be52-984156ce7686",
+        "externalId": "50127957",
+        "status": "new"
+      },
+      {
+        "id": "c650d30c-9887-43a7-8ae2-b6c9644d9197",
+        "title": "Sterile Knowledge: Artificial Intelligence, and the Genealogy of Understanding",
+        "url": "https://medium.com/@smoking2man/sterile-knowledge-artificial-intelligence-models-and-the-genealogy-of-understanding-51d8e1355a04",
+        "sourceId": "7efd8e16-df11-469d-be52-984156ce7686",
+        "externalId": "50128314",
+        "status": "new"
+      },
+      {
+        "id": "19335156-54d5-459a-aab9-7caf20cade96",
+        "title": "Hallucination as Model Defense: On the Nature of Artificial Intelligence Errors",
+        "url": "https://medium.com/@smoking2man/hallucination-as-model-defense-on-the-nature-of-artificial-intelligence-errors-1186260be3be",
+        "sourceId": "7efd8e16-df11-469d-be52-984156ce7686",
+        "externalId": "50128966",
+        "status": "new"
+      },
+      {
+        "id": "7921424a-18ee-4fcc-aafe-ef2eff9b7f68",
+        "title": "AI lab offers free plumbing and HVAC repairs to train AI robots",
+        "url": "https://www.tomshardware.com/tech-industry/artificial-intelligence/ai-lab-offers-free-plumbing-and-hvac-repairs-across-three-cities-to-train-ai-robots-wearable-sensors-record-video-of-repair-work-for-robotics-training-free-services-also-include-electrical-work-air-duct-cleaning-and-carpet-cleaning",
+        "sourceId": "7efd8e16-df11-469d-be52-984156ce7686",
+        "externalId": "50132550",
+        "status": "saved",
+        "analysis": {
+          "hook": "AI lab offers free plumbing and HVAC repairs to train AI robots",
+          "format": "article",
+          "hypothesis": "Hipótesis editorial: un tema específico desde la primera frase podría facilitar que la audiencia identifique el valor de la pieza. No hay evidencia causal ni datos suficientes para afirmar por qué tuvo éxito.",
+          "saturation": "low",
+          "saturationReason": "0 referencias relacionadas en 47 referencias del corpus observado de esta marca. Estimación de repetición interna, no de saturación global ni de Latinoamérica.",
+          "relevance": 35,
+          "adaptation": "Para la audiencia que defina la marca, convertir «AI lab offers free plumbing and HVAC repairs to train AI robots» en un ejemplo aplicado a Educación y formación en Latinoamérica. Usar el tono Claro, cercano y práctico de 30X Discovery QA; añadir una decisión concreta, un caso local verificable y límites. Contrastar con publicaciones propias antes de aprobar.",
+          "segmentIds": [],
+          "signals": [
+            "Motor local: comparación de texto y reglas editoriales, sin búsqueda global.",
+            "Material disponible: título/enlace; contenido completo no disponible.",
+            "Publicada hace 18 h; ventana de comparación: 7 días.",
+            "Puntos oficiales: 20; 11 comentarios. Comparación dentro de 40 resultados de esta fuente.",
+            "Sin historial suficiente: se requieren dos observaciones separadas al menos 10 minutos para estimar velocidad.",
+            "Coincidencias con el contexto de marca: ninguna coincidencia literal; revisar relevancia manualmente.",
+            "Historial editorial comparable: 0 referencias guardadas y 0 descartadas. Afinidad textual usada como ajuste de relevancia; no es un modelo entrenado.",
+            "No se pudo enriquecer el enlace: Enlace conservado sin leer: el operador debe revisar los términos y el permiso de esta web para esta finalidad. Puedes aportar contenido propio. Análisis limitado al material compartido."
+          ],
+          "confidence": "low",
+          "engine": "heuristic",
+          "analyzedAt": "2026-10-18T10:44:14.913Z"
+        }
+      },
+      {
+        "id": "9ecab264-f34f-411a-a3a7-50f875c944b1",
+        "title": "Why the Creators of AI Do Not Understand Their Own Creations",
+        "url": "https://news.ycombinator.com/item?id=50132747",
+        "sourceId": "7efd8e16-df11-469d-be52-984156ce7686",
+        "externalId": "50132747",
+        "status": "new"
+      },
+      {
+        "id": "e01c8b78-0323-43f3-9a5c-bc3ddaa2927f",
+        "title": "AI coding interfaces make approval easy and understanding hard",
+        "url": "https://www.aymannadeem.com/artificial/intelligence,/developer/tools/2026/10/10/ai-coding-interfaces-make-approval-easy-and-understanding-hard.html",
+        "sourceId": "7efd8e16-df11-469d-be52-984156ce7686",
+        "externalId": "50135617",
+        "status": "new"
+      },
+      {
+        "id": "f15e3c15-b981-4806-b0a5-b3dd16ee11a0",
+        "title": "Websites are closing their doors to AI agents",
+        "url": "https://www.theverge.com/ai-artificial-intelligence/1013195/ai-agents-blocked-web",
+        "sourceId": "7efd8e16-df11-469d-be52-984156ce7686",
+        "externalId": "50132119",
+        "status": "new"
+      },
+      {
+        "id": "0ba2fe5a-5c90-4d43-99db-9b57e698ebee",
+        "title": "calcio",
+        "url": "https://trends.google.com/trends/explore?q=calcio&geo=US",
+        "sourceId": "31c40db1-b05c-435d-9d81-d266b321c165",
+        "externalId": "google-trends:US:calcio",
+        "status": "new"
+      },
+      {
+        "id": "f32af83f-a447-4652-bbaa-dd8686e08ed4",
+        "title": "real sociedad - barcelona",
+        "url": "https://trends.google.com/trends/explore?q=real+sociedad+-+barcelona&geo=US",
+        "sourceId": "31c40db1-b05c-435d-9d81-d266b321c165",
+        "externalId": "google-trends:US:real%20sociedad%20-%20barcelona",
+        "status": "new"
+      },
+      {
+        "id": "aee93f9c-41e4-452b-b9be-91ba91844a6e",
+        "title": "tsa precheck",
+        "url": "https://trends.google.com/trends/explore?q=tsa+precheck&geo=US",
+        "sourceId": "31c40db1-b05c-435d-9d81-d266b321c165",
+        "externalId": "google-trends:US:tsa%20precheck",
+        "status": "new"
+      },
+      {
+        "id": "da49df3b-a71c-4d9f-9145-c1d2b26092c2",
+        "title": "did the guardians win last night",
+        "url": "https://trends.google.com/trends/explore?q=did+the+guardians+win+last+night&geo=US",
+        "sourceId": "31c40db1-b05c-435d-9d81-d266b321c165",
+        "externalId": "google-trends:US:did%20the%20guardians%20win%20last%20night",
+        "status": "new"
+      },
+      {
+        "id": "b5e670ef-d74e-440f-ba99-b2dbb9055d6f",
+        "title": "columbus marathon 2026",
+        "url": "https://trends.google.com/trends/explore?q=columbus+marathon+2026&geo=US",
+        "sourceId": "31c40db1-b05c-435d-9d81-d266b321c165",
+        "externalId": "google-trends:US:columbus%20marathon%202026",
+        "status": "new"
+      },
+      {
+        "id": "b013d5b2-d700-4ffe-af1e-ddb7d60bfa0f",
+        "title": "peggy flanagan",
+        "url": "https://trends.google.com/trends/explore?q=peggy+flanagan&geo=US",
+        "sourceId": "31c40db1-b05c-435d-9d81-d266b321c165",
+        "externalId": "google-trends:US:peggy%20flanagan",
+        "status": "new"
+      },
+      {
+        "id": "b8f2f071-884f-4c4f-a887-6ae35d38f40b",
+        "title": "smh",
+        "url": "https://trends.google.com/trends/explore?q=smh&geo=US",
+        "sourceId": "31c40db1-b05c-435d-9d81-d266b321c165",
+        "externalId": "google-trends:US:smh",
+        "status": "new"
+      },
+      {
+        "id": "0330d536-20fd-46f7-982c-3d2253962517",
+        "title": "gus ormo",
+        "url": "https://trends.google.com/trends/explore?q=gus+ormo&geo=US",
+        "sourceId": "31c40db1-b05c-435d-9d81-d266b321c165",
+        "externalId": "google-trends:US:gus%20ormo",
+        "status": "new"
+      },
+      {
+        "id": "8b861d00-4b0c-4ff3-84e8-45ed8600b191",
+        "title": "jacob elordi",
+        "url": "https://trends.google.com/trends/explore?q=jacob+elordi&geo=US",
+        "sourceId": "31c40db1-b05c-435d-9d81-d266b321c165",
+        "externalId": "google-trends:US:jacob%20elordi",
+        "status": "new"
+      },
+      {
+        "id": "87c407e4-51dd-4cf3-a5ce-deb15736c179",
+        "title": "october 18",
+        "url": "https://trends.google.com/trends/explore?q=october+18&geo=US",
+        "sourceId": "31c40db1-b05c-435d-9d81-d266b321c165",
+        "externalId": "google-trends:US:october%2018",
+        "status": "new"
+      }
+    ],
+    "sources": [
+      {
+        "name": "Video IA QA restringido",
+        "type": "youtube",
+        "query": "inteligencia artificial EdTech",
+        "platform": "youtube",
+        "enabled": false,
+        "limit": 20,
+        "id": "e3abb9b1-728c-4dc8-ba64-96992eebbdf1",
+        "createdAt": "2026-10-18T10:43:15.407Z",
+        "updatedAt": "2026-10-18T10:43:15.407Z",
+        "accessPolicy": {
+          "allowed": false,
+          "reason": "YouTube está bloqueado para este análisis editorial hasta completar la revisión de uso de datos, métricas derivadas, conservación y atribución. Una API key no habilita ese uso.",
+          "termsUrl": "https://developers.google.com/youtube/terms/developer-policies",
+          "reviewedAt": "2026-10-18"
+        }
+      },
+      {
+        "name": "Google Trends · Estados Unidos",
+        "type": "rss",
+        "url": "https://trends.google.com/trending/rss?geo=US",
+        "enabled": true,
+        "id": "31c40db1-b05c-435d-9d81-d266b321c165",
+        "createdAt": "2026-10-18T10:42:49.126Z",
+        "updatedAt": "2026-10-18T10:47:08.580Z",
+        "lastSyncedAt": "2026-10-18T10:47:08.580Z",
+        "lastResultCount": 10,
+        "accessPolicy": {
+          "allowed": true,
+          "reason": "Exportación RSS oficial de Google Trends; se mantiene la atribución.",
+          "termsUrl": "https://support.google.com/trends/answer/3076011",
+          "reviewedAt": "2026-10-18"
+        }
+      },
+      {
+        "name": "Hacker News · tecnología",
+        "type": "hackernews",
+        "query": "",
+        "enabled": true,
+        "id": "7efd8e16-df11-469d-be52-984156ce7686",
+        "createdAt": "2026-10-18T10:42:49.124Z",
+        "updatedAt": "2026-10-18T10:47:08.677Z",
+        "lastSyncedAt": "2026-10-18T10:47:08.677Z",
+        "lastResultCount": 40,
+        "accessPolicy": {
+          "allowed": true,
+          "reason": "API pública prevista para consultas automatizadas; conserva la atribución y respeta sus límites.",
+          "reviewedAt": "2026-10-18",
+          "termsUrl": "https://hn.algolia.com/api"
+        }
+      },
+      {
+        "name": "Noticias globales · GDELT",
+        "type": "gdelt",
+        "query": "",
+        "enabled": false,
+        "id": "651c4c73-3407-49ea-90cc-dac8b15ba63d",
+        "createdAt": "2026-10-18T10:42:49.122Z",
+        "updatedAt": "2026-10-18T10:47:03.368Z",
+        "lastError": "Noticias globales · GDELT: GDELT no está disponible (HTTP 429).",
+        "lastAttemptAt": "2026-10-18T10:42:58.743Z",
+        "accessPolicy": {
+          "allowed": true,
+          "reason": "API pública prevista para consultas automatizadas; conserva la atribución y respeta sus límites.",
+          "reviewedAt": "2026-10-18",
+          "termsUrl": "https://www.gdeltproject.org/about.html"
+        }
+      }
+    ],
+    "radarActivities": [
+      {
+        "id": "ea6e3b43-45e8-424b-9491-66f52044d95c",
+        "text": "Radar actualizado: 1 referencias nuevas, 49 actualizadas y 0 fuentes con errores.",
+        "createdAt": "2026-10-18T10:47:08.696Z"
+      },
+      {
+        "id": "29c7bd71-3bbb-4040-baf3-55513f74fec1",
+        "text": "Radar actualizado: 47 referencias nuevas, 3 actualizadas y 1 fuentes con errores.",
+        "createdAt": "2026-10-18T10:42:58.757Z"
+      }
+    ]
+  },
+  "allPreviousRetained": true,
+  "exactUrlDuplicates": [],
+  "manualRepeatFinal": {
+    "count": 50,
+    "citation": {
+      "source": "Equipo",
+      "language": "en",
+      "market": "Referencia del equipo",
+      "format": "link",
+      "status": "new",
+      "tags": [],
+      "title": "Cita QA sin lectura verificada",
+      "text": "Nota propia: enlace guardado como cita, no leímos el contenido externo. Conservar esta nota durante recuperación.",
+      "url": "https://example.com/30x-synthetic-missing-article-20261018",
+      "id": "7327410e-c7a6-4a53-b516-7d3361aaea92",
+      "createdAt": "2026-10-18T10:46:36.409Z",
+      "updatedAt": "2026-10-18T10:47:08.679Z",
+      "brandRelevance": {
+        "score": 0,
+        "matchedTerms": [],
+        "method": "lexical"
+      }
+    },
+    "isolation": {
+      "brand": "Isolation Discovery QA",
+      "referenceCount": 0,
+      "sourceCount": 3
+    },
+    "radarActivities": [
+      {
+        "id": "ea6e3b43-45e8-424b-9491-66f52044d95c",
+        "text": "Radar actualizado: 1 referencias nuevas, 49 actualizadas y 0 fuentes con errores.",
+        "createdAt": "2026-10-18T10:47:08.696Z"
+      },
+      {
+        "id": "29c7bd71-3bbb-4040-baf3-55513f74fec1",
+        "text": "Radar actualizado: 47 referencias nuevas, 3 actualizadas y 1 fuentes con errores.",
+        "createdAt": "2026-10-18T10:42:58.757Z"
+      }
+    ],
+    "scrollWidth": 390,
+    "viewport": 390,
+    "text": "El contenido de 30X Discovery QA, con dirección.\n\nDel contexto de tu empresa a una publicación que puedas evaluar.\n\n1 referencias nuevas disponibles. Ya puedes explorar oportunidades.\n\nElige qué vale la pena contar ahora\n\nRevisa oportunidades que conectan referencias públicas con las necesidades de tu audiencia y convierte una en contenido propio.\n\nExplorar oportunidades\nUn flujo, de principio a fin\n3 de 6 etapas con actividad\nContexto\nDirección editorial definida\nAudiencia\n1 perfil definido\nDescubrimiento\n49 referencias disponibles\nCreación y revisión\n0 borradores · 0 en revisión\nCalendario\n0"
+  },
+  "restrictedEnableAttempt": {
+    "status": 403,
+    "data": {
+      "error": "YouTube está bloqueado para este análisis editorial hasta completar la revisión de uso de datos, métricas derivadas, conservación y atribución. Una API key no habilita ese uso."
+    }
+  }
+}
