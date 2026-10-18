@@ -1,0 +1,261 @@
+{
+  "issueId": "navigation-3",
+  "agent": "/root/fix_navigation_3",
+  "engine": "T3 collaborative browser, Chromium; CSS viewport emulation, no physical-device claim",
+  "runtime": {
+    "apiPort": 4521,
+    "webPort": 5521,
+    "host": "127.0.1.31",
+    "dataDir": "/tmp/30x-remediation-navigation-3"
+  },
+  "before": {
+    "width": 390,
+    "documentWidth": 390,
+    "searchInDom": true,
+    "searchVisible": false,
+    "labelDisplay": "none",
+    "visibleReferenceIds": [
+      "49a4af6a-1261-4f85-9bbe-e159a4501e87",
+      "703ecbd3-c2fa-4fa3-9270-a193dabb8460",
+      "edd1ece4-0765-40ed-8011-688080c8014d"
+    ]
+  },
+  "checks": [
+    {
+      "name": "search-exact-reference",
+      "width": 390,
+      "documentWidth": 390,
+      "query": "ALFA",
+      "visible": true,
+      "font": "16px",
+      "shown": [
+        "ALFA — IA para equipos"
+      ],
+      "ids": [
+        "49a4af6a-1261-4f85-9bbe-e159a4501e87"
+      ],
+      "pass": true
+    },
+    {
+      "name": "zero-matches-is-search-empty",
+      "width": 390,
+      "shown": [],
+      "emptyTitle": "No hay referencias que coincidan",
+      "hint": "Prueba otra palabra, borra la búsqueda o revisa el filtro de estado.",
+      "pass": true
+    },
+    {
+      "name": "clear-restores-exact-set-and-focus",
+      "width": 390,
+      "query": "",
+      "ids": [
+        "49a4af6a-1261-4f85-9bbe-e159a4501e87",
+        "703ecbd3-c2fa-4fa3-9270-a193dabb8460",
+        "edd1ece4-0765-40ed-8011-688080c8014d"
+      ],
+      "focus": "Buscar en esta sección",
+      "pass": true
+    },
+    {
+      "name": "search-exact-reference",
+      "width": 768,
+      "documentWidth": 768,
+      "query": "ALFA",
+      "visible": true,
+      "font": "16px",
+      "shown": [
+        "ALFA — IA para equipos"
+      ],
+      "ids": [
+        "49a4af6a-1261-4f85-9bbe-e159a4501e87"
+      ],
+      "pass": true
+    },
+    {
+      "name": "zero-matches-is-search-empty",
+      "width": 768,
+      "shown": [],
+      "emptyTitle": "No hay referencias que coincidan",
+      "hint": "Prueba otra palabra, borra la búsqueda o revisa el filtro de estado.",
+      "pass": true
+    },
+    {
+      "name": "clear-restores-exact-set-and-focus",
+      "width": 768,
+      "query": "",
+      "ids": [
+        "49a4af6a-1261-4f85-9bbe-e159a4501e87",
+        "703ecbd3-c2fa-4fa3-9270-a193dabb8460",
+        "edd1ece4-0765-40ed-8011-688080c8014d"
+      ],
+      "focus": "Buscar en esta sección",
+      "pass": true
+    },
+    {
+      "name": "search-exact-reference",
+      "width": 901,
+      "documentWidth": 901,
+      "query": "ALFA",
+      "visible": true,
+      "font": "13px",
+      "shown": [
+        "ALFA — IA para equipos"
+      ],
+      "ids": [
+        "49a4af6a-1261-4f85-9bbe-e159a4501e87"
+      ],
+      "pass": true
+    },
+    {
+      "name": "zero-matches-is-search-empty",
+      "width": 901,
+      "shown": [],
+      "emptyTitle": "No hay referencias que coincidan",
+      "hint": "Prueba otra palabra, borra la búsqueda o revisa el filtro de estado.",
+      "pass": true
+    },
+    {
+      "name": "clear-restores-exact-set-and-focus",
+      "width": 901,
+      "query": "",
+      "ids": [
+        "49a4af6a-1261-4f85-9bbe-e159a4501e87",
+        "703ecbd3-c2fa-4fa3-9270-a193dabb8460",
+        "edd1ece4-0765-40ed-8011-688080c8014d"
+      ],
+      "focus": "Buscar en esta sección",
+      "pass": true
+    },
+    {
+      "name": "search-exact-reference",
+      "width": 1024,
+      "documentWidth": 1024,
+      "query": "ALFA",
+      "visible": true,
+      "font": "13px",
+      "shown": [
+        "ALFA — IA para equipos"
+      ],
+      "ids": [
+        "49a4af6a-1261-4f85-9bbe-e159a4501e87"
+      ],
+      "pass": true
+    },
+    {
+      "name": "zero-matches-is-search-empty",
+      "width": 1024,
+      "shown": [],
+      "emptyTitle": "No hay referencias que coincidan",
+      "hint": "Prueba otra palabra, borra la búsqueda o revisa el filtro de estado.",
+      "pass": true
+    },
+    {
+      "name": "clear-restores-exact-set-and-focus",
+      "width": 1024,
+      "query": "",
+      "ids": [
+        "49a4af6a-1261-4f85-9bbe-e159a4501e87",
+        "703ecbd3-c2fa-4fa3-9270-a193dabb8460",
+        "edd1ece4-0765-40ed-8011-688080c8014d"
+      ],
+      "focus": "Buscar en esta sección",
+      "pass": true
+    },
+    {
+      "name": "search-exact-reference",
+      "width": 1440,
+      "documentWidth": 1440,
+      "query": "ALFA",
+      "visible": true,
+      "font": "13px",
+      "shown": [
+        "ALFA — IA para equipos"
+      ],
+      "ids": [
+        "49a4af6a-1261-4f85-9bbe-e159a4501e87"
+      ],
+      "pass": true
+    },
+    {
+      "name": "zero-matches-is-search-empty",
+      "width": 1440,
+      "shown": [],
+      "emptyTitle": "No hay referencias que coincidan",
+      "hint": "Prueba otra palabra, borra la búsqueda o revisa el filtro de estado.",
+      "pass": true
+    },
+    {
+      "name": "clear-restores-exact-set-and-focus",
+      "width": 1440,
+      "query": "",
+      "ids": [
+        "49a4af6a-1261-4f85-9bbe-e159a4501e87",
+        "703ecbd3-c2fa-4fa3-9270-a193dabb8460",
+        "edd1ece4-0765-40ed-8011-688080c8014d"
+      ],
+      "focus": "Buscar en esta sección",
+      "pass": true
+    },
+    {
+      "name": "keyboard-clear-button",
+      "width": 390,
+      "pass": true,
+      "evidence": "BETA → Tab focuses Borrar búsqueda with3px outline; Enter clears and returns focus to the input."
+    },
+    {
+      "name": "keyboard-escape-clears",
+      "width": 390,
+      "pass": true,
+      "evidence": "GAMMA → Escape clears to empty and restores all3 references while retaining input focus."
+    },
+    {
+      "name": "mobile-menu-retains-search",
+      "width": 390,
+      "pass": true,
+      "evidence": "Open menu focuses Cerrar menú; Escape focuses Abrir menú; ALFA query and exact single result remain."
+    },
+    {
+      "name": "capture-cta-retains-search",
+      "width": 390,
+      "pass": true,
+      "evidence": "Header Agregar referencia opens capture dialog; Escape closes and returns focus to trigger; ALFA result retained."
+    },
+    {
+      "name": "brand-scope",
+      "width": 1440,
+      "pass": true,
+      "evidence": "Native brand switch to914de286-78b2-4e0c-9b50-3d11cfa00653 displays0 results forALFA, switch back toc059da28-97ed-4465-976c-8a696ee0737a displays onlyALFA."
+    },
+    {
+      "name": "opportunities-no-global-search",
+      "width": 390,
+      "pass": true,
+      "evidence": "Menu Oportunidades navigates to/opportunities with0 .global-search input; global search not duplicated."
+    },
+    {
+      "name": "navigation-reset",
+      "width": 390,
+      "pass": true,
+      "evidence": "Menu→Más herramientas→Referencias closes menu, resets query and displays all3 references."
+    },
+    {
+      "name": "small-mobile-boundaries",
+      "width": 320,
+      "pass": true,
+      "documentWidth": 320,
+      "font": "16px",
+      "evidence": "Input x51–249; clear x257–299; menu x16–48; add x264–304; all inside320px."
+    },
+    {
+      "name": "contrast",
+      "pass": true,
+      "ratios": {
+        "input": 11.7,
+        "placeholder": 4.58,
+        "icon": 5.87,
+        "focus": 3.97
+      },
+      "evidence": "Computed RGB colors against label background251,252,251; text/placeholder>=4.5 and icon/focus>=3."
+    }
+  ]
+}

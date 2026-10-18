@@ -1,0 +1,68 @@
+{
+  "issueId": "navigation-3",
+  "agent": "/root/fix_navigation_3",
+  "status": "fixed",
+  "rootCause": "El único control que alimenta search del workspace estaba oculto por display:none en dos capas CSS heredadas: bajo1050px en styles.css y bajo900px en workspace.css. Referencias carecía de otro control.",
+  "changes": [
+    "La misma búsqueda permanece visible en todas las anchuras; bajo900px ocupa una segunda fila del encabezado sin competir con menú, contexto o captura. Input16px y controles dentro del viewport.",
+    "Borrar búsqueda y Escape restauran la lista completa y conservan el foco en el input. El botón de borrado tiene nombre accesible, área42×42 y foco visible.",
+    "Texto, placeholder, iconos y foco tienen contraste comprobado. El encabezado mantiene el contexto de una empresa con nombre largo y no desborda.",
+    "Referencias distingue no tener contenido de no encontrar coincidencias e indica cómo recuperar resultados; hunk coordinado con references-3.",
+    "La condición de las secciones buscables se conserva: Oportunidades no recibe una segunda búsqueda. DESIGN.md registra el nuevo comportamiento."
+  ],
+  "files": [
+    "src/App.tsx",
+    "src/workspace.css",
+    "src/features/Discovery.tsx (sólo EmptyState de InboxPage)",
+    "DESIGN.md"
+  ],
+  "verification": [
+    {
+      "kind": "browser",
+      "command": "T3 preview_resize390px + preview_evaluate .global-search input / getClientRects / display; repetir tras cambio",
+      "before": "Input presente en DOM pero no visible; label display:none;3 referencias reales del fixture presentes y sin alternativa de búsqueda.",
+      "after": "Input visible,16px; ancho de documento390; ALFA muestra únicamente el ID49a4af6a-1261-4f85-9bbe-e159a4501e87. El mismo control permanece visible a320/768/901/1024/1440."
+    },
+    {
+      "kind": "browser",
+      "command": "T3 preview_type ALFA→ZZZ-sin-resultado→preview_click Borrar búsqueda en390/768/901/1024/1440",
+      "before": "La interacción móvil era imposible porque el único input estaba oculto.",
+      "after": "15/15 comprobaciones: referencia/ID exacto, cero coincidencias con explicación adecuada y restauración de los3 IDs originales con foco en el input; sin overflow."
+    },
+    {
+      "kind": "browser",
+      "command": "T3 teclado Tab/Enter/Escape, menú, captura, cambio nativo de marca y navegación",
+      "before": "Sin búsqueda móvil alcanzable.",
+      "after": "9 comprobaciones adicionales: borrado por teclado, foco visible, Escape, preservación tras menú/modal, aislamiento de marca, búsqueda no duplicada en Oportunidades, reseteo al volver a Referencias, límites320px y contraste.24/24 comprobaciones registradas en browser-checks.json."
+    },
+    {
+      "kind": "test",
+      "command": "node --test tests/legacy-navigation.test.mjs tests/workflow-recovery.test.mjs tests/remediation-navigation-2.test.mjs",
+      "before": "Sin test unitario de CSS que pueda demostrar el síntoma real; se usa la seam del navegador, con reproducción roja anterior.",
+      "after": "13 tests pasan;0 fallos, cancelaciones u omitidos."
+    },
+    {
+      "kind": "test",
+      "command": "npx tsc --noEmit",
+      "before": "No se modifican contratos del backend ni tipos compartidos.",
+      "after": "Exit0, sin diagnósticos."
+    }
+  ],
+  "artifacts": [
+    "docs/remediation/evidence/navigation-3/browser-checks.json",
+    "docs/remediation/evidence/navigation-3/before-mobile-hidden-search.png",
+    "docs/remediation/evidence/navigation-3/after-mobile-alfa.png",
+    "docs/remediation/evidence/navigation-3/after-tablet-beta.png",
+    "docs/remediation/evidence/navigation-3/after-desktop-alfa.png",
+    "docs/remediation/evidence/navigation-3/after-mobile-no-matches.png",
+    "docs/remediation/evidence/navigation-3/after-320-boundaries.png",
+    "docs/remediation/evidence/navigation-3/nearby-tests.log",
+    "docs/remediation/evidence/navigation-3/types.log"
+  ],
+  "limitations": [
+    "Navegador nativo T3/Chromium con viewports CSS emulados; no prueba de dispositivo físico o Safari.",
+    "La búsqueda conserva el filtrado local del estado cargado de la empresa; esta corrección no añade un motor de búsqueda remoto ni cambia su alcance.",
+    "No se usan proveedores ni credenciales reales. Todos los datos de prueba son ficticios.",
+    "Runtime y pestaña propios cerrados. Al enviar SIGTERM apareció una aserción de Node24 --watch FSEventWrap durante el cierre, también vista por otros agentes; los puertos4521 y5521 quedaron libres. No hubo error funcional de búsqueda durante las pruebas."
+  ]
+}

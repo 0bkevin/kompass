@@ -1,0 +1,21 @@
+✔ maps known legacy hash bookmarks to clean route paths (0.829361ms)
+✔ maps a legacy Studio piece bookmark and safely encodes its id (0.159451ms)
+✔ leaves unknown hashes unmapped (0.108854ms)
+✔ leaves inherited object property names unmapped (0.15226ms)
+✔ migrates a legacy URL to a clean path and preserves its query (0.834209ms)
+✔ resolves workspace paths and selected Studio ids (0.677241ms)
+✔ Escape/close and workspace leave share a cancellable discard decision (1.603269ms)
+✔ opening or reverting a normalized new/existing source needs no warning (0.2717ms)
+✔ every source field participates in the saved baseline (0.389578ms)
+✔ a pending save prevents duplicate submissions and all discard paths (0.186782ms)
+✔ global busy state protects a pristine open form, but not a closed source form (0.156116ms)
+✔ asset upload records per-file failures and continues through the batch (1.298669ms)
+✔ draft refresh retry reuses the created piece and never creates it twice (0.326712ms)
+ℹ tests 13
+ℹ suites 0
+ℹ pass 13
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 58.549384
