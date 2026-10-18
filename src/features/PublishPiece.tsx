@@ -26,8 +26,8 @@ function Receipt({ receipt }: { receipt: PublicationReceipt }) {
       </Badge>
       <p>
         {receipt.provider === "legacy"
-          ? "Conservamos el recibo histórico de un conector que ya no está disponible."
-          : `El endpoint aceptó la solicitud (HTTP ${receipt.status ?? "2xx"}). Comprueba en tu servicio la publicación final en ${receipt.destination?.provider === "webhook" ? "el canal correspondiente" : "el destino"}.`}
+          ? "Conector anterior no disponible."
+          : `HTTP ${receipt.status ?? "2xx"}. Comprueba la publicación final en tu servicio.`}
       </p>
       <details>
         <summary>Ver recibo del conector</summary>
@@ -83,7 +83,7 @@ export default function PublishPiece({
         if (signal?.aborted) return null;
         setDelivery(null);
         setReadError(
-          "No pudimos consultar el estado del envío. Consulta de nuevo antes de enviar para evitar duplicados.",
+          "No pudimos consultar el envío. Consulta de nuevo antes de enviarlo para evitar duplicados.",
         );
         return null;
       } finally {
@@ -148,9 +148,7 @@ export default function PublishPiece({
         receipt: saved.publicationReceipt,
       });
       setOpen(false);
-      notify(
-        "El webhook aceptó la pieza. Comprueba la publicación final en tu servicio.",
-      );
+      notify("Envío aceptado. Comprueba la publicación final en tu servicio.");
       await refresh().catch(() =>
         setReadError(
           "El recibo está guardado. Actualiza el estado para sincronizar Studio.",
@@ -199,22 +197,20 @@ export default function PublishPiece({
               : "Envío sin confirmar"}
           </Badge>
           <p>
-            Comprueba el destino. El envío puede haberse recibido y está
-            bloqueado para evitar duplicados. Consultar el estado no vuelve a
-            enviar la pieza.
+            El destino puede haber recibido la pieza. Envío bloqueado para
+            evitar duplicados; consultar el estado no la reenvía.
           </p>
         </div>
       )}
       {delivery?.status === "failed" && (
         <p role="status">
-          El conector rechazó el envío. Revisa su configuración y confirma de
-          nuevo para reintentarlo.
+          Envío rechazado. Revisa el conector antes de reintentar.
         </p>
       )}
       {versionChanged && (
         <p className="form-error" role="alert">
-          La versión de Studio cambió. Actualiza la pieza y revisa su aprobación
-          antes de enviar.
+          La versión cambió. Actualiza la pieza y revisa su aprobación antes de
+          enviar.
         </p>
       )}
       {delivery && !approvalValid && delivery.status !== "delivered" && (
@@ -250,10 +246,7 @@ export default function PublishPiece({
           )}
           {!checking && delivery && !delivery.destination && (
             <>
-              <p>
-                No hay un conector de envío disponible. Usa «Exportar» para
-                llevar esta pieza a tu canal y publicarla allí.
-              </p>
+              <p>Sin conector disponible.</p>
               {delivery.unavailableReason && (
                 <details>
                   <summary>Ver estado de la conexión</summary>
@@ -262,16 +255,11 @@ export default function PublishPiece({
               )}
             </>
           )}
-          {reviewer && (
-            <p>
-              Un propietario o editor puede enviar esta pieza. Puedes consultar
-              su estado y recibo.
-            </p>
-          )}
+          {reviewer && <p>Enviar requiere un propietario o editor.</p>}
           {disabled && !sending && (
             <p>
-              Resuelve los cambios sin guardar o la operación actual antes de
-              enviar la versión aprobada.
+              Guarda los cambios y espera a que termine la operación actual
+              antes de enviar.
             </p>
           )}
           {!open && feedback}
@@ -329,19 +317,12 @@ export default function PublishPiece({
               </p>
             )}
             <p>
-              El webhook recibirá la pieza aprobada, sus escenas y las
-              referencias de sus recursos. Su aceptación no confirma la
-              publicación final en {piece.channel}; compruébala en tu servicio.
+              Se enviarán la pieza aprobada, sus escenas y recursos. La
+              aceptación del webhook no confirma la publicación final en{" "}
+              {piece.channel}.
             </p>
-            {delivery?.destination?.provider === "webhook" &&
-              delivery.destination.parametersHidden && (
-                <p className="small muted">
-                  Los parámetros de la URL se omiten aquí por seguridad.
-                </p>
-              )}
             <p>
-              Este envío es inmediato. La fecha de la grilla sólo organiza el
-              calendario.
+              Envío inmediato, independientemente de la fecha del calendario.
             </p>
             {feedback}
           </div>
