@@ -1,0 +1,18 @@
+✔ original HTTP repro: manual capture rejects loopback and leaves no stored reference or activity (66.790186ms)
+ℹ {"status":400,"error":"URL debe usar HTTP o HTTPS y un dominio público sin credenciales.","persisted":0}
+✔ POST and PATCH reject private, reserved, normalized local, intranet and non-public URLs without mutation (316.174272ms)
+ℹ 66 inadmissible URL cases rejected on both HTTP write routes
+✔ ordinary public citations and literal public addresses save without DNS, page access or fabricated reading (71.50633ms)
+ℹ 15 admissible citations stored; DNS lookups=0, external fetches=0
+✔ citation privacy and session rules reject embedded contact or credential data without echoing it (48.714458ms)
+✔ legacy inadmissible originals are omitted on readback without rewriting history, and can be corrected or removed (23.430175ms)
+✔ URL-free documents and text still work, and deduplicating a public citation retains its original record (25.2097ms)
+✔ authentication, editor/reviewer permissions, brands and attached assets remain isolated (46.700158ms)
+ℹ tests 7
+ℹ suites 0
+ℹ pass 7
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 800.332241

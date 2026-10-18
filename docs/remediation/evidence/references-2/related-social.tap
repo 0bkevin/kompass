@@ -1,0 +1,83 @@
+✔ a company completes context → evidence → original draft → approval → calendar → recorded results without providers (420.533611ms)
+✔ five anonymous voluntary responses become an aggregate signal and change the evidence explanation (145.161301ms)
+✔ context imports, opportunities, polls and outcomes stay isolated across accounts and companies (267.165288ms)
+✔ social settings reveal credential presence and model, never secret values (413.086095ms)
+✔ only the owner can update brand social credentials (10.548733ms)
+✔ disconnect overrides an environment key and saving a new key reconnects (19.354177ms)
+✔ social sources start paused and Apify rejects platforms without an adapter (38.909487ms)
+✖ reference CRUD cannot forge video analysis or provider provenance (4.934144ms)
+✖ editing reference content or asset invalidates audiovisual analysis and media (2.85043ms)
+✔ fetchSource dispatches social providers and sync preserves provider provenance without filling absent metrics (219.687839ms)
+✔ YouTube priority is query-local and history compares only the same video (1.706454ms)
+✔ Apify metrics remain provider-reported and small view changes do not label a general trend (0.488577ms)
+▶ social source changes, pauses, and deletion during fetch are skipped without telemetry or references
+  ✔ pause (8.083955ms)
+  ✔ query change (10.887505ms)
+  ✔ URL change (16.720434ms)
+  ✔ type change (10.046656ms)
+  ✔ delete (8.030404ms)
+✔ social source changes, pauses, and deletion during fetch are skipped without telemetry or references (55.088924ms)
+✔ same social video refresh keeps valid analysis but changed media or identity invalidates it (49.586994ms)
+✔ cross-source promotion cannot replace the identity or media behind saved video analysis (33.576111ms)
+✔ different social videos with similar captions do not fuzzy merge (29.111876ms)
+✔ draft fallback uses validated audiovisual observations without copying on-screen text (9.124894ms)
+✔ AI draft receives the complete validated audiovisual context as reference data (13.48323ms)
+✔ analysis API response redacts provider media URL while retaining the private value in storage (10.762676ms)
+✔ requires authentication, brand membership, and editor permissions (104.600775ms)
+✔ missing Gemini key returns a clear conflict without changing the reference (22.431879ms)
+✔ normalizes only exact public YouTube hosts and persists honest structured coverage (38.018113ms)
+✔ uses the brand YouTube API secret to bound a manually added public video (33.627337ms)
+✔ rejects text-only and arbitrary URLs without calling Gemini (22.839654ms)
+✔ rejects stale YouTube duration metadata rather than trusting a client body field (37.640011ms)
+✔ private uploaded MP4 uses resumable Files API, accepts files.get plain resources, then deletes upload (1032.504683ms)
+✔ analyzes recognized Apify MP4 without duration metadata and hides its signed URL (21.680214ms)
+✔ rejects an invalid private path and a zero-duration MP4 before external processing (21.710091ms)
+✔ bad model schema and provider authorization errors never save or leak secrets (35.966518ms)
+✔ rejects a provider URL resolving to a reserved address before fetching it (20.437851ms)
+✔ rejects concurrent analysis and guards against reference changes before save (34.79565ms)
+ℹ tests 36
+ℹ suites 0
+ℹ pass 34
+ℹ fail 2
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1658.929409
+
+✖ failing tests:
+
+test at tests/social-core.test.mjs:258:1
+✖ reference CRUD cannot forge video analysis or provider provenance (4.934144ms)
+  AssertionError [ERR_ASSERTION]: {"error":"URL debe usar HTTP o HTTPS y un dominio público sin credenciales."}
+  
+  400 !== 201
+  
+      at TestContext.<anonymous> (file:///home/ubuntu/.t3/projects/30x-trackt-2/tests/social-core.test.mjs:283:10)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async Test.run (node:internal/test_runner/test:1404:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:969:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 400,
+    expected: 201,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/social-core.test.mjs:349:1
+✖ editing reference content or asset invalidates audiovisual analysis and media (2.85043ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  400 !== 201
+  
+      at TestContext.<anonymous> (file:///home/ubuntu/.t3/projects/30x-trackt-2/tests/social-core.test.mjs:359:10)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async Test.run (node:internal/test_runner/test:1404:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:969:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 400,
+    expected: 201,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }

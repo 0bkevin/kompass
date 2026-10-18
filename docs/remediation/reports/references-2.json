@@ -1,0 +1,86 @@
+{
+  "issueId": "references-2",
+  "agent": "fix_references_2",
+  "status": "fixed",
+  "integrationStatus": "pending_coordinator",
+  "rootCause": "referenceInput aceptaba toda URL HTTP/HTTPS sin credenciales; no aplicaba la política local de citas públicas a IP literales privadas/reservadas ni hosts locales/intranet. publicReference exponía el enlace histórico sin comprobar admisibilidad.",
+  "changes": [
+    "Extraída a server/public-citation-url.mjs la política de publicLink, compartida por referencias y citas de audiencia/resultados, con los mismos mensajes y límites de cada consumidor.",
+    "Reutilizadas isPublicAddress y containsUrlContactDetails. Se comprueba el hostname normalizado por URL, puntos DNS finales, sufijos locales/reservados, puertos estándar, credenciales, protocolo, sesiones y datos personales, sin DNS ni solicitudes de página.",
+    "POST/PATCH de referencias rechazan URL inadmisibles antes de persistir o invalidar análisis. La deduplicación transaccional existente permanece intacta.",
+    "publicReference omite URL histórica inadmisible y devuelve originalUrlOmitted sin modificar almacenamiento; GET referencias y state mantienen el contexto, y PATCH puede corregir/quitar el enlace o actualizar estado.",
+    "El detalle explica la omisión; captura explica el límite de enlace público y la diferencia entre citar y leer. Los errores conservan los campos."
+  ],
+  "files": [
+    "server/public-citation-url.mjs",
+    "server/core.mjs",
+    "server/audience-insights.mjs",
+    "src/features/Discovery.tsx",
+    "src/lib/types.ts",
+    "tests/remediation-references-2.test.mjs",
+    "docs/remediation/reports/references-2.md",
+    "docs/remediation/reports/references-2.json"
+  ],
+  "verification": [
+    {
+      "command": "node --test tests/remediation-references-2.test.mjs",
+      "before": "1/1 falla: POST original devuelve 201 y readback contiene 1 referencia.",
+      "after": "7/7 pasan. Caso original 400 y 0 referencias/actividad; 66 URL negativas en POST/PATCH; 15 citas admisibles; adjuntos/texto; roles/marcas; privacidad; legacy; deduplicación. Cero DNS y fetch externos.",
+      "kind": "test"
+    },
+    {
+      "command": "node --test tests/core.test.mjs tests/audience-insights.test.mjs tests/remediation-signals-2.test.mjs tests/remediation-results-1.test.mjs tests/remediation-duplicate-reference.test.mjs tests/remediation-discovery-1.test.mjs tests/capture-retry.test.mjs tests/social-core.test.mjs tests/social-intelligence.test.mjs tests/integrated-flow.test.mjs tests/video-analysis.test.mjs",
+      "before": "La primera ejecución de social-core revela dos fixtures con .test que esperaban crear referencias públicas.",
+      "after": "140/140 pasan con las tres URL de fixture corregidas a example.com por el coordinador, manteniendo todas las aserciones.",
+      "kind": "test"
+    },
+    {
+      "command": "npx tsc --noEmit",
+      "before": "No aplicable.",
+      "after": "exit 0.",
+      "kind": "test"
+    },
+    {
+      "command": "T3 preview_* en http://127.0.1.19:5509/inbox; pestaña propia incognito; 1280×800 y 390×844.",
+      "before": "La UI guarda loopback, el GET lo conserva y detalle ofrece Ver original con ese href. Nunca se abrió el destino.",
+      "after": "POST 400 conserva URL/título/contexto; el mismo formulario corregido a NASA guarda 201; después de recarga GET/state muestran la cita pública. Legacy no expone URL/Ver original y muestra explicación; fila SQL intacta. Sin desborde horizontal móvil.",
+      "kind": "browser"
+    }
+  ],
+  "artifacts": [
+    "docs/remediation/evidence/references-2/red.tap",
+    "docs/remediation/evidence/references-2/green.tap",
+    "docs/remediation/evidence/references-2/nearby-final.tap",
+    "docs/remediation/evidence/references-2/related-social.tap",
+    "docs/remediation/evidence/references-2/typecheck.txt",
+    "docs/remediation/evidence/references-2/browser-checks.json",
+    "docs/remediation/evidence/references-2/before-private-original.png",
+    "docs/remediation/evidence/references-2/private-rejected-desktop.png",
+    "docs/remediation/evidence/references-2/private-rejected-mobile.png",
+    "docs/remediation/evidence/references-2/legacy-original-omitted-desktop.png",
+    "docs/remediation/evidence/references-2/legacy-original-omitted-mobile.png",
+    "docs/remediation/evidence/references-2/public-corrected-desktop.png",
+    "docs/remediation/evidence/references-2/public-corrected-mobile.png"
+  ],
+  "limitations": [
+    "Validación local determinista de admisibilidad de una cita; no prueba que el contenido sea accesible, público en su totalidad o haya sido leído.",
+    "No resuelve DNS, no sigue redirecciones ni inspecciona páginas o autenticación remota. Un nombre con apariencia pública podría resolver a una red privada o servir contenido restringido; cualquier futura lectura debe usar la protección de safeFetch.",
+    "No se observó ni se afirma SSRF, lectura privada, publicación o entrega real a proveedores.",
+    "No se ejecutó build global; corresponde a integración del coordinador.",
+    "La comprobación móvil usa viewport emulado, no un dispositivo físico."
+  ],
+  "coordination": [
+    "El coordinador autorizó extraer publicLink y añadir el saneamiento de publicReference.",
+    "El coordinador actualizó tres URL de fixtures en tests/social-core.test.mjs de example.test a example.com, sin relajar validación ni alterar aserciones.",
+    "No se tocaron upload/detectFile, brandInput, sourceInput, pieceInput, señales ni outcomes fuera de la extracción acordada del wrapper de citas."
+  ],
+  "cleanup": {
+    "ownTabClosed": true,
+    "devSession": 36266,
+    "processExited": true,
+    "apiPortFree": true,
+    "webPortFree": true,
+    "runtimeDataPreserved": true,
+    "note": "Node --watch emitió una aserción de FSWatcher al recibir SIGINT; terminó y los puertos quedaron libres. Las pruebas HTTP usaron servidores sin watch."
+  }
+}

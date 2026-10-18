@@ -1,0 +1,91 @@
+{
+  "issueId": "references-2",
+  "synthetic": true,
+  "environment": {
+    "host": "127.0.1.19",
+    "apiPort": 4509,
+    "webPort": 5509,
+    "dataDir": "/tmp/30x-remediation-references-2/runtime",
+    "discoveryEnabled": false,
+    "providerCredentials": "OPENAI_API_KEY, GEMINI_API_KEY, YOUTUBE_API_KEY y APIFY_API_TOKEN retiradas; .env ausente",
+    "tabId": "tab_4j_07e54779-9ab2-4979-8a15-674c4eff160a"
+  },
+  "before": {
+    "action": "UI Agregar referencia y abrir detalle",
+    "url": "http://127.0.0.1:9/qa-private-reference",
+    "status": 201,
+    "persistedCount": 1,
+    "referenceId": "bbfe36f2-32d5-4943-b0c4-6d111afcd1c7",
+    "originalHref": "http://127.0.0.1:9/qa-private-reference",
+    "destinationOpened": false
+  },
+  "after": {
+    "privateCapture": {
+      "status": 400,
+      "error": "URL debe usar HTTP o HTTPS y un dominio público sin credenciales.",
+      "persistedCount": 1,
+      "note": "Sólo permanece la fila histórica del rojo.",
+      "retainedForm": {
+        "url": "http://127.0.0.1:9/qa-private-reference",
+        "title": "QA URL privada loopback",
+        "text": "Contexto sintético conservado al corregir el enlace."
+      }
+    },
+    "correctionInSameForm": {
+      "status": 201,
+      "referenceId": "0c2052ff-0e6a-42fe-9f6e-cfb3d79c6820",
+      "url": "https://www.nasa.gov/news/",
+      "title": "QA cita pública corregida",
+      "retainedText": "Contexto sintético conservado al corregir el enlace.",
+      "dialogClosed": true,
+      "source": "Equipo",
+      "analysis": null
+    },
+    "afterReload": {
+      "readbackStatus": 200,
+      "persistedCount": 2,
+      "publicOriginalHref": "https://www.nasa.gov/news/",
+      "legacyUrlOmitted": true,
+      "legacyOriginalLinkCount": 0,
+      "legacyNotice": "El enlace original se omitió porque no cumple las reglas de citas públicas. El contexto aportado sigue disponible.",
+      "legacyStorageUnchanged": {
+        "url": "http://127.0.0.1:9/qa-private-reference",
+        "createdAt": "2026-10-18T05:25:53.994Z",
+        "updatedAt": "2026-10-18T05:25:53.994Z"
+      }
+    },
+    "viewports": [
+      {
+        "width": 1280,
+        "height": 800
+      },
+      {
+        "width": 390,
+        "height": 844,
+        "documentWidth": 390,
+        "dialogClientWidth": 370,
+        "dialogScrollWidth": 370
+      }
+    ],
+    "accessibility": {
+      "errorRole": "alert",
+      "urlDescribedBy": "capture-url-hint",
+      "hintContrast": 5.9,
+      "errorContrast": 5.32
+    },
+    "limits": [
+      "No se abrió la cita privada ni el enlace público de NASA.",
+      "No se verificó DNS, disponibilidad o lectura del contenido.",
+      "El navegador usa una ventana emulada; no se probó un dispositivo físico."
+    ]
+  },
+  "cleanup": {
+    "ownTabClosed": true,
+    "devSession": 36266,
+    "processExited": true,
+    "apiPortFree": true,
+    "webPortFree": true,
+    "runtimeDataPreserved": true,
+    "note": "Node --watch emitió una aserción de FSWatcher al recibir SIGINT; terminó y los puertos quedaron libres. Las pruebas HTTP usaron servidores sin watch."
+  }
+}
