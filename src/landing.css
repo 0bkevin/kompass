@@ -153,7 +153,7 @@
   font-weight: 550;
   line-height: 1.4;
   white-space: nowrap;
-  transition: transform 160ms var(--lp-ease-out);
+  transition: transform 100ms var(--lp-ease-out);
 }
 .lp-button-primary {
   border-color: transparent;
@@ -317,7 +317,7 @@
 .lp-stage-number {
   color: #8f879e;
   font-variant-numeric: tabular-nums;
-  font-size: 10px;
+  font-size: 11px;
 }
 .lp-stage-arrow {
   color: #5d566a;
@@ -383,7 +383,7 @@
   text-wrap: pretty;
 }
 .lp-stage-content > p {
-  font-size: 13px;
+  font-size: 14px;
   color: #b6afc1;
   max-width: 65ch;
 }
@@ -451,7 +451,7 @@
   gap: 100px;
   margin-bottom: 70px;
 }
-.lp-page h2 {
+.lp-page :where(h2) {
   font-size: 43px;
   letter-spacing: -0.03em;
   line-height: 1.15;
@@ -568,7 +568,7 @@
   border-radius: 4px;
   background: #392c4b;
   color: #d8baf9;
-  font-size: 10px;
+  font-size: 11px;
   white-space: nowrap;
 }
 .lp-manuscript {
@@ -576,7 +576,7 @@
 }
 .lp-manuscript > span {
   color: #a89ab9;
-  font-size: 10px;
+  font-size: 11px;
 }
 .lp-manuscript > p {
   font-family: "Hedvig Letters Serif", Georgia, serif;
@@ -626,7 +626,7 @@
   display: flex;
   align-items: center;
   gap: 7px;
-  font-size: 10px;
+  font-size: 11px;
 }
 .lp-calendar-visual {
   background: #131318;
@@ -637,7 +637,7 @@
 .lp-calendar-period {
   color: #aaa0b7;
   margin-left: auto;
-  font-size: 10px;
+  font-size: 11px;
 }
 .lp-calendar-days {
   display: grid;
@@ -646,7 +646,7 @@
   padding: 12px 0;
   border-bottom: 1px solid var(--lp-line);
   color: #a8a0b4;
-  font-size: 10px;
+  font-size: 11px;
 }
 .lp-calendar-grid {
   position: relative;
@@ -674,7 +674,7 @@
 }
 .lp-calendar-entry small {
   grid-column: 2;
-  font-size: 9px;
+  font-size: 11px;
   display: flex;
   align-items: center;
   gap: 4px;
@@ -703,7 +703,7 @@
   gap: 9px;
   padding: 13px 20px;
   border-top: 1px solid var(--lp-line);
-  font-size: 10px;
+  font-size: 11px;
   color: #b8aac9;
 }
 .lp-teams {
@@ -887,9 +887,6 @@
     background: #28232f;
     border-color: #645371;
   }
-  .lp-button:active {
-    transform: scale(0.97);
-  }
   .lp-text-link:hover,
   .lp-example-output a:hover,
   .lp-example-foot a:hover {
@@ -983,7 +980,7 @@
   .lp-stage-arrow {
     display: none;
   }
-  .lp-page h2 {
+  .lp-page :where(h2) {
     font-size: 36px;
   }
   .lp-workflow {
@@ -1121,7 +1118,7 @@
     gap: 9px;
   }
   .lp-example-label {
-    font-size: 9px;
+    font-size: 11px;
   }
   .lp-stage-tabs {
     padding: 0 5px;
@@ -1132,7 +1129,7 @@
     justify-content: center;
     gap: 5px;
     min-height: 68px;
-    font-size: 10px;
+    font-size: 12px;
     padding: 10px 5px;
   }
   .lp-stage-tabs button::after {
@@ -1156,7 +1153,7 @@
   }
   .lp-small-label,
   .lp-need-caption {
-    font-size: 10px;
+    font-size: 11px;
   }
   .lp-need-caption {
     margin-top: 11px;
@@ -1166,10 +1163,10 @@
     font-size: 16px;
   }
   .lp-stage-content > p {
-    font-size: 12px;
+    font-size: 13px;
   }
   .lp-stage-content .lp-example-detail {
-    font-size: 10px;
+    font-size: 12px;
   }
   .lp-example-output :is(strong, a) {
     font-size: 12px;
@@ -1183,7 +1180,7 @@
   }
   .lp-example-foot {
     padding: 13px 16px;
-    font-size: 10px;
+    font-size: 11px;
     flex-wrap: wrap;
     gap: 6px;
   }
@@ -1211,7 +1208,7 @@
     gap: 24px;
     margin-bottom: 38px;
   }
-  .lp-page h2 {
+  .lp-page :where(h2) {
     font-size: 36px;
     line-height: 1.17;
   }
@@ -1311,7 +1308,7 @@
   .lp-footer p {
     order: 3;
     width: 100%;
-    font-size: 10px;
+    font-size: 11px;
   }
 }
 @media (max-width: 360px) {
@@ -1353,8 +1350,12 @@
     opacity 160ms var(--lp-ease-out),
     transform 160ms var(--lp-ease-out);
 }
+.lp-button:focus-visible {
+  transition: none;
+}
 .lp-button:active:not(:focus-visible) {
   transform: scale(0.97);
+  transition-duration: 160ms;
 }
 .lp-spinner {
   animation: lp-spin 750ms linear infinite;

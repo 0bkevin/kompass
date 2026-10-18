@@ -76,7 +76,7 @@ const faqs = [
   {
     question: "¿Necesito conectar mis redes sociales?",
     answer:
-      "Puedes escribir, revisar, planificar y exportar sin conectar redes. YouTube dispone de descubrimiento público y contadores oficiales. Instagram, LinkedIn y TikTok todavía no tienen conexión oficial; sus resultados se pueden registrar manualmente.",
+      "Puedes escribir, revisar, planificar y exportar sin conectar redes. YouTube dispone de descubrimiento público y contadores oficiales que se actualizan cada hora mientras el servidor está activo. Instagram, LinkedIn y TikTok todavía no tienen conexión oficial; sus resultados se pueden registrar manualmente.",
   },
   {
     question: "¿El calendario publica por mí?",
@@ -190,28 +190,12 @@ function EditorialExample() {
   const [selected, setSelected] = useState(1);
   const [pointerMotion, setPointerMotion] = useState(false);
   const tabs = useRef<(HTMLButtonElement | null)[]>([]);
-  const panel = useRef<HTMLDivElement>(null);
-  const previousAnimation = useRef<Animation | null>(null);
   const stage = stages[selected];
 
   function selectStage(index: number, animate: boolean) {
     if (index === selected) return;
-    previousAnimation.current?.cancel();
     setPointerMotion(animate);
     setSelected(index);
-    if (
-      animate &&
-      !window.matchMedia("(prefers-reduced-motion: reduce)").matches
-    ) {
-      previousAnimation.current =
-        panel.current?.animate(
-          [
-            { opacity: 0.6, transform: "translateY(4px)" },
-            { opacity: 1, transform: "translateY(0)" },
-          ],
-          { duration: 200, easing: "cubic-bezier(0.23, 1, 0.32, 1)" },
-        ) ?? null;
-    }
   }
 
   function moveTab(event: KeyboardEvent<HTMLButtonElement>, index: number) {
@@ -282,7 +266,6 @@ function EditorialExample() {
         <div
           className="lp-stage-content"
           id="lp-example-panel"
-          ref={panel}
           role="tabpanel"
           aria-labelledby={`lp-tab-${selected}`}
           tabIndex={0}
