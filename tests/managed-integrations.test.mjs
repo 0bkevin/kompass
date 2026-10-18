@@ -458,7 +458,7 @@ test("new spaces need no provider settings and first-use endpoints preserve tena
     assert.equal(company.status, 201);
     const id = company.data.id;
     const sources = database.listRecords(id, "sources");
-    assert.equal(sources.length, 4);
+    assert.equal(sources.length, 5);
     assert.ok(
       sources.every(
         (source) => source.enabled && sourceAccessPolicy(source).allowed,

@@ -238,6 +238,16 @@ export function webAccessPolicy(value, purpose = "metadata") {
       termsUrl: "https://support.google.com/trends/answer/3076011",
       reviewedAt: ACCESS_POLICY_VERSION,
     };
+  // Reviewed 2026-10-18: the official public feed and robots permit this RSS
+  // read. This exact endpoint grant never extends to articles or comments.
+  if (purpose === "rss" && value === "https://news.ycombinator.com/rss")
+    return {
+      allowed: true,
+      reason:
+        "RSS público oficial de Hacker News; solo títulos y metadatos, con atribución.",
+      termsUrl: "https://news.ycombinator.com/rss",
+      reviewedAt: ACCESS_POLICY_VERSION,
+    };
   const grant = reviewed(value, purpose);
   return grant
     ? {
@@ -323,7 +333,9 @@ export function assertOutboundAllowed(value, purpose = "metadata") {
     purpose === "robots" &&
     url.pathname === "/robots.txt" &&
     !url.search &&
+    !url.hash &&
     (url.origin === "https://trends.google.com" ||
+      url.origin === "https://news.ycombinator.com" ||
       reviews().some(
         (grant) =>
           grant.origin === url.origin &&

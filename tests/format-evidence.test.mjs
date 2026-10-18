@@ -2,6 +2,7 @@ import test from "node:test";
 import assert from "node:assert/strict";
 import {
   buildFormatEvidence,
+  buildFormatComparison,
   FORMAT_EVIDENCE_MIN_SAMPLE_SIZE,
 } from "../server/format-evidence.mjs";
 
@@ -742,4 +743,150 @@ test("report is immutable, deterministic and excludes free text, audience names 
   );
   for (const now of [null, "bad", Infinity, 1e17])
     assert.throws(() => report({ now }), /now debe ser una fecha válida/);
+});
+
+const formatSamples = (
+  format,
+  values = [100, 200, 300],
+  pieceValues = {},
+  outcomeValues = {},
+) =>
+  values.map((views, index) =>
+    sample(
+      `${format}-${index}`,
+      { format, ...pieceValues },
+      {
+        metrics: { views, engagement: 10, leads: 1 },
+        ...outcomeValues,
+      },
+    ),
+  );
+
+test("3 versus 3 formats compare per metric with descriptive winners, ties and variability", () => {
+  const result = withSamples([
+    ...formatSamples("post", [100, 200, 900]),
+    ...formatSamples("carousel", [300, 400, 500]),
+  ]);
+  const [comparison] = result.manualPerformance.comparisons;
+  assert.equal(comparison.status, "compared");
+  assert.equal(comparison.segmentId, "teams");
+  assert.equal(comparison.channel, "linkedin");
+  assert.equal(comparison.measurementWindow.durationMs, DAY);
+  assert.equal(comparison.metrics.views.status, "winner");
+  assert.equal(comparison.metrics.views.winnerFormat, "carousel");
+  assert.equal(comparison.metrics.views.medianDifference, 200);
+  assert.equal(comparison.metrics.views.unit, "count");
+  assert.deepEqual(comparison.metrics.views.samples, [
+    { format: "carousel", sampleSize: 3, median: 400, min: 300, max: 500 },
+    { format: "post", sampleSize: 3, median: 200, min: 100, max: 900 },
+  ]);
+  assert.equal(comparison.metrics.engagement.status, "neutral");
+  assert.equal(comparison.metrics.engagement.winnerFormat, null);
+  assert.equal(comparison.metrics.leads.status, "neutral");
+  assert.match(comparison.warnings.join(" "), /solapan/);
+  assert.match(
+    comparison.warnings.join(" "),
+    /no acreditan significación estadística/,
+  );
+  assert.equal(result.findings.length, 3);
+  assert.ok(
+    result.findings.every(
+      (finding) =>
+        typeof finding.title === "string" && typeof finding.detail === "string",
+    ),
+  );
+});
+
+test("duplicate URLs cannot supply the third sample for a format comparison", () => {
+  const posts = formatSamples("post");
+  posts[0].outcome.publishedUrl = "https://www.linkedin.com/posts/same";
+  posts[1].outcome.publishedUrl =
+    "https://www.linkedin.com/posts/same?utm_source=copy#part";
+  const result = withSamples([...posts, ...formatSamples("carousel")]);
+  const [comparison] = result.manualPerformance.comparisons;
+  assert.equal(comparison.status, "inconclusive");
+  assert.equal(comparison.metrics.views.status, "inconclusive");
+  assert.equal(comparison.metrics.views.winnerFormat, null);
+  assert.deepEqual(
+    comparison.metrics.views.samples.map((item) => item.sampleSize),
+    [3, 2],
+  );
+  assert.deepEqual(result.findings, []);
+  assert.match(comparison.warnings.join(" "), /al menos 3 piezas/);
+});
+
+test("format comparison requires explicit measuredAt and identical elapsed windows", () => {
+  for (const outcomeValues of [
+    { measuredAt: undefined },
+    { measuredAt: new Date(NOW - DAY + 1).toISOString() },
+  ]) {
+    const result = withSamples([
+      ...formatSamples("post"),
+      ...formatSamples("carousel", undefined, {}, outcomeValues),
+    ]);
+    assert.equal(result.manualPerformance.comparisons.length, 2);
+    assert.ok(
+      result.manualPerformance.comparisons.every(
+        (item) => item.status === "inconclusive",
+      ),
+    );
+    assert.deepEqual(result.findings, []);
+  }
+});
+
+test("format comparisons never cross audience or channel boundaries", () => {
+  for (const dimensions of [
+    { channel: "instagram" },
+    { segmentId: "editors" },
+  ]) {
+    const result = withSamples([
+      ...formatSamples("post"),
+      ...formatSamples("carousel", undefined, dimensions, dimensions),
+    ]);
+    assert.equal(result.manualPerformance.comparisons.length, 2);
+    assert.ok(
+      result.manualPerformance.comparisons.every(
+        (item) => item.status === "inconclusive",
+      ),
+    );
+    assert.deepEqual(result.findings, []);
+  }
+});
+
+test("explicit non-count units are excluded rather than pooled with manual counts", () => {
+  const mixed = formatSamples(
+    "carousel",
+    undefined,
+    {},
+    { metricUnits: { engagement: "percent" } },
+  );
+  const result = withSamples([...formatSamples("post"), ...mixed]);
+  assert.equal(result.exclusions.outcomes.length, 3);
+  assert.ok(
+    result.exclusions.outcomes.every(
+      (item) => item.reason === "incompatible_metric_units",
+    ),
+  );
+  assert.equal(result.manualPerformance.comparisons[0].status, "inconclusive");
+});
+
+test("standalone format comparison uses the same validated input contract", () => {
+  const samples = [...formatSamples("post"), ...formatSamples("carousel")];
+  const options = {
+    pieces: samples.map((item) => item.piece),
+    outcomes: samples.map((item) => item.outcome),
+    now: NOW,
+  };
+  const comparison = buildFormatComparison(BRAND, options);
+  const evidence = report(options);
+  assert.equal(comparison.status, "compared");
+  assert.deepEqual(
+    comparison.comparisons,
+    evidence.manualPerformance.comparisons,
+  );
+  assert.deepEqual(comparison.findings, evidence.findings);
+  assert.equal(
+    buildFormatComparison(BRAND, { now: NOW }).status,
+    "inconclusive",
+  );
 });

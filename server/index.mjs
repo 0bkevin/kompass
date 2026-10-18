@@ -17,6 +17,7 @@ import { createOpportunityAnalysisRouter } from "./opportunity-analysis.mjs";
 import { createGoogleAuthRouter } from "./google-auth.mjs";
 import { createMediaRouter } from "./media-router.mjs";
 import { createEditorialEvidenceRouter } from "./editorial-evidence.mjs";
+import { createEditorialComparisonRouter } from "./editorial-comparison.mjs";
 import { createOpportunityFeedbackRouter } from "./opportunity-feedback.mjs";
 import { createPilotEvaluationRouter } from "./pilot-evaluation.mjs";
 import { createResearchReportRouter } from "./research-report.mjs";
@@ -66,6 +67,7 @@ export function createApp({
   app.use("/api", createCommunityRouter());
   app.use("/api", createOpportunityAnalysisRouter());
   app.use("/api", createEditorialEvidenceRouter());
+  app.use("/api", createEditorialComparisonRouter());
   app.use("/api", createOpportunityFeedbackRouter());
   app.use("/api", createPilotEvaluationRouter());
   app.use("/api", createResearchReportRouter());

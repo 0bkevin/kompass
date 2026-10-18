@@ -297,6 +297,18 @@ function outcomeExclusion(outcome, piece, brand, references, eligibleIds, now) {
     )
   )
     return "invalid_metrics";
+  // The manual outcome schema stores counts. Never interpret an explicitly
+  // supplied rate, percentage or other unit as one of those counts.
+  if (
+    METRICS.some((metric) =>
+      [
+        outcome.metricUnits?.[metric],
+        outcome.metricsUnits?.[metric],
+        outcome.metrics?.[metric + "Unit"],
+      ].some((unit) => unit !== undefined && unit !== "count"),
+    )
+  )
+    return "incompatible_metric_units";
   return measurement(outcome, now) ? null : "invalid_measurement_window";
 }
 
@@ -310,6 +322,126 @@ function statistics(values) {
         : (sorted[middle - 1] + sorted[middle]) / 2,
     min: sorted[0],
     max: sorted.at(-1),
+  };
+}
+
+const METRIC_NAMES = {
+  views: "visualizaciones",
+  engagement: "interacciones",
+  leads: "leads",
+};
+
+// Input is the already validated, deduplicated manual groups from this module.
+// Pairwise comparisons retain their exact audience, channel and elapsed window.
+function compareFormatGroups(groups) {
+  const buckets = new Map();
+  for (const group of groups) {
+    const key = keyFor(group.segmentId, group.channel, group.measurementWindow);
+    const bucket = buckets.get(key) || [];
+    bucket.push(group);
+    buckets.set(key, bucket);
+  }
+  const comparisons = [];
+  const findings = [];
+  for (const bucket of buckets.values()) {
+    bucket.sort((a, b) => a.format.localeCompare(b.format));
+    const pairs = bucket.flatMap((a, index) =>
+      bucket.slice(index + 1).map((b) => [a, b]),
+    );
+    if (!pairs.length) pairs.push([bucket[0]]);
+    for (const pair of pairs) {
+      const first = pair[0];
+      const sufficient =
+        pair.length === 2 &&
+        pair.every((group) => group.status === "comparable");
+      const warnings = [
+        "Conteos manuales descriptivos; no acreditan significación estadística, causalidad ni resultados futuros.",
+        "Las piezas pueden diferir en tema, distribución y fecha de publicación; no es un experimento controlado.",
+      ];
+      if (!sufficient)
+        warnings.push(
+          "Se requieren dos formatos con al menos 3 piezas distintas cada uno y fecha explícita de medición en el mismo segmento, canal e intervalo exacto.",
+        );
+      const metrics = Object.fromEntries(
+        METRICS.map((metric) => {
+          const samples = pair.map((group) => ({
+            format: group.format,
+            sampleSize: group.sampleSize,
+            ...(group.metrics?.[metric] || {
+              median: null,
+              min: null,
+              max: null,
+            }),
+          }));
+          let status = "inconclusive";
+          let winnerFormat = null;
+          let medianDifference = null;
+          if (sufficient) {
+            const difference = samples[0].median - samples[1].median;
+            medianDifference = Math.abs(difference);
+            status = difference === 0 ? "neutral" : "winner";
+            if (difference !== 0)
+              winnerFormat = samples[difference > 0 ? 0 : 1].format;
+            if (
+              Math.max(samples[0].min, samples[1].min) <=
+              Math.min(samples[0].max, samples[1].max)
+            )
+              warnings.push(
+                `Los rangos observados de ${METRIC_NAMES[metric]} se solapan; la mediana no describe todas las piezas.`,
+              );
+          }
+          return [
+            metric,
+            { status, winnerFormat, unit: "count", medianDifference, samples },
+          ];
+        }),
+      );
+      const comparison = {
+        segmentId: first.segmentId,
+        channel: first.channel,
+        measurementWindow: first.measurementWindow,
+        formats: pair.map((group) => group.format),
+        status: sufficient ? "compared" : "inconclusive",
+        metrics,
+        warnings,
+      };
+      comparisons.push(comparison);
+      for (const [metric, result] of Object.entries(metrics)) {
+        if (result.status === "inconclusive") continue;
+        const values = result.samples
+          .map(
+            (item) =>
+              `${FORMAT_NAMES[item.format]}: mediana ${item.median}, rango ${item.min}–${item.max}, n=${item.sampleSize}`,
+          )
+          .join("; ");
+        findings.push({
+          title:
+            result.status === "neutral"
+              ? `Medianas iguales de ${METRIC_NAMES[metric]}`
+              : `${FORMAT_NAMES[result.winnerFormat]}: mayor mediana de ${METRIC_NAMES[metric]}`,
+          detail: `${first.channel}, segmento ${first.segmentId}, intervalo ${first.measurementWindow.durationMs / 3_600_000} h. ${values}. Comparación descriptiva de conteos manuales; no implica significación, causalidad ni predice resultados.`,
+        });
+      }
+    }
+  }
+  return {
+    comparisons: comparisons.sort(compare),
+    findings: findings.sort(compare),
+  };
+}
+
+/** Same input contract and policy checks as buildFormatEvidence. */
+export function buildFormatComparison(brand, options = {}) {
+  const evidence = buildFormatEvidence(brand, options);
+  return {
+    status: evidence.manualPerformance.comparisons.some(
+      (item) => item.status === "compared",
+    )
+      ? "compared"
+      : "inconclusive",
+    comparisons: evidence.manualPerformance.comparisons,
+    findings: evidence.findings,
+    exclusions: evidence.exclusions,
   };
 }
 
@@ -469,6 +601,7 @@ export function buildFormatEvidence(
   const comparable = manualGroups.filter(
     (group) => group.status === "comparable",
   );
+  const { comparisons, findings } = compareFormatGroups(manualGroups);
   const knownFormats = observedGroups.filter(
     (group) => group.format !== "unknown",
   );
@@ -514,10 +647,12 @@ export function buildFormatEvidence(
       status: comparable.length ? "comparable" : "insufficient",
       minimumSampleSize: FORMAT_EVIDENCE_MIN_SAMPLE_SIZE,
       groups: manualGroups,
+      comparisons,
       reason: comparable.length
-        ? "Cada grupo conserva sus conteos y unidades; no se calcula un score combinado entre redes ni un ranking de formatos."
+        ? "Comparaciones descriptivas por métrica entre formatos del mismo segmento, canal e intervalo exacto. Cada grupo conserva sus conteos; no se combinan redes ni se predicen resultados."
         : `Sin comparación manual suficiente: se requieren ${FORMAT_EVIDENCE_MIN_SAMPLE_SIZE} piezas distintas por segmento, canal, formato e intervalo exacto, con fecha explícita de medición.`,
     },
+    findings,
     recommendations,
     exclusions: {
       references: exclusions.references.sort(compare),
