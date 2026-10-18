@@ -14,6 +14,8 @@ import {
   SquarePen,
   Bookmark,
   MoreHorizontal,
+  Eye,
+  Heart,
 } from "lucide-react";
 import { useWorkspace } from "../lib/workspace";
 import { ApiError, api, json } from "../lib/api";
@@ -25,7 +27,8 @@ import {
   type PieceEditorState,
 } from "../lib/piece-draft";
 import { Badge, Button, EmptyState, Field, Modal } from "../components/ui";
-import { download, formatNames, statusNames, timeAgo } from "../lib/format";
+import { download, formatNames, pieceStatusLabel, timeAgo } from "../lib/format";
+import PublishPiece from "./PublishPiece";
 
 export default function Studio() {
   const { state, refresh, notify, navigate, selectedPieceId, search } =
@@ -44,7 +47,6 @@ export default function Studio() {
     <div className="page">
       <div className="page-heading">
         <div>
-          <p className="eyebrow">DE LA OPORTUNIDAD A TU VOZ</p>
           <h1>Las ideas toman forma aquí.</h1>
           <p>
             Guiones editables, contexto de audiencia y un espacio para revisar
@@ -94,17 +96,17 @@ export default function Studio() {
                         : "neutral"
                   }
                 >
-                  {statusNames[p.status]}
+                  {pieceStatusLabel(p)}
                 </Badge>
               </div>
               <button
                 className="piece-open"
                 onClick={() => navigate("studio", p.id)}
               >
-                <span className="eyebrow">
+                <h2>{p.title}</h2>
+                <span className="piece-format">
                   {formatNames[p.format]} · {p.channel}
                 </span>
-                <h2>{p.title}</h2>
                 <p>{p.hook || p.script.slice(0, 150)}</p>
               </button>
               <div className="piece-footer">
@@ -150,8 +152,10 @@ export default function Studio() {
 
 function NewDraft({ onClose }: { onClose: () => void }) {
   const { state, refresh, notify, navigate } = useWorkspace();
+  const controlStyle = { fontSize: 16 };
   const [busy, setBusy] = useState(false),
     [error, setError] = useState(""),
+    [format, setFormat] = useState<Piece["format"]>("post"),
     [createdPiece, setCreatedPiece] = useState<Piece | null>(null);
   function closeWhenIdle() {
     if (!busy) onClose();
@@ -177,6 +181,14 @@ function NewDraft({ onClose }: { onClose: () => void }) {
                     segmentId: f.get("segmentId") || undefined,
                     format: f.get("format"),
                     channel: f.get("channel"),
+                    topic: f.get("topic") || undefined,
+                    cta: f.get("cta") || undefined,
+                    ...(f.get("unitCount")
+                      ? { unitCount: Number(f.get("unitCount")) }
+                      : {}),
+                    ...(f.get("includeExample")
+                      ? { includeExample: f.get("includeExample") === "yes" }
+                      : {}),
                     instructions: f.get("instructions"),
                   }),
                 }),
@@ -200,7 +212,11 @@ function NewDraft({ onClose }: { onClose: () => void }) {
         }}
       >
         <Field label="Referencia de origen (opcional)">
-          <select name="referenceId" disabled={busy || !!createdPiece}>
+          <select
+            name="referenceId"
+            style={controlStyle}
+            disabled={busy || !!createdPiece}
+          >
             <option value="">Partir de una idea propia</option>
             {state.references
               .filter((r) => r.status !== "dismissed")
@@ -211,25 +227,59 @@ function NewDraft({ onClose }: { onClose: () => void }) {
               ))}
           </select>
         </Field>
+        <Field label="Tema (opcional)">
+          <input
+            name="topic"
+            style={controlStyle}
+            maxLength={200}
+            placeholder="Por ejemplo: una bitácora de faltantes de inventario"
+            disabled={busy || !!createdPiece}
+          />
+        </Field>
         <Field label="Tu dirección editorial">
           <textarea
             name="instructions"
+            style={controlStyle}
             placeholder="¿Qué quieres contar, desde qué ángulo y qué debería llevarse la audiencia?"
+            aria-describedby={
+              state.integrations.ai.configured
+                ? undefined
+                : "draft-directions-help"
+            }
             rows={4}
             disabled={busy || !!createdPiece}
           />
         </Field>
+        {!state.integrations.ai.configured && (
+          <p className="small muted" id="draft-directions-help">
+            Las notas libres se conservan en un brief para revisión manual. Usa
+            los controles de abajo para aplicar el CTA y la estructura.
+          </p>
+        )}
         <div className="form-grid">
           <Field label="Formato">
-            <select name="format" disabled={busy || !!createdPiece}>
+            <select
+              name="format"
+              style={controlStyle}
+              value={format}
+              onChange={(event) =>
+                setFormat(event.target.value as Piece["format"])
+              }
+              disabled={busy || !!createdPiece}
+            >
               <option value="post">Post</option>
               <option value="carousel">Carrusel</option>
               <option value="reel">Guion de reel</option>
+              <option value="video">Guion de video</option>
               <option value="newsletter">Newsletter</option>
             </select>
           </Field>
           <Field label="Canal">
-            <select name="channel" disabled={busy || !!createdPiece}>
+            <select
+              name="channel"
+              style={controlStyle}
+              disabled={busy || !!createdPiece}
+            >
               <option value="linkedin">LinkedIn</option>
               <option value="instagram">Instagram</option>
               <option value="tiktok">TikTok</option>
@@ -238,8 +288,54 @@ function NewDraft({ onClose }: { onClose: () => void }) {
             </select>
           </Field>
         </div>
+        <Field label="Llamado a la acción exacto (opcional)">
+          <input
+            name="cta"
+            style={controlStyle}
+            maxLength={2000}
+            placeholder="Por ejemplo: Descarga la plantilla de inventario."
+            disabled={busy || !!createdPiece}
+          />
+        </Field>
+        {["carousel", "reel", "video"].includes(format) && (
+          <Field
+            label={
+              format === "carousel"
+                ? "Cantidad de láminas"
+                : "Cantidad de escenas"
+            }
+          >
+            <select
+              name="unitCount"
+              style={controlStyle}
+              disabled={busy || !!createdPiece}
+            >
+              <option value="">Automática (5 por defecto)</option>
+              {[3, 4, 5, 6, 7, 8].map((count) => (
+                <option key={count} value={count}>
+                  {count}
+                </option>
+              ))}
+            </select>
+          </Field>
+        )}
+        <Field label="Ejemplo hipotético">
+          <select
+            name="includeExample"
+            style={controlStyle}
+            disabled={busy || !!createdPiece}
+          >
+            <option value="">Según las notas</option>
+            <option value="yes">Incluir</option>
+            <option value="no">Omitir</option>
+          </select>
+        </Field>
         <Field label="Audiencia">
-          <select name="segmentId" disabled={busy || !!createdPiece}>
+          <select
+            name="segmentId"
+            style={controlStyle}
+            disabled={busy || !!createdPiece}
+          >
             <option value="">Audiencia general de la marca</option>
             {state.brand.audience.map((s) => (
               <option key={s.id} value={s.id}>
@@ -253,9 +349,22 @@ function NewDraft({ onClose }: { onClose: () => void }) {
           <p>
             {state.integrations.ai.configured
               ? "Usará tu proveedor de IA configurado."
-              : "Usará una estructura local basada en tu marca. Puedes conectar IA desde Configuración."}
+              : "Usará una estructura local con tu audiencia, formato y controles elegidos. El resto del brief requiere revisión manual. Puedes conectar IA desde Configuración."}
           </p>
         </div>
+        {!state.integrations.ai.configured && (
+          <details className="small">
+            <summary>
+              Indicaciones simples que también reconoce en las notas
+            </summary>
+            <p>
+              «4 láminas» o «3 escenas» (de 3 a 8), «ejemplo hipotético» y «CTA
+              final exacto: “Tu texto.”». Para newsletter: «secciones: Registrar
+              y Revisar» (de 2 a 8 títulos cortos). Los controles elegidos
+              tienen prioridad y el formato siempre es el del selector.
+            </p>
+          </details>
+        )}
         {error && (
           <p className="form-error" role="alert">
             {error}
@@ -506,7 +615,6 @@ function PieceEditor({ piece }: { piece: Piece }) {
       </button>
       <div className="page-heading editor-heading">
         <div>
-          <p className="eyebrow">ESTUDIO DE CONTENIDO</p>
           <h1>{draft.title}</h1>
           <div className="row">
             <Badge
@@ -518,7 +626,7 @@ function PieceEditor({ piece }: { piece: Piece }) {
                     : "neutral"
               }
             >
-              {statusNames[piece.status]}
+              {pieceStatusLabel(piece)}
             </Badge>
             <span className="small muted">
               {dirty
@@ -610,6 +718,27 @@ function PieceEditor({ piece }: { piece: Piece }) {
           pieza se conserva; elige Audiencia general u otra audiencia para poder
           guardar.
         </p>
+      )}
+      {piece.editorialBrief && (
+        <details className="callout" style={{ display: "block", overflowWrap: "anywhere" }}>
+          <summary>Brief y revisión pendiente (fuera del texto publicable)</summary>
+          <div className="stack small" style={{ maxWidth: "75ch" }}>
+            {piece.editorialBrief.notes.map((note, index) => <p key={index}>{note}</p>)}
+            <p>
+              <strong>Controles aplicados:</strong> {formatNames[piece.editorialBrief.applied.format]}
+              {piece.editorialBrief.applied.unitCount ? ` · ${piece.editorialBrief.applied.unitCount} ${piece.editorialBrief.applied.format === "carousel" ? "láminas" : "escenas"}` : ""}
+              {piece.editorialBrief.applied.includeExample ? " · ejemplo hipotético" : ""}
+              {piece.editorialBrief.applied.sectionTitles ? ` · ${piece.editorialBrief.applied.sectionTitles.join(", ")}` : ""}
+            </p>
+            <p><strong>CTA aplicado al crear:</strong> {piece.editorialBrief.applied.cta}</p>
+            <p><strong>Necesidad de audiencia:</strong> {piece.editorialBrief.audienceNeeds}</p>
+            {piece.editorialBrief.instructions && (
+              <div><strong>Dirección editorial original:</strong><p style={{ whiteSpace: "pre-wrap" }}>{piece.editorialBrief.instructions}</p></div>
+            )}
+            {piece.editorialBrief.angle && <p><strong>Ángulo de partida para revisar:</strong> {piece.editorialBrief.angle}</p>}
+            {piece.editorialBrief.referenceUrl && <p><strong>Procedencia:</strong> {piece.editorialBrief.referenceUrl}</p>}
+          </div>
+        </details>
       )}
       <div className="editor-layout">
         <section className="card script-editor">
@@ -789,7 +918,7 @@ function PieceEditor({ piece }: { piece: Piece }) {
                 </EmptyState>
               )}
               <p className="small muted">
-                El montaje y la generación de medios están en el backlog.
+                Asocia los archivos que usarás al producir y publicar esta pieza.
               </p>
             </div>
           ) : (
@@ -873,7 +1002,7 @@ function PieceEditor({ piece }: { piece: Piece }) {
               </span>
               <div>
                 <strong>{state.brand.name}</strong>
-                <small>{draft.channel} · Borrador</small>
+                <small>{draft.channel} · {pieceStatusLabel(piece)}</small>
               </div>
               <MoreHorizontal size={18} />
             </div>
@@ -883,13 +1012,13 @@ function PieceEditor({ piece }: { piece: Piece }) {
               <p>{draft.cta}</p>
             </div>
             <div className="post-preview-bottom">
-              <span>♡</span>
+              <Heart size={17} />
               <MessageSquare size={17} />
               <Send size={17} />
               <Bookmark size={17} />
             </div>
           </div>
-          <div className="insight-card review-card">
+          <div className={`insight-card review-card ${["approved", "scheduled", "published"].includes(piece.status) ? "publication-review" : ""}`}>
             {approvalConflict && (
               <div className="stack">
                 <p className="form-error" role="alert">
@@ -951,10 +1080,12 @@ function PieceEditor({ piece }: { piece: Piece }) {
               </>
             ) : piece.status === "approved" ? (
               <>
-                <p>Ya tiene aprobación. Elige un espacio en tu grilla.</p>
+                <p>
+                  Ya tiene aprobación. Puedes enviarla ahora o elegir un espacio
+                  en tu grilla.
+                </p>
                 <Button
-                  variant="primary"
-                  disabled={readonly}
+                  disabled={readonly || !!busy}
                   onClick={() => setSchedule(true)}
                 >
                   Planificar publicación
@@ -965,12 +1096,20 @@ function PieceEditor({ piece }: { piece: Piece }) {
                 <p>
                   {piece.status === "scheduled"
                     ? "Esta pieza está incluida en la grilla. El calendario organiza; no publica automáticamente."
-                    : "La pieza se publicó mediante un conector configurado."}
+                    : "El envío mediante conector quedó registrado. Consulta el recibo."}
                 </p>
                 <Button onClick={() => navigate("calendar")}>
                   Ver en la grilla
                 </Button>
               </>
+            )}
+            {["approved", "scheduled", "published"].includes(piece.status) && (
+              <PublishPiece
+                piece={piece}
+                disabled={!!busy || dirty || approvalBlocked}
+                onBusyChange={(sending) => setBusy(sending ? "publish" : "")}
+                onPublished={acceptSavedPiece}
+              />
             )}
           </div>
         </aside>
@@ -982,7 +1121,7 @@ function PieceEditor({ piece }: { piece: Piece }) {
   );
 }
 function EyeIcon() {
-  return <span>◉</span>;
+  return <Eye size={16} />;
 }
 
 export function ScheduleModal({
@@ -1033,8 +1172,9 @@ export function ScheduleModal({
           defaultValue={defaultDate}
         />
         <p className="muted small">
-          Planifica el trabajo del equipo. La publicación automática está en el
-          backlog; exporta la pieza cuando esté lista.
+          La grilla no publica automáticamente. Usa Enviar ahora desde la pieza
+          para un conector, o publica desde tu canal y registra el enlace en
+          Resultados.
         </p>
         <Button variant="primary" type="submit" busy={busy}>
           Guardar en la grilla

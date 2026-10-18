@@ -1,0 +1,49 @@
+.publication-actions {
+  min-width: 0;
+  margin-block-start: 20px;
+  padding-block-start: 20px;
+  border-block-start: 1px solid var(--border);
+}
+.publication-actions,
+.publication-actions .stack,
+.publication-dialog {
+  gap: 12px;
+}
+.publication-review > p,
+.review-card .publication-actions p,
+.publication-dialog p {
+  margin: 0;
+  color: #19352b;
+  font-size: 14px;
+  line-height: 1.5;
+}
+.publication-review > .button,
+.review-card .publication-actions .button {
+  margin-top: 0;
+  font-size: 13px;
+}
+.review-card .publication-actions .form-error,
+.publication-dialog .form-error {
+  color: #a84141;
+}
+.publication-actions .badge {
+  align-self: flex-start;
+  white-space: normal;
+}
+.publication-actions summary,
+.publication-dialog summary {
+  font-size: 13px;
+  cursor: pointer;
+}
+.publication-actions details > div,
+.publication-dialog details > p {
+  margin-block-start: 12px;
+}
+.publication-dialog-actions {
+  flex-wrap: wrap;
+}
+@media (max-width: 520px) {
+  .publication-dialog-actions > .button {
+    flex: 1 1 100%;
+  }
+}
