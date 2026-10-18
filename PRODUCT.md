@@ -38,7 +38,7 @@ The application is named `kompass`, written in lowercase on every public and aut
 
 The user-selected promise is «Le damos dirección a tu contenido». Written content should explain the decisions the team can make: who to address, what question to answer, which sources support the topic, how to shape and review the piece, and what recorded results suggest trying next. Use concrete Spanish for content teams. Keep clear operational labels and factual limitations. Avoid vague growth promises, trend claims without evidence, motivational filler and repeated compass metaphors; the promise does not need to appear in every instruction.
 
-The user explicitly authorizes a complete replacement visual identity for the public landing: dark by default with purple, informed by Resend and Exa. This scope starts only at the landing. The authenticated workspace and authentication retain their established restrained green, light neutral surfaces and familiar controls. Product truth and operational behavior remain binding across both worlds.
+The user explicitly expands the approved kompass identity to the complete application and authorizes rewriting every page and component. The former landing-only visual boundary is superseded. Use the established dark-by-default charcoal and purple world, native kompass mark, Hedvig Letters Serif and Geist throughout authentication, onboarding, workspace, public community forms and shared controls. The landing retains its approved composition; operational screens express the same brand through readable task-focused layouts. Product truth, existing workflows, permissions, session isolation and saved data remain binding.
 
 ## Evidence on Hand
 
