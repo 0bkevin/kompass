@@ -1,0 +1,147 @@
+{
+  "testKind": "agent-driven-interactive-ux-verification",
+  "company": "30X · evaluación con fuentes reales",
+  "viewportUnits": "CSS pixels; browser emulation, not physical-device testing",
+  "before": {
+    "homeNextActionTopDesktop": 608,
+    "opportunityCreateTopDesktop": 1566.859375,
+    "opportunityMobile": {
+      "width": 390,
+      "createButtonTop": 2259.421875,
+      "docWidth": 390,
+      "docHeight": 3567,
+      "detailTop": 988.5859375,
+      "expandedDetails": [
+        {
+          "summary": "Análisis contextual con IA\nOpcional",
+          "open": true
+        },
+        {
+          "summary": "Ver citas y límites del análisis",
+          "open": false
+        },
+        {
+          "summary": "Gancho, formato, tema y momento",
+          "open": false
+        },
+        {
+          "summary": "Consultar 12 referencias",
+          "open": false
+        }
+      ]
+    }
+  },
+  "after": {
+    "homeDesktop": {
+      "heading": "Tu próximo contenido.",
+      "nextButtonTop": 417.1328125,
+      "nextBeforeSourceStatus": true,
+      "docWidth": 1280,
+      "viewportWidth": 1280,
+      "primaryButtons": ["Continuar borrador"],
+      "errors": []
+    },
+    "opportunityDesktop": {
+      "width": 1280,
+      "createButtonTop": 867.8515625,
+      "createButtonDocumentTop": 867.8515625,
+      "firstControl": null,
+      "sectionOrder": [
+        {
+          "tag": "FORM",
+          "class": "journey-draft-form"
+        },
+        {
+          "tag": "DETAILS",
+          "class": "journey-semantic"
+        },
+        {
+          "tag": "DETAILS",
+          "class": "journey-rationale"
+        }
+      ],
+      "details": [
+        {
+          "summary": "Filtrar por audiencia o tema\nOpcional",
+          "open": false
+        },
+        {
+          "summary": "Añadir indicaciones (opcional)",
+          "open": false
+        },
+        {
+          "summary": "Por qué puede servirle a tu audiencia\nVer análisis con IA",
+          "open": false
+        },
+        {
+          "summary": "",
+          "open": false
+        },
+        {
+          "summary": "Revisar evidencia y crecimiento\n12 referencias",
+          "open": false
+        },
+        {
+          "summary": "",
+          "open": false
+        },
+        {
+          "summary": "",
+          "open": false
+        },
+        {
+          "summary": "47 referencias · 3 fuentes activas",
+          "open": false
+        }
+      ],
+      "docWidth": 1280,
+      "docHeight": 1275,
+      "errors": []
+    },
+    "opportunityMobile": {
+      "width": 390,
+      "scrollY": 0,
+      "createButtonTop": 1180.875,
+      "createButtonDocumentTop": 1180.875,
+      "docWidth": 390,
+      "docHeight": 1569,
+      "selectedDefaults": [
+        "Directivos y equipos de Latinoamérica que evalúan IA",
+        "Post",
+        "LinkedIn"
+      ],
+      "formBeforeAnalysis": true,
+      "buttonEnabled": true
+    }
+  },
+  "interactions": {
+    "optionalInstructionsRetainedAfterCollapse": {
+      "notesRetained": true,
+      "optionsClosed": true
+    },
+    "noMatchesThenExplicitRecovery": {
+      "cardsAfterExpand": 23,
+      "queryCleared": true,
+      "unmatchedOptIn": true
+    },
+    "restoredAudienceMatchedOnlyCards": 1,
+    "existingIntelCitationAccessible": true,
+    "existingFourAnalysisLimitationsAccessible": true,
+    "notesClearedAfterTest": true
+  },
+  "verification": {
+    "testsPassed": 520,
+    "testsFailed": 0,
+    "productionBuildPassed": true,
+    "rootDetectorAdvisories": 79,
+    "rootDetectorWarnings": 0,
+    "newProviderCredentials": false,
+    "newAiCallsInThisRound": false,
+    "mainCompanyContentModified": false
+  },
+  "limits": [
+    "Geometry changes do not establish measured user task speed or comprehension.",
+    "No recruited human participants or physical devices were used.",
+    "Source availability and the public-test provider conditions are unchanged."
+  ]
+}
