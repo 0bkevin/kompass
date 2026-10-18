@@ -2,6 +2,7 @@ import fs from "node:fs";
 import path from "node:path";
 import os from "node:os";
 import { spawn, spawnSync } from "node:child_process";
+import { inflateSync } from "node:zlib";
 
 export const MEDIA_RATIOS = ["1:1", "4:5", "9:16", "16:9"];
 const dimensions = {
@@ -178,46 +179,159 @@ export function runBoundedProcess(
   });
 }
 
+const pngCrcTable = Array.from({ length: 256 }, (_, index) => {
+  let value = index;
+  for (let bit = 0; bit < 8; bit++)
+    value = (value >>> 1) ^ (0xedb88320 & -(value & 1));
+  return value >>> 0;
+});
+function pngCrc(bytes) {
+  let crc = 0xffffffff;
+  for (const byte of bytes) crc = (crc >>> 8) ^ pngCrcTable[(crc ^ byte) & 255];
+  return (crc ^ 0xffffffff) >>> 0;
+}
+
 export function inspectPng(filePath) {
-  const info = fs.lstatSync(filePath);
-  if (
-    !info.isFile() ||
-    info.isSymbolicLink() ||
-    info.size > 25 * MiB ||
-    info.size < 33
-  )
-    throw mediaFailure(
+  const invalid = () =>
+    mediaFailure(
       "INVALID_IMAGE",
-      "La imagen generada no tiene un archivo PNG válido.",
+      "La imagen generada no tiene un archivo PNG válido y completo.",
       502,
     );
-  const handle = fs.openSync(filePath, "r");
-  const header = Buffer.alloc(24);
   try {
-    fs.readSync(handle, header, 0, header.length, 0);
-  } finally {
-    fs.closeSync(handle);
+    const info = fs.lstatSync(filePath);
+    if (
+      !info.isFile() ||
+      info.isSymbolicLink() ||
+      info.size > 25 * MiB ||
+      info.size < 57
+    )
+      throw invalid();
+    const bytes = fs.readFileSync(filePath);
+    if (
+      !bytes
+        .subarray(0, 8)
+        .equals(Buffer.from([137, 80, 78, 71, 13, 10, 26, 10]))
+    )
+      throw invalid();
+    let offset = 8,
+      header,
+      palette = false,
+      imageData = [],
+      ended = false,
+      dataEnded = false;
+    while (offset < bytes.length) {
+      if (offset + 12 > bytes.length) throw invalid();
+      const length = bytes.readUInt32BE(offset),
+        end = offset + 12 + length;
+      if (end > bytes.length) throw invalid();
+      const type = bytes.toString("ascii", offset + 4, offset + 8);
+      if (
+        !/^[A-Za-z]{4}$/.test(type) ||
+        pngCrc(bytes.subarray(offset + 4, end - 4)) !==
+          bytes.readUInt32BE(end - 4)
+      )
+        throw invalid();
+      const data = bytes.subarray(offset + 8, end - 4);
+      if (!header && type !== "IHDR") throw invalid();
+      if (type === "IHDR") {
+        if (header || length !== 13) throw invalid();
+        header = {
+          width: data.readUInt32BE(0),
+          height: data.readUInt32BE(4),
+          depth: data[8],
+          color: data[9],
+          compression: data[10],
+          filter: data[11],
+          interlace: data[12],
+        };
+        const depths = {
+          0: [1, 2, 4, 8, 16],
+          2: [8, 16],
+          3: [1, 2, 4, 8],
+          4: [8, 16],
+          6: [8, 16],
+        };
+        if (
+          header.width < 64 ||
+          header.height < 64 ||
+          header.width > 8192 ||
+          header.height > 8192 ||
+          !depths[header.color]?.includes(header.depth) ||
+          header.compression !== 0 ||
+          header.filter !== 0 ||
+          header.interlace > 1
+        )
+          throw invalid();
+      } else if (type === "PLTE") {
+        if (
+          palette ||
+          imageData.length ||
+          !length ||
+          length % 3 ||
+          length > 768 ||
+          [0, 4].includes(header.color)
+        )
+          throw invalid();
+        palette = true;
+      } else if (type === "IDAT") {
+        if (dataEnded || (header.color === 3 && !palette)) throw invalid();
+        imageData.push(data);
+      } else if (type === "IEND") {
+        if (length || !imageData.length || end !== bytes.length)
+          throw invalid();
+        ended = true;
+      } else if (type[0] === type[0].toUpperCase()) throw invalid();
+      if (imageData.length && type !== "IDAT") dataEnded = true;
+      offset = end;
+    }
+    if (!ended || !header || !imageData.some((part) => part.length))
+      throw invalid();
+    // Validate the actual decompressed scanlines, including all Adam7 passes.
+    // This rejects header-only files, corrupt/truncated zlib and inflate bombs
+    // without requiring FFmpeg for the image-only subscription workflow.
+    const channels = { 0: 1, 2: 3, 3: 1, 4: 2, 6: 4 }[header.color];
+    const passes = header.interlace
+      ? [
+          [0, 0, 8, 8],
+          [4, 0, 8, 8],
+          [0, 4, 4, 8],
+          [2, 0, 4, 4],
+          [0, 2, 2, 4],
+          [1, 0, 2, 2],
+          [0, 1, 1, 2],
+        ]
+      : [[0, 0, 1, 1]];
+    const rows = passes.map(([x, y, dx, dy]) => {
+      const width = Math.max(0, Math.ceil((header.width - x) / dx)),
+        height = Math.max(0, Math.ceil((header.height - y) / dy));
+      return {
+        count: width ? height : 0,
+        bytes: Math.ceil((width * channels * header.depth) / 8) + 1,
+      };
+    });
+    const expected = rows.reduce((sum, row) => sum + row.count * row.bytes, 0);
+    if (expected > 128 * MiB) throw invalid();
+    const compressed = Buffer.concat(imageData);
+    const inflated = inflateSync(compressed, {
+      maxOutputLength: expected,
+      info: true,
+    });
+    if (
+      inflated.buffer.length !== expected ||
+      inflated.engine.bytesWritten !== compressed.length
+    )
+      throw invalid();
+    let at = 0;
+    for (const row of rows)
+      for (let index = 0; index < row.count; index++) {
+        if (inflated.buffer[at] > 4) throw invalid();
+        at += row.bytes;
+      }
+    return { width: header.width, height: header.height, size: info.size };
+  } catch {
+    throw invalid();
   }
-  if (
-    !header
-      .subarray(0, 8)
-      .equals(Buffer.from([137, 80, 78, 71, 13, 10, 26, 10])) ||
-    header.toString("ascii", 12, 16) !== "IHDR"
-  )
-    throw mediaFailure(
-      "INVALID_IMAGE",
-      "La imagen generada no tiene un archivo PNG válido.",
-      502,
-    );
-  const width = header.readUInt32BE(16),
-    height = header.readUInt32BE(20);
-  if (width < 64 || height < 64 || width > 8192 || height > 8192)
-    throw mediaFailure(
-      "INVALID_IMAGE",
-      "Las dimensiones de la imagen generada no son válidas.",
-      502,
-    );
-  return { width, height, size: info.size };
 }
 
 export function resolveGeneratedImage(events, generatedRoot) {
@@ -346,11 +460,14 @@ function assText(value) {
 }
 
 export function videoCaptions(piece) {
-  const source = piece.scenes?.some((scene) => scene.text?.trim())
-    ? piece.scenes.map((scene) => scene.text?.trim()).filter(Boolean)
-    : [
-        piece.script?.trim() || piece.hook?.trim() || piece.title?.trim(),
-      ].filter(Boolean);
+  // Studio edits the saved script independently of the original AI scene list.
+  // The current script is canonical; scenes only rescue pieces without one.
+  const script = piece.script?.trim();
+  const source = script
+    ? [script]
+    : piece.scenes?.some((scene) => scene.text?.trim())
+      ? piece.scenes.map((scene) => scene.text?.trim()).filter(Boolean)
+      : [piece.hook?.trim() || piece.title?.trim()].filter(Boolean);
   if (source.join(" ").length > 3200)
     throw mediaFailure(
       "VIDEO_SCRIPT_TOO_LONG",
@@ -422,7 +539,11 @@ export async function renderAnimatedVideo({
     mode: 0o600,
   });
   const filePath = path.join(workDir, "video.mp4");
-  const filters = `scale=${width}:${height}:force_original_aspect_ratio=increase,crop=${width}:${height},zoompan=z='min(zoom+0.00035,1.08)':x='iw/2-iw/zoom/2':y='ih/2-ih/zoom/2':d=1:s=${width}x${height}:fps=24,setsar=1,subtitles=captions.ass,format=yuv420p`;
+  // Contain the entire illustration inside a matte canvas. Extra safe padding
+  // exceeds the maximum zoom, so a ratio change never crops headings or panels.
+  const innerWidth = Math.floor(width / 1.12 / 2) * 2,
+    innerHeight = Math.floor(height / 1.12 / 2) * 2;
+  const filters = `scale=${innerWidth}:${innerHeight}:force_original_aspect_ratio=decrease,pad=${width}:${height}:(ow-iw)/2:(oh-ih)/2:color=0xeeeae2,zoompan=z='min(zoom+0.00035,1.06)':x='iw/2-iw/zoom/2':y='ih/2-ih/zoom/2':d=1:s=${width}x${height}:fps=24,setsar=1,subtitles=captions.ass,format=yuv420p`;
   const result = await runBoundedProcess(
     binary,
     [

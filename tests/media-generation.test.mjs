@@ -31,7 +31,12 @@ after(() => {
   fs.rmSync(testRoot, { recursive: true, force: true });
 });
 
-function fixturePng(file, width = 64, height = 64) {
+function fixturePng(
+  file,
+  width = 64,
+  height = 64,
+  { compressed, invalidFilter = false } = {},
+) {
   const crc32 = (bytes) => {
     let crc = 0xffffffff;
     for (const byte of bytes) {
@@ -62,12 +67,13 @@ function fixturePng(file, width = 64, height = 64) {
       pixels[at + 1] = 90;
       pixels[at + 2] = Math.floor((y * 255) / height);
     }
+  if (invalidFilter) pixels[0] = 5;
   fs.writeFileSync(
     file,
     Buffer.concat([
       Buffer.from([137, 80, 78, 71, 13, 10, 26, 10]),
       chunk("IHDR", ihdr),
-      chunk("IDAT", deflateSync(pixels)),
+      chunk("IDAT", compressed || deflateSync(pixels)),
       chunk("IEND", Buffer.alloc(0)),
     ]),
     { mode: 0o600 },
@@ -260,6 +266,43 @@ test("image results must belong to the exact newly generated Codex thread and ca
   assert.throws(() => resolveGeneratedImage(events(link), root), {
     code: "INVALID_IMAGE_RESULT",
   });
+});
+
+test("PNG validation requires checksummed chunks and decodable pixel rows, not just a signature", () => {
+  const root = fs.mkdtempSync(path.join(testRoot, "png-validation-"));
+  const valid = fs.readFileSync(fixturePng(path.join(root, "valid.png")));
+  const headerOnly = valid.subarray(0, 33);
+  const corruptedCrc = Buffer.from(valid);
+  corruptedCrc[corruptedCrc.length - 1] ^= 1;
+  for (const [name, bytes] of Object.entries({
+    headerOnly,
+    missingEnd: valid.subarray(0, valid.length - 12),
+    corruptedCrc,
+    trailingData: Buffer.concat([valid, Buffer.from("extra")]),
+  })) {
+    const file = path.join(root, name + ".png");
+    fs.writeFileSync(file, bytes);
+    assert.throws(() => inspectPng(file), { code: "INVALID_IMAGE" }, name);
+  }
+  for (const [name, compressed] of Object.entries({
+    emptyImageData: Buffer.alloc(0),
+    truncatedZlib: Buffer.from([120, 156, 0]),
+    missingRows: deflateSync(Buffer.alloc(1)),
+    inflateBomb: deflateSync(Buffer.alloc(1024 * 1024)),
+  })) {
+    const file = fixturePng(path.join(root, name + ".png"), 64, 64, {
+      compressed,
+    });
+    assert.throws(() => inspectPng(file), { code: "INVALID_IMAGE" }, name);
+  }
+  const invalidFilter = fixturePng(
+    path.join(root, "invalid-filter.png"),
+    64,
+    64,
+    { invalidFilter: true },
+  );
+  assert.throws(() => inspectPng(invalidFilter), { code: "INVALID_IMAGE" });
+  assert.equal(inspectPng(path.join(root, "valid.png")).width, 64);
 });
 
 test("requests are company scoped and cannot supply shell commands, API URLs or worker environment", () => {
@@ -520,6 +563,29 @@ test("subprocess cancellation and timeout terminate work instead of leaving an o
   );
 });
 
+test("saved script edits replace stale scene captions in the generated video", () => {
+  const piece = {
+    script:
+      "Guion nuevo guardado: define criterios de revisión.\n\nPrueba primero con datos ficticios.",
+    scenes: [{ text: "GUION ANTIGUO QUE YA SE CORRIGIÓ" }],
+  };
+  assert.deepEqual(videoCaptions(piece), [
+    "Guion nuevo guardado: define criterios de revisión.",
+    "Prueba primero con datos ficticios.",
+  ]);
+  const subtitles = buildVideoSubtitles(piece, 720, 1280).text;
+  assert.match(subtitles, /Guion nuevo guardado/);
+  assert.match(subtitles, /Prueba primero con datos ficticios/);
+  assert.doesNotMatch(subtitles, /GUION ANTIGUO/);
+  assert.deepEqual(
+    videoCaptions({
+      script: "   ",
+      scenes: [{ text: "Escena de respaldo sin guion." }],
+    }),
+    ["Escena de respaldo sin guion."],
+  );
+});
+
 test("captions preserve the script, reject overlong text and escape subtitle formatting", () => {
   const caption = buildVideoSubtitles(
     { script: "{\\pos(1,1)} Texto original.\n\nSegunda parte." },
@@ -565,6 +631,63 @@ test(
       assert.equal(
         fs.readFileSync(output.filePath).toString("ascii", 4, 8),
         "ftyp",
+      );
+    }
+  },
+);
+
+test(
+  "portrait video preserves the complete landscape illustration at the beginning and end",
+  { skip: spawnSync("ffmpeg", ["-version"], { stdio: "ignore" }).status !== 0 },
+  async () => {
+    const workDir = fs.mkdtempSync(path.join(testRoot, "contain-video-"));
+    const imagePath = fixturePng(path.join(workDir, "landscape.png"), 640, 360);
+    const output = await renderAnimatedVideo({
+      imagePath,
+      piece: { script: "Composición de prueba con la ilustración completa." },
+      workDir,
+      aspectRatio: "9:16",
+    });
+    for (const seconds of [0.1, output.duration - 0.2]) {
+      const stripe = spawnSync(
+        "ffmpeg",
+        [
+          "-hide_banner",
+          "-loglevel",
+          "error",
+          "-ss",
+          String(seconds),
+          "-i",
+          output.filePath,
+          "-vf",
+          "crop=iw:2:0:ih/2",
+          "-frames:v",
+          "1",
+          "-pix_fmt",
+          "rgb24",
+          "-f",
+          "rawvideo",
+          "pipe:1",
+        ],
+        { maxBuffer: 1024 * 1024 },
+      );
+      assert.equal(stripe.status, 0);
+      const sourcePixels = [];
+      for (let x = 0; x < 720; x++)
+        if (stripe.stdout[x * 3 + 1] < 150)
+          sourcePixels.push({ x, red: stripe.stdout[x * 3] });
+      assert.ok(sourcePixels.length > 500);
+      assert.ok(
+        Math.min(...sourcePixels.map((pixel) => pixel.red)) < 12,
+        "the illustration's left edge remains visible",
+      );
+      assert.ok(
+        Math.max(...sourcePixels.map((pixel) => pixel.red)) > 240,
+        "the illustration's right edge remains visible",
+      );
+      assert.ok(
+        sourcePixels[0].x > 5 && sourcePixels.at(-1).x < 714,
+        "safe matte padding remains throughout the camera movement",
       );
     }
   },
