@@ -1,0 +1,128 @@
+{
+  "issueId": "results-1",
+  "fixture": "All accounts, company, pieces, personal data and metrics are synthetic.",
+  "tabId": "tab_4h_07e54779-9ab2-4979-8a15-674c4eff160a",
+  "origin": "http://127.0.1.24:5514",
+  "before": {
+    "uiSavedLiteral": true,
+    "afterReloadReturnedAndVisible": true,
+    "metrics": {
+      "views": 1500,
+      "engagement": 100,
+      "leads": 10
+    },
+    "screenshot": "docs/remediation/evidence/results-1/before-reload.png"
+  },
+  "after": {
+    "legacyRead": {
+      "noteOmitted": true,
+      "metrics": {
+        "views": 1500,
+        "engagement": 100,
+        "leads": 10
+      },
+      "outcomeId": "0d2feb87-d932-4b65-b7af-832c100f518c",
+      "pieceId": "175b7d49-a116-4899-b4af-e7b2d7b97c46",
+      "createdAt": "2026-10-18T05:20:40.223Z",
+      "publishedAt": "2026-10-17T10:00:00.000Z",
+      "visibleContact": false,
+      "metricsInUi": [
+        "1500 visualizaciones",
+        "100 interacciones",
+        "10 contactos"
+      ]
+    },
+    "rejectedUi": {
+      "fields": {
+        "views": "1500",
+        "engagement": "100",
+        "leads": "10",
+        "notes": "SINTÉTICO. Contacto individual: Persona QA, persona-qa@example.com, teléfono +52 55 1234 5678; pidió formación."
+      },
+      "error": "Notas: registra necesidades agregadas del grupo; elimina emails, teléfonos y fichas o datos de personas.",
+      "errorReflectsContact": false,
+      "persistedMetrics": {
+        "views": 1500,
+        "engagement": 100,
+        "leads": 10
+      },
+      "returnedNotes": null,
+      "describedBy": "outcome-notes-privacy"
+    },
+    "requests": [
+      {
+        "url": "http://127.0.1.24:5514/api/brands/1a5a437b-d667-436f-97e3-5ab5356102f5/pieces/175b7d49-a116-4899-b4af-e7b2d7b97c46/outcome",
+        "method": "POST",
+        "status": 400,
+        "failed": false
+      }
+    ],
+    "mobile": {
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "documentWidth": 390,
+      "hint": {
+        "text": "Registra aprendizajes del grupo, sin nombres, emails, teléfonos ni fichas de personas.",
+        "fontSize": "12px",
+        "color": "rgb(88, 104, 94)",
+        "describedBy": "outcome-notes-privacy"
+      },
+      "error": "Notas: registra necesidades agregadas del grupo; elimina emails, teléfonos y fichas o datos de personas.",
+      "values": [
+        "1500",
+        "100",
+        "10"
+      ]
+    },
+    "correctionAfterReload": {
+      "count": 1,
+      "notes": "SINTÉTICO. Medición a 1 día: 1500 visualizaciones, 100 interacciones y 10 contactos en total. El grupo pidió más ejemplos de formación.",
+      "metrics": {
+        "views": 1500,
+        "engagement": 100,
+        "leads": 10
+      },
+      "id": "0d2feb87-d932-4b65-b7af-832c100f518c",
+      "createdAt": "2026-10-18T05:20:40.223Z",
+      "publishedAt": "2026-10-17T10:00:00.000Z",
+      "pieceId": "175b7d49-a116-4899-b4af-e7b2d7b97c46",
+      "table": [
+        {
+          "segmentId": "b0a77902-47e3-41a1-9633-55a08a96bac1",
+          "name": "Equipos comerciales sintéticos",
+          "pieces": 1,
+          "views": 1500,
+          "engagement": 100,
+          "leads": 10
+        }
+      ],
+      "visibleContact": false,
+      "documentWidth": 390,
+      "viewportWidth": 390
+    }
+  },
+  "rawLegacyRowCheck": {
+    "retainedBeforeCorrection": true,
+    "rawNoteRetainedBeforeCorrection": true,
+    "metrics": {
+      "views": 1500,
+      "engagement": 100,
+      "leads": 10
+    },
+    "readProjectionOmittedOnlyNote": true
+  },
+  "screenshots": [
+    "before-reload.png",
+    "legacy-note-omitted.png",
+    "rejected-desktop.png",
+    "rejected-mobile.png",
+    "corrected-mobile.png"
+  ],
+  "limitations": [
+    "Development server with SQLite fixture; no production data, provider keys, publication or external traffic.",
+    "Browser uses an emulated 390x844 viewport; no physical mobile device.",
+    "Contact and record structure checks are deterministic heuristics; no claim of detecting every possible personal-data paraphrase."
+  ]
+}

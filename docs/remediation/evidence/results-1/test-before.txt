@@ -1,0 +1,91 @@
+✖ original HTTP repro: the literal contact note cannot be saved or exposed by insights (50.856188ms)
+✖ contact details and individual records are rejected atomically on a correction (20.786738ms)
+✔ aggregate notes retain the 5000 character limit, metrics, piece identity and idempotent correction (32.62138ms)
+✖ legacy personal notes are omitted from reads without mutating rows or dropping metrics (13.901651ms)
+✖ omitting legacy notes does not change a comparable 3+3 editorial learning (35.729879ms)
+✔ reviewers and other brands retain their read and write boundaries (31.017601ms)
+ℹ tests 6
+ℹ suites 0
+ℹ pass 2
+ℹ fail 4
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 350.001069
+
+✖ failing tests:
+
+test at tests/remediation-results-1.test.mjs:73:1
+✖ original HTTP repro: the literal contact note cannot be saved or exposed by insights (50.856188ms)
+  AssertionError [ERR_ASSERTION]: Observed 200; persisted contact note: true; exposed by insights: true
+  
+  200 !== 400
+  
+      at TestContext.<anonymous> (file:///home/ubuntu/.t3/projects/30x-trackt-2/tests/remediation-results-1.test.mjs:79:10)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async Test.run (node:internal/test_runner/test:1404:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 200,
+    expected: 400,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/remediation-results-1.test.mjs:87:1
+✖ contact details and individual records are rejected atomically on a correction (20.786738ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  200 !== 400
+  
+      at TestContext.<anonymous> (file:///home/ubuntu/.t3/projects/30x-trackt-2/tests/remediation-results-1.test.mjs:103:12)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async Test.run (node:internal/test_runner/test:1404:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:969:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 200,
+    expected: 400,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/remediation-results-1.test.mjs:138:1
+✖ legacy personal notes are omitted from reads without mutating rows or dropping metrics (13.901651ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+  
+  + 'SINTÉTICO. Contacto individual: Persona QA, persona-qa@example.com, teléfono +52 55 1234 5678; pidió formación.'
+  - undefined
+  
+      at TestContext.<anonymous> (file:///home/ubuntu/.t3/projects/30x-trackt-2/tests/remediation-results-1.test.mjs:150:10)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async Test.run (node:internal/test_runner/test:1404:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:969:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 'SINTÉTICO. Contacto individual: Persona QA, persona-qa@example.com, teléfono +52 55 1234 5678; pidió formación.',
+    expected: undefined,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/remediation-results-1.test.mjs:169:1
+✖ omitting legacy notes does not change a comparable 3+3 editorial learning (35.729879ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  0 !== 1
+  
+      at TestContext.<anonymous> (file:///home/ubuntu/.t3/projects/30x-trackt-2/tests/remediation-results-1.test.mjs:195:10)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1397:25)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:969:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 0,
+    expected: 1,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }

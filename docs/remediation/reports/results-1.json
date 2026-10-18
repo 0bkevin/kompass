@@ -1,0 +1,69 @@
+{
+  "issueId": "results-1",
+  "agent": "fix_results_1",
+  "status": "fixed",
+  "rootCause": "outcomeInput sólo limitaba notes a texto de 5000 caracteres: no aplicaba el contrato de datos agregados. learningFor devolvía notes sin proyección de privacidad y el POST de corrección volvía a guardar existing.notes si se omitía el campo.",
+  "changes": [
+    "outcomeInput valida notes con assertAggregateAudienceText después de aplicar el límite existente de 5000. Rechaza contactos explícitos y estructuras de ficha individual antes de mutar resultados, piezas o actividad; el error no refleja el contenido rechazado.",
+    "learningFor omite únicamente notes no agregadas de los resultados antiguos. Conserva métricas, IDs, fechas, conteos y filas, sin migración ni borrado masivo.",
+    "Al corregir sólo métricas, el fallback de notes antiguas pasa por la misma proyección. Conserva notas agregadas válidas, permite borrado explícito y actualiza el mismo outcome por pieceId.",
+    "Journey muestra ayuda asociada a notes mediante aria-describedby. El alert existente conserva notas y métricas al rechazar; no se modifican las tres métricas ni sus step."
+  ],
+  "files": [
+    "server/audience-insights.mjs",
+    "src/features/Journey.tsx",
+    "tests/remediation-results-1.test.mjs"
+  ],
+  "verification": [
+    {
+      "command": "node --test tests/remediation-results-1.test.mjs",
+      "before": "Exit 1; 2 PASS y 4 FAIL. La cadena literal devolvía 200, persistía la ficha y la exponía en insights.",
+      "after": "Exit 0; 6/6 PASS. Rechazo literal, corrección atómica, variantes email/teléfono/ficha/CSV, límite 5000, omisión antigua, corrección sólo métricas, comparación 3+3 y límites de roles/marca.",
+      "kind": "test"
+    },
+    {
+      "command": "node --test tests/remediation-results-1.test.mjs tests/audience-insights.test.mjs tests/remediation-signals-1.test.mjs tests/remediation-signals-2.test.mjs",
+      "before": "La suite específica anterior acreditó el defecto antes de cambiar el servidor.",
+      "after": "Exit 0; 54/54 PASS. Incluye protecciones de URLs de señales/publicaciones, aprobación, bloqueo de publicación, transacciones y aprendizaje.",
+      "kind": "test"
+    },
+    {
+      "command": "T3 preview_* own tab; select synthetic approved piece in /results, enter literal note and 1500/100/10, submit, reload, GET /insights",
+      "before": "UI guardó y mostró tras recarga SINTÉTICO. Contacto individual: Persona QA, persona-qa@example.com, teléfono +52 55 1234 5678; pidió formación.; SQLite e insights conservaron notes.",
+      "after": "POST real de UI devuelve 400 con ayuda sin reflejar datos. Conserva la nota escrita y 1500/100/10 para corregir. Recargar la fila antigua omite notes manteniendo métricas; SQLite mantiene esa fila hasta su corrección explícita.",
+      "kind": "browser"
+    },
+    {
+      "command": "T3 preview_* correct note to aggregate learning, submit and reload at 390x844 and 1280x800",
+      "before": "La ficha literal quedaba en el resultado publicado.",
+      "after": "Nota agregada persiste; 1 outcome, mismo ID/createdAt/publishedAt/pieceId y métricas 1500/100/10. Sin contacto en pantalla ni desbordamiento horizontal; alert de rechazo y ayuda accesibles.",
+      "kind": "browser"
+    }
+  ],
+  "artifacts": [
+    "docs/remediation/evidence/results-1/test-before.txt",
+    "docs/remediation/evidence/results-1/test-after.txt",
+    "docs/remediation/evidence/results-1/browser-checks.json",
+    "docs/remediation/evidence/results-1/before-reload.png",
+    "docs/remediation/evidence/results-1/legacy-note-omitted.png",
+    "docs/remediation/evidence/results-1/rejected-desktop.png",
+    "docs/remediation/evidence/results-1/rejected-mobile.png",
+    "docs/remediation/evidence/results-1/corrected-mobile.png",
+    "docs/remediation/evidence/results-1/corrected-desktop.png"
+  ],
+  "limitations": [
+    "Datos de cuenta, empresa, audiencia, pieza, contacto y métricas exclusivamente sintéticos. No acredita rendimiento de negocio, publicación social ni entrega de un proveedor.",
+    "Se probó desarrollo propio y SQLite aislada /tmp/30x-remediation-results-1; no se ejecutó build/format global. Compilación y recorrido integrado corresponden al coordinador.",
+    "La detección reutiliza sin cambios el helper compartido de contactos explícitos y fichas estructuradas. No pretende identificar todos los nombres sueltos ni toda paráfrasis de datos personales.",
+    "Las notas antiguas personales permanecen en el almacenamiento previo y se omiten en las lecturas de insights; se eliminan sólo de la fila corregida al omitir/reemplazar notes. No se hizo un borrado masivo.",
+    "Móvil comprobado con viewport emulado, no con dispositivo físico. results-2 (fracciones/step) queda fuera de este cambio."
+  ],
+  "resources": {
+    "host": "127.0.1.24",
+    "apiPort": 4514,
+    "webPort": 5514,
+    "dataDir": "/tmp/30x-remediation-results-1",
+    "tabId": "tab_4h_07e54779-9ab2-4979-8a15-674c4eff160a",
+    "cleanup": "Pestaña propia cerrada y proceso propio detenido; puertos 4514/5514 liberados."
+  }
+}
