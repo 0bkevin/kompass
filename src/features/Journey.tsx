@@ -32,6 +32,7 @@ import { api, json } from "../lib/api";
 import type { AudienceEvidenceResource } from "../lib/audience-evidence";
 import { formatNames, pieceStatusLabel, safeExternalUrl } from "../lib/format";
 import { safeAudienceEvidenceUrl } from "../lib/evidence-url.mjs";
+import { opportunityDraftReferenceId } from "../lib/opportunity-draft-reference";
 import type {
   AudienceSignal,
   Insights,
@@ -839,7 +840,11 @@ function OpportunityRow({
       const piece = await api<Piece>(`/api/brands/${brandId}/draft`, {
         method: "POST",
         body: json({
-          referenceId: opportunity.referenceIds[0],
+          referenceId: opportunityDraftReferenceId(
+            opportunity,
+            analysis,
+            state.references,
+          ),
           segmentId,
           format,
           channel,
