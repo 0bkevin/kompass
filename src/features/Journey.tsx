@@ -14,7 +14,6 @@ import {
   Check,
   CheckCircle2,
   ChevronDown,
-  Circle,
   ClipboardCheck,
   ExternalLink,
   FileText,
@@ -476,7 +475,7 @@ export function Home() {
         Revisa qué necesita tu audiencia y decide qué pieza trabajar ahora.
       </JourneyHeader>
       <section className="journey-next" aria-labelledby="next-action-heading">
-        <div>
+        <div className="journey-next-action">
           <h2 id="next-action-heading">{next.title}</h2>
           <p>{next.body}</p>
           <Button
@@ -487,6 +486,30 @@ export function Home() {
             <ArrowRight size={17} />
           </Button>
         </div>
+        <dl
+          className="journey-editorial-context"
+          aria-label="Criterios de tu contenido"
+        >
+          <div>
+            <dt>Para quién</dt>
+            <dd>{brand.audience[0]?.name || "Define tu primera audiencia"}</dd>
+          </div>
+          <div>
+            <dt>Sobre qué</dt>
+            <dd>
+              {brand.pillars.slice(0, 3).join(" · ") ||
+                "Completa los temas de tu empresa"}
+            </dd>
+          </div>
+          <div>
+            <dt>Con qué evidencia</dt>
+            <dd>
+              {references.length
+                ? `${number(references.length)} ${references.length === 1 ? "referencia" : "referencias"} para contrastar`
+                : "Incorpora tu primera referencia"}
+            </dd>
+          </div>
+        </dl>
       </section>
       <WorkspacePreparation enabled={!reviewer && hasContext && hasAudience} />
       <section className="journey-section" aria-labelledby="workflow-heading">
@@ -498,10 +521,25 @@ export function Home() {
           </span>
         </div>
         <ol className="journey-steps">
-          {steps.map((step) => (
+          {steps.map((step, index) => (
             <li key={step.title}>
-              <button onClick={() => navigate(step.view)}>
-                {step.done ? <CheckCircle2 size={20} /> : <Circle size={20} />}
+              <button
+                onClick={() => navigate(step.view)}
+                data-complete={step.done || undefined}
+                data-current={next.view === step.view || undefined}
+              >
+                <span
+                  className="journey-step-state"
+                  aria-label={
+                    step.done ? "Con actividad" : `Etapa ${index + 1}`
+                  }
+                >
+                  {step.done ? (
+                    <Check size={14} aria-hidden="true" />
+                  ) : (
+                    index + 1
+                  )}
+                </span>
                 <span>
                   <strong>{step.title}</strong>
                   <small>{step.detail}</small>
@@ -917,6 +955,18 @@ function OpportunityRow({
                 {name}
               </span>
             ))}
+        </div>
+        <div className="journey-opportunity-proof">
+          <span>
+            <FileText size={14} aria-hidden="true" />
+            {opportunity.evidence.length}{" "}
+            {opportunity.evidence.length === 1 ? "referencia" : "referencias"}{" "}
+            para comprobar
+          </span>
+          <span>
+            Confianza en la interpretación:{" "}
+            {confidenceNames[opportunity.confidence].toLocaleLowerCase()}
+          </span>
         </div>
       </div>
       <Button
@@ -2276,12 +2326,17 @@ export function Results() {
         Registra qué preguntas surgieron y qué tema o enfoque quieres volver a
         probar.
       </JourneyHeader>
-      <AutomaticMetrics />
+      <section
+        className="journey-automatic-results"
+        aria-label="Cifras oficiales de YouTube"
+      >
+        <AutomaticMetrics />
+      </section>
       <Notice>
-        Las cifras automáticas de YouTube se muestran arriba con su fuente y
-        fecha de consulta. Abajo puedes registrar resultados manuales de otros
-        canales. Programar en el calendario no publica en redes: confirma la
-        publicación y guarda su enlace para consultar sus cifras.
+        Las cifras automáticas de YouTube conservan su fuente y fecha de
+        consulta. Los registros manuales de abajo recogen lo que aporta tu
+        equipo. El calendario organiza la publicación; confirma el envío en su
+        canal y guarda el enlace para consultar sus cifras.
       </Notice>
       {state.brand.role === "reviewer" ? (
         <ReviewerNotice />
@@ -2438,7 +2493,7 @@ export function Results() {
                               document
                                 .querySelector(".journey-results-form")
                                 ?.scrollIntoView({
-                                  behavior: "smooth",
+                                  behavior: "instant",
                                   block: "start",
                                 });
                             }}

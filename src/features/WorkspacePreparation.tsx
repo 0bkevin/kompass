@@ -102,7 +102,12 @@ export function WorkspacePreparation({ enabled }: { enabled: boolean }) {
   )
     return null;
   return (
-    <div className="journey-notice" role="status" aria-live="polite">
+    <div
+      className="journey-notice"
+      role="status"
+      aria-live="polite"
+      aria-busy={busy}
+    >
       <RefreshCw size={18} aria-hidden="true" />
       <div>
         {busy ? (
