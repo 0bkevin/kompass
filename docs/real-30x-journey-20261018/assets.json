@@ -1,0 +1,116 @@
+{
+  "date": "2026-10-18",
+  "host": "http://127.0.0.85:5505",
+  "dataDir": "/tmp/radar-real-30x-assets-20261018",
+  "setup": {
+    "uiRegistration": true,
+    "companyFixtureCreatedViaApi": true,
+    "discoveryEnabled": false,
+    "credentialsConfigured": false,
+    "aiReady": false,
+    "externalRequests": false,
+    "sourceMaterial": "Self-authored QA Markdown and TXT; no copied official 30X content."
+  },
+  "batch": {
+    "text": "Saltar al contenido\n30X\nRADAR\n3\nCambiar de marca\n30X Recursos QA\nEspacio de trabajo\nCrear otra marca\nInicio\nAudiencia\nOportunidades\nContenido\nCalendario\nResultados\nEmpresa y contenido\nMás herramientas\nExplorar fuentes\nReferencias\nArchivos\nFuentes y equipo\nQ\nQA 30X Recursos\nAdministrador\n30X Recursos QA\n/\nArchivos\nAgregar referencia\nTodo lo que necesitas para crear.\n\nImágenes, videos, documentos y referencias, con acceso para tu equipo.\n\nHasta 25 MiB por archivo. TXT, Markdown y CSV en UTF-8.\n\nSubir archivos\nResultado de la carga\n30X-prueba-editorial-propia.md: Guardado\n30X-notas-originales.txt: Guardado\n30X-formato-invalido.exe: No se pudo subir — Formato no admitido. Sube PNG, JPG, WebP, GIF, PDF, texto, audio o MP4/WebM válidos.\nTodos\nImágenes\nVideos\nDocumentos\nAudio\n30X-notas-originales.txt\n0.00 MiB · 18 oct\nDocumento\n30X-prueba-editorial-propia.md\n0.00 MiB · 18 oct\nDocumento\n\nGuarda videos y archivos de tu marca para consultarlos y asociarlos a una pieza desde el estudio.\n\n30X Radar · Hecho para encontrar tu próximo ángulo.\nLas señales tienen contexto. Las decisiones son tuyas.\nSe guardaron 2 archivo(s); 1 no se pudieron subir. Revisa el resultado por archivo.",
+    "console": [
+      {
+        "level": "error",
+        "text": "Failed to load resource: the server responded with a status of 400 (Bad Request)",
+        "timestamp": "2026-10-18T12:02:22.154Z"
+      }
+    ],
+    "requests": [
+      {
+        "url": "http://127.0.0.85:5505/api/brands/79801c7f-78ab-4824-ad1e-f23a10d7fa98/assets",
+        "method": "POST",
+        "status": 201,
+        "failed": false,
+        "timestamp": "2026-10-18T12:02:22.123Z"
+      },
+      {
+        "url": "http://127.0.0.85:5505/api/brands/79801c7f-78ab-4824-ad1e-f23a10d7fa98/assets",
+        "method": "POST",
+        "status": 201,
+        "failed": false,
+        "timestamp": "2026-10-18T12:02:22.138Z"
+      },
+      {
+        "url": "http://127.0.0.85:5505/api/brands/79801c7f-78ab-4824-ad1e-f23a10d7fa98/assets",
+        "method": "POST",
+        "status": 400,
+        "failed": false,
+        "timestamp": "2026-10-18T12:02:22.154Z"
+      }
+    ],
+    "consoleNote": "The 400 console resource message is the intentionally rejected unsupported EXE upload, not an uncaught application exception."
+  },
+  "assetsAfterUpload": [
+    {
+      "id": "0cf70570-e256-4375-8243-fb43f443d043",
+      "name": "30X-notas-originales.txt",
+      "url": "/api/brands/79801c7f-78ab-4824-ad1e-f23a10d7fa98/assets/0cf70570-e256-4375-8243-fb43f443d043/file",
+      "size": 110,
+      "type": "document"
+    },
+    {
+      "id": "d60d137e-661f-417c-99f0-fce3b0717b1f",
+      "name": "30X-prueba-editorial-propia.md",
+      "url": "/api/brands/79801c7f-78ab-4824-ad1e-f23a10d7fa98/assets/d60d137e-661f-417c-99f0-fce3b0717b1f/file",
+      "size": 288,
+      "type": "document"
+    }
+  ],
+  "download": {
+    "filename": "30X-prueba-editorial-propia.md",
+    "bytes": 288,
+    "sha256": "5dd4bced518414e0555e3be7a2016de11e6eac9b0e6d0759c0b53786c0932b94",
+    "byteIdentical": true,
+    "utf8Readable": true,
+    "inlineDocumentTextViewer": false
+  },
+  "attached": {
+    "pieceId": "a7eeb97e-c386-4d9f-86f6-9f17fc2f6cf8",
+    "assetIds": [
+      "d60d137e-661f-417c-99f0-fce3b0717b1f",
+      "0cf70570-e256-4375-8243-fb43f443d043"
+    ],
+    "generationEngine": "heuristic",
+    "assetNames": ["30X-notas-originales.txt", "30X-prueba-editorial-propia.md"]
+  },
+  "persistedAfterReload": {
+    "checkboxes": [
+      {
+        "name": "30X-notas-originales.txt",
+        "checked": true
+      },
+      {
+        "name": "30X-prueba-editorial-propia.md",
+        "checked": true
+      }
+    ],
+    "horizontalOverflow": false
+  },
+  "deleted": {
+    "remainingAssetNames": ["30X-notas-originales.txt"],
+    "pieceAssetIds": [],
+    "stillDraft": true,
+    "horizontalOverflow": false
+  },
+  "final": {
+    "checkboxes": [
+      {
+        "name": "30X-notas-originales.txt",
+        "checked": false
+      }
+    ],
+    "deletedFileStatus": 404,
+    "horizontalOverflow": false
+  },
+  "result": "passed-no-new-resource-defects",
+  "notes": [
+    "Resource modal displays a document icon and a working original download, not an inline text viewer.",
+    "One checkbox was manually detached and saved. Deleting the other still-attached document automatically removed its draft association.",
+    "Expected unsupported-upload HTTP400 and explicit deleted-file HTTP404 were observed."
+  ]
+}

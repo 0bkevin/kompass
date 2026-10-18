@@ -1,0 +1,2 @@
+Notas de prueba originales para revisar carga parcial.
+No contienen datos de alumnos, seguidores ni clientes.
