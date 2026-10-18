@@ -1,5 +1,7 @@
 # Nueva landing pública de kompass
 
+El [parallax y las microinteracciones](parallax-motion.md) documentan el movimiento actual, su revisión de Emil y la grabación real del navegador.
+
 La [revisión de contenido de kompass](../kompass-copy.md) recoge el texto y las capturas actuales de la landing, acceso y aplicación. La [revisión de copy y navbar](copy-navbar-refinement.md) documenta la aplicación inicial de la skill de Peter Yang y del titular elegido por el usuario, «Le damos dirección a tu contenido». La evidencia siguiente documenta la entrega inicial.
 
 Implementada en `design/landing-dark-purple`, desde `9fd8e9a92a389540d4e8fd04d00a03fab6790bd7`. El checkout estaba limpio y no incluía `docs/deployment-evaluation-20261018.md`. No se copiaron `.env`, tokens ni datos del checkout anterior. Servidor propio: [landing local](http://localhost:5188/), API 3038; los servidores 3026 y 5450 se conservaron.

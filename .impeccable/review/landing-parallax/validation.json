@@ -1,0 +1,178 @@
+{
+  "date": "2026-10-18",
+  "scroll": [
+    {
+      "y": 0,
+      "layers": [
+        {
+          "name": "lp-aperture-layer lp-depth-far",
+          "transform": "matrix(1, 0, 0, 1, 0, 0)"
+        },
+        {
+          "name": "lp-aperture-layer lp-depth-near",
+          "transform": "matrix(1, 0, 0, 1, 0, 0)"
+        }
+      ],
+      "exampleTop": 561.96875,
+      "heroCopyTransform": "none",
+      "overflow": false
+    },
+    {
+      "y": 350,
+      "layers": [
+        {
+          "name": "lp-aperture-layer lp-depth-far",
+          "transform": "matrix(1, 0, 0, 1, 0, 19.58)"
+        },
+        {
+          "name": "lp-aperture-layer lp-depth-near",
+          "transform": "matrix(1, 0, 0, 1, 0, 8.70222)"
+        }
+      ],
+      "exampleTop": 561.96875,
+      "heroCopyTransform": "none",
+      "overflow": false
+    },
+    {
+      "y": 700,
+      "layers": [
+        {
+          "name": "lp-aperture-layer lp-depth-far",
+          "transform": "matrix(1, 0, 0, 1, 0, 43.6256)"
+        },
+        {
+          "name": "lp-aperture-layer lp-depth-near",
+          "transform": "matrix(1, 0, 0, 1, 0, 19.3892)"
+        }
+      ],
+      "exampleTop": 561.96875,
+      "heroCopyTransform": "none",
+      "overflow": false
+    },
+    {
+      "y": 350,
+      "layers": [
+        {
+          "name": "lp-aperture-layer lp-depth-far",
+          "transform": "matrix(1, 0, 0, 1, 0, 19.58)"
+        },
+        {
+          "name": "lp-aperture-layer lp-depth-near",
+          "transform": "matrix(1, 0, 0, 1, 0, 8.70222)"
+        }
+      ],
+      "exampleTop": 561.96875,
+      "heroCopyTransform": "none",
+      "overflow": false
+    },
+    {
+      "y": 0,
+      "layers": [
+        {
+          "name": "lp-aperture-layer lp-depth-far",
+          "transform": "matrix(1, 0, 0, 1, 0, 0)"
+        },
+        {
+          "name": "lp-aperture-layer lp-depth-near",
+          "transform": "matrix(1, 0, 0, 1, 0, 0)"
+        }
+      ],
+      "exampleTop": 561.96875,
+      "heroCopyTransform": "none",
+      "overflow": false
+    }
+  ],
+  "indicatorAlignment": [
+    {
+      "width": 1280,
+      "scrollWidth": 1280,
+      "barLeft": 930.5,
+      "expectedLeft": 930.5,
+      "barWidth": 236.5,
+      "expectedWidth": 236.5,
+      "decor": "block",
+      "selected": "lp-tab-3",
+      "readingTransform": "none"
+    },
+    {
+      "width": 390,
+      "scrollWidth": 390,
+      "barLeft": 284.5,
+      "expectedLeft": 284.5,
+      "barWidth": 74.5,
+      "expectedWidth": 74.5,
+      "decor": "none",
+      "selected": "lp-tab-3",
+      "readingTransform": "none"
+    },
+    {
+      "width": 768,
+      "scrollWidth": 768,
+      "barLeft": 564.5,
+      "expectedLeft": 564.5,
+      "barWidth": 150.5,
+      "expectedWidth": 150.5,
+      "decor": "block",
+      "selected": "lp-tab-3",
+      "readingTransform": "none"
+    }
+  ],
+  "reducedMotion": {
+    "method": "CSSOM: actual reduced-motion rules enabled, no-preference rules disabled",
+    "layers": [
+      {
+        "animation": "none",
+        "transform": "none"
+      },
+      {
+        "animation": "none",
+        "transform": "none"
+      }
+    ],
+    "indicatorTransition": "none 1e-05s",
+    "buttonTransitions": "background-color 0.15s, border-color 0.15s",
+    "panel": "lp-tab-0"
+  },
+  "staticFallback": {
+    "method": "CSSOM: scroll enhancement block disabled to check static fallback",
+    "layers": [
+      {
+        "animation": "none",
+        "transform": "none"
+      },
+      {
+        "animation": "none",
+        "transform": "none"
+      }
+    ],
+    "textVisible": true,
+    "exampleVisible": true
+  },
+  "keyboard": {
+    "selected": "lp-tab-2",
+    "focused": "lp-tab-2",
+    "transitionDuration": "0s",
+    "activeIndicatorAnimations": 0
+  },
+  "rapidPointerChanges": {
+    "finalSelected": "lp-tab-3",
+    "panelLabelledBy": "lp-tab-3",
+    "errors": [],
+    "sampledLongTasks": []
+  },
+  "review": {
+    "skill": "review-animations",
+    "verdict": "Approve",
+    "confirmation": "Approve maintained after responsive alignment and reduced-motion color fixes"
+  },
+  "tests": {
+    "pass": 591,
+    "fail": 0
+  },
+  "build": "client, server and TypeScript passed",
+  "limits": [
+    "Reduced-motion branch tested via CSSOM; no native OS emulation exposed by T3",
+    "Static fallback checked by disabling enhancement block; no separate Firefox/Safari run",
+    "No physical mobile/GPU/fps measurement"
+  ]
+}

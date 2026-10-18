@@ -136,53 +136,56 @@ export function KompassMark({ className = "" }: { className?: string }) {
 
 function SignalAperture() {
   return (
-    <svg
-      className="lp-aperture"
-      viewBox="0 0 1440 650"
-      fill="none"
-      aria-hidden="true"
-    >
-      <g stroke="#3d315b" strokeWidth="1">
-        <path d="M0 110h112v112h112v112h112M1440 110h-112v112h-112v112h-112" />
-        <path d="M0 222h112v112h112v112h112M1440 222h-112v112h-112v112h-112" />
-        <path d="M0 334h112v112h112v112h112M1440 334h-112v112h-112v112h-112" />
-      </g>
-      {[0, 1, 2, 3].map((row) => (
-        <g key={row} className={`lp-aperture-row lp-aperture-row-${row}`}>
-          <rect
-            x={row % 2 ? 36 : -20}
-            y={52 + row * 112}
-            width="104"
-            height="104"
-            rx="4"
-            fill={row === 1 ? "#6e46bc" : "#20192f"}
-          />
-          <rect
-            x={row % 2 ? 1320 : 1376}
-            y={52 + row * 112}
-            width="104"
-            height="104"
-            rx="4"
-            fill={row === 2 ? "#513189" : "#20192f"}
-          />
-          <path
-            d={`M${row % 2 ? 50 : -6} ${78 + row * 112}h76m-76 12h76m-76 12h76m-76 12h76m-76 12h76`}
-            stroke="#9c79d9"
-            strokeOpacity=".24"
-          />
-          <path
-            d={`M${row % 2 ? 1334 : 1390} ${78 + row * 112}h76m-76 12h76m-76 12h76m-76 12h76m-76 12h76`}
-            stroke="#9c79d9"
-            strokeOpacity=".24"
-          />
-        </g>
-      ))}
-      <g stroke="#b99ae9" strokeOpacity=".5">
-        <rect x="100" y="48" width="24" height="24" rx="3" />
-        <rect x="1316" y="384" width="24" height="24" rx="3" />
-        <path d="M210 109h12m-6-6v12M1230 221h12m-6-6v12" />
-      </g>
-    </svg>
+    <div className="lp-aperture" aria-hidden="true">
+      <div className="lp-aperture-layer lp-depth-far">
+        <svg viewBox="0 0 1440 650" fill="none">
+          <g stroke="#3d315b" strokeWidth="1">
+            <path d="M0 110h112v112h112v112h112M1440 110h-112v112h-112v112h-112" />
+            <path d="M0 222h112v112h112v112h112M1440 222h-112v112h-112v112h-112" />
+            <path d="M0 334h112v112h112v112h112M1440 334h-112v112h-112v112h-112" />
+          </g>
+          <g stroke="#b99ae9" strokeOpacity=".5">
+            <rect x="100" y="48" width="24" height="24" rx="3" />
+            <rect x="1316" y="384" width="24" height="24" rx="3" />
+            <path d="M210 109h12m-6-6v12M1230 221h12m-6-6v12" />
+          </g>
+        </svg>
+      </div>
+      <div className="lp-aperture-layer lp-depth-near">
+        <svg viewBox="0 0 1440 650" fill="none">
+          {[0, 1, 2, 3].map((row) => (
+            <g key={row}>
+              <rect
+                x={row % 2 ? 36 : -20}
+                y={52 + row * 112}
+                width="104"
+                height="104"
+                rx="4"
+                fill={row === 1 ? "#6e46bc" : "#20192f"}
+              />
+              <rect
+                x={row % 2 ? 1320 : 1376}
+                y={52 + row * 112}
+                width="104"
+                height="104"
+                rx="4"
+                fill={row === 2 ? "#513189" : "#20192f"}
+              />
+              <path
+                d={`M${row % 2 ? 50 : -6} ${78 + row * 112}h76m-76 12h76m-76 12h76m-76 12h76m-76 12h76`}
+                stroke="#9c79d9"
+                strokeOpacity=".24"
+              />
+              <path
+                d={`M${row % 2 ? 1334 : 1390} ${78 + row * 112}h76m-76 12h76m-76 12h76m-76 12h76m-76 12h76`}
+                stroke="#9c79d9"
+                strokeOpacity=".24"
+              />
+            </g>
+          ))}
+        </svg>
+      </div>
+    </div>
   );
 }
 
@@ -248,6 +251,12 @@ function EditorialExample() {
             )}
           </button>
         ))}
+        <span className="lp-stage-track" aria-hidden="true">
+          <span
+            className="lp-stage-indicator"
+            style={{ transform: `translateX(${selected * 100}%)` }}
+          />
+        </span>
       </div>
       <div className="lp-example-body">
         <div className="lp-need">
