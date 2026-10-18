@@ -2,9 +2,17 @@
 
 Fecha: 18 de octubre de 2026. Entorno local con Node.js 24, SQLite temporal y credenciales de prueba. No constituye una validación de operación pública a escala.
 
-## Pruebas automáticas
+## Revisión vigente de condiciones de uso
 
-- `npm test`: 373 pruebas aprobadas, sin fallos, cancelaciones ni pruebas omitidas. La línea base anterior a las correcciones tenía 170.
+La revisión posterior de fuentes y permisos está en [compliance/README.md](compliance/README.md). Apify Instagram/TikTok, Reddit, YouTube editorial, Gemini video y Telegram entrante están bloqueados por el servidor. Webs/feeds adicionales, IA y webhooks requieren revisión por origen, ruta y finalidad. Las pruebas de éxito de proveedores de la entrega anterior no acreditan permisos ni describen conectores actualmente activables.
+
+`node --test --test-timeout=20000 tests/*.test.mjs`: **422 aprobadas**, cero fallos, cancelaciones u omitidas. `npm run build` incluye TypeScript y pasa. Las regresiones cubren credenciales, fuentes heredadas, suplantación del origen, redirecciones, revocación, robots, cuota HN, datos restringidos en pantalla, salida hacia IA y publicación con atribución. No se hicieron llamadas de pago ni scraping social para comprobarlo.
+
+Los inventarios de las dos bases de vista previa encontraron **cero referencias de proveedores restringidos y cero referencias YouTube pendientes de revisión de conservación**. Son inspecciones de solo lectura, sin borrar información; ver [evidencia](compliance/evidence/).
+
+## Pruebas anteriores a la revisión de permisos
+
+- Línea base anterior: `npm test`, 373 pruebas aprobadas, sin fallos, cancelaciones ni pruebas omitidas. La línea base anterior a las correcciones tenía 170.
 - `npm run build`: compilación Vite y comprobación TypeScript aprobadas.
 - Tres pruebas de recorrido HTTP integrado cubren alta, contexto de empresa, audiencia, referencias, oportunidad, borrador, revisión, aprobación, calendario y resultados. Usan SQLite temporal y respuestas externas simuladas.
 - Se comprueban aislamiento entre empresas, permisos de revisor, aprobación ligada a la versión del contenido, correcciones de resultados sin duplicación y rechazo de métricas inválidas.

@@ -1,0 +1,94 @@
+
+> 30x-radar@0.1.0 build
+> vite build && tsc -b
+
+vite v8.3.4 building client environment for production...
+transforming...
+✓ 1742 modules transformed.
+rendering chunks...
+computing gzip size...
+dist/client/assets/Studio-BweWT6u2.css              0.88 kB │ gzip:   0.35 kB
+dist/client/assets/_workspace-CGaShUBb.css          3.13 kB │ gzip:   1.08 kB
+dist/client/assets/Community-JlM8IFn1.css           3.70 kB │ gzip:   1.07 kB
+dist/client/assets/calendar-pn1I1cu6.css           14.06 kB │ gzip:   3.25 kB
+dist/client/assets/Journey-Dp5qj5j8.css            22.13 kB │ gzip:   4.62 kB
+dist/client/assets/index-BNI9Lhk-.css              55.19 kB │ gzip:  12.43 kB
+dist/client/assets/_pieceId-DuxlseB9.js             0.07 kB │ gzip:   0.08 kB
+dist/client/assets/studio-DuxlseB9.js               0.07 kB │ gzip:   0.08 kB
+dist/client/assets/brand-CeKbx2tS.js                0.07 kB │ gzip:   0.08 kB
+dist/client/assets/home-C0KsrqZW.js                 0.07 kB │ gzip:   0.08 kB
+dist/client/assets/opportunities-DYrXAORs.js        0.07 kB │ gzip:   0.08 kB
+dist/client/assets/results-BJOKJSpv.js              0.07 kB │ gzip:   0.08 kB
+dist/client/assets/inbox-CtKv9mqL.js                0.07 kB │ gzip:   0.09 kB
+dist/client/assets/radar-CKEmmnZS.js                0.07 kB │ gzip:   0.09 kB
+dist/client/assets/chevron-right-BmL4eIJl.js        0.11 kB │ gzip:   0.12 kB
+dist/client/assets/copy-BNVMgmKa.js                 0.22 kB │ gzip:   0.19 kB
+dist/client/assets/search-B_5mqrie.js               0.22 kB │ gzip:   0.19 kB
+dist/client/assets/community._token-CAyA7shb.js     0.23 kB │ gzip:   0.19 kB
+dist/client/assets/video-DIiF4HKO.js                0.23 kB │ gzip:   0.20 kB
+dist/client/assets/link-wFjDcfKH.js                 0.24 kB │ gzip:   0.18 kB
+dist/client/assets/upload-DG3L9JfQ.js               0.24 kB │ gzip:   0.20 kB
+dist/client/assets/circle-check-7nzMVpUS.js         0.27 kB │ gzip:   0.22 kB
+dist/client/assets/send-Cp3y8deq.js                 0.27 kB │ gzip:   0.22 kB
+dist/client/assets/folder-open-BWyX7ptK.js          0.27 kB │ gzip:   0.20 kB
+dist/client/assets/users-Db7l67NC.js                0.29 kB │ gzip:   0.21 kB
+dist/client/assets/save-C8Sy2GRQ.js                 0.31 kB │ gzip:   0.21 kB
+dist/client/assets/trash-2-BnbGEQBk.js              0.34 kB │ gzip:   0.24 kB
+dist/client/assets/clapperboard-BNLnBlFp.js         0.44 kB │ gzip:   0.29 kB
+dist/client/assets/message-square-BtM3nBZs.js       0.46 kB │ gzip:   0.29 kB
+dist/client/assets/calendar-days-BYaPPUzH.js        0.47 kB │ gzip:   0.25 kB
+dist/client/assets/sparkles-D0igvY7E.js             0.49 kB │ gzip:   0.29 kB
+dist/client/assets/refresh-cw-Dm-SohSD.js           0.50 kB │ gzip:   0.29 kB
+dist/client/assets/info-BH6oyj2x.js                 0.53 kB │ gzip:   0.30 kB
+dist/client/assets/workflow-recovery-DO5MRZQt.js    0.62 kB │ gzip:   0.40 kB
+dist/client/assets/palette-wUFgSZUS.js              0.67 kB │ gzip:   0.37 kB
+dist/client/assets/ProviderCredits-Bia_Xmyj.js      1.44 kB │ gzip:   0.75 kB
+dist/client/assets/format-8gAvABfR.js               1.49 kB │ gzip:   0.88 kB
+dist/client/assets/audience-1piGHaOq.js             1.74 kB │ gzip:   0.84 kB
+dist/client/assets/ui-ijGD7WNf.js                   4.79 kB │ gzip:   2.18 kB
+dist/client/assets/assets-DciW5Rv3.js               6.25 kB │ gzip:   2.62 kB
+dist/client/assets/jsx-runtime-DyZJNswf.js          8.78 kB │ gzip:   3.33 kB
+dist/client/assets/Community-6Gc_O_m4.js           10.60 kB │ gzip:   3.90 kB
+dist/client/assets/calendar-B7UdCaWB.js            15.96 kB │ gzip:   5.18 kB
+dist/client/assets/_workspace-DNFOJX5s.js          28.35 kB │ gzip:   9.36 kB
+dist/client/assets/settings-CzmurI6k.js            28.35 kB │ gzip:   9.09 kB
+dist/client/assets/Studio-D-Q5eD4q.js              33.58 kB │ gzip:  10.17 kB
+dist/client/assets/Discovery-DaqKkAsx.js           42.68 kB │ gzip:  12.81 kB
+dist/client/assets/Journey-5R0jtQYy.js             66.81 kB │ gzip:  18.38 kB
+dist/client/assets/index-DTdxQrkz.js              337.69 kB │ gzip: 108.50 kB
+
+✓ built in 1.30s
+vite v8.3.4 building ssr environment for production...
+transforming...
+✓ 111 modules transformed.
+rendering chunks...
+computing gzip size...
+dist/server/assets/start-5Z2QO8AU.js                         0.14 kB │ gzip:  0.13 kB
+dist/server/assets/home-DRc-G5wj.js                          0.19 kB │ gzip:  0.16 kB
+dist/server/assets/radar-BV7mvgBQ.js                         0.19 kB │ gzip:  0.16 kB
+dist/server/assets/studio--PoX45km.js                        0.19 kB │ gzip:  0.15 kB
+dist/server/assets/results-B23iD5vr.js                       0.20 kB │ gzip:  0.16 kB
+dist/server/assets/inbox-CLy2HOFB.js                         0.20 kB │ gzip:  0.16 kB
+dist/server/assets/_pieceId-lLtlEjKL.js                      0.20 kB │ gzip:  0.16 kB
+dist/server/assets/brand-C01gcpVJ.js                         0.21 kB │ gzip:  0.16 kB
+dist/server/assets/opportunities-CJ1pRlJ5.js                 0.21 kB │ gzip:  0.16 kB
+dist/server/assets/empty-plugin-adapters-D9UWiqvJ.js         0.22 kB │ gzip:  0.16 kB
+dist/server/assets/community._token-BXRmfkzz.js              0.39 kB │ gzip:  0.25 kB
+dist/server/assets/workflow-recovery-BhphqmiV.js             0.77 kB │ gzip:  0.37 kB
+dist/server/assets/format-Ner0v5Hz.js                        1.76 kB │ gzip:  0.90 kB
+dist/server/assets/ProviderCredits-y5xWkJHN.js               2.39 kB │ gzip:  1.00 kB
+dist/server/assets/audience-afvO0CS7.js                      3.25 kB │ gzip:  1.22 kB
+dist/server/assets/_tanstack-start-manifest_v-BRrE1fIk.js    5.67 kB │ gzip:  1.27 kB
+dist/server/assets/ui-CFMQDrxi.js                            5.75 kB │ gzip:  2.07 kB
+dist/server/assets/assets-C8DYJeqZ.js                        9.58 kB │ gzip:  3.08 kB
+dist/server/assets/router-DvxvTeef.js                       10.59 kB │ gzip:  2.77 kB
+dist/server/assets/Community-BVBHwo_W.js                    16.61 kB │ gzip:  4.63 kB
+dist/server/assets/calendar-DEfxmRZ3.js                     26.63 kB │ gzip:  6.42 kB
+dist/server/assets/_workspace-22XPdZIb.js                   40.12 kB │ gzip:  9.81 kB
+dist/server/assets/settings-DC9nITnl.js                     45.79 kB │ gzip: 10.79 kB
+dist/server/assets/Studio-x-b6W-Ta.js                       53.75 kB │ gzip: 12.53 kB
+dist/server/assets/Discovery-HpYL4S-p.js                    64.43 kB │ gzip: 15.32 kB
+dist/server/server.js                                       92.88 kB │ gzip: 23.45 kB
+dist/server/assets/Journey-CcEGF7-z.js                     106.09 kB │ gzip: 22.89 kB
+
+✓ built in 390ms

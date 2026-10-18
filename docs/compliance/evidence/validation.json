@@ -1,0 +1,64 @@
+{
+  "checkedAt": "2026-10-18T10:22:18.194211+00:00",
+  "tests": {
+    "command": "node --test --test-timeout=20000 tests/*.test.mjs",
+    "passed": 422,
+    "failed": 0,
+    "cancelled": 0,
+    "skipped": 0,
+    "log": "tests.txt"
+  },
+  "build": {
+    "command": "npm run build",
+    "status": "passed",
+    "includesTypeScript": true,
+    "log": "build.txt"
+  },
+  "independentAdversarialCases": 15,
+  "sourceAndTestDigest": "eea24636e2adc90cd153336c2629339dbaf1e21c7ec13f3bdfe479cf5dbeb70f",
+  "browser": {
+    "route": "/settings",
+    "testData": "Explicit synthetic demo workspace in QA database",
+    "viewports": [
+      {
+        "width": 390,
+        "height": 844,
+        "horizontalOverflow": false,
+        "formInputMinimumPx": 16,
+        "screenshot": "settings-mobile.png"
+      },
+      {
+        "width": 1440,
+        "height": 900,
+        "horizontalOverflow": false,
+        "screenshot": "settings-desktop.png"
+      }
+    ],
+    "restrictedConnectorCards": 3,
+    "restrictedActivationFields": 0,
+    "unreviewedSourceToggleDisabled": true,
+    "directApifyActivationHttpStatus": 403,
+    "unreviewedWebsiteInspectionHttpStatus": 200,
+    "unreviewedWebsiteEvidence": "linked, not read",
+    "ownProvidedTextEvidence": "provided",
+    "fontsLoadedFromSameOrigin": true,
+    "automaticExternalResourcesAfterFinalReload": []
+  },
+  "providerRuns": {
+    "paidCalls": 0,
+    "socialScraperRuns": 0
+  },
+  "historicalData": {
+    "readOnlyInventories": [
+      "preview-inventory.json",
+      "qa-inventory.json"
+    ],
+    "automaticDeletion": false
+  },
+  "limits": [
+    "No blanket legal certification; country-specific obligations and user content rights require separate review.",
+    "HN cap is per process; multiple processes/shared IPs need a shared quota budget.",
+    "Operator grant records document permission review, not permission by themselves.",
+    "No official Instagram account connector or approved YouTube analytics grant has been established."
+  ]
+}

@@ -49,17 +49,17 @@ Las oportunidades separan prioridad editorial, crecimiento observado e hipótesi
 
 La base admite RSS/Atom, Hacker News, Google Trends RSS y GDELT. Aportan señales diferentes; una noticia o interés de búsqueda no se presenta como crecimiento en LinkedIn. Las fuentes pueden limitar acceso o devolver errores parciales.
 
-YouTube usa un conector oficial opcional. Instagram y TikTok disponen de adaptadores Apify opcionales, pausados hasta configuración y activación. No existe un conector de descubrimiento general de LinkedIn. El acceso a una red depende de sus permisos, condiciones, cuota y disponibilidad; no se accede a sesiones privadas ni se eluden bloqueos.
+La revisión de condiciones de uso bloquea los adaptadores Apify de Instagram/TikTok, Reddit, el análisis editorial de YouTube y el análisis audiovisual de Gemini. Una credencial o una cuenta propia no los activa. Los enlaces sociales pueden conservarse como citas sin leer perfiles ni seguidores.
 
-Apify reserva conservadoramente USD1 antes de cada intento y comparte el presupuesto entre empresas con la misma credencial. `APIFY_DAILY_BUDGET_USD=3` y `APIFY_MONTHLY_BUDGET_USD=30` fijan los límites por defecto; `0` pausa el proveedor. Estas reservas incluyen intentos fallidos y no representan la factura real. La interfaz muestra el estado y los errores por fuente. Hosting, almacenamiento y modelos de IA tienen costos separados.
+Webs, feeds adicionales, proveedores de IA y webhooks requieren un permiso revisado por el operador para dominio, ruta y finalidad. `SOURCE_ACCESS_POLICY_FILE` registra esa revisión con vencimiento; no sustituye una autorización real. Las lecturas permitidas respetan robots y vuelven a comprobar cada redirección y el origen del contenido almacenado. Ver la [revisión por funcionalidad](docs/compliance/README.md), sus fuentes oficiales y restricciones.
 
-El análisis audiovisual de referencias requiere Gemini y un medio accesible. No equivale a generar o editar un video final. Los conectores de publicación configurados mantienen su acción explícita y aprobación; los canales sociales sin integración usan planificación/exportación y registro manual.
+Los límites de reservas Apify se conservan para auditar usos previos, pero no se ejecutan Actors en este despliegue. Hosting, almacenamiento y modelos de IA tienen costos separados. La recepción automática de mensajes de Telegram está desactivada. Publicar requiere contenido aprobado, permiso del destino y una acción explícita; el calendario organiza fechas y no publica por sí solo.
 
 ## Persistencia y operación
 
 `DATA_DIR` contiene SQLite, archivos y la clave de cifrado. Respalda todo el directorio; no copies datos ni credenciales de otro entorno. Credenciales por empresa cifradas en servidor; sesiones HttpOnly, membresías y roles de propietario/editor/revisor. El corpus de audiencia no es un CRM de personas; los datos de autenticación del operador están separados.
 
-`DISCOVERY_ENABLED` y `DISCOVERY_INTERVAL_MS` controlan la búsqueda periódica. Los fallos se muestran por fuente y tienen espera progresiva. La IA contextual requiere `OPENAI_API_KEY` o un proveedor compatible configurado en la empresa; el video usa Gemini. La configuración de ejemplo documenta variables sin incluir secretos.
+`DISCOVERY_ENABLED` y `DISCOVERY_INTERVAL_MS` controlan la búsqueda periódica. Los fallos se muestran por fuente y tienen espera progresiva. La IA contextual requiere una credencial y una revisión vigente del proveedor para esa finalidad; el video permanece restringido. La configuración de ejemplo documenta variables sin incluir secretos.
 
 ## Verificación y límites
 

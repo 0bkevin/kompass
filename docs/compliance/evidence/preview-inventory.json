@@ -1,0 +1,12 @@
+{
+  "checkedAt": "2026-10-18T10:22:18.267Z",
+  "policyVersion": "2026-10-18",
+  "readOnly": true,
+  "networkCalls": 0,
+  "sources": 4,
+  "storedEnabledSourcesWithoutCurrentPermission": 0,
+  "references": 49,
+  "restrictedReferences": 0,
+  "youtubeReferencesRequiringRetentionReview": 0,
+  "note": "Counts are an inventory under the current policy, not a legal certification. Historical data is not deleted by this command."
+}

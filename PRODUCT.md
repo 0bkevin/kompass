@@ -51,3 +51,7 @@ Prior application in ../30x-track; the audio transcript and challenge supplied i
 ## Open Decisions
 
 Deployment host, deadline and API operating budget are not supplied. Do not infer purchasing authorization. Private learner datasets are outside the current challenge scope. Broader personal-data use requires a changed brief.
+
+## Acceso a fuentes revisado
+
+La revisión de condiciones de uso aplica a cada finalidad, no solo a la disponibilidad pública de una URL. [La matriz vigente](docs/compliance/README.md) registra fuentes y funciones habilitadas, restringidas y sus condiciones. Apify Instagram/TikTok, Reddit, YouTube editorial, Gemini video y Telegram entrante están bloqueados. No se promete cobertura social ni autorización por guardar una credencial. Webs/feeds adicionales, IA y webhooks requieren una revisión vigente; el recorrido con material propio y fuentes aprobadas sigue disponible.
