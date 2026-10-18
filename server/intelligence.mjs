@@ -442,6 +442,7 @@ export function parseFeed(xml, source) {
     /* A pure parser may be used without a source URL. */
   }
   const officialGoogle = officialGoogleFeed(source.url);
+  const officialHn = source.url === "https://news.ycombinator.com/rss";
   return asArray(rss?.item || feed?.entry)
     .slice(0, 60)
     .map((item, index) => {
@@ -454,15 +455,23 @@ export function parseFeed(xml, source) {
       const traffic = xmlText(item["ht:approx_traffic"]);
       const googleTrend = officialGoogle && !!traffic;
       const country = feedUrl?.searchParams.get("geo");
+      // HN's description is a Comments link, never the linked article body.
+      const discussion = xmlText(item.comments);
+      const discussionUrl =
+        /^https:\/\/news\.ycombinator\.com\/item\?id=\d+$/.test(discussion)
+          ? discussion
+          : undefined;
       return {
         title: xmlText(item.title).slice(0, 500),
         url: url && /^https?:\/\//i.test(url) ? String(url) : undefined,
-        text: xmlText(
-          item.description ||
-            item.summary ||
-            item.content ||
-            item["content:encoded"],
-        ).slice(0, 12000),
+        text: officialHn
+          ? ""
+          : xmlText(
+              item.description ||
+                item.summary ||
+                item.content ||
+                item["content:encoded"],
+            ).slice(0, 12000),
         publishedAt: Number.isFinite(Date.parse(published))
           ? new Date(published).toISOString()
           : undefined,
@@ -486,6 +495,21 @@ export function parseFeed(xml, source) {
           .filter(Boolean)
           .slice(0, 5),
         format: "article",
+        ...(officialHn
+          ? {
+              contentScope: "metadata_only",
+              sourceUrl: source.url,
+              discussionUrl,
+              relatedUrls: discussionUrl ? [discussionUrl] : [],
+              providerAttributions: [
+                {
+                  id: "hackernews",
+                  name: "Hacker News",
+                  url: "https://news.ycombinator.com/",
+                },
+              ],
+            }
+          : {}),
         ...(officialGoogle
           ? googleTrendIdentity(
               xmlText(item.title).slice(0, 500),

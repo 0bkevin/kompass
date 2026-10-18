@@ -456,6 +456,12 @@ function defaults(brandId) {
       enabled: true,
     },
     {
+      name: "Hacker News · RSS oficial",
+      type: "rss",
+      url: "https://news.ycombinator.com/rss",
+      enabled: true,
+    },
+    {
       name: "Google Trends · Estados Unidos",
       type: "rss",
       url: "https://trends.google.com/trending/rss?geo=US",
