@@ -106,11 +106,7 @@ export function authRateLimit(req, res, next) {
   next();
 }
 export function checkOrigin(req, res, next) {
-  if (
-    ["GET", "HEAD", "OPTIONS"].includes(req.method) ||
-    req.path.startsWith("/inbox/telegram/")
-  )
-    return next();
+  if (["GET", "HEAD", "OPTIONS"].includes(req.method)) return next();
   const origin = req.get("origin");
   if (!origin) return next();
   const expected = `${req.protocol}://${req.get("host")}`;

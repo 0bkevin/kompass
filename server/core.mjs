@@ -1,3 +1,4 @@
+import { publicPublicationReceipt } from "./publication-receipt.mjs";
 import express from "express";
 import multer from "multer";
 import { createHash, randomUUID, randomBytes } from "node:crypto";
@@ -74,7 +75,17 @@ export function publicPiece(piece) {
   const approvalVersion = createHash("sha256")
     .update(JSON.stringify(pieceApprovalContent(piece)))
     .digest("base64url");
-  return { ...piece, approvalVersion };
+  return {
+    ...piece,
+    ...(piece.publicationReceipt
+      ? {
+          publicationReceipt: publicPublicationReceipt(
+            piece.publicationReceipt,
+          ),
+        }
+      : {}),
+    approvalVersion,
+  };
 }
 
 function approvalConflict() {
@@ -641,7 +652,7 @@ function pieceInput(body, current, req) {
   if (body.channel !== undefined)
     result.channel = options(
       body.channel,
-      ["instagram", "linkedin", "tiktok", "youtube", "telegram"],
+      ["instagram", "linkedin", "tiktok", "youtube"],
       "Canal",
     );
   for (const [key, kind] of [

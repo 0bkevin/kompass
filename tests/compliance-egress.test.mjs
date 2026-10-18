@@ -228,43 +228,6 @@ test("unreviewed integration changes fail atomically before DNS or secret writes
   assert.equal(lookup.mock.callCount(), 0);
 });
 
-test("Telegram truncation preserves mandatory source credits in preview and actual approved send", async () => {
-  permissionFile();
-  setSecret(brand.id, "telegram", {
-    botToken: "12345:synthetic_bot_not_real_credential",
-    chatId: "-1001234567890",
-  });
-  const piece = saveRecord(brand.id, "pieces", {
-    title: "Synthetic approved original",
-    caption: "Owned text. ".repeat(500),
-    status: "approved",
-    channel: "telegram",
-    providerAttributions: [{ id: "gdelt" }],
-  });
-  const preview = getPublicationState(brand, piece);
-  assert.equal(preview.textTruncated, true);
-  assert.ok(preview.previewText.length <= 4096);
-  assert.ok(
-    preview.previewText.endsWith(
-      "Datos: GDELT Project (https://www.gdeltproject.org/)",
-    ),
-  );
-  let sent;
-  await publishPiece(brand, piece, {
-    fetcher: async (_url, options) => {
-      sent = JSON.parse(options.body);
-      return new Response(
-        JSON.stringify({
-          ok: true,
-          result: { message_id: 1, chat: { id: -1001234567890 } },
-        }),
-        { headers: { "content-type": "application/json" } },
-      );
-    },
-  });
-  assert.equal(sent.text, preview.previewText);
-});
-
 test("known restricted platforms cannot be reopened by an operator web grant", async () => {
   const filename = permissionFile();
   const now = Date.now();
@@ -327,10 +290,13 @@ test("a reviewed web origin cannot expose token-bearing, private-route or person
   );
 });
 
-test("Telegram publishing permission never permits message collection", async () => {
+test("retired Telegram destinations reject both publishing and collection", async () => {
   permissionFile();
-  await assert.rejects(
-    safeFetch("https://api.telegram.org/bot12345:synthetic/getUpdates"),
-    { status: 403 },
-  );
+  for (const method of ["getUpdates", "sendMessage"])
+    await assert.rejects(
+      safeFetch(`https://api.telegram.org/bot12345:synthetic/${method}`, {
+        policyPurpose: "telegram-publish",
+      }),
+      { status: 403 },
+    );
 });

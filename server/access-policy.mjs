@@ -304,14 +304,6 @@ export function webhookAccessPolicy(value) {
 export function assertOutboundAllowed(value, purpose = "metadata") {
   const url = parsedUrl(value);
   if (!url) deny("El destino no es una URL pública de recopilación válida.");
-  if (
-    purpose === "telegram-publish" &&
-    url.protocol === "https:" &&
-    url.hostname === "api.telegram.org" &&
-    !url.search &&
-    /^\/bot[\d]+:[\w-]+\/sendMessage$/.test(url.pathname)
-  )
-    return;
   if (isRestrictedCollectionUrl(value))
     deny(
       "La recopilación de esta plataforma está bloqueada por la política de acceso.",
@@ -399,11 +391,6 @@ export function publicAccessPolicies() {
         providerAccessPolicy(key),
       ]),
     ),
-    telegramInbox: {
-      allowed: false,
-      reason:
-        "La recepción automática de mensajes está desactivada: falta un flujo de consentimiento individual y uso autorizado.",
-    },
     externalWeb: {
       allowed: false,
       reason:

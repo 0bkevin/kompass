@@ -37,7 +37,7 @@ mock.method(dns, "lookup", async () => [
 ]);
 mock.method(https, "request", (url, options, callback) => {
   assert.ok(
-    ["api.telegram.org", "webhook.example.test"].includes(url.hostname),
+    url.hostname === "webhook.example.test",
     "Only synthetic provider targets are allowed",
   );
   const request = new EventEmitter();
@@ -51,7 +51,7 @@ mock.method(https, "request", (url, options, callback) => {
   };
   request.end = () => {
     attempts.push({
-      provider: url.hostname === "api.telegram.org" ? "telegram" : "webhook",
+      provider: "webhook",
       headers: options.headers,
       body: JSON.parse(body),
     });
@@ -68,9 +68,7 @@ mock.method(https, "request", (url, options, callback) => {
             ? 500
             : mode === "reject"
               ? 403
-              : url.hostname === "api.telegram.org"
-                ? 200
-                : 202;
+              : 202;
       incoming.headers = {
         "content-type": "application/json",
         "x-request-id": "SIMULATED-request-1",
@@ -82,10 +80,7 @@ mock.method(https, "request", (url, options, callback) => {
         Buffer.from(
           JSON.stringify({
             ok: mode !== "reject",
-            result:
-              mode === "invalidReceipt"
-                ? {}
-                : { message_id: 701, chat: { id: -1001234567890 } },
+            accepted: mode !== "reject",
           }),
         ),
       );
@@ -128,17 +123,7 @@ async function account(name) {
   assert.equal(response.status, 201);
   return response;
 }
-function configure({ telegram = true, webhook = true } = {}) {
-  database.setSecret(
-    brand.id,
-    "telegram",
-    telegram
-      ? {
-          botToken: "123456789:SIMULATED_TRANSPORT_ONLY_ABCDEFGHIJKLMNOP",
-          chatId: "-1001234567890",
-        }
-      : null,
-  );
+function configure({ webhook = true } = {}) {
   database.setSecret(
     brand.id,
     "webhook",
@@ -152,7 +137,7 @@ function configure({ telegram = true, webhook = true } = {}) {
 }
 const base = () => `/brands/${brand.id}`;
 const route = (piece) => `${base()}/pieces/${piece.id}`;
-async function piece(channel = "telegram", approve = true) {
+async function piece(channel = "linkedin", approve = true) {
   const created = await request(`${base()}/pieces`, {
     method: "POST",
     body: {
@@ -209,6 +194,39 @@ after(async () => {
   fs.rmSync(temporary, { recursive: true, force: true });
 });
 
+test("the HTTP API rejects the removed connector and channel without side effects", async () => {
+  configure();
+  const before = attempts.length;
+  const webhook = database.getSecret(brand.id, "webhook");
+  const configured = await request(`${base()}/integrations`);
+  assert.equal(configured.status, 200);
+  assert.equal(Object.hasOwn(configured.data, "telegram"), false);
+  const invalid = await request(`${base()}/integrations`, {
+    method: "PUT",
+    body: { webhook: null, telegram: { botToken: "SIMULATED", chatId: "123" } },
+  });
+  assert.equal(invalid.status, 400);
+  assert.deepEqual(database.getSecret(brand.id, "webhook"), webhook);
+  const count = database.listRecords(brand.id, "pieces").length;
+  for (const [path, body] of [
+    ["/pieces", { title: "Rejected channel", channel: "telegram" }],
+    ["/draft", { channel: "telegram" }],
+  ]) {
+    const result = await request(`${base()}${path}`, { method: "POST", body });
+    assert.equal(result.status, 400);
+  }
+  assert.equal(database.listRecords(brand.id, "pieces").length, count);
+  const draft = await piece("linkedin", false);
+  const saved = database.getRecord(brand.id, "pieces", draft.id);
+  const changed = await request(route(draft), {
+    method: "PATCH",
+    body: { channel: "telegram", expectedEditVersion: draft.approvalVersion },
+  });
+  assert.equal(changed.status, 400);
+  assert.deepEqual(database.getRecord(brand.id, "pieces", draft.id), saved);
+  assert.equal(attempts.length, before);
+});
+
 test("the explicit publish flow exposes its actual destination and journal without credentials", async () => {
   configure();
   const approved = await piece();
@@ -219,13 +237,12 @@ test("the explicit publish flow exposes its actual destination and journal witho
     "Approved piece must expose a safe publication state for the UI",
   );
   assert.equal(state.data.status, "ready");
-  assert.equal(state.data.destination.provider, "telegram");
-  assert.equal(state.data.destination.chatId, "-1001234567890");
-  assert.equal(state.data.approvalVersion, approved.approvalVersion);
+  assert.equal(state.data.destination.provider, "webhook");
   assert.equal(
-    state.data.previewText,
-    [approved.title, approved.caption, approved.cta].join("\n\n"),
+    state.data.destination.url,
+    "https://webhook.example.test/SIMULATED",
   );
+  assert.equal(state.data.approvalVersion, approved.approvalVersion);
   assert.doesNotMatch(
     JSON.stringify(state.data),
     /SIMULATED_TRANSPORT_ONLY|SIMULATED_WEBHOOK_SECRET|SIMULATED_QUERY/,
@@ -244,7 +261,7 @@ test("the explicit publish flow exposes its actual destination and journal witho
 });
 
 test("the API preserves authentication, brand, editor, approval and missing-connector gates", async () => {
-  const draft = await piece("telegram", false);
+  const draft = await piece("linkedin", false);
   const before = attempts.length;
   assert.equal(
     (await request(`${route(draft)}/publish`, { cookie: null })).status,
@@ -283,7 +300,7 @@ test("the API preserves authentication, brand, editor, approval and missing-conn
       .prepare("UPDATE members SET role='owner' WHERE brand_id=? AND user_id=?")
       .run(brand.id, owner.data.user.id);
   }
-  configure({ telegram: false, webhook: false });
+  configure({ webhook: false });
   assert.equal(
     (
       await request(`${route(approved)}/publish`, {
@@ -316,9 +333,9 @@ test("an explicit confirmation is bound to the current approved version and dest
     ).status,
     409,
   );
-  database.setSecret(brand.id, "telegram", {
-    botToken: "SIMULATED_ONLY",
-    chatId: "@SIMULATED_CHANGED_DESTINATION",
+  database.setSecret(brand.id, "webhook", {
+    url: "https://webhook.example.test/SIMULATED?private=CHANGED",
+    secret: "SIMULATED_CHANGED_DESTINATION",
   });
   const changed = await request(`${route(approved)}/publish`, {
     method: "POST",
@@ -326,7 +343,7 @@ test("an explicit confirmation is bound to the current approved version and dest
   });
   assert.equal(changed.status, 409);
   assert.match(changed.data.error, /destino|conector/i);
-  configure({ telegram: false, webhook: false });
+  configure({ webhook: false });
   assert.equal(
     (await request(`${route(approved)}/publish`, { method: "POST", body }))
       .status,
@@ -364,7 +381,7 @@ test("an explicit confirmation is bound to the current approved version and dest
   configure();
 });
 
-test("approved and scheduled Telegram pieces send once and persist a final receipt", async () => {
+test("approved and scheduled webhook pieces send once and persist a final receipt", async () => {
   configure();
   mode = "success";
   for (const scheduled of [false, true]) {
@@ -389,12 +406,12 @@ test("approved and scheduled Telegram pieces send once and persist a final recei
     });
     assert.equal(reply.status, 200, JSON.stringify(reply.data));
     assert.equal(reply.data.status, "published");
-    assert.equal(reply.data.publicationReceipt.provider, "telegram");
-    assert.equal(reply.data.publicationReceipt.messageId, 701);
+    assert.equal(reply.data.publicationReceipt.provider, "webhook");
+    assert.equal(reply.data.publicationReceipt.status, 202);
     assert.equal(
       attempts.at(-1).provider,
-      "telegram",
-      "Configured Telegram wins only for its channel",
+      "webhook",
+      "The configured webhook receives the approved piece",
     );
     assert.equal(
       (await request(`${route(approved)}/publish`)).data.status,
@@ -458,30 +475,6 @@ test("a definite rejection allows only a deliberate retry with the same idempote
     attempts.at(-1).headers["idempotency-key"],
     attempts.at(-2).headers["idempotency-key"],
   );
-});
-
-test("Telegram success without a message receipt remains uncertain", async () => {
-  configure();
-  const approved = await piece();
-  const body = await confirmation(approved),
-    before = attempts.length;
-  mode = "invalidReceipt";
-  assert.equal(
-    (await request(`${route(approved)}/publish`, { method: "POST", body }))
-      .status,
-    502,
-  );
-  assert.equal(
-    (await request(`${route(approved)}/publish`)).data.status,
-    "uncertain",
-  );
-  mode = "success";
-  assert.equal(
-    (await request(`${route(approved)}/publish`, { method: "POST", body }))
-      .status,
-    409,
-  );
-  assert.equal(attempts.length, before + 1);
 });
 
 test("a webhook server error is ambiguous and must not become a retryable rejection", async () => {

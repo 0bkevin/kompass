@@ -27,7 +27,6 @@ const channelNames: Record<Piece["channel"], string> = {
   linkedin: "LinkedIn",
   tiktok: "TikTok",
   youtube: "YouTube",
-  telegram: "Telegram",
 };
 const fullDate = new Intl.DateTimeFormat("es", {
   weekday: "long",

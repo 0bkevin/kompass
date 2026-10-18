@@ -289,11 +289,6 @@
   background: #f8eeea;
   color: #865c4e;
 }
-.calendar-event.channel-telegram {
-  --calendar-channel: #78aabd;
-  background: #eaf4f8;
-  color: #416c7b;
-}
 .calendar-event.published {
   opacity: 0.7;
 }
@@ -564,9 +559,6 @@
 }
 .calendar-channel.channel-youtube > i {
   background: #c28f81;
-}
-.calendar-channel.channel-telegram > i {
-  background: #78aabd;
 }
 .calendar-agenda-bottom .text-button {
   font-size: 10px;

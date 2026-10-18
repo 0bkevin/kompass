@@ -50,7 +50,6 @@ const channelNames: Record<string, string> = {
   instagram: "Instagram",
   tiktok: "TikTok",
   youtube: "YouTube",
-  telegram: "Telegram",
 };
 const confidenceNames = { low: "Limitada", medium: "Media", high: "Alta" };
 const growthStates: Record<

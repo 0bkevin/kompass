@@ -42,6 +42,8 @@ export function initDb() {
     CREATE TABLE IF NOT EXISTS invitations (token_hash TEXT PRIMARY KEY, brand_id TEXT NOT NULL REFERENCES brands(id) ON DELETE CASCADE, role TEXT NOT NULL, expires_at INTEGER NOT NULL, created_by TEXT NOT NULL REFERENCES users(id), used_at INTEGER);
     CREATE INDEX IF NOT EXISTS records_kind ON records(brand_id,kind);
     CREATE INDEX IF NOT EXISTS sessions_expiry ON sessions(expires_at);`);
+  // Retired connector: discard credentials and intake cursors, preserve work/history.
+  db.exec("DELETE FROM secrets WHERE key IN ('telegram', 'telegramUpdates')");
   const keyPath = path.join(DATA_DIR, ".encryption-key");
   try {
     fs.writeFileSync(keyPath, randomBytes(32), { flag: "wx", mode: 0o600 });
@@ -167,7 +169,6 @@ export function setSecret(brandId, key, value) {
 }
 export function publicIntegrations(brandId) {
   const ai = getSecret(brandId, "ai");
-  const telegram = getSecret(brandId, "telegram");
   const webhook = getSecret(brandId, "webhook");
   return {
     ai: {
@@ -178,10 +179,6 @@ export function publicIntegrations(brandId) {
       ...(ai?.model || process.env.OPENAI_MODEL
         ? { model: ai?.model || process.env.OPENAI_MODEL }
         : {}),
-    },
-    telegram: {
-      configured: !!(telegram?.botToken && telegram?.chatId),
-      ...(telegram?.chatId ? { chatId: telegram.chatId } : {}),
     },
     webhook: {
       accessPolicy: webhookAccessPolicy(webhook?.url),

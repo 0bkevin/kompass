@@ -291,7 +291,6 @@ function NewDraft({ onClose }: { onClose: () => void }) {
               <option value="instagram">Instagram</option>
               <option value="tiktok">TikTok</option>
               <option value="youtube">YouTube</option>
-              <option value="telegram">Telegram</option>
             </select>
           </Field>
         </div>
@@ -834,15 +833,11 @@ function PieceEditor({ piece }: { piece: Piece }) {
                         })
                       }
                     >
-                      {[
-                        "linkedin",
-                        "instagram",
-                        "tiktok",
-                        "youtube",
-                        "telegram",
-                      ].map((v) => (
-                        <option key={v}>{v}</option>
-                      ))}
+                      {["linkedin", "instagram", "tiktok", "youtube"].map(
+                        (v) => (
+                          <option key={v}>{v}</option>
+                        ),
+                      )}
                     </select>
                   </Field>
                   <Field label="Audiencia">

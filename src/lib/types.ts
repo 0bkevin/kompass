@@ -24,7 +24,6 @@ export interface AccessPolicies {
   youtube: AccessPolicy;
   gemini: AccessPolicy;
   reddit: AccessPolicy;
-  telegramInbox: AccessPolicy;
   externalWeb: AccessPolicy;
 }
 export interface User {
@@ -182,7 +181,7 @@ export interface Piece {
   ideaId?: string;
   segmentId?: string;
   format: "reel" | "carousel" | "post" | "video" | "newsletter";
-  channel: "instagram" | "linkedin" | "tiktok" | "youtube" | "telegram";
+  channel: "instagram" | "linkedin" | "tiktok" | "youtube";
   status: "draft" | "review" | "approved" | "scheduled" | "published";
   hook: string;
   script: string;
@@ -217,14 +216,14 @@ export interface Piece {
   publicationError?: string;
   publicationReceipt?: PublicationReceipt;
 }
-export type PublicationDestination =
-  | { provider: "telegram"; chatId: string }
-  | { provider: "webhook"; url: string; parametersHidden?: boolean };
+export type PublicationDestination = {
+  provider: "webhook";
+  url: string;
+  parametersHidden?: boolean;
+};
 export interface PublicationReceipt {
-  provider: "telegram" | "webhook";
+  provider: "legacy" | "webhook";
   publishedAt: string;
-  messageId?: string | number;
-  chatId?: string | number;
   status?: number;
   requestId?: string;
   destination?: PublicationDestination;
@@ -235,8 +234,7 @@ export interface PublicationState {
   approvalVersion: string;
   destination: PublicationDestination | null;
   destinationKey: string | null;
-  previewText?: string;
-  textTruncated?: boolean;
+  unavailableReason?: string;
   receipt?: PublicationReceipt;
   error?: string;
 }
@@ -286,7 +284,6 @@ export interface Activity {
 }
 export interface Integrations {
   ai: { configured: boolean; model?: string; accessPolicy?: AccessPolicy };
-  telegram: { configured: boolean; chatId?: string; inboxUrl?: string };
   webhook: { configured: boolean; url?: string; accessPolicy?: AccessPolicy };
 }
 export interface BrandState {

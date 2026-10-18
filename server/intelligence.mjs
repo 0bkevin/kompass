@@ -2289,15 +2289,10 @@ export async function createDraft(brand, input, options = {}) {
   )
     ? input.format
     : "post";
-  const channel = [
-    "instagram",
-    "linkedin",
-    "tiktok",
-    "youtube",
-    "telegram",
-  ].includes(input.channel)
-    ? input.channel
-    : "linkedin";
+  const channels = ["instagram", "linkedin", "tiktok", "youtube"];
+  if (input.channel !== undefined && !channels.includes(input.channel))
+    throw integrationError("Selecciona un canal disponible.");
+  const channel = input.channel || "linkedin";
   const videoAnalysis = videoAnalysisShape(reference?.videoAnalysis);
   const local = localDraft(brand, input, {
     reference,
@@ -2386,15 +2381,6 @@ export async function createDraft(brand, input, options = {}) {
 
 export function createIntelligenceRouter() {
   const router = express.Router();
-  router.post("/inbox/telegram/:brandId/:secret", (_req, _res) => {
-    // A configured bot/chat is not permission to ingest participant content or
-    // process it with AI. Keep every legacy intake URL closed before touching
-    // the payload, even when its former credentials are valid.
-    throw integrationError(
-      "La recepción desde Telegram está deshabilitada: no importamos mensajes ni contenido de chats para análisis. Usa contenido público autorizado desde la plataforma. La publicación explícita por Telegram es independiente.",
-      403,
-    );
-  });
   router.use("/brands/:brandId", requireAuth, requireBrand);
   router.post("/brands/:brandId/discover", requireEditor, async (req, res) =>
     res.json(await syncSources(req.brand)),
@@ -2425,9 +2411,6 @@ export function createIntelligenceRouter() {
   });
   router.get("/brands/:brandId/integrations", requireOwner, (req, res) => {
     const integrations = publicIntegrations(req.brand.id);
-    const telegram = getSecret(req.brand.id, "telegram");
-    if (telegram?.inboxSecret)
-      integrations.telegram.inboxUrl = `/api/inbox/telegram/${req.brand.id}/${telegram.inboxSecret}`;
     res.json(integrations);
   });
   router.put(

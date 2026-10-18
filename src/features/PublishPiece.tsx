@@ -12,28 +12,21 @@ import { useWorkspace } from "../lib/workspace";
 import "./publish-piece.css";
 
 function destinationName(destination: PublicationDestination) {
-  return destination.provider === "telegram"
-    ? `Telegram · chat ${destination.chatId}`
-    : `Webhook · ${destination.url}`;
+  return `Webhook · ${destination.url}`;
 }
 
 function Receipt({ receipt }: { receipt: PublicationReceipt }) {
   const date = new Date(receipt.publishedAt);
-  const chatId =
-    receipt.chatId ??
-    (receipt.destination?.provider === "telegram"
-      ? receipt.destination.chatId
-      : "configurado");
   return (
     <div className="stack" role="status">
       <Badge tone="green">
-        {receipt.provider === "telegram"
-          ? "Envío confirmado por Telegram"
+        {receipt.provider === "legacy"
+          ? "Envío anterior registrado"
           : "Webhook aceptó la pieza"}
       </Badge>
       <p>
-        {receipt.provider === "telegram"
-          ? `Telegram confirmó el mensaje ${receipt.messageId ?? "registrado"} en el chat ${chatId}.`
+        {receipt.provider === "legacy"
+          ? "Conservamos el recibo histórico de un conector que ya no está disponible."
           : `El endpoint aceptó la solicitud (HTTP ${receipt.status ?? "2xx"}). Comprueba en tu servicio la publicación final en ${receipt.destination?.provider === "webhook" ? "el canal correspondiente" : "el destino"}.`}
       </p>
       <details>
@@ -156,9 +149,7 @@ export default function PublishPiece({
       });
       setOpen(false);
       notify(
-        saved.publicationReceipt?.provider === "telegram"
-          ? "Telegram confirmó el envío."
-          : "El webhook aceptó la pieza. Comprueba la publicación final en tu servicio.",
+        "El webhook aceptó la pieza. Comprueba la publicación final en tu servicio.",
       );
       await refresh().catch(() =>
         setReadError(
@@ -259,8 +250,8 @@ export default function PublishPiece({
           )}
           {!checking && delivery && !delivery.destination && (
             <p>
-              Conecta Telegram para este canal o un webhook en Fuentes y equipo.
-              Mientras tanto, puedes exportar la pieza.
+              {delivery.unavailableReason ||
+                "Conecta un webhook en Fuentes y equipo. Mientras tanto, puedes exportar la pieza."}
             </p>
           )}
           {reviewer && (
@@ -329,40 +320,11 @@ export default function PublishPiece({
                 {destinationName(delivery.destination)}
               </p>
             )}
-            {delivery?.destination?.provider === "telegram" ? (
-              <>
-                <p>
-                  Telegram recibirá un mensaje de texto con la versión guardada
-                  y aprobada. Los recursos adjuntos no se envían.
-                </p>
-                <details open>
-                  <summary>Texto que se enviará</summary>
-                  <p
-                    style={{
-                      whiteSpace: "pre-wrap",
-                      overflowWrap: "anywhere",
-                      maxHeight: 220,
-                      overflowY: "auto",
-                    }}
-                  >
-                    {delivery.previewText}
-                  </p>
-                </details>
-                {delivery.textTruncated && (
-                  <p className="form-error">
-                    Telegram admite 4.096 caracteres. Se enviará el texto
-                    recortado que ves arriba.
-                  </p>
-                )}
-              </>
-            ) : (
-              <p>
-                El webhook recibirá la pieza aprobada, sus escenas y las
-                referencias de sus recursos. Su aceptación no confirma la
-                publicación final en {piece.channel}; compruébala en tu
-                servicio.
-              </p>
-            )}
+            <p>
+              El webhook recibirá la pieza aprobada, sus escenas y las
+              referencias de sus recursos. Su aceptación no confirma la
+              publicación final en {piece.channel}; compruébala en tu servicio.
+            </p>
             {delivery?.destination?.provider === "webhook" &&
               delivery.destination.parametersHidden && (
                 <p className="small muted">

@@ -17,7 +17,6 @@ import {
   Link,
   Check,
   KeyRound,
-  Send,
   Globe,
   ToggleLeft,
   ToggleRight,
@@ -170,17 +169,11 @@ export default function Settings() {
   const [aiModel, setAiModel] = useState(
     state.integrations.ai.model || "gpt-4.1-mini",
   );
-  const [botToken, setBotToken] = useState("");
-  const [chatId, setChatId] = useState(
-    state.integrations.telegram.chatId || "",
-  );
   const [webhookUrl, setWebhookUrl] = useState(
     state.integrations.webhook.url || "",
   );
   const [webhookSecret, setWebhookSecret] = useState("");
-  const [integrationTab, setIntegrationTab] = useState<
-    "ai" | "telegram" | "webhook"
-  >("ai");
+  const [integrationTab, setIntegrationTab] = useState<"ai" | "webhook">("ai");
 
   const loadSocialSettings = useCallback(async () => {
     const requestedBrandId = brandId;
@@ -225,10 +218,8 @@ export default function Settings() {
     setAcceptToken("");
     setSocialSettings(null);
     setAiKey("");
-    setBotToken("");
     setWebhookSecret("");
     setAiModel(state.integrations.ai.model || "gpt-4.1-mini");
-    setChatId(state.integrations.telegram.chatId || "");
     setWebhookUrl(state.integrations.webhook.url || "");
   }, [brandId]);
 
@@ -718,7 +709,6 @@ export default function Settings() {
             {(
               [
                 { id: "ai", label: "IA", icon: Sparkles },
-                { id: "telegram", label: "Telegram", icon: Send },
                 { id: "webhook", label: "Publicación", icon: Globe },
               ] as const
             ).map((tab) => (
@@ -806,77 +796,6 @@ export default function Settings() {
                       }
                     >
                       Usar motor local
-                    </Button>
-                  )}
-                </div>
-              )}
-            </form>
-          )}
-          {integrationTab === "telegram" && (
-            <form
-              className="stack"
-              onSubmit={(event) => {
-                event.preventDefault();
-                integration({ telegram: { botToken, chatId } }, () =>
-                  setBotToken(""),
-                );
-              }}
-            >
-              <Badge
-                tone={
-                  state.integrations.telegram.configured ? "green" : "neutral"
-                }
-              >
-                {state.integrations.telegram.configured
-                  ? "Telegram configurado"
-                  : "Sin conectar"}
-              </Badge>
-              <p className="muted" style={{ fontSize: 13 }}>
-                Publica texto aprobado en un canal donde tu bot tenga permiso.
-                La recepción automática de mensajes está desactivada. Configurar
-                este bot no importa conversaciones ni mensajes privados.
-              </p>
-              <Field
-                label="Token del bot (vacío para conservar)"
-                type="password"
-                autoComplete="new-password"
-                value={botToken}
-                onChange={(event) => setBotToken(event.target.value)}
-                disabled={!owner}
-                placeholder="123456:…"
-              />
-              <Field
-                label="Chat ID autorizado"
-                value={chatId}
-                onChange={(event) => setChatId(event.target.value)}
-                disabled={!owner}
-                placeholder="-1001234567890"
-              />
-              {owner && (
-                <div className="row" style={{ flexWrap: "wrap" }}>
-                  <Button
-                    type="submit"
-                    variant="primary"
-                    disabled={
-                      !!busy ||
-                      (!botToken && !state.integrations.telegram.configured) ||
-                      !chatId
-                    }
-                    busy={busy === "integration"}
-                  >
-                    Guardar Telegram
-                  </Button>
-                  {state.integrations.telegram.configured && (
-                    <Button
-                      disabled={!!busy}
-                      onClick={() =>
-                        integration({ telegram: null }, () => {
-                          setBotToken("");
-                          setChatId("");
-                        })
-                      }
-                    >
-                      Desconectar
                     </Button>
                   )}
                 </div>
