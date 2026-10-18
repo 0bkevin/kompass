@@ -368,7 +368,7 @@ export function Home() {
     : !hasContext
       ? {
           title: "Empieza por lo que tu empresa ya cuenta",
-          body: "Importa tu web, enlaces públicos o contenido propio. Revisa la propuesta antes de aplicarla a tu contexto.",
+          body: "Añade tu web, enlaces públicos o contenido propio para definir los temas y la voz de tu empresa. Revisa la propuesta antes de aplicarla.",
           action: "Completar contexto",
           view: "brand",
         }
@@ -382,7 +382,7 @@ export function Home() {
         : !references.length
           ? {
               title: "Encuentra las primeras señales",
-              body: "Busca contenido público o agrega una referencia que tu equipo haya encontrado. Cada recomendación necesita evidencia.",
+              body: "Busca referencias relacionadas con la necesidad que elegiste o añade una que tu equipo haya encontrado.",
               action: "Descubrir contenido",
               view: "radar",
             }
@@ -397,7 +397,7 @@ export function Home() {
             : review[0]
               ? {
                   title: "Cierra la revisión antes de planificar",
-                  body: "Revisa el guion y sus comentarios. La aprobación protege la versión que llegará al calendario.",
+                  body: "Comprueba que el guion responde a la necesidad elegida y resuelve los comentarios antes de aprobarlo.",
                   action: "Abrir revisión",
                   view: "studio",
                   pieceId: review[0].id,
@@ -405,7 +405,7 @@ export function Home() {
               : approved[0]
                 ? {
                     title: "Dale una fecha al contenido aprobado",
-                    body: "Organiza tu calendario, prepara los archivos y publica desde tu canal. Programar aquí organiza el trabajo del equipo.",
+                    body: "Asigna una fecha y prepara los archivos. El equipo debe publicar desde su canal; el calendario organiza ese trabajo.",
                     action: "Planificar publicación",
                     view: "calendar",
                   }
@@ -419,7 +419,7 @@ export function Home() {
                   : published.length && !outcomes.length
                     ? {
                         title: "Completa el ciclo con resultados",
-                        body: "Confirma la publicación en su destino y registra sus métricas. Podrás comparar resultados por audiencia y ajustar tus siguientes decisiones.",
+                        body: "Confirma la publicación en su canal y registra sus métricas. Compara piezas por audiencia para decidir qué tema o enfoque volver a probar.",
                         action: "Registrar resultados",
                         view: "results",
                       }
@@ -435,7 +435,7 @@ export function Home() {
         title: "Contexto",
         detail: hasContext
           ? "Dirección editorial definida"
-          : "Importa y revisa tu empresa",
+          : "Revisa los temas de tu empresa",
         view: "brand",
         done: hasContext,
       },
@@ -473,7 +473,7 @@ export function Home() {
   return (
     <div className="page journey-page">
       <JourneyHeader title="Tu próximo contenido.">
-        Continúa donde lo dejaste o encuentra una nueva oportunidad.
+        Revisa qué necesita tu audiencia y decide qué pieza trabajar ahora.
       </JourneyHeader>
       <section className="journey-next" aria-labelledby="next-action-heading">
         <div>
@@ -491,7 +491,7 @@ export function Home() {
       <WorkspacePreparation enabled={!reviewer && hasContext && hasAudience} />
       <section className="journey-section" aria-labelledby="workflow-heading">
         <div className="section-heading">
-          <h2 id="workflow-heading">Un flujo, de principio a fin</h2>
+          <h2 id="workflow-heading">De la necesidad al resultado</h2>
           <span className="journey-muted">
             {steps.filter((step) => step.done).length} de {steps.length} etapas
             con actividad
@@ -549,10 +549,10 @@ export function Home() {
           ) : (
             <div className="journey-quiet-empty">
               <FileText size={25} />
-              <h3>La primera pieza empieza con una buena referencia</h3>
+              <h3>Elige una oportunidad para tu primera pieza</h3>
               <p>
-                Encuentra una oportunidad y crea un borrador para editar,
-                revisar y planificar.
+                Revisa a quién puede ayudar y qué referencias la respaldan.
+                Después crea un borrador para editar y revisar.
               </p>
               <Button onClick={() => navigate("opportunities")}>
                 Buscar una oportunidad
@@ -599,10 +599,10 @@ export function Home() {
           ) : !insights.error ? (
             <div className="journey-quiet-empty">
               <Search size={25} />
-              <h3>Construye una base de evidencia</h3>
+              <h3>Añade referencias para elegir un tema</h3>
               <p>
-                Las oportunidades aparecerán al incorporar referencias que se
-                relacionen con tu contexto y audiencia.
+                Busca contenido relacionado con tus temas y las necesidades de
+                tu audiencia. Así podrás evaluar qué merece una pieza propia.
               </p>
               <Button onClick={() => navigate("radar")}>
                 Explorar referencias
@@ -656,7 +656,8 @@ export function Opportunities() {
           </Button>
         }
       >
-        Revisa una propuesta para tu audiencia y conviértela en un borrador.
+        Revisa qué necesidad atiende cada propuesta y las referencias que la
+        respaldan. Elige una para crear tu borrador.
       </JourneyHeader>
       {state.brand.role === "reviewer" && <ReviewerNotice />}
       <details className="journey-opportunity-filters">
@@ -873,7 +874,9 @@ function OpportunityRow({
       if (active.current !== brandId) return;
       setBusy(false);
       releaseGuard();
-      notify("Borrador guardado. Revísalo y hazlo tuyo en el estudio.");
+      notify(
+        "Borrador guardado. Revisa el guion y ajusta el enfoque en el estudio.",
+      );
       navigate("studio", piece.id);
     } catch (createError) {
       if (active.current === brandId) setError(errorMessage(createError));
@@ -952,8 +955,8 @@ function OpportunityRow({
             >
               <h3>Prepara tu borrador</h3>
               <p>
-                Ya elegimos una audiencia y un formato inicial. Puedes
-                cambiarlos; el borrador se abrirá para que lo revises.
+                Comprueba la audiencia, el formato y el canal propuestos.
+                Después podrás editar el guion en el estudio.
               </p>
               <fieldset disabled={busy}>
                 <div className="journey-draft-fields">
@@ -1074,7 +1077,7 @@ function OpportunityRow({
             <div className="section-heading">
               <h3>
                 {analysis
-                  ? "Lectura contextual con IA"
+                  ? "Relación con tu audiencia según la IA"
                   : "Comprueba la relación con tu audiencia"}
               </h3>
               {canCreate && (
@@ -1097,7 +1100,7 @@ function OpportunityRow({
                   Es una propuesta editorial para validar, no una explicación
                   del rendimiento de las referencias.
                 </p>
-                <h3>Adaptación propuesta con IA</h3>
+                <h3>Cómo abordar el tema para tu audiencia</h3>
                 <p>{analysis.adaptation}</p>
                 <details>
                   <summary>Ver citas y límites del análisis</summary>
@@ -1232,7 +1235,7 @@ export function CompanyContext() {
   return (
     <div className="page journey-page">
       <JourneyHeader
-        title="Tu empresa es el punto de partida."
+        title="El contexto de tu empresa."
         action={
           <Button onClick={() => navigate("audience")}>
             Continuar a audiencia
@@ -1240,8 +1243,8 @@ export function CompanyContext() {
           </Button>
         }
       >
-        Reúne tu web y contenido propio. Tú decides qué se incorpora a la
-        dirección editorial.
+        Reúne tu web y contenido propio para definir tus temas y tu voz. Revisa
+        la propuesta antes de incorporarla.
       </JourneyHeader>
       <div
         className="journey-tabs"
@@ -1389,8 +1392,8 @@ function ContextImportForm({ onSaved }: { onSaved: () => void }) {
     <section className="journey-import-form">
       <h2>Trae lo que ya tienes</h2>
       <p>
-        Con una sola fuente puedes empezar. Las sugerencias son una
-        interpretación del contenido, no una medición de tus consumidores.
+        Añade una fuente para preparar una propuesta de contexto. Revisa qué
+        pudimos leer y corrige los temas, la descripción y la voz de tu empresa.
       </p>
       <form
         onSubmit={(event) => void submit(event)}
@@ -2012,10 +2015,10 @@ function AudienceSignalForm({ onSaved }: { onSaved: () => void }) {
   }
   return (
     <section className="journey-signal-form">
-      <h2>Registra una señal, con contexto</h2>
+      <h2>¿Qué indica que existe esta necesidad?</h2>
       <p>
-        Guarda observaciones sobre contenido y necesidades del grupo. Evita
-        nombres, correos y datos de personas.
+        Describe qué observaste, a qué grupo puede servirle y qué falta por
+        comprobar. Evita nombres, correos y datos de personas.
       </p>
       <form
         className="stack"
@@ -2261,7 +2264,7 @@ export function Results() {
   return (
     <div className="page journey-page">
       <JourneyHeader
-        title="Publica, registra y aprende."
+        title="Usa los resultados para decidir qué sigue."
         action={
           <Button onClick={() => navigate("calendar")}>
             <CalendarDays size={16} />
@@ -2269,8 +2272,9 @@ export function Results() {
           </Button>
         }
       >
-        Compara lo que ocurrió con cada grupo de audiencia y usa esa evidencia
-        en tu próxima decisión.
+        Compara los resultados de las piezas dirigidas a cada audiencia.
+        Registra qué preguntas surgieron y qué tema o enfoque quieres volver a
+        probar.
       </JourneyHeader>
       <AutomaticMetrics />
       <Notice>

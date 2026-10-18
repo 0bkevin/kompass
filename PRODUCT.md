@@ -36,6 +36,8 @@ Keep observations separate from editorial hypotheses. No invented metrics, globa
 
 The application is named `kompass`, written in lowercase on every public and authenticated surface. This name replaces the previous product name across the application.
 
+The user-selected promise is «Le damos dirección a tu contenido». Written content should explain the decisions the team can make: who to address, what question to answer, which sources support the topic, how to shape and review the piece, and what recorded results suggest trying next. Use concrete Spanish for content teams. Keep clear operational labels and factual limitations. Avoid vague growth promises, trend claims without evidence, motivational filler and repeated compass metaphors; the promise does not need to appear in every instruction.
+
 The user explicitly authorizes a complete replacement visual identity for the public landing: dark by default with purple, informed by Resend and Exa. This scope starts only at the landing. The authenticated workspace and authentication retain their established restrained green, light neutral surfaces and familiar controls. Product truth and operational behavior remain binding across both worlds.
 
 ## Evidence on Hand
@@ -56,4 +58,4 @@ Deployment host, deadline and API operating budget are not supplied. Do not infe
 
 ## Acceso a fuentes revisado
 
-La revisión de condiciones de uso aplica a cada finalidad, no solo a la disponibilidad pública de una URL. [La matriz vigente](docs/compliance/README.md) registra fuentes y funciones habilitadas, restringidas y sus condiciones. Apify Instagram/TikTok, Reddit, YouTube editorial y Gemini video están bloqueados. No se promete cobertura social ni autorización por guardar una credencial. Webs/feeds adicionales, IA y webhooks requieren una revisión vigente; el recorrido con material propio y fuentes aprobadas sigue disponible.
+La revisión de condiciones de uso aplica a cada finalidad, no solo a la disponibilidad pública de una URL. [La matriz vigente](docs/compliance/README.md) registra fuentes y funciones habilitadas, restringidas y sus condiciones. Apify Instagram/TikTok, Reddit, el análisis editorial con datos de YouTube y Gemini video están bloqueados. El catálogo público y los contadores oficiales de YouTube tienen un [conector separado](docs/official-social-sync-20261018.md); esos datos no se envían a la IA ni al aprendizaje editorial. No se promete cobertura social ni autorización por guardar una credencial. Webs/feeds adicionales, IA y webhooks requieren una revisión vigente; el recorrido con material propio y fuentes aprobadas sigue disponible.

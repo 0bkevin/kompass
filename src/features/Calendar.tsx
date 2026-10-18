@@ -268,10 +268,10 @@ export default function Calendar() {
     <div className="page calendar-page">
       <div className="page-heading">
         <div>
-          <h1>Tu contenido, en su momento.</h1>
+          <h1>Pon fecha a las piezas aprobadas.</h1>
           <p>
-            Dale espacio a las buenas ideas. Organiza la grilla y mantén al
-            equipo en la misma página.
+            Consulta el plan editorial y ajusta las fechas antes de publicar
+            desde tu canal.
           </p>
         </div>
         <Button onClick={exportCalendar} disabled={!periodPieces.length}>
@@ -688,7 +688,7 @@ export default function Calendar() {
       <section className="card calendar-upcoming">
         <div className="section-heading">
           <div>
-            <h2>Próximas en salir</h2>
+            <h2>Próximas piezas</h2>
           </div>
           <span className="small muted">Tu siguiente contenido, en orden</span>
         </div>

@@ -15,6 +15,8 @@ Audience: content teams at companies, media and creators. Job: choose content wi
 
 User-approved headline: “Le damos dirección a tu contenido.” Keep this wording. Use exactly two landing font families: Hedvig Letters Serif for display headings and Geist for body, navigation and controls. Copy edits follow the installed petergyang/no-ai-slop skill. The landing header content height is 64px desktop, 60px tablet and 56px mobile.
 
+Written direction: explain how the team decides what to tell, whom it helps and which sources support it, then carries that decision into a script, review, calendar and recorded results. Open supporting copy with the difficulty of choosing what to publish. Avoid unsupported growth or trend framing and do not repeat compass metaphors. This editorial direction applies across the application; visual replacement remains scoped to the landing.
+
 Proof: a clearly labeled illustrative editorial example; only capabilities verified in README/source. No borrowed assets, fictional customers, testimonials, conversion numbers or publishing promises.
 
 ## Direction contract

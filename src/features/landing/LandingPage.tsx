@@ -450,9 +450,9 @@ export function LandingPage() {
               <span>a tu contenido.</span>
             </h1>
             <p>
-              Parte de las preguntas de tu audiencia y de lo que sabe tu equipo.
-              Revisa fuentes públicas y prepara una propuesta de contenido que
-              puedan trabajar juntos.
+              Entre tantas ideas, cuesta elegir qué publicar. Parte de las
+              preguntas de tu audiencia, revisa las fuentes y prepara un guion
+              con tu equipo.
             </p>
             <div className="lp-actions">
               {signup}
@@ -502,14 +502,14 @@ export function LandingPage() {
         >
           <div className="lp-section-intro">
             <h2 id="lp-workflow-title">
-              Guarda las fuentes
+              Elige el tema.
               <br />
-              <span>junto al guion.</span>
+              <span>Dale forma al guion.</span>
             </h2>
             <p>
-              Consulta las referencias de cada tema mientras escribes. Cuando
-              otra persona revise el guion, podrá ver de dónde salió la
-              propuesta.
+              Antes de escribir, revisa a quién le sirve el tema y qué fuentes
+              tienes. Con esa información, tu equipo puede elegir el enfoque y
+              preparar la pieza.
             </p>
           </div>
           <div className="lp-context-row">
@@ -518,16 +518,16 @@ export function LandingPage() {
                 <Focus size={34} strokeWidth={1.2} />
               </span>
               <h3>
-                Elige qué tema
+                Contrasta la idea
                 <br />
-                vas a trabajar.
+                con fuentes públicas.
               </h3>
             </div>
             <div className="lp-context-copy">
               <p>
-                Define una necesidad de audiencia y compárala con las
-                referencias públicas que encuentres. Revisa qué se ha observado
-                y qué sigue siendo una hipótesis antes de proponer un tema.
+                Compara una necesidad de tu audiencia con referencias públicas.
+                Distingue lo observado de las hipótesis para decidir si merece
+                la pena trabajar el tema.
               </p>
               <div className="lp-inline-points">
                 <span>
@@ -572,9 +572,9 @@ export function LandingPage() {
                 <span>y revisa los resultados.</span>
               </h3>
               <p>
-                Asigna fechas a las piezas y exporta el plan. Después de
-                publicar, consulta los contadores de YouTube o registra los
-                resultados de otros canales.
+                Pon fecha a las piezas y exporta el plan. Después de publicar,
+                consulta los contadores de YouTube o registra los resultados de
+                otros canales para decidir qué temas seguir trabajando.
               </p>
               <p className="lp-feature-note">
                 El calendario no publica automáticamente.
@@ -595,8 +595,8 @@ export function LandingPage() {
                 <span>medios y creadores.</span>
               </h2>
               <p>
-                Cada empresa tiene su propio espacio, con su marca, sus
-                audiencias y su equipo.
+                Cada empresa tiene su propio espacio para reunir sus fuentes y
+                decidir qué contar con su equipo.
               </p>
               <a className="lp-text-link" href="#como-funciona">
                 Ver cómo funciona <ArrowUpRight size={16} />
@@ -613,8 +613,9 @@ export function LandingPage() {
                 <div>
                   <h3>Empresas</h3>
                   <p>
-                    Elige qué preguntas puede responder tu empresa y prepara los
-                    contenidos con tu equipo.
+                    Usa lo que sabe tu empresa para responder preguntas de su
+                    audiencia. Decide qué temas trabajar y prepara las piezas
+                    con tu equipo.
                   </p>
                 </div>
               </article>
@@ -628,8 +629,8 @@ export function LandingPage() {
                 <div>
                   <h3>Medios</h3>
                   <p>
-                    Conserva las fuentes de cada historia mientras escribes el
-                    guion y lo revisas con la redacción.
+                    Elige un enfoque para cada historia, conserva las fuentes y
+                    revisa el guion con la redacción.
                   </p>
                 </div>
               </article>
@@ -646,8 +647,8 @@ export function LandingPage() {
                 <div>
                   <h3>Creadores</h3>
                   <p>
-                    Reúne tus ideas, escribe los guiones y organiza cuándo
-                    publicarlos.
+                    Elige qué pregunta de tu audiencia vas a responder. Reúne
+                    las referencias, escribe el guion y ponle fecha.
                   </p>
                 </div>
               </article>
@@ -704,9 +705,9 @@ export function LandingPage() {
               <span>y añade tu empresa.</span>
             </h2>
             <p>
-              Empieza por su web, una publicación o un texto propio.
+              Empieza por tu web, una publicación o un texto propio.
               <br />
-              Después, define a quién quieres dirigirte.
+              Define a quién quieres dirigirte y qué necesita resolver.
             </p>
             {signup}
           </div>
@@ -717,7 +718,7 @@ export function LandingPage() {
           <KompassMark />
           <span>kompass</span>
         </a>
-        <p>Guiones, revisión y calendario para equipos de contenido.</p>
+        <p>Decide qué contar y llévalo a un guion.</p>
         <a href="#contenido">
           Volver arriba <ArrowUpRight size={14} />
         </a>

@@ -349,13 +349,10 @@ export default function Radar() {
     <div className="page radar-page">
       <div className="page-heading">
         <div>
-          <h1>
-            El mundo se mueve.
-            <br className="small-break" /> Encuentra tu próximo ángulo.
-          </h1>
+          <h1>Decide qué merece contar tu empresa.</h1>
           <p>
-            Conversaciones que crecen, filtradas por lo que importa para{" "}
-            <strong>{state.brand.name}</strong>.
+            Revisa referencias públicas y su relación con{" "}
+            <strong>{state.brand.name}</strong> antes de elegir un ángulo.
           </p>
         </div>
         <Button
@@ -365,7 +362,7 @@ export default function Radar() {
           onClick={() => void discover()}
         >
           <RefreshCw size={16} />
-          Buscar tendencias
+          Buscar en mis fuentes
         </Button>
       </div>
       {state.references.some((r) => r.isDemo) && !real.length && (
@@ -373,8 +370,8 @@ export default function Radar() {
           <Info size={16} />
           <span>
             Estás viendo datos de ejemplo. Pulsa{" "}
-            <strong>Buscar tendencias</strong> para traer señales reales de tus
-            fuentes.
+            <strong>Buscar en mis fuentes</strong> para traer señales reales de
+            tus fuentes.
           </span>
           <Badge tone="amber">DEMO</Badge>
         </div>
@@ -534,7 +531,7 @@ export default function Radar() {
               title={
                 state.references.length
                   ? "Todavía no hay señales con estos filtros"
-                  : "Tu próxima gran idea está por aparecer"
+                  : "Reúne referencias antes de elegir un tema"
               }
               action={
                 <Button
@@ -585,14 +582,10 @@ export default function Radar() {
             <div className="row">
               <Sparkles size={18} />
             </div>
-            <h3>
-              Una tendencia.
-              <br />
-              Tu propia perspectiva.
-            </h3>
+            <h3>Define qué aporta tu enfoque.</h3>
             <p>
-              Elige una señal y encuentra un enfoque que tu audiencia todavía
-              necesite escuchar.
+              Completa el contexto de tu empresa para evaluar qué referencias
+              pueden servir a tu audiencia.
             </p>
             <button onClick={() => navigate("brand")}>
               Afinar mi contexto
@@ -1741,7 +1734,7 @@ export function InboxPage() {
           title={
             state.references.length
               ? "No hay referencias que coincidan"
-              : "Nada se pierde si tiene su lugar"
+              : "Guarda material para tu próxima pieza"
           }
           action={
             !state.references.length ? (
@@ -1848,10 +1841,9 @@ export function CaptureModal({ onClose }: { onClose: () => void }) {
     }
   }
   return (
-    <Modal title="Una buena referencia merece quedarse" onClose={close}>
+    <Modal title="Agregar una referencia" onClose={close}>
       <p className="muted">
-        Comparte lo que te llamó la atención. Añade contexto para que el
-        análisis tenga mejores señales.
+        Guarda el material y explica qué te gustaría contar a partir de él.
       </p>
       <form className="stack" onSubmit={submit}>
         <Field

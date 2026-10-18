@@ -46,7 +46,7 @@ function BrandFields({ brand }: { brand?: Brand }) {
         <textarea
           name="description"
           defaultValue={brand?.description}
-          placeholder="Ayudamos a… con una perspectiva…"
+          placeholder="Qué ofreces, a quién ayudas y qué necesitas explicar."
           required
           rows={3}
           maxLength={4000}
@@ -333,7 +333,7 @@ export function BrandPage() {
         return false;
       }
       return window.confirm(
-        "Hay cambios sin guardar en el ADN de la marca. ¿Salir y descartarlos?",
+        "Hay cambios sin guardar en el contexto de la marca. ¿Salir y descartarlos?",
       );
     },
   });
@@ -352,10 +352,10 @@ export function BrandPage() {
     <div className="page">
       <div className="page-heading">
         <div>
-          <h1>El ADN de tu marca.</h1>
+          <h1>El contexto de tu marca.</h1>
           <p>
-            El contexto que convierte tendencias genéricas en oportunidades
-            propias.
+            Define tus temas, objetivos y voz para evaluar qué contenido encaja
+            con tu empresa.
           </p>
         </div>
         <Badge tone="green">
@@ -446,15 +446,11 @@ export function BrandPage() {
           </div>
           <div className="insight-card">
             <Target size={22} />
-            <h3>
-              Un contexto más preciso.
-              <br />
-              Mejores oportunidades.
-            </h3>
+            <h3>Qué hace relevante una referencia</h3>
             <p className="muted">
-              La relevancia se compara con tus temas, audiencia y objetivos.
-              Cambiar tu contexto no reescribe análisis anteriores: puedes
-              actualizarlos desde cada referencia.
+              Cada análisis compara la referencia con tus temas, audiencia y
+              objetivos. Si cambias el contexto, actualiza el análisis de las
+              referencias que quieras volver a evaluar.
             </p>
           </div>
         </aside>
@@ -464,7 +460,8 @@ export function BrandPage() {
 }
 
 export function AudiencePage() {
-  const { state, refresh, notify, registerUnsavedChangesGuard } = useWorkspace();
+  const { state, refresh, notify, registerUnsavedChangesGuard } =
+    useWorkspace();
   const [editing, setEditing] = useState<Segment | null | undefined>(undefined),
     [busy, setBusy] = useState(false),
     [error, setError] = useState("");
@@ -495,7 +492,9 @@ export function AudiencePage() {
         form &&
         JSON.stringify([...new FormData(form).entries()]) !==
           audienceBaselineRef.current &&
-        !window.confirm("Hay cambios sin guardar. ¿Salir y descartar este perfil?")
+        !window.confirm(
+          "Hay cambios sin guardar. ¿Salir y descartar este perfil?",
+        )
       )
         return false;
       audienceFormRef.current = null;
@@ -557,8 +556,8 @@ export function AudiencePage() {
         <div>
           <h1>¿A quién quieres llegar?</h1>
           <p>
-            Perfiles editoriales que dan dirección a tus referencias, enfoques y
-            guiones.
+            Define qué necesita cada grupo para elegir temas y escribir guiones
+            que respondan a esa necesidad.
           </p>
         </div>
         <Button
@@ -602,7 +601,7 @@ export function AudiencePage() {
       ) : (
         <EmptyState
           icon={<Users />}
-          title="Una audiencia concreta cambia el contenido"
+          title="Define a quién debe ayudar tu contenido"
           action={
             <Button
               onClick={() => startEditing(null)}
@@ -612,8 +611,8 @@ export function AudiencePage() {
             </Button>
           }
         >
-          Define roles, momento de adopción y necesidades. El análisis podrá
-          recomendar enfoques más cercanos.
+          Describe qué decisiones toma ese grupo y qué necesita resolver.
+          Usaremos ese contexto para evaluar referencias y proponer enfoques.
         </EmptyState>
       )}
       <div className="callout audience-note">
@@ -728,13 +727,19 @@ export function AudiencePage() {
                   rows={4}
                   aria-invalid={invalidField === "needs" || undefined}
                   aria-describedby={
-                    invalidField === "needs" ? "audience-profile-error" : undefined
+                    invalidField === "needs"
+                      ? "audience-profile-error"
+                      : undefined
                   }
                   required
                 />
               </Field>
               {error && (
-                <p id="audience-profile-error" className="form-error" role="alert">
+                <p
+                  id="audience-profile-error"
+                  className="form-error"
+                  role="alert"
+                >
                   {error}
                 </p>
               )}

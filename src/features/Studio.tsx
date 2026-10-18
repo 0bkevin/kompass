@@ -56,10 +56,9 @@ export default function Studio() {
     <div className="page">
       <div className="page-heading">
         <div>
-          <h1>Las ideas toman forma aquí.</h1>
+          <h1>Prepara una pieza con un enfoque claro.</h1>
           <p>
-            Guiones editables, contexto de audiencia y un espacio para revisar
-            en equipo.
+            Elige a quién va dirigida, edita el guion y revísalo con tu equipo.
           </p>
         </div>
         <Button

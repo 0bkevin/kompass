@@ -433,7 +433,9 @@ export default function App() {
     selectBrand(brand.id);
     setNewBrand(false);
     navigate("home");
-    notify("Tu empresa está lista. Empecemos con tu primera oportunidad.");
+    notify(
+      "Tu empresa está lista. Elige qué necesidad de audiencia vas a trabajar.",
+    );
   };
   if (!session)
     return (
@@ -447,7 +449,7 @@ export default function App() {
             <Button onClick={() => void loadSession()}>Reintentar</Button>
           </>
         ) : (
-          <p>Conectando con tu próximo hallazgo…</p>
+          <p>Cargando tu espacio de trabajo…</p>
         )}
       </div>
     );
@@ -747,8 +749,7 @@ export default function App() {
           )}
         </main>
         <footer className="app-footer">
-          <span>kompass · Hecho para encontrar tu próximo ángulo.</span>
-          <span>Las señales tienen contexto. Las decisiones son tuyas.</span>
+          <span>kompass · Le damos dirección a tu contenido.</span>
         </footer>
       </div>
       {newBrand && (
@@ -904,14 +905,13 @@ function Auth({
         <div className="wordmark">kompass</div>
         <div className="auth-intro">
           <h1>
-            Tu audiencia cambia. <br />
-            Tu contenido
-            <br />
-            <em>también puede.</em>
+            Le damos dirección <br />
+            <em>a tu contenido.</em>
           </h1>
           <p>
-            Conecta el contexto de tu empresa con señales públicas, crea
-            contenido con criterio y aprende de cada publicación.
+            Decide qué contar a partir de las preguntas de tu audiencia y de
+            fuentes que puedas contrastar. Prepara el guion y revísalo con tu
+            equipo.
           </p>
           <div className="auth-radar">
             <div className="auth-orbit o1" />
@@ -921,31 +921,27 @@ function Auth({
               <Radio size={34} />
             </div>
             <span className="auth-signal s1">
-              Conversaciones que crecen <ArrowUpRight size={15} />
+              Una pregunta de audiencia <ArrowUpRight size={15} />
             </span>
             <span className="auth-signal s2">
-              Tu marca. Tu perspectiva. <Palette size={15} />
+              Fuentes para contrastar <Palette size={15} />
             </span>
             <span className="auth-signal s3">
-              De referencia a guion <ArrowRight size={15} />
+              Un enfoque para el guion <ArrowRight size={15} />
             </span>
           </div>
         </div>
         <p className="auth-footnote">
-          Descubrimiento + criterio editorial + un espacio para crear.
+          Tu equipo elige el enfoque y aprueba cada pieza.
         </p>
       </div>
       <div className="auth-form-wrap">
         <div className="auth-form">
-          <h2>
-            {signup
-              ? "Dale contexto a tu contenido."
-              : "Qué bueno tenerte de vuelta."}
-          </h2>
+          <h2>{signup ? "Empieza por tu empresa." : "Retoma tu contenido."}</h2>
           <p className="muted">
             {signup
-              ? "Crea tu cuenta. Después, empieza por tu web o una publicación."
-              : "Tu próxima oportunidad de contenido te espera."}
+              ? "Crea tu cuenta y añade tu web o un texto propio para definir a quién quieres dirigirte."
+              : "Vuelve a tus propuestas, guiones y revisiones."}
           </p>
           {googleEnabled && !linkGoogle && (
             <>
@@ -1079,8 +1075,8 @@ function Auth({
             Explorar con datos de ejemplo
           </Button>
           <p className="auth-small">
-            La demo usa ejemplos identificados. Puedes crear tu marca y
-            descubrir contenido real en cualquier momento.
+            La demo usa ejemplos identificados. Al crear tu empresa, podrás
+            trabajar con tus propias audiencias, fuentes y piezas.
           </p>
         </div>
       </div>

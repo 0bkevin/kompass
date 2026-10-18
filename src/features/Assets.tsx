@@ -104,10 +104,10 @@ export default function Assets() {
     <div className="page">
       <div className="page-heading">
         <div>
-          <h1>Todo lo que necesitas para crear.</h1>
+          <h1>El material para tu próxima pieza.</h1>
           <p>
-            Imágenes, videos, documentos y referencias, con acceso para tu
-            equipo.
+            Reúne imágenes, videos y documentos de tu empresa y asócialos a una
+            pieza desde el estudio.
           </p>
           <p id="asset-upload-help">
             Hasta 25 MiB por archivo. TXT, Markdown y CSV en UTF-8.

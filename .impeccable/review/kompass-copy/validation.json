@@ -1,0 +1,186 @@
+{
+  "date": "2026-10-18",
+  "scope": "Written content alignment with Le damos dirección a tu contenido",
+  "browserChecks": [
+    {
+      "url": "/home",
+      "width": 1280,
+      "scrollWidth": 1280,
+      "heading": "Tu próximo contenido.",
+      "description": "Revisa qué necesita tu audiencia y decide qué pieza trabajar ahora.",
+      "overflow": [],
+      "footerVisible": true
+    },
+    {
+      "url": "/brand",
+      "width": 1280,
+      "scrollWidth": 1280,
+      "heading": "El contexto de tu empresa.",
+      "description": "Reúne tu web y contenido propio para definir tus temas y tu voz. Revisa la propuesta antes de incorporarla.",
+      "overflow": [],
+      "footerVisible": true
+    },
+    {
+      "url": "/audience",
+      "width": 1280,
+      "scrollWidth": 1280,
+      "heading": "Entiende la necesidad antes de elegir el tema.",
+      "description": "Define grupos, recoge señales y distingue lo observado de lo que aún necesitas comprobar.",
+      "overflow": [],
+      "footerVisible": true
+    },
+    {
+      "url": "/opportunities",
+      "width": 1280,
+      "scrollWidth": 1280,
+      "heading": "Elige tu próximo tema.",
+      "description": "Revisa qué necesidad atiende cada propuesta y las referencias que la respaldan. Elige una para crear tu borrador.",
+      "overflow": [],
+      "footerVisible": true
+    },
+    {
+      "url": "/radar",
+      "width": 1280,
+      "scrollWidth": 1280,
+      "heading": "Decide qué merece contar tu empresa.",
+      "description": "Revisa referencias públicas y su relación con Empresa de ejemplo antes de elegir un ángulo.",
+      "overflow": [],
+      "footerVisible": true
+    },
+    {
+      "url": "/studio",
+      "width": 1280,
+      "scrollWidth": 1280,
+      "heading": "Prepara una pieza con un enfoque claro.",
+      "description": "Elige a quién va dirigida, edita el guion y revísalo con tu equipo.",
+      "overflow": [],
+      "footerVisible": true
+    },
+    {
+      "url": "/calendar",
+      "width": 1280,
+      "scrollWidth": 1280,
+      "heading": "Pon fecha a las piezas aprobadas.",
+      "description": "Consulta el plan editorial y ajusta las fechas antes de publicar desde tu canal.",
+      "overflow": [],
+      "footerVisible": true
+    },
+    {
+      "url": "/results",
+      "width": 1280,
+      "scrollWidth": 1280,
+      "heading": "Usa los resultados para decidir qué sigue.",
+      "description": "Compara los resultados de las piezas dirigidas a cada audiencia. Registra qué preguntas surgieron y qué tema o enfoque quieres volver a probar.",
+      "overflow": [],
+      "footerVisible": true
+    },
+    {
+      "url": "/assets",
+      "width": 1280,
+      "scrollWidth": 1280,
+      "heading": "El material para tu próxima pieza.",
+      "description": "Reúne imágenes, videos y documentos de tu empresa y asócialos a una pieza desde el estudio.",
+      "overflow": [],
+      "footerVisible": true
+    },
+    {
+      "url": "/home",
+      "width": 390,
+      "scrollWidth": 390,
+      "heading": "Tu próximo contenido.",
+      "description": "Revisa qué necesita tu audiencia y decide qué pieza trabajar ahora.",
+      "overflow": [],
+      "footerVisible": true
+    },
+    {
+      "url": "/brand",
+      "width": 390,
+      "scrollWidth": 390,
+      "heading": "El contexto de tu empresa.",
+      "description": "Reúne tu web y contenido propio para definir tus temas y tu voz. Revisa la propuesta antes de incorporarla.",
+      "overflow": [],
+      "footerVisible": true
+    },
+    {
+      "url": "/audience",
+      "width": 390,
+      "scrollWidth": 390,
+      "heading": "Entiende la necesidad antes de elegir el tema.",
+      "description": "Define grupos, recoge señales y distingue lo observado de lo que aún necesitas comprobar.",
+      "overflow": [],
+      "footerVisible": true
+    },
+    {
+      "url": "/opportunities",
+      "width": 390,
+      "scrollWidth": 390,
+      "heading": "Elige tu próximo tema.",
+      "description": "Revisa qué necesidad atiende cada propuesta y las referencias que la respaldan. Elige una para crear tu borrador.",
+      "overflow": [],
+      "footerVisible": true
+    },
+    {
+      "url": "/radar",
+      "width": 390,
+      "scrollWidth": 390,
+      "heading": "Decide qué merece contar tu empresa.",
+      "description": "Revisa referencias públicas y su relación con Empresa de ejemplo antes de elegir un ángulo.",
+      "overflow": [],
+      "footerVisible": true
+    },
+    {
+      "url": "/studio",
+      "width": 390,
+      "scrollWidth": 390,
+      "heading": "Prepara una pieza con un enfoque claro.",
+      "description": "Elige a quién va dirigida, edita el guion y revísalo con tu equipo.",
+      "overflow": [],
+      "footerVisible": true
+    },
+    {
+      "url": "/calendar",
+      "width": 390,
+      "scrollWidth": 390,
+      "heading": "Pon fecha a las piezas aprobadas.",
+      "description": "Consulta el plan editorial y ajusta las fechas antes de publicar desde tu canal.",
+      "overflow": [],
+      "footerVisible": true
+    },
+    {
+      "url": "/results",
+      "width": 390,
+      "scrollWidth": 390,
+      "heading": "Usa los resultados para decidir qué sigue.",
+      "description": "Compara los resultados de las piezas dirigidas a cada audiencia. Registra qué preguntas surgieron y qué tema o enfoque quieres volver a probar.",
+      "overflow": [],
+      "footerVisible": true
+    },
+    {
+      "url": "/assets",
+      "width": 390,
+      "scrollWidth": 390,
+      "heading": "El material para tu próxima pieza.",
+      "description": "Reúne imágenes, videos y documentos de tu empresa y asócialos a una pieza desde el estudio.",
+      "overflow": [],
+      "footerVisible": true
+    }
+  ],
+  "tests": {
+    "passed": 591,
+    "failed": 0
+  },
+  "build": "client, SSR and TypeScript passed",
+  "editorialReview": {
+    "skills": ["no-ai-slop", "impeccable clarify", "impeccable polish"],
+    "independentReviewBlockingFindings": 0
+  },
+  "console": {
+    "visibleErrors": 0,
+    "visibleWarnings": 0,
+    "omitted": [
+      "49 older console entries",
+      "160 older network entries",
+      "15 of 30 actionTimeline"
+    ]
+  }
+}

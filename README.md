@@ -2,7 +2,7 @@
 
 # kompass · contenido con contexto
 
-Plataforma para empresas, medios y creadores: empieza por el contenido de una empresa, conecta necesidades de audiencia con evidencia pública y acompaña la pieza hasta su revisión, calendario y resultados. Cada empresa tiene su propio espacio, marca, audiencias, fuentes y equipo.
+kompass ayuda a equipos de contenido de empresas, medios y creadores a decidir qué contar, a quién y con qué fundamento. Parte del contexto de la empresa y de las necesidades de audiencia, reúne fuentes públicas y lleva la propuesta a un guion, revisión, calendario y resultados. Cada empresa tiene su propio espacio, audiencias, fuentes y equipo.
 
 El [cambio de nombre a kompass](docs/kompass-rename.md) incluye la compatibilidad y las comprobaciones de la landing, el acceso y la aplicación.
 

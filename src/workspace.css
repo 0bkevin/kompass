@@ -465,7 +465,7 @@ li {
   .field select {
     font-size: 16px;
   }
-  .app-footer > span:last-child {
+  .app-footer > span:nth-child(2) {
     display: none;
   }
   .sidebar {

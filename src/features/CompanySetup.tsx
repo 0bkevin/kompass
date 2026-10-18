@@ -207,8 +207,8 @@ export function CompanySetup({
             Empieza por lo que ya tienes.
           </h2>
           <p className="setup-description">
-            Cuéntanos qué hace tu empresa. Si tienes una web o redes, puedes
-            añadirlas para conservarlas como referencia.
+            Comparte qué hace tu empresa y a quién ayuda para definir qué
+            quieres contar. Puedes añadir tu web y redes como referencia.
           </p>
           <fieldset disabled={busy}>
             <Field
@@ -225,7 +225,7 @@ export function CompanySetup({
                 <strong>No pudimos leer el contenido de tus enlaces.</strong>
                 <p>
                   Los conservaremos como referencia. Pega una descripción o un
-                  contenido propio para preparar tu empresa.
+                  contenido propio para preparar el contexto de tu empresa.
                 </p>
               </div>
             )}
@@ -322,8 +322,8 @@ export function CompanySetup({
             ¿Describe bien a tu empresa?
           </h2>
           <p className="setup-description">
-            Esta es una propuesta inicial. Corrige lo que haga falta; tú conoces
-            tu empresa.
+            Revisa qué hace tu empresa, a quién ayuda y qué temas quiere tratar.
+            Corrige la propuesta antes de continuar.
           </p>
           <div className="form-grid">
             <Field
@@ -447,8 +447,8 @@ export function CompanySetup({
             ¿A quién quieres ayudar?
           </h2>
           <p className="setup-description">
-            Comienza con un grupo y una necesidad. Después podrás añadir más y
-            contrastarlos con señales públicas.
+            Elige un grupo y qué necesita resolver. Usaremos ese criterio para
+            evaluar temas y proponer enfoques; después podrás añadir más grupos.
           </p>
           <fieldset disabled={busy || !!created}>
             <Field

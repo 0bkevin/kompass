@@ -27,7 +27,7 @@ export const Route = createRootRoute({
       {
         name: "description",
         content:
-          "Descubre señales, organiza referencias y convierte tendencias en contenido para tu marca.",
+          "Decide qué contar y por qué. Contrasta las necesidades de tu audiencia con fuentes públicas y prepara guiones para revisar y planificar con tu equipo.",
       },
       { name: "theme-color", content: "#f7f8f5" },
     ],

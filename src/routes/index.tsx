@@ -20,7 +20,7 @@ export const Route = createFileRoute("/")({
       {
         name: "description",
         content:
-          "Consulta fuentes públicas y prepara guiones con tu equipo a partir de las preguntas de tu audiencia. Revisa cada pieza y organiza las fechas en el calendario.",
+          "Decide qué contar y por qué. Contrasta las necesidades de tu audiencia con fuentes públicas y prepara guiones para revisar y planificar con tu equipo.",
       },
       { name: "theme-color", content: "#0c0c10" },
     ],

@@ -107,8 +107,8 @@ export function WorkspacePreparation({ enabled }: { enabled: boolean }) {
       <div>
         {busy ? (
           <p>
-            Estamos buscando las primeras referencias para tu empresa. Puedes
-            seguir trabajando mientras terminamos.
+            Buscamos las primeras referencias relacionadas con tu empresa.
+            Puedes seguir trabajando mientras terminamos.
           </p>
         ) : (
           <>
@@ -122,7 +122,7 @@ export function WorkspacePreparation({ enabled }: { enabled: boolean }) {
                     : result.status === "partial"
                       ? "Ya tienes referencias para explorar. Algunas fuentes no respondieron; las demás siguen disponibles."
                       : result.added > 0
-                        ? `${result.added} referencias nuevas disponibles. Ya puedes explorar oportunidades.`
+                        ? `${result.added} referencias nuevas disponibles. Revisa qué temas pueden servirle a tu audiencia.`
                         : "La primera búsqueda terminó sin referencias nuevas. Puedes ampliar el tema o aportar contenido propio."}
                 </p>
               )

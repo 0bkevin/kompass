@@ -3098,7 +3098,7 @@ fieldset .field {
     padding: 17px 18px;
     font-size: 8px;
   }
-  .app-footer > span:last-child {
+  .app-footer > span:nth-child(2) {
     display: none;
   }
   .small-break {
