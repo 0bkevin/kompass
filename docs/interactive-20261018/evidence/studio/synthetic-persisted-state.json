@@ -1,0 +1,253 @@
+[
+  {
+    "brand_id": "e34bd138-2086-4897-81eb-9125f7a09137",
+    "kind": "references",
+    "id": "5adf8af0-1669-4aed-874a-71ffede5d7b8",
+    "data": {
+      "source": "manual",
+      "language": "Desconocido",
+      "market": "Sin definir",
+      "format": "post",
+      "status": "new",
+      "tags": [],
+      "title": "Referencia sintética: seguimiento EdTech con bitácora",
+      "text": "Documento sintético propio. Un equipo EdTech registra pregunta del prospecto, siguiente paso acordado y responsable. No contiene métricas ni testimonios.",
+      "url": "https://example.com/qa-studio-owned-reference",
+      "id": "5adf8af0-1669-4aed-874a-71ffede5d7b8",
+      "createdAt": "2026-10-18T10:48:53.152Z",
+      "updatedAt": "2026-10-18T10:48:53.152Z"
+    }
+  },
+  {
+    "brand_id": "e34bd138-2086-4897-81eb-9125f7a09137",
+    "kind": "pieces",
+    "id": "a951bca4-092e-4a31-88a4-a7223b2d1f6e",
+    "data": {
+      "title": "QA · Bitácora comercial revisada",
+      "hook": "Antes de pedirle a la IA que redacte el seguimiento, registra qué necesita resolver el prospecto.",
+      "script": "Si lideras una EdTech, puedes probar una bitácora compartida para preparar el seguimiento comercial con IA y revisión humana.\n\nCada entrada reúne cuatro elementos:\n\n1. Pregunta del prospecto. Registra qué preguntó y qué información falta, sin completar los vacíos con suposiciones.\n\n2. Borrador con IA. Pídele una respuesta basada únicamente en información aprobada. Indícale que marque los datos pendientes de confirmar. Evita incluir datos personales innecesarios.\n\n3. Revisión humana. Una persona comprueba que la respuesta sea correcta, pertinente y que no prometa algo que el equipo no pueda cumplir.\n\n4. Siguiente paso. Propón una acción concreta y regístrala como acordada solo cuando el prospecto la confirme.\n\nEjemplo ilustrativo:\n\nPregunta: «¿El programa se puede adaptar a los horarios de nuestro equipo?»\n\nPedido a la IA: «Redacta una respuesta breve usando nuestra información aprobada sobre modalidades y horarios. Si falta un dato, márcalo como pendiente. Cierra preguntando qué franjas horarias necesita el equipo».\n\nRevisión humana: [Verificar modalidades, horarios y condiciones de adaptación antes de enviar].\n\nSiguiente paso propuesto: pedir las franjas horarias para evaluar opciones. Si el prospecto acepta, registrar quién dará seguimiento y en qué fecha.\n\nLa bitácora deja una pregunta útil para revisar cada oportunidad: ¿qué sabemos, qué falta comprobar y qué acordamos hacer después?\n\nComenta BITÁCORA para revisar el ejemplo.",
+      "caption": "Una bitácora comercial con cuatro elementos: pregunta del prospecto, borrador con IA, revisión humana y siguiente paso acordado.",
+      "cta": "Responde BITÁCORA para revisar la plantilla.",
+      "format": "post",
+      "channel": "linkedin",
+      "scenes": [],
+      "assetIds": [],
+      "comments": [],
+      "generationEngine": "ai",
+      "providerAttributions": [],
+      "segmentId": "edtech",
+      "status": "draft",
+      "id": "a951bca4-092e-4a31-88a4-a7223b2d1f6e",
+      "createdAt": "2026-10-18T10:48:56.815Z",
+      "updatedAt": "2026-10-18T10:49:11.594Z"
+    }
+  },
+  {
+    "brand_id": "e34bd138-2086-4897-81eb-9125f7a09137",
+    "kind": "pieces",
+    "id": "f217ee1e-b725-46a2-904b-8ac3a387dc4d",
+    "data": {
+      "title": "Bitácora de retrabajos en operaciones HealthTech",
+      "hook": "¿Hubo que repetir una tarea? Documenta qué pasó antes de atribuir una causa.",
+      "script": "Lámina 1 — Registra el retrabajo\nAnota el proceso, qué tarea se repitió y qué hubo que corregir. Describe hechos observables, sin atribuir culpas.\n\nLámina 2 — Deja una pista útil\nDocumenta el resultado esperado, dónde apareció el desvío y qué evidencia permite revisarlo. No incluyas datos de pacientes ni información sensible.\n\nLámina 3 — Usa IA para ordenar\nPídele que agrupe los registros por causas posibles, usando solo lo documentado. Que separe evidencia de hipótesis y marque lo que falta confirmar. Usa una herramienta autorizada por tu organización.\n\nLámina 4 — Revisa y acuerda\nUna persona del equipo valida las agrupaciones y las causas propuestas. Registra el ajuste acordado, quién lo revisará y cuándo comprobarán si corresponde cerrar el pendiente.\n\nGuarda esta bitácora para tu próxima revisión.",
+      "caption": "Una bitácora para conversar sobre retrabajos con hechos a mano: qué se repitió, dónde apareció el desvío y qué queda por confirmar. La IA puede ayudar a ordenar los registros; el equipo revisa las hipótesis y acuerda el siguiente paso.",
+      "cta": "Guarda esta bitácora para tu próxima revisión.",
+      "format": "carousel",
+      "channel": "instagram",
+      "scenes": [],
+      "assetIds": [
+        "0c3077bc-3070-47b2-85ad-51334dad5b50"
+      ],
+      "comments": [],
+      "generationEngine": "ai",
+      "referenceId": "5adf8af0-1669-4aed-874a-71ffede5d7b8",
+      "providerAttributions": [],
+      "segmentId": "healthtech",
+      "status": "draft",
+      "id": "f217ee1e-b725-46a2-904b-8ac3a387dc4d",
+      "createdAt": "2026-10-18T10:49:38.678Z",
+      "updatedAt": "2026-10-18T10:49:44.279Z"
+    }
+  },
+  {
+    "brand_id": "e34bd138-2086-4897-81eb-9125f7a09137",
+    "kind": "pieces",
+    "id": "8fe091d0-409b-4980-8f62-87b68215d3af",
+    "data": {
+      "title": "Un borrador con IA necesita una revisión antes del envío",
+      "hook": "Si el proveedor de IA devuelve un borrador con errores, conviene detener el envío y darle a una persona el contexto necesario para revisarlo.",
+      "script": "En el seguimiento comercial de una EdTech, generar un borrador y autorizar su envío son dos decisiones distintas. La IA puede proponer el mensaje; una persona debe revisar qué se promete y si corresponde enviarlo.\n\nRegistrar\n\nCuando aparezca un error, conserva el borrador y registra qué necesita corrección. Distingue entre una respuesta incompleta, información incorrecta y una falla del proveedor que impidió generar el contenido.\n\nDeja el mensaje pendiente de revisión. Si vuelves a solicitar un borrador, conserva ambas versiones para que la persona responsable pueda comparar los cambios.\n\nRevisar\n\nAntes de enviar, contrasta el texto con la conversación comercial y la información vigente de tu oferta. Revisa destinatario, compromisos, condiciones y próximo paso. Toda afirmación sin respaldo debe quedar marcada como [VERIFICAR] y resolverse antes del envío.\n\nDefine quién puede corregir y aprobar el mensaje. Si falta contexto, devuelve el borrador a quien lleva la oportunidad comercial. Si el proveedor sigue fallando, continúa la redacción de forma manual con la misma revisión.\n\nPara liderar este proceso, deja explícitas tres cosas: quién revisa, qué comprueba y quién autoriza el envío.\n\nResponde REVISAR para comentar el proceso.",
+      "caption": "Cómo organizar la revisión humana de un borrador comercial cuando el proveedor de IA devuelve errores.",
+      "cta": "Responde REVISAR para comentar el proceso.",
+      "scenes": [],
+      "generationEngine": "ai",
+      "providerAttributions": [],
+      "segmentId": "edtech",
+      "format": "newsletter",
+      "channel": "linkedin",
+      "status": "draft",
+      "assetIds": [],
+      "comments": [],
+      "id": "8fe091d0-409b-4980-8f62-87b68215d3af",
+      "createdAt": "2026-10-18T10:50:26.189Z",
+      "updatedAt": "2026-10-18T10:50:26.189Z"
+    }
+  },
+  {
+    "brand_id": "e34bd138-2086-4897-81eb-9125f7a09137",
+    "kind": "pieces",
+    "id": "0dd6e690-3967-40fe-9531-4fa31ef59487",
+    "data": {
+      "title": "QA · Relevo con edición completa",
+      "hook": "Registra lo pendiente antes de cerrar el relevo.",
+      "script": "Escena 1: Registra la tarea pendiente.\n\nEscena 2: Confirma el responsable con revisión humana.\n\nEscena 3: Acuerda qué revisar mañana.",
+      "caption": "QA sintético: una bitácora para revisar el próximo paso.",
+      "cta": "Revisa el siguiente paso con tu equipo.",
+      "format": "reel",
+      "channel": "youtube",
+      "scenes": [
+        {
+          "id": "14214b58-1a14-44b8-b8a0-00e6ddc53a74",
+          "text": "Escena 1: Una forma de trabajar en «QA · Relevo operativo con bitácora» para Líderes de operaciones HealthTech.\nLa necesidad que guía esta propuesta: Documentar procesos operativos y reducir retrabajo con revisión humana. Elige una tarea de tu día a día que permita trabajar en ella.",
+          "duration": 18
+        },
+        {
+          "id": "5d9c8536-fbdd-4e45-8822-4a55a65e5686",
+          "text": "Escena 2: Registrar el punto de partida\nPara trabajar en «Documentar procesos operativos y reducir retrabajo con revisión humana», anota qué tarea está pendiente, qué la bloquea y quién necesita resolverla. Conserva ese registro para poder comparar después.",
+          "duration": 15
+        },
+        {
+          "id": "d6336d65-aa22-4a1e-a09f-82db88ab8d25",
+          "text": "Escena 3: El siguiente paso\nGuarda este relevo para tu próxima reunión.",
+          "duration": 5
+        }
+      ],
+      "assetIds": [],
+      "comments": [],
+      "generationEngine": "heuristic",
+      "editorialBrief": {
+        "instructions": "Tres escenas. Describe cómo un equipo HealthTech documenta un relevo operativo sin datos de pacientes. Cada escena debe tener una acción concreta. No inventes cifras. CTA final exacto: “Comenta RELEVO para revisar la bitácora.”",
+        "angle": "",
+        "audienceNeeds": "Documentar procesos operativos y reducir retrabajo con revisión humana",
+        "referenceUrl": "",
+        "providerAttributions": [],
+        "applied": {
+          "format": "reel",
+          "unitCount": 3,
+          "cta": "Guarda este relevo para tu próxima reunión.",
+          "includeExample": false
+        },
+        "notes": [
+          "La estructura local aplica formato, CTA, cantidad de láminas o escenas y ejemplo hipotético. Revisa manualmente el resto de la dirección editorial; se conserva aquí y no se añade al texto publicable."
+        ]
+      },
+      "providerAttributions": [],
+      "status": "draft",
+      "id": "0dd6e690-3967-40fe-9531-4fa31ef59487",
+      "createdAt": "2026-10-18T11:02:58.618Z",
+      "updatedAt": "2026-10-18T11:05:44.741Z"
+    }
+  },
+  {
+    "brand_id": "e34bd138-2086-4897-81eb-9125f7a09137",
+    "kind": "pieces",
+    "id": "30518077-b4bb-47fe-9f1c-8db827f71c43",
+    "data": {
+      "title": "QA · Tutorial de bitácora operativa",
+      "hook": "Una forma de trabajar en «QA · Tutorial de bitácora operativa» para Líderes de operaciones HealthTech.",
+      "script": "Escena 1: Una forma de trabajar en «QA · Tutorial de bitácora operativa» para Líderes de operaciones HealthTech.\nLa necesidad que guía esta propuesta: Documentar procesos operativos y reducir retrabajo con revisión humana. Elige una tarea de tu día a día que permita trabajar en ella.\n\nEscena 2: Registrar el punto de partida\nPara trabajar en «Documentar procesos operativos y reducir retrabajo con revisión humana», anota qué tarea está pendiente, qué la bloquea y quién necesita resolverla. Conserva ese registro para poder comparar después.\n\nEscena 3: Ejemplo hipotético\nUn equipo que necesita «Documentar procesos operativos y reducir retrabajo con revisión humana» registra una tarea pendiente y un obstáculo, prueba una alternativa y deja anotado qué pudo resolver y qué sigue abierto. Este escenario ilustra el método; no presenta resultados reales.\n\nEscena 4: El siguiente paso\nRevisa la bitácora con tu equipo.",
+      "caption": "Líderes de operaciones HealthTech: Documentar procesos operativos y reducir retrabajo con revisión humana.\n\nRevisa la bitácora con tu equipo.",
+      "cta": "Revisa la bitácora con tu equipo.",
+      "scenes": [
+        {
+          "id": "6aa70c7c-bf1a-4d5c-98a3-d2a268a00486",
+          "text": "Escena 1: Una forma de trabajar en «QA · Tutorial de bitácora operativa» para Líderes de operaciones HealthTech.\nLa necesidad que guía esta propuesta: Documentar procesos operativos y reducir retrabajo con revisión humana. Elige una tarea de tu día a día que permita trabajar en ella.",
+          "duration": 18
+        },
+        {
+          "id": "40886a19-a1e0-4495-a6ff-4228165b402c",
+          "text": "Escena 2: Registrar el punto de partida\nPara trabajar en «Documentar procesos operativos y reducir retrabajo con revisión humana», anota qué tarea está pendiente, qué la bloquea y quién necesita resolverla. Conserva ese registro para poder comparar después.",
+          "duration": 15
+        },
+        {
+          "id": "5227d77c-814e-48c2-8952-88f2f3bdd1a1",
+          "text": "Escena 3: Ejemplo hipotético\nUn equipo que necesita «Documentar procesos operativos y reducir retrabajo con revisión humana» registra una tarea pendiente y un obstáculo, prueba una alternativa y deja anotado qué pudo resolver y qué sigue abierto. Este escenario ilustra el método; no presenta resultados reales.",
+          "duration": 18
+        },
+        {
+          "id": "83c8b78a-a690-4656-93a6-2ac6a78366ca",
+          "text": "Escena 4: El siguiente paso\nRevisa la bitácora con tu equipo.",
+          "duration": 5
+        }
+      ],
+      "generationEngine": "heuristic",
+      "editorialBrief": {
+        "instructions": "Crea 4 escenas y un ejemplo hipotético. Explica qué información registrar durante un relevo HealthTech, con revisión humana y sin datos de pacientes.",
+        "angle": "",
+        "audienceNeeds": "Documentar procesos operativos y reducir retrabajo con revisión humana",
+        "referenceUrl": "https://example.com/qa-studio-owned-reference",
+        "providerAttributions": [],
+        "applied": {
+          "format": "video",
+          "unitCount": 4,
+          "cta": "Revisa la bitácora con tu equipo.",
+          "includeExample": true
+        },
+        "notes": [
+          "La estructura local aplica formato, CTA, cantidad de láminas o escenas y ejemplo hipotético. Revisa manualmente el resto de la dirección editorial; se conserva aquí y no se añade al texto publicable."
+        ]
+      },
+      "referenceId": "5adf8af0-1669-4aed-874a-71ffede5d7b8",
+      "providerAttributions": [],
+      "segmentId": "healthtech",
+      "format": "video",
+      "channel": "youtube",
+      "status": "draft",
+      "assetIds": [],
+      "comments": [],
+      "id": "30518077-b4bb-47fe-9f1c-8db827f71c43",
+      "createdAt": "2026-10-18T11:03:42.270Z",
+      "updatedAt": "2026-10-18T11:03:42.270Z"
+    }
+  },
+  {
+    "brand_id": "e34bd138-2086-4897-81eb-9125f7a09137",
+    "kind": "pieces",
+    "id": "499ac172-eda1-4c0c-b8a7-a1d6e00cffe7",
+    "data": {
+      "title": "Del prospecto al envío: tres pasos con revisión humana",
+      "hook": "La IA puede preparar el borrador. Tu equipo decide qué enviar.",
+      "script": "Escena 1 — Pregunta del prospecto\nVisual: interfaz ficticia, sin nombres ni datos personales; una pregunta pendiente.\nVoz: «Empieza por entender qué pregunta el prospecto. ¿Qué necesita resolver antes de avanzar?»\n\nEscena 2 — Borrador con IA\nVisual: la pregunta pasa a un documento marcado como «Borrador».\nVoz: «Pide a la IA un borrador con información aprobada. Si falta un dato, que lo señale para verificar.»\n\nEscena 3 — Revisión humana\nVisual: una persona revisa el texto; el botón de enviar permanece sin pulsar.\nVoz: «Antes de enviar, revisa exactitud, tono y siguiente paso. Comenta REVISIÓN para conversar con tu equipo.»",
+      "caption": "Para tu equipo comercial EdTech: entender la pregunta, preparar un borrador con IA y revisar antes de enviar. Toda información pendiente de confirmar debe quedar marcada en el borrador.",
+      "cta": "Comenta REVISIÓN para conversar con tu equipo.",
+      "scenes": [
+        {
+          "id": "e17650e3-0273-41c5-aebc-1d3ecdad3f5e",
+          "text": "Visual: interfaz ficticia, sin datos personales, con una pregunta pendiente. Voz: «Empieza por entender qué pregunta el prospecto. ¿Qué necesita resolver antes de avanzar?»",
+          "duration": 9
+        },
+        {
+          "id": "c1aee477-78cb-4d66-8f9f-c5f47c355397",
+          "text": "Visual: documento marcado como «Borrador». Voz: «Pide a la IA un borrador con información aprobada. Si falta un dato, que lo señale para verificar.»",
+          "duration": 10
+        },
+        {
+          "id": "aaedc202-040a-4506-b3b8-a003155ddb60",
+          "text": "Visual: revisión del texto antes de pulsar enviar. Voz: «Antes de enviar, revisa exactitud, tono y siguiente paso. Comenta REVISIÓN para conversar con tu equipo.»",
+          "duration": 10
+        }
+      ],
+      "generationEngine": "ai",
+      "providerAttributions": [],
+      "segmentId": "edtech",
+      "format": "reel",
+      "channel": "tiktok",
+      "status": "draft",
+      "assetIds": [],
+      "comments": [],
+      "id": "499ac172-eda1-4c0c-b8a7-a1d6e00cffe7",
+      "createdAt": "2026-10-18T11:04:22.321Z",
+      "updatedAt": "2026-10-18T11:04:22.321Z"
+    }
+  }
+]

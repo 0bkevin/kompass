@@ -399,6 +399,7 @@ function PieceEditor({ piece }: { piece: Piece }) {
     [schedule, setSchedule] = useState(false),
     [tab, setTab] = useState("script");
   const dirty = isPieceEditorDirty(draft, baseline);
+  const previewCta = draft.cta.trim();
   const missingAudience =
     !!draft.segmentId &&
     !state.brand.audience.some((segment) => segment.id === draft.segmentId);
@@ -1054,7 +1055,9 @@ function PieceEditor({ piece }: { piece: Piece }) {
             <div className="post-copy">
               <strong>{draft.hook}</strong>
               <p>{draft.script}</p>
-              <p>{draft.cta}</p>
+              {previewCta && !draft.script.includes(previewCta) && (
+                <p>{draft.cta}</p>
+              )}
             </div>
             <div className="post-preview-bottom">
               <Heart size={17} />

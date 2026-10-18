@@ -1,0 +1,193 @@
+{
+  "sameCta": {
+    "url": "http://127.0.2.65:5467/studio/499ac172-eda1-4c0c-b8a7-a1d6e00cffe7",
+    "cta": "Comenta REVISIÓN para conversar con tu equipo.",
+    "scriptOccurrences": 1,
+    "previewOccurrences": 1,
+    "previewParagraphs": 1
+  },
+  "differentCta": {
+    "url": "http://127.0.2.65:5467/studio/a951bca4-092e-4a31-88a4-a7223b2d1f6e",
+    "cta": "Responde BITÁCORA para revisar la plantilla.",
+    "scriptContainsCta": false,
+    "previewOccurrences": 1,
+    "lastParagraph": "Responde BITÁCORA para revisar la plantilla.",
+    "previewParagraphs": 2
+  },
+  "isolation": {
+    "brand": "2c9c2eff-2a5d-49c6-aa11-4377997287ff",
+    "emptyState": true,
+    "leaksEdtech": false,
+    "status": 200,
+    "pieceCount": 0,
+    "referenceCount": 0,
+    "assetCount": 0
+  },
+  "editsReloaded": {
+    "url": "http://127.0.2.65:5465/studio/0dd6e690-3967-40fe-9531-4fa31ef59487",
+    "dirty": false,
+    "fields": [
+      {
+        "label": "Cambiar de marca",
+        "value": "e34bd138-2086-4897-81eb-9125f7a09137"
+      },
+      {
+        "label": "",
+        "value": ""
+      },
+      {
+        "label": "Título de trabajo",
+        "value": "QA · Relevo con edición completa"
+      },
+      {
+        "label": "Canal",
+        "value": "youtube"
+      },
+      {
+        "label": "Audiencia",
+        "value": ""
+      },
+      {
+        "label": "Gancho · la primera razón para quedarse",
+        "value": "Registra lo pendiente antes de cerrar el relevo."
+      },
+      {
+        "label": "Guion o cuerpo del contenido",
+        "value": "Escena 1: Registra la tarea pendiente.\n\nEscena 2: Confirma el responsable con revisión humana.\n\nEscena 3: Acuerda qué revisar mañana."
+      },
+      {
+        "label": "Caption o texto de acompañamiento",
+        "value": "QA sintético: una bitácora para revisar el próximo paso."
+      },
+      {
+        "label": "Llamado a la acción",
+        "value": "Revisa el siguiente paso con tu equipo."
+      },
+      {
+        "label": "Responsable",
+        "value": ""
+      }
+    ]
+  },
+  "persistedCarousel": {
+    "title": "Bitácora de retrabajos en operaciones HealthTech",
+    "channel": "instagram",
+    "audience": "healthtech",
+    "script": "Lámina 1 — Registra el retrabajo\nAnota el proceso, qué tarea se repitió y qué hubo que corregir. Describe hechos observables, sin atribuir culpas.\n\nLámina 2 — Deja una pista útil\nDocumenta el resultado esperado, dónde apareció el desvío y qué evidencia permite revisarlo. No incluyas datos de pacientes ni información sensible.\n\nLámina 3 — Usa IA para ordenar\nPídele que agrupe los registros por causas posibles, usando solo lo documentado. Que separe evidencia de hipótesis y marque lo que falta confirmar. Usa una herramienta autorizada por tu organización.\n\nLámina 4 — Revisa y acuerda\nUna persona del equipo valida las agrupaciones y las causas propuestas. Registra el ajuste acordado, quién lo revisará y cuándo comprobarán si corresponde cerrar el pendiente.\n\nGuarda esta bitácora para tu próxima revisión."
+  },
+  "persistedNewsletter": {
+    "title": "Un borrador con IA necesita una revisión antes del envío",
+    "script": "En el seguimiento comercial de una EdTech, generar un borrador y autorizar su envío son dos decisiones distintas. La IA puede proponer el mensaje; una persona debe revisar qué se promete y si corresponde enviarlo.\n\nRegistrar\n\nCuando aparezca un error, conserva el borrador y registra qué necesita corrección. Distingue entre una respuesta incompleta, información incorrecta y una falla del proveedor que impidió generar el contenido.\n\nDeja el mensaje pendiente de revisión. Si vuelves a solicitar un borrador, conserva ambas versiones para que la persona responsable pueda comparar los cambios.\n\nRevisar\n\nAntes de enviar, contrasta el texto con la conversación comercial y la información vigente de tu oferta. Revisa destinatario, compromisos, condiciones y próximo paso. Toda afirmación sin respaldo debe quedar marcada como [VERIFICAR] y resolverse antes del envío.\n\nDefine quién puede corregir y aprobar el mensaje. Si falta contexto, devuelve el borrador a quien lleva la oportunidad comercial. Si el proveedor sigue fallando, continúa la redacción de forma manual con la misma revisión.\n\nPara liderar este proceso, deja explícitas tres cosas: quién revisa, qué comprueba y quién autoriza el envío.\n\nResponde REVISAR para comentar el proceso."
+  },
+  "mobileVideo": {
+    "text": "Saltar al contenido\nContenido\nTodas las piezas\nQA · Tutorial de bitácora operativa\nBorrador\nActualizado Ahora\nEstructura local\nExportar\nGuardar cambios\nBrief y revisión pendiente (fuera del texto publicable)\nGuion y enfoque\nRecursos\nComentarios (0)\nTítulo de trabajo\nCanal\nlinkedin\ninstagram\ntiktok\nyoutube\nAudiencia\nGeneral\nCEOs EdTech de LatAm\nLíderes de operaciones HealthTech\nGancho · la primera razón para quedarse\nGuion o cuerpo del contenido\nCaption o texto de acompañamiento\nLlamado a la acción\nResponsable\nSin asignar\nQA Studio Sintético\nStudio QA Resumed\nVISTA PREVIA DEL TEXTO\n3\n30X Studio QA\nyoutube · Borrador\nUna forma de trabajar en «QA · Tutorial de bitácora operativa» para Líderes de operaciones HealthTech.\n\nEscena 1: Una forma de trabajar en «QA · Tutorial de bitácora operativa» para Líderes de operaciones HealthTech.\nLa necesidad que guía esta propuesta: Documentar procesos operativos y reducir retrabajo con revisión humana. Elige una tarea de tu día a día que permita trabajar en ella.\n\nEscena 2: Registrar el punto de partida\nPara trabajar en «Documentar procesos operativos y reducir retrabajo con revisión humana», anota qué tarea está pendiente, qué la bloquea y quién necesita resolverla. Conserva ese registro para poder comparar después.\n\nEscena 3: Ejemplo hipotético\nUn equipo que necesita «Documentar procesos operativos y reducir retrabajo con revisión humana» registra una tarea pendiente y un obstáculo, prueba una alternativa y deja anotado qué pudo resolver y qué sigue abierto. Este escenario ilustra el método; no presenta resultados reales.\n\nEscena 4: El siguiente paso\nRevisa la bitácora con tu equipo.\n\nRevisa la bitácora con tu equipo.\n\nEl siguiente paso\n\nRevisa hechos, enfoque y voz de marca antes de pedir aprobación.\n\nEnviar a revisión\n30X Radar · Hecho para encontrar tu próximo ángulo.\nPrimer guion listo. Hazlo tuyo.",
+    "width": 390,
+    "scrollWidth": 390,
+    "script": "Escena 1: Una forma de trabajar en «QA · Tutorial de bitácora operativa» para Líderes de operaciones HealthTech.\nLa necesidad que guía esta propuesta: Documentar procesos operativos y reducir retrabajo con revisión humana. Elige una tarea de tu día a día que permita trabajar en ella.\n\nEscena 2: Registrar el punto de partida\nPara trabajar en «Documentar procesos operativos y reducir retrabajo con revisión humana», anota qué tarea está pendiente, qué la bloquea y quién necesita resolverla. Conserva ese registro para poder comparar después.\n\nEscena 3: Ejemplo hipotético\nUn equipo que necesita «Documentar procesos operativos y reducir retrabajo con revisión humana» registra una tarea pendiente y un obstáculo, prueba una alternativa y deja anotado qué pudo resolver y qué sigue abierto. Este escenario ilustra el método; no presenta resultados reales.\n\nEscena 4: El siguiente paso\nRevisa la bitácora con tu equipo."
+  },
+  "productionDiagnostics": {
+    "console": [
+      {
+        "level": "error",
+        "text": "Failed to load resource: the server responded with a status of 502 (Bad Gateway)",
+        "timestamp": "2026-10-18T11:04:01.065Z"
+      },
+      {
+        "level": "error",
+        "text": "Failed to load resource: the server responded with a status of 502 (Bad Gateway)",
+        "timestamp": "2026-10-18T11:04:01.399Z"
+      },
+      {
+        "level": "error",
+        "text": "Failed to load resource: the server responded with a status of 502 (Bad Gateway)",
+        "timestamp": "2026-10-18T11:04:01.614Z"
+      },
+      {
+        "level": "debug",
+        "text": "[vite] connecting...",
+        "timestamp": "2026-10-18T11:06:28.634Z"
+      },
+      {
+        "level": "debug",
+        "text": "[vite] connected.",
+        "timestamp": "2026-10-18T11:06:28.639Z"
+      },
+      {
+        "level": "info",
+        "text": "%cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold",
+        "timestamp": "2026-10-18T11:06:29.094Z"
+      },
+      {
+        "level": "debug",
+        "text": "[vite] connecting...",
+        "timestamp": "2026-10-18T11:07:18.082Z"
+      },
+      {
+        "level": "debug",
+        "text": "[vite] connected.",
+        "timestamp": "2026-10-18T11:07:18.087Z"
+      },
+      {
+        "level": "info",
+        "text": "%cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold",
+        "timestamp": "2026-10-18T11:07:18.169Z"
+      },
+      {
+        "level": "debug",
+        "text": "[vite] connecting...",
+        "timestamp": "2026-10-18T11:07:18.636Z"
+      },
+      {
+        "level": "debug",
+        "text": "[vite] connected.",
+        "timestamp": "2026-10-18T11:07:18.640Z"
+      },
+      {
+        "level": "info",
+        "text": "%cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold",
+        "timestamp": "2026-10-18T11:07:18.703Z"
+      },
+      {
+        "level": "log",
+        "text": "[vite] server connection lost. Polling for restart...",
+        "timestamp": "2026-10-18T11:07:19.027Z"
+      }
+    ],
+    "failures": []
+  },
+  "viteDiagnostics": {
+    "console": [
+      {
+        "level": "debug",
+        "text": "[vite] connecting...",
+        "timestamp": "2026-10-18T11:07:18.082Z"
+      },
+      {
+        "level": "debug",
+        "text": "[vite] connected.",
+        "timestamp": "2026-10-18T11:07:18.087Z"
+      },
+      {
+        "level": "info",
+        "text": "%cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold",
+        "timestamp": "2026-10-18T11:07:18.169Z"
+      },
+      {
+        "level": "debug",
+        "text": "[vite] connecting...",
+        "timestamp": "2026-10-18T11:07:18.636Z"
+      },
+      {
+        "level": "debug",
+        "text": "[vite] connected.",
+        "timestamp": "2026-10-18T11:07:18.640Z"
+      },
+      {
+        "level": "info",
+        "text": "%cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold",
+        "timestamp": "2026-10-18T11:07:18.703Z"
+      }
+    ],
+    "failures": []
+  }
+}

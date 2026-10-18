@@ -1,0 +1,25 @@
+{
+  "responses": [
+    {
+      "status": 502,
+      "json": {
+        "error": "El proveedor de IA rechazó la solicitud (HTTP 503). Revisa la clave, modelo y cuota."
+      }
+    },
+    {
+      "status": 502,
+      "json": {
+        "error": "La IA no devolvió el contenido estructurado esperado. No se guardaron resultados inventados."
+      }
+    },
+    {
+      "status": 502,
+      "json": {
+        "error": "La IA devolvió campos inválidos. No se guardó el borrador."
+      }
+    }
+  ],
+  "alert": "La IA devolvió campos inválidos. No se guardó el borrador.",
+  "topic": "QA · Validación y recuperación del proveedor",
+  "busy": false
+}
