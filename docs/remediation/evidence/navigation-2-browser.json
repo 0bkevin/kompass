@@ -1,0 +1,263 @@
+{
+  "issueId": "navigation-2",
+  "agent": "fix_navigation_2",
+  "environment": {
+    "url": "http://127.0.1.35:5525/settings",
+    "apiPort": 4525,
+    "webPort": 5525,
+    "dataDir": "/tmp/30x-remediation-navigation-2",
+    "tabId": "tab_4g_07e54779-9ab2-4979-8a15-674c4eff160a",
+    "data": "Dos marcas ficticias; datos de ejemplo claramente identificados. Sin proveedores ni credenciales reales."
+  },
+  "checks": [
+    {
+      "case": "Escape original",
+      "before": "FAIL: modal cerrado sin confirmación, nombre descartado",
+      "nativeDialog": null
+    },
+    {
+      "case": "Escape corregido rechazado",
+      "after": "PASS: confirm nativo; rechazar mantiene nombre Fuente sintética sin guardar"
+    },
+    {
+      "case": "Fondo rechazado",
+      "after": "PASS: confirm nativo; rechazar mantiene borrador"
+    },
+    {
+      "case": "Cancelar",
+      "dialog": {
+        "type": "confirm",
+        "message": "Hay cambios sin guardar. ¿Salir y descartar esta fuente?"
+      }
+    },
+    {
+      "case": "Cancelar rechazado",
+      "pass": true,
+      "form": [
+        {
+          "type": "text",
+          "value": "Fuente sintética sin guardar"
+        },
+        {
+          "type": "select-one",
+          "value": "rss"
+        },
+        {
+          "type": "url",
+          "value": "https://example.com/synthetic-feed"
+        },
+        {
+          "type": "checkbox",
+          "value": "on",
+          "checked": true
+        }
+      ]
+    },
+    {
+      "case": "Cerrar rechazado",
+      "pass": true,
+      "form": [
+        {
+          "type": "text",
+          "value": "Fuente sintética sin guardar"
+        },
+        {
+          "type": "select-one",
+          "value": "rss"
+        },
+        {
+          "type": "url",
+          "value": "https://example.com/synthetic-feed"
+        },
+        {
+          "type": "checkbox",
+          "value": "on",
+          "checked": true
+        }
+      ]
+    },
+    {
+      "case": "Escape aceptado",
+      "pass": true
+    },
+    {
+      "case": "Abrir/cerrar fuente intacta",
+      "pass": true
+    },
+    {
+      "case": "Navegación rechazada",
+      "pass": true,
+      "path": "/settings",
+      "form": [
+        {
+          "type": "text",
+          "value": "Fuente sintética protegida al navegar"
+        },
+        {
+          "type": "select-one",
+          "value": "rss"
+        },
+        {
+          "type": "url",
+          "value": "https://example.com/navigation2-feed"
+        },
+        {
+          "type": "checkbox",
+          "value": "on",
+          "checked": true
+        }
+      ]
+    },
+    {
+      "case": "Navegación aceptada",
+      "path": "/home",
+      "pass": true
+    },
+    {
+      "case": "Cambio empresa rechazado",
+      "brand": "a1e6e93a-3112-4dbf-8124-b00dff57da91",
+      "pass": true,
+      "form": [
+        {
+          "type": "text",
+          "value": "Fuente sintética cambio de empresa"
+        },
+        {
+          "type": "select-one",
+          "value": "rss"
+        },
+        {
+          "type": "url",
+          "value": ""
+        },
+        {
+          "type": "checkbox",
+          "value": "on",
+          "checked": true
+        }
+      ]
+    },
+    {
+      "case": "Cambio empresa aceptado",
+      "brand": "bfc4cfcb-3a50-46dd-a195-b03ab61e3f90",
+      "dialogOpen": false,
+      "pass": true
+    },
+    {
+      "case": "Aviso nativo de recarga",
+      "dialog": {
+        "type": "beforeunload",
+        "message": "",
+        "defaultValue": ""
+      }
+    },
+    {
+      "case": "Recarga rechazada",
+      "pass": true,
+      "form": [
+        {
+          "type": "text",
+          "value": "Fuente sintética protegida al recargar"
+        },
+        {
+          "type": "select-one",
+          "value": "rss"
+        },
+        {
+          "type": "url",
+          "value": "https://example.com/reload-feed"
+        },
+        {
+          "type": "checkbox",
+          "value": "on",
+          "checked": true
+        }
+      ]
+    },
+    {
+      "case": "Recarga aceptada",
+      "pass": true,
+      "path": "/settings",
+      "dialogOpen": false
+    },
+    {
+      "case": "Guardado pendiente",
+      "requests": 1,
+      "discardBlocked": true,
+      "allInputsDisabled": true,
+      "nativeDialog": null
+    },
+    {
+      "case": "Guardado recuperado",
+      "dialogOpen": false,
+      "savedCount": 1,
+      "savedSource": {
+        "name": "Fuente sintética guardada · navigation-2",
+        "type": "rss",
+        "url": "https://example.com/synthetic-feed",
+        "enabled": true,
+        "id": "ef7dd612-6f7c-4a6a-bead-b5fd68c5d921",
+        "createdAt": "2026-10-18T05:22:49.087Z",
+        "updatedAt": "2026-10-18T05:22:49.087Z"
+      },
+      "pass": true
+    },
+    {
+      "case": "Editar fuente guardada sin cambios",
+      "pass": true
+    },
+    {
+      "case": "Fallo de guardado recuperable (503 simulado)",
+      "pass": true,
+      "preserved": [
+        {
+          "type": "text",
+          "value": "Fuente sintética recuperada · navigation-2"
+        },
+        {
+          "type": "select-one",
+          "value": "rss"
+        },
+        {
+          "type": "url",
+          "value": "https://example.com/synthetic-feed"
+        },
+        {
+          "type": "checkbox",
+          "value": "on",
+          "checked": true
+        }
+      ],
+      "saveEnabled": true
+    },
+    {
+      "case": "Reintento guardado correcto",
+      "pass": true
+    },
+    {
+      "case": "Navegar tras guardar",
+      "pass": true
+    },
+    {
+      "case": "Recarga sin cambios tras guardar",
+      "pass": true,
+      "dialogOpen": false,
+      "savedVisible": true
+    },
+    {
+      "case": "Modal fuente móvil",
+      "viewport": 390,
+      "documentWidth": 390,
+      "pass": true
+    }
+  ],
+  "simulations": [
+    "Se retuvo sólo el POST local de fuentes antes de enviarlo al API para simular latencia.",
+    "Un único PATCH local de fuente recibió 503 sintético; fetch se restauró automáticamente antes del reintento."
+  ],
+  "cleanup": {
+    "ownTabClosed": true,
+    "ownProcessStopped": true,
+    "note": "Al detener npm run dev, el watcher Node produjo una aserción nativa en FSWatcher.close después de cambios externos de server/core.mjs; no ocurrió durante las verificaciones funcionales."
+  }
+}

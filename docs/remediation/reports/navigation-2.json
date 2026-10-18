@@ -1,0 +1,108 @@
+{
+  "issueId": "navigation-2",
+  "agent": "fix_navigation_2",
+  "status": "fixed",
+  "rootCause": "Settings cerraba el modal mediante setSource(null) desde Escape, fondo y Cancelar, sin comparar un baseline ni registrar registerUnsavedChangesGuard. El modal compartido invocaba correctamente onClose; la decisión de descarte faltaba en Settings.",
+  "changes": [
+    "Controlador del borrador de fuente con baseline tomado al abrir desde el borrador ya normalizado por los cambios sources-1/sources-2; compara todos los campos y no considera el orden de propiedades una edición.",
+    "Escape, clic fuera, Cancelar y Cerrar usan la misma confirmación de descarte. Rechazar conserva todos los campos; aceptar limpia el borrador y su baseline.",
+    "Registro con registerUnsavedChangesGuard y el patrón existente useRef/useEffect para navegación interna, cambio de empresa y beforeunload.",
+    "Bloqueo síncrono antes de guardar para evitar envíos duplicados; busy bloquea cierres/navegación y deshabilita campos y nuevas aperturas de fuente. Error conserva el borrador; éxito limpia la guardia.",
+    "Sin cambios en formularios ni persistencia de credenciales, sourceInput, payloads de fuentes o lógica de normalización por tipo/plataforma."
+  ],
+  "files": [
+    "src/features/Settings.tsx",
+    "src/lib/source-draft-guard.mjs",
+    "src/lib/source-draft-guard.d.mts",
+    "tests/remediation-navigation-2.test.mjs",
+    "docs/remediation/reports/navigation-2.md",
+    "docs/remediation/reports/navigation-2.json",
+    "docs/remediation/evidence/navigation-2-before-edit.png",
+    "docs/remediation/evidence/navigation-2-before-discard.png",
+    "docs/remediation/evidence/navigation-2-after-escape-rejected.png",
+    "docs/remediation/evidence/navigation-2-after-reload-rejected.png",
+    "docs/remediation/evidence/navigation-2-busy.png",
+    "docs/remediation/evidence/navigation-2-after-save.png",
+    "docs/remediation/evidence/navigation-2-desktop.png",
+    "docs/remediation/evidence/navigation-2-mobile.png",
+    "docs/remediation/evidence/navigation-2-browser.json"
+  ],
+  "verification": [
+    {
+      "command": "T3 preview_*: /settings → Añadir fuente → Nombre Fuente sintética sin guardar → Escape → preview_status + evaluación del modal",
+      "before": "FAIL reproducido antes del arreglo: dialog:null, modal cerrado y nombre ya no disponible; capturas antes/después del descarte.",
+      "after": "Confirm nativo Hay cambios sin guardar. ¿Salir y descartar esta fuente?; rechazar conserva modal y nombre exacto, aceptar cierra; nueva apertura/cierre sin cambios no advierte.",
+      "kind": "browser"
+    },
+    {
+      "command": "T3 preview_*: fondo, Cancelar y Cerrar; rechazar confirmación; comparar todos los inputs/selects/checkbox",
+      "before": "Cierres directos sin política de cambios en Settings; el síntoma original medido fue Escape.",
+      "after": "Las tres vías solicitan confirmación; rechazo conserva idénticos nombre, tipo, URL y checkbox. Escape aceptado limpia sin advertencias posteriores.",
+      "kind": "browser"
+    },
+    {
+      "command": "T3 preview_*: activar handlers de navegación a Inicio y cambio a marca sintética Sur desde DOM; preview_status/preview_dialog rechazar y aceptar",
+      "before": "No se registraba guardia de fuentes; no se ejecutó comparación de estas rutas antes del cambio.",
+      "after": "Rechazar conserva /settings, empresa original y formulario. Aceptar navega a /home o cambia de empresa y cierra fuente sin persistir cambios descartados.",
+      "kind": "browser"
+    },
+    {
+      "command": "T3 preview_evaluate programa location.reload(); preview_status; preview_dialog rechazar/aceptar",
+      "before": "No se registraba guardia de fuentes; reproducción histórica de navigation-2 limitada a Escape.",
+      "after": "beforeunload nativo; rechazar conserva todos los campos, aceptar recarga y descarta. Tras guardar y reabrir sin editar, recarga sin advertencia falsa y fuente sigue guardada.",
+      "kind": "browser"
+    },
+    {
+      "command": "T3 preview_* con POST local de fuente retenido; dos submits síncronos; Escape/fondo/Cerrar/navegación; liberar POST; GET /sources",
+      "before": "La guardia de descarte y un cerrojo síncrono específico no existían.",
+      "after": "Una sola petición para dos submits; campos deshabilitados, cierres y navegación bloqueados sin confirmaciones; al liberar se guarda una única fuente y se cierra el formulario.",
+      "kind": "browser"
+    },
+    {
+      "command": "T3 preview_* con un PATCH local de fuente respondiendo 503 sintético; reintentar con transporte restaurado",
+      "before": "No se ejecutó una comparación de fallo de red previa.",
+      "after": "Error explícito, campos intactos y botón disponible; retry correcto guarda y permite navegar sin advertencias residuales.",
+      "kind": "browser"
+    },
+    {
+      "command": "node --test tests/remediation-navigation-2.test.mjs tests/remediation-sources-1.test.mjs tests/remediation-sources-2.test.mjs",
+      "before": "El control previo del síntoma falló en navegador; el controlador se extrajo como seam nueva para pruebas conductuales, sin comparar texto de JSX.",
+      "after": "17/17 PASS: 5 pruebas del controlador y 12 de normalización/persistencia de sources-1/sources-2.",
+      "kind": "test"
+    },
+    {
+      "command": "TypeScript transpileModule sobre src/features/Settings.tsx con reportDiagnostics; inspección T3 1280×800 y 390×844",
+      "before": "Sin diagnóstico sintáctico comparativo; el cambio incorpora fieldset para busy.",
+      "after": "0 diagnósticos sintácticos; controles, foco y acciones visibles. En móvil documento 390px, modal 370px, sin overflow horizontal.",
+      "kind": "browser"
+    }
+  ],
+  "artifacts": [
+    "docs/remediation/evidence/navigation-2-before-edit.png",
+    "docs/remediation/evidence/navigation-2-before-discard.png",
+    "docs/remediation/evidence/navigation-2-after-escape-rejected.png",
+    "docs/remediation/evidence/navigation-2-after-reload-rejected.png",
+    "docs/remediation/evidence/navigation-2-busy.png",
+    "docs/remediation/evidence/navigation-2-after-save.png",
+    "docs/remediation/evidence/navigation-2-desktop.png",
+    "docs/remediation/evidence/navigation-2-mobile.png",
+    "docs/remediation/evidence/navigation-2-browser.json"
+  ],
+  "limitations": [
+    "Se verificó el runtime de desarrollo con datos ficticios y dos marcas aisladas en /tmp/30x-remediation-navigation-2; no se usaron proveedores ni claves reales.",
+    "Latencia y un error HTTP 503 fueron simulaciones explícitas de fetch para una sola operación local de fuente; no acreditan entrega o comportamiento de proveedores reales.",
+    "No se ejecutó build ni format global ni se tocaron dependencias; compilación y recorrido integrado final corresponden al coordinador.",
+    "Un preview_press tras el arreglo agotó su espera mientras estaba abierto el confirm nativo; preview_status y preview_dialog verificaron y resolvieron ese diálogo. No fue un fallo de la guardia.",
+    "Al detener el runtime, Node --watch emitió una aserción nativa en FSWatcher.close tras cambios externos del servidor; la sesión terminó y los puertos propios quedaron libres. Ocurrió después de las comprobaciones funcionales."
+  ],
+  "cleanup": {
+    "tabClosed": true,
+    "tabId": "tab_4g_07e54779-9ab2-4979-8a15-674c4eff160a",
+    "runtimeSession": 18588,
+    "runtimeStopped": true,
+    "exclusivePortsFree": [
+      4525,
+      5525
+    ]
+  }
+}
