@@ -456,7 +456,9 @@ const TOPICS = [
     },
   },
   {
-    pattern: /\b(?:salud|healthtech|hospital\w*|m[eé]dic\w*|healthcare)\b/iu,
+    // Medical word families exclude medición/mediciones (measurement).
+    pattern:
+      /\b(?:salud|healthtech|hospital\w*|m[eé]dic(?:[oa]s?|in\w*|ament\w*|al\w*|aci[oó]n(?:es)?|at\w*)|healthcare)\b/iu,
     pillar: "Innovación en salud",
     segment: {
       name: "Equipos de gestión en salud",
