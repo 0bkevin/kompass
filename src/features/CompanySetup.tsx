@@ -48,12 +48,20 @@ export function CompanySetup({
   const [links, setLinks] = useState("");
   const [text, setText] = useState("");
   const [inspection, setInspection] = useState<Inspection | null>(null);
+  const [inspectedInput, setInspectedInput] = useState("");
   const [draft, setDraft] = useState<CompanyDraft>(initialDraft);
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState("");
   const [created, setCreated] = useState<Brand | null>(null);
   const alive = useRef(true);
   const heading = useRef<HTMLHeadingElement>(null);
+  const description = useRef<HTMLTextAreaElement>(null);
+  const input = JSON.stringify([website.trim(), links.trim(), text.trim()]);
+  const needsDescription =
+    inspection !== null &&
+    !inspection.evidence.some((item) =>
+      ["read", "provided"].includes(item.status),
+    );
   useEffect(() => {
     alive.current = true;
     return () => {
@@ -66,6 +74,9 @@ export function CompanySetup({
       ?.closest(".company-setup")
       ?.scrollIntoView({ block: "start" });
   }, [step]);
+  useEffect(() => {
+    if (step === 0 && needsDescription && !busy) description.current?.focus();
+  }, [step, needsDescription, busy]);
 
   const update = <K extends keyof CompanyDraft>(
     key: K,
@@ -112,6 +123,7 @@ export function CompanySetup({
       });
       if (!alive.current) return;
       setInspection(result);
+      setInspectedInput(input);
       setDraft({
         ...initialDraft,
         ...result.draft,
@@ -123,7 +135,13 @@ export function CompanySetup({
           id: segment.id || crypto.randomUUID(),
         })),
       });
-      setStep(1);
+      if (
+        result.evidence.some((item) =>
+          ["read", "provided"].includes(item.status),
+        )
+      ) {
+        setStep(1);
+      }
     } catch (cause) {
       if (alive.current) setError((cause as Error).message);
     } finally {
@@ -189,12 +207,12 @@ export function CompanySetup({
             Empieza por lo que ya tienes.
           </h2>
           <p className="setup-description">
-            Comparte tu web o contenido. Prepararemos un contexto que podrás
-            revisar antes de guardarlo.
+            Cuéntanos qué hace tu empresa. Si tienes una web o redes, puedes
+            añadirlas para conservarlas como referencia.
           </p>
           <fieldset disabled={busy}>
             <Field
-              label="Web de tu empresa"
+              label="Web de tu empresa (opcional)"
               name="companyWebsite"
               value={website}
               onChange={(event) => setWebsite(event.target.value)}
@@ -202,12 +220,33 @@ export function CompanySetup({
               maxLength={2000}
               autoComplete="url"
             />
-            <details
-              className="setup-more"
-              open={!website || !!links || !!text}
-            >
+            {needsDescription && (
+              <div className="setup-recovery" role="status">
+                <strong>No pudimos leer el contenido de tus enlaces.</strong>
+                <p>
+                  Los conservaremos como referencia. Pega una descripción o un
+                  contenido propio para preparar tu empresa.
+                </p>
+              </div>
+            )}
+            <Field label="Descripción de tu empresa">
+              <textarea
+                ref={description}
+                value={text}
+                onChange={(event) => setText(event.target.value)}
+                placeholder="Ej. Somos 30X. Ofrecemos formación en ventas e IA para líderes y equipos de Latinoamérica."
+                rows={4}
+                maxLength={20000}
+                aria-describedby="setup-description-help"
+              />
+            </Field>
+            <p id="setup-description-help" className="setup-field-help">
+              Incluye el nombre, qué ofreces y a quién ayudas. También puedes
+              pegar una publicación propia.
+            </p>
+            <details className="setup-more">
               <summary>
-                <Link2 size={16} /> Añadir redes sociales o texto
+                <Link2 size={16} /> Añadir redes sociales (opcional)
               </summary>
               <div className="stack">
                 <Field label="Instagram, YouTube u otros enlaces públicos">
@@ -217,15 +256,6 @@ export function CompanySetup({
                     placeholder="https://instagram.com/tuempresa\nUn enlace por línea"
                     rows={2}
                     maxLength={12000}
-                  />
-                </Field>
-                <Field label="También puedes pegar una descripción o una publicación">
-                  <textarea
-                    value={text}
-                    onChange={(event) => setText(event.target.value)}
-                    placeholder="Qué hace tu empresa, a quién ayuda o un contenido que la represente…"
-                    rows={4}
-                    maxLength={20000}
                   />
                 </Field>
               </div>
@@ -246,7 +276,10 @@ export function CompanySetup({
               variant="primary"
               type="submit"
               busy={busy}
-              disabled={!website.trim() && !links.trim() && !text.trim()}
+              disabled={
+                (!website.trim() && !links.trim() && !text.trim()) ||
+                (needsDescription && input === inspectedInput)
+              }
             >
               {busy ? "Leyendo tu contenido…" : "Preparar mi empresa"}
               <ArrowRight size={16} />
@@ -255,7 +288,10 @@ export function CompanySetup({
               disabled={busy}
               variant="ghost"
               onClick={() => {
-                setDraft(initialDraft);
+                if (!inspection || input !== inspectedInput) {
+                  setInspection(null);
+                  setDraft({ ...initialDraft, website: website.trim() });
+                }
                 setStep(1);
               }}
             >
@@ -330,22 +366,34 @@ export function CompanySetup({
             required
             maxLength={1200}
           />
-          <div className="form-grid">
-            <Field
-              label="Mercado"
-              value={draft.market}
-              onChange={(event) => update("market", event.target.value)}
-              required
-              maxLength={150}
-            />
-            <Field
-              label="Voz de la marca"
-              value={draft.tone}
-              onChange={(event) => update("tone", event.target.value)}
-              required
-              maxLength={300}
-            />
-          </div>
+          <details
+            className="setup-more setup-defaults"
+            onInvalid={(event) => {
+              event.currentTarget.open = true;
+            }}
+          >
+            <summary>Mercado y voz de la marca (opcional)</summary>
+            <p className="setup-field-help">
+              Empezaremos con {draft.market} y la voz «{draft.tone}». Puedes
+              ajustar estos valores ahora o más adelante.
+            </p>
+            <div className="form-grid">
+              <Field
+                label="Mercado"
+                value={draft.market}
+                onChange={(event) => update("market", event.target.value)}
+                required
+                maxLength={150}
+              />
+              <Field
+                label="Voz de la marca"
+                value={draft.tone}
+                onChange={(event) => update("tone", event.target.value)}
+                required
+                maxLength={300}
+              />
+            </div>
+          </details>
           {inspection && (
             <details className="setup-evidence">
               <summary>

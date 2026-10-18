@@ -84,6 +84,28 @@
 .setup-more .stack {
   margin-top: 20px;
 }
+.setup-field-help {
+  margin-top: -10px;
+  margin-bottom: 20px;
+  color: #54665b;
+  font-size: 12px;
+  line-height: 1.65;
+}
+.setup-defaults > .setup-field-help {
+  margin-top: 12px;
+}
+.setup-recovery {
+  margin-bottom: 20px;
+  padding: 16px;
+  background: #eef5ef;
+  border-radius: 12px;
+  color: #355641;
+  font-size: 13px;
+  line-height: 1.6;
+}
+.setup-recovery p {
+  margin-top: 4px;
+}
 .setup-note {
   font-size: 12px;
   color: #54665b;
