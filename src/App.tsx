@@ -95,6 +95,12 @@ export default function App() {
   const callbackError = useLocation({
     select: (location) => location.search.authError,
   });
+  const authIntent = useLocation({
+    select: (location) =>
+      typeof location.search.auth === "string"
+        ? location.search.auth
+        : undefined,
+  });
   const [authError, setAuthError] = useState(() =>
     typeof callbackError === "string" &&
     Object.hasOwn(googleAuthErrors, callbackError)
@@ -144,6 +150,18 @@ export default function App() {
     [activeId, setActiveId] = useState(""),
     [state, setState] = useState<BrandState | null>(null),
     [error, setError] = useState("");
+  useEffect(() => {
+    if (!session?.user || authIntent === undefined) return;
+    void router.navigate({
+      to: ".",
+      search: (previous: WorkspaceSearch) => {
+        const next = { ...previous };
+        delete next.auth;
+        return next;
+      },
+      replace: true,
+    });
+  }, [session?.user, authIntent, router]);
   const [search, setSearch] = useState(""),
     [capture, setCapture] = useState(false),
     [newBrand, setNewBrand] = useState(false),
@@ -430,7 +448,14 @@ export default function App() {
       </div>
     );
   if (!session.user)
-    return <Auth onSuccess={authenticated} initialError={authError} />;
+    return (
+      <Auth
+        key={authIntent === "login" ? "login" : "signup"}
+        onSuccess={authenticated}
+        initialError={authError}
+        initialMode={authIntent === "login" ? "login" : "signup"}
+      />
+    );
   if (joining)
     return (
       <div className="initial-loader">
@@ -760,11 +785,15 @@ export default function App() {
 function Auth({
   onSuccess,
   initialError,
+  initialMode,
 }: {
   onSuccess: (value: Session) => void;
   initialError: string;
+  initialMode: "login" | "signup";
 }) {
-  const [signup, setSignup] = useState(!initialError),
+  const [signup, setSignup] = useState(
+      !initialError && initialMode === "signup",
+    ),
     [busy, setBusy] = useState(""),
     [error, setError] = useState(
       Object.hasOwn(googleAuthErrors, initialError)
@@ -799,6 +828,7 @@ function Auth({
   function returnTo() {
     const target = new URL(window.location.href);
     target.searchParams.delete("authError");
+    target.searchParams.delete("auth");
     return target.pathname + target.search;
   }
   function startGoogle() {
