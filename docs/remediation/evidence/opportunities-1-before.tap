@@ -1,0 +1,164 @@
+TAP version 13
+# Subtest: cold start does not claim observed growth
+ok 1 - cold start does not claim observed growth
+  ---
+  duration_ms: 111.463095
+  type: 'test'
+  ...
+# Subtest: one observation does not claim observed growth
+ok 2 - one observation does not claim observed growth
+  ---
+  duration_ms: 8.282314
+  type: 'test'
+  ...
+# Subtest: comparable windows 0 → 0 report their actual direction
+not ok 3 - comparable windows 0 → 0 report their actual direction
+  ---
+  duration_ms: 8.599463
+  type: 'test'
+  location: '/home/ubuntu/.t3/projects/30x-trackt-2/tests/remediation-opportunities-1.test.mjs:103:3'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    + actual - expected
+    
+    + 'observed'
+    - 'stable'
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 'stable'
+  actual: 'observed'
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///home/ubuntu/.t3/projects/30x-trackt-2/tests/remediation-opportunities-1.test.mjs:109:12)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1397:25)
+    async Test.processPendingSubtests (node:internal/test_runner/test:969:7)
+  ...
+# Subtest: comparable windows 1 → 1 report their actual direction
+not ok 4 - comparable windows 1 → 1 report their actual direction
+  ---
+  duration_ms: 10.397535
+  type: 'test'
+  location: '/home/ubuntu/.t3/projects/30x-trackt-2/tests/remediation-opportunities-1.test.mjs:103:3'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    + actual - expected
+    
+    + 'observed'
+    - 'stable'
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 'stable'
+  actual: 'observed'
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///home/ubuntu/.t3/projects/30x-trackt-2/tests/remediation-opportunities-1.test.mjs:109:12)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1397:25)
+    async Test.processPendingSubtests (node:internal/test_runner/test:969:7)
+  ...
+# Subtest: comparable windows 3 → 1 report their actual direction
+not ok 5 - comparable windows 3 → 1 report their actual direction
+  ---
+  duration_ms: 12.673398
+  type: 'test'
+  location: '/home/ubuntu/.t3/projects/30x-trackt-2/tests/remediation-opportunities-1.test.mjs:103:3'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    + actual - expected
+    
+    + 'observed'
+    - 'declining'
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 'declining'
+  actual: 'observed'
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///home/ubuntu/.t3/projects/30x-trackt-2/tests/remediation-opportunities-1.test.mjs:109:12)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1397:25)
+    async Test.processPendingSubtests (node:internal/test_runner/test:969:7)
+  ...
+# Subtest: comparable windows 3 → 0 report their actual direction
+not ok 6 - comparable windows 3 → 0 report their actual direction
+  ---
+  duration_ms: 12.679638
+  type: 'test'
+  location: '/home/ubuntu/.t3/projects/30x-trackt-2/tests/remediation-opportunities-1.test.mjs:103:3'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    + actual - expected
+    
+    + 'observed'
+    - 'declining'
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 'declining'
+  actual: 'observed'
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///home/ubuntu/.t3/projects/30x-trackt-2/tests/remediation-opportunities-1.test.mjs:109:12)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1397:25)
+    async Test.processPendingSubtests (node:internal/test_runner/test:969:7)
+  ...
+# Subtest: comparable windows 1 → 4 report their actual direction
+ok 7 - comparable windows 1 → 4 report their actual direction
+  ---
+  duration_ms: 14.924545
+  type: 'test'
+  ...
+# Subtest: comparable windows 0 → 2 report their actual direction
+ok 8 - comparable windows 0 → 2 report their actual direction
+  ---
+  duration_ms: 11.343552
+  type: 'test'
+  ...
+# Subtest: different source queries cannot establish a direction
+ok 9 - different source queries cannot establish a direction
+  ---
+  duration_ms: 15.404719
+  type: 'test'
+  ...
+# Subtest: different configured sources cannot establish a direction
+ok 10 - different configured sources cannot establish a direction
+  ---
+  duration_ms: 23.179147
+  type: 'test'
+  ...
+# Subtest: unequal or stale observation windows cannot establish a direction
+ok 11 - unequal or stale observation windows cannot establish a direction
+  ---
+  duration_ms: 16.81107
+  type: 'test'
+  ...
+# Subtest: native YouTube metrics remain native even with comparable RSS history
+ok 12 - native YouTube metrics remain native even with comparable RSS history
+  ---
+  duration_ms: 20.539735
+  type: 'test'
+  ...
+# Subtest: demonstration evidence cannot become an observed direction
+ok 13 - demonstration evidence cannot become an observed direction
+  ---
+  duration_ms: 17.467359
+  type: 'test'
+  ...
+1..13
+# tests 13
+# suites 0
+# pass 9
+# fail 4
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 359.232432

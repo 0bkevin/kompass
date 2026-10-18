@@ -1,0 +1,110 @@
+{
+  "synthetic": true,
+  "observedAt": "2026-10-18T04:58:08.760Z",
+  "url": "http://127.0.1.21:5511/home",
+  "api": {
+    "status": 200,
+    "hasHistory": true,
+    "opportunities": [
+      {
+        "title": "Admisión clínica · estable",
+        "growth": {
+          "label": "stable",
+          "explanation": "1 publicaciones fechadas en la ventana terminada el 2026-10-18, frente a 1 en la terminada el 2026-10-10; mismas 1 fuentes configuradas. La frecuencia se mantuvo igual en estas ventanas; no se observó crecimiento. No mide alcance, éxito ni una tendencia global."
+        }
+      },
+      {
+        "title": "Agenda clínica · cero",
+        "growth": {
+          "label": "stable",
+          "explanation": "0 publicaciones fechadas en la ventana terminada el 2026-10-18, frente a 0 en la terminada el 2026-10-10; mismas 1 fuentes configuradas. La frecuencia se mantuvo igual en estas ventanas; no se observó crecimiento. No mide alcance, éxito ni una tendencia global."
+        }
+      },
+      {
+        "title": "Espera clínica · señal inicial",
+        "growth": {
+          "label": "early_signal",
+          "explanation": "2 publicaciones fechadas en la ventana terminada el 2026-10-18, frente a 0 en la terminada el 2026-10-10; mismas 1 fuentes configuradas. Aumento con una muestra pequeña; verificar en próximas observaciones. No mide alcance, éxito ni una tendencia global."
+        }
+      },
+      {
+        "title": "Seguimiento clínico · aumento",
+        "growth": {
+          "label": "observed",
+          "explanation": "4 publicaciones fechadas en la ventana terminada el 2026-10-18, frente a 1 en la terminada el 2026-10-10; mismas 1 fuentes configuradas. Aumentó la frecuencia en esta muestra. No mide alcance, éxito ni una tendencia global."
+        }
+      },
+      {
+        "title": "Turnos clínicos · descenso",
+        "growth": {
+          "label": "declining",
+          "explanation": "1 publicaciones fechadas en la ventana terminada el 2026-10-18, frente a 3 en la terminada el 2026-10-10; mismas 1 fuentes configuradas. Disminuyó la frecuencia en esta muestra; no se observó crecimiento. No mide alcance, éxito ni una tendencia global."
+        }
+      },
+      {
+        "title": "Video clínico · YouTube nativo",
+        "growth": {
+          "label": "insufficient",
+          "explanation": "Las métricas nativas de YouTube se muestran por video; no se convierten en una puntuación ni una tendencia de rendimiento."
+        }
+      }
+    ]
+  },
+  "cold": {
+    "status": 200,
+    "hasHistory": false,
+    "growth": {
+      "label": "insufficient",
+      "explanation": "Faltan dos observaciones comparables: ventanas de 7 días, mismas fuentes y consultas, separadas por al menos una semana. Una sola consulta no demuestra crecimiento."
+    }
+  },
+  "ui": {
+    "stableWithCurrentReference": {
+      "passed": true,
+      "title": "Agenda clínica · cero",
+      "badge": "Frecuencia sin cambios",
+      "tone": "badge neutral",
+      "explanation": "0 publicaciones fechadas en la ventana terminada el 2026-10-18, frente a 0 en la terminada el 2026-10-10; mismas 1 fuentes configuradas. La frecuencia se mantuvo igual en estas ventanas; no se observó crecimiento. No mide alcance, éxito ni una tendencia global."
+    },
+    "mobile": {
+      "badge": "Frecuencia sin cambios",
+      "tone": "badge neutral",
+      "viewport": 390,
+      "documentWidth": 390,
+      "badgeBox": {
+        "left": 16,
+        "right": 155,
+        "width": 139,
+        "height": 25.59375
+      }
+    },
+    "home": {
+      "passed": true,
+      "rows": [
+        {
+          "title": "Admisión clínica · estable",
+          "label": "Frecuencia sin cambios"
+        },
+        {
+          "title": "Agenda clínica · cero",
+          "label": "Frecuencia sin cambios"
+        },
+        {
+          "title": "Espera clínica · señal inicial",
+          "label": "Señal inicial"
+        }
+      ]
+    },
+    "decline": {
+      "badge": "Descenso observado",
+      "tone": "badge amber",
+      "asserted": "1 frente a 3; Disminuyó la frecuencia en esta muestra; no se observó crecimiento."
+    }
+  },
+  "screenshots": {
+    "cold": "/home/ubuntu/.t3/userdata/browser-artifacts/browser-screenshot-127-0-1-21-mvdcssi7-c8da2a94.png",
+    "declineDesktop": "/home/ubuntu/.t3/userdata/browser-artifacts/browser-screenshot-127-0-1-21-mvdctsye-f2e994eb.png",
+    "stableDesktop": "/home/ubuntu/.t3/userdata/browser-artifacts/browser-screenshot-127-0-1-21-mvdctt6q-f22bcc6b.png",
+    "stableMobile": "/home/ubuntu/.t3/userdata/browser-artifacts/browser-screenshot-127-0-1-21-mvdcu1xf-4ed42daa.png"
+  }
+}

@@ -1,0 +1,62 @@
+{
+  "issueId": "opportunities-1",
+  "agent": "fix_opportunities_1",
+  "status": "fixed",
+  "rootCause": "growthFor asignaba observed a toda comparación que no fuera un aumento pequeño; la UI convertía observed en «Crecimiento observado» verde incluso para descensos e igualdad.",
+  "changes": [
+    "growthFor devuelve stable para igualdad y declining para descenso; observed y early_signal quedan reservados a aumentos comparables.",
+    "La explicación conserva conteos, fechas y alcance de las fuentes y describe la dirección real sin atribuir alcance, éxito ni tendencia global.",
+    "Contrato TypeScript ampliado y presentación compartida por Oportunidades e Inicio: stable neutral, declining ámbar, observed verde."
+  ],
+  "files": [
+    "server/audience-insights.mjs (solo growthFor)",
+    "src/lib/journey-types.ts (solo growth.label)",
+    "src/features/Journey.tsx (solo helper de crecimiento y consumidores)",
+    "tests/remediation-opportunities-1.test.mjs"
+  ],
+  "verification": [
+    {
+      "command": "node --test --test-reporter=tap tests/remediation-opportunities-1.test.mjs",
+      "before": "Exit 1: 9 PASS, 4 FAIL. 0→0 y 1→1 devolvían observed en vez de stable; 3→1 y 3→0 observed en vez de declining.",
+      "after": "Exit 0: 13 PASS. Cubre además cold start, una observación, 1→4, 0→2, consultas/fuentes distintas, ventanas desiguales/caducadas, demo y YouTube nativo con historia RSS positiva comparable.",
+      "kind": "test"
+    },
+    {
+      "command": "node --test --test-reporter=tap tests/audience-insights.test.mjs",
+      "before": "No ejecutado antes del cambio; no se atribuye un resultado anterior.",
+      "after": "Exit 0: 13 PASS.",
+      "kind": "test"
+    },
+    {
+      "command": "node --test tests/audience-insights.test.mjs tests/opportunity-analysis.test.mjs",
+      "before": "No ejecutado antes del cambio.",
+      "after": "Se detuvo tras 103,9 s sin progreso después de 20 PASS, en «only one analysis per brand runs at a time while another workspace can proceed». Resultado cancelado: 20 PASS, 1 CANCELLED; no cuenta como verde. Coordinador avisado.",
+      "kind": "test"
+    },
+    {
+      "command": "T3 preview_status → preview_open(reuseExistingTab:false, profileId:'incognito', open:false), host http://127.0.1.21:5511; preview_select/type/click/evaluate/snapshot",
+      "before": "El rojo de esta tarea está demostrado por tests; UI anterior documentada en docs/adversarial/reports/opportunities.md.",
+      "after": "Fixtures sintéticas, ventanas de 7 días terminadas 2026-10-10 y 2026-10-18, mismas fuentes/consulta. API HTTP 200 y UI: 0→0/1→1 stable neutral; 3→1 declining ámbar y texto 1 frente a 3; 1→4 observed verde; 0→2 early_signal. Cold start y YouTube insufficient. 0→0 conserva una referencia vigente; Inicio muestra las dos filas estables sin reclamar crecimiento. Viewport móvil 390×844: documento y badge sin desbordamiento.",
+      "kind": "browser"
+    }
+  ],
+  "artifacts": [
+    "docs/remediation/evidence/opportunities-1-before.tap",
+    "docs/remediation/evidence/opportunities-1-after.tap",
+    "docs/remediation/evidence/opportunities-1-nearby.tap",
+    "docs/remediation/evidence/opportunities-1-browser.json",
+    "docs/remediation/evidence/opportunities-1-cold.png",
+    "docs/remediation/evidence/opportunities-1-decline.png",
+    "docs/remediation/evidence/opportunities-1-stable-zero.png",
+    "docs/remediation/evidence/opportunities-1-stable-mobile.png",
+    "/tmp/30x-remediation-opportunities-1/audit/seed.mjs",
+    "/tmp/30x-remediation-opportunities-1/audit/manifest.json"
+  ],
+  "limitations": [
+    "Toda la evidencia es sintética y local, sin proveedores, claves, gasto ni observaciones reales de audiencia; no se acredita calidad longitudinal real.",
+    "No se ejecutó build global ni suite global; validación integrada corresponde al coordinador.",
+    "La combinación de tests cancelada queda registrada como tal.",
+    "Pestaña propia tab_48 cerrada y desarrollo propio detenido; ss confirmó 4511/5511 libres. Node --watch emitió una aserción FSEventWrap al cerrarse después de las comprobaciones."
+  ]
+}
+

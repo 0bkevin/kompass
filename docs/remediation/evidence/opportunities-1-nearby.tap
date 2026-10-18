@@ -1,0 +1,88 @@
+TAP version 13
+# Subtest: cold-start opportunities cite actual records and treat audience fit as an editorial hypothesis
+ok 1 - cold-start opportunities cite actual records and treat audience fit as an editorial hypothesis
+  ---
+  duration_ms: 89.33905
+  type: 'test'
+  ...
+# Subtest: insights and audience signals enforce authentication, workspace isolation and editor permissions
+ok 2 - insights and audience signals enforce authentication, workspace isolation and editor permissions
+  ---
+  duration_ms: 68.336349
+  type: 'test'
+  ...
+# Subtest: public observations need a citation and reject private links, person fields, contact data and invalid samples
+ok 3 - public observations need a citation and reject private links, person fields, contact data and invalid samples
+  ---
+  duration_ms: 56.152999
+  type: 'test'
+  ...
+# Subtest: public evidence affects priority more than an editorial hypothesis without claiming audience observation
+ok 4 - public evidence affects priority more than an editorial hypothesis without claiming audience observation
+  ---
+  duration_ms: 5.966571
+  type: 'test'
+  ...
+# Subtest: community aggregates require five voluntary responses and cannot be forged by the manual endpoint
+ok 5 - community aggregates require five voluntary responses and cannot be forged by the manual endpoint
+  ---
+  duration_ms: 15.434463
+  type: 'test'
+  ...
+# Subtest: topic growth requires week-separated comparable observations, not repeated cold-start refreshes
+ok 6 - topic growth requires week-separated comparable observations, not repeated cold-start refreshes
+  ---
+  duration_ms: 25.803176
+  type: 'test'
+  ...
+# Subtest: YouTube and demo records never synthesize performance growth or real audience claims
+ok 7 - YouTube and demo records never synthesize performance growth or real audience claims
+  ---
+  duration_ms: 13.685376
+  type: 'test'
+  ...
+# Subtest: editors record and correct a real publication while preserving approved editorial content
+ok 8 - editors record and correct a real publication while preserving approved editorial content
+  ---
+  duration_ms: 20.285631
+  type: 'test'
+  ...
+# Subtest: results cannot bypass review, publication locks or workspace isolation
+ok 9 - results cannot bypass review, publication locks or workspace isolation
+  ---
+  duration_ms: 34.043045
+  type: 'test'
+  ...
+# Subtest: result validation rejects invalid metrics, private URLs and future publication times
+ok 10 - result validation rejects invalid metrics, private URLs and future publication times
+  ---
+  duration_ms: 29.802248
+  type: 'test'
+  ...
+# Subtest: publication and result writes roll back together if persistence fails
+ok 11 - publication and result writes roll back together if persistence fails
+  ---
+  duration_ms: 8.916731
+  type: 'test'
+  ...
+# Subtest: recorded outcomes adjust priority only with comparable own content and remain separate from growth
+ok 12 - recorded outcomes adjust priority only with comparable own content and remain separate from growth
+  ---
+  duration_ms: 36.707063
+  type: 'test'
+  ...
+# Subtest: Spanish audience needs find relevant English public content without assuming observed viewers
+ok 13 - Spanish audience needs find relevant English public content without assuming observed viewers
+  ---
+  duration_ms: 3.597306
+  type: 'test'
+  ...
+1..13
+# tests 13
+# suites 0
+# pass 13
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 519.170335

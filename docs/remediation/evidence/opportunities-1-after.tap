@@ -1,0 +1,88 @@
+TAP version 13
+# Subtest: cold start does not claim observed growth
+ok 1 - cold start does not claim observed growth
+  ---
+  duration_ms: 108.112231
+  type: 'test'
+  ...
+# Subtest: one observation does not claim observed growth
+ok 2 - one observation does not claim observed growth
+  ---
+  duration_ms: 8.512481
+  type: 'test'
+  ...
+# Subtest: comparable windows 0 → 0 report their actual direction
+ok 3 - comparable windows 0 → 0 report their actual direction
+  ---
+  duration_ms: 8.446743
+  type: 'test'
+  ...
+# Subtest: comparable windows 1 → 1 report their actual direction
+ok 4 - comparable windows 1 → 1 report their actual direction
+  ---
+  duration_ms: 10.492779
+  type: 'test'
+  ...
+# Subtest: comparable windows 3 → 1 report their actual direction
+ok 5 - comparable windows 3 → 1 report their actual direction
+  ---
+  duration_ms: 14.454375
+  type: 'test'
+  ...
+# Subtest: comparable windows 3 → 0 report their actual direction
+ok 6 - comparable windows 3 → 0 report their actual direction
+  ---
+  duration_ms: 13.286834
+  type: 'test'
+  ...
+# Subtest: comparable windows 1 → 4 report their actual direction
+ok 7 - comparable windows 1 → 4 report their actual direction
+  ---
+  duration_ms: 18.215228
+  type: 'test'
+  ...
+# Subtest: comparable windows 0 → 2 report their actual direction
+ok 8 - comparable windows 0 → 2 report their actual direction
+  ---
+  duration_ms: 10.210474
+  type: 'test'
+  ...
+# Subtest: different source queries cannot establish a direction
+ok 9 - different source queries cannot establish a direction
+  ---
+  duration_ms: 17.337615
+  type: 'test'
+  ...
+# Subtest: different configured sources cannot establish a direction
+ok 10 - different configured sources cannot establish a direction
+  ---
+  duration_ms: 24.147637
+  type: 'test'
+  ...
+# Subtest: unequal or stale observation windows cannot establish a direction
+ok 11 - unequal or stale observation windows cannot establish a direction
+  ---
+  duration_ms: 15.753354
+  type: 'test'
+  ...
+# Subtest: native YouTube metrics remain native even with comparable RSS history
+ok 12 - native YouTube metrics remain native even with comparable RSS history
+  ---
+  duration_ms: 17.972652
+  type: 'test'
+  ...
+# Subtest: demonstration evidence cannot become an observed direction
+ok 13 - demonstration evidence cannot become an observed direction
+  ---
+  duration_ms: 15.621825
+  type: 'test'
+  ...
+1..13
+# tests 13
+# suites 0
+# pass 13
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 350.700572
