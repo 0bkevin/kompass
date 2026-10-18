@@ -1,0 +1,77 @@
+{
+  "issueId": "signals-3",
+  "agent": "fix_signals_3",
+  "status": "fixed",
+  "rootCause": "AudienceSignalForm declaraba maxLength200 aunque signalInput valida el tema con boundedText(...,160). Un texto de161 era válido en HTML y fallaba recién al persistir. Los títulos de señales guardadas tampoco permitían partir cadenas continuas de160 caracteres, provocando desborde horizontal móvil.",
+  "changes": [
+    "El campo Tema o necesidad usa maxLength160, conserva su nombre y validación obligatoria y muestra una ayuda visible asociada mediante aria-describedby.",
+    "Los títulos y observaciones de .journey-signal usan overflow-wrap:anywhere. El contenido se conserva completo y enlaces/acciones permanecen dentro de la fila.",
+    "No se modifican el contrato del servidor, permisos, aislamiento, privacidad, guardias de cambios, envío ni otros componentes de Journey."
+  ],
+  "files": [
+    "src/features/Journey.tsx",
+    "src/features/journey.css"
+  ],
+  "verification": [
+    {
+      "command": "T3 preview_type/click/evaluate: rellenar señal pública sintética con A×161, nota, URL example.com y muestra5; Guardar señal",
+      "before": "maxLength200, longitud161, validity.valid=true; POST400 Tema: longitud inválida (máximo160); GET0 señales. Campos conservados.",
+      "after": "La misma entrada nativa queda en160; una tecla adicional no la amplía. Ayuda Máximo160caracteres asociada al campo; nota, URL y muestra intactas. Guardar persiste exactamente A×160 en una señal con los valores originales; formulario se vacía sólo al completar.",
+      "kind": "browser"
+    },
+    {
+      "command": "HTTP real desde preview_evaluate: POST tema C×161 y GET; POST B×160 y GET en la marca aislada",
+      "before": "El servidor ya tenía el límite correcto160; el error estaba en la UI.",
+      "after": "161 devuelve400 sin mutación (1→1);160 devuelve201 y contenido exacto (1→2). No se almacena el tema rechazado.",
+      "kind": "http"
+    },
+    {
+      "command": "T3 preview_resize390×844, preview_type É×158+🚀+X, Tab/Shift+Tab/Enter, GET y recarga",
+      "before": "Un campo200 permitía contenido sobre el límite real; el listado con A×160/B×160 desbordaba el documento a1935px.",
+      "after": "Unicode queda en160 unidades UTF16, incluido el emoji íntegro, y se guarda exactamente una vez por Enter (2→3); Tab enfoca note con outline3px. Campo16px y ayuda legible. Tras la corrección CSS, documento390/390 y cada fila358/358, sin truncar el tema, con citas y eliminar dentro del viewport.",
+      "kind": "browser"
+    },
+    {
+      "command": "T3 preview_navigate recarga, seleccionar Señales y validación por aria-ref fresco, introducir D×161 y guardar",
+      "before": "Había3 señales válidas persistidas con IDs únicos.",
+      "after": "Las3señales e IDs permanecen. La UI limita D×161 a D×160 y guarda una sola señal nueva (3→4,4 IDs únicos), conserva nota/URL/muestra y limpia el formulario al éxito; documento390/390 después del guardado.",
+      "kind": "browser"
+    },
+    {
+      "command": "node --test tests/remediation-signals-1.test.mjs tests/remediation-signals-2.test.mjs",
+      "before": "No se cambian las pruebas ni las defensas de privacidad existentes.",
+      "after": "35/35 PASS;0fail,0cancelled,0skipped. Salida0.",
+      "kind": "test"
+    },
+    {
+      "command": "./node_modules/.bin/tsc --noEmit --incremental false",
+      "before": "Comprobación del JSX y props después del cambio pequeño.",
+      "after": "Salida0, sin diagnósticos.",
+      "kind": "test"
+    },
+    {
+      "command": "Cerrar pestaña propia y detener concurrently cuyo DATA_DIR es /tmp/30x-remediation-signals-3; verificar procesos y sockets",
+      "before": "Runtime propio API4522/web5522 y pestaña incognito exclusiva.",
+      "after": "Pestaña cerrada;0 procesos con ese DATA_DIR y puertos4522/5522 sin listener. No se tocan otros runtimes.",
+      "kind": "http"
+    }
+  ],
+  "artifacts": [
+    "docs/remediation/evidence/signals-3/observed.json",
+    "docs/remediation/evidence/signals-3/before-161-rejected-server.png",
+    "docs/remediation/evidence/signals-3/after-160-limited-ui.png",
+    "docs/remediation/evidence/signals-3/mobile-390-unicode-form.png",
+    "docs/remediation/evidence/signals-3/mobile-390-wrapped-persisted-signals.png",
+    "docs/remediation/evidence/signals-3/nearby-tests.log",
+    "docs/remediation/evidence/signals-3/typecheck.log",
+    "docs/remediation/evidence/signals-3/cleanup.json"
+  ],
+  "limitations": [
+    "Datos, cuenta, audiencia, notas y enlaces de evidencia sintéticos; no se usaron credenciales, descubrimiento ni proveedores externos. No se acredita representatividad o calidad de contenido real.",
+    "Escritorio1280×800 y móvil390×844 comprobados en Chromium con viewport emulado; no dispositivo físico ni Safari.",
+    "El límite cuenta unidades UTF16, coherente con maxlength HTML y el contrato actual JavaScript; no se amplió ni reinterpretó el límite del servidor.",
+    "No se añadió un test que sólo lea una constante de JSX: el síntoma se reprodujo y verificó con interacción nativa y HTTP real. El build global e integración final corresponden al coordinador.",
+    "Durante SIGTERM de Node24 --watch apareció la aserción interna FSEventWrap en el cierre del watcher. El runtime terminó y se comprobó la ausencia de procesos y listeners; las comprobaciones funcionales habían pasado.",
+    "Una acción de selección tras recargar usó el nombre accesible anterior sin el contador, agotó su espera y no mutó datos. Se corrigió el selector usando la referencia del snapshot fresco y se completó la comprobación final."
+  ]
+}

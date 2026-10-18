@@ -1,0 +1,205 @@
+{
+  "issueId": "signals-3",
+  "synthetic": true,
+  "environment": {
+    "url": "http://127.0.1.32:5522/audience",
+    "dataDir": "/tmp/30x-remediation-signals-3",
+    "apiPort": 4522,
+    "webPort": 5522,
+    "providers": "credentials unset; discovery disabled"
+  },
+  "red": {
+    "phase": "RED",
+    "expected": "Tema máximo160 antes de enviar",
+    "actual": {
+      "maxLength": 200,
+      "topicLength": 161,
+      "valid": true,
+      "error": "Tema: longitud inválida (máximo 160).",
+      "values": {
+        "segmentId": "f1b99b3c-37d5-4fe6-bd37-2bfbfa4f557b",
+        "topic": "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+        "note": "QA sintética: se revisaron cinco piezas públicas sobre propuestas comerciales. Es una observación agregada que requiere validación.",
+        "sourceUrl": "https://example.com/qa-signals-3/evidencia-agregada",
+        "sampleSize": "5"
+      },
+      "signals": []
+    },
+    "brandId": "3b172d97-403f-4d31-a741-58f95ad98d9d"
+  },
+  "green": {
+    "phase": "GREEN",
+    "maxLength": 160,
+    "length": 160,
+    "valid": true,
+    "hint": "Máximo 160 caracteres.",
+    "values": {
+      "segmentId": "f1b99b3c-37d5-4fe6-bd37-2bfbfa4f557b",
+      "topic": "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+      "note": "QA sintética: se revisaron cinco piezas públicas sobre propuestas comerciales. Es una observación agregada que requiere validación.",
+      "sourceUrl": "https://example.com/qa-signals-3/evidencia-agregada",
+      "sampleSize": "5"
+    }
+  },
+  "desktopSave": {
+    "brandId": "3b172d97-403f-4d31-a741-58f95ad98d9d",
+    "signals": {
+      "signals": [
+        {
+          "segmentId": "f1b99b3c-37d5-4fe6-bd37-2bfbfa4f557b",
+          "topic": "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+          "note": "QA sintética: se revisaron cinco piezas públicas sobre propuestas comerciales. Es una observación agregada que requiere validación.",
+          "sourceType": "public_content",
+          "sourceUrl": "https://example.com/qa-signals-3/evidencia-agregada",
+          "sampleSize": 5,
+          "id": "0f527758-ef2f-44c4-a1fd-bd08724ec981",
+          "createdAt": "2026-10-18T05:38:24.782Z",
+          "updatedAt": "2026-10-18T05:38:24.782Z"
+        }
+      ]
+    },
+    "reset": {
+      "segmentId": "f1b99b3c-37d5-4fe6-bd37-2bfbfa4f557b",
+      "topic": "",
+      "note": "",
+      "sourceUrl": "",
+      "sampleSize": ""
+    }
+  },
+  "http": {
+    "beforeCount": 1,
+    "rejectedStatus": 400,
+    "rejectedBody": {
+      "error": "Tema: longitud inválida (máximo 160)."
+    },
+    "afterRejectCount": 1,
+    "acceptedStatus": 201,
+    "accepted": {
+      "segmentId": "f1b99b3c-37d5-4fe6-bd37-2bfbfa4f557b",
+      "topic": "BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB",
+      "note": "QA sintética agregada: cinco piezas revisadas para evaluar propuestas comerciales.",
+      "sourceType": "public_content",
+      "sourceUrl": "https://example.com/qa-signals-3/http",
+      "sampleSize": 5,
+      "id": "e1954d9a-e981-4bde-ae99-62c6078183d1",
+      "createdAt": "2026-10-18T05:38:37.538Z",
+      "updatedAt": "2026-10-18T05:38:37.538Z"
+    },
+    "afterAcceptCount": 2,
+    "exact160": true,
+    "rejectedAbsent": true
+  },
+  "mobileBeforeWrappingFix": {
+    "width": 390,
+    "documentWidth": 1935,
+    "topic": "ÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉ🚀",
+    "length": 160,
+    "expectedUnicode": true,
+    "valid": true,
+    "fontSize": "16px",
+    "outline": "rgb(38, 124, 96) solid 3px",
+    "inputWithinViewport": true,
+    "hint": "Máximo 160 caracteres.",
+    "hintVisible": true,
+    "values": {
+      "segmentId": "f1b99b3c-37d5-4fe6-bd37-2bfbfa4f557b",
+      "topic": "ÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉ🚀",
+      "note": "QA móvil sintética: se revisaron cinco piezas agregadas sobre automatización comercial. La afinidad del grupo sigue pendiente de validar.",
+      "sourceUrl": "https://example.com/qa-signals-3/unicode",
+      "sampleSize": "5"
+    }
+  },
+  "mobileSave": {
+    "count": 3,
+    "signals": [
+      {
+        "id": "d8dfa7ab-3ad2-47c7-bc20-2dae27f1b883",
+        "topic": "ÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉ🚀",
+        "topicLength": 160,
+        "note": "QA móvil sintética: se revisaron cinco piezas agregadas sobre automatización comercial. La afinidad del grupo sigue pendiente de validar.",
+        "sourceUrl": "https://example.com/qa-signals-3/unicode",
+        "sampleSize": 5
+      },
+      {
+        "id": "e1954d9a-e981-4bde-ae99-62c6078183d1",
+        "topic": "BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB",
+        "topicLength": 160,
+        "note": "QA sintética agregada: cinco piezas revisadas para evaluar propuestas comerciales.",
+        "sourceUrl": "https://example.com/qa-signals-3/http",
+        "sampleSize": 5
+      },
+      {
+        "id": "0f527758-ef2f-44c4-a1fd-bd08724ec981",
+        "topic": "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+        "topicLength": 160,
+        "note": "QA sintética: se revisaron cinco piezas públicas sobre propuestas comerciales. Es una observación agregada que requiere validación.",
+        "sourceUrl": "https://example.com/qa-signals-3/evidencia-agregada",
+        "sampleSize": 5
+      }
+    ],
+    "unicodeSavedExactly": true,
+    "blankTopicAfterSave": true
+  },
+  "mobileAfterWrappingFix": {
+    "width": 390,
+    "scroll": 390,
+    "rows": [
+      {
+        "length": 160,
+        "width": 358,
+        "scroll": 358,
+        "wrap": "anywhere",
+        "linksWithin": true,
+        "actionWithin": true
+      },
+      {
+        "length": 160,
+        "width": 358,
+        "scroll": 358,
+        "wrap": "anywhere",
+        "linksWithin": true,
+        "actionWithin": true
+      },
+      {
+        "length": 160,
+        "width": 358,
+        "scroll": 358,
+        "wrap": "anywhere",
+        "linksWithin": true,
+        "actionWithin": true
+      }
+    ]
+  },
+  "confirmationAfterReloadAndWrappingFix": {
+    "count": 4,
+    "uniqueIds": 4,
+    "previousIdsPresent": true,
+    "confirmationCount": 1,
+    "confirmation": {
+      "segmentId": "f1b99b3c-37d5-4fe6-bd37-2bfbfa4f557b",
+      "topic": "DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD",
+      "note": "QA sintética de confirmación: cinco piezas revisadas como señal agregada del equipo, sin afirmar representatividad.",
+      "sourceType": "public_content",
+      "sourceUrl": "https://example.com/qa-signals-3/confirmacion",
+      "sampleSize": 5,
+      "id": "d77cf393-35e3-4a28-a57b-f012076f0b55",
+      "createdAt": "2026-10-18T05:41:31.681Z",
+      "updatedAt": "2026-10-18T05:41:31.681Z"
+    },
+    "reset": {
+      "segmentId": "f1b99b3c-37d5-4fe6-bd37-2bfbfa4f557b",
+      "topic": "",
+      "note": "",
+      "sourceUrl": "",
+      "sampleSize": ""
+    },
+    "width": 390,
+    "documentWidth": 390
+  },
+  "keyboard": {
+    "desktopAndMobileTabFromTopic": "note",
+    "focusOutline": "rgb(38, 124, 96) solid 3px",
+    "mobileSave": "Shift+Tab to topic, Enter saves exactly one Unicode160 signal"
+  },
+  "toolingNote": "After reload the tab accessible name included its count. One follow-up batch used the obsolete exact name, timed out without changing data, and was corrected using the fresh snapshot aria-ref. No alternate browser was used."
+}

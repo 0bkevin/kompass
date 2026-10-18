@@ -1,0 +1,13 @@
+{
+  "tabId": "tab_4q_07e54779-9ab2-4979-8a15-674c4eff160a",
+  "tabClosed": true,
+  "dataDir": "/tmp/30x-remediation-signals-3",
+  "runtimeSession": 96436,
+  "stoppedConcurrentlyPid": 266928,
+  "ownProcessesRemaining": [],
+  "portsListening": {
+    "4522": false,
+    "5522": false
+  },
+  "shutdownNote": "Node24 watch-mode FSEventWrap assertion during SIGTERM only; processes and sockets verified absent."
+}
