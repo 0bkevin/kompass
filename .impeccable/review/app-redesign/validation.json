@@ -1,0 +1,54 @@
+{
+  "branch": "design/landing-dark-purple",
+  "implementationCommit": "06d6121",
+  "webPort": 5188,
+  "apiPort": 3038,
+  "tests": {
+    "command": "npm test",
+    "passed": 591,
+    "failed": 0,
+    "skipped": 0,
+    "exitCode": 0
+  },
+  "build": {
+    "command": "npm run build",
+    "includesTypeScript": true,
+    "exitCode": 0
+  },
+  "routeViewports": 22,
+  "additionalStateCaptures": 12,
+  "routeTextContrastFailures": 0,
+  "routeHorizontalOverflowFailures": 0,
+  "tabletWidths": [768, 1024],
+  "keyboard": {
+    "drawerFocusTrap": true,
+    "shiftTabWrap": true,
+    "escapeDismissal": true,
+    "focusReturn": true,
+    "focusOutline": "2px solid #d7c2ff"
+  },
+  "reducedMotion": {
+    "method": "Actual CSS media branches temporarily enabled via CSSOM and then restored; no native preference emulation in T3 browser",
+    "buttonTransition": "background-color 150ms, border-color 150ms",
+    "animation": "none"
+  },
+  "detectorRuns": 1,
+  "detectorFindings": {
+    "supersededSystemAdvisories": 499,
+    "selectedGeistWarnings": 11,
+    "officialGoogleButtonFontWarning": 1
+  },
+  "motionReview": {
+    "initialFindingGroups": 4,
+    "resolved": 4,
+    "verdict": "Approve"
+  },
+  "finishReview": {
+    "context": "fresh independent agent",
+    "requiredCapturesInspected": 34,
+    "disposition": "ship",
+    "materialFixes": 0
+  },
+  "externalProviderCallsTested": false,
+  "newRuntimeDependencies": false
+}

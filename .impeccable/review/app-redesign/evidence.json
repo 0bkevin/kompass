@@ -1,0 +1,332 @@
+{
+  "routes": [
+    {
+      "path": "/home",
+      "width": 1440,
+      "scrollWidth": 1440,
+      "title": "Tu pr\u00f3ximo contenido.",
+      "bodyBg": "rgb(12, 12, 16)",
+      "checked": 68,
+      "contrast": [],
+      "overflow": [],
+      "screenshot": "/workspace/t3-worktrees/30x-trackt-2/design-landing-dark-purple/.impeccable/review/app-redesign/home-1440.png"
+    },
+    {
+      "path": "/brand",
+      "width": 1440,
+      "scrollWidth": 1440,
+      "title": "El contexto de tu empresa.",
+      "bodyBg": "rgb(12, 12, 16)",
+      "checked": 40,
+      "contrast": [],
+      "overflow": [],
+      "screenshot": "/workspace/t3-worktrees/30x-trackt-2/design-landing-dark-purple/.impeccable/review/app-redesign/brand-1440.png"
+    },
+    {
+      "path": "/audience",
+      "width": 1440,
+      "scrollWidth": 1440,
+      "title": "Entiende la necesidad antes de elegir el tema.",
+      "bodyBg": "rgb(12, 12, 16)",
+      "checked": 56,
+      "contrast": [],
+      "overflow": [],
+      "screenshot": "/workspace/t3-worktrees/30x-trackt-2/design-landing-dark-purple/.impeccable/review/app-redesign/audience-1440.png"
+    },
+    {
+      "path": "/opportunities",
+      "width": 1440,
+      "scrollWidth": 1440,
+      "title": "Elige tu pr\u00f3ximo tema.",
+      "bodyBg": "rgb(12, 12, 16)",
+      "checked": 57,
+      "contrast": [],
+      "overflow": [],
+      "screenshot": "/workspace/t3-worktrees/30x-trackt-2/design-landing-dark-purple/.impeccable/review/app-redesign/opportunities-1440.png"
+    },
+    {
+      "path": "/radar",
+      "width": 1440,
+      "scrollWidth": 1440,
+      "title": "Decide qu\u00e9 merece contar tu empresa.",
+      "bodyBg": "rgb(12, 12, 16)",
+      "checked": 81,
+      "contrast": [],
+      "overflow": [],
+      "screenshot": "/workspace/t3-worktrees/30x-trackt-2/design-landing-dark-purple/.impeccable/review/app-redesign/radar-1440.png"
+    },
+    {
+      "path": "/inbox",
+      "width": 1440,
+      "scrollWidth": 1440,
+      "title": "Las referencias, en un solo lugar.",
+      "bodyBg": "rgb(12, 12, 16)",
+      "checked": 73,
+      "contrast": [],
+      "overflow": [],
+      "screenshot": "/workspace/t3-worktrees/30x-trackt-2/design-landing-dark-purple/.impeccable/review/app-redesign/inbox-1440.png"
+    },
+    {
+      "path": "/studio",
+      "width": 1440,
+      "scrollWidth": 1440,
+      "title": "Prepara una pieza con un enfoque claro.",
+      "bodyBg": "rgb(12, 12, 16)",
+      "checked": 79,
+      "contrast": [],
+      "overflow": [],
+      "screenshot": "/workspace/t3-worktrees/30x-trackt-2/design-landing-dark-purple/.impeccable/review/app-redesign/studio-1440.png"
+    },
+    {
+      "path": "/calendar",
+      "width": 1440,
+      "scrollWidth": 1440,
+      "title": "Pon fecha a las piezas aprobadas.",
+      "bodyBg": "rgb(12, 12, 16)",
+      "checked": 68,
+      "contrast": [],
+      "overflow": [],
+      "screenshot": "/workspace/t3-worktrees/30x-trackt-2/design-landing-dark-purple/.impeccable/review/app-redesign/calendar-1440.png"
+    },
+    {
+      "path": "/results",
+      "width": 1440,
+      "scrollWidth": 1440,
+      "title": "Usa los resultados para decidir qu\u00e9 sigue.",
+      "bodyBg": "rgb(12, 12, 16)",
+      "checked": 37,
+      "contrast": [],
+      "overflow": [],
+      "screenshot": "/workspace/t3-worktrees/30x-trackt-2/design-landing-dark-purple/.impeccable/review/app-redesign/results-1440.png"
+    },
+    {
+      "path": "/assets",
+      "width": 1440,
+      "scrollWidth": 1440,
+      "title": "El material para tu pr\u00f3xima pieza.",
+      "bodyBg": "rgb(12, 12, 16)",
+      "checked": 44,
+      "contrast": [],
+      "overflow": [],
+      "screenshot": "/workspace/t3-worktrees/30x-trackt-2/design-landing-dark-purple/.impeccable/review/app-redesign/assets-1440.png"
+    },
+    {
+      "path": "/settings",
+      "width": 1440,
+      "scrollWidth": 1440,
+      "title": "Fuentes y equipo",
+      "bodyBg": "rgb(12, 12, 16)",
+      "checked": 49,
+      "contrast": [],
+      "overflow": [],
+      "screenshot": "/workspace/t3-worktrees/30x-trackt-2/design-landing-dark-purple/.impeccable/review/app-redesign/settings-1440.png"
+    },
+    {
+      "path": "/home",
+      "width": 390,
+      "scrollWidth": 390,
+      "title": "Tu pr\u00f3ximo contenido.",
+      "bodyBg": "rgb(12, 12, 16)",
+      "checked": 19,
+      "contrast": [],
+      "overflow": [],
+      "screenshot": "/workspace/t3-worktrees/30x-trackt-2/design-landing-dark-purple/.impeccable/review/app-redesign/home-390.png"
+    },
+    {
+      "path": "/brand",
+      "width": 390,
+      "scrollWidth": 390,
+      "title": "El contexto de tu empresa.",
+      "bodyBg": "rgb(12, 12, 16)",
+      "checked": 16,
+      "contrast": [],
+      "overflow": [],
+      "screenshot": "/workspace/t3-worktrees/30x-trackt-2/design-landing-dark-purple/.impeccable/review/app-redesign/brand-390.png"
+    },
+    {
+      "path": "/audience",
+      "width": 390,
+      "scrollWidth": 390,
+      "title": "Entiende la necesidad antes de elegir el tema.",
+      "bodyBg": "rgb(12, 12, 16)",
+      "checked": 18,
+      "contrast": [],
+      "overflow": [],
+      "screenshot": "/workspace/t3-worktrees/30x-trackt-2/design-landing-dark-purple/.impeccable/review/app-redesign/audience-390.png"
+    },
+    {
+      "path": "/opportunities",
+      "width": 390,
+      "scrollWidth": 390,
+      "title": "Elige tu pr\u00f3ximo tema.",
+      "bodyBg": "rgb(12, 12, 16)",
+      "checked": 29,
+      "contrast": [],
+      "overflow": [],
+      "screenshot": "/workspace/t3-worktrees/30x-trackt-2/design-landing-dark-purple/.impeccable/review/app-redesign/opportunities-390.png"
+    },
+    {
+      "path": "/radar",
+      "width": 390,
+      "scrollWidth": 390,
+      "title": "Decide qu\u00e9 merece contar tu empresa.",
+      "bodyBg": "rgb(12, 12, 16)",
+      "checked": 33,
+      "contrast": [],
+      "overflow": [],
+      "screenshot": "/workspace/t3-worktrees/30x-trackt-2/design-landing-dark-purple/.impeccable/review/app-redesign/radar-390.png"
+    },
+    {
+      "path": "/inbox",
+      "width": 390,
+      "scrollWidth": 390,
+      "title": "Las referencias, en un solo lugar.",
+      "bodyBg": "rgb(12, 12, 16)",
+      "checked": 29,
+      "contrast": [],
+      "overflow": [],
+      "screenshot": "/workspace/t3-worktrees/30x-trackt-2/design-landing-dark-purple/.impeccable/review/app-redesign/inbox-390.png"
+    },
+    {
+      "path": "/studio",
+      "width": 390,
+      "scrollWidth": 390,
+      "title": "Prepara una pieza con un enfoque claro.",
+      "bodyBg": "rgb(12, 12, 16)",
+      "checked": 22,
+      "contrast": [],
+      "overflow": [],
+      "screenshot": "/workspace/t3-worktrees/30x-trackt-2/design-landing-dark-purple/.impeccable/review/app-redesign/studio-390.png"
+    },
+    {
+      "path": "/calendar",
+      "width": 390,
+      "scrollWidth": 390,
+      "title": "Pon fecha a las piezas aprobadas.",
+      "bodyBg": "rgb(12, 12, 16)",
+      "checked": 26,
+      "contrast": [],
+      "overflow": [],
+      "screenshot": "/workspace/t3-worktrees/30x-trackt-2/design-landing-dark-purple/.impeccable/review/app-redesign/calendar-390.png"
+    },
+    {
+      "path": "/results",
+      "width": 390,
+      "scrollWidth": 390,
+      "title": "Usa los resultados para decidir qu\u00e9 sigue.",
+      "bodyBg": "rgb(12, 12, 16)",
+      "checked": 11,
+      "contrast": [],
+      "overflow": [],
+      "screenshot": "/workspace/t3-worktrees/30x-trackt-2/design-landing-dark-purple/.impeccable/review/app-redesign/results-390.png"
+    },
+    {
+      "path": "/assets",
+      "width": 390,
+      "scrollWidth": 390,
+      "title": "El material para tu pr\u00f3xima pieza.",
+      "bodyBg": "rgb(12, 12, 16)",
+      "checked": 20,
+      "contrast": [],
+      "overflow": [],
+      "screenshot": "/workspace/t3-worktrees/30x-trackt-2/design-landing-dark-purple/.impeccable/review/app-redesign/assets-390.png"
+    },
+    {
+      "path": "/settings",
+      "width": 390,
+      "scrollWidth": 390,
+      "title": "Fuentes y equipo",
+      "bodyBg": "rgb(12, 12, 16)",
+      "checked": 18,
+      "contrast": [],
+      "overflow": [],
+      "screenshot": "/workspace/t3-worktrees/30x-trackt-2/design-landing-dark-purple/.impeccable/review/app-redesign/settings-390.png"
+    }
+  ],
+  "states": [
+    {
+      "name": "signup",
+      "width": 1440,
+      "url": "http://localhost:5188/home?auth=signup",
+      "screenshotPath": "/home/ubuntu/.t3/userdata/browser-artifacts/browser-screenshot-localhost-mvdwu94x-cc3c69f1.png",
+      "screenshot": "/workspace/t3-worktrees/30x-trackt-2/design-landing-dark-purple/.impeccable/review/app-redesign/signup-1440.png"
+    },
+    {
+      "name": "signup",
+      "width": 390,
+      "url": "http://localhost:5188/home?auth=signup",
+      "screenshotPath": "/home/ubuntu/.t3/userdata/browser-artifacts/browser-screenshot-localhost-mvdwudxf-e61940f0.png",
+      "screenshot": "/workspace/t3-worktrees/30x-trackt-2/design-landing-dark-purple/.impeccable/review/app-redesign/signup-390.png"
+    },
+    {
+      "name": "setup-start",
+      "width": 1440,
+      "url": "http://localhost:5188/home",
+      "screenshotPath": "/home/ubuntu/.t3/userdata/browser-artifacts/browser-screenshot-localhost-mvdwux1f-976af2b6.png",
+      "screenshot": "/workspace/t3-worktrees/30x-trackt-2/design-landing-dark-purple/.impeccable/review/app-redesign/setup-start-1440.png"
+    },
+    {
+      "name": "setup-start",
+      "width": 390,
+      "url": "http://localhost:5188/home",
+      "screenshotPath": "/home/ubuntu/.t3/userdata/browser-artifacts/browser-screenshot-localhost-mvdwuxg5-db98b4ce.png",
+      "screenshot": "/workspace/t3-worktrees/30x-trackt-2/design-landing-dark-purple/.impeccable/review/app-redesign/setup-start-390.png"
+    },
+    {
+      "name": "mobile-menu",
+      "width": 390,
+      "url": "http://localhost:5188/settings",
+      "screenshotPath": "/home/ubuntu/.t3/userdata/browser-artifacts/browser-screenshot-localhost-mvdwv5yn-2c734dff.png",
+      "screenshot": "/workspace/t3-worktrees/30x-trackt-2/design-landing-dark-purple/.impeccable/review/app-redesign/mobile-menu-390.png"
+    },
+    {
+      "name": "setup-audience",
+      "width": 390,
+      "url": "http://localhost:5188/home",
+      "screenshotPath": "/home/ubuntu/.t3/userdata/browser-artifacts/browser-screenshot-localhost-mvdwvbgq-ae26ba38.png",
+      "screenshot": "/workspace/t3-worktrees/30x-trackt-2/design-landing-dark-purple/.impeccable/review/app-redesign/setup-audience-390.png"
+    },
+    {
+      "name": "studio-editor",
+      "width": 1440,
+      "url": "http://localhost:5188/studio/c953947b-f2f8-4356-b3f3-40eb5bd71080",
+      "screenshotPath": "/home/ubuntu/.t3/userdata/browser-artifacts/browser-screenshot-localhost-mvdwvnjh-e1a254a8.png",
+      "screenshot": "/workspace/t3-worktrees/30x-trackt-2/design-landing-dark-purple/.impeccable/review/app-redesign/studio-editor-1440.png"
+    },
+    {
+      "name": "schedule-dialog",
+      "width": 1440,
+      "url": "http://localhost:5188/studio/c953947b-f2f8-4356-b3f3-40eb5bd71080",
+      "screenshotPath": "/home/ubuntu/.t3/userdata/browser-artifacts/browser-screenshot-localhost-mvdwxdff-a15cd327.png",
+      "screenshot": "/workspace/t3-worktrees/30x-trackt-2/design-landing-dark-purple/.impeccable/review/app-redesign/schedule-dialog-1440.png"
+    },
+    {
+      "name": "schedule-dialog",
+      "width": 390,
+      "url": "http://localhost:5188/studio/c953947b-f2f8-4356-b3f3-40eb5bd71080",
+      "screenshotPath": "/home/ubuntu/.t3/userdata/browser-artifacts/browser-screenshot-localhost-mvdwxdsc-b21d2c39.png",
+      "screenshot": "/workspace/t3-worktrees/30x-trackt-2/design-landing-dark-purple/.impeccable/review/app-redesign/schedule-dialog-390.png"
+    },
+    {
+      "name": "community",
+      "width": 1440,
+      "url": "http://localhost:5188/community/a3HrUgH4DH7GOSB23qudaLR1iihezK1DAUpKs6JQanU",
+      "screenshotPath": "/home/ubuntu/.t3/userdata/browser-artifacts/browser-screenshot-localhost-mvdwy3jc-70e6e625.png",
+      "screenshot": "/workspace/t3-worktrees/30x-trackt-2/design-landing-dark-purple/.impeccable/review/app-redesign/community-1440.png"
+    },
+    {
+      "name": "community",
+      "width": 390,
+      "url": "http://localhost:5188/community/a3HrUgH4DH7GOSB23qudaLR1iihezK1DAUpKs6JQanU",
+      "screenshotPath": "/home/ubuntu/.t3/userdata/browser-artifacts/browser-screenshot-localhost-mvdwy42g-6d05cdc4.png",
+      "screenshot": "/workspace/t3-worktrees/30x-trackt-2/design-landing-dark-purple/.impeccable/review/app-redesign/community-390.png"
+    },
+    {
+      "name": "community-thanks",
+      "width": 390,
+      "url": "http://localhost:5188/community/a3HrUgH4DH7GOSB23qudaLR1iihezK1DAUpKs6JQanU",
+      "screenshotPath": "/home/ubuntu/.t3/userdata/browser-artifacts/browser-screenshot-localhost-mvdwz6xz-9b976719.png",
+      "screenshot": "/workspace/t3-worktrees/30x-trackt-2/design-landing-dark-purple/.impeccable/review/app-redesign/community-thanks-390.png"
+    }
+  ]
+}
