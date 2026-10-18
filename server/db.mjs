@@ -1,3 +1,4 @@
+import { resolveAiConfig } from "./integration-config.mjs";
 import { DatabaseSync } from "node:sqlite";
 import {
   randomUUID,
@@ -168,17 +169,19 @@ export function setSecret(brandId, key, value) {
   ).run(brandId, key, stored);
 }
 export function publicIntegrations(brandId) {
-  const ai = getSecret(brandId, "ai");
+  const stored = getSecret(brandId, "ai");
+  const ai = resolveAiConfig(stored);
+  const policy = aiProviderAccessPolicy(
+    ai?.baseUrl || process.env.OPENAI_BASE_URL || "https://api.openai.com/v1",
+  );
   const webhook = getSecret(brandId, "webhook");
   return {
     ai: {
-      accessPolicy: aiProviderAccessPolicy(
-        ai?.baseUrl || "https://api.openai.com/v1",
-      ),
-      configured: !ai?.disabled && !!(ai?.apiKey || process.env.OPENAI_API_KEY),
-      ...(ai?.model || process.env.OPENAI_MODEL
-        ? { model: ai?.model || process.env.OPENAI_MODEL }
-        : {}),
+      accessPolicy: policy,
+      configured: !!ai,
+      ready: !!ai && policy.allowed,
+      managedBy: ai?.managedBy || "local",
+      ...(ai ? { model: ai.model } : {}),
     },
     webhook: {
       accessPolicy: webhookAccessPolicy(webhook?.url),

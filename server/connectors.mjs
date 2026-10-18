@@ -1,3 +1,4 @@
+import { resolveAiConfig } from "./integration-config.mjs";
 import https from "node:https";
 import http from "node:http";
 import dns from "node:dns/promises";
@@ -271,15 +272,7 @@ export async function safeFetch(value, options = {}) {
 }
 
 export function getAiConfig(brandId) {
-  const stored = getSecret(brandId, "ai");
-  if (stored?.disabled) return null;
-  const apiKey = stored?.apiKey || process.env.OPENAI_API_KEY;
-  if (!apiKey) return null;
-  return {
-    apiKey,
-    model: stored?.model || process.env.OPENAI_MODEL || "gpt-4.1-mini",
-    baseUrl: stored?.baseUrl || "https://api.openai.com/v1",
-  };
+  return resolveAiConfig(getSecret(brandId, "ai"));
 }
 
 // Plain HTTP Responses API, no browser credentials or client-side API keys.
@@ -370,7 +363,19 @@ export async function configureIntegrations(brandId, input) {
   // Validate the whole request before saving any setting.
   const changes = {};
   if (input.ai !== undefined) {
-    if (input.ai === null || input.ai.disabled) changes.ai = { disabled: true };
+    if (
+      input.ai !== null &&
+      (typeof input.ai !== "object" || Array.isArray(input.ai))
+    )
+      throw integrationError("La configuración de IA debe ser un objeto.");
+    if (input.ai?.usePlatform === true) {
+      if (Object.keys(input.ai).some((key) => key !== "usePlatform"))
+        throw integrationError(
+          "Usar la IA de la plataforma no admite ajustes adicionales.",
+        );
+      changes.ai = null;
+    } else if (input.ai === null || input.ai.disabled)
+      changes.ai = { disabled: true };
     else {
       const previous = getSecret(brandId, "ai") || {};
       const apiKey = String(input.ai.apiKey || previous.apiKey || "").trim();

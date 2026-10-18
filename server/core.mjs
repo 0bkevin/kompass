@@ -470,12 +470,6 @@ function defaults(brandId) {
           },
         ]
       : []),
-    {
-      name: "TechCrunch · novedades",
-      type: "rss",
-      url: "https://techcrunch.com/feed/",
-      enabled: false,
-    },
   ];
   for (const source of sources) saveRecord(brandId, "sources", source);
 }
