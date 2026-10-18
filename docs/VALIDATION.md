@@ -4,11 +4,19 @@ Fecha: 18 de octubre de 2026. Entorno local con Node.js 24, SQLite temporal y cr
 
 ## Revisión vigente de condiciones de uso
 
-La revisión posterior de fuentes y permisos está en [compliance/README.md](compliance/README.md). Apify Instagram/TikTok, Reddit, YouTube editorial, Gemini video y Telegram entrante están bloqueados por el servidor. Webs/feeds adicionales, IA y webhooks requieren revisión por origen, ruta y finalidad. Las pruebas de éxito de proveedores de la entrega anterior no acreditan permisos ni describen conectores actualmente activables.
+La revisión posterior de fuentes y permisos está en [compliance/README.md](compliance/README.md). Apify Instagram/TikTok, Reddit, YouTube editorial y Gemini video están bloqueados por el servidor. Webs/feeds adicionales, IA y webhooks requieren revisión por origen, ruta y finalidad. Las pruebas de éxito de proveedores de la entrega anterior no acreditan permisos ni describen conectores actualmente activables.
 
-`node --test --test-timeout=20000 tests/*.test.mjs`: **422 aprobadas**, cero fallos, cancelaciones u omitidas. `npm run build` incluye TypeScript y pasa. Las regresiones cubren credenciales, fuentes heredadas, suplantación del origen, redirecciones, revocación, robots, cuota HN, datos restringidos en pantalla, salida hacia IA y publicación con atribución. No se hicieron llamadas de pago ni scraping social para comprobarlo.
+`node --test --test-timeout=20000 tests/*.test.mjs`: **427 aprobadas**, cero fallos, cancelaciones u omitidas. `npm run build` incluye TypeScript y pasa. Las regresiones cubren credenciales, fuentes heredadas, suplantación del origen, redirecciones, revocación, robots, cuota HN, datos restringidos en pantalla, salida hacia IA y publicación con atribución. No se hicieron llamadas de pago ni scraping social para comprobarlo.
 
 Los inventarios de las dos bases de vista previa encontraron **cero referencias de proveedores restringidos y cero referencias YouTube pendientes de revisión de conservación**. Son inspecciones de solo lectura, sin borrar información; ver [evidencia](compliance/evidence/).
+
+## Retirada de Telegram
+
+Por petición del usuario se eliminó Telegram del producto: pestaña y formulario de ajustes, canales de Studio/calendario, envío Bot API, ruta de recepción y excepción de origen. La API rechaza ese conector y canal; un pedido mixto inválido no desconecta el webhook. El arranque elimina solo sus credenciales y cursores, conservando piezas, recibos históricos, IA y webhooks. Las piezas antiguas no se redirigen a otro conector.
+
+La suite completa pasa con **427 pruebas**, cero fallos u omisiones; `npm run build` pasa con TypeScript. Se mantienen las regresiones de aprobación, confirmación de destino, idempotencia, recepción HTTP, rechazos definitivos y entregas inciertas mediante transporte webhook simulado. No se hicieron llamadas externas de publicación.
+
+Comprobación interactiva en la vista previa de QA: ajustes con solo IA y Publicación, formulario de webhook accesible, cero controles Telegram; creación de contenido con LinkedIn, Instagram, TikTok y YouTube. Ajustes y Studio sin desbordamiento horizontal a 390 y 1440 px. Ambas vistas previas (3026 y 5450) reiniciadas con el build actualizado.
 
 ## Pruebas anteriores a la revisión de permisos
 

@@ -53,7 +53,7 @@ La revisión de condiciones de uso bloquea los adaptadores Apify de Instagram/Ti
 
 Webs, feeds adicionales, proveedores de IA y webhooks requieren un permiso revisado por el operador para dominio, ruta y finalidad. `SOURCE_ACCESS_POLICY_FILE` registra esa revisión con vencimiento; no sustituye una autorización real. Las lecturas permitidas respetan robots y vuelven a comprobar cada redirección y el origen del contenido almacenado. Ver la [revisión por funcionalidad](docs/compliance/README.md), sus fuentes oficiales y restricciones.
 
-Los límites de reservas Apify se conservan para auditar usos previos, pero no se ejecutan Actors en este despliegue. Hosting, almacenamiento y modelos de IA tienen costos separados. La recepción automática de mensajes de Telegram está desactivada. Publicar requiere contenido aprobado, permiso del destino y una acción explícita; el calendario organiza fechas y no publica por sí solo.
+Los límites de reservas Apify se conservan para auditar usos previos, pero no se ejecutan Actors en este despliegue. Hosting, almacenamiento y modelos de IA tienen costos separados. Publicar requiere contenido aprobado, permiso del destino y una acción explícita; el calendario organiza fechas y no publica por sí solo.
 
 ## Persistencia y operación
 

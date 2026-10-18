@@ -517,3 +517,17 @@ Esta serie posterior reemplaza la activación por credenciales por controles de 
 62. `9938e6e8b2` — test(workflow): retain permitted scenarios with explicit synthetic source reviews
 63. `a509660eb1` — docs(compliance): record official terms feature dispositions and final evidence
 64. `docs(commits): document the source-permission hardening series` — índice de la serie y límites de su validación.
+
+## Ajustes solicitados por el usuario — 18 de octubre de 2026
+
+65. `b908d26` — fix(settings): remove provider terms links from connector cards
+
+    Retirar los enlaces «Consultar condiciones del proveedor» de las tres tarjetas, manteniendo sus estados. Build y comprobación interactiva correctos.
+
+66. `91b198e` — feat(platform): remove Telegram integration and retire saved credentials
+
+    Eliminar Telegram de ajustes, selección de canales, contratos públicos, recepción y envío Bot API. Rechazar configuraciones antiguas sin modificar otros conectores; impedir el reenvío de piezas antiguas a webhooks. Borrar sus credenciales y cursores al arrancar y conservar contenido e historial.
+
+    Migrar las regresiones de publicación a webhooks y comprobar retirada por HTTP, control de origen, limpieza de arranque y bloqueo de salida. Suite completa: **427 aprobadas**, cero fallos; build y TypeScript correctos. Ajustes y creación de contenido revisados en navegador; vistas previas actualizadas.
+
+67. `docs(product): align workflow and validation with Telegram removal` — actualizar alcance vigente, matriz de funciones, evidencia de validación e índice de cambios.
