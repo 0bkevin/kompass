@@ -13,6 +13,7 @@ import { download, formatNames } from "../lib/format";
 import type { Opportunity } from "../lib/journey-types";
 import type { Brand } from "../lib/types";
 import { useWorkspace } from "../lib/workspace";
+import { ReportDraft } from "./ReportDraft";
 import {
   exportMarkdown,
   isResearchReportStale,
@@ -242,18 +243,21 @@ function ReportSession({
               </div>
             </details>
           </section>
-          <div className="report-findings-pair">
-            <FindingSection
-              title="Tendencias en las fuentes"
-              items={report.trends}
-              empty="Sin tendencias informadas para este período."
-            />
-            <FindingSection
-              title="Formatos"
-              items={report.formats}
-              empty="Sin patrones de formato informados."
-            />
-          </div>
+          <details className="report-evidence-disclosure">
+            <summary>Historial y formatos observados</summary>
+            <div className="report-findings-pair">
+              <FindingSection
+                title="Tendencias en las fuentes"
+                items={report.trends}
+                empty="Sin tendencias informadas para este período."
+              />
+              <FindingSection
+                title="Formatos"
+                items={report.formats}
+                empty="Sin patrones de formato informados."
+              />
+            </div>
+          </details>
           <section
             className="report-opportunities"
             aria-labelledby="report-opportunities-title"
@@ -349,46 +353,49 @@ function ReportSession({
               </EmptyState>
             )}
           </section>
-          <section
-            className="report-review"
-            aria-label="Validación, costos y piloto"
-          >
-            <FindingSection
-              title="Validación editorial"
-              items={report.validation}
-              empty="Sin decisiones editoriales registradas."
-            />
-            <div className="report-costs">
-              <h2>Costos</h2>
-              <p>
-                {report.costs?.actualUsd !== undefined
-                  ? `Costo informado: USD ${report.costs.actualUsd.toFixed(2)}.`
-                  : "Costo real no informado."}
-              </p>
-              {report.costs?.reservedUsd !== undefined && (
-                <p className="report-muted">
-                  Reserva: USD {report.costs.reservedUsd.toFixed(2)}. No
-                  equivale a gasto real.
-                </p>
-              )}
-              {report.costs?.note && (
-                <p className="report-muted">{report.costs.note}</p>
-              )}
-            </div>
-            <FindingSection
-              title="Piloto"
-              items={report.pilot}
-              empty="Sin evaluación del piloto registrada."
-            />
-            {brand.role !== "reviewer" && (
-              <PilotForm
-                key={brand.id}
-                brandId={brand.id}
-                endpoints={endpoints}
-                onSaved={reload}
+          <details className="report-evaluation-disclosure">
+            <summary>Decisiones y evaluación del piloto</summary>
+            <section
+              className="report-review"
+              aria-label="Validación, costos y piloto"
+            >
+              <FindingSection
+                title="Validación editorial"
+                items={report.validation}
+                empty="Sin decisiones editoriales registradas."
               />
-            )}
-          </section>
+              <div className="report-costs">
+                <h2>Costos</h2>
+                <p>
+                  {report.costs?.actualUsd !== undefined
+                    ? `Costo informado: USD ${report.costs.actualUsd.toFixed(2)}.`
+                    : "Costo real no informado."}
+                </p>
+                {report.costs?.reservedUsd !== undefined && (
+                  <p className="report-muted">
+                    Reserva: USD {report.costs.reservedUsd.toFixed(2)}. No
+                    equivale a gasto real.
+                  </p>
+                )}
+                {report.costs?.note && (
+                  <p className="report-muted">{report.costs.note}</p>
+                )}
+              </div>
+              <FindingSection
+                title="Piloto"
+                items={report.pilot}
+                empty="Sin evaluación del piloto registrada."
+              />
+              {brand.role !== "reviewer" && (
+                <PilotForm
+                  key={brand.id}
+                  brandId={brand.id}
+                  endpoints={endpoints}
+                  onSaved={reload}
+                />
+              )}
+            </section>
+          </details>
         </>
       )}
     </div>
@@ -574,6 +581,9 @@ function OpportunityRow({
             endpoints={endpoints}
             onSaved={onSaved}
           />
+        )}
+        {brand.role !== "reviewer" && (
+          <ReportDraft opportunity={item} selectedSegment={segmentId} />
         )}
       </div>
     </details>

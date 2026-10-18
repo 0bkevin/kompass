@@ -2,6 +2,51 @@
   max-width: 1160px;
   margin: 0 auto;
 }
+.report-create-piece {
+  grid-column: 1 / -1;
+  padding-block: 20px;
+  border-top: 1px solid var(--border);
+}
+.report-create-piece summary {
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 500;
+}
+.report-create-piece form {
+  margin-top: 20px;
+}
+.report-create-piece fieldset {
+  border: 0;
+  padding: 0;
+  min-width: 0;
+}
+.report-draft-action {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 16px;
+}
+.report-evidence-disclosure,
+.report-evaluation-disclosure {
+  border-bottom: 1px solid var(--border);
+  padding-block: 16px;
+}
+.report-evidence-disclosure > summary,
+.report-evaluation-disclosure > summary {
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 500;
+}
+.report-evidence-disclosure .report-findings-pair {
+  margin-top: 20px;
+}
+.report-evaluation-disclosure .report-review {
+  margin-top: 20px;
+}
+.report-create-piece > .button {
+  margin-top: 16px;
+}
 .report-header,
 .report-actions,
 .report-meta,
