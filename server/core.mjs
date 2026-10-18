@@ -733,27 +733,11 @@ function pieceInput(body, current, req) {
       403,
       "La aprobación requiere un propietario o revisor desde la acción de revisión.",
     );
-  const editorialKeys = [
-    "title",
-    "hook",
-    "script",
-    "caption",
-    "cta",
-    "format",
-    "channel",
-    "segmentId",
-    "assetIds",
-    "scenes",
-    "referenceId",
-    "ideaId",
-  ];
-  const editorialChange = editorialKeys.some(
-    (key) =>
-      body[key] !== undefined &&
-      JSON.stringify(body[key]) !== JSON.stringify(current[key]),
-  );
+  const approvalContentChanged =
+    JSON.stringify(pieceApprovalContent(result)) !==
+    JSON.stringify(pieceApprovalContent(current));
   if (
-    editorialChange &&
+    approvalContentChanged &&
     ["approved", "scheduled"].includes(from) &&
     !["draft", "review"].includes(to)
   )

@@ -1,0 +1,140 @@
+{
+  "at": "2026-10-18T11:05:10.330Z",
+  "main": {
+    "title": "Checklist comercial EdTech — revisión",
+    "hook": "Tres pasos para CEOs de EdTech en Latinoamérica.",
+    "script": "Corrección después de planificar: validar el CRM y revisar cada mensaje con una persona antes de enviarlo.",
+    "caption": "La IA práctica ayuda a ordenar el seguimiento comercial. Este ejemplo es sintético y requiere validar los datos del equipo.",
+    "cta": "Comparte qué paso probarías en tu proceso de ventas.",
+    "format": "post",
+    "channel": "linkedin",
+    "scenes": [],
+    "assetIds": [],
+    "comments": [
+      {
+        "id": "328b9248-d7a4-4832-90ed-911599ccbc06",
+        "author": "Rosa Revisora 30X",
+        "text": "Revisión humana: validar que el equipo comercial confirme las fechas antes de probar IA.",
+        "createdAt": "2026-10-18T10:50:13.880Z"
+      },
+      {
+        "id": "2743f820-3681-446b-afd5-ce9c4b9eef2e",
+        "author": "Rosa Revisora 30X",
+        "text": "Cambios solicitados: Añadir la validación de datos del CRM antes del siguiente contacto.",
+        "createdAt": "2026-10-18T10:50:14.045Z"
+      },
+      {
+        "id": "cc858ee2-d8c6-4a16-9cf1-de11f0fd2671",
+        "author": "Rosa Revisora 30X",
+        "text": "Aprobada.",
+        "createdAt": "2026-10-18T10:50:23.011Z"
+      },
+      {
+        "id": "199f419d-2d30-4e7c-8104-d0ebb000da2d",
+        "author": "Rosa Revisora 30X",
+        "text": "Revisión reanudada: confirmar consentimiento y responsables con el equipo comercial.",
+        "createdAt": "2026-10-18T11:03:02.464Z"
+      },
+      {
+        "id": "bfbf2ce2-302a-4e09-bc38-93b5b3ed84bf",
+        "author": "Rosa Revisora 30X",
+        "text": "Cambios solicitados: Añadir una comprobación humana del mensaje antes de enviarlo.",
+        "createdAt": "2026-10-18T11:03:02.581Z"
+      },
+      {
+        "id": "6e7ecef3-eab8-40d6-b1e3-00836456a97b",
+        "author": "Rosa Revisora 30X",
+        "text": "Aprobada.",
+        "createdAt": "2026-10-18T11:03:07.746Z"
+      },
+      {
+        "id": "67202c54-3a66-4b1e-93cc-cfc44ff4ce0b",
+        "author": "Rosa Revisora 30X",
+        "text": "Aprobada.",
+        "createdAt": "2026-10-18T11:04:21.014Z"
+      }
+    ],
+    "segmentId": "4018f6bb-3a7c-4fb8-895f-ff29ca197c90",
+    "status": "approved",
+    "id": "a83014cf-985b-453e-a4af-0e3ae5a888c8",
+    "createdAt": "2026-10-18T10:49:32.704Z",
+    "updatedAt": "2026-10-18T11:04:21.014Z",
+    "approvalVersion": "302lBfoBK4TXdzwJ64_aDqSWjhAp9pNCVThpCkHPC7o"
+  },
+  "brands": [
+    {
+      "id": "669565be-320f-4f19-9556-f0257efcb167",
+      "name": "30X Aprobaciones",
+      "enabledSources": 0,
+      "pieces": [
+        {
+          "id": "db1dc84a-05e1-41a2-92ee-38be4d98a0f4",
+          "title": "Carrera aprobación/edición 4",
+          "status": "approved",
+          "approvalVersion": "S-uvtBAsi-oqj83F6qSWYYPq4J0xFz7EMLi7fdqWNmg"
+        },
+        {
+          "id": "869cc99b-9cda-4443-b3b9-f00d5fa9453f",
+          "title": "Carrera aprobación/edición 3",
+          "status": "approved",
+          "approvalVersion": "80eJ1QbYAvNBxz1IGitJa8ufZ_btL4NsHxiHQ_oymYY"
+        },
+        {
+          "id": "67fee7d6-bd21-45c8-900e-a8990e8767d5",
+          "title": "Carrera aprobación/edición 2",
+          "status": "approved",
+          "approvalVersion": "LWiVxJvE_KBJEtklNtnk_Hr1nvkFoVER_XmUEG8V_jM"
+        },
+        {
+          "id": "872bc490-0dbd-45fa-87d5-bd71123ad8ca",
+          "title": "Carrera aprobación/edición 1",
+          "status": "review",
+          "approvalVersion": "2tiFc6l2d11BZyUdc7NCd8b5QKfhNZfHyHSjHG22DqM"
+        },
+        {
+          "id": "4724e33d-8044-4fe3-a2cd-a0cd71ca2d8d",
+          "title": "Historial publicado — fixture sintética",
+          "status": "published",
+          "approvalVersion": "_79Ng4ZJ3sfCNLaJ2XK9j_nbia6OBp61UQwbJGPZX3I"
+        },
+        {
+          "id": "41941e2d-0577-4b74-b277-c5fcb6c020c4",
+          "title": "Asignación — comprobación de vínculo de aprobación",
+          "status": "approved",
+          "approvalVersion": "MUqEsv9LK1Ii3qxJSeEJzQ3IQ-SMRdKPtzsU4io2Vy4"
+        },
+        {
+          "id": "40fe48f0-55a9-4676-968e-a85b47fa6a98",
+          "title": "IA para ventas — aprobación desactualizada",
+          "status": "review",
+          "approvalVersion": "55gQjAzQsvfGZfOOCHNH51eP61syTqUIBTANzjOHFM4"
+        },
+        {
+          "id": "75cc6fe7-104b-440f-be34-066c401b8410",
+          "title": "Seguimiento de oportunidades — concurrencia",
+          "status": "draft",
+          "approvalVersion": "0OdozZqcbtNO1CU1Zxfei9TyN3OTYAa-73XrmAkrlQ4"
+        },
+        {
+          "id": "a83014cf-985b-453e-a4af-0e3ae5a888c8",
+          "title": "Checklist comercial EdTech — revisión",
+          "status": "approved",
+          "approvalVersion": "302lBfoBK4TXdzwJ64_aDqSWjhAp9pNCVThpCkHPC7o"
+        }
+      ]
+    },
+    {
+      "id": "31025dce-d99a-4bb0-9c8e-fbd3fe62dff5",
+      "name": "30X Otro espacio",
+      "enabledSources": 0,
+      "pieces": []
+    }
+  ],
+  "assertions": {
+    "allSourcesDisabled": true,
+    "mainApproved": true,
+    "planCancelled": true,
+    "commentsPersisted": true,
+    "approvalBoundRevisedText": true
+  }
+}

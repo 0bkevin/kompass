@@ -1,0 +1,117 @@
+{
+  "at": "2026-10-18T11:04:14.845Z",
+  "fixtureOnly": true,
+  "noDeliveryPerformed": true,
+  "id": "4724e33d-8044-4fe3-a2cd-a0cd71ca2d8d",
+  "before": {
+    "title": "Historial publicado — fixture sintética",
+    "hook": "",
+    "script": "Contenido histórico sintético aprobado y conservado.",
+    "caption": "Fixture de protección; no se realizó ningún envío.",
+    "cta": "",
+    "format": "post",
+    "channel": "linkedin",
+    "scenes": [],
+    "assetIds": [],
+    "comments": [],
+    "status": "published",
+    "id": "4724e33d-8044-4fe3-a2cd-a0cd71ca2d8d",
+    "createdAt": "2026-10-18T11:04:14.798Z",
+    "updatedAt": "2026-10-18T11:04:14.813Z",
+    "approvalVersion": "_79Ng4ZJ3sfCNLaJ2XK9j_nbia6OBp61UQwbJGPZX3I",
+    "scheduledFor": "2026-10-17T14:00:00.000Z",
+    "publishedAt": "2026-10-17T14:00:00.000Z",
+    "publicationReceipt": {
+      "provider": "webhook",
+      "publishedAt": "2026-10-17T14:00:00.000Z",
+      "result": "accepted",
+      "statusCode": 202
+    }
+  },
+  "results": [
+    {
+      "label": "edit",
+      "status": 409,
+      "data": {
+        "error": "Una pieza publicada solo admite actualizar sus resultados. Crea un borrador nuevo para editarla."
+      }
+    },
+    {
+      "label": "return to draft",
+      "status": 409,
+      "data": {
+        "error": "Una pieza publicada solo admite actualizar sus resultados. Crea un borrador nuevo para editarla."
+      }
+    },
+    {
+      "label": "delete",
+      "status": 409,
+      "data": {
+        "error": "Las piezas publicadas se conservan para mantener su historial."
+      }
+    }
+  ],
+  "metrics": {
+    "status": 200,
+    "data": {
+      "title": "Historial publicado — fixture sintética",
+      "hook": "",
+      "script": "Contenido histórico sintético aprobado y conservado.",
+      "caption": "Fixture de protección; no se realizó ningún envío.",
+      "cta": "",
+      "format": "post",
+      "channel": "linkedin",
+      "scenes": [],
+      "assetIds": [],
+      "comments": [],
+      "status": "published",
+      "id": "4724e33d-8044-4fe3-a2cd-a0cd71ca2d8d",
+      "createdAt": "2026-10-18T11:04:14.798Z",
+      "updatedAt": "2026-10-18T11:04:14.839Z",
+      "approvalVersion": "_79Ng4ZJ3sfCNLaJ2XK9j_nbia6OBp61UQwbJGPZX3I",
+      "scheduledFor": "2026-10-17T14:00:00.000Z",
+      "publishedAt": "2026-10-17T14:00:00.000Z",
+      "publicationReceipt": {
+        "provider": "webhook",
+        "publishedAt": "2026-10-17T14:00:00.000Z",
+        "result": "accepted",
+        "statusCode": 202
+      },
+      "metrics": {
+        "views": 200,
+        "engagement": 20,
+        "leads": 2
+      }
+    }
+  },
+  "after": {
+    "title": "Historial publicado — fixture sintética",
+    "hook": "",
+    "script": "Contenido histórico sintético aprobado y conservado.",
+    "caption": "Fixture de protección; no se realizó ningún envío.",
+    "cta": "",
+    "format": "post",
+    "channel": "linkedin",
+    "scenes": [],
+    "assetIds": [],
+    "comments": [],
+    "status": "published",
+    "id": "4724e33d-8044-4fe3-a2cd-a0cd71ca2d8d",
+    "createdAt": "2026-10-18T11:04:14.798Z",
+    "updatedAt": "2026-10-18T11:04:14.839Z",
+    "approvalVersion": "_79Ng4ZJ3sfCNLaJ2XK9j_nbia6OBp61UQwbJGPZX3I",
+    "scheduledFor": "2026-10-17T14:00:00.000Z",
+    "publishedAt": "2026-10-17T14:00:00.000Z",
+    "publicationReceipt": {
+      "provider": "webhook",
+      "publishedAt": "2026-10-17T14:00:00.000Z",
+      "result": "accepted",
+      "statusCode": 202
+    },
+    "metrics": {
+      "views": 200,
+      "engagement": 20,
+      "leads": 2
+    }
+  }
+}

@@ -1,0 +1,59 @@
+{
+  "at": "2026-10-18T11:03:56.021Z",
+  "approved": {
+    "status": 200,
+    "data": {
+      "title": "Asignación — comprobación de vínculo de aprobación",
+      "hook": "",
+      "script": "Texto aprobado que no cambia.",
+      "caption": "",
+      "cta": "",
+      "format": "post",
+      "channel": "linkedin",
+      "scenes": [],
+      "assetIds": [],
+      "comments": [
+        {
+          "id": "20491f1f-e65a-495b-aabf-3de3c0ac5777",
+          "author": "Rosa Revisora 30X",
+          "text": "Aprobada.",
+          "createdAt": "2026-10-18T11:03:56.013Z"
+        }
+      ],
+      "status": "approved",
+      "id": "41941e2d-0577-4b74-b277-c5fcb6c020c4",
+      "createdAt": "2026-10-18T11:03:55.998Z",
+      "updatedAt": "2026-10-18T11:03:56.013Z",
+      "approvalVersion": "iqpMqU8guW-XxpGVEmRNnnbVwxyNv_e8MfR1nuL6egg"
+    }
+  },
+  "assigned": {
+    "status": 200,
+    "data": {
+      "title": "Asignación — comprobación de vínculo de aprobación",
+      "hook": "",
+      "script": "Texto aprobado que no cambia.",
+      "caption": "",
+      "cta": "",
+      "format": "post",
+      "channel": "linkedin",
+      "scenes": [],
+      "assetIds": [],
+      "comments": [
+        {
+          "id": "20491f1f-e65a-495b-aabf-3de3c0ac5777",
+          "author": "Rosa Revisora 30X",
+          "text": "Aprobada.",
+          "createdAt": "2026-10-18T11:03:56.013Z"
+        }
+      ],
+      "status": "approved",
+      "id": "41941e2d-0577-4b74-b277-c5fcb6c020c4",
+      "createdAt": "2026-10-18T11:03:55.998Z",
+      "updatedAt": "2026-10-18T11:03:56.018Z",
+      "assignee": "299d223b-6bce-4695-ae95-7a2487b0980c",
+      "approvalVersion": "MUqEsv9LK1Ii3qxJSeEJzQ3IQ-SMRdKPtzsU4io2Vy4"
+    }
+  },
+  "hashChanged": true
+}

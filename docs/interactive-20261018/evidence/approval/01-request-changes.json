@@ -1,0 +1,73 @@
+{
+  "at": "2026-10-18T10:50:22.580Z",
+  "status": 200,
+  "pieces": [
+    {
+      "title": "IA para ventas — aprobación desactualizada",
+      "hook": "Tres pasos para CEOs de EdTech en Latinoamérica.",
+      "script": "1. Revisa oportunidades abiertas.\n2. Usa IA para preparar el siguiente contacto.\n3. Confirma responsables y fechas con tu equipo.",
+      "caption": "La IA práctica ayuda a ordenar el seguimiento comercial. Este ejemplo es sintético y requiere validar los datos del equipo.",
+      "cta": "Comparte qué paso probarías en tu proceso de ventas.",
+      "format": "post",
+      "channel": "linkedin",
+      "scenes": [],
+      "assetIds": [],
+      "comments": [],
+      "segmentId": "4018f6bb-3a7c-4fb8-895f-ff29ca197c90",
+      "status": "draft",
+      "id": "40fe48f0-55a9-4676-968e-a85b47fa6a98",
+      "createdAt": "2026-10-18T10:49:32.717Z",
+      "updatedAt": "2026-10-18T10:49:32.717Z",
+      "approvalVersion": "e1PuxBWkLsRAB6uu_Z-Jw8qQAne8jxbt6ojIbZkResw"
+    },
+    {
+      "title": "Seguimiento de oportunidades — concurrencia",
+      "hook": "Tres pasos para CEOs de EdTech en Latinoamérica.",
+      "script": "1. Revisa oportunidades abiertas.\n2. Usa IA para preparar el siguiente contacto.\n3. Confirma responsables y fechas con tu equipo.",
+      "caption": "La IA práctica ayuda a ordenar el seguimiento comercial. Este ejemplo es sintético y requiere validar los datos del equipo.",
+      "cta": "Comparte qué paso probarías en tu proceso de ventas.",
+      "format": "post",
+      "channel": "linkedin",
+      "scenes": [],
+      "assetIds": [],
+      "comments": [],
+      "segmentId": "4018f6bb-3a7c-4fb8-895f-ff29ca197c90",
+      "status": "draft",
+      "id": "75cc6fe7-104b-440f-be34-066c401b8410",
+      "createdAt": "2026-10-18T10:49:32.711Z",
+      "updatedAt": "2026-10-18T10:49:32.711Z",
+      "approvalVersion": "WwPpxza0ow-JBc6OBpwmyV-IOSij8THhLFiw_HEX4-s"
+    },
+    {
+      "title": "Checklist comercial EdTech — revisión",
+      "hook": "Tres pasos para CEOs de EdTech en Latinoamérica.",
+      "script": "1. Revisa oportunidades abiertas.\n2. Usa IA para preparar el siguiente contacto.\n3. Confirma responsables y fechas con tu equipo.",
+      "caption": "La IA práctica ayuda a ordenar el seguimiento comercial. Este ejemplo es sintético y requiere validar los datos del equipo.",
+      "cta": "Comparte qué paso probarías en tu proceso de ventas.",
+      "format": "post",
+      "channel": "linkedin",
+      "scenes": [],
+      "assetIds": [],
+      "comments": [
+        {
+          "id": "328b9248-d7a4-4832-90ed-911599ccbc06",
+          "author": "Rosa Revisora 30X",
+          "text": "Revisión humana: validar que el equipo comercial confirme las fechas antes de probar IA.",
+          "createdAt": "2026-10-18T10:50:13.880Z"
+        },
+        {
+          "id": "2743f820-3681-446b-afd5-ce9c4b9eef2e",
+          "author": "Rosa Revisora 30X",
+          "text": "Cambios solicitados: Añadir la validación de datos del CRM antes del siguiente contacto.",
+          "createdAt": "2026-10-18T10:50:14.045Z"
+        }
+      ],
+      "segmentId": "4018f6bb-3a7c-4fb8-895f-ff29ca197c90",
+      "status": "draft",
+      "id": "a83014cf-985b-453e-a4af-0e3ae5a888c8",
+      "createdAt": "2026-10-18T10:49:32.704Z",
+      "updatedAt": "2026-10-18T10:50:14.045Z",
+      "approvalVersion": "CLIehNQJnCWu51dt1AM-A3xjmasDyDtuAOyoxHX3kq4"
+    }
+  ]
+}

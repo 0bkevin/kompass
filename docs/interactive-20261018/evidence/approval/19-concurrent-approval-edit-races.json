@@ -1,0 +1,232 @@
+{
+  "at": "2026-10-18T11:04:14.921Z",
+  "raceResults": [
+    {
+      "id": "872bc490-0dbd-45fa-87d5-bd71123ad8ca",
+      "approval": {
+        "status": 409,
+        "data": {
+          "error": "La pieza cambió desde que la revisaste. Actualiza y revisa la versión actual antes de aprobar."
+        }
+      },
+      "edit": {
+        "status": 200,
+        "data": {
+          "title": "Carrera aprobación/edición 1",
+          "hook": "",
+          "script": "Versión concurrente del equipo.",
+          "caption": "",
+          "cta": "",
+          "format": "post",
+          "channel": "linkedin",
+          "scenes": [],
+          "assetIds": [],
+          "comments": [],
+          "status": "review",
+          "id": "872bc490-0dbd-45fa-87d5-bd71123ad8ca",
+          "createdAt": "2026-10-18T11:04:14.847Z",
+          "updatedAt": "2026-10-18T11:04:14.857Z",
+          "approvalVersion": "2tiFc6l2d11BZyUdc7NCd8b5QKfhNZfHyHSjHG22DqM"
+        }
+      },
+      "final": {
+        "title": "Carrera aprobación/edición 1",
+        "hook": "",
+        "script": "Versión concurrente del equipo.",
+        "caption": "",
+        "cta": "",
+        "format": "post",
+        "channel": "linkedin",
+        "scenes": [],
+        "assetIds": [],
+        "comments": [],
+        "status": "review",
+        "id": "872bc490-0dbd-45fa-87d5-bd71123ad8ca",
+        "createdAt": "2026-10-18T11:04:14.847Z",
+        "updatedAt": "2026-10-18T11:04:14.857Z",
+        "approvalVersion": "2tiFc6l2d11BZyUdc7NCd8b5QKfhNZfHyHSjHG22DqM"
+      }
+    },
+    {
+      "id": "67fee7d6-bd21-45c8-900e-a8990e8767d5",
+      "approval": {
+        "status": 200,
+        "data": {
+          "title": "Carrera aprobación/edición 2",
+          "hook": "",
+          "script": "Versión inicial a revisar.",
+          "caption": "",
+          "cta": "",
+          "format": "post",
+          "channel": "linkedin",
+          "scenes": [],
+          "assetIds": [],
+          "comments": [
+            {
+              "id": "11b6f510-02eb-4a31-90b9-0f35b3cfd798",
+              "author": "Rosa Revisora 30X",
+              "text": "Aprobada.",
+              "createdAt": "2026-10-18T11:04:14.875Z"
+            }
+          ],
+          "status": "approved",
+          "id": "67fee7d6-bd21-45c8-900e-a8990e8767d5",
+          "createdAt": "2026-10-18T11:04:14.865Z",
+          "updatedAt": "2026-10-18T11:04:14.875Z",
+          "approvalVersion": "LWiVxJvE_KBJEtklNtnk_Hr1nvkFoVER_XmUEG8V_jM"
+        }
+      },
+      "edit": {
+        "status": 409,
+        "data": {
+          "error": "Los cambios de contenido requieren volver a borrador o revisión para renovar la aprobación."
+        }
+      },
+      "final": {
+        "title": "Carrera aprobación/edición 2",
+        "hook": "",
+        "script": "Versión inicial a revisar.",
+        "caption": "",
+        "cta": "",
+        "format": "post",
+        "channel": "linkedin",
+        "scenes": [],
+        "assetIds": [],
+        "comments": [
+          {
+            "id": "11b6f510-02eb-4a31-90b9-0f35b3cfd798",
+            "author": "Rosa Revisora 30X",
+            "text": "Aprobada.",
+            "createdAt": "2026-10-18T11:04:14.875Z"
+          }
+        ],
+        "status": "approved",
+        "id": "67fee7d6-bd21-45c8-900e-a8990e8767d5",
+        "createdAt": "2026-10-18T11:04:14.865Z",
+        "updatedAt": "2026-10-18T11:04:14.875Z",
+        "approvalVersion": "LWiVxJvE_KBJEtklNtnk_Hr1nvkFoVER_XmUEG8V_jM"
+      }
+    },
+    {
+      "id": "869cc99b-9cda-4443-b3b9-f00d5fa9453f",
+      "approval": {
+        "status": 200,
+        "data": {
+          "title": "Carrera aprobación/edición 3",
+          "hook": "",
+          "script": "Versión inicial a revisar.",
+          "caption": "",
+          "cta": "",
+          "format": "post",
+          "channel": "linkedin",
+          "scenes": [],
+          "assetIds": [],
+          "comments": [
+            {
+              "id": "5b0a9733-19de-4325-a3c2-c6025da4c697",
+              "author": "Rosa Revisora 30X",
+              "text": "Aprobada.",
+              "createdAt": "2026-10-18T11:04:14.894Z"
+            }
+          ],
+          "status": "approved",
+          "id": "869cc99b-9cda-4443-b3b9-f00d5fa9453f",
+          "createdAt": "2026-10-18T11:04:14.883Z",
+          "updatedAt": "2026-10-18T11:04:14.894Z",
+          "approvalVersion": "80eJ1QbYAvNBxz1IGitJa8ufZ_btL4NsHxiHQ_oymYY"
+        }
+      },
+      "edit": {
+        "status": 409,
+        "data": {
+          "error": "Los cambios de contenido requieren volver a borrador o revisión para renovar la aprobación."
+        }
+      },
+      "final": {
+        "title": "Carrera aprobación/edición 3",
+        "hook": "",
+        "script": "Versión inicial a revisar.",
+        "caption": "",
+        "cta": "",
+        "format": "post",
+        "channel": "linkedin",
+        "scenes": [],
+        "assetIds": [],
+        "comments": [
+          {
+            "id": "5b0a9733-19de-4325-a3c2-c6025da4c697",
+            "author": "Rosa Revisora 30X",
+            "text": "Aprobada.",
+            "createdAt": "2026-10-18T11:04:14.894Z"
+          }
+        ],
+        "status": "approved",
+        "id": "869cc99b-9cda-4443-b3b9-f00d5fa9453f",
+        "createdAt": "2026-10-18T11:04:14.883Z",
+        "updatedAt": "2026-10-18T11:04:14.894Z",
+        "approvalVersion": "80eJ1QbYAvNBxz1IGitJa8ufZ_btL4NsHxiHQ_oymYY"
+      }
+    },
+    {
+      "id": "db1dc84a-05e1-41a2-92ee-38be4d98a0f4",
+      "approval": {
+        "status": 200,
+        "data": {
+          "title": "Carrera aprobación/edición 4",
+          "hook": "",
+          "script": "Versión inicial a revisar.",
+          "caption": "",
+          "cta": "",
+          "format": "post",
+          "channel": "linkedin",
+          "scenes": [],
+          "assetIds": [],
+          "comments": [
+            {
+              "id": "812975d4-21d1-40d5-924a-cb3ace0e30a8",
+              "author": "Rosa Revisora 30X",
+              "text": "Aprobada.",
+              "createdAt": "2026-10-18T11:04:14.914Z"
+            }
+          ],
+          "status": "approved",
+          "id": "db1dc84a-05e1-41a2-92ee-38be4d98a0f4",
+          "createdAt": "2026-10-18T11:04:14.904Z",
+          "updatedAt": "2026-10-18T11:04:14.914Z",
+          "approvalVersion": "S-uvtBAsi-oqj83F6qSWYYPq4J0xFz7EMLi7fdqWNmg"
+        }
+      },
+      "edit": {
+        "status": 409,
+        "data": {
+          "error": "Los cambios de contenido requieren volver a borrador o revisión para renovar la aprobación."
+        }
+      },
+      "final": {
+        "title": "Carrera aprobación/edición 4",
+        "hook": "",
+        "script": "Versión inicial a revisar.",
+        "caption": "",
+        "cta": "",
+        "format": "post",
+        "channel": "linkedin",
+        "scenes": [],
+        "assetIds": [],
+        "comments": [
+          {
+            "id": "812975d4-21d1-40d5-924a-cb3ace0e30a8",
+            "author": "Rosa Revisora 30X",
+            "text": "Aprobada.",
+            "createdAt": "2026-10-18T11:04:14.914Z"
+          }
+        ],
+        "status": "approved",
+        "id": "db1dc84a-05e1-41a2-92ee-38be4d98a0f4",
+        "createdAt": "2026-10-18T11:04:14.904Z",
+        "updatedAt": "2026-10-18T11:04:14.914Z",
+        "approvalVersion": "S-uvtBAsi-oqj83F6qSWYYPq4J0xFz7EMLi7fdqWNmg"
+      }
+    }
+  ],
+  "passed": true
+}
