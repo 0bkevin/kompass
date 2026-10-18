@@ -92,7 +92,7 @@
   border-bottom: 1px solid #222128;
 }
 .lp-header-inner {
-  min-height: 88px;
+  min-height: 64px;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -935,7 +935,7 @@
 }
 @media (max-width: 800px) {
   .lp-header-inner {
-    min-height: 76px;
+    min-height: 60px;
   }
   .lp-nav {
     display: none;
@@ -1045,7 +1045,7 @@
   }
   .lp-header-inner {
     gap: 12px;
-    min-height: 72px;
+    min-height: 56px;
   }
   .lp-brand {
     gap: 8px;

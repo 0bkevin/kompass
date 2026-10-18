@@ -11,6 +11,8 @@ Mode: Persuade. Target `/`, `src/routes/index.tsx`, `src/features/landing/`, `sr
 
 Audience: content teams at companies, media and creators. Job: choose content with audience context and public evidence, then keep the editorial thread through writing, review, planning and results. Primary action: `/home?auth=signup`. Returning access: `/home?auth=login`. Demo: explicit POST to the existing demo API after a button click. Root invitations and legacy links retain their paths.
 
+User-approved headline: “Le damos dirección a tu contenido.” Keep this wording. Use exactly two landing font families: Hedvig Letters Serif for display headings and Geist for body, navigation and controls. Copy edits follow the installed petergyang/no-ai-slop skill. The landing header content height is 64px desktop, 60px tablet and 56px mobile.
+
 Proof: a clearly labeled illustrative editorial example; only capabilities verified in README/source. No borrowed assets, fictional customers, testimonials, conversion numbers or publishing promises.
 
 ## Direction contract

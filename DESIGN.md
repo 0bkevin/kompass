@@ -249,7 +249,7 @@ The aperture's saturated violet modules and fine connecting strokes are native S
 
 ## Layout
 
-The landing centers content in a maximum-width container (1120px) with desktop side space (48px). At 1100px or less the gutters become 32px, at 600px or less 20px, and at 360px or less 16px. The header is a horizontal flex row; its central links disappear at 800px, while login remains available. The small header account action disappears at 600px.
+The landing centers content in a maximum-width container (1120px) with desktop side space (48px). At 1100px or less the gutters become 32px, at 600px or less 20px, and at 360px or less 16px. The compact header is a horizontal flex row with content height 64px on desktop, 60px at 800px and 56px at 600px. Its central links disappear at 800px, while login remains available. The small header account action disappears at 600px.
 
 Landing content uses spacious sections, open two-column grids and thin divided rows. Large desktop inter-column gaps (100px, or 120px in the audience region) reduce to 60px at 1100px and smaller local values at 800px. Section and feature grids become one column at 600px. The editorial example keeps a four-column tab strip; its two-column body becomes stacked on mobile, with the proposed need above the selected result. The example body reserves height across stages (312px desktop, 340px at 800px, 490px mobile) to limit layout movement. At 360px the main action pair stacks. Peripheral SVG aperture geometry disappears at 600px.
 
@@ -305,7 +305,7 @@ Input fields belong to workspace and authentication; the public landing does not
 
 ### Navigation
 
-Landing navigation uses quiet small Geist links in a spacious horizontal header, with login and account access on the right. Links brighten on fine-pointer hover and retain visible keyboard focus. Mobile removes the central anchor links and preserves returning access; the landing does not gain the workspace drawer.
+Landing navigation uses quiet small Geist links in a compact horizontal header, with login and account access on the right. Links brighten on fine-pointer hover and retain visible keyboard focus. Mobile removes the central anchor links and preserves returning access; the landing does not gain the workspace drawer.
 
 The working application's dark sidebar pairs outline icons with readable labels. Its active item uses a lighter green block and pale text without an edge stripe. Supporting destinations remain in a disclosure. The top bar carries company context and the current screen; a menu control opens the drawer on narrow screens.
 

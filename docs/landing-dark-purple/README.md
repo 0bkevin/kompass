@@ -1,5 +1,7 @@
 # Nueva landing pública de 30X Radar
 
+La [revisión de copy y navbar](copy-navbar-refinement.md) aplica la skill de Peter Yang y el titular elegido después por el usuario, «Le damos dirección a tu contenido». Sus capturas corresponden al estado actual; la evidencia siguiente documenta la entrega inicial.
+
 Implementada en `design/landing-dark-purple`, desde `9fd8e9a92a389540d4e8fd04d00a03fab6790bd7`. El checkout estaba limpio y no incluía `docs/deployment-evaluation-20261018.md`. No se copiaron `.env`, tokens ni datos del checkout anterior. Servidor propio: [landing local](http://localhost:5188/), API 3038; los servidores 3026 y 5450 se conservaron.
 
 ## Resultado

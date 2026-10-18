@@ -24,12 +24,12 @@ const stages = [
   {
     label: "Audiencia",
     icon: Users,
-    title: "Primero, una necesidad concreta.",
+    title: "Elige a quién va dirigido el contenido.",
     description:
       "Un equipo pequeño quiere empezar a usar IA, pero no sabe qué tarea elegir ni qué debe revisar.",
     detail:
-      "Punto de partida propuesto por el equipo. Se revisa antes de buscar oportunidades.",
-    output: "Ayudar a dar un primer paso con criterio.",
+      "Necesidad propuesta por el equipo, pendiente de contrastar con fuentes.",
+    output: "Ayudar al equipo a elegir su primera tarea con IA.",
     outputLabel: "Objetivo editorial",
   },
   {
@@ -46,22 +46,22 @@ const stages = [
   {
     label: "Enfoque",
     icon: Focus,
-    title: "Tu experiencia convierte la señal en una idea.",
+    title: "Prepara una guía para elegir esa primera tarea.",
     description:
-      "“Tu primera tarea con IA: elige algo pequeño, define qué revisar y prueba con un ejemplo.” Un enfoque práctico para esa necesidad.",
+      "“Tu primera tarea con IA: elige algo pequeño, define qué revisar y prueba con un ejemplo.”",
     detail:
       "Hipótesis editorial para una empresa de formación. El equipo decide si merece producirse.",
-    output: "Una guía de inicio, no otra lista de herramientas.",
+    output: "Una guía para elegir y probar una tarea con IA.",
     outputLabel: "Enfoque original propuesto",
   },
   {
     label: "Guion",
     icon: FileText,
-    title: "Una pieza que ya se puede revisar.",
+    title: "Revisa el guion con tu equipo.",
     description:
       "“Antes de elegir una herramienta, elige una tarea. Prueba con material de ejemplo y acuerda qué revisará una persona antes de usar el resultado.”",
     detail:
-      "Borrador de ejemplo. En la plataforma, los comentarios y la aprobación acompañan cada versión.",
+      "Borrador de ejemplo. El equipo comenta y aprueba la versión que va a programar.",
     output: "Guion → revisión del equipo → calendario",
     outputLabel: "Siguiente paso",
   },
@@ -71,7 +71,7 @@ const faqs = [
   {
     question: "¿Con qué puede empezar mi equipo?",
     answer:
-      "Crea tu cuenta y añade el contexto de tu empresa desde su web, enlaces públicos o texto propio. Revisa la información y define una primera audiencia y su necesidad. La plataforma te guía al siguiente paso.",
+      "Crea tu cuenta y añade la web de tu empresa, enlaces públicos o un texto propio. Revisa la información y define a quién va dirigido tu contenido y qué necesita resolver.",
   },
   {
     question: "¿Necesito conectar mis redes sociales?",
@@ -81,7 +81,7 @@ const faqs = [
   {
     question: "¿El calendario publica por mí?",
     answer:
-      "El calendario organiza fechas y permite exportar el plan. La publicación en una red social requiere una acción aparte: programar una pieza aquí no la publica automáticamente.",
+      "El calendario organiza fechas y permite exportar el plan. Para publicar el contenido en una red social debes hacerlo aparte.",
   },
   {
     question: "¿Puedo crear imágenes y videos?",
@@ -215,7 +215,7 @@ function EditorialExample() {
     <figure className="lp-example" id="ejemplo">
       <figcaption className="lp-example-heading">
         <span>
-          <RadarMark /> Una pregunta. Un hilo de trabajo.
+          <RadarMark /> De una pregunta al guion
         </span>
         <span className="lp-example-label">Ejemplo ilustrativo</span>
       </figcaption>
@@ -292,7 +292,7 @@ function EditorialExample() {
       </div>
       <div className="lp-example-foot">
         <Check size={14} />
-        <span>La fuente informa. Tu equipo decide.</span>
+        <span>Tu equipo revisa la fuente y decide qué escribir.</span>
         <a href="#como-funciona">
           Sigue el recorrido <ArrowDown size={14} />
         </a>
@@ -368,7 +368,7 @@ function CalendarVisual() {
       </div>
       <div className="lp-calendar-bottom">
         <ArrowRight size={16} />
-        <span>Planifica. Exporta. Revisa resultados.</span>
+        <span>Fechas y estado de cada contenido</span>
       </div>
     </div>
   );
@@ -447,14 +447,14 @@ export function LandingPage() {
         <section className="lp-hero" aria-labelledby="lp-hero-title">
           <div className="lp-container lp-hero-copy">
             <h1 id="lp-hero-title">
-              De «¿qué publicamos?»
+              Le damos dirección
               <br />
-              <span>a una idea con fundamento.</span>
+              <span>a tu contenido.</span>
             </h1>
             <p>
-              Conecta lo que tu audiencia necesita con señales públicas.
-              <br className="lp-desktop-break" /> Lleva cada idea al guion, la
-              revisión y el calendario de tu equipo.
+              Parte de las preguntas de tu audiencia y de lo que sabe tu equipo.
+              Revisa fuentes públicas y prepara una propuesta de contenido que
+              puedan trabajar juntos.
             </p>
             <div className="lp-actions">
               {signup}
@@ -504,14 +504,14 @@ export function LandingPage() {
         >
           <div className="lp-section-intro">
             <h2 id="lp-workflow-title">
-              Las buenas ideas merecen
+              Guarda las fuentes
               <br />
-              <span>un hilo conductor.</span>
+              <span>junto al guion.</span>
             </h2>
             <p>
-              Cuando las referencias, los borradores y las decisiones viven
-              separados, el contexto se pierde. Reúne el trabajo alrededor de lo
-              que quieres resolver para tu audiencia.
+              Consulta las referencias de cada tema mientras escribes. Cuando
+              otra persona revise el guion, podrá ver de dónde salió la
+              propuesta.
             </p>
           </div>
           <div className="lp-context-row">
@@ -520,20 +520,20 @@ export function LandingPage() {
                 <Focus size={34} strokeWidth={1.2} />
               </span>
               <h3>
-                Elige qué vale
+                Elige qué tema
                 <br />
-                la pena contar.
+                vas a trabajar.
               </h3>
             </div>
             <div className="lp-context-copy">
               <p>
-                Empieza por tu empresa y una necesidad de audiencia. Contrasta
-                las oportunidades con fuentes públicas y entiende de dónde nace
-                cada propuesta.
+                Define una necesidad de audiencia y compárala con las
+                referencias públicas que encuentres. Revisa qué se ha observado
+                y qué sigue siendo una hipótesis antes de proponer un tema.
               </p>
               <div className="lp-inline-points">
                 <span>
-                  <Check size={15} /> Fuentes con procedencia
+                  <Check size={15} /> Enlaces a las fuentes
                 </span>
                 <span>
                   <Check size={15} /> Hipótesis identificadas
@@ -544,14 +544,14 @@ export function LandingPage() {
           <div className="lp-feature-row">
             <div className="lp-feature-copy">
               <h3>
-                Que el equipo avance.
+                Revisa el guion
                 <br />
-                <span>Con el mismo contexto.</span>
+                <span>con tu equipo.</span>
               </h3>
               <p>
-                Convierte el enfoque en un guion original. Edita, recoge
-                comentarios y aprueba la versión que el equipo ha revisado, sin
-                perder el vínculo con la idea inicial.
+                Escribe un guion a partir de la propuesta y recoge los
+                comentarios del equipo en el mismo espacio. Aprueba la versión
+                que vas a usar antes de programarla.
               </p>
               <a
                 className="lp-text-link"
@@ -569,18 +569,17 @@ export function LandingPage() {
             <CalendarVisual />
             <div className="lp-feature-copy">
               <h3>
-                Una idea no termina
+                Organiza las fechas
                 <br />
-                <span>cuando está escrita.</span>
+                <span>y revisa los resultados.</span>
               </h3>
               <p>
-                Organiza fechas y exporta tu plan. Después, revisa los
-                contadores oficiales disponibles de YouTube o registra
-                resultados de otros canales para preparar la siguiente decisión.
+                Asigna fechas a las piezas y exporta el plan. Después de
+                publicar, consulta los contadores de YouTube o registra los
+                resultados de otros canales.
               </p>
               <p className="lp-feature-note">
-                Tu equipo mantiene el control: el calendario no publica
-                automáticamente.
+                El calendario no publica automáticamente.
               </p>
             </div>
           </div>
@@ -593,18 +592,16 @@ export function LandingPage() {
           <div className="lp-container lp-teams-inner">
             <div className="lp-teams-heading">
               <h2 id="lp-teams-title">
-                Tu conocimiento.
+                Para empresas,
                 <br />
-                Su próxima
-                <br />
-                <span>buena respuesta.</span>
+                <span>medios y creadores.</span>
               </h2>
               <p>
-                No necesitas más temas sueltos. Necesitas conectar lo que sabes
-                con lo que tu audiencia quiere resolver.
+                Cada empresa tiene su propio espacio, con su marca, sus
+                audiencias y su equipo.
               </p>
-              <a className="lp-text-link" href="#contenido">
-                Encuentra tu punto de partida <ArrowUpRight size={16} />
+              <a className="lp-text-link" href="#como-funciona">
+                Ver cómo funciona <ArrowUpRight size={16} />
               </a>
             </div>
             <div className="lp-team-list">
@@ -618,8 +615,8 @@ export function LandingPage() {
                 <div>
                   <h3>Empresas</h3>
                   <p>
-                    Convierte el conocimiento de tu marca en una prioridad
-                    editorial que tu equipo pueda explicar, producir y revisar.
+                    Elige qué preguntas puede responder tu empresa y prepara los
+                    contenidos con tu equipo.
                   </p>
                 </div>
               </article>
@@ -633,8 +630,8 @@ export function LandingPage() {
                 <div>
                   <h3>Medios</h3>
                   <p>
-                    Mantén las referencias y el enfoque de una historia al pasar
-                    del hallazgo al guion y a la revisión editorial.
+                    Conserva las fuentes de cada historia mientras escribes el
+                    guion y lo revisas con la redacción.
                   </p>
                 </div>
               </article>
@@ -651,8 +648,8 @@ export function LandingPage() {
                 <div>
                   <h3>Creadores</h3>
                   <p>
-                    Dale continuidad a tus ideas: una audiencia definida, un
-                    guion propio y un calendario que puedas mantener.
+                    Reúne tus ideas, escribe los guiones y organiza cuándo
+                    publicarlos.
                   </p>
                 </div>
               </article>
@@ -666,15 +663,10 @@ export function LandingPage() {
         >
           <div>
             <h2 id="lp-faq-title">
-              Antes de
+              Preguntas
               <br />
-              <span>dar el primer paso.</span>
+              <span>antes de empezar.</span>
             </h2>
-            <p>
-              Lo que puedes hacer hoy,
-              <br />
-              con claridad desde el inicio.
-            </p>
           </div>
           <div className="lp-faq-list">
             {faqs.map(({ question, answer }, index) => (
@@ -709,14 +701,14 @@ export function LandingPage() {
           <div className="lp-container">
             <RadarMark className="lp-close-mark" />
             <h2 id="lp-close-title">
-              Tu próxima idea
+              Crea tu cuenta
               <br />
-              <span>puede empezar con un porqué.</span>
+              <span>y añade tu empresa.</span>
             </h2>
             <p>
-              Crea tu cuenta. Empieza por tu empresa.
+              Empieza por su web, una publicación o un texto propio.
               <br />
-              Dale a tu equipo un punto de partida compartido.
+              Después, define a quién quieres dirigirte.
             </p>
             {signup}
           </div>
@@ -729,7 +721,7 @@ export function LandingPage() {
             30X <span>Radar</span>
           </span>
         </a>
-        <p>Contenido con contexto. Decisiones con criterio.</p>
+        <p>Guiones, revisión y calendario para equipos de contenido.</p>
         <a href="#contenido">
           Volver arriba <ArrowUpRight size={14} />
         </a>

@@ -16,11 +16,11 @@ export const Route = createFileRoute("/")({
   },
   head: () => ({
     meta: [
-      { title: "30X Radar — Contenido con fundamento" },
+      { title: "30X Radar · Le damos dirección a tu contenido" },
       {
         name: "description",
         content:
-          "De qué publicamos a una idea con fundamento. Conecta necesidades de audiencia con evidencia pública y lleva cada idea al guion, la revisión y el calendario de tu equipo.",
+          "Consulta fuentes públicas y prepara guiones con tu equipo a partir de las preguntas de tu audiencia. Revisa cada pieza y organiza las fechas en el calendario.",
       },
       { name: "theme-color", content: "#0c0c10" },
     ],
