@@ -1,7 +1,10 @@
 import fs from "node:fs";
 import path from "node:path";
-import os from "node:os";
 import { spawn, spawnSync } from "node:child_process";
+import {
+  createMediaSandbox,
+  mediaSandboxAvailability,
+} from "./media-sandbox.mjs";
 import { inflateSync } from "node:zlib";
 
 export const MEDIA_RATIOS = ["1:1", "4:5", "9:16", "16:9"];
@@ -403,8 +406,15 @@ export async function generateCodexImage({
     prompt,
     "END_PUBLIC_CREATIVE_BRIEF",
   ].join("\n");
-  const result = await runBoundedProcess(binary, codexImageArguments(workDir), {
+  const sandbox = createMediaSandbox({
+    workDir,
+    commandArgs: codexImageArguments(workDir),
+    binary,
+    sourceEnv: mediaWorkerEnvironment(),
+  });
+  const result = await runBoundedProcess(sandbox.binary, sandbox.args, {
     cwd: workDir,
+    env: sandbox.env,
     input: instructions,
     timeoutMs: 8 * 60_000,
     signal,
@@ -417,7 +427,7 @@ export async function generateCodexImage({
       limited ? "MEDIA_USAGE_LIMIT" : "MEDIA_PROVIDER_ERROR",
       limited
         ? "La cuenta de ChatGPT alcanzó su límite de uso. Espera a que se restablezca o revisa los créditos de la cuenta."
-        : "Codex no pudo completar la imagen. Revisa que la sesión de ChatGPT del servidor siga activa.",
+        : "Codex no pudo completar la imagen. Si la sesión venció, el administrador debe volver a iniciar sesión en Codex con ChatGPT en el servidor y crear una nueva solicitud.",
       limited ? 429 : 502,
     );
   }
@@ -434,11 +444,7 @@ export async function generateCodexImage({
       502,
     );
   }
-  const codexHome = process.env.CODEX_HOME || path.join(os.homedir(), ".codex");
-  const source = resolveGeneratedImage(
-    events,
-    path.join(codexHome, "generated_images"),
-  );
+  const source = resolveGeneratedImage(events, sandbox.generatedImagesRoot);
   const filePath = path.join(workDir, "illustration.png");
   fs.copyFileSync(source, filePath, fs.constants.COPYFILE_EXCL);
   fs.chmodSync(filePath, 0o600);
@@ -446,7 +452,6 @@ export async function generateCodexImage({
     filePath,
     ...inspectPng(filePath),
     provider: "codex-chatgpt",
-    model: "gpt-image-2",
   };
 }
 
@@ -658,22 +663,27 @@ export function localMediaCapabilities({ refresh = false } = {}) {
     /Logged in using ChatGPT/i.test(
       (codex.stdout || "") + (codex.stderr || ""),
     );
+  const sandbox =
+    enabled && signedIn ? mediaSandboxAvailability() : { ready: false };
   const available = (binary) =>
     spawnSync(binary, ["-version"], { env, timeout: 3000, stdio: "ignore" })
       .status === 0;
   const videoReady =
     enabled &&
     signedIn &&
+    sandbox.ready &&
     available(process.env.RADAR_FFMPEG_BINARY || "ffmpeg") &&
     available(process.env.RADAR_FFPROBE_BINARY || "ffprobe");
   const reason = !enabled
     ? "La creación visual aún no está activada en este servidor."
     : !signedIn
       ? "El administrador debe iniciar sesión en Codex con ChatGPT en este servidor."
-      : undefined;
+      : !sandbox.ready
+        ? sandbox.reason
+        : undefined;
   const value = {
     image: {
-      ready: signedIn,
+      ready: signedIn && sandbox.ready,
       provider: "codex-chatgpt",
       label: "Imagen con tu suscripción de ChatGPT",
       ...(reason ? { reason } : {}),
