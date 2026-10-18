@@ -13,6 +13,7 @@ Reutilizar la aplicación existente desde 30x-track@b203ac729d18: React, TanStac
 Importar únicamente código, contratos, configuración de ejemplo y pruebas. Los datos, claves y directorios de ejecución permanecen fuera de Git.
 
 Alcance: 66 archivos.
+
 - test: 102/102 pruebas.
 - build: aprobado.
 
@@ -111,6 +112,7 @@ Montar los routers de contexto, audiencia, comunidad y análisis en la aplicaci�
 Añadir recorridos HTTP completos con aislamiento, aprobación versionada, planificación y resultados manuales.
 
 Alcance: 2 archivos.
+
 - test: 170/170 pruebas.
 
 ### 14. `015ef6deb3` — feat(contracts): modelar briefs, evidencia y recibos de publicación
@@ -120,6 +122,7 @@ Definir los contratos de oportunidades, señales y resultados junto a briefs edi
 Distinguir un webhook aceptado de una publicación social confirmada en las etiquetas compartidas.
 
 Alcance: 3 archivos.
+
 - TypeScript: aprobado.
 
 ### 15. `adeefd91a8` — feat(onboarding): revisar la empresa a partir de su contenido
@@ -129,6 +132,7 @@ Añadir un alta guiada desde sitio web, enlaces públicos o texto. Presentar la 
 Mostrar procedencia, limitaciones, carga y recuperación sin exigir transcribir toda la marca.
 
 Alcance: 2 archivos.
+
 - TypeScript: aprobado.
 
 ### 16. `d5246c8b52` — fix(audience): conservar mercados y proteger perfiles sin guardar
@@ -138,6 +142,7 @@ Representar mercados e idiomas personalizados sin sustituirlos al cambiar otro c
 Registrar guardias de cambios pendientes, conservar errores y datos al cancelar, y bloquear guardados duplicados.
 
 Alcance: 1 archivos.
+
 - TypeScript: aprobado.
 
 ### 17. `d26a20b1a7` — fix(library): alinear límites, formatos y recuperación de cargas
@@ -147,6 +152,7 @@ Mostrar el límite real de 25 MiB y la codificación UTF-8, admitir CSV en el se
 Mantener el reintento de actualización sin volver a subir archivos ya guardados.
 
 Alcance: 1 archivos.
+
 - TypeScript: aprobado.
 
 ### 18. `460ef210c9` — feat(references): consultar adjuntos y recuperar capturas sin duplicar
@@ -156,6 +162,7 @@ Separar la cita pública del adjunto autenticado y permitir descargar el origina
 Alinear los límites de captura, explicar enlaces históricos omitidos y distinguir cero coincidencias de una biblioteca vacía.
 
 Alcance: 2 archivos.
+
 - TypeScript: aprobado.
 
 ### 19. `e9153845a2` — fix(sources): normalizar proveedores y proteger la configuración pendiente
@@ -165,6 +172,7 @@ Limpiar campos incompatibles al cambiar de fuente y mantener la plataforma visib
 Proteger Escape, navegación, cambio de empresa y recarga; conservar el formulario ante errores y añadir el estado del presupuesto.
 
 Alcance: 4 archivos.
+
 - TypeScript: aprobado.
 
 ### 20. `030cbd6c4a` — feat(studio): editar formatos y confirmar envíos con aprobación vigente
@@ -174,6 +182,7 @@ Añadir controles de formato, CTA, cantidad y ejemplo hipotético, con brief sep
 Permitir el envío explícito con destino y versión confirmados, estados de carga, recibos y recuperación; los cambios sin guardar o una entrega incierta bloquean reenvíos inseguros.
 
 Alcance: 3 archivos.
+
 - TypeScript: aprobado.
 
 ### 21. `5dfeecff1d` — fix(calendar): excluir borradores y fechas residuales del plan editorial
@@ -183,6 +192,7 @@ Compartir la elegibilidad de grilla, contadores, próximos contenidos y CSV. Man
 Conservar el historial publicado y devolver las piezas aprobadas con fecha residual a la bandeja para agendar.
 
 Alcance: 4 archivos.
+
 - TypeScript: aprobado.
 
 ### 22. `1f565e2c3f` — feat(community-ui): sincronizar preguntas y señales sin cargas eternas
@@ -192,6 +202,7 @@ Compartir una consulta con cancelación y cercado por empresa entre preguntas y 
 Añadir la respuesta pública accesible y el umbral agregado sin modelar participantes.
 
 Alcance: 3 archivos.
+
 - TypeScript: aprobado.
 
 ### 23. `db709aed3b` — feat(workspace): guiar de la audiencia al contenido y sus resultados
@@ -203,6 +214,7 @@ Mantener la búsqueda accesible en móvil, entradas a 16px, errores recuperables
 Hacer configurables los puertos de desarrollo y documentar los proveedores opcionales sin secretos.
 
 Alcance: 17 archivos.
+
 - TypeScript: aprobado.
 - build: aprobado.
 
@@ -477,6 +489,7 @@ Consolidar los 25 responsables, las reproducciones y los resultados integrados. 
 Registrar 373 pruebas, compilación, recorrido completo en escritorio y móvil, CSV exacto y corrección de resultados sin duplicación. Mantener separados los datos ficticios, los proveedores simulados y la operación externa no comprobada.
 
 Alcance: 27 archivos.
+
 - test: 373/373 pruebas.
 - build: aprobado.
 
@@ -487,3 +500,20 @@ El commit final es `docs(delivery): documentar operación, validación y la hist
 La última instantánea de código aprobó 373 pruebas y la compilación. El recorrido compilado y las evidencias originales permanecen en [la validación integrada](remediation/SUMMARY.md).
 
 Los directorios de ejecución, las bases, los secretos, node_modules y dist permanecen fuera de Git. Las rutas temporales citadas en informes son contexto de la ejecución local; las regresiones automatizadas crean sus propias fixtures.
+
+## Revisión de términos y permisos de acceso — 18 de octubre de 2026
+
+Esta serie posterior reemplaza la activación por credenciales por controles de permiso. No establece una certificación legal universal. Validación conjunta final: **422 pruebas aprobadas**, cero fallos/omitidas/canceladas, compilación y TypeScript correctos; comprobación de navegador en 390 y 1440 píxeles. [Matriz y evidencia de revisión](compliance/README.md).
+
+53. `a64875694f` — feat(policy): require scoped and expiring reviews for external access
+54. `de9c204818` — fix(egress): verify AI providers and publication destinations before sending data
+55. `b878e09b28` — fix(sources): block unapproved scraping and retain immutable ingestion permissions
+56. `573fafef2e` — fix(audience): exclude restricted evidence from observations and opportunity analysis
+57. `1b988cf10e` — feat(editorial): preserve dataset credits through discovery drafts and exports
+58. `5f44f39db6` — fix(settings): explain blocked connectors and keep owned-content onboarding usable
+59. `dc2ba4bd57` — fix(privacy): self-host licensed fonts and remove browser CDN requests
+60. `a5062668f0` — test(compliance): reproduce credential provenance redirect and revocation bypasses
+61. `fc12a81e7b` — test(providers): verify restricted collection cannot spend mutate or derive metrics
+62. `9938e6e8b2` — test(workflow): retain permitted scenarios with explicit synthetic source reviews
+63. `a509660eb1` — docs(compliance): record official terms feature dispositions and final evidence
+64. `docs(commits): document the source-permission hardening series` — índice de la serie y límites de su validación.
