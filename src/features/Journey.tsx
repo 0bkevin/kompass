@@ -2171,11 +2171,7 @@ function SignalRow({
             : " · Muestra no indicada"}
         </small>
         {evidenceUrl && (
-          <a
-            href={evidenceUrl}
-            target="_blank"
-            rel="noreferrer"
-          >
+          <a href={evidenceUrl} target="_blank" rel="noreferrer">
             Consultar evidencia
             <ExternalLink size={13} />
           </a>
@@ -2546,8 +2542,7 @@ function OutcomeForm({
         {
           method: "POST",
           body: json({
-            publishedUrl:
-              String(input.get("publishedUrl") || "").trim() || undefined,
+            publishedUrl: String(input.get("publishedUrl") || "").trim(),
             publishedAt: new Date(date).toISOString(),
             metrics: {
               views: Number(input.get("views")),

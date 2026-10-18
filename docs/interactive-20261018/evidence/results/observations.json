@@ -1,0 +1,949 @@
+{
+  "reviewDate": "2026-10-18",
+  "scope": "Synthetic 30X practical AI for LatAm; no posts, scraping, or provider calls",
+  "productionOrigin": "http://127.0.2.68:5468",
+  "postFixFrontendOrigin": "http://127.0.2.68:5477",
+  "original": {
+    "fixture": {
+      "brandId": "1997cbad-4ca4-4fd2-b2c5-7c256a1e839a",
+      "pieces": [
+        {
+          "id": "d9b9a699-2ec4-4bcc-86a0-c59ab7c20705",
+          "title": "SINTÉTICO · En revisión no elegible",
+          "channel": "linkedin",
+          "segmentId": "edtech-ceos",
+          "status": "review"
+        },
+        {
+          "id": "bedacf74-e18d-4cca-b960-ffe205bf7c5c",
+          "title": "SINTÉTICO · Borrador no elegible",
+          "channel": "linkedin",
+          "segmentId": "healthtech-ops",
+          "status": "draft"
+        },
+        {
+          "id": "fbfd65ea-1c83-43c6-9873-bfe6cdf1a054",
+          "title": "SINTÉTICO · IA para operaciones HealthTech",
+          "channel": "instagram",
+          "segmentId": "healthtech-ops",
+          "status": "published",
+          "publicationOrigin": "manual_record",
+          "metricsOrigin": "manual",
+          "metrics": {
+            "views": 0,
+            "engagement": 0,
+            "leads": 0
+          },
+          "publishedAt": "2026-10-12T12:00:00.000Z"
+        },
+        {
+          "id": "202f6acc-0bad-4aff-bda2-7959f374f6c2",
+          "title": "SINTÉTICO · IA práctica para ventas EdTech B",
+          "channel": "linkedin",
+          "segmentId": "edtech-ceos",
+          "status": "published",
+          "publicationOrigin": "manual_record",
+          "metricsOrigin": "manual",
+          "metrics": {
+            "views": 199.25,
+            "engagement": 19.75,
+            "leads": 0
+          },
+          "publishedAt": "2026-10-11T12:00:00.000Z"
+        },
+        {
+          "id": "a961c050-fc2f-4afe-b2c5-a6503ea1718b",
+          "title": "SINTÉTICO · IA práctica para ventas EdTech A",
+          "channel": "linkedin",
+          "segmentId": "edtech-ceos",
+          "status": "published",
+          "publicationOrigin": "manual_record",
+          "metricsOrigin": "manual",
+          "metrics": {
+            "views": 1300.75,
+            "engagement": 80.25,
+            "leads": 4.5
+          },
+          "publishedAt": "2026-10-10T12:00:00.000Z"
+        }
+      ]
+    },
+    "validation": [
+      {
+        "caseName": "negative",
+        "status": 400,
+        "data": {
+          "error": "Las métricas deben ser números finitos entre 0 y 1000000000000."
+        }
+      },
+      {
+        "caseName": "null",
+        "status": 400,
+        "data": {
+          "error": "Las métricas deben ser números finitos entre 0 y 1000000000000."
+        }
+      },
+      {
+        "caseName": "stringInfinity",
+        "status": 400,
+        "data": {
+          "error": "Las métricas deben ser números finitos entre 0 y 1000000000000."
+        }
+      },
+      {
+        "caseName": "tooLarge",
+        "status": 400,
+        "data": {
+          "error": "Las métricas deben ser números finitos entre 0 y 1000000000000."
+        }
+      },
+      {
+        "caseName": "futureDate",
+        "status": 400,
+        "data": {
+          "error": "Indica una publicación real con fecha pasada o actual."
+        }
+      },
+      {
+        "caseName": "invalidDate",
+        "status": 400,
+        "data": {
+          "error": "La fecha de publicación no es válida."
+        }
+      },
+      {
+        "caseName": "privateUrl",
+        "status": 400,
+        "data": {
+          "error": "Enlace de publicación debe usar HTTP o HTTPS y un dominio público sin credenciales."
+        }
+      },
+      {
+        "caseName": "unapproved bedacf74-e18d-4cca-b960-ffe205bf7c5c",
+        "status": 409,
+        "data": {
+          "error": "La pieza necesita estar aprobada antes de registrar su publicación."
+        }
+      },
+      {
+        "caseName": "unapproved d9b9a699-2ec4-4bcc-86a0-c59ab7c20705",
+        "status": 409,
+        "data": {
+          "error": "La pieza necesita estar aprobada antes de registrar su publicación."
+        }
+      }
+    ],
+    "unchanged": true,
+    "learning": {
+      "outcomes": [
+        {
+          "pieceId": "fbfd65ea-1c83-43c6-9873-bfe6cdf1a054",
+          "channel": "instagram",
+          "segmentId": "healthtech-ops",
+          "title": "SINTÉTICO · IA para operaciones HealthTech",
+          "publishedAt": "2026-10-12T12:00:00.000Z",
+          "metrics": {
+            "views": 0,
+            "engagement": 0,
+            "leads": 0
+          },
+          "notes": "SINTÉTICO. Métricas a 3 días, ninguna visualización registrada todavía.",
+          "origin": "manual",
+          "id": "bc5f1ab4-5677-4a72-8fdb-73f2af46f32d",
+          "createdAt": "2026-10-18T11:10:21.607Z",
+          "updatedAt": "2026-10-18T11:10:21.607Z"
+        },
+        {
+          "pieceId": "202f6acc-0bad-4aff-bda2-7959f374f6c2",
+          "channel": "linkedin",
+          "segmentId": "edtech-ceos",
+          "title": "SINTÉTICO · IA práctica para ventas EdTech B",
+          "publishedAt": "2026-10-11T12:00:00.000Z",
+          "metrics": {
+            "views": 199.25,
+            "engagement": 19.75,
+            "leads": 0
+          },
+          "notes": "SINTÉTICO. Segunda pieza, medición a 7 días; muestra pequeña.",
+          "origin": "manual",
+          "id": "a692fc15-fe2b-4890-9c6c-f9d89a8fdfa8",
+          "createdAt": "2026-10-18T11:09:38.450Z",
+          "updatedAt": "2026-10-18T11:09:38.450Z"
+        },
+        {
+          "id": "3925b356-3722-41a7-9279-e7b2afb6ae88",
+          "pieceId": "a961c050-fc2f-4afe-b2c5-a6503ea1718b",
+          "channel": "linkedin",
+          "segmentId": "edtech-ceos",
+          "title": "SINTÉTICO · IA práctica para ventas EdTech A",
+          "publishedAt": "2026-10-10T12:00:00.000Z",
+          "metrics": {
+            "views": 1300.75,
+            "engagement": 80.25,
+            "leads": 4.5
+          },
+          "notes": "SINTÉTICO. Corrección a 7 días; sin conclusiones causales.",
+          "origin": "manual",
+          "createdAt": "2026-10-18T11:08:44.575Z",
+          "updatedAt": "2026-10-18T11:09:38.090Z"
+        }
+      ],
+      "summary": "3 publicaciónes con resultados registrados manualmente por el equipo. Los totales son conteos aportados, pueden tener ventanas distintas y no comparan rendimiento entre redes ni demuestran causalidad, preferencias de consumidores o aprendizaje automático. Revisa piezas, canal y tiempo de medición antes de decidir.",
+      "bySegment": [
+        {
+          "segmentId": "edtech-ceos",
+          "name": "CEOs de EdTech",
+          "pieces": 2,
+          "views": 1500,
+          "engagement": 100,
+          "leads": 4.5
+        },
+        {
+          "segmentId": "healthtech-ops",
+          "name": "Operaciones de HealthTech",
+          "pieces": 1,
+          "views": 0,
+          "engagement": 0,
+          "leads": 0
+        }
+      ]
+    },
+    "table": "Totales registrados manualmente por audiencia y canal. Las métricas de canales distintos se mantienen separadas.\nAudiencia\tCanal\tPiezas\tVisualizaciones\tInteracciones\tContactos\nOperaciones de HealthTech\tInstagram\t1\t0\t0\t0\nCEOs de EdTech\tLinkedIn\t2\t1500\t100\t4,5",
+    "requests": [
+      {
+        "url": "/api/brands/1997cbad-4ca4-4fd2-b2c5-7c256a1e839a/pieces/a961c050-fc2f-4afe-b2c5-a6503ea1718b/outcome",
+        "method": "POST",
+        "status": 200,
+        "body": {
+          "publishedUrl": "",
+          "publishedAt": "2026-10-10T12:00:00.000Z",
+          "metrics": {
+            "views": 1300.75,
+            "engagement": 80.25,
+            "leads": 4.5
+          },
+          "notes": "SINTÉTICO. Corrección a 7 días; sin conclusiones causales."
+        },
+        "response": {
+          "id": "3925b356-3722-41a7-9279-e7b2afb6ae88",
+          "pieceId": "a961c050-fc2f-4afe-b2c5-a6503ea1718b",
+          "channel": "linkedin",
+          "segmentId": "edtech-ceos",
+          "title": "SINTÉTICO · IA práctica para ventas EdTech A",
+          "publishedAt": "2026-10-10T12:00:00.000Z",
+          "metrics": {
+            "views": 1300.75,
+            "engagement": 80.25,
+            "leads": 4.5
+          },
+          "notes": "SINTÉTICO. Corrección a 7 días; sin conclusiones causales.",
+          "origin": "manual",
+          "createdAt": "2026-10-18T11:08:44.575Z",
+          "updatedAt": "2026-10-18T11:09:38.090Z"
+        }
+      },
+      {
+        "url": "/api/brands/1997cbad-4ca4-4fd2-b2c5-7c256a1e839a/state",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/api/brands/1997cbad-4ca4-4fd2-b2c5-7c256a1e839a/state",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/api/brands/1997cbad-4ca4-4fd2-b2c5-7c256a1e839a/insights",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/api/brands/1997cbad-4ca4-4fd2-b2c5-7c256a1e839a/insights",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/api/brands/1997cbad-4ca4-4fd2-b2c5-7c256a1e839a/pieces/202f6acc-0bad-4aff-bda2-7959f374f6c2/outcome",
+        "method": "POST",
+        "status": 200,
+        "body": {
+          "publishedUrl": "",
+          "publishedAt": "2026-10-11T12:00:00.000Z",
+          "metrics": {
+            "views": 199.25,
+            "engagement": 19.75,
+            "leads": 0
+          },
+          "notes": "SINTÉTICO. Segunda pieza, medición a 7 días; muestra pequeña."
+        },
+        "response": {
+          "pieceId": "202f6acc-0bad-4aff-bda2-7959f374f6c2",
+          "channel": "linkedin",
+          "segmentId": "edtech-ceos",
+          "title": "SINTÉTICO · IA práctica para ventas EdTech B",
+          "publishedAt": "2026-10-11T12:00:00.000Z",
+          "metrics": {
+            "views": 199.25,
+            "engagement": 19.75,
+            "leads": 0
+          },
+          "notes": "SINTÉTICO. Segunda pieza, medición a 7 días; muestra pequeña.",
+          "origin": "manual",
+          "id": "a692fc15-fe2b-4890-9c6c-f9d89a8fdfa8",
+          "createdAt": "2026-10-18T11:09:38.450Z",
+          "updatedAt": "2026-10-18T11:09:38.450Z"
+        }
+      },
+      {
+        "url": "/api/brands/1997cbad-4ca4-4fd2-b2c5-7c256a1e839a/state",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/api/brands/1997cbad-4ca4-4fd2-b2c5-7c256a1e839a/insights",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/api/brands/1997cbad-4ca4-4fd2-b2c5-7c256a1e839a/insights",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/api/brands/1997cbad-4ca4-4fd2-b2c5-7c256a1e839a/pieces/fbfd65ea-1c83-43c6-9873-bfe6cdf1a054/outcome",
+        "method": "POST",
+        "status": 200,
+        "body": {
+          "publishedUrl": "",
+          "publishedAt": "2026-10-12T12:00:00.000Z",
+          "metrics": {
+            "views": 0,
+            "engagement": 0,
+            "leads": 0
+          },
+          "notes": "SINTÉTICO. Métricas a 3 días, ninguna visualización registrada todavía."
+        },
+        "response": {
+          "pieceId": "fbfd65ea-1c83-43c6-9873-bfe6cdf1a054",
+          "channel": "instagram",
+          "segmentId": "healthtech-ops",
+          "title": "SINTÉTICO · IA para operaciones HealthTech",
+          "publishedAt": "2026-10-12T12:00:00.000Z",
+          "metrics": {
+            "views": 0,
+            "engagement": 0,
+            "leads": 0
+          },
+          "notes": "SINTÉTICO. Métricas a 3 días, ninguna visualización registrada todavía.",
+          "origin": "manual",
+          "id": "bc5f1ab4-5677-4a72-8fdb-73f2af46f32d",
+          "createdAt": "2026-10-18T11:10:21.607Z",
+          "updatedAt": "2026-10-18T11:10:21.607Z"
+        }
+      },
+      {
+        "url": "/api/brands/1997cbad-4ca4-4fd2-b2c5-7c256a1e839a/state",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/api/brands/1997cbad-4ca4-4fd2-b2c5-7c256a1e839a/insights",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/api/brands/1997cbad-4ca4-4fd2-b2c5-7c256a1e839a/insights",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/api/brands/1997cbad-4ca4-4fd2-b2c5-7c256a1e839a/state",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/api/brands/1997cbad-4ca4-4fd2-b2c5-7c256a1e839a/insights",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/api/brands/1997cbad-4ca4-4fd2-b2c5-7c256a1e839a/pieces/a961c050-fc2f-4afe-b2c5-a6503ea1718b/outcome",
+        "method": "POST",
+        "status": 400,
+        "body": {
+          "metrics": {
+            "views": -1,
+            "engagement": 0,
+            "leads": 0
+          }
+        },
+        "response": {
+          "error": "Las métricas deben ser números finitos entre 0 y 1000000000000."
+        }
+      },
+      {
+        "url": "/api/brands/1997cbad-4ca4-4fd2-b2c5-7c256a1e839a/pieces/a961c050-fc2f-4afe-b2c5-a6503ea1718b/outcome",
+        "method": "POST",
+        "status": 400,
+        "body": {
+          "metrics": {
+            "views": null,
+            "engagement": 0,
+            "leads": 0
+          }
+        },
+        "response": {
+          "error": "Las métricas deben ser números finitos entre 0 y 1000000000000."
+        }
+      },
+      {
+        "url": "/api/brands/1997cbad-4ca4-4fd2-b2c5-7c256a1e839a/pieces/a961c050-fc2f-4afe-b2c5-a6503ea1718b/outcome",
+        "method": "POST",
+        "status": 400,
+        "body": {
+          "metrics": {
+            "views": "Infinity",
+            "engagement": 0,
+            "leads": 0
+          }
+        },
+        "response": {
+          "error": "Las métricas deben ser números finitos entre 0 y 1000000000000."
+        }
+      },
+      {
+        "url": "/api/brands/1997cbad-4ca4-4fd2-b2c5-7c256a1e839a/pieces/a961c050-fc2f-4afe-b2c5-a6503ea1718b/outcome",
+        "method": "POST",
+        "status": 400,
+        "body": {
+          "metrics": {
+            "views": 1000000000001,
+            "engagement": 0,
+            "leads": 0
+          }
+        },
+        "response": {
+          "error": "Las métricas deben ser números finitos entre 0 y 1000000000000."
+        }
+      },
+      {
+        "url": "/api/brands/1997cbad-4ca4-4fd2-b2c5-7c256a1e839a/pieces/a961c050-fc2f-4afe-b2c5-a6503ea1718b/outcome",
+        "method": "POST",
+        "status": 400,
+        "body": {
+          "metrics": {
+            "views": 1,
+            "engagement": 0,
+            "leads": 0
+          },
+          "publishedAt": "2027-01-01T12:00:00Z"
+        },
+        "response": {
+          "error": "Indica una publicación real con fecha pasada o actual."
+        }
+      },
+      {
+        "url": "/api/brands/1997cbad-4ca4-4fd2-b2c5-7c256a1e839a/pieces/a961c050-fc2f-4afe-b2c5-a6503ea1718b/outcome",
+        "method": "POST",
+        "status": 400,
+        "body": {
+          "metrics": {
+            "views": 1,
+            "engagement": 0,
+            "leads": 0
+          },
+          "publishedAt": "bad-date"
+        },
+        "response": {
+          "error": "La fecha de publicación no es válida."
+        }
+      },
+      {
+        "url": "/api/brands/1997cbad-4ca4-4fd2-b2c5-7c256a1e839a/pieces/a961c050-fc2f-4afe-b2c5-a6503ea1718b/outcome",
+        "method": "POST",
+        "status": 400,
+        "body": {
+          "metrics": {
+            "views": 1,
+            "engagement": 0,
+            "leads": 0
+          },
+          "publishedUrl": "http://127.0.0.1/private"
+        },
+        "response": {
+          "error": "Enlace de publicación debe usar HTTP o HTTPS y un dominio público sin credenciales."
+        }
+      },
+      {
+        "url": "/api/brands/1997cbad-4ca4-4fd2-b2c5-7c256a1e839a/pieces/bedacf74-e18d-4cca-b960-ffe205bf7c5c/outcome",
+        "method": "POST",
+        "status": 409,
+        "body": {
+          "metrics": {
+            "views": 1,
+            "engagement": 0,
+            "leads": 0
+          }
+        },
+        "response": {
+          "error": "La pieza necesita estar aprobada antes de registrar su publicación."
+        }
+      },
+      {
+        "url": "/api/brands/1997cbad-4ca4-4fd2-b2c5-7c256a1e839a/pieces/d9b9a699-2ec4-4bcc-86a0-c59ab7c20705/outcome",
+        "method": "POST",
+        "status": 409,
+        "body": {
+          "metrics": {
+            "views": 1,
+            "engagement": 0,
+            "leads": 0
+          }
+        },
+        "response": {
+          "error": "La pieza necesita estar aprobada antes de registrar su publicación."
+        }
+      },
+      {
+        "url": "/api/brands/1997cbad-4ca4-4fd2-b2c5-7c256a1e839a/insights",
+        "method": "GET",
+        "status": 200
+      }
+    ],
+    "errors": []
+  },
+  "final": {
+    "state": {
+      "brandId": "1997cbad-4ca4-4fd2-b2c5-7c256a1e839a",
+      "pieces": [
+        {
+          "id": "3565d4be-03c3-4ce5-9134-8c58554a4572",
+          "title": "SINTÉTICO · IA práctica EdTech Instagram",
+          "channel": "instagram",
+          "segmentId": "edtech-ceos",
+          "status": "published",
+          "referenceId": "567d3232-119d-4373-8e24-519e291ce17c",
+          "publicationOrigin": "manual_record",
+          "metricsOrigin": "manual",
+          "metrics": {
+            "views": 10.125,
+            "engagement": 1.5,
+            "leads": 0.25
+          },
+          "publishedUrl": "https://example.org/30x/edtech-instagram-manual",
+          "publishedAt": "2026-10-13T12:00:00.000Z"
+        },
+        {
+          "id": "d9b9a699-2ec4-4bcc-86a0-c59ab7c20705",
+          "title": "SINTÉTICO · En revisión no elegible",
+          "channel": "linkedin",
+          "segmentId": "edtech-ceos",
+          "status": "review"
+        },
+        {
+          "id": "bedacf74-e18d-4cca-b960-ffe205bf7c5c",
+          "title": "SINTÉTICO · Borrador no elegible",
+          "channel": "linkedin",
+          "segmentId": "healthtech-ops",
+          "status": "draft"
+        },
+        {
+          "id": "fbfd65ea-1c83-43c6-9873-bfe6cdf1a054",
+          "title": "SINTÉTICO · IA para operaciones HealthTech",
+          "channel": "instagram",
+          "segmentId": "healthtech-ops",
+          "status": "published",
+          "publicationOrigin": "manual_record",
+          "metricsOrigin": "manual",
+          "metrics": {
+            "views": 0,
+            "engagement": 0,
+            "leads": 0
+          },
+          "publishedAt": "2026-10-12T12:00:00.000Z"
+        },
+        {
+          "id": "202f6acc-0bad-4aff-bda2-7959f374f6c2",
+          "title": "SINTÉTICO · IA práctica para ventas EdTech B",
+          "channel": "linkedin",
+          "segmentId": "edtech-ceos",
+          "status": "published",
+          "publicationOrigin": "manual_record",
+          "metricsOrigin": "manual",
+          "metrics": {
+            "views": 199.25,
+            "engagement": 19.75,
+            "leads": 0
+          },
+          "publishedAt": "2026-10-11T12:00:00.000Z"
+        },
+        {
+          "id": "a961c050-fc2f-4afe-b2c5-a6503ea1718b",
+          "title": "SINTÉTICO · IA práctica para ventas EdTech A",
+          "channel": "linkedin",
+          "segmentId": "edtech-ceos",
+          "status": "published",
+          "publicationOrigin": "manual_record",
+          "metricsOrigin": "manual",
+          "metrics": {
+            "views": 1300.75,
+            "engagement": 80.25,
+            "leads": 4.5
+          },
+          "publishedAt": "2026-10-10T12:00:00.000Z"
+        }
+      ],
+      "references": [
+        {
+          "id": "567d3232-119d-4373-8e24-519e291ce17c",
+          "title": "SINTÉTICO · Referencia propia IA práctica EdTech",
+          "source": "SINTÉTICO · Material propio QA",
+          "url": "https://example.org/30x/own-source-fixture"
+        }
+      ],
+      "sources": [
+        {
+          "id": "11386f48-4209-4df1-a89e-52e1fc8b83ba",
+          "enabled": false
+        },
+        {
+          "id": "72c2eb53-a89d-4a65-9083-9c30542e5485",
+          "enabled": false
+        },
+        {
+          "id": "3626122a-6d48-4832-b6e3-17de54d2f6e4",
+          "enabled": false
+        }
+      ]
+    },
+    "learning": {
+      "outcomes": [
+        {
+          "pieceId": "3565d4be-03c3-4ce5-9134-8c58554a4572",
+          "channel": "instagram",
+          "segmentId": "edtech-ceos",
+          "title": "SINTÉTICO · IA práctica EdTech Instagram",
+          "publishedUrl": "https://example.org/30x/edtech-instagram-manual",
+          "publishedAt": "2026-10-13T12:00:00.000Z",
+          "metrics": {
+            "views": 10.125,
+            "engagement": 1.5,
+            "leads": 0.25
+          },
+          "notes": "SINTÉTICO. Medición a 7 días de una adaptación propia en otro canal.",
+          "origin": "manual",
+          "id": "5d5cb4b5-fc02-4021-afc4-b14bb7fdc7af",
+          "createdAt": "2026-10-18T11:12:26.091Z",
+          "updatedAt": "2026-10-18T11:12:26.091Z"
+        },
+        {
+          "pieceId": "fbfd65ea-1c83-43c6-9873-bfe6cdf1a054",
+          "channel": "instagram",
+          "segmentId": "healthtech-ops",
+          "title": "SINTÉTICO · IA para operaciones HealthTech",
+          "publishedAt": "2026-10-12T12:00:00.000Z",
+          "metrics": {
+            "views": 0,
+            "engagement": 0,
+            "leads": 0
+          },
+          "notes": "SINTÉTICO. Métricas a 3 días, ninguna visualización registrada todavía.",
+          "origin": "manual",
+          "id": "bc5f1ab4-5677-4a72-8fdb-73f2af46f32d",
+          "createdAt": "2026-10-18T11:10:21.607Z",
+          "updatedAt": "2026-10-18T11:10:21.607Z"
+        },
+        {
+          "pieceId": "202f6acc-0bad-4aff-bda2-7959f374f6c2",
+          "channel": "linkedin",
+          "segmentId": "edtech-ceos",
+          "title": "SINTÉTICO · IA práctica para ventas EdTech B",
+          "publishedAt": "2026-10-11T12:00:00.000Z",
+          "metrics": {
+            "views": 199.25,
+            "engagement": 19.75,
+            "leads": 0
+          },
+          "notes": "SINTÉTICO. Segunda pieza, medición a 7 días; muestra pequeña.",
+          "origin": "manual",
+          "id": "a692fc15-fe2b-4890-9c6c-f9d89a8fdfa8",
+          "createdAt": "2026-10-18T11:09:38.450Z",
+          "updatedAt": "2026-10-18T11:09:38.450Z"
+        },
+        {
+          "id": "3925b356-3722-41a7-9279-e7b2afb6ae88",
+          "pieceId": "a961c050-fc2f-4afe-b2c5-a6503ea1718b",
+          "channel": "linkedin",
+          "segmentId": "edtech-ceos",
+          "title": "SINTÉTICO · IA práctica para ventas EdTech A",
+          "publishedAt": "2026-10-10T12:00:00.000Z",
+          "metrics": {
+            "views": 1300.75,
+            "engagement": 80.25,
+            "leads": 4.5
+          },
+          "notes": "SINTÉTICO. Corrección a 7 días; sin conclusiones causales.",
+          "origin": "manual",
+          "createdAt": "2026-10-18T11:08:44.575Z",
+          "updatedAt": "2026-10-18T11:11:30.612Z"
+        }
+      ],
+      "summary": "4 publicaciónes con resultados registrados manualmente por el equipo. Los totales son conteos aportados, pueden tener ventanas distintas y no comparan rendimiento entre redes ni demuestran causalidad, preferencias de consumidores o aprendizaje automático. Revisa piezas, canal y tiempo de medición antes de decidir.",
+      "bySegment": [
+        {
+          "segmentId": "edtech-ceos",
+          "name": "CEOs de EdTech",
+          "pieces": 3,
+          "views": 1510.125,
+          "engagement": 101.5,
+          "leads": 4.75
+        },
+        {
+          "segmentId": "healthtech-ops",
+          "name": "Operaciones de HealthTech",
+          "pieces": 1,
+          "views": 0,
+          "engagement": 0,
+          "leads": 0
+        }
+      ]
+    },
+    "learningReasons": [
+      {
+        "title": "IA práctica",
+        "reasons": [
+          "Aprendizaje editorial pendiente: hacen falta al menos 3 publicaciones propias de este tema y 3 de otros temas del mismo segmento, canal, formato y ventana aproximada de medición. Sin esa muestra no se ajusta la prioridad por resultados."
+        ]
+      }
+    ],
+    "ui": {
+      "table": "Totales registrados manualmente por audiencia y canal. Las métricas de canales distintos se mantienen separadas.\nAudiencia\tCanal\tPiezas\tVisualizaciones\tInteracciones\tContactos\nCEOs de EdTech\tInstagram\t1\t10,125\t1,5\t0,25\nOperaciones de HealthTech\tInstagram\t1\t0\t0\t0\nCEOs de EdTech\tLinkedIn\t2\t1500\t100\t4,5",
+      "tableRows": [
+        [
+          "CEOs de EdTech",
+          "Instagram",
+          "1",
+          "10,125",
+          "1,5",
+          "0,25"
+        ],
+        [
+          "Operaciones de HealthTech",
+          "Instagram",
+          "1",
+          "0",
+          "0",
+          "0"
+        ],
+        [
+          "CEOs de EdTech",
+          "LinkedIn",
+          "2",
+          "1500",
+          "100",
+          "4,5"
+        ]
+      ],
+      "summary": "4 publicaciónes con resultados registrados manualmente por el equipo. Los totales son conteos aportados, pueden tener ventanas distintas y no comparan rendimiento entre redes ni demuestran causalidad, preferencias de consumidores o aprendizaje automático. Revisa piezas, canal y tiempo de medición antes de decidir. Las diferencias pueden depender del canal, la distribución y el momento. No demuestran causalidad ni predicen éxito.",
+      "width": 390,
+      "documentWidth": 390,
+      "tableWidth": 610,
+      "regionWidth": 358,
+      "regionOverflow": "auto",
+      "regionTabIndex": 0
+    }
+  },
+  "sourceFixture": {
+    "fixture": "API preparation only; no outcome saved",
+    "reference": {
+      "id": "567d3232-119d-4373-8e24-519e291ce17c",
+      "title": "SINTÉTICO · Referencia propia IA práctica EdTech",
+      "source": "SINTÉTICO · Material propio QA",
+      "url": "https://example.org/30x/own-source-fixture"
+    },
+    "piece": {
+      "id": "3565d4be-03c3-4ce5-9134-8c58554a4572",
+      "title": "SINTÉTICO · IA práctica EdTech Instagram",
+      "channel": "instagram",
+      "segmentId": "edtech-ceos",
+      "referenceId": "567d3232-119d-4373-8e24-519e291ce17c",
+      "status": "approved"
+    }
+  },
+  "mobileReload": {
+    "reloadValues": [
+      {
+        "name": "publishedUrl",
+        "value": ""
+      },
+      {
+        "name": "publishedAt",
+        "value": "2026-10-10T12:00"
+      },
+      {
+        "name": "views",
+        "value": "1300.75"
+      },
+      {
+        "name": "engagement",
+        "value": "80.25"
+      },
+      {
+        "name": "leads",
+        "value": "4.5"
+      },
+      {
+        "name": "notes",
+        "value": "SINTÉTICO. Corrección a 7 días; sin conclusiones causales."
+      }
+    ],
+    "links": [],
+    "width": 390,
+    "documentWidth": 390,
+    "formValid": true,
+    "buttons": [
+      {
+        "text": "",
+        "title": "",
+        "aria": "Cerrar menú"
+      },
+      {
+        "text": "",
+        "title": "",
+        "aria": null
+      },
+      {
+        "text": "",
+        "title": "",
+        "aria": null
+      },
+      {
+        "text": "",
+        "title": "",
+        "aria": null
+      },
+      {
+        "text": "",
+        "title": "",
+        "aria": null
+      },
+      {
+        "text": "",
+        "title": "",
+        "aria": null
+      }
+    ]
+  },
+  "permissions": {
+    "body": "Saltar al contenido\n30X\nRADAR\n3\nCambiar de marca\n30X QA · Resultados sintéticos\nEspacio de trabajo\nCrear otra marca\nInicio\nAudiencia\nOportunidades\nContenido\nCalendario\nResultados\nEmpresa y contenido\nMás herramientas\nFuentes y equipo\nR\nRevisor sintético Resultados\nRevisor\n30X QA · Resultados sintéticos\n/\nResultados\nAgregar referencia\nPublica, registra y aprende.\n\nCompara lo que ocurrió con cada grupo de audiencia y usa esa evidencia en tu próxima decisión.\n\nAbrir calendario\nLas métricas se registran manualmente. Programar en el calendario no publica en redes. Si usaste un webhook, comprueba la publicación final en tu servicio. Guarda aquí el enlace y los datos después de confirmar la publicación.\nTu acceso de revisor permite consultar la información y aprobar piezas en el estudio. Un editor o administrador puede incorporar fuentes, señales y resultados.\nResultados por audiencia\nActualizar\n\n3 publicaciónes con resultados registrados manualmente por el equipo. Los totales son conteos aportados, pueden tener ventanas distintas y no comparan rendimiento entre redes ni demuestran causalidad, preferencias de consumidores o aprendizaje automático. Revisa piezas, canal y tiempo de medición antes de decidir. Las diferencias pueden depender del canal, la distribución y el momento. No demuestran causalidad ni predicen éxito.\n\nTotales registrados manualmente por audiencia y canal. Las métricas de canales distintos se mantienen separadas.\nAudiencia\tCanal\tPiezas\tVisualizaciones\tInteracciones\tContactos\nOperaciones de HealthTech\tInstagram\t1\t0\t0\t0\nCEOs de EdTech\tLinkedIn\t2\t1500\t100\t4,5\n\nInteracciones = cantidad de acciones registradas por el equipo, no una tasa. Compara piezas y periodos equivalentes.\n\nPublicaciones registradas\n3 registros manuales\nSINTÉTICO · IA para operaciones HealthTech\n\n12 oct · Operaciones de HealthTech\n\nSINTÉTICO. Métricas a 3 días, ninguna visualización registrada todavía.\n\n0 visualizaciones\n0 interacciones\n0 contactos\nSINTÉTICO · IA práctica para ventas EdTech B\n\n11 oct · CEOs de EdTech\n\nSINTÉTICO. Segunda pieza, medición a 7 días; muestra pequeña.\n\n199,25 visualizaciones\n19,75 interacciones\n0 contactos\nSINTÉTICO · IA práctica para ventas EdTech A\n\n10 oct · CEOs de EdTech\n\nSINTÉTICO. Corrección a 7 días; sin conclusiones causales.\n\n1300,75 visualizaciones\n80,25 interacciones\n4,5 contactos\n30X Radar · Hecho para encontrar tu próximo ángulo.\nLas señales tienen contexto. Las decisiones son tuyas.",
+    "formCount": 0,
+    "selectCount": 0,
+    "readStatus": 200,
+    "writeStatus": 403,
+    "writeError": {
+      "error": "Necesitas permisos de edición."
+    },
+    "foreignStatus": 404,
+    "foreignError": {
+      "error": "No se encontró la marca."
+    }
+  },
+  "companySwitch": {
+    "empty": {
+      "brand": "886ef8c3-2c74-4451-b5b4-2ffbd60b4a8f",
+      "formCount": 0,
+      "body": "o\nAudiencia\nOportunidades\nContenido\nCalendario\nResultados\nEmpresa y contenido\nMás herramientas\nFuentes y equipo\nR\nResultados sintéticos QA\nAdministrador\nEmpresa B · QA sin resultados\n/\nResultados\nAgregar referencia\nPublica, registra y aprende.\n\nCompara lo que ocurrió con cada grupo de audiencia y usa esa evidencia en tu próxima decisión.\n\nAbrir calendario\nLas métricas se registran manualmente. Programar en el calendario no publica en redes. Si usaste un webhook, comprueba la publicación final en tu servicio. Guarda aquí el enlace y los datos después de confirmar la publicación.\nRegistrar o corregir una publicación\nRegistro manual\nPrimero aprueba una pieza en el estudio\n\nCuando esté aprobada o programada, podrás registrar su publicación y sus métricas aquí.\n\nAbrir estudio\nResultados por audiencia\nActualizar\nLos resultados empiezan con una publicación real\n\nAún no hay métricas registradas. Al guardar la primera pieza verás su audiencia, visualizaciones, interacciones y contactos.\n\n30X Radar · Hecho para encontrar tu próximo ángulo.\nLas señales tienen contexto. Las decisiones son tuyas."
+    },
+    "back": {
+      "brand": "1997cbad-4ca4-4fd2-b2c5-7c256a1e839a",
+      "selected": "",
+      "formCount": 0,
+      "table": "Totales registrados manualmente por audiencia y canal. Las métricas de canales distintos se mantienen separadas.\nAudiencia\tCanal\tPiezas\tVisualizaciones\tInteracciones\tContactos\nOperaciones de HealthTech\tInstagram\t1\t0\t0\t0\nCEOs de EdTech\tLinkedIn\t2\t1500\t100\t4,5"
+    }
+  },
+  "foreignPiece": {
+    "status": 404,
+    "error": {
+      "error": "No se encontró la pieza en esta empresa."
+    }
+  },
+  "diagnostics": {
+    "console": [
+      {
+        "level": "debug",
+        "text": "[vite] connecting...",
+        "timestamp": "2026-10-18T11:12:25.390Z"
+      },
+      {
+        "level": "debug",
+        "text": "[vite] connected.",
+        "timestamp": "2026-10-18T11:12:25.396Z"
+      },
+      {
+        "level": "info",
+        "text": "%cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold",
+        "timestamp": "2026-10-18T11:12:25.521Z"
+      }
+    ],
+    "network": [],
+    "omitted": [
+      "160 older network entries",
+      "10 older action timeline entries",
+      "40 of 40 actionTimeline",
+      "40 of 40 networkEntries",
+      "26 of 29 consoleEntries"
+    ]
+  },
+  "guardObservations": {
+    "pieceCancel": {
+      "selected": "202f6acc-0bad-4aff-bda2-7959f374f6c2",
+      "retainedViews": "999",
+      "newPost": false
+    },
+    "pieceAccept": {
+      "selected": "fbfd65ea-1c83-43c6-9873-bfe6cdf1a054",
+      "newBlankMetrics": true
+    },
+    "reload": {
+      "unsavedBeforeUnloadDialog": true,
+      "cancelRetainedForm": true,
+      "savedReloadNoDialog": true
+    },
+    "companyCancel": {
+      "brand": "1997cbad-4ca4-4fd2-b2c5-7c256a1e839a",
+      "retainedUnsavedNote": true
+    }
+  },
+  "clientValidation": {
+    "required": [
+      "publishedAt",
+      "views",
+      "engagement",
+      "leads"
+    ],
+    "optional": [
+      "publishedUrl",
+      "notes"
+    ],
+    "invalidMetricValues": [
+      "",
+      -1,
+      1000000000001,
+      "Infinity"
+    ],
+    "validMetricValues": [
+      0,
+      0.125,
+      1000000000000
+    ],
+    "fieldStep": "any",
+    "integerOnly": false,
+    "blankDateInvalid": true,
+    "futureDateInvalid": true,
+    "privateUrl": {
+      "nativeUrlValidity": true,
+      "serverStatus": 400,
+      "retainedAllFields": true
+    }
+  }
+}

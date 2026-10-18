@@ -915,7 +915,7 @@ function outcomeInput(input) {
   }
   return {
     metrics,
-    ...(publishedUrl ? { publishedUrl } : {}),
+    ...(Object.hasOwn(body, "publishedUrl") ? { publishedUrl } : {}),
     ...(publishedAt ? { publishedAt } : {}),
     ...(body.notes !== undefined
       ? {
@@ -1007,10 +1007,10 @@ export function createAudienceInsightsRouter() {
           existing?.publishedAt ||
           piece.publishedAt ||
           new Date().toISOString();
-        const publishedUrl =
-          input.publishedUrl ||
-          existing?.publishedUrl ||
-          citationUrl(piece.publishedUrl);
+        // An explicit blank removes a mistaken link; an omitted field keeps it.
+        const publishedUrl = Object.hasOwn(input, "publishedUrl")
+          ? input.publishedUrl
+          : existing?.publishedUrl || citationUrl(piece.publishedUrl);
         const notes = input.notes ?? aggregateOutcomeNotes(existing?.notes);
         saved = saveRecord(req.brand.id, "outcomes", {
           ...(existing ? { id: existing.id } : {}),
@@ -1028,7 +1028,7 @@ export function createAudienceInsightsRouter() {
           ...piece,
           status: "published",
           publishedAt,
-          ...(publishedUrl ? { publishedUrl } : {}),
+          publishedUrl,
           metrics: input.metrics,
           metricsOrigin: "manual",
           publicationOrigin: piece.publicationOrigin || "manual_record",

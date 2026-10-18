@@ -1,0 +1,28 @@
+✔ cold-start opportunities cite actual records and treat audience fit as an editorial hypothesis (132.017986ms)
+✔ insights and audience signals enforce authentication, workspace isolation and editor permissions (72.333599ms)
+✔ public observations need a citation and reject private links, person fields, contact data and invalid samples (48.648529ms)
+✔ public evidence affects priority more than an editorial hypothesis without claiming audience observation (6.528038ms)
+✔ community aggregates require five voluntary responses and cannot be forged by the manual endpoint (15.92333ms)
+✔ topic growth requires week-separated comparable observations, not repeated cold-start refreshes (33.97276ms)
+✔ YouTube and demo records never synthesize performance growth or real audience claims (16.65202ms)
+✔ editors record and correct a real publication while preserving approved editorial content (22.371378ms)
+✔ results cannot bypass review, publication locks or workspace isolation (30.579461ms)
+✔ result validation rejects invalid metrics, private URLs and future publication times (28.55774ms)
+✔ publication and result writes roll back together if persistence fails (7.104998ms)
+✔ recorded outcomes adjust priority only with comparable own content and remain separate from growth (31.284394ms)
+✔ Spanish audience needs find relevant English public content without assuming observed viewers (3.283913ms)
+✔ clearing a manual publication URL removes the outcome and piece link, while omitted corrections preserve it (86.304746ms)
+✔ original HTTP repro: the literal contact note cannot be saved or exposed by insights (66.087736ms)
+✔ contact details and individual records are rejected atomically on a correction (40.566227ms)
+✔ aggregate notes retain the 5000 character limit, metrics, piece identity and idempotent correction (91.387993ms)
+✔ legacy personal notes are omitted from reads without mutating rows or dropping metrics (19.518655ms)
+✔ omitting legacy notes does not change a comparable 3+3 editorial learning (39.901313ms)
+✔ reviewers and other brands retain their read and write boundaries (30.030903ms)
+ℹ tests 20
+ℹ suites 0
+ℹ pass 20
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 567.506723
