@@ -23,7 +23,7 @@ No se encontraron ni se necesitan cifras de conversión atribuibles a esta plata
 
 ## Verdad del producto y recorridos revisados
 
-Se leyeron [README](../../README.md), [App y Auth](../../src/App.tsx), [ruta raíz del workspace](../../src/routes/_workspace/index.tsx), [rutas y documento raíz](../../src/routes/__root.tsx), [asistente de empresa](../../src/features/CompanySetup.tsx), [navegación heredada](../../src/lib/legacy-navigation.mjs) y las entradas de autenticación de [server/core.mjs](../../server/core.mjs).
+Se leyeron [README](../../README.md), [App y Auth](../../src/App.tsx), ruta raíz del workspace de la base (`src/routes/_workspace/index.tsx`, sustituida por la landing en esta rama), [rutas y documento raíz](../../src/routes/__root.tsx), [asistente de empresa](../../src/features/CompanySetup.tsx), [navegación heredada](../../src/lib/legacy-navigation.mjs) y las entradas de autenticación de [server/core.mjs](../../server/core.mjs).
 
 En el estado de partida, `/` redirige a `/home`. Sin sesión, `App` muestra `Auth` sobre las rutas de trabajo. **No existen rutas públicas `/signup`, `/register`, `/login` ni `/demo`.** Registro e inicio son modos internos del formulario. Un enlace que use cualquiera de esas rutas sin implementarla sería incorrecto.
 
