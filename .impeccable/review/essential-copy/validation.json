@@ -1,0 +1,312 @@
+{
+  "views": [
+    {
+      "path": "/home",
+      "width": 1440,
+      "scrollWidth": 1440,
+      "title": "Inicio",
+      "bodyBg": "rgb(12, 12, 16)",
+      "checked": 65,
+      "contrast": [],
+      "overflow": [],
+      "screenshot": "/workspace/t3-worktrees/30x-trackt-2/design-landing-dark-purple/.impeccable/review/essential-copy/home-1440.png"
+    },
+    {
+      "path": "/brand",
+      "width": 1440,
+      "scrollWidth": 1440,
+      "title": "Empresa",
+      "bodyBg": "rgb(12, 12, 16)",
+      "checked": 36,
+      "contrast": [],
+      "overflow": [],
+      "screenshot": "/workspace/t3-worktrees/30x-trackt-2/design-landing-dark-purple/.impeccable/review/essential-copy/brand-1440.png"
+    },
+    {
+      "path": "/audience",
+      "width": 1440,
+      "scrollWidth": 1440,
+      "title": "Audiencia",
+      "bodyBg": "rgb(12, 12, 16)",
+      "checked": 55,
+      "contrast": [],
+      "overflow": [],
+      "screenshot": "/workspace/t3-worktrees/30x-trackt-2/design-landing-dark-purple/.impeccable/review/essential-copy/audience-1440.png"
+    },
+    {
+      "path": "/opportunities",
+      "width": 1440,
+      "scrollWidth": 1440,
+      "title": "Oportunidades",
+      "bodyBg": "rgb(12, 12, 16)",
+      "checked": 50,
+      "contrast": [],
+      "overflow": [],
+      "screenshot": "/workspace/t3-worktrees/30x-trackt-2/design-landing-dark-purple/.impeccable/review/essential-copy/opportunities-1440.png"
+    },
+    {
+      "path": "/radar",
+      "width": 1440,
+      "scrollWidth": 1440,
+      "title": "Explorar fuentes",
+      "bodyBg": "rgb(12, 12, 16)",
+      "checked": 91,
+      "contrast": [],
+      "overflow": [],
+      "screenshot": "/workspace/t3-worktrees/30x-trackt-2/design-landing-dark-purple/.impeccable/review/essential-copy/radar-1440.png"
+    },
+    {
+      "path": "/inbox",
+      "width": 1440,
+      "scrollWidth": 1440,
+      "title": "Referencias",
+      "bodyBg": "rgb(12, 12, 16)",
+      "checked": 75,
+      "contrast": [],
+      "overflow": [],
+      "screenshot": "/workspace/t3-worktrees/30x-trackt-2/design-landing-dark-purple/.impeccable/review/essential-copy/inbox-1440.png"
+    },
+    {
+      "path": "/studio",
+      "width": 1440,
+      "scrollWidth": 1440,
+      "title": "Contenido",
+      "bodyBg": "rgb(12, 12, 16)",
+      "checked": 72,
+      "contrast": [],
+      "overflow": [],
+      "screenshot": "/workspace/t3-worktrees/30x-trackt-2/design-landing-dark-purple/.impeccable/review/essential-copy/studio-1440.png"
+    },
+    {
+      "path": "/calendar",
+      "width": 1440,
+      "scrollWidth": 1440,
+      "title": "Calendario",
+      "bodyBg": "rgb(12, 12, 16)",
+      "checked": 67,
+      "contrast": [],
+      "overflow": [],
+      "screenshot": "/workspace/t3-worktrees/30x-trackt-2/design-landing-dark-purple/.impeccable/review/essential-copy/calendar-1440.png"
+    },
+    {
+      "path": "/results",
+      "width": 1440,
+      "scrollWidth": 1440,
+      "title": "Resultados",
+      "bodyBg": "rgb(12, 12, 16)",
+      "checked": 35,
+      "contrast": [],
+      "overflow": [],
+      "screenshot": "/workspace/t3-worktrees/30x-trackt-2/design-landing-dark-purple/.impeccable/review/essential-copy/results-1440.png"
+    },
+    {
+      "path": "/assets",
+      "width": 1440,
+      "scrollWidth": 1440,
+      "title": "Archivos",
+      "bodyBg": "rgb(12, 12, 16)",
+      "checked": 41,
+      "contrast": [],
+      "overflow": [],
+      "screenshot": "/workspace/t3-worktrees/30x-trackt-2/design-landing-dark-purple/.impeccable/review/essential-copy/assets-1440.png"
+    },
+    {
+      "path": "/settings",
+      "width": 1440,
+      "scrollWidth": 1440,
+      "title": "Fuentes y equipo",
+      "bodyBg": "rgb(12, 12, 16)",
+      "checked": 44,
+      "contrast": [],
+      "overflow": [],
+      "screenshot": "/workspace/t3-worktrees/30x-trackt-2/design-landing-dark-purple/.impeccable/review/essential-copy/settings-1440.png"
+    },
+    {
+      "path": "/home",
+      "width": 390,
+      "scrollWidth": 390,
+      "title": "Inicio",
+      "bodyBg": "rgb(12, 12, 16)",
+      "checked": 21,
+      "contrast": [],
+      "overflow": [],
+      "screenshot": "/workspace/t3-worktrees/30x-trackt-2/design-landing-dark-purple/.impeccable/review/essential-copy/home-390.png"
+    },
+    {
+      "path": "/brand",
+      "width": 390,
+      "scrollWidth": 390,
+      "title": "Empresa",
+      "bodyBg": "rgb(12, 12, 16)",
+      "checked": 14,
+      "contrast": [],
+      "overflow": [],
+      "screenshot": "/workspace/t3-worktrees/30x-trackt-2/design-landing-dark-purple/.impeccable/review/essential-copy/brand-390.png"
+    },
+    {
+      "path": "/audience",
+      "width": 390,
+      "scrollWidth": 390,
+      "title": "Audiencia",
+      "bodyBg": "rgb(12, 12, 16)",
+      "checked": 19,
+      "contrast": [],
+      "overflow": [],
+      "screenshot": "/workspace/t3-worktrees/30x-trackt-2/design-landing-dark-purple/.impeccable/review/essential-copy/audience-390.png"
+    },
+    {
+      "path": "/opportunities",
+      "width": 390,
+      "scrollWidth": 390,
+      "title": "Oportunidades",
+      "bodyBg": "rgb(12, 12, 16)",
+      "checked": 28,
+      "contrast": [],
+      "overflow": [],
+      "screenshot": "/workspace/t3-worktrees/30x-trackt-2/design-landing-dark-purple/.impeccable/review/essential-copy/opportunities-390.png"
+    },
+    {
+      "path": "/radar",
+      "width": 390,
+      "scrollWidth": 390,
+      "title": "Explorar fuentes",
+      "bodyBg": "rgb(12, 12, 16)",
+      "checked": 28,
+      "contrast": [],
+      "overflow": [],
+      "screenshot": "/workspace/t3-worktrees/30x-trackt-2/design-landing-dark-purple/.impeccable/review/essential-copy/radar-390.png"
+    },
+    {
+      "path": "/inbox",
+      "width": 390,
+      "scrollWidth": 390,
+      "title": "Referencias",
+      "bodyBg": "rgb(12, 12, 16)",
+      "checked": 35,
+      "contrast": [],
+      "overflow": [],
+      "screenshot": "/workspace/t3-worktrees/30x-trackt-2/design-landing-dark-purple/.impeccable/review/essential-copy/inbox-390.png"
+    },
+    {
+      "path": "/studio",
+      "width": 390,
+      "scrollWidth": 390,
+      "title": "Contenido",
+      "bodyBg": "rgb(12, 12, 16)",
+      "checked": 22,
+      "contrast": [],
+      "overflow": [],
+      "screenshot": "/workspace/t3-worktrees/30x-trackt-2/design-landing-dark-purple/.impeccable/review/essential-copy/studio-390.png"
+    },
+    {
+      "path": "/calendar",
+      "width": 390,
+      "scrollWidth": 390,
+      "title": "Calendario",
+      "bodyBg": "rgb(12, 12, 16)",
+      "checked": 28,
+      "contrast": [],
+      "overflow": [],
+      "screenshot": "/workspace/t3-worktrees/30x-trackt-2/design-landing-dark-purple/.impeccable/review/essential-copy/calendar-390.png"
+    },
+    {
+      "path": "/results",
+      "width": 390,
+      "scrollWidth": 390,
+      "title": "Resultados",
+      "bodyBg": "rgb(12, 12, 16)",
+      "checked": 12,
+      "contrast": [],
+      "overflow": [],
+      "screenshot": "/workspace/t3-worktrees/30x-trackt-2/design-landing-dark-purple/.impeccable/review/essential-copy/results-390.png"
+    },
+    {
+      "path": "/assets",
+      "width": 390,
+      "scrollWidth": 390,
+      "title": "Archivos",
+      "bodyBg": "rgb(12, 12, 16)",
+      "checked": 17,
+      "contrast": [],
+      "overflow": [],
+      "screenshot": "/workspace/t3-worktrees/30x-trackt-2/design-landing-dark-purple/.impeccable/review/essential-copy/assets-390.png"
+    },
+    {
+      "path": "/settings",
+      "width": 390,
+      "scrollWidth": 390,
+      "title": "Fuentes y equipo",
+      "bodyBg": "rgb(12, 12, 16)",
+      "checked": 18,
+      "contrast": [],
+      "overflow": [],
+      "screenshot": "/workspace/t3-worktrees/30x-trackt-2/design-landing-dark-purple/.impeccable/review/essential-copy/settings-390.png"
+    }
+  ],
+  "auth": [
+    {
+      "url": "http://localhost:5188/home?auth=signup",
+      "screenshotPath": "/home/ubuntu/.t3/userdata/browser-artifacts/browser-screenshot-localhost-mvdxsxkq-28fe5640.png",
+      "width": 1440,
+      "screenshot": "/workspace/t3-worktrees/30x-trackt-2/design-landing-dark-purple/.impeccable/review/essential-copy/auth-1440.png"
+    },
+    {
+      "url": "http://localhost:5188/home?auth=signup",
+      "screenshotPath": "/home/ubuntu/.t3/userdata/browser-artifacts/browser-screenshot-localhost-mvdxt5z4-27f3d3a9.png",
+      "width": 390,
+      "screenshot": "/workspace/t3-worktrees/30x-trackt-2/design-landing-dark-purple/.impeccable/review/essential-copy/auth-390.png"
+    }
+  ],
+  "states": [
+    {
+      "name": "editor",
+      "width": 1440,
+      "url": "http://localhost:5188/studio/0440f0db-2353-4e4a-ada8-8b444b9c3743",
+      "screenshotPath": "/home/ubuntu/.t3/userdata/browser-artifacts/browser-screenshot-localhost-mvdxv92u-afbaa96c.png",
+      "screenshot": "/workspace/t3-worktrees/30x-trackt-2/design-landing-dark-purple/.impeccable/review/essential-copy/editor-1440.png"
+    },
+    {
+      "name": "editor",
+      "width": 390,
+      "url": "http://localhost:5188/studio/0440f0db-2353-4e4a-ada8-8b444b9c3743",
+      "screenshotPath": "/home/ubuntu/.t3/userdata/browser-artifacts/browser-screenshot-localhost-mvdxv9h6-9866fd5f.png",
+      "screenshot": "/workspace/t3-worktrees/30x-trackt-2/design-landing-dark-purple/.impeccable/review/essential-copy/editor-390.png"
+    },
+    {
+      "name": "schedule",
+      "width": 390,
+      "url": "http://localhost:5188/studio/0440f0db-2353-4e4a-ada8-8b444b9c3743",
+      "screenshotPath": "/home/ubuntu/.t3/userdata/browser-artifacts/browser-screenshot-localhost-mvdxvrsk-775945ec.png",
+      "screenshot": "/workspace/t3-worktrees/30x-trackt-2/design-landing-dark-purple/.impeccable/review/essential-copy/schedule-390.png"
+    },
+    {
+      "name": "community",
+      "width": 390,
+      "url": "http://localhost:5188/community/a3HrUgH4DH7GOSB23qudaLR1iihezK1DAUpKs6JQanU",
+      "screenshotPath": "/home/ubuntu/.t3/userdata/browser-artifacts/browser-screenshot-localhost-mvdxwqh8-ece751f1.png",
+      "screenshot": "/workspace/t3-worktrees/30x-trackt-2/design-landing-dark-purple/.impeccable/review/essential-copy/community-390.png"
+    }
+  ],
+  "checks": {
+    "tests": {
+      "passed": 591,
+      "failed": 0,
+      "skipped": 0
+    },
+    "productionBuild": "passed",
+    "typeScript": "passed",
+    "routeContrastFailures": 0,
+    "routePageOverflowFailures": 0,
+    "inspection": "initial desktop/mobile batch; one home confirmation after removing duplicate preview",
+    "functional": [
+      "login",
+      "reference capture",
+      "draft creation",
+      "review",
+      "approval",
+      "scheduling"
+    ],
+    "consoleErrorSample": [],
+    "externalCredentialProvidersTested": false
+  }
+}
