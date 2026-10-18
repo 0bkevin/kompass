@@ -1,0 +1,60 @@
+{
+  "issueId": "signals-2",
+  "agent": "fix_signals_2",
+  "status": "fixed",
+  "rootCause": "publicLink comprobaba el origen y algunos nombres de parámetros, pero no el contenido de ruta, valores o fragmento. Las lecturas de señales antiguas sólo comprobaban topic/note y podían incluir sourceUrl con contacto en GET, insights y el contexto de IA.",
+  "changes": [
+    "Nuevo detector local de privacidad de URL con percent-decoding repetido y tolerante a escapes malformados; sin DNS, fetch, scraping ni proveedor.",
+    "Rechazo de correo en componentes de URL y de campos explícitos de contacto, teléfono, identidad o nombre combinado con atributos personales; errores sin reflejar contacto.",
+    "publicLink aplica el detector a sourceUrl pública/editorial opcional, publishedUrl y citationUrl, preservando las restricciones previas de origen y sesión.",
+    "admissibleSignal excluye señales antiguas con URL de contacto en las lecturas y en el corpus de insights/IA, conservando el almacenamiento histórico.",
+    "Se conservan IDs largos, handles, nombres de autores/empresas sin contexto personal, parámetros funcionales y sourceUrl comunitaria relativa. No se cambiaron pesos, crecimiento, resultados ni UI."
+  ],
+  "files": [
+    "server/url-privacy.mjs",
+    "server/audience-insights.mjs (import, publicLink y comprobación URL de admissibleSignal)",
+    "tests/remediation-signals-2.test.mjs",
+    "docs/remediation/reports/signals-2.md",
+    "docs/remediation/reports/signals-2.json"
+  ],
+  "verification": [
+    {
+      "command": "node --test tests/remediation-signals-2.test.mjs",
+      "before": "29 casos: 27 fallos, 2 éxitos; POST aceptó email ficticio en ruta/contact query y variantes encoded con 201; lecturas expusieron URL legacy.",
+      "after": "Los mismos 29 casos pasaron: POST rechaza con 400 sin persistir/reflejar contacto; legacy excluido de GET/insights sin borrar almacenamiento; URLs públicas y IDs largos preservados.",
+      "kind": "test"
+    },
+    {
+      "command": "node --test tests/remediation-signals-2.test.mjs tests/opportunity-analysis.test.mjs",
+      "before": "El test rojo acreditó entrada de URLs legacy al corpus de insights. La comprobación adicional del transporte de IA se añadió tras el arreglo.",
+      "after": "42/42: 30 casos de remediación más 12 cercanos de análisis. Ruta real de IA con transporte inyectado ficticio confirma que señales legacy de contacto no llegan al payload del proveedor; ninguna llamada a proveedor real.",
+      "kind": "test"
+    },
+    {
+      "command": "node --test tests/remediation-signals-1.test.mjs tests/audience-insights.test.mjs",
+      "before": "No se modificaron los tests existentes.",
+      "after": "18/18: permisos, aislamiento, validación de texto agregado, citas, comunidad, crecimiento y resultados preservados.",
+      "kind": "test"
+    },
+    {
+      "command": "./node_modules/.bin/prettier --check server/url-privacy.mjs tests/remediation-signals-2.test.mjs; node --check server/url-privacy.mjs; node --check server/audience-insights.mjs; node --check tests/remediation-signals-2.test.mjs",
+      "before": "No aplicable.",
+      "after": "Formato propio y sintaxis correctos. Sin build o format global.",
+      "kind": "test"
+    }
+  ],
+  "artifacts": [
+    "docs/remediation/evidence/signals-2-red.txt",
+    "docs/remediation/evidence/signals-2-green.txt",
+    "docs/remediation/evidence/signals-2-nearby.txt",
+    "docs/remediation/evidence/signals-2-analysis.txt"
+  ],
+  "limitations": [
+    "Datos y credencial de proveedor exclusivamente ficticios; el transporte de IA es simulado y no acredita entrega, precisión o calidad de un proveedor real.",
+    "No hubo recorrido nuevo de navegador. Se verificó por HTTP el mismo POST consumido por la UI; no se editó la interfaz.",
+    "No se visitaron URLs externas, resolvieron DNS ni comprobó extracción. Una cita pública no acredita lectura independiente.",
+    "No se hace NER ni se clasifican nombres arbitrarios o números sin contexto como contactos; se preservan nombres editoriales y IDs de contenido legítimos.",
+    "No hubo borrado masivo ni auditoría de todos los históricos ajenos a señales. La integración y build final corresponden al coordinador."
+  ],
+  "cleanup": "Servidores locales de test cerrados, SQLite temporal cerrada y directorios temporales eliminados. Sin pestañas ni procesos propios persistentes."
+}

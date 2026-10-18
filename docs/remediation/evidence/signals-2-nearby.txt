@@ -1,0 +1,26 @@
+✔ cold-start opportunities cite actual records and treat audience fit as an editorial hypothesis (101.705126ms)
+✔ insights and audience signals enforce authentication, workspace isolation and editor permissions (67.451132ms)
+✔ public observations need a citation and reject private links, person fields, contact data and invalid samples (54.74242ms)
+✔ public evidence affects priority more than an editorial hypothesis without claiming audience observation (6.455689ms)
+✔ community aggregates require five voluntary responses and cannot be forged by the manual endpoint (18.873552ms)
+✔ topic growth requires week-separated comparable observations, not repeated cold-start refreshes (26.510953ms)
+✔ YouTube and demo records never synthesize performance growth or real audience claims (14.028722ms)
+✔ editors record and correct a real publication while preserving approved editorial content (20.930013ms)
+✔ results cannot bypass review, publication locks or workspace isolation (32.084982ms)
+✔ result validation rejects invalid metrics, private URLs and future publication times (29.761687ms)
+✔ publication and result writes roll back together if persistence fails (7.633134ms)
+✔ recorded outcomes adjust priority only with comparable own content and remain separate from growth (35.102825ms)
+✔ Spanish audience needs find relevant English public content without assuming observed viewers (3.333409ms)
+✔ the real UI POST rejects the reported individual audience sheet and does not return it after reload (194.644469ms)
+✔ individual audience fields and rows remain private even without the reported sheet heading (22.234431ms)
+✔ aggregate observations preserve public authors, companies and cohort names (74.193864ms)
+✔ emails and phones remain rejected in both text fields without echoing personal details (12.328318ms)
+✔ previously stored individual sheets and contact notes are excluded from HTTP reads and the insights corpus (41.644583ms)
+ℹ tests 18
+ℹ suites 0
+ℹ pass 18
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 530.877389
