@@ -15,7 +15,9 @@ import { publicCitationUrl } from "./public-citation-url.mjs";
 import { explainEditorialFactors } from "./editorial-factors.mjs";
 import { opportunityFingerprint } from "./opportunity-fingerprint.mjs";
 import { assertAggregateAudienceText } from "./aggregate-privacy.mjs";
+import { referenceUsePolicy, sourceAccessPolicy } from "./access-policy.mjs";
 import { containsUrlContactDetails } from "./url-privacy.mjs";
+import { providerAttributionsForReference } from "../src/lib/provider-attribution.mjs";
 import {
   deduplicateReferences,
   REFERENCE_IDENTITY_VERSION,
@@ -71,7 +73,10 @@ function matches(left, right) {
 }
 function admissibleSignal(signal) {
   try {
-    assertAggregateAudienceText(`${clean(signal.topic)}\n${clean(signal.note)}`, "Señal");
+    assertAggregateAudienceText(
+      `${clean(signal.topic)}\n${clean(signal.note)}`,
+      "Señal",
+    );
   } catch (error) {
     if (error.status === 400) return false;
     throw error;
@@ -204,6 +209,7 @@ export function recordTopicObservation(brandId, options = {}) {
   const sources = listRecords(brandId, "sources").filter(
     (source) =>
       source.enabled &&
+      sourceAccessPolicy(source).allowed &&
       source.type !== "youtube" &&
       source.platform !== "youtube" &&
       !source.lastError &&
@@ -218,6 +224,10 @@ export function recordTopicObservation(brandId, options = {}) {
     listRecords(brandId, "references").filter(
       (reference) =>
         !reference.isDemo &&
+        referenceUsePolicy(
+          reference,
+          sources.find((source) => source.id === reference.sourceId),
+        ).allowed &&
         reference.platform !== "youtube" &&
         ids.has(reference.sourceId),
     ),
@@ -563,6 +573,7 @@ function buildOpportunities(
       ];
       const evidence = items.slice(0, 12).map((reference) => ({
         referenceId: reference.id,
+        providerAttributions: providerAttributionsForReference(reference),
         title: clean(reference.title) || topic,
         ...(citationUrl(reference.url)
           ? { url: citationUrl(reference.url) }
@@ -694,9 +705,14 @@ export function buildInsights(brand, options = {}) {
   const now = timestamp(options.now);
   const allReferences = selectedRecords(brand, "references", options);
   const allPieces = selectedRecords(brand, "pieces", options);
+  const sources = selectedRecords(brand, "sources", options);
   const isDemo = realScope(brand, allReferences, allPieces);
-  const scopedReferences = allReferences.filter((item) =>
-    isDemo ? item.isDemo === true : !item.isDemo,
+  const scopedReferences = allReferences.filter(
+    (item) =>
+      referenceUsePolicy(
+        item,
+        sources.find((source) => source.id === item.sourceId),
+      ).allowed && (isDemo ? item.isDemo === true : !item.isDemo),
   );
   // Deduplicate globally before assigning topics so legacy copies cannot count
   // again in a second opportunity merely because their editorial topic differs.
@@ -704,7 +720,6 @@ export function buildInsights(brand, options = {}) {
   const pieces = allPieces.filter((item) =>
     isDemo ? item.isDemo === true : !item.isDemo,
   );
-  const sources = selectedRecords(brand, "sources", options);
   const segmentIds = new Set(
     (brand.audience || []).map((segment) => segment.id),
   );

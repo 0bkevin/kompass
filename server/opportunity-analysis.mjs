@@ -2,6 +2,7 @@ import express from "express";
 import { db, getBrand, listRecords, saveRecord, addActivity } from "./db.mjs";
 import { requireAuth, requireBrand, requireEditor } from "./core.mjs";
 import { resolveUser } from "./auth.mjs";
+import { referenceUsePolicy } from "./access-policy.mjs";
 import { getAiConfig, generateStructured, safeFetch } from "./connectors.mjs";
 import { buildInsights } from "./audience-insights.mjs";
 import {
@@ -122,8 +123,15 @@ function exactFields(value, fields) {
 }
 function inputFor(brand, opportunity, references, signals) {
   const ids = new Set(opportunity.referenceIds);
+  const sources = listRecords(brand.id, "sources");
   const eligible = references.filter(
-    (reference) => ids.has(reference.id) && !isYouTubeReference(reference),
+    (reference) =>
+      ids.has(reference.id) &&
+      !isYouTubeReference(reference) &&
+      referenceUsePolicy(
+        reference,
+        sources.find((source) => source.id === reference.sourceId),
+      ).allowed,
   );
   if (!eligible.length)
     fail(
