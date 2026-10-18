@@ -1,0 +1,70 @@
+{
+  "simulated": true,
+  "externalTransport": false,
+  "scope": "providers-1",
+  "origin": "http://127.0.1.29:5519",
+  "fixtures": "All accounts, pieces, connections and receipts are fictitious.",
+  "cases": [
+    {
+      "case": "Original approved piece + both configured connectors",
+      "before": "FAIL: Exportar and Planificar publicación were the only actions; no explicit send action.",
+      "after": "PASS: Enviar ahora enabled, Telegram chat shown."
+    },
+    {
+      "case": "Original scheduled piece",
+      "after": "PASS: UI scheduling persists Programado, does not send, and Enviar ahora remains enabled."
+    },
+    {
+      "case": "Confirmation and keyboard",
+      "after": "PASS: exact text/destination shown, Tab trapped, Escape cancels, trigger focus restored after animation frame; no send on open/cancel."
+    },
+    {
+      "case": "Unsaved editorial changes",
+      "after": "PASS: changing caption disables Enviar ahora and explains approved-version constraint; reverting enables it."
+    },
+    {
+      "case": "Pending send",
+      "after": "PASS: Enviando disabled, Cancelar disabled, Escape cannot close, status remains Programado before receipt, one simulated request."
+    },
+    {
+      "case": "Telegram receipt",
+      "after": "PASS: message 901 / synthetic chat receipt shown; no document overflow at 390 px."
+    },
+    {
+      "case": "Webhook rejection and explicit retry",
+      "after": "PASS: HTTP403 retains Aprobado, inline error and explicit Confirmar reintento; next deliberate retry yields HTTP202 receipt."
+    },
+    {
+      "case": "Uncertain transport",
+      "after": "PASS: remains Aprobado, Envío sin confirmar and Consultar estado; no send action after reload, status read does not increase requests."
+    },
+    {
+      "case": "Browser loses POST response after server acceptance",
+      "after": "PASS: read-only reconciliation shows delivered receipt and closes dialog; exactly one transport request."
+    }
+  ],
+  "downstream": {
+    "home": {
+      "homeWebhookLabel": "QA webhook SIMULADOPost · LinkedInAceptado por webhook",
+      "deliveryCounter": [
+        "0 programadas · 3 envíos registrados"
+      ]
+    },
+    "results": {
+      "resultsWebhookLabel": "QA webhook SIMULADO · Aceptado por webhook",
+      "receiptLimitation": true
+    },
+    "calendar": {
+      "calendarWebhookLabel": "QA webhook SIMULADO · LinkedIn · 12:00 · Aceptado por webhook",
+      "agenda": "12:00Aceptado por webhookQA webhook SIMULADOLinkedIn",
+      "buttons": [
+        "Exportar CSV"
+      ]
+    },
+    "csv": {
+      "webhookRow": "\"2026-10-18\",\"12:00\",\"UTC\",\"QA webhook SIMULADO\",\"LinkedIn\",\"Post\",\"Aceptado por webhook\",\"Audiencia general\",\"\",\"Contenido de QA ficticio, transporte SIMULADO.\",\"Texto SIMULADO de prueba\",\"CTA de QA\"\r",
+      "accepted": true
+    }
+  },
+  "transportRequests": 5
+}

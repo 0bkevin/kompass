@@ -1,0 +1,57 @@
+✔ registration, session, password validation, login and logout persist safely (394.537806ms)
+✔ brands start empty and users cannot read or mutate other brands (57.164173ms)
+✔ deleting an audience used by approved or published content preserves its links and version (60.91976ms)
+✔ deleting an audience used only by an idea is rejected (26.481478ms)
+✔ capture → analysis → draft → review → approval → schedule with no fabricated publication (62.928991ms)
+✔ private uploads validate formats, hide storage paths and enforce brand isolation (32.841622ms)
+✔ invitation acceptance is single-use; reviewer can review/comment but cannot edit (90.071566ms)
+✔ approval is bound to the displayed content version across review interleavings (91.023302ms)
+✔ unchanged oversized legacy piece text can be saved with an unrelated edit (16.173578ms)
+✔ optional edit preconditions reject stale HTTP writes without breaking older clients (23.853905ms)
+✔ editor may produce content but cannot configure integrations or approve their work (59.128168ms)
+✔ changing a source URL removes old metrics and snapshot history rather than reusing evidence (5.863905ms)
+✔ demo data is explicitly labeled; secret values are encrypted and absent from state (81.776273ms)
+✔ invalid requests and foreign Origin mutations fail with safe JSON errors (12.297131ms)
+✔ canonical dedup removes tracking but preserves content query and unrelated topics (3.055499ms)
+✔ RSS and Atom preserve real titles, dates, source URLs and Google approximate traffic (5.457884ms)
+✔ Google Trends identifies queries and countries rather than the shared feed link (199.55756ms)
+✔ legacy Google feed identities are repaired without losing editorial decisions or linked pieces (29.631119ms)
+✔ first snapshot never claims growth; separate observations support actual velocity only (0.460145ms)
+✔ GDELT discovery uses detection date without claiming popularity or publication date (5.771286ms)
+✔ discovery persists source failures, does not duplicate URLs, and refreshes official metrics (27.27831ms)
+✔ topic-specific sources use brand context and RSS query filters unrelated content (3.121699ms)
+✔ preliminary brand relevance matches Spanish sectors to English terms without AI (10.621593ms)
+✔ discovery recalculates lexical relevance without modifying editorial status or analysis (7.081554ms)
+✔ continuous discovery obeys cadence and persists exponential backoff without overlapping runs (10.273578ms)
+✔ continuous discovery never duplicates an active manual refresh (9.831972ms)
+✔ the same article across sources keeps platform metrics separate and adds evidence (24.572058ms)
+✔ real discovery never merges into a similarly named demo reference (16.090233ms)
+✔ saturation is unknown for small samples and qualified as observed brand corpus (4.373648ms)
+✔ URL fetch blocks private, mapped, reserved and DNS-rebinding destinations (5.517153ms)
+✔ AI provider failures are explicit and secret never appears in errors (4.280977ms)
+✔ local analysis and drafts persist useful editable output without API keys (10.380879ms)
+✔ analysis protects simultaneous reference edits and preserves dismissal decisions (11.187216ms)
+✔ publishing requires approval and real connector; webhook delivery is idempotent (16.383616ms)
+✔ uncertain network delivery cannot silently duplicate a publication (10.82494ms)
+✔ the explicit publish flow exposes its actual destination and journal without credentials (204.049386ms)
+✔ the API preserves authentication, brand, editor, approval and missing-connector gates (53.298763ms)
+✔ an explicit confirmation is bound to the current approved version and destination (61.572344ms)
+✔ approved and scheduled Telegram pieces send once and persist a final receipt (81.764293ms)
+✔ webhook acceptance records its HTTP receipt without claiming a network publication (33.982324ms)
+[30X Radar] El webhook rechazó la pieza (HTTP 403).
+✔ a definite rejection allows only a deliberate retry with the same idempotency key (39.736003ms)
+[30X Radar] Telegram no devolvió un recibo de mensaje válido. Comprueba el chat antes de intentar otro envío.
+✔ Telegram success without a message receipt remains uncertain (34.536961ms)
+[30X Radar] El webhook respondió HTTP 500. No se pudo confirmar el envío; comprueba el destino antes de repetirlo.
+[30X Radar] El webhook respondió HTTP 408. No se pudo confirmar el envío; comprueba el destino antes de repetirlo.
+✔ a webhook server error is ambiguous and must not become a retryable rejection (64.456014ms)
+✔ an uncertain delivery remains blocked after reload and preserves mutation gates (38.80593ms)
+✔ an in-flight send exposes pending state and blocks double submits and edits (38.252225ms)
+ℹ tests 45
+ℹ suites 0
+ℹ pass 45
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1132.13601

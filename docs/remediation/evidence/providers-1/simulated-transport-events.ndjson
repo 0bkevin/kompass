@@ -1,0 +1,5 @@
+{"simulated":true,"provider":"telegram","mode":"pending"}
+{"simulated":true,"provider":"webhook","mode":"reject"}
+{"simulated":true,"provider":"webhook","mode":"success"}
+{"simulated":true,"provider":"telegram","mode":"uncertain"}
+{"simulated":true,"provider":"telegram","mode":"success"}

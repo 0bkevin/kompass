@@ -1,0 +1,95 @@
+{
+  "issueId": "providers-1",
+  "agent": "fix_providers_1",
+  "status": "fixed",
+  "rootCause": "La configuración y publishPiece existían, pero Studio no exponía una acción de envío ni consultaba el diario de publicación. La UI no podía distinguir un rechazo reintentable de un envío pendiente o incierto. Al completar el flujo se reprodujeron dos fallos de integración: webhook HTTP5xx/408 tratado como rechazo definitivo y Telegram sin message_id tratado como éxito.",
+  "changes": [
+    "Acción Enviar ahora para piezas aprobadas/programadas, confirmación protegida con destino real y vista previa del texto que recibirá Telegram. Los cambios locales, permisos o versión desactualizada bloquean el envío.",
+    "GET /api/brands/:brandId/pieces/:id/publish devuelve estado seguro, destino sin parámetros sensibles, vista previa, recibo, versión y huella opaca del conector. No envía ni muta la pieza.",
+    "POST publish conserva requireEditor y exige expectedApprovalVersion y expectedDestinationKey antes del transporte. Cambiar la aprobación o desconectar/cambiar el destino invalida una confirmación abierta.",
+    "Busy/doble clic, errores visibles, reintento explícito sólo tras rechazo y consulta sin reenvío para sending/uncertain. Una respuesta del navegador perdida se reconcilia con GET.",
+    "Recibos persistidos y etiquetas de aceptación del webhook en Studio/Home/Calendario/Resultados/CSV; HTTP2xx no se presenta como prueba de publicación final en una red.",
+    "Conservados locks, idempotencia, journal y assertPieceMutable. HTTP5xx/408 del webhook y éxito Telegram sin recibo válido quedan inciertos y bloquean nuevos envíos."
+  ],
+  "files": [
+    "src/features/PublishPiece.tsx",
+    "src/features/publish-piece.css",
+    "src/features/Studio.tsx",
+    "src/features/Calendar.tsx",
+    "src/features/Journey.tsx",
+    "src/lib/types.ts",
+    "src/lib/format.ts",
+    "server/connectors.mjs",
+    "server/intelligence.mjs",
+    "tests/remediation-providers-1.test.mjs"
+  ],
+  "verification": [
+    {
+      "command": "T3 preview_evaluate: approved-piece action assertion on http://127.0.1.29:5519/studio/:pieceId",
+      "before": "FAIL: sólo Exportar/Planificar publicación, sin acción de envío con ambos conectores configurados.",
+      "after": "PASS: Enviar ahora habilitado con chat visible; también sigue habilitado tras Planificar por UI, sin envío al guardar el calendario.",
+      "kind": "browser"
+    },
+    {
+      "command": "node --test tests/remediation-providers-1.test.mjs",
+      "before": "8 fallos: GET publish devolvía404. Sondas añadidas antes de su corrección: HTTP500 guardaba failed; Telegram sin message_id devolvía200.",
+      "after": "10 pruebas específicas PASS, incluido HTTP408, con SQLite temporal y transporte HTTPS sustituido; cero solicitudes a proveedores reales.",
+      "kind": "test"
+    },
+    {
+      "command": "node --test tests/remediation-providers-1.test.mjs tests/intelligence.test.mjs tests/core.test.mjs",
+      "before": "La prueba específica fallaba en el contrato nuevo.",
+      "after": "45 PASS, 0 fallos; se mantienen aprobación, autenticación, aislamiento, permisos y bloqueo de edición/eliminación durante envío incierto.",
+      "kind": "test"
+    },
+    {
+      "command": "./node_modules/.bin/tsc --noEmit --pretty false",
+      "before": "No se ejecutó build global.",
+      "after": "PASS sin diagnósticos.",
+      "kind": "test"
+    },
+    {
+      "command": "T3 preview_click/press/evaluate/snapshot: confirmar/cancelar/programar/enviar/reintentar/recargar en runtime simulado providers-1",
+      "before": "Flujo original aprobado/programado inaccesible.",
+      "after": "PASS desktop1280x800 y viewport390x844: destino y texto explicados; Tab/Escape/foco; cambios locales bloquean; busy no confirma publicación; rechazo permite reintento explícito; incertidumbre persiste sin botón de reenvío; pérdida de respuesta del navegador se reconcilia sin duplicar.",
+      "kind": "browser"
+    },
+    {
+      "command": "T3 preview_*: Home/Resultados/Calendario y Exportar CSV con recibo webhook simulado",
+      "before": "El estado published se mostraba genéricamente como Publicado.",
+      "after": "PASS: Aceptado por webhook en Home, selector Results, evento/agenda Calendar y fila CSV. Conteo agregado: envíos registrados.",
+      "kind": "browser"
+    }
+  ],
+  "artifacts": [
+    "docs/remediation/evidence/providers-1/before-approved.png",
+    "docs/remediation/evidence/providers-1/approved-confirmation-desktop.png",
+    "docs/remediation/evidence/providers-1/scheduled-confirmation-mobile.png",
+    "docs/remediation/evidence/providers-1/telegram-receipt-mobile.png",
+    "docs/remediation/evidence/providers-1/webhook-rejected.png",
+    "docs/remediation/evidence/providers-1/webhook-accepted-desktop.png",
+    "docs/remediation/evidence/providers-1/uncertain-after-reload.png",
+    "docs/remediation/evidence/providers-1/browser-checks.json",
+    "docs/remediation/evidence/providers-1/simulated-transport-events.ndjson",
+    "docs/remediation/evidence/providers-1/simulated-runtime.mjs",
+    "docs/remediation/evidence/providers-1/tests-final.txt"
+  ],
+  "limitations": [
+    "Todas las cuentas, piezas, destinos, credenciales y respuestas son ficticios. No hubo envío externo, credencial real, gasto ni verificación de entrega de proveedores reales.",
+    "El recorrido interactivo se verificó con T3 preview_*; las pruebas Node cubren los endpoints reales con transporte sustituido, no un navegador E2E persistente.",
+    "Un HTTP2xx del webhook confirma aceptación del endpoint. La publicación final en el canal debe comprobarse en el servicio del operador.",
+    "Un envío uncertain o sending no se desbloquea automáticamente: primero hay que comprobar el destino. No se añadió una acción que borre el journal para reenviar.",
+    "Telegram mantiene su contrato de mensaje de texto hasta4096 caracteres; la confirmación muestra exactamente el texto recortado y avisa si se recorta. No envía recursos adjuntos.",
+    "POST publish requiere ahora la versión/huella de GET; clientes HTTP anteriores con body{} reciben409. La firma interna publishPiece(brand,value,{fetcher}) sigue compatible.",
+    "Para verificar la etiqueta en Calendario/CSV se añadió sólo a la pieza ficticia del webhook una fecha local de planificación en la base QA; esto no modifica la elegibilidad ni el modelo del producto.",
+    "No se ejecutó build global, detector de diseño, cambio de dependencias, commits ni subagentes. Integración final a cargo del coordinador."
+  ],
+  "cleanup": {
+    "ownPreviewClosed": true,
+    "ownServersStopped": true,
+    "apiPort": 4519,
+    "webPort": 5519,
+    "dataDir": "/tmp/30x-remediation-providers-1",
+    "host": "127.0.1.29"
+  }
+}
