@@ -34,7 +34,7 @@ Keep observations separate from editorial hypotheses. No invented metrics, globa
 
 ## Brand Commitments
 
-Retain the established 30X Radar identity from the application the user requested to reuse: restrained green, light neutral work surfaces, Spanish copy, familiar operational controls. Improve hierarchy, flow and readability rather than replacing the visual world. No new visual identity was requested.
+The user explicitly authorizes a complete replacement visual identity for the public landing: dark by default with purple, informed by Resend and Exa. This scope starts only at the landing. The authenticated workspace and authentication retain their established restrained green, light neutral surfaces and familiar controls. Product truth and operational behavior remain binding across both worlds.
 
 ## Evidence on Hand
 
