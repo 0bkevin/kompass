@@ -1,0 +1,491 @@
+{
+  "issueId": "results-2",
+  "synthetic": true,
+  "origin": "http://127.0.1.34:5524",
+  "red": {
+    "apiStatus": 200,
+    "metrics": {
+      "views": 300.5,
+      "engagement": 30.25,
+      "leads": 3.5
+    },
+    "formValid": false,
+    "inputsStep": "1",
+    "allStepMismatch": true,
+    "submitRequests": 0,
+    "persistedNote": "SINTÉTICO. Medición agregada inicial a 7 días."
+  },
+  "desktopReload": {
+    "formValid": true,
+    "values": {
+      "views": "300.5",
+      "engagement": "30.25",
+      "leads": "3.5"
+    },
+    "notes": "SINTÉTICO. Nota corregida sin cambiar las métricas decimales.",
+    "outcomes": [
+      {
+        "id": "4d169652-3987-482d-99f6-7f9a8b4c06fe",
+        "pieceId": "99bd9232-a4a2-4bbf-a5a8-252c9423123c",
+        "channel": "linkedin",
+        "segmentId": "0a9fe016-ef33-4f4b-9b5a-b445fd5a249a",
+        "title": "Pieza de métricas decimales — fixture sintética",
+        "publishedUrl": "https://example.com/qa/synthetic-decimals",
+        "publishedAt": "2026-10-17T12:00:00.000Z",
+        "metrics": {
+          "views": 300.5,
+          "engagement": 30.25,
+          "leads": 3.5
+        },
+        "notes": "SINTÉTICO. Nota corregida sin cambiar las métricas decimales.",
+        "origin": "manual",
+        "createdAt": "2026-10-18T05:38:38.307Z",
+        "updatedAt": "2026-10-18T05:39:05.027Z"
+      }
+    ]
+  },
+  "httpBoundaries": {
+    "cases": [
+      {
+        "key": "views",
+        "name": "negative",
+        "status": 400
+      },
+      {
+        "key": "views",
+        "name": "over maximum",
+        "status": 400
+      },
+      {
+        "key": "views",
+        "name": "string",
+        "status": 400
+      },
+      {
+        "key": "views",
+        "name": "null",
+        "status": 400
+      },
+      {
+        "key": "engagement",
+        "name": "negative",
+        "status": 400
+      },
+      {
+        "key": "engagement",
+        "name": "over maximum",
+        "status": 400
+      },
+      {
+        "key": "engagement",
+        "name": "string",
+        "status": 400
+      },
+      {
+        "key": "engagement",
+        "name": "null",
+        "status": 400
+      },
+      {
+        "key": "leads",
+        "name": "negative",
+        "status": 400
+      },
+      {
+        "key": "leads",
+        "name": "over maximum",
+        "status": 400
+      },
+      {
+        "key": "leads",
+        "name": "string",
+        "status": 400
+      },
+      {
+        "key": "leads",
+        "name": "null",
+        "status": 400
+      },
+      {
+        "key": "views",
+        "name": "1e400",
+        "status": 400
+      },
+      {
+        "key": "views",
+        "name": "NaN",
+        "status": 400
+      },
+      {
+        "key": "views",
+        "name": "Infinity",
+        "status": 400
+      },
+      {
+        "name": "0",
+        "status": 200,
+        "metrics": {
+          "views": 0,
+          "engagement": 0,
+          "leads": 0
+        },
+        "sameId": true
+      },
+      {
+        "name": "1000000000000",
+        "status": 200,
+        "metrics": {
+          "views": 1000000000000,
+          "engagement": 1000000000000,
+          "leads": 1000000000000
+        },
+        "sameId": true
+      }
+    ],
+    "invalidNoMutation": true,
+    "restored": {
+      "status": 200,
+      "id": "4d169652-3987-482d-99f6-7f9a8b4c06fe",
+      "metrics": {
+        "views": 300.5,
+        "engagement": 30.25,
+        "leads": 3.5
+      },
+      "notes": "SINTÉTICO. Nota corregida sin cambiar las métricas decimales."
+    },
+    "outcomesCount": 1
+  },
+  "inputBoundaries": [
+    {
+      "name": "views",
+      "min": "0",
+      "max": "1000000000000",
+      "step": "any",
+      "cases": [
+        {
+          "input": "0",
+          "value": "0",
+          "valid": true,
+          "underflow": false,
+          "overflow": false,
+          "missing": false
+        },
+        {
+          "input": "0.125",
+          "value": "0.125",
+          "valid": true,
+          "underflow": false,
+          "overflow": false,
+          "missing": false
+        },
+        {
+          "input": "300.5",
+          "value": "300.5",
+          "valid": true,
+          "underflow": false,
+          "overflow": false,
+          "missing": false
+        },
+        {
+          "input": "1000000000000",
+          "value": "1000000000000",
+          "valid": true,
+          "underflow": false,
+          "overflow": false,
+          "missing": false
+        },
+        {
+          "input": "-0.1",
+          "value": "-0.1",
+          "valid": false,
+          "underflow": true,
+          "overflow": false,
+          "missing": false
+        },
+        {
+          "input": "1000000000001",
+          "value": "1000000000001",
+          "valid": false,
+          "underflow": false,
+          "overflow": true,
+          "missing": false
+        },
+        {
+          "input": "1e400",
+          "value": "",
+          "valid": false,
+          "underflow": false,
+          "overflow": false,
+          "missing": true
+        },
+        {
+          "input": "NaN",
+          "value": "",
+          "valid": false,
+          "underflow": false,
+          "overflow": false,
+          "missing": true
+        },
+        {
+          "input": "Infinity",
+          "value": "",
+          "valid": false,
+          "underflow": false,
+          "overflow": false,
+          "missing": true
+        },
+        {
+          "input": "",
+          "value": "",
+          "valid": false,
+          "underflow": false,
+          "overflow": false,
+          "missing": true
+        }
+      ]
+    },
+    {
+      "name": "engagement",
+      "min": "0",
+      "max": "1000000000000",
+      "step": "any",
+      "cases": [
+        {
+          "input": "0",
+          "value": "0",
+          "valid": true,
+          "underflow": false,
+          "overflow": false,
+          "missing": false
+        },
+        {
+          "input": "0.125",
+          "value": "0.125",
+          "valid": true,
+          "underflow": false,
+          "overflow": false,
+          "missing": false
+        },
+        {
+          "input": "300.5",
+          "value": "300.5",
+          "valid": true,
+          "underflow": false,
+          "overflow": false,
+          "missing": false
+        },
+        {
+          "input": "1000000000000",
+          "value": "1000000000000",
+          "valid": true,
+          "underflow": false,
+          "overflow": false,
+          "missing": false
+        },
+        {
+          "input": "-0.1",
+          "value": "-0.1",
+          "valid": false,
+          "underflow": true,
+          "overflow": false,
+          "missing": false
+        },
+        {
+          "input": "1000000000001",
+          "value": "1000000000001",
+          "valid": false,
+          "underflow": false,
+          "overflow": true,
+          "missing": false
+        },
+        {
+          "input": "1e400",
+          "value": "",
+          "valid": false,
+          "underflow": false,
+          "overflow": false,
+          "missing": true
+        },
+        {
+          "input": "NaN",
+          "value": "",
+          "valid": false,
+          "underflow": false,
+          "overflow": false,
+          "missing": true
+        },
+        {
+          "input": "Infinity",
+          "value": "",
+          "valid": false,
+          "underflow": false,
+          "overflow": false,
+          "missing": true
+        },
+        {
+          "input": "",
+          "value": "",
+          "valid": false,
+          "underflow": false,
+          "overflow": false,
+          "missing": true
+        }
+      ]
+    },
+    {
+      "name": "leads",
+      "min": "0",
+      "max": "1000000000000",
+      "step": "any",
+      "cases": [
+        {
+          "input": "0",
+          "value": "0",
+          "valid": true,
+          "underflow": false,
+          "overflow": false,
+          "missing": false
+        },
+        {
+          "input": "0.125",
+          "value": "0.125",
+          "valid": true,
+          "underflow": false,
+          "overflow": false,
+          "missing": false
+        },
+        {
+          "input": "300.5",
+          "value": "300.5",
+          "valid": true,
+          "underflow": false,
+          "overflow": false,
+          "missing": false
+        },
+        {
+          "input": "1000000000000",
+          "value": "1000000000000",
+          "valid": true,
+          "underflow": false,
+          "overflow": false,
+          "missing": false
+        },
+        {
+          "input": "-0.1",
+          "value": "-0.1",
+          "valid": false,
+          "underflow": true,
+          "overflow": false,
+          "missing": false
+        },
+        {
+          "input": "1000000000001",
+          "value": "1000000000001",
+          "valid": false,
+          "underflow": false,
+          "overflow": true,
+          "missing": false
+        },
+        {
+          "input": "1e400",
+          "value": "",
+          "valid": false,
+          "underflow": false,
+          "overflow": false,
+          "missing": true
+        },
+        {
+          "input": "NaN",
+          "value": "",
+          "valid": false,
+          "underflow": false,
+          "overflow": false,
+          "missing": true
+        },
+        {
+          "input": "Infinity",
+          "value": "",
+          "valid": false,
+          "underflow": false,
+          "overflow": false,
+          "missing": true
+        },
+        {
+          "input": "",
+          "value": "",
+          "valid": false,
+          "underflow": false,
+          "overflow": false,
+          "missing": true
+        }
+      ]
+    }
+  ],
+  "mobileSave": {
+    "outcomes": [
+      {
+        "id": "4d169652-3987-482d-99f6-7f9a8b4c06fe",
+        "pieceId": "99bd9232-a4a2-4bbf-a5a8-252c9423123c",
+        "channel": "linkedin",
+        "segmentId": "0a9fe016-ef33-4f4b-9b5a-b445fd5a249a",
+        "title": "Pieza de métricas decimales — fixture sintética",
+        "publishedUrl": "https://example.com/qa/synthetic-decimals",
+        "publishedAt": "2026-10-17T12:00:00.000Z",
+        "metrics": {
+          "views": 300.5,
+          "engagement": 30.25,
+          "leads": 3.5
+        },
+        "notes": "SINTÉTICO. Corrección móvil por teclado; las métricas decimales se conservan.",
+        "origin": "manual",
+        "createdAt": "2026-10-18T05:38:38.307Z",
+        "updatedAt": "2026-10-18T05:39:31.196Z"
+      }
+    ],
+    "viewportWidth": 390,
+    "documentWidth": 390,
+    "notes": "SINTÉTICO. Corrección móvil por teclado; las métricas decimales se conservan.",
+    "fontSize": "16px"
+  },
+  "mobileReload": {
+    "pass": true,
+    "fields": {
+      "views": {
+        "value": "300.5",
+        "valid": true
+      },
+      "engagement": {
+        "value": "30.25",
+        "valid": true
+      },
+      "leads": {
+        "value": "3.5",
+        "valid": true
+      }
+    },
+    "notes": "SINTÉTICO. Corrección móvil por teclado; las métricas decimales se conservan.",
+    "outcomes": [
+      {
+        "id": "4d169652-3987-482d-99f6-7f9a8b4c06fe",
+        "pieceId": "99bd9232-a4a2-4bbf-a5a8-252c9423123c",
+        "channel": "linkedin",
+        "segmentId": "0a9fe016-ef33-4f4b-9b5a-b445fd5a249a",
+        "title": "Pieza de métricas decimales — fixture sintética",
+        "publishedUrl": "https://example.com/qa/synthetic-decimals",
+        "publishedAt": "2026-10-17T12:00:00.000Z",
+        "metrics": {
+          "views": 300.5,
+          "engagement": 30.25,
+          "leads": 3.5
+        },
+        "notes": "SINTÉTICO. Corrección móvil por teclado; las métricas decimales se conservan.",
+        "origin": "manual",
+        "createdAt": "2026-10-18T05:38:38.307Z",
+        "updatedAt": "2026-10-18T05:39:31.196Z"
+      }
+    ],
+    "viewportWidth": 390,
+    "documentWidth": 390,
+    "privacyHint": "Registra aprendizajes del grupo, sin nombres, emails, teléfonos ni fichas de personas."
+  }
+}

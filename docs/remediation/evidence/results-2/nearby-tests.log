@@ -1,0 +1,27 @@
+✔ cold-start opportunities cite actual records and treat audience fit as an editorial hypothesis (107.417163ms)
+✔ insights and audience signals enforce authentication, workspace isolation and editor permissions (67.128005ms)
+✔ public observations need a citation and reject private links, person fields, contact data and invalid samples (46.882724ms)
+✔ public evidence affects priority more than an editorial hypothesis without claiming audience observation (5.660919ms)
+✔ community aggregates require five voluntary responses and cannot be forged by the manual endpoint (16.766803ms)
+✔ topic growth requires week-separated comparable observations, not repeated cold-start refreshes (29.511039ms)
+✔ YouTube and demo records never synthesize performance growth or real audience claims (16.408172ms)
+✔ editors record and correct a real publication while preserving approved editorial content (18.692819ms)
+✔ results cannot bypass review, publication locks or workspace isolation (33.310681ms)
+✔ result validation rejects invalid metrics, private URLs and future publication times (26.784006ms)
+✔ publication and result writes roll back together if persistence fails (7.298962ms)
+✔ recorded outcomes adjust priority only with comparable own content and remain separate from growth (33.265382ms)
+✔ Spanish audience needs find relevant English public content without assuming observed viewers (2.805181ms)
+✔ original HTTP repro: the literal contact note cannot be saved or exposed by insights (49.793576ms)
+✔ contact details and individual records are rejected atomically on a correction (40.126352ms)
+✔ aggregate notes retain the 5000 character limit, metrics, piece identity and idempotent correction (87.814862ms)
+✔ legacy personal notes are omitted from reads without mutating rows or dropping metrics (17.476224ms)
+✔ omitting legacy notes does not change a comparable 3+3 editorial learning (40.222086ms)
+✔ reviewers and other brands retain their read and write boundaries (30.945222ms)
+ℹ tests 19
+ℹ suites 0
+ℹ pass 19
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 521.355095

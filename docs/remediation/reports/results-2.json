@@ -1,0 +1,53 @@
+{
+  "issueId": "results-2",
+  "agent": "/root/fix_results_2",
+  "status": "fixed",
+  "rootCause": "OutcomeForm impone step=1 a las tres métricas, aunque outcomeInput acepta números finitos entre 0 y 10^12. Las fracciones ya persistidas activaban stepMismatch y el navegador bloqueaba un submit de corrección de notas antes de enviar HTTP.",
+  "changes": [
+    "Las tres métricas de OutcomeForm usan step=\"any\", alineando la edición con el contrato API finito existente.",
+    "Se conservan required, min=0 y max=10^12, las cifras originales, el registro manual, la validación de notas agregadas y las guardias de guardado y navegación. No se altera el servidor ni se redondean los datos."
+  ],
+  "files": [
+    "src/features/Journey.tsx"
+  ],
+  "verification": [
+    {
+      "command": "T3 preview: API POST outcome 300.5/30.25/3.5 → cargar /results → seleccionar pieza → corregir sólo nota → Actualizar registro",
+      "before": "API200; los3inputs mostraron stepMismatch=true y formValid=false; click no produjo POST y persistió nota inicial.",
+      "after": "Los3inputs son válidos; click produjo un único POST200 con métricas exactas y nota nueva, mismo outcomeID y createdAt, un solo registro; confirmado de nuevo tras recargar.",
+      "kind": "browser"
+    },
+    {
+      "command": "T3 preview a390×844: recargar, seleccionar pieza, modificar sólo nota, Tab al botón y Enter, recargar de nuevo",
+      "before": "El contrato step=1 bloqueaba estas mismas fracciones independientemente del breakpoint.",
+      "after": "La nota móvil persistió en el mismo outcome y las3métricas permanecen exactas; foco visible3px, campos16px y documentWidth=viewportWidth=390.",
+      "kind": "browser"
+    },
+    {
+      "command": "HTTP POST outcome: cada métrica con negativo, >10^12, cadena y null; views1e400/NaN/Infinity; ceros y máximo inclusivo",
+      "before": "Se conserva el contrato existente sin cambios.",
+      "after": "15casos inválidos400 sin cambiar el outcome;0 y10^12 inclusivos200 con mismoID. Se restauraron300.5/30.25/3.5. Los3inputs reales además mantienen min/max/required y admiten0.125.",
+      "kind": "http"
+    },
+    {
+      "command": "node --test tests/remediation-results-1.test.mjs tests/audience-insights.test.mjs",
+      "before": "Suites vecinas existentes, sin modificaciones.",
+      "after": "19/19 tests; 0 fallos, 0 cancelados, 0 omitidos; exit 0.",
+      "kind": "test"
+    }
+  ],
+  "artifacts": [
+    "docs/remediation/evidence/results-2/observations.json",
+    "docs/remediation/evidence/results-2/red-decimals-block-submit.png",
+    "docs/remediation/evidence/results-2/green-note-corrected-desktop.png",
+    "docs/remediation/evidence/results-2/mobile-keyboard-submit-focus.png",
+    "docs/remediation/evidence/results-2/mobile-reload-preserves-decimals.png",
+    "docs/remediation/evidence/results-2/nearby-tests.log"
+  ],
+  "limitations": [
+    "Todos los nombres, métricas, notas y URLs corresponden a una empresa y pieza ficticias aisladas. La aprobación inicial se preparó como fixture de estado; esta corrección no acredita el flujo completo de aprobación.",
+    "Se verificó registro manual, no publicación externa ni proveedores reales.",
+    "La prueba móvil usa viewport Chromium de390px y teclado del navegador; no acredita un dispositivo físico ni un teclado virtual específico.",
+    "No se añade un test que sólo replique step; la comprobación regresiva atraviesa los inputs y submit reales mediante T3. El coordinador ejecutará build y suite integrados."
+  ]
+}
