@@ -317,9 +317,9 @@ export default function PublishPiece({
               </p>
             )}
             <p>
-              Se enviarán la pieza aprobada, sus escenas y recursos. La
-              aceptación del webhook no confirma la publicación final en{" "}
-              {piece.channel}.
+              Se enviarán la pieza aprobada, sus escenas y archivos asociados
+              (hasta 25 MB en total). La aceptación del webhook no confirma la
+              publicación final en {piece.channel}.
             </p>
             <p>
               Envío inmediato, independientemente de la fecha del calendario.

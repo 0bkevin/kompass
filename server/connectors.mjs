@@ -21,6 +21,7 @@ import {
 } from "./db.mjs";
 
 import { publicPublicationReceipt } from "./publication-receipt.mjs";
+import { publicationAssets } from "./publication-assets.mjs";
 
 export { publicIntegrations };
 // Below the documented 10,000 requests/IP/hour ceiling. Shared across brands
@@ -542,7 +543,10 @@ export async function publishPiece(brand, value, options = {}) {
         publicationReceipt: previous.receipt,
         publicationError: undefined,
       });
-    const { webhook, destination } = publicationDestination(brand, piece);
+    const { webhook, destination, destinationKey } = publicationDestination(
+      brand,
+      piece,
+    );
     if (!webhook?.url)
       throw integrationError(
         "Conecta un webhook de publicación. Puedes exportar la pieza mientras tanto.",
@@ -557,6 +561,17 @@ export async function publishPiece(brand, value, options = {}) {
         reference.sourceId &&
           getRecord(brand.id, "sources", reference.sourceId),
       );
+    const assets = await publicationAssets(brand.id, piece);
+    if (
+      JSON.stringify(getRecord(brand.id, "pieces", piece.id)) !==
+        JSON.stringify(piece) ||
+      publicationDestination(brand, piece).destinationKey !== destinationKey
+    )
+      throw integrationError(
+        "La pieza o el conector cambió mientras se preparaban los archivos. Revisa la versión y confirma el envío de nuevo.",
+        409,
+      );
+    assertWebhookAllowed(webhook.url);
     const idempotencyKey = createHash("sha256")
       .update(`${brand.id}:${piece.id}`)
       .digest("hex");
@@ -585,6 +600,7 @@ export async function publishPiece(brand, value, options = {}) {
           idempotencyKey,
           brand: { id: brand.id, name: brand.name },
           piece,
+          assets,
         }),
       });
       if (!response.ok) {
