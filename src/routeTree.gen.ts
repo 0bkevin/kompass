@@ -11,6 +11,7 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as WorkspaceRouteImport } from './routes/_workspace'
+import { Route as PitchRouteImport } from './routes/pitch'
 import { Route as WorkspaceAssetsRouteImport } from './routes/_workspace/assets'
 import { Route as WorkspaceAudienceRouteImport } from './routes/_workspace/audience'
 import { Route as WorkspaceBrandRouteImport } from './routes/_workspace/brand'
@@ -33,6 +34,11 @@ const IndexRoute = IndexRouteImport.update({
 } as any)
 const WorkspaceRoute = WorkspaceRouteImport.update({
   id: '/_workspace',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PitchRoute = PitchRouteImport.update({
+  id: '/pitch',
+  path: '/pitch',
   getParentRoute: () => rootRouteImport,
 } as any)
 const WorkspaceAssetsRoute = WorkspaceAssetsRouteImport.update({
@@ -108,6 +114,7 @@ const WorkspaceStudioPieceIdRoute = WorkspaceStudioPieceIdRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/pitch': typeof PitchRoute
   '/assets': typeof WorkspaceAssetsRoute
   '/audience': typeof WorkspaceAudienceRoute
   '/brand': typeof WorkspaceBrandRoute
@@ -125,6 +132,7 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/pitch': typeof PitchRoute
   '/assets': typeof WorkspaceAssetsRoute
   '/audience': typeof WorkspaceAudienceRoute
   '/brand': typeof WorkspaceBrandRoute
@@ -144,6 +152,7 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/_workspace': typeof WorkspaceRouteWithChildren
+  '/pitch': typeof PitchRoute
   '/_workspace/assets': typeof WorkspaceAssetsRoute
   '/_workspace/audience': typeof WorkspaceAudienceRoute
   '/_workspace/brand': typeof WorkspaceBrandRoute
@@ -163,6 +172,7 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/pitch'
     | '/assets'
     | '/audience'
     | '/brand'
@@ -180,6 +190,7 @@ export interface FileRouteTypes {
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/pitch'
     | '/assets'
     | '/audience'
     | '/brand'
@@ -198,6 +209,7 @@ export interface FileRouteTypes {
     | '__root__'
     | '/'
     | '/_workspace'
+    | '/pitch'
     | '/_workspace/assets'
     | '/_workspace/audience'
     | '/_workspace/brand'
@@ -217,6 +229,7 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   WorkspaceRoute: typeof WorkspaceRouteWithChildren
+  PitchRoute: typeof PitchRoute
   CommunityTokenRoute: typeof CommunityTokenRoute
 }
 
@@ -234,6 +247,13 @@ declare module '@tanstack/react-router' {
       path: ''
       fullPath: '/'
       preLoaderRoute: typeof WorkspaceRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/pitch': {
+      id: '/pitch'
+      path: '/pitch'
+      fullPath: '/pitch'
+      preLoaderRoute: typeof PitchRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/_workspace/assets': {
@@ -386,6 +406,7 @@ const WorkspaceRouteWithChildren = WorkspaceRoute._addFileChildren(
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   WorkspaceRoute: WorkspaceRouteWithChildren,
+  PitchRoute: PitchRoute,
   CommunityTokenRoute: CommunityTokenRoute,
 }
 export const routeTree = rootRouteImport
